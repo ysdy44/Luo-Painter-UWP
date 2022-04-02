@@ -219,6 +219,10 @@
       <Project>{df0fe13f-3d6d-432d-aca9-1d2b6009c843}</Project>
       <Name>Luo Painter.Elements</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Historys\Luo Painter.Historys.csproj">
+      <Project>{3f41d818-7a96-4a18-94d2-0c440a3108de}</Project>
+      <Name>Luo Painter.Historys</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Shaders\Luo Painter.Shaders.csproj">
       <Project>{31ccde60-a61f-438d-a3ef-c26216f5f517}</Project>
       <Name>Luo Painter.Shaders</Name>
