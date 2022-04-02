@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="DPIExtensions.cs" />
+    <Compile Include="Historian.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
