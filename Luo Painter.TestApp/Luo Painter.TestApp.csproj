@@ -165,6 +165,9 @@
     <Compile Include="ScrollerPage.xaml.cs">
       <DependentUpon>ScrollerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WriteableBitmapSourcePage.xaml.cs">
+      <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -243,6 +246,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ScrollerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WriteableBitmapSourcePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
