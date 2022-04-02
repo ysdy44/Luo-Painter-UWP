@@ -140,6 +140,9 @@
     <Compile Include="HistorianPage.xaml.cs">
       <DependentUpon>HistorianPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LayerPage.xaml.cs">
+      <DependentUpon>LayerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="HistorianPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LayerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
