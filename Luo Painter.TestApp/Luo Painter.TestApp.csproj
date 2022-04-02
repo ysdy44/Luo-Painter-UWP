@@ -152,6 +152,9 @@
     <Compile Include="MarqueeToolPage.xaml.cs">
       <DependentUpon>MarqueeToolPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PenPage.xaml.cs">
+      <DependentUpon>PenPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PointerWheelChangedPage.xaml.cs">
       <DependentUpon>PointerWheelChangedPage.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MarqueeToolPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
