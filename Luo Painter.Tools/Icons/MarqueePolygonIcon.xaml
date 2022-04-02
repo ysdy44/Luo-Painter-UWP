@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="MarqueePolygonIcon" TargetType="ContentControl">
+        <Path HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="{ThemeResource SystemControlBackgroundBaseHighBrush}">
+            <Path.Data>
+                M18.012,20.969l1.882,-4.032l2.688,-1.882l-1.344,-1.882l0.806,-1.344l0.538,-11.829l-8.334,7.527l-14.248,-4.57l6.452,14.517l9.678,-1.882l1.613,1.076l-1.613,4.301l1.882,0Zm-0.269,-10.753l0.807,2.15l1.613,-1.075l-0,-6.452l-5.646,5.108l-10.753,-3.764l3.763,8.872l8.872,-1.882l1.344,-2.957Zm1.613,3.763l-0.269,0.271l0.269,0.536l0.807,-0.269l-0.807,-0.538Z
+            </Path.Data>
+        </Path>
+    </ControlTemplate>
+
+</ResourceDictionary>

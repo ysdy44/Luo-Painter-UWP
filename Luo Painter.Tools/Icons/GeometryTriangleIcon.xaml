@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="GeometryTriangleIcon" TargetType="ContentControl">
+        <Polygon HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="#439EFB">
+            <Polygon.Points>
+                10,0 0,20 20,20
+            </Polygon.Points>
+        </Polygon>
+    </ControlTemplate>
+
+</ResourceDictionary>
