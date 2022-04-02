@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolGroupType.cs" />
     <Compile Include="ToolType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Tools.rd.xml" />
   </ItemGroup>
