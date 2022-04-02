@@ -143,6 +143,9 @@
     <Compile Include="LayerPage.xaml.cs">
       <DependentUpon>LayerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LiquefactionShaderPage.xaml.cs">
+      <DependentUpon>LiquefactionShaderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -197,6 +200,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LayerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LiquefactionShaderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
