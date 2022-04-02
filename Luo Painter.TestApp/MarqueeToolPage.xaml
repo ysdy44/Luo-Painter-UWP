@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.MarqueeToolPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Page.Resources>
+        <!--Transformer-->
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+
+        <!--Brush-->
+        <LinearGradientBrush x:Key="AppPurpleLinearGradientBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0" Color="#FA97FF"/>
+            <GradientStop Offset="1" Color="#9365FB"/>
+        </LinearGradientBrush>
+    </Page.Resources>
+
+    <Grid>
+        <canvas:CanvasAnimatedControl x:Name="CanvasControl"/>
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <AppBarButton x:Name="ResetButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Back"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Clear"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    重设画布
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+    </Grid>
+
+</Page>
