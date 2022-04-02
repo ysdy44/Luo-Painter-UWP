@@ -137,6 +137,9 @@
     <Compile Include="CanvasTransformerPage.xaml.cs">
       <DependentUpon>CanvasTransformerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HistorianPage.xaml.cs">
+      <DependentUpon>HistorianPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CanvasTransformerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HistorianPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
