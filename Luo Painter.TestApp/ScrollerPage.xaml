@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.ScrollerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+        <Rectangle Margin="18" RadiusX="12" RadiusY="12" StrokeThickness="2" Stroke="Gray" StrokeDashArray="8, 4" />
+        <InkCanvas x:Name="InkCanvas"/>
+        <elements:Scroller x:Name="Scroller" IsHitTestVisible="False" />
+        <Thumb x:Name="Thumb" Width="70" Height="70" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+            <Thumb.Template>
+                <ControlTemplate>
+                    <SymbolIcon Symbol="Go" >
+                        <UIElement.RenderTransformOrigin>
+                            0.5, 0.5
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="-1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </ControlTemplate>
+            </Thumb.Template>
+        </Thumb>
+    </Grid>
+
+</Page>
