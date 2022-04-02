@@ -1,0 +1,144 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.BitmapBrushPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Transformer-->
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+    </FrameworkElement.Resources>
+
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <xaml:CanvasControl x:Name="CanvasControl"/>
+            <StackPanel Grid.Column="2">
+
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                    Origin
+                </TextBlock>
+                <xaml:CanvasControl x:Name="OriginCanvasControl" Height="100"/>
+
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                    Source
+                </TextBlock>
+                <xaml:CanvasControl x:Name="SourceCanvasControl" Height="100"/>
+
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                    Temp
+                </TextBlock>
+                <xaml:CanvasControl x:Name="TempCanvasControl" Height="100"/>
+
+                <Ellipse Width="45" Height="45" 
+                         StrokeThickness="1" Stroke="White"
+                         Opacity="{x:Bind OpacitySlider.Value, Mode=OneWay}">
+                    <Ellipse.Fill>
+                        <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+            </StackPanel>
+        </Grid>
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <CommandBar.Content>
+                <ComboBox x:Name="InkModeComboBox" SelectedIndex="0" VerticalAlignment="Center">
+                    <x:String>Dry</x:String>
+                    <x:String>WetWithOpacity</x:String>
+                    <x:String>WetWithBlendMode</x:String>
+                    <x:String>WetWithOpacityAndBlendMode</x:String>
+                </ComboBox>
+            </CommandBar.Content>
+
+            <AppBarButton x:Name="OpacityButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="S"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <Slider x:Name="OpacitySlider"
+                                Value="0.4" Minimum="0" Maximum="1" StepFrequency="0.01"
+                                Header="{x:Bind OpacitySlider.Value, Mode=OneWay}"
+                                Orientation="Vertical" Height="222" HorizontalAlignment="Center"
+                                />
+                    </Flyout>
+                </AppBarButton.Flyout>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Stop"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Opacity
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="BlendModeButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="B"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <ListView x:Name="BlendModeListView" Width="200" IsItemClickEnabled="True"/>
+                    </Flyout>
+                </AppBarButton.Flyout>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Bold"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Blend Mode
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ColorButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="C"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <ColorPicker x:Name="ColorPicker"
+                                     Color="DodgerBlue"
+                                     ColorSpectrumShape="Ring"
+                                     IsMoreButtonVisible="False"
+                                     IsColorSliderVisible="True"
+                                     IsColorChannelTextInputVisible="False"
+                                     IsHexInputVisible="False"
+                                     IsAlphaEnabled="False"
+                                     IsAlphaSliderVisible="True"
+                                     IsAlphaTextInputVisible="False" />
+                    </Flyout>
+                </AppBarButton.Flyout>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="FontColor"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Color
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ClearButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Delete"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Clear
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+    </Grid>
+
+</Page>
