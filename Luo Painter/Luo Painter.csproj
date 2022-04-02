@@ -214,6 +214,12 @@
       <Version>6.2.12</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Luo Painter.Elements\Luo Painter.Elements.csproj">
+      <Project>{df0fe13f-3d6d-432d-aca9-1d2b6009c843}</Project>
+      <Name>Luo Painter.Elements</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
