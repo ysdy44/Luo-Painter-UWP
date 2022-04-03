@@ -155,6 +155,9 @@
     <Compile Include="PenPage.xaml.cs">
       <DependentUpon>PenPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ListViewPage.xaml.cs">
+      <DependentUpon>ListViewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PointerWheelChangedPage.xaml.cs">
       <DependentUpon>PointerWheelChangedPage.xaml</DependentUpon>
     </Compile>
@@ -237,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ListViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PointerWheelChangedPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -278,6 +285,10 @@
     <ProjectReference Include="..\Luo Painter.Shaders\Luo Painter.Shaders.csproj">
       <Project>{31CCDE60-A61F-438D-A3EF-C26216F5F517}</Project>
       <Name>Luo Painter.Shaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Tools\Luo Painter.Tools.csproj">
+      <Project>{CFDC0144-0649-431A-9D8D-95246D2F3837}</Project>
+      <Name>Luo Painter.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
