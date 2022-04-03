@@ -49,7 +49,7 @@ public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource sour
         Properties =
         {
             // TODO: Please replace "Parameter1" with the HLSL Parameter.
-            ["Parameter1"] = parameter1,
+            ["parameter1"] = parameter1,
         }
     };
 
@@ -60,10 +60,14 @@ public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource sour
 
 ## Deployment instructions
 
-> Run CompileShaders.cmd from a Developer Command Prompt for VS2017;
+> 1. Run the Developer Command Prompt for VS2017,
 > 
-> This will recompile *.hlsl files, generating the *.bin output binaries.
+> 2. Input "cd CurrentFolderPath" and press enter to jump to current folder,
+> 
+> 3. Input "CompileShaders.cmd" and press enter to run CompileShaders.cmd.
+> 
+> (This will recompile *.hlsl files, generating the *.bin output binaries)
 >
-> In the Solution View, Put the *.bin File into the "Shader" Folder;
+> 4. In the Solution View, Put the *.bin File into the "Shader" Folder;
 >
-> In the Properties View, Set the "Build Action" of the *.bin File to "Content".
+> 5. In the Properties View, Set the "Build Action" of the *.bin File to "Content".

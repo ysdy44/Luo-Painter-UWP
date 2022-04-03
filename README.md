@@ -19,6 +19,7 @@ Painting Tool. If you need to paint might as well try.
 |:-|:-|
 |System requirements| Windows10 1803 or upper|
 |Development tool|Visual Studio 2022|
+|Graphics library|Win2D|
 |Programing language|C#|
 |Display language|Chinese and English|
 |Comment language|Chinese|

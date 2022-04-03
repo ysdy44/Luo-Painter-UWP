@@ -49,7 +49,7 @@ public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource sour
         Properties =
         {
             // TODO: 请使用 HLSL 参数替换 "Parameter1"。
-            ["Parameter1"] = parameter1,
+            ["parameter1"] = parameter1,
         }
     };
 
@@ -60,10 +60,14 @@ public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource sour
 
 ## 部署说明
 
-> 启动 VS2017 的 开发人员 命令提示符，运行 CompileShaders.cmd。
+> 1. 启动 VS2017 的 开发人员 命令提示符，
 > 
-> 这将重新编译 *.hlsl 文件，生成 *.bin 输出二进制文件。
+> 2. 输入 "cd 当前文件夹的路径" 并按下回车键，以跳转到当前文件夹，
+> 
+> 3. 输入 "CompileShaders.cmd" 并按下回车键，以运行 CompileShaders.cmd。
+> 
+> （这将重新编译 *.hlsl 文件，生成 *.bin 输出二进制文件）
 >
-> 在解决方案视图中，将 *.bin 文件放入 "Shader" 文件夹；
+> 4. 在解决方案视图中，将 *.bin 文件放入 "Shader" 文件夹；
 >
-> 在属性视图中，将 *.bin 文件的 ”生成操作“ 设置为 “内容”。
+> 5. 在属性视图中，将 *.bin 文件的 ”生成操作“ 设置为 “内容”。

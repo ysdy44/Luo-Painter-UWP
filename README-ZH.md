@@ -1,4 +1,4 @@
-# 洛画
+# 洛画-UWP
 
 ![](ScreenShot/logo.png)
 
@@ -21,6 +21,7 @@
 |:-|:-|
 |系统要求| Windows10 1803 或更高|
 |开发工具|Visual Studio 2022|
+|图形库|Win2D|
 |编程语言|C#|
 |显示语言|中文 and English|
 |评论语言|中文|
