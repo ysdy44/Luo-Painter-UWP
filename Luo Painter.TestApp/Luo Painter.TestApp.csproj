@@ -168,6 +168,9 @@
     <Compile Include="ScrollerPage.xaml.cs">
       <DependentUpon>ScrollerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CanvasImageSourcePage.xaml.cs">
+      <DependentUpon>CanvasImageSourcePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ScrollerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CanvasImageSourcePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
