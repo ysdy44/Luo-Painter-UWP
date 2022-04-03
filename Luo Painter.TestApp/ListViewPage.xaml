@@ -4,8 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:blends="using:Luo_Painter.Blends"
     xmlns:local="using:Luo_Painter.TestApp"
     xmlns:tools="using:Luo_Painter.Tools"
+    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -73,95 +75,236 @@
                 </tools:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
-
+        <CollectionViewSource x:Name="CollectionViewSource2" IsSourceGrouped="True">
+            <CollectionViewSource.Source>
+                <blends:BlendGroupingList>
+                    <blends:NoneBlendGrouping/>
+                    <blends:BlendGrouping Key="Multiply">
+                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Multiply">
+                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Theme">
+                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Burn">
+                        <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Themer">
+                        <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Dodge">
+                        <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Light">
+                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Mix">
+                        <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Color">
+                        <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Color</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Composite">
+                        <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Division</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                </blends:BlendGroupingList>
+            </CollectionViewSource.Source>
+        </CollectionViewSource>
     </FrameworkElement.Resources>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-    <!--Tool-->
-    <ListView 
-        Padding="12"
-        IsItemClickEnabled="True"               
-        SelectionMode="Extended"               
-        ItemsSource="{x:Bind CollectionViewSource.View}"
-        >
+        <!--Tool-->
+        <ListView 
+            Padding="12"
+            IsItemClickEnabled="True"               
+            SelectionMode="Extended"               
+            ItemsSource="{x:Bind CollectionViewSource.View}"
+            >
 
-        <ItemsControl.ItemContainerTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition IsStaggeringEnabled="True"/>
-            </TransitionCollection>
-        </ItemsControl.ItemContainerTransitions>
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition IsStaggeringEnabled="True"/>
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
 
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <ItemsWrapGrid                       
-                    ItemWidth="72.8"                           
-                    ItemHeight="50"        
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid                       
+                        ItemWidth="72.8"                           
+                        ItemHeight="50"        
                     
-                    Orientation="Horizontal"                          
-                    MaximumRowsOrColumns="33"        
+                        Orientation="Horizontal"                          
+                        MaximumRowsOrColumns="33"        
                     
-                    AreStickyGroupHeadersEnabled="False"
-                    GroupHeaderPlacement="Top"                             
-                    GroupPadding="0,12"                        
-                    />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+                        AreStickyGroupHeadersEnabled="False"
+                        GroupHeaderPlacement="Top"                             
+                        GroupPadding="0,12"                        
+                        />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="MinWidth" Value="50"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
-            </Style>
-        </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="MinWidth" Value="50"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
 
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="tools:ToolType">
-                <local:ToolIcon Type="{x:Bind}"/>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="tools:ToolType">
+                    <local:ToolIcon Type="{x:Bind}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
 
-        <ItemsControl.GroupStyle>
-            <GroupStyle HidesIfEmpty="True">
-                <GroupStyle.HeaderContainerStyle>
-                    <Style TargetType="ListViewHeaderItem">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="MinHeight" Value="2"/>
-                        <Setter Property="Height" Value="Auto"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewHeaderItem">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="{TemplateBinding Background}" />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </GroupStyle.HeaderContainerStyle>
-                <GroupStyle.HeaderTemplate>
-                    <DataTemplate x:DataType="tools:ToolGrouping">
-                        <TextBlock Margin="12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Key}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
-                    </DataTemplate>
-                </GroupStyle.HeaderTemplate>
-            </GroupStyle>
-        </ItemsControl.GroupStyle>
+            <ItemsControl.GroupStyle>
+                <GroupStyle HidesIfEmpty="True">
+                    <GroupStyle.HeaderContainerStyle>
+                        <Style TargetType="ListViewHeaderItem">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="MinHeight" Value="2"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewHeaderItem">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="{TemplateBinding Background}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.HeaderContainerStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate x:DataType="tools:ToolGrouping">
+                            <TextBlock Margin="12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Key}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ItemsControl.GroupStyle>
 
-        <ListView.Header>
-            <Button HorizontalAlignment="Stretch">
-                Header
-            </Button>
-        </ListView.Header>
+            <ListView.Header>
+                <Button HorizontalAlignment="Stretch">
+                    Header
+                </Button>
+            </ListView.Header>
 
-        <ListView.Footer>
-            <Button HorizontalAlignment="Stretch">
-                Footer
-            </Button>
-        </ListView.Footer>
+            <ListView.Footer>
+                <Button HorizontalAlignment="Stretch">
+                    Footer
+                </Button>
+            </ListView.Footer>
 
-    </ListView>
+        </ListView>
 
+        <!--Blend-->
+        <ListView Grid.Column="1"
+            Padding="12"
+            IsItemClickEnabled="True"               
+            SelectionMode="Extended"               
+            ItemsSource="{x:Bind CollectionViewSource2.View}"
+            >
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition IsStaggeringEnabled="True"/>
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel                       
+                        AreStickyGroupHeadersEnabled="False"
+                        GroupHeaderPlacement="Top"                             
+                        GroupPadding="0,12"                        
+                        />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="MinWidth" Value="50"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="effects:BlendEffectMode">
+                    <local:BlendIcon Type="{x:Bind}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.GroupStyle>
+                <GroupStyle HidesIfEmpty="True">
+                    <GroupStyle.HeaderContainerStyle>
+                        <Style TargetType="ListViewHeaderItem">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="MinHeight" Value="2"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewHeaderItem">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="{TemplateBinding Background}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.HeaderContainerStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate x:DataType="blends:IBlendGrouping">
+                            <TextBlock Margin="12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Key}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ItemsControl.GroupStyle>
+
+            <ListView.Header>
+                <Button HorizontalAlignment="Stretch">
+                    Header
+                </Button>
+            </ListView.Header>
+
+            <ListView.Footer>
+                <Button HorizontalAlignment="Stretch">
+                    Footer
+                </Button>
+            </ListView.Footer>
+
+        </ListView>
+
+    </Grid>
 </Page>
