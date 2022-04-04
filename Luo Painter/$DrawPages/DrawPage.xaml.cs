@@ -151,6 +151,8 @@ namespace Luo_Painter
         public DrawPage()
         {
             this.InitializeComponent();
+            this.ConstructCanvas();
+            this.ConstructOperator();
 
             this.ConstructLayers();
             this.ConstructLayer();
