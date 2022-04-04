@@ -2,6 +2,8 @@
 {
     public enum ToolGroupType
     {
+        None,
+
         Pixel,
         Paint,
 

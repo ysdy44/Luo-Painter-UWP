@@ -23,6 +23,8 @@ namespace Luo_Painter.Tools
         {
             switch (groupType)
             {
+                case ToolGroupType.None: return Colors.Transparent;
+
                 case ToolGroupType.Pixel: return Color.FromArgb(255, 153, 50, 204);
                 case ToolGroupType.Paint: return Color.FromArgb(255, 255, 0, 0);
 
