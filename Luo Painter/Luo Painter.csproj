@@ -119,8 +119,10 @@
     <Compile Include="%24DrawPages\DrawPage.Dialog.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Method.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Storyboard.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tip.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

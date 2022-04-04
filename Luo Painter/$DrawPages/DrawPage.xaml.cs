@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Numerics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -138,6 +139,10 @@ namespace Luo_Painter
         //@Converter
         private string ScaleXToYConverter(double value) => this.Round2Converter(this.ScaleRange.InverseProportion.ConvertXToY(value));
 
+        //@Converter
+        private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
+        private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
+
 
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
@@ -146,6 +151,10 @@ namespace Luo_Painter
         public DrawPage()
         {
             this.InitializeComponent();
+
+            this.ConstructTools();
+            this.ConstructBlends();
+            this.ConstructPaint();
 
             this.ConstructHistory();
 
