@@ -147,6 +147,9 @@ namespace Luo_Painter
         {
             this.InitializeComponent();
 
+            this.ConstructStoryboard();
+            this.ConstructSplitStoryboard();
+
             this.ConstructTip();
             this.ConstructColor();
             this.ConstructColorShape();
