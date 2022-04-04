@@ -18,6 +18,17 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
+    internal class ApplicationBrushesExtension : List<SolidColorBrush>
+    {
+        public ApplicationBrushesExtension() : base(new SolidColorBrush[]
+        {
+            Application.Current.Resources["ListViewItemBackgroundSelected"] as SolidColorBrush,
+            Application.Current.Resources["ListViewItemBackgroundSelectedPointerOver"] as SolidColorBrush,
+            Application.Current.Resources["ListViewItemBackgroundSelectedPressed"] as SolidColorBrush,
+            Application.Current.Resources["HyperlinkButtonForeground"] as SolidColorBrush,
+        }) { }
+    }
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
