@@ -146,6 +146,10 @@ namespace Luo_Painter
         public DrawPage()
         {
             this.InitializeComponent();
+
+            this.ConstructTip();
+            this.ConstructColor();
+            this.ConstructColorShape();
         }
     }
 }
