@@ -82,15 +82,21 @@
 
 
             <!--StaticResource-->
-            <SolidColorBrush x:Name="Brush00" x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Name="Brush01" x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Name="Brush02" x:Key="ListViewItemBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Name="Brush03" x:Key="HyperlinkButtonForeground" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="SliderTrackValueFill" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="SliderThumbBackground" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="SliderTrackValueFillPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="SliderTrackValueFillPressed" Color="{ThemeResource SystemAccentColor}"/>
+            
+            <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{ThemeResource SystemAccentColor}"/>
+            
             <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
             <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
             <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
-          
-            
+         
+
             <!--Merged-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Style/Brush.xaml"/>

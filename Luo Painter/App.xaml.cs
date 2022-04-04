@@ -22,6 +22,11 @@ namespace Luo_Painter
     {
         public ApplicationBrushesExtension() : base(new SolidColorBrush[]
         {
+            Application.Current.Resources["SliderTrackValueFill"] as SolidColorBrush,
+            Application.Current.Resources["SliderThumbBackground"] as SolidColorBrush,
+            Application.Current.Resources["SliderTrackValueFillPointerOver"] as SolidColorBrush,
+            Application.Current.Resources["SliderTrackValueFillPressed"] as SolidColorBrush,
+
             Application.Current.Resources["ListViewItemBackgroundSelected"] as SolidColorBrush,
             Application.Current.Resources["ListViewItemBackgroundSelectedPointerOver"] as SolidColorBrush,
             Application.Current.Resources["ListViewItemBackgroundSelectedPressed"] as SolidColorBrush,
