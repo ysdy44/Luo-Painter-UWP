@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+
+    <!--Brush-->
+    <SolidColorBrush x:Key="AppBackgroundDark" Color="{ThemeResource AppBackgroundColorDark}"/>
+    <SolidColorBrush x:Key="AppBackgroundMediumDark" Color="{ThemeResource AppBackgroundColorMediumDark}"/>
+    <SolidColorBrush x:Key="AppBackground" Color="{ThemeResource AppBackgroundColor}"/>
+    <SolidColorBrush x:Key="AppBackgroundMediumLight" Color="{ThemeResource AppBackgroundColorMediumLight}"/>
+    <SolidColorBrush x:Key="AppBackgroundLight" Color="{ThemeResource AppBackgroundColorLight}"/>
+
+    <SolidColorBrush x:Key="AppBorderBrush" Color="{ThemeResource AppBorderBrushColor}"/>
+    <SolidColorBrush x:Key="AppStroke" Color="{ThemeResource AppStrokeColor}"/>
+    <SolidColorBrush x:Key="AppForeground" Color="{ThemeResource AppForegroundColor}"/>
+
+    
+</ResourceDictionary>
