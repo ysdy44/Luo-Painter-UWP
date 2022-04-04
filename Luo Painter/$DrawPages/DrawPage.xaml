@@ -4,11 +4,970 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:local="using:Luo_Painter"
+    xmlns:blends="using:Luo_Painter.Blends"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:layers="using:Luo_Painter.Layers"
+    xmlns:tools="using:Luo_Painter.Tools"
+    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <Grid>
+
+    <FrameworkElement.Resources>
+        <!--Transformer-->
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasTransformer x:Name="Transformer" />
+        <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
+
+        <!--Style-->
+        <Style TargetType="ScrollViewer" BasedOn="{StaticResource AppVerticalScrollViewerStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}" >
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}" />
+        </Style>
+
+        <!--Storyboard-->
+        <Storyboard x:Name="ShowStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DismissOverlay" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="HideStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DismissOverlay" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <!--Storyboard-->
+        <Storyboard x:Name="ShowToolStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="-220" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="HideToolStoryboard" >
+            <DoubleAnimation Duration="0:0:0.075" By="0" To="-220" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+        </Storyboard>
+        <!--Storyboard-->
+        <Storyboard x:Name="ShowLayerStoryboard" >
+            <DoubleAnimation Duration="0:0:0.15" By="222" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="HideLayerStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="0" To="222" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <!--Storyboard-->
+        <Storyboard x:Name="UnexpandLayerStoryboard" >
+            <DoubleAnimation Duration="0:0:0.15" By="150" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="ExpandLayerStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="0" To="150" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <!--Storyboard-->
+        <Storyboard x:Name="ShowTipStoryboard" >
+            <DoubleAnimation Duration="0:0:0.15" By="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="TipBorder" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="HideTipStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="TipBorder" d:IsOptimized="True"/>
+        </Storyboard>
+
+        <!--Radian-->
+        <local:RadianRange x:Name="RadianRange"/>
+        <Storyboard x:Name="RadianStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="RadianSlider" EnableDependentAnimation ="True">
+                <SplineDoubleKeyFrame Value="0" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--Scale-->
+        <local:ScaleRange x:Name="ScaleRange"/>
+        <Storyboard x:Name="ScaleStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="ScaleSlider" EnableDependentAnimation ="True">
+                <SplineDoubleKeyFrame Value="-9" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!--CollectionViewSource-->
+        <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
+            <CollectionViewSource.Source>
+                <tools:ToolGroupingList x:Name="ToolGroupingList">
+                    <tools:ToolGrouping Key="Pixel">
+                        <tools:ToolType>MarqueeRectangular</tools:ToolType>
+                        <tools:ToolType>MarqueeElliptical</tools:ToolType>
+                        <tools:ToolType>MarqueePolygon</tools:ToolType>
+                        <tools:ToolType>MarqueeFreeHand</tools:ToolType>
+                        <tools:ToolType>MarqueeFloodSetect</tools:ToolType>
+                        <tools:ToolType>MarqueeSelectionBrush</tools:ToolType>
+                    </tools:ToolGrouping>
+                    <tools:ToolGrouping Key="Paint">
+                        <tools:ToolType>PaintBrush</tools:ToolType>
+                        <tools:ToolType>PaintWatercolorPen</tools:ToolType>
+                        <tools:ToolType>PaintPencil</tools:ToolType>
+                        <tools:ToolType>PaintEraseBrush</tools:ToolType>
+                        <tools:ToolType>PatternGrid</tools:ToolType>
+                        <tools:ToolType>PatternDiagonal</tools:ToolType>
+                        <tools:ToolType>PatternSpotted</tools:ToolType>
+                    </tools:ToolGrouping>
+                    <tools:ToolGrouping Key="Vector">
+                        <tools:ToolType>Cursor</tools:ToolType>
+                        <tools:ToolType>View</tools:ToolType>
+                        <tools:ToolType>Brush</tools:ToolType>
+                        <tools:ToolType>Transparency</tools:ToolType>
+                        <tools:ToolType>Image</tools:ToolType>
+                        <tools:ToolType>Crop</tools:ToolType>
+                    </tools:ToolGrouping>
+                    <tools:ToolGrouping Key="Text">
+                        <tools:ToolType>TextArtistic</tools:ToolType>
+                        <tools:ToolType>TextFrame</tools:ToolType>
+                    </tools:ToolGrouping>
+                    <tools:ToolGrouping Key="Curve">
+                        <tools:ToolType>Pen</tools:ToolType>
+                        <tools:ToolType>Node</tools:ToolType>
+                    </tools:ToolGrouping>
+                    <tools:ToolGrouping Key="Geometry">
+                        <!--Geometry0-->
+                        <tools:ToolType>GeometryRectangle</tools:ToolType>
+                        <tools:ToolType>GeometryEllipse</tools:ToolType>
+                        <!--Geometry1-->
+                        <tools:ToolType>GeometryRoundRect</tools:ToolType>
+                        <tools:ToolType>GeometryTriangle</tools:ToolType>
+                        <tools:ToolType>GeometryDiamond</tools:ToolType>
+                        <!--Geometry2-->
+                        <tools:ToolType>GeometryPentagon</tools:ToolType>
+                        <tools:ToolType>GeometryStar</tools:ToolType>
+                        <tools:ToolType>GeometryCog</tools:ToolType>
+                        <!--Geometry3-->
+                        <tools:ToolType>GeometryDount</tools:ToolType>
+                        <tools:ToolType>GeometryPie</tools:ToolType>
+                        <tools:ToolType>GeometryCookie</tools:ToolType>
+                        <!--Geometry4-->
+                        <tools:ToolType>GeometryArrow</tools:ToolType>
+                        <tools:ToolType>GeometryCapsule</tools:ToolType>
+                        <tools:ToolType>GeometryHeart</tools:ToolType>
+                    </tools:ToolGrouping>
+                </tools:ToolGroupingList>
+            </CollectionViewSource.Source>
+        </CollectionViewSource>
+
+        <CollectionViewSource x:Name="BlendCollectionViewSource" IsSourceGrouped="True">
+            <CollectionViewSource.Source>
+                <blends:BlendGroupingList x:Name="BlendGroupingList">
+                    <blends:NoneBlendGrouping/>
+                    <blends:BlendGrouping Key="Multiply">
+                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Theme">
+                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Burn">
+                        <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Themer">
+                        <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Dodge">
+                        <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Light">
+                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Mix">
+                        <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Color">
+                        <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Color</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Composite">
+                        <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Division</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                </blends:BlendGroupingList>
+            </CollectionViewSource.Source>
+        </CollectionViewSource>
+
+        <!--Flyout-->
+        <Flyout x:Name="BlendFlyout" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <ListView x:Name="BlendListView" 
+                    MinHeight="100" 
+                    IsItemClickEnabled="True" 
+                    SelectionMode="Single" 
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    ItemsSource="{x:Bind BlendCollectionViewSource.View}" >
+
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel                           
+                            AreStickyGroupHeadersEnabled="False"                    
+                            GroupHeaderPlacement="Top"                           
+                            GroupPadding="0"                     
+                            />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="MinWidth" Value="70"/>
+                        <Setter Property="MinHeight" Value="40"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Padding" Value="20,4"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="effects:BlendEffectMode">
+                        <local:BlendIcon Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True">
+                        <GroupStyle.HeaderContainerStyle>
+                            <Style TargetType="ListViewHeaderItem">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="MinHeight" Value="2"/>
+                                <Setter Property="Height" Value="Auto"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewHeaderItem">
+                                            <Rectangle Height="2" Fill="{ThemeResource AppStroke}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.HeaderContainerStyle>
+                    </GroupStyle>
+                </ItemsControl.GroupStyle>
+
+            </ListView>
+        </Flyout>
+
+    </FrameworkElement.Resources>
+
+
+    <Grid Background="{ThemeResource AppBackgroundDark}">
+
+        <!--VisualState-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <!--Phone-->
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="Column0.Width" Value="0"/>
+                        <Setter Target="Column2.Width" Value="0"/>
+
+                        <Setter Target="CanvasControl.Margin" Value="0,0,0,50"/>
+
+                        <!--Storyboard-->
+                        <Setter Target="DismissOverlay.Opacity" Value="0"/>
+                        <Setter Target="DismissOverlay.Visibility" Value="Visible"/>
+                        <Setter Target="ToolButton.Visibility" Value="Visible"/>
+                        <Setter Target="LayerButton.Visibility" Value="Visible"/>
+                        <Setter Target="ToolButton.IsChecked" Value="False"/>
+                        <Setter Target="LayerButton.IsChecked" Value="False"/>
+                        <Setter Target="ToolTransform.X" Value="-220"/>
+                        <Setter Target="LayerTransform.X" Value="222"/>
+
+                        <!--Tool-->
+                        <Setter Target="ToolListView.Background" Value="{ThemeResource AppAcrylicElementBrush}"/>
+                        <Setter Target="ToolListView.(Grid.Column)" Value="1"/>
+                        <Setter Target="ToolListView.(Grid.Row)" Value="0"/>
+                        <Setter Target="ToolListView.(Grid.RowSpan)" Value="2"/>
+                        <Setter Target="ToolListView.Margin" Value="0,0,0,50"/>
+                        <Setter Target="ToolListView.CornerRadius" Value="0"/>
+                        <Setter Target="ToolListView.HorizontalAlignment" Value="Left"/>
+
+                        <!--Layer-->
+                        <Setter Target="LayerListView.Background" Value="{ThemeResource AppAcrylicElementBrush}"/>
+                        <Setter Target="LayerListView.(Grid.Column)" Value="1"/>
+                        <Setter Target="LayerListView.(Grid.Row)" Value="0"/>
+                        <Setter Target="LayerListView.(Grid.RowSpan)" Value="2"/>
+                        <Setter Target="LayerListView.Margin" Value="0,0,0,50"/>
+                        <Setter Target="LayerListView.CornerRadius" Value="0"/>
+                        <Setter Target="LayerListView.HorizontalAlignment" Value="Right"/>
+
+                        <!--Head-->
+                        <Setter Target="HeadGrid.(Grid.Column)" Value="1"/>
+                        <Setter Target="HeadGrid.(Grid.ColumnSpan)" Value="1"/>
+
+                        <Setter Target="HeadColumn00.Width" Value="50"/>
+                        <Setter Target="HeadColumn01.Width" Value="44"/>
+                        <Setter Target="HeadColumn02.Width" Value="44"/>
+
+                        <Setter Target="HeadColumn04.Width" Value="44"/>
+                        <Setter Target="HeadColumn05.Width" Value="44"/>
+                        <Setter Target="HeadColumn06.Width" Value="50"/>
+
+                        <!--Foot-->
+                        <Setter Target="FootGrid.CornerRadius" Value="0"/>
+                        <Setter Target="FootGrid.Margin" Value="70,0"/>
+                        <Setter Target="FootGrid.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="FootGrid.BorderThickness" Value="0,1,0,0"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Pad-->
+                <VisualState x:Name="Pad">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="Column0.Width" Value="0"/>
+                        <Setter Target="Column2.Width" Value="0"/>
+
+                        <!--Storyboard-->
+                        <Setter Target="ToolButton.IsChecked" Value="True"/>
+                        <Setter Target="LayerButton.IsChecked" Value="True"/>
+                        <Setter Target="AddButton.Width" Value="70"/>
+                        <Setter Target="AddButton.HorizontalAlignment" Value="Left"/>
+                        <Setter Target="SplitButton.Visibility" Value="Visible"/>
+                        <Setter Target="LayerTransform.X" Value="150"/>
+
+                        <!--Tool-->
+                        <Setter Target="ToolListView.Background" Value="{ThemeResource AppAcrylicElementBrush}"/>
+                        <Setter Target="ToolListView.(Grid.Column)" Value="1"/>
+                        <Setter Target="ToolListView.(Grid.Row)" Value="1"/>
+                        <Setter Target="ToolListView.Width" Value="70"/>
+                        <Setter Target="ToolListView.Margin" Value="0,22"/>
+                        <Setter Target="ToolListView.CornerRadius" Value="0,8,8,0"/>
+                        <Setter Target="ToolListView.BorderThickness" Value="0,1,1,1"/>
+                        <Setter Target="ToolListView.HorizontalAlignment" Value="Left"/>
+                        <Setter Target="ToolListView.VerticalAlignment" Value="Center"/>
+
+                        <!--Layer-->
+                        <Setter Target="LayerListView.Background" Value="{ThemeResource AppAcrylicElementBrush}"/>
+                        <Setter Target="LayerListView.(Grid.Column)" Value="1"/>
+                        <Setter Target="LayerListView.(Grid.Row)" Value="1"/>
+                        <Setter Target="LayerListView.Margin" Value="0,22"/>
+                        <Setter Target="LayerListView.CornerRadius" Value="8,0,0,8"/>
+                        <Setter Target="LayerListView.HorizontalAlignment" Value="Right"/>
+                        <Setter Target="LayerListView.BorderThickness" Value="1,1,0,1"/>
+
+                        <!--Head-->
+                        <Setter Target="HeadGrid.(Grid.Column)" Value="1"/>
+                        <Setter Target="HeadGrid.(Grid.ColumnSpan)" Value="1"/>
+
+                        <!--Foot-->
+                        <Setter Target="FootGrid.CornerRadius" Value="8,8,0,0"/>
+                        <Setter Target="FootGrid.Margin" Value="90,0"/>
+                        <Setter Target="FootGrid.BorderThickness" Value="1,1,1,0"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--PC-->
+                <VisualState x:Name="PC">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <!--Storyboard-->
+                        <Setter Target="ToolButton.IsChecked" Value="True"/>
+                        <Setter Target="LayerButton.IsChecked" Value="True"/>
+                        <Setter Target="LayerTransform.X" Value="0"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <!--Extension-->
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColor}"/>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="Column0" Width="220"/>
+                <ColumnDefinition x:Name="Column1" Width="*"/>
+                <ColumnDefinition x:Name="Column2" Width="222"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--Canvas-->
+            <canvas:CanvasVirtualControl x:Name="CanvasControl" Grid.Column="1" Grid.RowSpan="2" />
+
+            <!--Head-->
+            <Grid x:Name="HeadGrid" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" BorderBrush="{StaticResource ListViewItemBackgroundSelected}" Background="{ThemeResource AppBackgroundMediumLight}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="HeadColumn00" Width="80" />
+                    <ColumnDefinition x:Name="HeadColumn01" Width="70" />
+                    <ColumnDefinition x:Name="HeadColumn02" Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition x:Name="HeadColumn04" Width="70" />
+                    <ColumnDefinition x:Name="HeadColumn05" Width="70" />
+                    <ColumnDefinition x:Name="HeadColumn06" Width="80" />
+                </Grid.ColumnDefinitions>
+
+                <Button >
+                    <SymbolIcon Symbol="GlobalNavigationButton"/>
+                </Button>
+
+                <Button x:Name="ExportButton" Grid.Column="1" >
+                    <SymbolIcon Symbol="NewWindow"/>
+                </Button>
+
+                <Button x:Name="SettingButton" Grid.Column="2" >
+                    <SymbolIcon Symbol="Setting"/>
+                </Button>
+
+                <Button x:Name="UndoButton" Grid.Column="4" IsEnabled="False" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="Z"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="Undo"/>
+                </Button>
+
+                <Button x:Name="RedoButton" Grid.Column="5" IsEnabled="False" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="Y"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="Redo"/>
+                </Button>
+
+                <Button Grid.Column="6" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="C"/>
+                    </UIElement.KeyboardAccelerators>
+                    <Button.Flyout>
+                        <Flyout Placement="Bottom">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button VerticalAlignment="Stretch" Foreground="{StaticResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                                        <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
+                                    </Button>
+                                    <ComboBox x:Name="ColorComboBox" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                    <ComboBox x:Name="ColorShapeComboBox" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Grid>
+                                <ContentControl Height="12" />
+                                <ColorPicker x:Name="ColorPicker" 
+                                             Color="Black"                    
+                                             IsMoreButtonVisible="True"               
+                                             IsHexInputVisible="True"                 
+                                             IsColorSpectrumVisible="True"               
+                                             IsColorSliderVisible="True"                 
+                                             IsColorPreviewVisible="True"                
+                                             IsColorChannelTextInputVisible="True"                 
+                                             IsAlphaTextInputVisible="True"                  
+                                             IsAlphaSliderVisible="True"                  
+                                             IsAlphaEnabled="True"               
+                                             ColorSpectrumShape="Ring"                  
+                                             ColorSpectrumComponents="HueSaturation"                  
+                                             />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                    <Grid>
+                        <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="White" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Grid>
+                </Button>
+
+            </Grid>
+
+
+            <!--Dismiss-->
+            <Border x:Name="DismissOverlay" Grid.Column="1" Grid.RowSpan="2" Visibility="Collapsed" Opacity="0" Margin="0,0,0,50" Background="{ThemeResource AppStroke}"/>
+
+
+            <!--Foot-->
+            <Grid x:Name="FootGrid" Grid.Column="1" Grid.Row="1" CornerRadius="8" Margin="22" MinWidth="222" MaxWidth="460" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicElementBrush}">
+                <Grid x:Name="PaintBrushPanel" Margin="12,0" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider x:Name="SizeSlider" Grid.Column="0" Value="22" Minimum="1" Maximum="500" >
+                    </Slider>
+                    <Slider x:Name="OpacitySlider" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
+                    </Slider>
+                    <Button x:Name="BlendButton" Grid.Column="1" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                Blend Mode
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Space"/>
+                        </UIElement.KeyboardAccelerators>
+                        <!--Icon-->
+                        <ContentControl x:Name="BlendIcon">
+                            <FrameworkElement.Resources>
+                                <ResourceDictionary x:Name="BlendResource"/>
+                            </FrameworkElement.Resources>
+                        </ContentControl>
+                    </Button>
+                </Grid>
+            </Grid>
+
+
+            <!--Tool-->
+            <ListView x:Name="ToolListView" 
+                    Grid.Row="1" 
+                    Width="220"
+                    MinHeight="100" 
+                    BorderThickness="0,0,1,0" 
+                    BorderBrush="{ThemeResource AppStroke}" 
+                    Background="{ThemeResource AppAcrylicWindowBrush}"
+                    IsItemClickEnabled="True" 
+                    SelectionMode="Single" 
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    ItemsSource="{x:Bind ToolCollectionViewSource.View}" >
+
+                <UIElement.RenderTransformOrigin>
+                    0.5,0.5
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <TranslateTransform x:Name="ToolTransform" X="0"/>
+                </UIElement.RenderTransform>
+
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid                           
+                            ItemWidth="70"
+                            ItemHeight="50"
+                   
+                            Orientation="Horizontal"                   
+                            MaximumRowsOrColumns="3"    
+                    
+                            AreStickyGroupHeadersEnabled="False"                    
+                            GroupHeaderPlacement="Top"                           
+                            GroupPadding="0"                     
+                            />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="MinWidth" Value="50"/>
+                        <Setter Property="Width" Value="70"/>
+                        <Setter Property="Height" Value="50"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="tools:ToolType">
+                        <local:ToolIcon Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True">
+                        <GroupStyle.HeaderContainerStyle>
+                            <Style TargetType="ListViewHeaderItem">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="MinHeight" Value="2"/>
+                                <Setter Property="Height" Value="Auto"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewHeaderItem">
+                                            <Rectangle Height="2" Fill="{ThemeResource AppStroke}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.HeaderContainerStyle>
+                    </GroupStyle>
+                </ItemsControl.GroupStyle>
+
+            </ListView>
+
+
+            <!--Layer-->
+            <ListView x:Name="LayerListView" 
+                    Grid.Column="2" 
+                    Grid.RowSpan="2" 
+                    Width="220"
+                    MinHeight="100" 
+                    BorderThickness="1,0,0,0" 
+                    BorderBrush="{ThemeResource AppStroke}" 
+                    Background="{ThemeResource AppAcrylicWindowBrush}"
+                    IsItemClickEnabled="True" 
+                    SelectionMode="Extended"
+                    
+                    AllowDrop="True"
+                    CanReorderItems="True"
+                    ReorderMode="Enabled"
+                    
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                    ItemsSource="{x:Bind ObservableCollection, Mode=OneTime}"
+                    >
+
+                <UIElement.RenderTransformOrigin>
+                    0.5,0.5
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <TranslateTransform x:Name="LayerTransform" X="0"/>
+                </UIElement.RenderTransform>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Transitions">
+                            <Setter.Value>
+                                <TransitionCollection>
+
+                                </TransitionCollection>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="layers:ILayer">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="1" IsHitTestVisible="False" Width="38" Height="38" BorderThickness="1" BorderBrush="Black" Background="White" >
+                                <Image Source="{x:Bind Thumbnail, Mode=OneWay}" />
+                            </Border>
+
+                            <TextBlock Grid.Column="2" IsHitTestVisible="False" Margin="6,0" VerticalAlignment="Center" >
+                                <Run Text="{x:Bind Name, Mode=OneWay}"/>           
+                                <Run>
+                                    (
+                                </Run><Run Text="{x:Bind Type, Mode=OneWay}"/><Run>
+                                    )
+                                </Run>
+                            </TextBlock>
+
+                            <FontIcon Grid.Column="3" IsHitTestVisible="False" Opacity="0.8" Glyph="&#x23A5;" FontSize="18" FontFamily="Segoe UI Symbol"/>
+
+                            <FontIcon Grid.Column="0" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
+                            <FontIcon Grid.Column="0" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
+                            <Ellipse Grid.Column="0" Visibility="{x:Bind IsSelected, Mode=OneWay}" IsHitTestVisible="False" Fill="White" Width="14" Height="14"/>
+                            <Button Grid.Column="0" CommandParameter="{Binding}" Command="{Binding ElementName=SelectButton, Path=Command, Mode=OneWay}"/>
+
+                            <FontIcon Grid.Column="4" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
+                            <FontIcon Grid.Column="4" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
+                            <FontIcon Grid.Column="4" Visibility="{x:Bind Visibility, Mode=OneWay}" IsHitTestVisible="False" Glyph="&#xE7B3;" FontSize="22" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                            <Button Grid.Column="4" CommandParameter="{Binding}" Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ListView.Header>
+                    <Border Height="45" BorderThickness="0,0,0,1" BorderBrush="{StaticResource ListViewItemBackgroundSelected}">
+                        <Button x:Name="AddButton" >
+                            <UIElement.KeyboardAccelerators>
+                                <KeyboardAccelerator Modifiers="None" Key="Insert"/>
+                            </UIElement.KeyboardAccelerators>
+                            <SymbolIcon Symbol="Add" />
+                        </Button>
+                    </Border>
+                </ListView.Header>
+
+                <ListView.Footer>
+                    <Border Height="45" BorderThickness="0,1,0,0" BorderBrush="{StaticResource ListViewItemBackgroundSelected}"
+                            Visibility="{x:Bind SplitButton.Visibility, Mode=OneWay}">
+                        <Button x:Name="SplitButton" Visibility="Collapsed" HorizontalAlignment="Left" Width="70" >
+                            <UIElement.ManipulationMode>
+                                TranslateX
+                            </UIElement.ManipulationMode>
+                            <SymbolIcon x:Name="SplitIcon" Symbol="GlobalNavigationButton" />
+                        </Button>
+                    </Border>
+                </ListView.Footer>
+
+            </ListView>
+
+
+            <ToggleButton x:Name="ToolButton" 
+                          Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Padding="0" Width="70" Height="49" 
+                          IsEnabled="{x:Bind ReverseBooleanConverter(ToolButton.IsChecked), Mode=OneWay}"
+                          HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="{ThemeResource SystemBaseHighColor}" Background="{ThemeResource AppBackgroundLight}" Style="{StaticResource TextBlockButtonStyle}">
+                <!--Icon-->
+                <ContentControl x:Name="ToolIcon">
+                    <FrameworkElement.Resources>
+                        <ResourceDictionary x:Name="ToolResource"/>
+                    </FrameworkElement.Resources>
+                </ContentControl>
+            </ToggleButton>
+            <ToggleButton x:Name="LayerButton" 
+                          Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Padding="0" Width="70" Height="49" 
+                          IsEnabled="{x:Bind ReverseBooleanConverter(LayerButton.IsChecked), Mode=OneWay}"
+                          HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{ThemeResource SystemBaseHighColor}" Background="{ThemeResource AppBackgroundLight}" Style="{StaticResource TextBlockButtonStyle}">
+                <PathIcon>
+                    <PathIcon.Data>
+                        M11.839,19.464l9.279,-5.4l2.56,1.38l-11.839,6.519l-11.839,-6.519l2.278,-1.38l9.561,5.4Zm0,-4.33l-9.561,-5.471l-2.278,1.319l11.839,6.531l11.839,-6.531l-2.132,-1.319l-9.707,5.471Zm0,-2.069l-11.839,-6.494l11.839,-6.571l11.839,6.571l-11.839,6.494Z
+                    </PathIcon.Data>
+                </PathIcon>
+            </ToggleButton>
+
+
+        </Grid>
+
+
+        <!--Dialog-->
+        <ContentDialog x:Name="ExportDislog" Style="{StaticResource AppContentDialogStyle}">
+            <ContentDialog.PrimaryButtonText>
+                OK
+            </ContentDialog.PrimaryButtonText>
+            <ContentDialog.SecondaryButtonText>
+                Cancel
+            </ContentDialog.SecondaryButtonText>
+            <StackPanel>
+
+                <!--DPI-->
+                <TextBlock x:Name="DPITextBlock" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
+                    DPI
+                </TextBlock>
+                <ListView x:Name="DPIComboBox" SelectedIndex="1" Background="{ThemeResource AppBackgroundMediumLight}">
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="MinWidth" Value="45" />
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Padding" Value="2" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection>
+
+                        </TransitionCollection>
+                    </ListView.ItemContainerTransitions>
+
+                    <x:Int32>72</x:Int32>
+                    <x:Int32>96</x:Int32>
+                    <x:Int32>144</x:Int32>
+                    <x:Int32>192</x:Int32>
+                    <x:Int32>300</x:Int32>
+                    <x:Int32>400</x:Int32>
+                </ListView>
+
+                <!--Format-->
+                <TextBlock x:Name="FormatTextBlock" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
+                    File Format
+                </TextBlock>
+                <ListView x:Name="FormatComboBox" SelectedIndex="0" Background="{ThemeResource AppBackgroundMediumLight}">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="MinWidth" Value="54" />
+                            <Setter Property="Width" Value="54" />
+                            <Setter Property="Padding" Value="2" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection>
+
+                        </TransitionCollection>
+                    </ListView.ItemContainerTransitions>
+                    <x:String>JPEG</x:String>
+                    <x:String>PNG</x:String>
+                    <x:String>BMP</x:String>
+                    <x:String>GIF</x:String>
+                    <x:String>TIFF</x:String>
+                </ListView>
+
+            </StackPanel>
+        </ContentDialog>
+        <ContentDialog x:Name="SettingDislog" Style="{StaticResource AppContentDialogStyle}">
+            <ContentDialog.Title>
+                Setting
+            </ContentDialog.Title>
+            <ContentDialog.PrimaryButtonText>
+                OK
+            </ContentDialog.PrimaryButtonText>
+            <ContentDialog.SecondaryButtonText>
+                Cancel
+            </ContentDialog.SecondaryButtonText>
+            <StackPanel>
+
+                <!--Radian-->
+                <TextBlock x:Name="RadianTextBlock" Style="{StaticResource BaseTextBlockStyle}">
+                    Radian
+                </TextBlock>
+                <Slider x:Name="RadianSlider" Value="{x:Bind RadianRange.Range.Default}" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}">
+                    <Slider.Header>
+                        <Button x:Name="RadianClearButton" MinWidth="64" Style="{StaticResource TextBlockButtonStyle}">
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                                <Run Text="{x:Bind RoundConverter(RadianSlider.Value), Mode=OneWay}"/><Run>º</Run>
+                            </TextBlock>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <!--Scale-->
+                <TextBlock x:Name="ScaleTextBlock" Style="{StaticResource BaseTextBlockStyle}">
+                    Scale
+                </TextBlock>
+                <Slider x:Name="ScaleSlider" Value="{x:Bind ScaleRange.XRange.Default}" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}">
+                    <Slider.Header>
+                        <Button x:Name="ScaleClearButton" MinWidth="64" Style="{StaticResource TextBlockButtonStyle}">
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                                <Run Text="{x:Bind ScaleXToYConverter(ScaleSlider.Value), Mode=OneWay}"/><Run>%</Run>
+                            </TextBlock>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+            </StackPanel>
+        </ContentDialog>
+
+
+        <!--Tip-->
+        <Border x:Name="TipBorder" Visibility="Collapsed" IsHitTestVisible="False" Padding="12,2" CornerRadius="4" MinWidth="60" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource AppAcrylicOverlayBrush}">
+            <StackPanel>
+                <TextBlock x:Name="TipTitleTextBlock" FontSize="16" HorizontalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
+                    <!--Title-->
+                </TextBlock>
+                <TextBlock x:Name="TipSubtitleTextBlock" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"  Foreground="{ThemeResource AppForeground}" >
+                    <!--Subtitle-->
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
 
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar RequestedTheme="Dark" Background="{ThemeResource SystemColorControlAccentBrush}">
+            <CommandBar.Content>
+                <TextBlock Margin="12,2" Style="{StaticResource TitleTextBlockStyle}">
+                    Shortcut
+                </TextBlock>
+            </CommandBar.Content>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton 
+                    x:Name="SelectButton" 
+                    Icon="SelectAll" 
+                    CommandParameter="{x:Null}">
+                    <AppBarButton.Command>
+                        <layers:RelayCommand x:Name="SelectCommand"/>
+                    </AppBarButton.Command>
+                    <AppBarButton.Label>
+                        Select
+                    </AppBarButton.Label>
+                </AppBarButton>
+                <AppBarButton 
+                    x:Name="VisualButton"                                 
+                    Icon="View"                                 
+                    CommandParameter="{x:Null}">
+                    <AppBarButton.Command>
+                        <layers:RelayCommand x:Name="VisualCommand"/>
+                    </AppBarButton.Command>
+                    <AppBarButton.Label>
+                        Visual
+                    </AppBarButton.Label>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="ClearButton" Icon="Clear">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Back"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Label>
+                        Clear
+                    </AppBarButton.Label>
+                </AppBarButton>
+                <AppBarButton x:Name="RemoveButton" Icon="Delete">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Label>
+                        Remove
+                    </AppBarButton.Label>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
