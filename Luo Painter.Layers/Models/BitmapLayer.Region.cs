@@ -130,6 +130,11 @@ namespace Luo_Painter.Layers.Models
 
             return new BitmapHistory(base.Id, undo, redo);
         }
+        public IHistory GetBitmapClearHistory()
+        {
+            IBuffer undo = this.OriginRenderTarget.GetPixelBytes().AsBuffer();
+            return new BitmapClearHistory(base.Id, undo);
+        }
         public bool Undo(IHistory history)
         {
             switch (history.Type)
@@ -146,6 +151,15 @@ namespace Luo_Painter.Layers.Models
                     {
                         this.SetPixelBytes(colors);
                         this.Flush();
+                        this.RenderThumbnail();
+                        return true;
+                    }
+                    else return false;
+                case HistoryType.BitmapClear:
+                    if (history.UndoParameter is IBuffer colors2)
+                    {
+                        this.OriginRenderTarget.SetPixelBytes(colors2);
+                        this.SourceRenderTarget.SetPixelBytes(colors2);
                         this.RenderThumbnail();
                         return true;
                     }
@@ -174,6 +188,10 @@ namespace Luo_Painter.Layers.Models
                         return true;
                     }
                     else return false;
+                case HistoryType.BitmapClear:
+                    this.Clear(Colors.Transparent);
+                    this.ClearThumbnail(Colors.Transparent);
+                    return true;
                 default:
                     return false;
             }

@@ -39,6 +39,21 @@ namespace Luo_Painter.Layers.Models
 
             this.ThumbnailWriteableBitmap.Invalidate();
         }
+        public void ClearThumbnail(Color color)
+        {
+            using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
+            {
+                ds.Clear(color);
+            }
+
+            byte[] bytes = this.ThumbnailRenderTarget.GetPixelBytes();
+            using (Stream stream = this.ThumbnailWriteableBitmap.PixelBuffer.AsStream())
+            {
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            this.ThumbnailWriteableBitmap.Invalidate();
+        }
 
     }
 }
