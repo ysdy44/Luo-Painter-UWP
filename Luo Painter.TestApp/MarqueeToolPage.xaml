@@ -13,12 +13,6 @@
     <Page.Resources>
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
-
-        <!--Brush-->
-        <LinearGradientBrush x:Key="AppPurpleLinearGradientBrush" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Offset="0" Color="#FA97FF"/>
-            <GradientStop Offset="1" Color="#9365FB"/>
-        </LinearGradientBrush>
     </Page.Resources>
 
     <Grid>
@@ -33,7 +27,7 @@
                     <SymbolIcon Symbol="Clear"/>
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
-                    重设画布
+                    Reset
                 </AppBarButton.Label>
             </AppBarButton>
 
