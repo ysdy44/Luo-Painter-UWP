@@ -125,6 +125,8 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
+    <Compile Include="FileUtils\FileUtil.Sample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
