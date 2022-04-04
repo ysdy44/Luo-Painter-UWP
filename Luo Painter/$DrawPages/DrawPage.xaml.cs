@@ -153,6 +153,39 @@ namespace Luo_Painter
             this.ConstructTip();
             this.ConstructColor();
             this.ConstructColorShape();
+
+
+            this.ApplicationView.Title = "*Untitled";
+
+
+            // Drag and Drop 
+            base.AllowDrop = true;
+            base.Drop += async (s, e) =>
+            {
+                int count = 0;
+
+                if (e.DataView.Contains(StandardDataFormats.StorageItems))
+                {
+                    IReadOnlyList<IStorageItem> items = await e.DataView.GetStorageItemsAsync();
+                    foreach (IStorageItem item in items)
+                    {
+                        if (item is IStorageFile file)
+                        {
+                            bool? result = await this.AddAsync(file);
+                            if (result == true) count++;
+                        }
+                    }
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+
+                if (count > 1) this.Tip("Add Images", $"{count}"); // Tip
+            };
+            base.DragOver += (s, e) =>
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+                //e.DragUIOverride.Caption = 
+                e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
+            };
         }
     }
 }
