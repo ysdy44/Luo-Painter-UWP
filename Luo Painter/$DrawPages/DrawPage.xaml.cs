@@ -152,6 +152,9 @@ namespace Luo_Painter
         {
             this.InitializeComponent();
 
+            this.ConstructLayers();
+            this.ConstructLayer();
+
             this.ConstructTools();
             this.ConstructBlends();
             this.ConstructPaint();
