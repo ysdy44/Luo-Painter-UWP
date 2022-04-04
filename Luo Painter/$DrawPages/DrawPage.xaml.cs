@@ -147,6 +147,8 @@ namespace Luo_Painter
         {
             this.InitializeComponent();
 
+            this.ConstructHistory();
+
             this.ConstructDialog();
             this.ConstructRadian();
             this.ConstructScale();

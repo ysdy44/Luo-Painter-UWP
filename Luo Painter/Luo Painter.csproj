@@ -117,6 +117,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="%24DrawPages\DrawPage.Dialog.cs" />
+    <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Method.cs" />
     <Compile Include="%24DrawPages\DrawPage.Storyboard.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tip.cs" />
