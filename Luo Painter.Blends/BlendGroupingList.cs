@@ -5,7 +5,28 @@ using System.Linq;
 
 namespace Luo_Painter.Blends
 {
-    public sealed class BlendGroupingList : List<IBlendGrouping>, IList<IBlendGrouping> { }
+    public sealed class BlendGroupingList : List<IBlendGrouping>, IList<IBlendGrouping>
+    {
+        public int GetIndex(BlendEffectMode type)
+        {
+            int index = 0;
+            foreach (IBlendGrouping item in this)
+                foreach (BlendEffectMode item2 in item)
+                    if (item2 == type)
+                        return index;
+                    else
+                        index++;
+            return -1;
+        }
+        public BlendGroupType GetGroupType(BlendEffectMode type)
+        {
+            foreach (IBlendGrouping item in this)
+                foreach (BlendEffectMode item2 in item)
+                    if (item2 == type)
+                        return item.Key;
+            return BlendGroupType.None;
+        }
+    }
     public interface IBlendGrouping : IGrouping<BlendGroupType, BlendEffectMode>
     {
     }
