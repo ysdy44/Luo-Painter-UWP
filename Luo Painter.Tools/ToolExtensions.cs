@@ -8,13 +8,15 @@ namespace Luo_Painter.Tools
     public static class ToolExtensions
     {
 
+        public static string GetResource(this ToolType type) => $"ms-appx:///Luo Painter.Tools/Icons/{type}Icon.xaml";
+        public static ControlTemplate GetTemplate(this ToolType type, ResourceDictionary resource) => resource[$"{type}Icon"] as ControlTemplate;
         public static ControlTemplate GetTemplate(this ToolType type, out ResourceDictionary resource)
         {
             resource = new ResourceDictionary
             {
-                Source = new Uri($"ms-appx:///Luo Painter.Tools/Icons/{type}Icon.xaml")
+                Source = new Uri(type.GetResource())
             };
-            return resource[$"{type}Icon"] as ControlTemplate;
+            return type.GetTemplate(resource);
         }
 
         public static Color GetColor(this ToolGroupType groupType)
