@@ -2,9 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     >
-    
 
-    <!--Style-->
+
+    <!--ToolTip-->
     <Style x:Key="AppToolTipStyle" TargetType="ToolTip">
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
@@ -21,19 +21,19 @@
     </Style>
 
 
-    <!--Style-->
+    <!--ContentDialog-->
     <Style x:Key="AppContentDialogStyle" TargetType="ContentDialog">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppBorderBrush}" />
-        <Setter Property="Background" Value="{ThemeResource AppBackgroundDark}" />
+        <Setter Property="Background" Value="{ThemeResource AppAcrylicOverlayBrush}" />
         <Setter Property="PrimaryButtonStyle" Value="{ThemeResource TextBlockButtonStyle}" />
         <Setter Property="SecondaryButtonStyle" Value="{ThemeResource TextBlockButtonStyle}" />
     </Style>
 
 
-    <!--Style-->
+    <!--ScrollViewer-->
     <Style x:Name="AppNoneScrollViewerStyle" TargetType="ScrollViewer">
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
@@ -69,7 +69,7 @@
     </Style>
 
 
-    <!--Style-->
+    <!--Border-->
     <Style x:Key="AppRoundedBorderStyle" TargetType="Border">
         <Setter Property="Margin" Value="1,0"/>
         <Setter Property="Height" Value="38"/>
@@ -80,7 +80,7 @@
     </Style>
 
 
-    <!--Style-->
+    <!--ComboBox-->
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="0,2" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -91,7 +91,7 @@
 
 
     <!--Slider-->
-    <Style x:Name="AppSliderStyle" TargetType="Slider">
+    <Style TargetType="Slider">
         <Setter Property="Background" Value="{ThemeResource SliderTrackFill}" />
         <Setter Property="BorderThickness" Value="{ThemeResource SliderBorderThemeThickness}" />
         <Setter Property="Foreground" Value="{ThemeResource SliderTrackValueFill}" />
@@ -101,6 +101,8 @@
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-7,0,-7,0" />
         <Setter Property="IsFocusEngagementEnabled" Value="True" />
+        <Setter Property="IsThumbToolTipEnabled" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Slider">
@@ -108,8 +110,9 @@
 
                         <Grid.Resources>
                             <Style TargetType="Thumb" x:Key="SliderThumbStyle">
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Setter Property="Background" Value="{ThemeResource SliderThumbBackground}" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="{ThemeResource SliderTrackValueFill}" />
+                                <Setter Property="Background" Value="{ThemeResource SystemControlHighlightChromeAltLowBrush}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="Thumb">
@@ -117,7 +120,7 @@
                           Background="{TemplateBinding Background}"
                           BorderBrush="{TemplateBinding BorderBrush}"
                           BorderThickness="{TemplateBinding BorderThickness}"
-                          CornerRadius="4" />
+                          CornerRadius="12" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -316,8 +319,8 @@
                                 <Thumb x:Name="HorizontalThumb"
                     Style="{StaticResource SliderThumbStyle}"
                     DataContext="{TemplateBinding Value}"
-                    Height="24"
-                    Width="8"
+                    Height="20"
+                    Width="20"
                     Grid.Row="0"
                     Grid.RowSpan="3"
                     Grid.Column="1"
@@ -370,8 +373,8 @@
                                 <Thumb x:Name="VerticalThumb"
                     Style="{StaticResource SliderThumbStyle}"
                     DataContext="{TemplateBinding Value}"
-                    Width="24"
-                    Height="8"
+                    Height="20"
+                    Width="20"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
@@ -387,6 +390,19 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+
+    <!--Flyout-->
+    <Style x:Key="AppFlyoutPresenterStyle" TargetType="FlyoutPresenter">
+        <Setter Property="MaxWidth" Value="1000"/>
+        <Setter Property="MinWidth" Value="250"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="Background" Value="{ThemeResource AppAcrylicOverlayBrush}" />
+    </Style>
+
 
 </ResourceDictionary>

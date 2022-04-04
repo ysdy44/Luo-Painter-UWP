@@ -15,5 +15,12 @@
     <SolidColorBrush x:Key="AppStroke" Color="{ThemeResource AppStrokeColor}"/>
     <SolidColorBrush x:Key="AppForeground" Color="{ThemeResource AppForegroundColor}"/>
 
-    
+    <AcrylicBrush x:Key="AppAcrylicOverlayBrush" BackgroundSource="Backdrop" 
+         TintColor="{ThemeResource AppBackgroundColorDark}" TintOpacity="0.6" FallbackColor="{ThemeResource AppBackgroundColorLight}" />
+    <AcrylicBrush x:Key="AppAcrylicElementBrush" BackgroundSource="Backdrop" 
+         TintColor="{ThemeResource AppBackgroundColorLight}" TintOpacity="0.6" FallbackColor="{ThemeResource AppBackgroundColorLight}" />
+    <AcrylicBrush x:Key="AppAcrylicWindowBrush" BackgroundSource="HostBackdrop" 
+         TintColor="{ThemeResource AppBackgroundColorLight}" TintOpacity="0.6" FallbackColor="{ThemeResource AppBackgroundColorLight}" />
+
+
 </ResourceDictionary>
