@@ -5,5 +5,6 @@
         None,
         Visibility,
         Bitmap,
+        BitmapClear,
     }
 }

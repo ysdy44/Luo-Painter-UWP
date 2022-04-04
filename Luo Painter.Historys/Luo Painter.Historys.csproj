@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="HistoryType.cs" />
     <Compile Include="IHistory.cs" />
+    <Compile Include="Models\BitmapClearHistory.cs" />
     <Compile Include="Models\BitmapHistory.cs" />
     <Compile Include="Models\VisibilityHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
