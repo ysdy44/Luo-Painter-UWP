@@ -96,6 +96,7 @@ namespace Luo_Painter
                 case ToolType.PaintWatercolorPen:
                 case ToolType.PaintPencil:
                 case ToolType.PaintEraseBrush:
+                case ToolType.PaintLiquefaction:
                     {
                         this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;
                         if (this.BitmapLayer == null)
@@ -104,7 +105,7 @@ namespace Luo_Painter
                             return;
                         }
 
-                        this.BitmapLayer.InkMode = this.GetInkMode(this.ToolType == ToolType.PaintEraseBrush);
+                        this.BitmapLayer.InkMode = this.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
                         this.CanvasControl.Invalidate(); // Invalidate
                     }
                     break;
@@ -121,6 +122,7 @@ namespace Luo_Painter
                 case ToolType.PaintWatercolorPen:
                 case ToolType.PaintPencil:
                 case ToolType.PaintEraseBrush:
+                case ToolType.PaintLiquefaction:
                     if (this.BitmapLayer == null) return;
                     this.Paint_Delta(this.BitmapLayer, staringPosition, position, pressure, this.ColorPicker.Color);
                     break;
@@ -137,6 +139,7 @@ namespace Luo_Painter
                 case ToolType.PaintWatercolorPen:
                 case ToolType.PaintPencil:
                 case ToolType.PaintEraseBrush:
+                case ToolType.PaintLiquefaction:
                     {
                         if (this.BitmapLayer == null) return;
 

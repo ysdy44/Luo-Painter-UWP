@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
@@ -53,6 +54,7 @@ namespace Luo_Painter
 
         Vector2 Position;
         Mesh Mesh;
+        byte[] LiquefactionShaderCodeBytes;
 
         private void ConstructCanvas()
         {
@@ -109,6 +111,7 @@ namespace Luo_Painter
 
         private async Task CreateResourcesAsync()
         {
+            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
         }
 
         private void ConstructOperator()

@@ -2,6 +2,7 @@
 using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -52,15 +53,31 @@ namespace Luo_Painter
                     bitmapLayer.ErasingWet(staringPosition, position, this.InkSize * pressure);
                     break;
 
+                case InkMode.Liquefy:
+                    bitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
+                    {
+                        Source1BorderMode = EffectBorderMode.Hard,
+                        Source1 = bitmapLayer.Source,
+                        Properties =
+                        {           
+                            ["radius"] = bitmapLayer.ConvertValueToOne(this.InkSize),
+                            ["position"] = bitmapLayer.ConvertValueToOne(staringPosition),
+                            ["targetPosition"] = bitmapLayer.ConvertValueToOne(position),
+                            ["pressure"] = pressure,
+                        }
+                    }, RectExtensions.GetRect(staringPosition, position, this.InkSize));
+                    break;
+
                 default:
                     break;
             }
 
+            this.CanvasControl.Invalidate(); // Invalidate
             Rect region = RectExtensions.GetRect
             (
                 this.ToPoint(staringPosition),
                 this.ToPoint(position),
-                this.CanvasControl.Dpi.ConvertDipsToPixels(this.InkSize * this.Transformer.Scale)
+                this.CanvasControl.Dpi.ConvertPixelsToDips(this.InkSize * this.Transformer.Scale)
             );
 
             if (this.CanvasControl.Size.TryIntersect(ref region))
@@ -80,6 +97,15 @@ namespace Luo_Painter
                 case InkMode.EraseDry:
                     // History
                     int removes = this.History.Push(bitmapLayer.GetBitmapHistory());
+                    bitmapLayer.Flush();
+                    bitmapLayer.RenderThumbnail();
+                    return true;
+
+                case InkMode.Liquefy:
+                    bitmapLayer.ClearTemp();
+
+                    // History
+                    int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
                     bitmapLayer.Flush();
                     bitmapLayer.RenderThumbnail();
                     return true;
@@ -116,8 +142,10 @@ namespace Luo_Painter
             }
         }
 
-        private InkMode GetInkMode(bool isErase)
+        private InkMode GetInkMode(bool isErase, bool isLiquefaction)
         {
+            if (isLiquefaction) return InkMode.Liquefy;
+            
             if (isErase)
             {
                 if (this.InkOpacity == 1f) return InkMode.EraseDry;
