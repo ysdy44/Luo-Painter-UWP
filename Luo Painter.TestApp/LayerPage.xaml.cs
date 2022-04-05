@@ -33,6 +33,11 @@ namespace Luo_Painter.TestApp
 
         private void ConstructLayers()
         {
+            this.LayerListView.SelectionChanged += (s, e) =>
+            {
+                this.AddRun.Text = e.AddedItems == null ? "0" : e.AddedItems.Count.ToString();
+                this.RemovedRun.Text = e.RemovedItems == null ? "0" : e.RemovedItems.Count.ToString();
+            };
             this.LayerListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is ILayer item)

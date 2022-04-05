@@ -118,6 +118,14 @@
             <xaml:CanvasControl x:Name="CanvasControl"/>
             <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
+                <CommandBar.Content>
+                    <TextBlock Margin="12,10,2,0">
+                        <Run>Selection</Run>
+                        <Run>Add:</Run><Run x:Name="AddRun"/>
+                        <Run>Removed:</Run><Run x:Name="RemovedRun"/>
+                    </TextBlock>
+                </CommandBar.Content>
+
                 <AppBarButton x:Name="AddButton" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="N"/>

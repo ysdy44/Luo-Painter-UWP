@@ -25,7 +25,7 @@ namespace Luo_Painter.TestApp
         #region DependencyProperty
 
 
-        /// <summary> Gets or set the SelectedItem for <see cref="ToolIcon"/>. </summary>
+        /// <summary> Gets or set the type for <see cref="ToolIcon"/>. </summary>
         public ToolType Type
         {
             get => (ToolType)base.GetValue(TypeProperty);
@@ -60,7 +60,7 @@ namespace Luo_Painter.TestApp
         #region DependencyProperty
 
 
-        /// <summary> Gets or set the SelectedItem for <see cref="BlendIcon"/>. </summary>
+        /// <summary> Gets or set the type for <see cref="BlendIcon"/>. </summary>
         public BlendEffectMode Type
         {
             get => (BlendEffectMode)base.GetValue(TypeProperty);
