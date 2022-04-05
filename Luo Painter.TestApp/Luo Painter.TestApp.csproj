@@ -177,6 +177,9 @@
     <Compile Include="SelectedButton.xaml.cs">
       <DependentUpon>SelectedButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectedButtonPage.xaml.cs">
+      <DependentUpon>SelectedButtonPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectedButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelectedButtonPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
