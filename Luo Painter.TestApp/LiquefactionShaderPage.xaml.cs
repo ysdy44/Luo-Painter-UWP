@@ -24,12 +24,11 @@ namespace Luo_Painter.TestApp
         Vector2 Position;
 
         float RangeSize = 50;
-        float Radius = 12;
         float Pressure = 0.5f;
         byte[] ShaderCodeBytes;
 
         Historian<IHistory> History { get; } = new Historian<IHistory>(20);
-        
+
         public LiquefactionShaderPage()
         {
             this.InitializeComponent();
@@ -55,7 +54,6 @@ namespace Luo_Painter.TestApp
             this.RangeSizeSlider.ValueChanged += (s, e) =>
             {
                 this.RangeSize = (float)e.NewValue;
-                this.Radius = (this.BitmapLayer == null) ? this.RangeSize / 2048f : this.BitmapLayer.GetRadius(this.RangeSize);
 
                 this.CanvasControl.Invalidate();
             };
@@ -181,20 +179,18 @@ namespace Luo_Painter.TestApp
             if (this.ShaderCodeBytes == null) return;
 
             // 1. Region
-            Rect rect = RectExtensions.GetRect(position, targetPosition, this.RangeSize / 2);
+            Rect rect = RectExtensions.GetRect(position, targetPosition, this.RangeSize);
 
             // 2. Shader
-            int w = 512;
-            int h = 512;
             PixelShaderEffect shader = new PixelShaderEffect(this.ShaderCodeBytes)
             {
                 Source1BorderMode = EffectBorderMode.Hard,
                 Source1 = this.BitmapLayer.Source,
                 Properties =
                 {
-                    ["radius"] = this.Radius,
-                    ["position"] = new Vector2(position.X / w, position.Y /h),
-                    ["targetPosition"] = new Vector2(targetPosition.X / w, targetPosition.Y /h),
+                    ["radius"] = this.BitmapLayer.ConvertValueToOne(this.RangeSize),
+                    ["position"] = this.BitmapLayer.ConvertValueToOne(position),
+                    ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(targetPosition),
                     ["pressure"] =  this.Pressure,
                 }
             };

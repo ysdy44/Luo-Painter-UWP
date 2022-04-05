@@ -11,7 +11,12 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
-        public float GetRadius(float rangeSize) => rangeSize / 2f / Math.Max(this.Width, this.Height);
+        public float ConvertValueToOne(float value) => value / Math.Max(this.Width, this.Height);
+        public float ConvertOneToValue(float one) => one * Math.Max(this.Width, this.Height);
+
+        public Vector2 ConvertValueToOne(Vector2 value) => new Vector2(value.X / this.Width, value.Y / this.Height);
+        public Vector2 ConvertOneToValue(Vector2 one) => new Vector2(one.X * this.Width, one.Y * this.Height);
+
 
         public void Shade(PixelShaderEffect shader, Rect rect)
         {
