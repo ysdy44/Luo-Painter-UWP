@@ -109,6 +109,7 @@
                         <tools:ToolType>PaintWatercolorPen</tools:ToolType>
                         <tools:ToolType>PaintPencil</tools:ToolType>
                         <tools:ToolType>PaintEraseBrush</tools:ToolType>
+                        <tools:ToolType>PaintLiquefaction</tools:ToolType>
                         <tools:ToolType>PatternGrid</tools:ToolType>
                         <tools:ToolType>PatternDiagonal</tools:ToolType>
                         <tools:ToolType>PatternSpotted</tools:ToolType>

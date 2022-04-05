@@ -16,6 +16,8 @@ namespace Luo_Painter.Layers.Models
 
         EraseDry,
         EraseWetWithOpacity,
+        
+        Liquefy,
     }
 
     public sealed partial class BitmapLayer : LayerBase, ILayer

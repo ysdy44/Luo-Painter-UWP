@@ -54,5 +54,6 @@
         PaintWatercolorPen,
         PaintPencil,
         PaintEraseBrush,
+        PaintLiquefaction,
     }
 }
