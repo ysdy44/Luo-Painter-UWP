@@ -21,6 +21,18 @@ namespace Luo_Painter.TestApp
         Vector2 Position;
         BitmapLayer BitmapLayer;
         ObservableCollection<ILayer> Layers { get; } = new ObservableCollection<ILayer>();
+    
+        private IEnumerable<string> Ids()
+        {
+            foreach (object item in this.LayerListView.SelectedItems)
+            {
+                if (item is ILayer layer)
+                {
+                    yield return layer.Id;
+                }
+            }
+        }
+
 
         public LayerPage()
         {
@@ -38,32 +50,7 @@ namespace Luo_Painter.TestApp
                 this.AddRun.Text = e.AddedItems == null ? "0" : e.AddedItems.Count.ToString();
                 this.RemovedRun.Text = e.RemovedItems == null ? "0" : e.RemovedItems.Count.ToString();
             };
-            this.LayerListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is ILayer item)
-                {
-                    foreach (ILayer item2 in this.Layers)
-                    {
-                        if (item.Id == item2.Id)
-                        {
-                            if (item2.IsSelected == false) item2.IsSelected = true;
-                            this.BitmapLayer = item as BitmapLayer;
-                        }
-                        else
-                        {
-                            if (item2.IsSelected) item2.IsSelected = false;
-                        }
-                    }
-                }
-            };
 
-            this.SelectCommand.Click += (s, layer) =>
-            {
-                if (layer.IsSelected == false) layer.IsSelected = true;
-
-                int index = this.Layers.IndexOf(layer);
-                this.LayerListView.SelectRange(new ItemIndexRange(index, 1));
-            };
             this.VisualCommand.Click += (s, layer) =>
             {
                 switch (layer.Visibility)
@@ -88,13 +75,7 @@ namespace Luo_Painter.TestApp
             {
                 int startingIndex = this.LayerListView.SelectedIndex;
 
-                IEnumerable<string> ids =
-                from layer
-                in this.Layers
-                where layer.IsSelected
-                select layer.Id;
-
-                foreach (string id in ids.ToArray())
+                foreach (string id in this.Ids().ToArray())
                 {
                     if (this.Layers.FirstOrDefault(c => c.Id == id) is ILayer layer)
                     {
@@ -105,33 +86,21 @@ namespace Luo_Painter.TestApp
                 int index = Math.Min(startingIndex, this.Layers.Count - 1);
                 this.LayerListView.SelectedIndex = index;
 
-                if (index >= 0)
-                {
-                    ILayer layer2 = this.Layers[index];
-                    if (layer2.IsSelected == false) layer2.IsSelected = true;
-                    this.BitmapLayer = layer2 as BitmapLayer;
-                }
-
                 this.CanvasControl.Invalidate(); // Invalidate
             };
 
-            this.AddButton.Click += (s, layer) =>
+            this.AddButton.Click += (s, e) =>
             {
                 ICanvasResourceCreator sender = this.CanvasControl;
-
-                foreach (ILayer item2 in this.Layers)
-                {
-                    if (item2.IsSelected) item2.IsSelected = false;
-                }
-
-                BitmapLayer bitmapLayer = new BitmapLayer(sender, 512, 512)
-                {
-                    IsSelected = true
-                };
-                this.BitmapLayer = bitmapLayer;
+                BitmapLayer bitmapLayer = new BitmapLayer(sender, 512, 512);
                 this.Layers.Add(bitmapLayer);
 
                 this.LayerListView.SelectedIndex = this.Layers.Count - 1;
+            };
+
+            this.SelectAllButton.Click += (s, e) =>
+            {
+                this.LayerListView.SelectAll();
             };
         }
 
@@ -139,11 +108,7 @@ namespace Luo_Painter.TestApp
         {
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                BitmapLayer bitmapLayer = new BitmapLayer(sender, 512, 512)
-                {
-                    IsSelected = true
-                };
-                this.BitmapLayer = bitmapLayer;
+                BitmapLayer bitmapLayer = new BitmapLayer(sender, 512, 512);
                 this.Layers.Add(bitmapLayer);
 
                 this.LayerListView.SelectedIndex = 0;

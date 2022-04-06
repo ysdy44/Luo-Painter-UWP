@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
+    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
@@ -49,27 +50,18 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="2" Margin="2,0" VerticalAlignment="Center" >
-                                <Run Text="{x:Bind IsSelected, Mode=OneWay}" />
                                 <Run Text="{x:Bind Visibility, Mode=OneWay}" />
                             </TextBlock>
                             <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
                                 <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
                             </Border>
-                            <Button                      
-                                VerticalAlignment="Stretch"      
-                                CommandParameter="{Binding}"                                     
-                                Command="{Binding ElementName=SelectButton, Path=Command, Mode=OneWay}"                                     
-                                >
-                                <FontIcon Glyph="&#xE005;" FontFamily="Segoe MDL2 Assets"/>
-                            </Button>
-                            <Button 
+                            <elements:SelectedButtonPresenter/>
+                            <elements:VisibleButton
                                 Grid.Column="3" 
-                                VerticalAlignment="Stretch"
+                                Visible="{x:Bind Visibility, Mode=OneWay}"
                                 CommandParameter="{Binding}"                                     
                                 Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"       
-                                >
-                                <FontIcon x:Name="FontIcon" Glyph="&#xE7B3;" FontSize="20" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
-                            </Button>
+                                />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -78,38 +70,6 @@
 
                     </TransitionCollection>
                 </ListView.ItemContainerTransitions>
-                <ListView.Header>
-                    <CommandBar>
-                        <CommandBar.PrimaryCommands>
-                            <AppBarButton 
-                                    x:Name="SelectButton" 
-                                    CommandParameter="{x:Null}">
-                                <AppBarButton.Command>
-                                    <layers:RelayCommand x:Name="SelectCommand"/>
-                                </AppBarButton.Command>
-                                <AppBarButton.Icon>
-                                    <SymbolIcon Symbol="SelectAll" />
-                                </AppBarButton.Icon>
-                                <AppBarButton.Label>
-                                    Select
-                                </AppBarButton.Label>
-                            </AppBarButton>
-                            <AppBarButton 
-                                    x:Name="VisualButton" 
-                                    CommandParameter="{x:Null}">
-                                <AppBarButton.Command>
-                                    <layers:RelayCommand x:Name="VisualCommand"/>
-                                </AppBarButton.Command>
-                                <AppBarButton.Icon>
-                                    <SymbolIcon Symbol="View" />
-                                </AppBarButton.Icon>
-                                <AppBarButton.Label>
-                                    Visual
-                                </AppBarButton.Label>
-                            </AppBarButton>
-                        </CommandBar.PrimaryCommands>
-                    </CommandBar>
-                </ListView.Header>
             </ListView>
         </SplitView.Pane>
 
@@ -126,25 +86,28 @@
                     </TextBlock>
                 </CommandBar.Content>
 
-                <AppBarButton x:Name="AddButton" >
+                <AppBarButton x:Name="SelectAllButton" Icon="SelectAll">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Label>
+                        Select All
+                    </AppBarButton.Label>
+                </AppBarButton>
+
+                <AppBarButton x:Name="AddButton" Icon="Add">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="N"/>
                     </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <SymbolIcon Symbol="Add"/>
-                    </AppBarButton.Icon>
                     <AppBarButton.Label>
                         Add
                     </AppBarButton.Label>
                 </AppBarButton>
 
-                <AppBarButton x:Name="RemoveButton" >
+                <AppBarButton x:Name="RemoveButton" Icon="Delete">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Delete"/>
                     </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <SymbolIcon Symbol="Delete"/>
-                    </AppBarButton.Icon>
                     <AppBarButton.Label>
                         Remove
                     </AppBarButton.Label>
@@ -155,5 +118,25 @@
 
 
     </SplitView>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton 
+                                    x:Name="VisualButton" 
+                                    CommandParameter="{x:Null}">
+                    <AppBarButton.Command>
+                        <layers:RelayCommand x:Name="VisualCommand"/>
+                    </AppBarButton.Command>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="View" />
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Visual
+                    </AppBarButton.Label>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 
 </Page>
