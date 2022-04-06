@@ -131,6 +131,9 @@
       <DependentUpon>SelectedButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThumbSlider.cs" />
+    <Compile Include="VisibleButton.xaml.cs">
+      <DependentUpon>VisibleButton.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +143,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="SelectedButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VisibleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
