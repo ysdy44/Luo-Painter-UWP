@@ -171,6 +171,9 @@
     <Compile Include="InverseProportionPage.xaml.cs">
       <DependentUpon>InverseProportionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MarblePage.xaml.cs">
+      <DependentUpon>MarblePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScrollerPage.xaml.cs">
       <DependentUpon>ScrollerPage.xaml</DependentUpon>
     </Compile>
@@ -272,6 +275,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="InverseProportionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MarblePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
