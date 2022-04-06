@@ -14,7 +14,6 @@ namespace Luo_Painter.Layers
         string Name { get; set; }
 
         Visibility Visibility { get; set; }
-        bool IsSelected { get; set; }
 
         ICanvasImage Origin { get; }
         ICanvasImage Source { get; }

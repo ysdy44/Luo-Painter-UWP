@@ -31,17 +31,6 @@ namespace Luo_Painter.Layers
         }
         private Visibility visibility;
 
-        public bool IsSelected
-        {
-            get => this.isSelected;
-            set
-            {
-                this.isSelected = value;
-                this.OnPropertyChanged(nameof(IsSelected)); // Notify 
-            }
-        }
-        private bool isSelected;
-
 
         //@Notify 
         /// <summary> Multicast event for property change notifications. </summary>
