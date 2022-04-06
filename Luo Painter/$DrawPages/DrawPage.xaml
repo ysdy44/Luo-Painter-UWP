@@ -719,15 +719,12 @@
 
                             <FontIcon Grid.Column="3" IsHitTestVisible="False" Opacity="0.8" Glyph="&#x23A5;" FontSize="18" FontFamily="Segoe UI Symbol"/>
 
-                            <FontIcon Grid.Column="0" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
-                            <FontIcon Grid.Column="0" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
-                            <Ellipse Grid.Column="0" Visibility="{x:Bind IsSelected, Mode=OneWay}" IsHitTestVisible="False" Fill="White" Width="14" Height="14"/>
-                            <Button Grid.Column="0" CommandParameter="{Binding}" Command="{Binding ElementName=SelectButton, Path=Command, Mode=OneWay}"/>
-
-                            <FontIcon Grid.Column="4" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
-                            <FontIcon Grid.Column="4" IsHitTestVisible="False" Opacity="0.1" Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets" />
-                            <FontIcon Grid.Column="4" Visibility="{x:Bind Visibility, Mode=OneWay}" IsHitTestVisible="False" Glyph="&#xE7B3;" FontSize="22" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
-                            <Button Grid.Column="4" CommandParameter="{Binding}" Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"/>
+                            <elements:SelectedButtonPresenter/>
+                            <elements:VisibleButton Grid.Column="4"
+                                Visible="{x:Bind Visibility, Mode=OneWay}"
+                                CommandParameter="{Binding}" 
+                                Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
+                                />
 
                         </Grid>
                     </DataTemplate>
@@ -929,17 +926,6 @@
             </CommandBar.Content>
             <CommandBar.PrimaryCommands>
                 <AppBarButton 
-                    x:Name="SelectButton" 
-                    Icon="SelectAll" 
-                    CommandParameter="{x:Null}">
-                    <AppBarButton.Command>
-                        <layers:RelayCommand x:Name="SelectCommand"/>
-                    </AppBarButton.Command>
-                    <AppBarButton.Label>
-                        Select
-                    </AppBarButton.Label>
-                </AppBarButton>
-                <AppBarButton 
                     x:Name="VisualButton"                                 
                     Icon="View"                                 
                     CommandParameter="{x:Null}">
@@ -952,6 +938,16 @@
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
+                
+                <AppBarButton x:Name="SelectAllButton" Icon="SelectAll">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Label>
+                        Select All
+                    </AppBarButton.Label>
+                </AppBarButton>
+                
                 <AppBarButton x:Name="ClearButton" Icon="Clear">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Back"/>
@@ -960,6 +956,7 @@
                         Clear
                     </AppBarButton.Label>
                 </AppBarButton>
+                
                 <AppBarButton x:Name="RemoveButton" Icon="Delete">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Delete"/>
@@ -968,6 +965,7 @@
                         Remove
                     </AppBarButton.Label>
                 </AppBarButton>
+                
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

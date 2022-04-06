@@ -13,33 +13,19 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page
     {
+        private IEnumerable<string> Ids()
+        {
+            foreach (object item in this.LayerListView.SelectedItems)
+            {
+                if (item is ILayer layer)
+                {
+                    yield return layer.Id;
+                }
+            }
+        }
 
         private void ConstructLayers()
         {
-            this.LayerListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is ILayer item)
-                {
-                    foreach (ILayer item2 in this.ObservableCollection)
-                    {
-                        if (item.Id != item2.Id)
-                        {
-                            if (item2.IsSelected) item2.IsSelected = false;
-                        }
-                    }
-
-                    if (item.IsSelected == false) item.IsSelected = true;
-                    this.BitmapLayer = item as BitmapLayer;
-                }
-            };
-
-            this.SelectCommand.Click += (s, layer) =>
-            {
-                if (layer.IsSelected == false) layer.IsSelected = true;
-
-                int index = this.ObservableCollection.IndexOf(layer);
-                this.LayerListView.SelectRange(new ItemIndexRange(index, 1));
-            };
             this.VisualCommand.Click += (s, layer) =>
             {
                 switch (layer.Visibility)
@@ -80,13 +66,7 @@ namespace Luo_Painter
             {
                 int startingIndex = this.LayerListView.SelectedIndex;
 
-                IEnumerable<string> ids =
-                from layer
-                in this.ObservableCollection
-                where layer.IsSelected
-                select layer.Id;
-
-                foreach (string id in ids.ToArray())
+                foreach (string id in this.Ids().ToArray())
                 {
                     if (this.ObservableCollection.FirstOrDefault(c => c.Id == id) is ILayer layer)
                     {
@@ -97,31 +77,15 @@ namespace Luo_Painter
                 int index = Math.Min(startingIndex, this.ObservableCollection.Count - 1);
                 this.LayerListView.SelectedIndex = index;
 
-                if (index >= 0)
-                {
-                    ILayer layer2 = this.ObservableCollection[index];
-                    if (layer2.IsSelected == false) layer2.IsSelected = true;
-                    this.BitmapLayer = layer2 as BitmapLayer;
-                }
-
                 this.CanvasControl.Invalidate(); // Invalidate
             };
 
             this.AddButton.Click += (s, e) =>
             {
                 int index = this.LayerListView.SelectedIndex;
+
                 ICanvasResourceCreator sender = this.CanvasControl;
-
-                foreach (ILayer item2 in this.ObservableCollection)
-                {
-                    if (item2.IsSelected) item2.IsSelected = false;
-                }
-
-                BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height)
-                {
-                    IsSelected = true
-                };
-                this.BitmapLayer = bitmapLayer;
+                BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
 
                 if (index >= 0)
                 {
@@ -134,6 +98,8 @@ namespace Luo_Painter
                     this.LayerListView.SelectedIndex = 0;
                 }
             };
+
+            this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();
         }
 
     }
