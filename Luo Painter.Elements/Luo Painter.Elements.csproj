@@ -125,6 +125,7 @@
     <Compile Include="DPIExtensions.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="InverseProportion.cs" />
+    <Compile Include="Marble.cs" />
     <Compile Include="ProgressRing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectExtensions.cs" />
