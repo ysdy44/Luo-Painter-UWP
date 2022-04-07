@@ -1,7 +1,11 @@
-﻿using Windows.Foundation;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 
 namespace Luo_Painter.Elements
 {
+    /// <summary>
+    /// Placement of <see cref="Marble"/>.
+    /// </summary>
     public enum MarblePlacement
     {
         Default,
@@ -9,81 +13,122 @@ namespace Luo_Painter.Elements
         Maximum,
     }
 
+    /// <summary>
+    /// Direction of <see cref="Marble"/>.
+    /// </summary>
+    public enum MarbleDirection
+    {
+        None,
+        Positive,
+        Negative,
+    }
+
+    /// <summary>
+    /// Represents a computational class,
+    /// that manipulates <see cref="UIElement.RenderTransform"/> 
+    /// by <see cref="UIElement.ManipulationDelta"/> events, 
+    /// like the Space Marbles.
+    /// </summary>
+    /// <code>
+    /// 
+    ///    readonly int Radius = 100;
+    ///    readonly Marble MarbleX = new Marble();
+    ///    readonly Marble MarbleY = new Marble();
+    ///    readonly TranslateTransform TranslateTransform = new TranslateTransform();
+    ///    
+    ///    this.UIElement.Width = 100 + 100;
+    ///    this.UIElement.Height = 100 + 100;
+    ///    this.UIElement.RenderTransform = this.TranslateTransform;
+    ///    this.UIElement.ManipulationMode = ManipulationModes.All;
+    ///    this.UIElement.ManipulationDelta += (s, e) =>
+    ///    {
+    ///       this.TranslateTransform.X = this.MarbleX.Move(this.TranslateTransform.X, e.Delta.Translation.X, e.IsInertial, 100, base.ActualWidth - 100);
+    ///       this.TranslateTransform.Y = this.MarbleY.Move(this.TranslateTransform.Y, e.Delta.Translation.Y, e.IsInertial, 100, base.ActualHeight - 100);
+    ///    };
+    ///    
+    /// </code>
     public sealed class Marble
     {
 
-        MarblePlacement XPlacement;
-        MarblePlacement YPlacement;
+        /// <summary>
+        /// Placement of <see cref="Marble"/>.
+        /// </summary>
+        public MarblePlacement Placement { get; private set; }
+        /// <summary>
+        /// Direction of <see cref="Marble"/>.
+        /// </summary>
+        public MarbleDirection Direction { get; private set; }
 
-        MarblePlacement StartingXPlacement;
-        MarblePlacement StartingYPlacement;
-
-        public Point Move(double x, double y, Point delta, double width, double height, bool inertiaStarting)
+        /// <summary>
+        /// Move the transform.
+        /// </summary>
+        /// <param name="transform"> The transform. </param>
+        /// <param name="delta"> <see cref="ManipulationDeltaRoutedEventArgs.Delta"/> </param>
+        /// <param name="isInertial"> <see cref="ManipulationDeltaRoutedEventArgs.IsInertial"/> </param>
+        /// <param name="minimum"> The minimum region. </param>
+        /// <param name="maximum"> The maximum region. </param>
+        /// <returns> The product transform. </returns>
+        public double Move(double transform, double delta, bool isInertial, double minimum, double maximum)
         {
-            if (inertiaStarting == false)
-                return new Point
-                {
-                    X = System.Math.Max(0, System.Math.Min(width, x + delta.X)),
-                    Y = System.Math.Max(0, System.Math.Min(height, y + delta.Y))
-                };
+            // NoInertial
+            if (isInertial == false) return System.Math.Clamp(transform + delta, minimum, maximum);
 
-            x += this.GetTranslation(delta.X, this.StartingXPlacement, this.XPlacement);
-            y += this.GetTranslation(delta.Y, this.StartingYPlacement, this.YPlacement);
-
-            MarblePlacement xp = this.GetPlacement(x, width);
-            if (this.XPlacement != xp)
+            // Direction
+            switch (this.Direction)
             {
-                this.StartingXPlacement = this.XPlacement;
-                this.XPlacement = xp;
+                case MarbleDirection.None: transform += delta; break;
+                case MarbleDirection.Positive: transform += System.Math.Abs(delta); break;
+                case MarbleDirection.Negative: transform -= System.Math.Abs(delta); break;
+                default: break;
             }
 
-            MarblePlacement yp = this.GetPlacement(y, height);
-            if (this.YPlacement != yp)
-            {
-                this.StartingYPlacement = this.YPlacement;
-                this.YPlacement = yp;
-            }
+            // Placement
+            MarblePlacement placement = this.GetPlacement(transform, minimum, maximum);
+            if (this.Placement == placement) return transform;
 
-            return new Point(x, y);
+            this.Direction = this.GetDirection(this.Placement, placement);
+            this.Placement = placement;
+            return transform;
         }
 
-        private MarblePlacement GetPlacement(double x, double width)
+        private MarblePlacement GetPlacement(double value, double minimum, double maximum)
         {
-            if (x < 0) return MarblePlacement.Minimum;
-            else if (x > width) return MarblePlacement.Maximum;
+            if (value < minimum) return MarblePlacement.Minimum;
+            else if (value > maximum) return MarblePlacement.Maximum;
             else return MarblePlacement.Default;
         }
 
-        private double GetTranslation(double x, MarblePlacement ox, MarblePlacement xx)
+        private MarbleDirection GetDirection(MarblePlacement startingPlacement, MarblePlacement placement)
         {
-            switch (ox)
+            switch (startingPlacement)
             {
                 case MarblePlacement.Minimum:
-                    switch (xx)
+                    switch (placement)
                     {
-                        case MarblePlacement.Minimum: return System.Math.Abs(x);
-                        case MarblePlacement.Default: return System.Math.Abs(x);
-                        case MarblePlacement.Maximum: return -System.Math.Abs(x);
-                        default: return x;
+                        case MarblePlacement.Minimum: return MarbleDirection.Positive;
+                        case MarblePlacement.Default: return MarbleDirection.Positive;
+                        case MarblePlacement.Maximum: return MarbleDirection.Negative;
+                        default: return MarbleDirection.None;
                     }
                 case MarblePlacement.Default:
-                    switch (xx)
+                    switch (placement)
                     {
-                        case MarblePlacement.Minimum: return System.Math.Abs(x);
-                        case MarblePlacement.Default: return x;
-                        case MarblePlacement.Maximum: return -System.Math.Abs(x);
-                        default: return x;
+                        case MarblePlacement.Minimum: return MarbleDirection.Positive;
+                        case MarblePlacement.Default: return MarbleDirection.None;
+                        case MarblePlacement.Maximum: return MarbleDirection.Negative;
+                        default: return MarbleDirection.None;
                     }
                 case MarblePlacement.Maximum:
-                    switch (xx)
+                    switch (placement)
                     {
-                        case MarblePlacement.Minimum: return System.Math.Abs(x);
-                        case MarblePlacement.Default: return -System.Math.Abs(x);
-                        case MarblePlacement.Maximum: return -System.Math.Abs(x);
-                        default: return x;
+                        case MarblePlacement.Minimum: return MarbleDirection.Positive;
+                        case MarblePlacement.Default: return MarbleDirection.Negative;
+                        case MarblePlacement.Maximum: return MarbleDirection.Negative;
+                        default: return MarbleDirection.None;
                     }
-                default: return x;
+                default: return MarbleDirection.None;
             }
         }
+
     }
 }
