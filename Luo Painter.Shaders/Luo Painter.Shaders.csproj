@@ -132,14 +132,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Liquefaction.bin" />
+    <Content Include="SprayGun.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Liquefaction.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CompileShaders.cmd" />
+    <Content Include="GeneralBrush.bin" />
+    <None Include="GeneralBrush.shader" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
+    <None Include="SprayGun.shader" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

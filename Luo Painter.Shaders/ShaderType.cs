@@ -3,5 +3,7 @@
     public enum ShaderType
     {
         Liquefaction,
+        GeneralBrush,
+        SprayGun,
     }
 }

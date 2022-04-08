@@ -22,6 +22,8 @@ namespace Luo_Painter.Shaders
             switch (type)
             {
                 case ShaderType.Liquefaction: return "ms-appx:///Luo Painter.Shaders/Liquefaction.bin";
+                case ShaderType.GeneralBrush: return "ms-appx:///Luo Painter.Shaders/GeneralBrush.bin";
+                case ShaderType.SprayGun: return "ms-appx:///Luo Painter.Shaders/SprayGun.txt";
                 default: return null;
             }
         }
