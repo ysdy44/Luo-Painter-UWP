@@ -13,6 +13,10 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
+        float InkSize = 22f;
+        float InkOpacity = 1;
+        BlendEffectMode? InkBlendMode = null;
+
         private void ConstructPaint()
         {
             this.SizeSlider.ValueChanged += (s, e) =>
@@ -130,9 +134,9 @@ namespace Luo_Painter
                 case InkMode.WetWithOpacity:
                     return bitmapLayer.GetWeting(this.InkOpacity);
                 case InkMode.WetWithBlendMode:
-                    return bitmapLayer.GetWeting(this.BlendType);
+                    return bitmapLayer.GetWeting(this.InkBlendMode.Value);
                 case InkMode.WetWithOpacityAndBlendMode:
-                    return bitmapLayer.GetWeting(this.InkOpacity, this.BlendType);
+                    return bitmapLayer.GetWeting(this.InkOpacity, this.InkBlendMode.Value);
 
                 case InkMode.EraseWetWithOpacity:
                     return bitmapLayer.GetEraseWeting(this.InkOpacity);
@@ -152,7 +156,7 @@ namespace Luo_Painter
                 else return InkMode.EraseWetWithOpacity;
             }
 
-            if (this.BlendType.IsNone())
+            if (this.InkBlendMode == null)
             {
                 if (this.InkOpacity == 1f) return InkMode.Dry;
                 else return InkMode.WetWithOpacity;

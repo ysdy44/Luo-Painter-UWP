@@ -18,10 +18,6 @@ namespace Luo_Painter
         ToolGroupType ToolGroupType = ToolGroupType.Paint;
 
         BitmapLayer BitmapLayer;
-        float InkSize = 22f;
-        float InkOpacity = 1;
-        BlendEffectMode BlendType = BlendExtensions.None;
-
 
         private void SetToolType(ToolType type)
         {
@@ -40,13 +36,6 @@ namespace Luo_Painter
 
             // FootGrid
             this.PaintBrushPanel.Visibility = groupType == ToolGroupType.Paint ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void SetBlendType(BlendEffectMode type)
-        {
-            // BlendIcon
-            this.BlendResource.Source = new Uri(type.GetResource());
-            this.BlendIcon.Template = type.GetTemplate(this.BlendResource);
         }
 
 
@@ -74,15 +63,21 @@ namespace Luo_Painter
 
         private void ConstructBlends()
         {
-            this.SetBlendType(this.BlendType);
-            this.BlendListView.SelectedIndex = this.BlendGroupingList.IndexOf(this.BlendType);
+            this.BlendListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
             this.BlendListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {
-                    if (this.BlendType == item) return;
-                    this.BlendType = item;
-                    this.SetBlendType(item);
+                    if (item.IsNone())
+                    {
+                        if (this.InkBlendMode == null) return;
+                        this.InkBlendMode = null;
+                    }
+                    else
+                    {
+                        if (this.InkBlendMode == item) return;
+                        this.InkBlendMode = item;
+                    }
                 }
             };
         }
