@@ -123,6 +123,7 @@
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="DPIExtensions.cs" />
+    <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="InverseProportion.cs" />
     <Compile Include="Marble.cs" />
