@@ -3,7 +3,11 @@
     public enum HistoryType
     {
         None,
+
+        BlendMode,
+        Opacity,
         Visibility,
+
         Bitmap,
         BitmapClear,
     }
