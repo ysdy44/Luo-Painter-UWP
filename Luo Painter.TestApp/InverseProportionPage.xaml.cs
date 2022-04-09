@@ -4,25 +4,38 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
+    internal sealed class ScaleRange
+    {
+        public Range XRange { get; }
+        public Range YRange { get; } = new Range
+        {
+            Default = 1,
+            Minimum = 0.1,
+            Maximum = 10,
+        };
+        public InverseProportion InverseProportion { get; } = new InverseProportion
+        {
+            A = -1,
+            B = 10,
+            C = 1,
+        };
+        public ScaleRange() => this.XRange = this.InverseProportion.ConvertYToX(this.YRange);
+    }
+
     public sealed partial class InverseProportionPage : Page
     {
 
         readonly Point[] OnePoints = new Point[1000];
 
-        readonly Range XRange;
-        readonly Range YRange = new Range { Default = 1, Minimum = 0.1, Maximum = 10 };
-        readonly InverseProportion Prop = new InverseProportion { A = -1, B = 10, C = 1 };
-
         public InverseProportionPage()
         {
             this.InitializeComponent();
-            this.XRange = this.Prop.ConvertYToX(this.YRange);
             for (int i = 0; i < this.OnePoints.Length; i++)
             {
                 double xOne = (double)i / this.OnePoints.Length;
-                double x = this.XRange.ConvertOneToValue(xOne);
-                double y = this.Prop.ConvertXToY(x);
-                double yOne = this.YRange.ConvertValueToOne(y);
+                double x = this.ScaleRange.XRange.ConvertOneToValue(xOne);
+                double y = this.ScaleRange.InverseProportion.ConvertXToY(x);
+                double yOne = this.ScaleRange.YRange.ConvertValueToOne(y);
                 Point one = new Point(xOne, yOne);
 
                 this.OnePoints[i] = one;
@@ -50,12 +63,12 @@ namespace Luo_Painter.TestApp
             this.XSlider.ValueChanged += (s, e) =>
             {
                 double x = e.NewValue;
-                double y = this.Prop.ConvertXToY(x);
+                double y = this.ScaleRange.InverseProportion.ConvertXToY(x);
                 this.XRun.Text = $"{x:0.00}";
                 this.YRun.Text = $"{y:0.00}";
 
-                double xOne = this.XRange.ConvertValueToOne(x);
-                double yOne = this.YRange.ConvertValueToOne(y);
+                double xOne = this.ScaleRange.XRange.ConvertValueToOne(x);
+                double yOne = this.ScaleRange.YRange.ConvertValueToOne(y);
                 Canvas.SetLeft(this.Ellipse, xOne * this.Canvas.ActualWidth - 10);
                 Canvas.SetTop(this.Ellipse, yOne * this.Canvas.ActualHeight - 10);
             };
@@ -63,12 +76,12 @@ namespace Luo_Painter.TestApp
             this.YSlider.ValueChanged += (s, e) =>
             {
                 double y = e.NewValue;
-                double x = this.Prop.ConvertYToX(y);
+                double x = this.ScaleRange.InverseProportion.ConvertYToX(y);
                 this.XRun.Text = $"{x:0.00}";
                 this.YRun.Text = $"{y:0.00}";
 
-                double xOne = this.XRange.ConvertValueToOne(x);
-                double yOne = this.YRange.ConvertValueToOne(y);
+                double xOne = this.ScaleRange.XRange.ConvertValueToOne(x);
+                double yOne = this.ScaleRange.YRange.ConvertValueToOne(y);
                 Canvas.SetLeft(this.Ellipse, xOne * this.Canvas.ActualWidth - 10);
                 Canvas.SetTop(this.Ellipse, yOne * this.Canvas.ActualHeight - 10);
             };

@@ -4,10 +4,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.TestApp"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    
+    <FrameworkElement.Resources>
+        <!--Range-->
+        <local:ScaleRange x:Name="ScaleRange"/>
+    </FrameworkElement.Resources>
+
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="122" />
@@ -38,31 +46,31 @@
             <Run Foreground="Red" >X</Run>
             <Run x:Name="XRun" >0</Run>         
             <LineBreak/>    
-            <Run FontSize="22" Text="{x:Bind XRange}"/>   
+            <Run FontSize="22" Text="{x:Bind ScaleRange.XRange}"/>   
             <LineBreak/>
             <LineBreak/>
             <Run Foreground="GreenYellow" >Y</Run>
             <Run x:Name="YRun">0</Run>     
             <LineBreak/>
-            <Run FontSize="22" Text="{x:Bind YRange}"/>
+            <Run FontSize="22" Text="{x:Bind ScaleRange.YRange}"/>
             <LineBreak/>
         </TextBlock>
 
         <Slider x:Name="XSlider"
                 Grid.Column="1" 
                 Grid.Row="2" 
-                Maximum="{x:Bind XRange.Maximum}"
-                Minimum="{x:Bind XRange.Minimum}"
-                Value="{x:Bind XRange.Default}"
+                Maximum="{x:Bind ScaleRange.XRange.Maximum}"
+                Minimum="{x:Bind ScaleRange.XRange.Minimum}"
+                Value="{x:Bind ScaleRange.XRange.Default}"
                 StepFrequency="0.1" 
                 Orientation="Horizontal" 
                 VerticalAlignment="Center" 
                 Foreground="Red" />
         <Slider x:Name="YSlider" 
                 Grid.Row="1" 
-                Maximum="{x:Bind YRange.Maximum}"
-                Minimum="{x:Bind YRange.Minimum}"
-                Value="{x:Bind YRange.Default}"
+                Maximum="{x:Bind ScaleRange.YRange.Maximum}"
+                Minimum="{x:Bind ScaleRange.YRange.Minimum}"
+                Value="{x:Bind ScaleRange.YRange.Default}"
                 StepFrequency="0.1" 
                 Orientation="Vertical" 
                 HorizontalAlignment="Center" 
