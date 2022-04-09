@@ -17,16 +17,16 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <tools:ToolGroupingList x:Name="ToolGroupingList">
-                    <tools:ToolGrouping Key="Pixel">
+                <local:ToolGroupingList x:Name="ToolGroupingList">
+                    <local:ToolGrouping Key="Pixel">
                         <tools:ToolType>MarqueeRectangular</tools:ToolType>
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
                         <tools:ToolType>MarqueePolygon</tools:ToolType>
                         <tools:ToolType>MarqueeFreeHand</tools:ToolType>
                         <tools:ToolType>MarqueeFloodSetect</tools:ToolType>
                         <tools:ToolType>MarqueeSelectionBrush</tools:ToolType>
-                    </tools:ToolGrouping>
-                    <tools:ToolGrouping Key="Paint">
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Paint">
                         <tools:ToolType>PaintBrush</tools:ToolType>
                         <tools:ToolType>PaintWatercolorPen</tools:ToolType>
                         <tools:ToolType>PaintPencil</tools:ToolType>
@@ -35,24 +35,24 @@
                         <tools:ToolType>PatternGrid</tools:ToolType>
                         <tools:ToolType>PatternDiagonal</tools:ToolType>
                         <tools:ToolType>PatternSpotted</tools:ToolType>
-                    </tools:ToolGrouping>
-                    <tools:ToolGrouping Key="Vector">
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Vector">
                         <tools:ToolType>Cursor</tools:ToolType>
                         <tools:ToolType>View</tools:ToolType>
                         <tools:ToolType>Brush</tools:ToolType>
                         <tools:ToolType>Transparency</tools:ToolType>
                         <tools:ToolType>Image</tools:ToolType>
                         <tools:ToolType>Crop</tools:ToolType>
-                    </tools:ToolGrouping>
-                    <tools:ToolGrouping Key="Text">
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Text">
                         <tools:ToolType>TextArtistic</tools:ToolType>
                         <tools:ToolType>TextFrame</tools:ToolType>
-                    </tools:ToolGrouping>
-                    <tools:ToolGrouping Key="Curve">
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Curve">
                         <tools:ToolType>Pen</tools:ToolType>
                         <tools:ToolType>Node</tools:ToolType>
-                    </tools:ToolGrouping>
-                    <tools:ToolGrouping Key="Geometry">
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Geometry">
                         <!--Geometry0-->
                         <tools:ToolType>GeometryRectangle</tools:ToolType>
                         <tools:ToolType>GeometryEllipse</tools:ToolType>
@@ -72,12 +72,12 @@
                         <tools:ToolType>GeometryArrow</tools:ToolType>
                         <tools:ToolType>GeometryCapsule</tools:ToolType>
                         <tools:ToolType>GeometryHeart</tools:ToolType>
-                    </tools:ToolGrouping>
-                </tools:ToolGroupingList>
+                    </local:ToolGrouping>
+                </local:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
 
-        <blends:BlendGrouping x:Name="BlendCollection" Key="None">
+        <local:BlendGrouping x:Name="BlendCollection" Key="None">
             <effects:BlendEffectMode>-1</effects:BlendEffectMode>
             <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
             <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
@@ -87,30 +87,30 @@
             <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
             <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
             <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-        </blends:BlendGrouping>
+        </local:BlendGrouping>
 
         <CollectionViewSource x:Name="BlendCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <blends:BlendGroupingList x:Name="BlendGroupingList">
-                    <blends:BlendGrouping Key="None">
+                <local:BlendGroupingList x:Name="BlendGroupingList">
+                    <local:BlendGrouping Key="None">
                         <effects:BlendEffectMode>-1</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Darken">
+                    </local:BlendGrouping>
+                    <local:BlendGrouping Key="Darken">
                         <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
                         <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
                         <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Lighten">
+                    </local:BlendGrouping>
+                    <local:BlendGrouping Key="Lighten">
                         <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
                         <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                        <blends:BlendGrouping Key="Contrast">
+                    </local:BlendGrouping>
+                    <local:BlendGrouping Key="Contrast">
                         <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
                         <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
@@ -118,20 +118,20 @@
                         <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Difference">
+                    </local:BlendGrouping>
+                    <local:BlendGrouping Key="Difference">
                         <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Division</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Color">
+                    </local:BlendGrouping>
+                    <local:BlendGrouping Key="Color">
                         <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Color</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                </blends:BlendGroupingList>
+                    </local:BlendGrouping>
+                </local:BlendGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -208,7 +208,7 @@
                         </Style>
                     </GroupStyle.HeaderContainerStyle>
                     <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="tools:ToolGrouping">
+                        <DataTemplate x:DataType="local:ToolGrouping">
                             <TextBlock Margin="12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Key}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
@@ -289,7 +289,7 @@
                         </Style>
                     </GroupStyle.HeaderContainerStyle>
                     <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="blends:IBlendGrouping">
+                        <DataTemplate x:DataType="local:BlendGrouping">
                             <TextBlock Margin="12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Key}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>

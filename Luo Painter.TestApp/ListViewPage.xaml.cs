@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Elements;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI.Xaml;
@@ -100,6 +101,14 @@ namespace Luo_Painter.TestApp
 
         #endregion
     }
+
+
+    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
+    internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
+
+    internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendGroupType, BlendEffectMode> { }
+    internal sealed class BlendGrouping : Grouping<BlendGroupType, BlendEffectMode> { }
+
 
     public sealed partial class ListViewPage : Page
     {
