@@ -121,7 +121,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BlendExtensions.cs" />
-    <Compile Include="BlendGroupingList.cs" />
     <Compile Include="BlendGroupType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Blends.rd.xml" />
