@@ -128,6 +128,7 @@
     <Compile Include="Models\BitmapLayer.Render.cs" />
     <Compile Include="Models\BitmapLayer.Source.cs" />
     <Compile Include="Models\BitmapLayer.Thumbnail.cs" />
+    <Compile Include="PaintExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayCommand.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Layers.rd.xml" />
