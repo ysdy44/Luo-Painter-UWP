@@ -41,6 +41,8 @@ namespace Luo_Painter
 
         private void ConstructColor()
         {
+            this.ColorButton.Click += (s, e) => this.ColorFlyout.ShowAt(this.ColorButton);
+
             this.ColorComboBox.ItemsSource = Enum.GetValues(typeof(ColorSpectrumComponents));
             this.ColorComboBox.SelectedItem = this.ColorPicker.ColorSpectrumComponents;
             this.ColorComboBox.SelectionChanged += (s, e) =>

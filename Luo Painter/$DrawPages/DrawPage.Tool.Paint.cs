@@ -3,6 +3,7 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -10,6 +11,40 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
+    internal sealed class InkRender
+    {
+        readonly BitmapLayer PaintLayer;
+        public ICanvasImage Souce => this.PaintLayer.Source;
+        public InkRender(CanvasControl sender) => this.PaintLayer = new BitmapLayer(sender, (int)sender.ActualWidth, (int)sender.ActualHeight);
+        public void Render(float size)
+        {
+            this.PaintLayer.Clear(Colors.Transparent);
+
+            float width = this.PaintLayer.Width;
+            float height = this.PaintLayer.Height;
+            float space = System.Math.Max(2, size / height * 2);
+
+            Vector2 position = new Vector2(10, height / 2 + 3.90181f);
+            float pressure = 0.001f;
+
+            for (float x = 10; x < width - 10; x += space)
+            {
+                // 0 ~ Π
+                float radian = x / width * FanKit.Math.Pi;
+
+                // Sin 0 ~ Π ︵
+                float targetPressure = (float)System.Math.Sin(radian);
+                // Sin 0 ~ 2Π ~
+                float offsetY = 20 * (float)System.Math.Sin(radian + radian);
+                Vector2 targetPosition = new Vector2(x, height / 2 + offsetY);
+
+                this.PaintLayer.FillCircleDry(position, targetPosition, pressure, targetPressure, space, Colors.Black);
+                position = targetPosition;
+                pressure = targetPressure;
+            }
+        }
+    }
+
     public sealed partial class DrawPage : Page
     {
 
@@ -17,16 +52,60 @@ namespace Luo_Painter
         float InkOpacity = 1;
         BlendEffectMode? InkBlendMode = null;
 
+        InkRender InkRender;
+
+        private void SetPaint()
+        {
+            this.PaintSizeSlider.Value = this.PaintSizeSlider2.Value;
+            this.PaintOpacitySlider.Value = this.PaintOpacitySlider2.Value;
+        }
+
         private void ConstructPaint()
         {
-            this.SizeSlider.ValueChanged += (s, e) =>
+            this.PaintCanvasControl.CreateResources += (sender, args) =>
+            {
+                this.InkRender = new InkRender(sender);
+                this.InkRender.Render(this.InkSize);
+            };
+            this.PaintCanvasControl.Draw += (sender, args) =>
+            {
+                args.DrawingSession.DrawImage(this.InkRender.Souce);
+            };
+
+            this.PaintSizeSlider.ValueChanged += (s, e) =>
+            {
+                this.InkSize = (float)e.NewValue;
+
+                this.InkRender.Render(this.InkSize);
+                this.PaintCanvasControl.Invalidate(); // Invalidate
+
+                this.PaintSizeSlider2.Value = e.NewValue;
+            };
+            this.PaintOpacitySlider.ValueChanged += (s, e) =>
+            {
+                this.InkOpacity = (float)(e.NewValue / 100);
+                this.PaintCanvasControl.Opacity = this.InkOpacity;
+
+                this.PaintOpacitySlider2.Value = e.NewValue;
+            };
+            this.PaintBlendModeListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is BlendEffectMode item)
+                {
+                    bool isNone = item.IsNone();
+
+                    if (isNone) this.InkBlendMode = null;
+                    else this.InkBlendMode = item;
+                }
+            };
+
+            this.PaintSizeSlider2.ValueChanged += (s, e) =>
             {
                 this.Tip("Size", $"{e.NewValue}"); // Tip
 
                 this.InkSize = (float)e.NewValue;
             };
-            this.BlendButton.Click += (s, e) => this.BlendFlyout.ShowAt(this.BlendButton);
-            this.OpacitySlider.ValueChanged += (s, e) =>
+            this.PaintOpacitySlider2.ValueChanged += (s, e) =>
             {
                 this.Tip("Opacity", $"{e.NewValue:0.00}%"); // Tip
 
@@ -156,7 +235,7 @@ namespace Luo_Painter
                 else return InkMode.EraseWetWithOpacity;
             }
 
-            if (this.InkBlendMode == null)
+            if (this.InkBlendMode.HasValue == false)
             {
                 if (this.InkOpacity == 1f) return InkMode.Dry;
                 else return InkMode.WetWithOpacity;

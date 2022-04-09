@@ -35,15 +35,23 @@ namespace Luo_Painter
             }
 
             // FootGrid
-            this.PaintBrushPanel.Visibility = groupType == ToolGroupType.Paint ? Visibility.Visible : Visibility.Collapsed;
+            this.PaintBrushPanel.Visibility =
+            this.PaintBrushPanel2.Visibility =
+            groupType == ToolGroupType.Paint ? Visibility.Visible : Visibility.Collapsed;
         }
 
 
         private void ConstructTools()
         {
+            this.ToolButton.Click += (s, e) =>
+            {
+                this.SetPaint();
+                this.ToolFlyout.ShowAt(this.ToolButton);
+            };
+
             this.SetToolType(this.ToolType);
             this.SetToolGroupType(this.ToolGroupType);
-            this.ToolListView.SelectedIndex = this.ToolGroupingList.IndexOf(ToolType.PaintBrush);
+            this.ToolListView.SelectedIndex = this.ToolCollection.IndexOf(ToolType.PaintBrush);
             this.ToolListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is ToolType item)
@@ -52,7 +60,7 @@ namespace Luo_Painter
                     this.ToolType = item;
                     this.SetToolType(item);
 
-                    ToolGroupType groupType = this.ToolGroupingList[item];
+                    ToolGroupType groupType = this.ToolCollection[item];
 
                     if (this.ToolGroupType == groupType) return;
                     this.ToolGroupType = groupType;
@@ -63,8 +71,8 @@ namespace Luo_Painter
 
         private void ConstructBlends()
         {
-            this.BlendListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
-            this.BlendListView.ItemClick += (s, e) =>
+            this.PaintBlendModeListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
+            this.PaintBlendModeListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {

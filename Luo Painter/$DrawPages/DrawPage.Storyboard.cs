@@ -8,61 +8,61 @@ namespace Luo_Painter
     {
 
         double StartingPaneX;
-        SplitViewPanePlacement PanePlacement => (this.LayerTransform.X > 75) ? SplitViewPanePlacement.Right : SplitViewPanePlacement.Left;
+        SplitViewPanePlacement PanePlacement => (this.LayerTransform.X > 70) ? SplitViewPanePlacement.Right : SplitViewPanePlacement.Left;
 
         private void ConstructStoryboard()
         {
-            this.ShowStoryboard.Completed += (s, e) => this.DismissOverlay.IsHitTestVisible = true;
-            this.HideStoryboard.Completed += (s, e) => this.DismissOverlay.IsHitTestVisible = false;
-            this.DismissOverlay.Tapped += (s, e) =>
-            {
-                this.ToolButton.IsChecked = false;
-                this.LayerButton.IsChecked = false;
-            };
+            //this.ShowStoryboard.Completed += (s, e) => this.DismissOverlay.IsHitTestVisible = true;
+            //this.HideStoryboard.Completed += (s, e) => this.DismissOverlay.IsHitTestVisible = false;
+            //this.DismissOverlay.Tapped += (s, e) =>
+            //{
+            //    this.ToolButton.IsChecked = false;
+            //    this.LayerButton.IsChecked = false;
+            //};
 
-            this.LayerButton.Unchecked += (s, e) =>
-            {
-                this.HideLayerStoryboard.Begin(); // Storyboard
-                if (this.ToolButton.IsChecked == false) this.HideStoryboard.Begin(); // Storyboard
-            };
-            this.LayerButton.Checked += (s, e) =>
-            {
-                this.ShowLayerStoryboard.Begin(); // Storyboard
-                if (this.ToolButton.IsChecked == false)
-                {
-                    this.ShowStoryboard.Begin(); // Storyboard
-                }
-            };
-            this.LayerButton.Tapped += (s, e) =>
-            {
-                this.HideToolStoryboard.Begin(); // Storyboard
-            };
-            this.ShowLayerStoryboard.Completed += (s, e) =>
-            {
-                if (this.ToolButton.Visibility == Visibility.Visible) this.ToolButton.IsChecked = false;
-            };
+            //this.LayerButton.Unchecked += (s, e) =>
+            //{
+            //    this.HideLayerStoryboard.Begin(); // Storyboard
+            //    if (this.ToolButton.IsChecked == false) this.HideStoryboard.Begin(); // Storyboard
+            //};
+            //this.LayerButton.Checked += (s, e) =>
+            //{
+            //    this.ShowLayerStoryboard.Begin(); // Storyboard
+            //    if (this.ToolButton.IsChecked == false)
+            //    {
+            //        this.ShowStoryboard.Begin(); // Storyboard
+            //    }
+            //};
+            //this.LayerButton.Tapped += (s, e) =>
+            //{
+            //    this.HideToolStoryboard.Begin(); // Storyboard
+            //};
+            //this.ShowLayerStoryboard.Completed += (s, e) =>
+            //{
+            //    if (this.ToolButton.Visibility == Visibility.Visible) this.ToolButton.IsChecked = false;
+            //};
 
-            this.ToolButton.Unchecked += (s, e) =>
-            {
-                this.HideToolStoryboard.Begin(); // Storyboard
-                if (this.LayerButton.IsChecked == false) this.HideStoryboard.Begin(); // Storyboard
-            };
-            this.ToolButton.Checked += (s, e) =>
-            {
-                this.ShowToolStoryboard.Begin(); // Storyboard
-                if (this.LayerButton.IsChecked == false)
-                {
-                    this.ShowStoryboard.Begin(); // Storyboard
-                }
-            };
-            this.ToolButton.Tapped += (s, e) =>
-            {
-                this.HideLayerStoryboard.Begin(); // Storyboard
-            };
-            this.ShowToolStoryboard.Completed += (s, e) =>
-            {
-                if (this.LayerButton.Visibility == Visibility.Visible) this.LayerButton.IsChecked = false;
-            };
+            //this.ToolButton.Unchecked += (s, e) =>
+            //{
+            //    this.HideToolStoryboard.Begin(); // Storyboard
+            //    if (this.LayerButton.IsChecked == false) this.HideStoryboard.Begin(); // Storyboard
+            //};
+            //this.ToolButton.Checked += (s, e) =>
+            //{
+            //    this.ShowToolStoryboard.Begin(); // Storyboard
+            //    if (this.LayerButton.IsChecked == false)
+            //    {
+            //        this.ShowStoryboard.Begin(); // Storyboard
+            //    }
+            //};
+            //this.ToolButton.Tapped += (s, e) =>
+            //{
+            //    this.HideLayerStoryboard.Begin(); // Storyboard
+            //};
+            //this.ShowToolStoryboard.Completed += (s, e) =>
+            //{
+            //    if (this.LayerButton.Visibility == Visibility.Visible) this.LayerButton.IsChecked = false;
+            //};
         }
 
         private void ConstructSplitStoryboard()
@@ -79,7 +79,7 @@ namespace Luo_Painter
             };
             this.SplitButton.ManipulationDelta += (s, e) =>
             {
-                this.LayerTransform.X = Math.Max(0, Math.Min(150, this.StartingPaneX + e.Cumulative.Translation.X));
+                this.LayerTransform.X = Math.Max(0, Math.Min(70 + 70, this.StartingPaneX + e.Cumulative.Translation.X));
                 switch (this.PanePlacement)
                 {
                     case SplitViewPanePlacement.Left: this.SplitIcon.Symbol = Symbol.AlignLeft; break;
@@ -96,7 +96,7 @@ namespace Luo_Painter
                 this.SplitIcon.Symbol = Symbol.GlobalNavigationButton;
                 this.SplitButton.IsEnabled = true;
             };
-           
+
             this.SplitButton.Click += (s, e) =>
             {
                 switch (this.PanePlacement)

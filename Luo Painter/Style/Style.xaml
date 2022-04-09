@@ -90,7 +90,58 @@
     </Style>
 
 
+    <!--TextBox-->
+    <Style TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+    </Style>
+
+
+    <!--Rectangle-->
+    <Style TargetType="Rectangle">
+        <Setter Property="MinWidth" Value="1" />
+        <Setter Property="MinHeight" Value="1" />
+        <Setter Property="MaxHeight" Value="30" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Fill" Value="{ThemeResource SystemAltLowColor}" />
+    </Style>
+    
+    
+    <!--Button-->
+    <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}" >
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Width" Value="70" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}" />
+    </Style>
+
+    
+    <!--Line-->
+    <Style TargetType="Line">
+        <Setter Property="X1" Value="0" />
+        <Setter Property="Y1" Value="0" />
+        <Setter Property="X2" Value="24" />
+        <Setter Property="Y2" Value="0" />
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="bottom" />
+        <Setter Property="StrokeStartLineCap" Value="Triangle" />
+        <Setter Property="StrokeEndLineCap" Value="Triangle" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="{ThemeResource SystemAltLowColor}" />
+    </Style>
+
+    
     <!--Slider-->
+    <x:Double x:Key="SliderTrackThemeHeight">3</x:Double>
     <Style TargetType="Slider">
         <Setter Property="Background" Value="{ThemeResource SliderTrackFill}" />
         <Setter Property="BorderThickness" Value="{ThemeResource SliderBorderThemeThickness}" />
@@ -319,8 +370,8 @@
                                 <Thumb x:Name="HorizontalThumb"
                     Style="{StaticResource SliderThumbStyle}"
                     DataContext="{TemplateBinding Value}"
-                    Height="20"
-                    Width="20"
+                    Height="18"
+                    Width="18"
                     Grid.Row="0"
                     Grid.RowSpan="3"
                     Grid.Column="1"
@@ -373,8 +424,8 @@
                                 <Thumb x:Name="VerticalThumb"
                     Style="{StaticResource SliderThumbStyle}"
                     DataContext="{TemplateBinding Value}"
-                    Height="20"
-                    Width="20"
+                    Height="18"
+                    Width="18"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"

@@ -1,6 +1,8 @@
-﻿using Luo_Painter.Layers;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,28 +26,77 @@ namespace Luo_Painter
             }
         }
 
+        private void SetLayer(ILayer layer)
+        {
+            if (layer == null)
+            {
+                this.LayerImage.Source = null;
+                this.LayerTextBox.Text = string.Empty;
+                this.OpacitySlider.Value = 100;
+                this.OpacitySlider.IsEnabled = false;
+                this.BlendModeListView.IsEnabled = false;
+                this.BlendModeListView.SelectedIndex = -1;
+            }
+            else
+            {
+                this.LayerImage.Source = layer.Thumbnail;
+                this.LayerTextBox.Text = layer.Name ?? string.Empty;
+                this.OpacitySlider.IsEnabled = true;
+                this.OpacitySlider.Value = layer.Opacity * 100;
+                this.BlendModeListView.IsEnabled = true;
+                this.BlendModeListView.SelectedIndex = layer.BlendMode.HasValue ? this.BlendCollection.IndexOf(layer.BlendMode.Value) : 0;
+            }
+        }
+
         private void ConstructLayers()
         {
             this.VisualCommand.Click += (s, layer) =>
             {
-                switch (layer.Visibility)
-                {
-                    case Visibility.Visible:
-                        layer.Visibility = Visibility.Collapsed;
-                        break;
-                    case Visibility.Collapsed:
-                        layer.Visibility = Visibility.Visible;
-                        break;
-                    default:
-                        break;
-                }
-
+                // History
+                int removes2 = this.History.Push(layer.GetVisibilityHistory());
                 this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.LayerButton.Click += (s, e) =>
+            {
+                this.SetLayer(this.LayerListView.SelectedItem as ILayer);
+                this.LayerFlyout.ShowAt(this.AddButton);
             };
         }
 
         private void ConstructLayer()
         {
+            this.OpacitySlider.ValueChanged += (s, e) =>
+            {
+                float opacity = (float)(e.NewValue / 100);
+                foreach (object item in this.LayerListView.SelectedItems)
+                {
+                    if (item is ILayer layer)
+                    {
+                        layer.Opacity = opacity;
+                    }
+                }
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.BlendModeListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is BlendEffectMode item)
+                {
+                    bool isNone = item.IsNone();
+
+                    foreach (object item2 in this.LayerListView.SelectedItems)
+                    {
+                        if (item2 is ILayer layer)
+                        {
+                            if (isNone) layer.BlendMode = null;
+                            else layer.BlendMode = item;
+                        }
+                    }
+
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
+
             this.ClearButton.Click += (s, e) =>
             {
                 int index = this.LayerListView.SelectedIndex;
@@ -76,6 +127,7 @@ namespace Luo_Painter
 
                 int index = Math.Min(startingIndex, this.ObservableCollection.Count - 1);
                 this.LayerListView.SelectedIndex = index;
+                this.SetLayer(this.LayerListView.SelectedItem as ILayer);
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -99,7 +151,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();
+            //this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();
         }
 
     }
