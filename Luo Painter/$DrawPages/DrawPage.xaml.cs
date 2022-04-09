@@ -98,6 +98,13 @@ namespace Luo_Painter
     }
 
 
+    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
+    internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
+
+    internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendGroupType, BlendEffectMode> { }
+    internal sealed class BlendGrouping : Grouping<BlendGroupType, BlendEffectMode> { }
+
+
     internal sealed class RadianRange
     {
         public Range Range { get; } = new Range

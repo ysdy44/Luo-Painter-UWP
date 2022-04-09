@@ -54,7 +54,7 @@ namespace Luo_Painter
         {
             this.SetToolType(this.ToolType);
             this.SetToolGroupType(this.ToolGroupType);
-            this.ToolListView.SelectedIndex = this.ToolGroupingList.GetIndex(ToolType.PaintBrush);
+            this.ToolListView.SelectedIndex = this.ToolGroupingList.IndexOf(ToolType.PaintBrush);
             this.ToolListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is ToolType item)
@@ -63,7 +63,7 @@ namespace Luo_Painter
                     this.ToolType = item;
                     this.SetToolType(item);
 
-                    ToolGroupType groupType = this.ToolGroupingList.GetGroupType(item);
+                    ToolGroupType groupType = this.ToolGroupingList[item];
 
                     if (this.ToolGroupType == groupType) return;
                     this.ToolGroupType = groupType;
@@ -75,7 +75,7 @@ namespace Luo_Painter
         private void ConstructBlends()
         {
             this.SetBlendType(this.BlendType);
-            this.BlendListView.SelectedIndex = this.BlendGroupingList.GetIndex(this.BlendType);
+            this.BlendListView.SelectedIndex = this.BlendGroupingList.IndexOf(this.BlendType);
             this.BlendListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is BlendEffectMode item)
