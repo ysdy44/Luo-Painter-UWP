@@ -93,30 +93,6 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public IHistory GetVisibilityHistory()
-        {
-            switch (base.Visibility)
-            {
-                case Visibility.Visible:
-                    base.Visibility = Visibility.Collapsed;
-                    return new VisibilityHistory
-                    {
-                        Id = base.Id,
-                        UndoParameter = Visibility.Visible,
-                        RedoParameter = Visibility.Collapsed
-                    };
-                case Visibility.Collapsed:
-                    base.Visibility = Visibility.Visible;
-                    return new VisibilityHistory
-                    {
-                        Id = base.Id,
-                        UndoParameter = Visibility.Collapsed,
-                        RedoParameter = Visibility.Visible
-                    };
-                default:
-                    return null;
-            }
-        }
         public IHistory GetBitmapHistory()
         {
             BitmapHistory bitmap = new BitmapHistory
