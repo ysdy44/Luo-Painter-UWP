@@ -49,14 +49,12 @@ namespace Luo_Painter.TestApp
                 if (result != true) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+                this.SourceCanvasControl.Invalidate(); // Invalidate
+                this.TempCanvasControl.Invalidate(); // Invalidate
             };
             this.PressureSlider.ValueChanged += (s, e) => this.Pressure = (float)(e.NewValue / 100f);
-            this.RangeSizeSlider.ValueChanged += (s, e) =>
-            {
-                this.RangeSize = (float)e.NewValue;
-
-                this.CanvasControl.Invalidate();
-            };
+            this.RangeSizeSlider.ValueChanged += (s, e) => this.RangeSize = (float)e.NewValue;
         }
 
         private void ConstructCanvas()

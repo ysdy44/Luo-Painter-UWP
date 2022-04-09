@@ -17,32 +17,45 @@ namespace Luo_Painter.TestApp
 {
     public sealed partial class ScrollerPage : Page
     {
+        public UIElement Target => this.InkCanvas;
 
         public ScrollerPage()
         {
             this.InitializeComponent();
+            this.ConstructScroller();
 
             this.InkCanvas.InkPresenter.InputDeviceTypes = (CoreInputDeviceTypes)7;
             this.InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(new InkDrawingAttributes
             {
                 Color = Colors.Red,
             });
+        }
 
+
+        private void ConstructScroller()
+        {
             this.Thumb.DragStarted += async (s, e) =>
             {
-                await this.Scroller.RenderAsync(this.InkCanvas);
+                if (this.Target.Visibility == Visibility.Collapsed) return;
+                await this.Scroller.RenderAsync(this.Target);
                 this.Scroller.DragStarted();
-                this.InkCanvas.Visibility = Visibility.Collapsed;
+                this.Target.Visibility = Visibility.Collapsed;
             };
             this.Thumb.DragDelta += (s, e) => this.Scroller.DragDelta(e.HorizontalChange, e.VerticalChange);
             this.Thumb.DragCompleted += (s, e) => this.Scroller.DragCompleted();
 
-            this.Scroller.DragPageDownCompleted += (s, e) => this.InkCanvas.Visibility = Visibility.Visible;
+            this.Scroller.DragPageDownCompleted += (s, e) => this.Target.Visibility = Visibility.Visible;
             this.Scroller.DragPageUpCompleted += (s, e) =>
             {
-                this.InkCanvas.InkPresenter.StrokeContainer.Clear();
-                this.InkCanvas.Visibility = Visibility.Visible;
+                this.Clear();
+                this.Target.Visibility = Visibility.Visible;
             };
+        }
+
+
+        public void Clear()
+        {
+            this.InkCanvas.InkPresenter.StrokeContainer.Clear();
         }
 
         public async Task<FileUpdateStatus?> Save()
