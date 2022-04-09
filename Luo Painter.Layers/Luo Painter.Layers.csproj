@@ -125,9 +125,7 @@
     <Compile Include="LayerType.cs" />
     <Compile Include="Models\BitmapLayer.cs" />
     <Compile Include="Models\BitmapLayer.Region.cs" />
-    <Compile Include="Models\BitmapLayer.Render.cs" />
     <Compile Include="Models\BitmapLayer.Source.cs" />
-    <Compile Include="Models\BitmapLayer.Thumbnail.cs" />
     <Compile Include="PaintExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayCommand.cs" />
