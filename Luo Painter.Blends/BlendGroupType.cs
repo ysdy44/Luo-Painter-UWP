@@ -3,15 +3,10 @@
     public enum BlendGroupType
     {
         None,
-
-        Multiply,
-        Theme,
-        Burn,
-        Themer,
-        Dodge,
-        Light,
-        Mix,
+        Darken,
+        Lighten,
+        Contrast,
+        Difference,
         Color,
-        Composite,
     }
 }

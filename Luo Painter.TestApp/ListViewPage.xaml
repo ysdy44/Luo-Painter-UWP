@@ -15,9 +15,9 @@
 
     <FrameworkElement.Resources>
         <!--CollectionViewSource-->
-        <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
+        <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <tools:ToolGroupingList>
+                <tools:ToolGroupingList x:Name="ToolGroupingList">
                     <tools:ToolGrouping Key="Pixel">
                         <tools:ToolType>MarqueeRectangular</tools:ToolType>
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
@@ -31,6 +31,7 @@
                         <tools:ToolType>PaintWatercolorPen</tools:ToolType>
                         <tools:ToolType>PaintPencil</tools:ToolType>
                         <tools:ToolType>PaintEraseBrush</tools:ToolType>
+                        <tools:ToolType>PaintLiquefaction</tools:ToolType>
                         <tools:ToolType>PatternGrid</tools:ToolType>
                         <tools:ToolType>PatternDiagonal</tools:ToolType>
                         <tools:ToolType>PatternSpotted</tools:ToolType>
@@ -75,57 +76,60 @@
                 </tools:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
-        <CollectionViewSource x:Name="CollectionViewSource2" IsSourceGrouped="True">
+
+        <blends:BlendGrouping x:Name="BlendCollection" Key="None">
+            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+        </blends:BlendGrouping>
+
+        <CollectionViewSource x:Name="BlendCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <blends:BlendGroupingList>
-                    <blends:NoneBlendGrouping/>
-                    <blends:BlendGrouping Key="Multiply">
-                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Multiply">
-                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Theme">
-                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                <blends:BlendGroupingList x:Name="BlendGroupingList">
+                    <blends:BlendGrouping Key="None">
+                        <effects:BlendEffectMode>-1</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
                     </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Burn">
+                    <blends:BlendGrouping Key="Darken">
+                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
                         <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Themer">
                         <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
                     </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Dodge">
+                    <blends:BlendGrouping Key="Lighten">
+                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
                         <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
                     </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Light">
+                        <blends:BlendGrouping Key="Contrast">
                         <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
                         <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Mix">
                         <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
+                    </blends:BlendGrouping>
+                    <blends:BlendGrouping Key="Difference">
                         <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Division</effects:BlendEffectMode>
                     </blends:BlendGrouping>
                     <blends:BlendGrouping Key="Color">
                         <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Color</effects:BlendEffectMode>
-                    </blends:BlendGrouping>
-                    <blends:BlendGrouping Key="Composite">
                         <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Division</effects:BlendEffectMode>
                     </blends:BlendGrouping>
                 </blends:BlendGroupingList>
             </CollectionViewSource.Source>
@@ -143,7 +147,7 @@
             Padding="12"
             IsItemClickEnabled="True"               
             SelectionMode="Extended"               
-            ItemsSource="{x:Bind CollectionViewSource.View}"
+            ItemsSource="{x:Bind ToolCollectionViewSource.View}"
             >
 
             <ItemsControl.ItemContainerTransitions>
@@ -230,7 +234,7 @@
             Padding="12"
             IsItemClickEnabled="True"               
             SelectionMode="Extended"               
-            ItemsSource="{x:Bind CollectionViewSource2.View}"
+            ItemsSource="{x:Bind BlendCollectionViewSource.View}"
             >
 
             <ItemsControl.ItemContainerTransitions>
