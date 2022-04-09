@@ -46,7 +46,7 @@ namespace Luo_Painter.Layers
                 this.OnPropertyChanged(nameof(Opacity)); // Notify 
             }
         }
-        private float opacity;
+        private float opacity = 1;
         public float StartingOpacity { get; private set; }
         public void CacheOpacity() => this.StartingOpacity = this.Opacity;
 

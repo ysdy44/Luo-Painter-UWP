@@ -24,6 +24,8 @@ namespace Luo_Painter.Layers.Models
             {
                 ds.DrawImage(bitmap);
             }
+
+            this.RenderThumbnail();
         }
 
         public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height)
