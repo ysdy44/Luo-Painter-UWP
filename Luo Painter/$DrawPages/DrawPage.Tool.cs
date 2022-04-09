@@ -114,7 +114,7 @@ namespace Luo_Painter
             }
         }
 
-        private void Tool_Delta(Vector2 staringPosition, Vector2 position, float pressure)
+        private void Tool_Delta(Vector2 staringPosition, Vector2 position, float staringPressure, float pressure)
         {
             switch (this.ToolType)
             {
@@ -124,7 +124,7 @@ namespace Luo_Painter
                 case ToolType.PaintEraseBrush:
                 case ToolType.PaintLiquefaction:
                     if (this.BitmapLayer == null) return;
-                    this.Paint_Delta(this.BitmapLayer, staringPosition, position, pressure, this.ColorPicker.Color);
+                    this.Paint_Delta(this.BitmapLayer, staringPosition, position, staringPressure, pressure, this.ColorPicker.Color);
                     break;
                 default:
                     break;

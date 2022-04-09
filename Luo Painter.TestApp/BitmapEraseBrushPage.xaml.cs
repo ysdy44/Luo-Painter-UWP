@@ -15,9 +15,10 @@ namespace Luo_Painter.TestApp
         BitmapLayer BitmapLayer;
 
         Vector2 Position;
+        float Pressure;
 
         InkMode InkMode = InkMode.EraseDry;
-        float Opacity2 = 0.4f;
+        float InkOpacity = 0.4f;
 
         public BitmapEraseBrushPage()
         {
@@ -41,7 +42,7 @@ namespace Luo_Painter.TestApp
             };
             this.OpacitySlider.ValueChanged += (s, e) =>
             {
-                this.Opacity2 = (float)e.NewValue;
+                this.InkOpacity = (float)e.NewValue;
             };
             this.ClearButton.Click += (s, e) =>
             {
@@ -126,6 +127,7 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                this.Pressure = properties.Pressure;
 
                 this.BitmapLayer.InkMode = this.GetInkMode();
                 this.BitmapLayer.InkMode = this.InkMode;
@@ -137,21 +139,23 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Delta += (point, properties) =>
             {
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                float pressure = properties.Pressure;
 
                 switch (this.BitmapLayer.InkMode)
                 {
                     case InkMode.None:
                         break;
                     case InkMode.EraseDry:
-                        this.BitmapLayer.ErasingDry(this.Position, position, 12 * properties.Pressure);
+                        this.BitmapLayer.ErasingDry(this.Position, position, this.Pressure, properties.Pressure, 12);
                         break;
                     case InkMode.EraseWetWithOpacity:
-                        this.BitmapLayer.ErasingWet(this.Position, position, 12 * properties.Pressure);
+                        this.BitmapLayer.ErasingWet(this.Position, position, this.Pressure, properties.Pressure, 12);
                         break;
                     default:
                         break;
                 }
                 this.Position = position;
+                this.Pressure = pressure;
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -210,7 +214,7 @@ namespace Luo_Painter.TestApp
 
         private InkMode GetInkMode()
         {
-            if (this.Opacity2 == 1f)
+            if (this.InkOpacity == 1f)
                 return InkMode.EraseDry;
             else
                 return InkMode.EraseWetWithOpacity;
@@ -223,7 +227,7 @@ namespace Luo_Painter.TestApp
                 case InkMode.EraseDry:
                     return this.BitmapLayer.Source;
                 case InkMode.EraseWetWithOpacity:
-                    return this.BitmapLayer.GetEraseWeting(this.Opacity2);
+                    return this.BitmapLayer.GetEraseWeting(this.InkOpacity);
                 default:
                     return this.BitmapLayer.Source;
             }

@@ -53,6 +53,8 @@ namespace Luo_Painter
     {
 
         Vector2 Position;
+        float Pressure;
+
         Mesh Mesh;
         byte[] LiquefactionShaderCodeBytes;
 
@@ -116,17 +118,20 @@ namespace Luo_Painter
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.Position = this.ToPosition(point);
+                this.Pressure = properties.Pressure;
                 this.Tool_Start(this.Position);
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
                 Vector2 position = this.ToPosition(point);
-                this.Tool_Delta(this.Position, position, properties.Pressure);
+                this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
                 this.Position = position;
+                this.Pressure = properties.Pressure;
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
                 Vector2 position = this.ToPosition(point);
+                this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
                 this.Tool_Complete(position);
             };
 

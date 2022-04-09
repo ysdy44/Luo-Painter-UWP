@@ -30,7 +30,7 @@ namespace Luo_Painter
             };
         }
 
-        private void Paint_Delta(BitmapLayer bitmapLayer, Vector2 staringPosition, Vector2 position, float pressure, Color color)
+        private void Paint_Delta(BitmapLayer bitmapLayer, Vector2 staringPosition, Vector2 position, float staringPressure, float pressure, Color color)
         {
             Rect rect = staringPosition.GetRect(this.InkSize);
             bitmapLayer.Hit(rect);
@@ -38,19 +38,19 @@ namespace Luo_Painter
             switch (bitmapLayer.InkMode)
             {
                 case InkMode.Dry:
-                    bitmapLayer.FillCircleDry(staringPosition, position, this.InkSize * pressure, color);
+                    bitmapLayer.FillCircleDry(staringPosition, position, staringPressure, pressure, this.InkSize, color);
                     break;
                 case InkMode.WetWithOpacity:
                 case InkMode.WetWithBlendMode:
                 case InkMode.WetWithOpacityAndBlendMode:
-                    bitmapLayer.FillCircleWet(staringPosition, position, this.InkSize * pressure, color);
+                    bitmapLayer.FillCircleWet(staringPosition, position, staringPressure, pressure, this.InkSize, color);
                     break;
 
                 case InkMode.EraseDry:
-                    bitmapLayer.ErasingDry(staringPosition, position, this.InkSize * pressure);
+                    bitmapLayer.ErasingDry(staringPosition, position, staringPressure, pressure, this.InkSize);
                     break;
                 case InkMode.EraseWetWithOpacity:
-                    bitmapLayer.ErasingWet(staringPosition, position, this.InkSize * pressure);
+                    bitmapLayer.ErasingWet(staringPosition, position, staringPressure, pressure, this.InkSize);
                     break;
 
                 case InkMode.Liquefy:
@@ -59,7 +59,7 @@ namespace Luo_Painter
                         Source1BorderMode = EffectBorderMode.Hard,
                         Source1 = bitmapLayer.Source,
                         Properties =
-                        {           
+                        {
                             ["radius"] = bitmapLayer.ConvertValueToOne(this.InkSize),
                             ["position"] = bitmapLayer.ConvertValueToOne(staringPosition),
                             ["targetPosition"] = bitmapLayer.ConvertValueToOne(position),
@@ -145,7 +145,7 @@ namespace Luo_Painter
         private InkMode GetInkMode(bool isErase, bool isLiquefaction)
         {
             if (isLiquefaction) return InkMode.Liquefy;
-            
+
             if (isErase)
             {
                 if (this.InkOpacity == 1f) return InkMode.EraseDry;

@@ -21,7 +21,7 @@ namespace Luo_Painter.TestApp
         Vector2 Position;
         BitmapLayer BitmapLayer;
         ObservableCollection<ILayer> Layers { get; } = new ObservableCollection<ILayer>();
-    
+
         private IEnumerable<string> Ids()
         {
             foreach (object item in this.LayerListView.SelectedItems)
@@ -152,7 +152,7 @@ namespace Luo_Painter.TestApp
 
                 Rect rect = position.GetRect(12 * properties.Pressure);
                 this.BitmapLayer.Hit(rect);
-                this.BitmapLayer.FillCircleDry(this.Position, position, 12 * properties.Pressure, Colors.Black);
+                this.BitmapLayer.FillCircleDry(this.Position, position, 1, 1, 12, Colors.Black);
                 this.Position = position;
 
                 this.CanvasControl.Invalidate(); // Invalidate

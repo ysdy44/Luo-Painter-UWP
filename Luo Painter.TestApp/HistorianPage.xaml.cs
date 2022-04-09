@@ -16,7 +16,7 @@ namespace Luo_Painter.TestApp
         Vector2 Position;
         BitmapLayer BitmapLayer;
         Historian<IHistory> History { get; } = new Historian<IHistory>(20);
-        
+
         public HistorianPage()
         {
             this.InitializeComponent();
@@ -124,7 +124,7 @@ namespace Luo_Painter.TestApp
 
                 Rect rect = position.GetRect(12 * properties.Pressure);
                 this.BitmapLayer.Hit(rect);
-                this.BitmapLayer.FillCircleDry(this.Position, position, 12 * properties.Pressure, Colors.White);
+                this.BitmapLayer.FillCircleDry(this.Position, position, 1, 1, 12, Colors.White);
                 this.Position = position;
 
                 this.CanvasControl.Invalidate(); // Invalidate

@@ -16,7 +16,7 @@ namespace Luo_Painter.Layers.Models
 
         EraseDry,
         EraseWetWithOpacity,
-        
+
         Liquefy,
     }
 
@@ -117,10 +117,20 @@ namespace Luo_Painter.Layers.Models
             Mode = blendMode
         };
 
-        public void FillCircleDry(Vector2 position, Vector2 targetPosition, float size, Color color)
-            => this.FillCircle(position, targetPosition, size, color, this.SourceRenderTarget);
-        public void FillCircleWet(Vector2 position, Vector2 targetPosition, float size, Color color)
-            => this.FillCircle(position, targetPosition, size, color, this.TempRenderTarget);
+        public void FillCircleDry(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color)
+        {
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                ds.FillCircle(position, targetPosition, pressure, targetPressure, size, color);
+            }
+        }
+        public void FillCircleWet(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color)
+        {
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            {
+                ds.FillCircle(position, targetPosition, pressure, targetPressure, size, color);
+            }
+        }
 
 
         public ArithmeticCompositeEffect GetEraseWeting(float opacity) => new ArithmeticCompositeEffect
@@ -133,10 +143,20 @@ namespace Luo_Painter.Layers.Models
             Source2 = this.TempRenderTarget,
         };
 
-        public void ErasingDry(Vector2 position, Vector2 targetPosition, float size)
-            => this.ErasingDryCore(position, targetPosition, size);
-        public void ErasingWet(Vector2 position, Vector2 targetPosition, float size)
-            => this.ErasingWetCore(position, targetPosition, size);
+        public void ErasingDry(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size)
+        {
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                ds.ErasingDry(position, targetPosition, pressure, targetPressure, size);
+            }
+        }
+        public void ErasingWet(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size)
+        {
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                ds.ErasingWet(position, targetPosition, pressure, targetPressure, size);
+            }
+        }
 
     }
 }

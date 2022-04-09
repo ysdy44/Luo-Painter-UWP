@@ -15,10 +15,11 @@ namespace Luo_Painter.TestApp
         BitmapLayer BitmapLayer;
 
         Vector2 Position;
+        float Pressure;
 
         InkMode InkMode = InkMode.Dry;
-        float Opacity2 = 0.4f;
-        BlendEffectMode? BlendMode = null;
+        float InkOpacity = 0.4f;
+        BlendEffectMode? InkBlendMode = null;
 
         public BitmapBrushPage()
         {
@@ -44,14 +45,14 @@ namespace Luo_Painter.TestApp
             };
             this.OpacitySlider.ValueChanged += (s, e) =>
             {
-                this.Opacity2 = (float)e.NewValue;
+                this.InkOpacity = (float)e.NewValue;
             };
             this.BlendModeListView.ItemsSource = System.Enum.GetValues(typeof(BlendEffectMode));
             this.BlendModeListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {
-                    this.BlendMode = item;
+                    this.InkBlendMode = item;
                 }
             };
             this.ClearButton.Click += (s, e) =>
@@ -136,6 +137,7 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                this.Pressure = properties.Pressure;
 
                 this.BitmapLayer.InkMode = this.GetInkMode();
                 this.BitmapLayer.InkMode = this.InkMode;
@@ -147,23 +149,25 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Delta += (point, properties) =>
             {
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                float pressure = properties.Pressure;
 
                 switch (this.BitmapLayer.InkMode)
                 {
                     case InkMode.None:
                         break;
                     case InkMode.Dry:
-                        this.BitmapLayer.FillCircleDry(this.Position, position, 12 * properties.Pressure, this.ColorPicker.Color);
+                        this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, properties.Pressure, 12, this.ColorPicker.Color);
                         break;
                     case InkMode.WetWithOpacity:
                     case InkMode.WetWithBlendMode:
                     case InkMode.WetWithOpacityAndBlendMode:
-                        this.BitmapLayer.FillCircleWet(this.Position, position, 12 * properties.Pressure, this.ColorPicker.Color);
+                        this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, properties.Pressure, 12, this.ColorPicker.Color);
                         break;
                     default:
                         break;
                 }
                 this.Position = position;
+                this.Pressure = pressure;
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -224,16 +228,16 @@ namespace Luo_Painter.TestApp
 
         private InkMode GetInkMode()
         {
-            if (this.BlendMode == null)
+            if (this.InkBlendMode == null)
             {
-                if (this.Opacity2 == 1f)
+                if (this.InkOpacity == 1f)
                     return InkMode.Dry;
                 else
                     return InkMode.WetWithOpacity;
             }
             else
             {
-                if (this.Opacity2 == 1f)
+                if (this.InkOpacity == 1f)
                     return InkMode.WetWithBlendMode;
                 else
                     return InkMode.WetWithOpacityAndBlendMode;
@@ -247,11 +251,11 @@ namespace Luo_Painter.TestApp
                 case InkMode.Dry:
                     return this.BitmapLayer.Source;
                 case InkMode.WetWithOpacity:
-                    return this.BitmapLayer.GetWeting(this.Opacity2);
+                    return this.BitmapLayer.GetWeting(this.InkOpacity);
                 case InkMode.WetWithBlendMode:
-                    return this.BitmapLayer.GetWeting(this.BlendMode.Value);
+                    return this.BitmapLayer.GetWeting(this.InkBlendMode.Value);
                 case InkMode.WetWithOpacityAndBlendMode:
-                    return this.BitmapLayer.GetWeting(this.Opacity2, this.BlendMode.Value);
+                    return this.BitmapLayer.GetWeting(this.InkOpacity, this.InkBlendMode.Value);
                 default:
                     return this.BitmapLayer.Source;
             }
