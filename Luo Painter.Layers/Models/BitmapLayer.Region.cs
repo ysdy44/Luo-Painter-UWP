@@ -99,18 +99,32 @@ namespace Luo_Painter.Layers.Models
             {
                 case Visibility.Visible:
                     base.Visibility = Visibility.Collapsed;
-                    return new VisibilityHistory(base.Id, Visibility.Visible, Visibility.Collapsed);
+                    return new VisibilityHistory
+                    {
+                        Id = base.Id,
+                        UndoParameter = Visibility.Visible,
+                        RedoParameter = Visibility.Collapsed
+                    };
                 case Visibility.Collapsed:
                     base.Visibility = Visibility.Visible;
-                    return new VisibilityHistory(base.Id, Visibility.Collapsed, Visibility.Visible);
+                    return new VisibilityHistory
+                    {
+                        Id = base.Id,
+                        UndoParameter = Visibility.Collapsed,
+                        RedoParameter = Visibility.Visible
+                    };
                 default:
                     return null;
             }
         }
         public IHistory GetBitmapHistory()
         {
-            IDictionary<int, IBuffer> undo = new Dictionary<int, IBuffer>();
-            IDictionary<int, IBuffer> redo = new Dictionary<int, IBuffer>();
+            BitmapHistory bitmap = new BitmapHistory
+            {
+                Id = base.Id,
+                UndoParameter = new Dictionary<int, IBuffer>(),
+                RedoParameter = new Dictionary<int, IBuffer>(),
+            };
 
             for (int i = 0; i < this.Length; i++)
             {
@@ -124,42 +138,42 @@ namespace Luo_Painter.Layers.Models
                 int width = this.GetWidth(x);
                 int height = this.GetHeight(y);
 
-                undo[i] = this.OriginRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
-                redo[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
+                bitmap.UndoParameter[i] = this.OriginRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
+                bitmap.RedoParameter[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
             }
 
-            return new BitmapHistory(base.Id, undo, redo);
+            return bitmap;
         }
-        public IHistory GetBitmapClearHistory()
+        public IHistory GetBitmapClearHistory() => new BitmapClearHistory
         {
-            IBuffer undo = this.OriginRenderTarget.GetPixelBytes().AsBuffer();
-            return new BitmapClearHistory(base.Id, undo);
-        }
+            Id = base.Id,
+            UndoParameter = this.OriginRenderTarget.GetPixelBytes().AsBuffer()
+        };
         public bool Undo(IHistory history)
         {
             switch (history.Type)
             {
                 case HistoryType.Visibility:
-                    if (history.UndoParameter is Visibility visibility)
+                    if (history is VisibilityHistory visibility)
                     {
-                        base.Visibility = visibility;
+                        base.Visibility = visibility.UndoParameter;
                         return true;
                     }
                     else return false;
                 case HistoryType.Bitmap:
-                    if (history.UndoParameter is IDictionary<int, IBuffer> colors)
+                    if (history is BitmapHistory bitmap)
                     {
-                        this.SetPixelBytes(colors);
+                        this.SetPixelBytes(bitmap.UndoParameter);
                         this.Flush();
                         this.RenderThumbnail();
                         return true;
                     }
                     else return false;
                 case HistoryType.BitmapClear:
-                    if (history.UndoParameter is IBuffer colors2)
+                    if (history is BitmapClearHistory bitmapClear)
                     {
-                        this.OriginRenderTarget.SetPixelBytes(colors2);
-                        this.SourceRenderTarget.SetPixelBytes(colors2);
+                        this.OriginRenderTarget.SetPixelBytes(bitmapClear.UndoParameter);
+                        this.SourceRenderTarget.SetPixelBytes(bitmapClear.UndoParameter);
                         this.RenderThumbnail();
                         return true;
                     }
@@ -173,16 +187,16 @@ namespace Luo_Painter.Layers.Models
             switch (history.Type)
             {
                 case HistoryType.Visibility:
-                    if (history.RedoParameter is Visibility visibility)
+                    if (history is VisibilityHistory visibility)
                     {
-                        base.Visibility = visibility;
+                        base.Visibility = visibility.RedoParameter;
                         return true;
                     }
                     else return false;
                 case HistoryType.Bitmap:
-                    if (history.RedoParameter is IDictionary<int, IBuffer> colors)
+                    if (history is BitmapHistory bitmap)
                     {
-                        this.SetPixelBytes(colors);
+                        this.SetPixelBytes(bitmap.RedoParameter);
                         this.Flush();
                         this.RenderThumbnail();
                         return true;
