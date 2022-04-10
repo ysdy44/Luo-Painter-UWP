@@ -24,6 +24,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.Liquefaction: return "ms-appx:///Luo Painter.Shaders/Liquefaction.bin";
                 case ShaderType.GeneralBrush: return "ms-appx:///Luo Painter.Shaders/GeneralBrush.bin";
                 case ShaderType.SprayGun: return "ms-appx:///Luo Painter.Shaders/SprayGun.txt";
+                case ShaderType.GradientMapping: return "ms-appx:///Luo Painter.Shaders/GradientMapping.bin";
                 default: return null;
             }
         }

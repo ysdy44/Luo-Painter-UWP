@@ -5,5 +5,6 @@
         Liquefaction,
         GeneralBrush,
         SprayGun,
+        GradientMapping,
     }
 }

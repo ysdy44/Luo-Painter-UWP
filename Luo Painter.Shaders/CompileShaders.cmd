@@ -20,6 +20,7 @@ if not exist %INCLUDEPATH%\d2d1effecthelpers.hlsli (
 )
 
 call :COMPILE Liquefaction.hlsl   || goto END
+call :COMPILE GradientMapping.hlsl   || goto END
 
 goto END
 
