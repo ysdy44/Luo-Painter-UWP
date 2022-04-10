@@ -22,6 +22,7 @@ namespace Luo_Painter.TestApp
         BitmapLayer BitmapLayer; // 1024 * 1024
         PixelBounds InterpolationBounds; // 5 * 7
         PixelBounds PixelBounds; // 540 * 620
+        PixelBoundsMode PixelBoundsMode = PixelBoundsMode.Transarent;
 
         public PixelBoundsPage()
         {
@@ -35,8 +36,15 @@ namespace Luo_Painter.TestApp
                 bool? result = await this.AddAsync(file);
                 if (result != true) return;
 
-                this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds();
-                this.PixelBounds = this.BitmapLayer.CreatePixelBounds(this.InterpolationBounds);
+                Color[] colors = this.BitmapLayer.GetInterpolationColors();
+                this.PixelBoundsMode = this.BitmapLayer.GetInterpolationBoundsMode(colors);
+                this.TextBlock.Text = this.PixelBoundsMode.ToString();
+
+                if (this.PixelBoundsMode != PixelBoundsMode.Transarent)
+                {
+                    this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds(colors);
+                    this.PixelBounds = this.BitmapLayer.CreatePixelBounds(this.InterpolationBounds);
+                }
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -58,6 +66,8 @@ namespace Luo_Painter.TestApp
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);
                 args.DrawingSession.DrawRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.YellowGreen, stroke);
+
+                if (this.PixelBoundsMode == PixelBoundsMode.Transarent) return;
                 args.DrawingSession.DrawRectangle(this.InterpolationBounds.ToRect(BitmapLayer.Unit), Colors.Red, stroke);
                 args.DrawingSession.DrawRectangle(this.PixelBounds.ToRect(), Colors.DodgerBlue, stroke);
             };
@@ -81,6 +91,8 @@ namespace Luo_Painter.TestApp
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);
                 args.DrawingSession.DrawRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.YellowGreen, stroke);
+
+                if (this.PixelBoundsMode == PixelBoundsMode.Transarent) return;
                 args.DrawingSession.DrawRectangle(this.InterpolationBounds.ToRect(BitmapLayer.Unit), Colors.Red, stroke);
                 args.DrawingSession.DrawRectangle(this.PixelBounds.ToRect(), Colors.DodgerBlue, stroke);
             };

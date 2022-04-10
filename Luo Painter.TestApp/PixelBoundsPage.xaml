@@ -22,6 +22,10 @@
             <xaml:CanvasControl x:Name="OriginCanvasControl" Grid.Column="2"/>
         </Grid>
 
+        <TextBlock x:Name="TextBlock" Margin="70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TitleTextBlockStyle}">
+            
+        </TextBlock>
+
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <CommandBar.Content>

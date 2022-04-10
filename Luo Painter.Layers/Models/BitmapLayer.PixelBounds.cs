@@ -1,11 +1,18 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
+    public enum PixelBoundsMode
+    {
+        Transarent,
+        Solid,
+    }
+
     public struct PixelBounds
     {
         public static readonly PixelBounds Zero = new PixelBounds
@@ -80,7 +87,7 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
-        public PixelBounds CreateInterpolationBounds()
+        public Color[] GetInterpolationColors()
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
@@ -96,7 +103,17 @@ namespace Luo_Painter.Layers.Models
                 });
             }
 
-            return PixelBounds.CreateFromBytes(this.TempRenderTarget.GetPixelColors(0, 0, this.XLength, this.YLength), this.XLength, this.YLength);
+            return this.TempRenderTarget.GetPixelColors(0, 0, this.XLength, this.YLength);
+        }
+
+        public PixelBoundsMode GetInterpolationBoundsMode(Color[] InterpolationColors) =>
+            InterpolationColors.All(c => c.A == byte.MinValue) ?             
+            PixelBoundsMode.Transarent :            
+            PixelBoundsMode.Solid;
+
+        public PixelBounds CreateInterpolationBounds(Color[] InterpolationColors)
+        {
+            return PixelBounds.CreateFromBytes(InterpolationColors, this.XLength, this.YLength);
         }
 
         public PixelBounds CreatePixelBounds(PixelBounds interpolationBounds)
