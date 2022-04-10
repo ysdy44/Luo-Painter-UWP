@@ -10,6 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    
     <FrameworkElement.Resources>
         <!--Flyout-->
         <Flyout x:Name="ColorFlyout" Placement="Top">
@@ -25,6 +26,7 @@
         </Flyout>
     </FrameworkElement.Resources>
 
+    
     <Grid>
 
         <Grid>
@@ -37,6 +39,20 @@
             <Rectangle Grid.Column="1" Fill="Gray"/>
             <xaml:CanvasControl x:Name="OriginCanvasControl" Grid.Column="2"/>
         </Grid>
+
+        <Border CornerRadius="6" 
+                Padding="12,3" MinHeight="40" 
+                Background="Red" RequestedTheme="Dark" 
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Visibility="{x:Bind BooleanToVisibilityConverter(Selector.IsHitTestVisible), Mode=OneWay}">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="Delete"/>
+                <ContentControl Width="12"/>
+                <TextBlock FontWeight="Medium" VerticalAlignment="Center">
+                    Drag to Remove
+                </TextBlock>
+            </StackPanel>
+        </Border>
 
         <Border Margin="0,70" Padding="12" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <local:GradientStopSelectorWithUI x:Name="Selector" Margin="25,0" Height="50" >
@@ -77,30 +93,6 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Add
-                </AppBarButton.Label>
-            </AppBarButton>
-
-            <AppBarButton x:Name="RemoveButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="R"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Remove"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Remove
-                </AppBarButton.Label>
-            </AppBarButton>
-
-            <AppBarButton x:Name="ImageButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="I"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Pictures"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Image
                 </AppBarButton.Label>
             </AppBarButton>
 

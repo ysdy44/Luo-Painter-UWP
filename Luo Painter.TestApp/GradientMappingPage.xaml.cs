@@ -14,6 +14,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -25,7 +26,6 @@ namespace Luo_Painter.TestApp
         public GradientStop CurrentStop { get; private set; }
         public GradientStop CurrentStopUI { get; private set; }
 
-        double StaringX;
         readonly ObservableCollection<GradientStop> Stops = new ObservableCollection<GradientStop>();
         readonly GradientStopCollection StopsUI = new GradientStopCollection();
 
@@ -53,30 +53,81 @@ namespace Luo_Painter.TestApp
 
             base.ItemManipulationStarted += (s, e) =>
             {
-                this.SetCurrent(s);
-                this.StaringX = Canvas.GetLeft(this.CurrentButton);
+                UIElement button = e.Container;
+
+                button.RenderTransformOrigin = new Point
+                {
+                    X = Canvas.GetLeft(button) + e.Cumulative.Translation.X + base.Margin.Left,
+                    Y = Canvas.GetTop(button) + e.Cumulative.Translation.Y + base.Margin.Top,
+                };
+
+                int index = -1;
+                foreach (var item in base.Items)
+                {
+                    index++;
+                    if (item.Value == button)
+                    {
+                        Canvas.SetZIndex(button, index);
+                        break;
+                    }
+                }
             };
             base.ItemManipulationDelta += (s, e) =>
             {
-                if (this.CurrentButton == null) return;
-                if (this.CurrentStop == null) return;
-                if (this.CurrentStopUI == null) return;
+                UIElement button = e.Container;
 
+                // Remove
+                if (base.Count > 2)
+                {
+                    double staringY = button.RenderTransformOrigin.Y;
+                    double y = staringY + e.Cumulative.Translation.Y;
+                    bool isRemove = y < -50;
+
+                    if (isRemove)
+                    {
+                        Canvas.SetTop(button, y - base.Margin.Top);
+                        base.IsHitTestVisible = false;
+                        return;
+                    }
+                    else
+                    {
+                        Canvas.SetTop(button, -base.Margin.Top);
+                        base.IsHitTestVisible = true;
+                    }
+                }
+
+                double staringX = button.RenderTransformOrigin.X;
+                double x = staringX + e.Cumulative.Translation.X;
                 double width = base.ActualWidth;
-                double x = this.StaringX + e.Cumulative.Translation.X;
-                double offset = Math.Clamp(x / width, 0, 1);
+                double offsetX = Math.Clamp(x / width, 0, 1);
+                Canvas.SetLeft(button, offsetX * width - base.Margin.Left);
 
-                this.CurrentStop.Offset = offset;
-                this.CurrentStopUI.Offset = offset;
-
-                Canvas.SetLeft(this.CurrentButton, base.GetItemLeft(this.CurrentStop));
-                Canvas.SetTop(this.CurrentButton, base.GetItemTop(this.CurrentStop));
+                int index = Canvas.GetZIndex(button);
+                this.Stops[index].Offset = offsetX;
+                this.StopsUI[index].Offset = offsetX;
             };
             base.ItemManipulationCompleted += (s, e) =>
             {
-                this.CurrentButton = null;
-                this.CurrentStop = null;
-                this.CurrentStopUI = null;
+                UIElement button = e.Container;
+
+                // Remove
+                base.IsHitTestVisible = true;
+                if (base.Count > 2)
+                {
+                    double staringY = button.RenderTransformOrigin.Y;
+                    double y = staringY + e.Cumulative.Translation.Y;
+                    double height = base.ActualHeight;
+                    bool isRemove = y < -height;
+
+                    if (isRemove)
+                    {
+                        this.SetCurrent(button);
+                        this.RemoveCurrent();
+                    }
+                }
+
+                button.RenderTransformOrigin = new Point();
+                Canvas.SetZIndex(button, 0);
             };
         }
 
@@ -84,6 +135,54 @@ namespace Luo_Painter.TestApp
         {
             this.Stops.Add(new GradientStop { Color = color, Offset = offset });
             this.StopsUI.Add(new GradientStop { Color = color, Offset = offset });
+        }
+        public bool Interpolation(Point point)
+        {
+            double x = point.X;
+            double width = base.ActualWidth;
+            double offsetX = Math.Clamp(x / width, 0, 1); // 0.5
+
+            //double y = point.Y;
+            //double height = base.ActualHeight;
+            //double offsetY = Math.Clamp(y / height, 0, 1); // 0.5
+
+            GradientStop left = null; // 0
+            GradientStop right = null; // 1
+            foreach (GradientStop item in this.Stops)
+            {
+                double offset = item.Offset;
+                if (offset < offsetX)
+                {
+                    if (left is null) left = item;
+                    else if (item.Offset < left.Offset) continue;
+                    else left = item;
+                }
+                else if (offset > offsetX)
+                {
+                    if (right is null) right = item;
+                    else if (item.Offset > left.Offset) continue;
+                    else right = item;
+                }
+                else return false;
+            }
+
+            if (left is null) return false;
+            if (right is null) return false;
+
+            double length = Math.Abs(right.Offset - left.Offset);
+            double min = Math.Abs(left.Offset - offsetX) / length;
+            double max = Math.Abs(right.Offset - offsetX) / length;
+            Color color = new Color
+            {
+                A = 255,
+                R = (byte)(left.Color.R * min + right.Color.R * max),
+                G = (byte)(left.Color.G * min + right.Color.G * max),
+                B = (byte)(left.Color.B * min + right.Color.B * max),
+            };
+
+            this.Stops.Add(new GradientStop { Color = color, Offset = offsetX });
+            this.StopsUI.Add(new GradientStop { Color = color, Offset = offsetX });
+            return true;
         }
         public void Clear()
         {
@@ -116,7 +215,47 @@ namespace Luo_Painter.TestApp
             if (this.CurrentStopUI == null) return;
             this.CurrentStopUI.Color = color;
         }
+        public void SetCurrentOffset(Point point)
+        {
+            double x = point.X;
+            double width = base.ActualWidth;
+            double offsetX = Math.Clamp(x / width, 0, 1); // 0.5
 
+            if (this.CurrentButton == null) return;
+            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
+
+            if (this.CurrentStop == null) return;
+            this.CurrentStop.Offset = offsetX;
+
+            if (this.CurrentStopUI == null) return;
+            this.CurrentStopUI.Offset = offsetX;
+        }
+
+        public void SetCurrent(Point point, double distance = 20)
+        {
+            double width = base.ActualWidth;
+
+            this.CurrentButton = null;
+            this.CurrentStop = null;
+            foreach (var item in base.Items)
+            {
+                double offset = item.Key.Offset;
+                double x = offset * width;
+
+                if (Math.Abs(x - point.X) < distance)
+                {
+                    this.CurrentButton = item.Value;
+                    this.CurrentStop = item.Key;
+                }
+            }
+            if (this.CurrentStop == null) return;
+
+            foreach (GradientStop item in this.StopsUI)
+            {
+                if (item.Offset == this.CurrentStop.Offset)
+                    this.CurrentStopUI = item;
+            }
+        }
         public void SetCurrent(object sender)
         {
             this.CurrentButton = sender as Button;
@@ -127,10 +266,8 @@ namespace Luo_Painter.TestApp
 
             foreach (GradientStop item in this.StopsUI)
             {
-                if (item.Offset == this.CurrentStop.Offset && item.Color == this.CurrentStop.Color)
-                {
+                if (item.Offset == this.CurrentStop.Offset)
                     this.CurrentStopUI = item;
-                }
             }
         }
 
@@ -151,6 +288,9 @@ namespace Luo_Painter.TestApp
     public sealed partial class GradientMappingPage : Page
     {
 
+        //@Converter
+        private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
+
         readonly CanvasDevice Device = new CanvasDevice();
         CanvasBitmap CanvasBitmap;
         CanvasRenderTarget Map;
@@ -160,11 +300,12 @@ namespace Luo_Painter.TestApp
         public GradientMappingPage()
         {
             this.InitializeComponent();
+            this.ConstructSelectorItems();
             this.ConstructSelector();
             this.ConstructCanvas();
         }
 
-        private void ConstructSelector()
+        private void ConstructSelectorItems()
         {
             base.Loaded += (s, e) =>
             {
@@ -182,7 +323,46 @@ namespace Luo_Painter.TestApp
                 this.ColorPicker.Color = this.Selector.CurrentStop.Color;
                 this.ColorFlyout.ShowAt(this.Selector.CurrentButton);
             };
-            this.Selector.ItemManipulationDelta += (s, e) => this.OriginCanvasControl.Invalidate(); // Invalidate
+
+            this.Selector.ItemManipulationStarted += (s, e) =>
+            {
+                e.Handled = true; // ManipulationStarted
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.Selector.ItemManipulationDelta += (s, e) =>
+            {
+                e.Handled = true; // ManipulationDelta
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.Selector.ItemManipulationCompleted += (s, e) =>
+            {
+                e.Handled = true; // ManipulationCompleted
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+        }
+
+        private void ConstructSelector()
+        {
+            this.Selector.ManipulationMode = Windows.UI.Xaml.Input.ManipulationModes.TranslateX;
+            this.Selector.ManipulationStarted += (s, e) =>
+            {
+                Point point = e.Position;
+                bool result = this.Selector.Interpolation(point);
+                if (result == false) return;
+
+                this.Selector.SetCurrent(point);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.Selector.ManipulationDelta += (s, e) =>
+            {
+                this.Selector.SetCurrentOffset(e.Position);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.Selector.ManipulationCompleted += (s, e) =>
+            {
+                this.Selector.SetCurrentOffset(e.Position);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
 
             this.ColorPicker.ColorChanged += (s, e) =>
             {
@@ -190,17 +370,7 @@ namespace Luo_Painter.TestApp
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
 
-            this.AddButton.Click += (s, e) =>
-            {
-                this.Selector.Add(Colors.DodgerBlue, 0);
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.RemoveButton.Click += (s, e) =>
-            {
-                this.Selector.RemoveCurrent();
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.ImageButton.Click += async (s, e) =>
+            this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
                 if (file == null) return;

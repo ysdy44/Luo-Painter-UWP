@@ -65,7 +65,7 @@ namespace Luo_Painter.Elements
             element.Style = this.ItemStyle;
             element.ContentTemplate = this.ItemTemplate;
             element.Click += this.ItemClick;
-            element.ManipulationMode = ManipulationModes.TranslateX;
+            element.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY;
             element.ManipulationStarted += this.ItemManipulationStarted;
             element.ManipulationDelta += this.ItemManipulationDelta;
             element.ManipulationCompleted += this.ItemManipulationCompleted;
@@ -113,6 +113,9 @@ namespace Luo_Painter.Elements
         /// </summary>
         /// <param name="value"> The value of item. </param>
         protected abstract void RemoveItemHandle(TValue value);
+
+        /// <summary> Gets the count of <see cref = "TSelector{TKey, TValue}" />'s items. </summary>
+        public int Count => this.Items.Count;
 
         /// <summary> Gets the items of <see cref = "TSelector{TKey, TValue}" />. </summary>
         protected readonly IDictionary<TKey, TValue> Items = new Dictionary<TKey, TValue>();
@@ -236,6 +239,7 @@ namespace Luo_Painter.Elements
                         this.RemoveItemHandle(item as TValue);
                     }
                     base.Children.Clear();
+                    this.Items.Clear();
                     break;
 
                 default:
