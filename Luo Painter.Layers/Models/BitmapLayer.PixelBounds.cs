@@ -65,6 +65,16 @@ namespace Luo_Painter.Layers.Models
         }
 
         public override string ToString() => $"{this.Left},{this.Top},{this.Right},{this.Bottom}";
+        public static bool operator ==(PixelBounds left, PixelBounds right) => left.Equals(right);
+        public static bool operator !=(PixelBounds left, PixelBounds right) => !left.Equals(right);
+        public bool Equals(PixelBounds other)
+        {
+            if (this.Left != other.Left) return false;
+            if (this.Top != other.Top) return false;
+            if (this.Right != other.Right) return false;
+            if (this.Bottom != other.Bottom) return false;
+            return true;
+        }
     }
 
     public sealed partial class BitmapLayer : LayerBase, ILayer
@@ -81,7 +91,7 @@ namespace Luo_Painter.Layers.Models
                 ds.DrawImage(new ScaleEffect
                 {
                     Scale = new Vector2(1f / BitmapLayer.Unit),
-                    InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
+                    InterpolationMode = CanvasImageInterpolation.Anisotropic,
                     Source = this.SourceRenderTarget,
                 });
             }
@@ -101,7 +111,7 @@ namespace Luo_Painter.Layers.Models
             int width = interpolationBounds.Width();
             int height = interpolationBounds.Height();
 
-            if (this.Width < BitmapLayer.Unit + BitmapLayer.Unit || this.Height < BitmapLayer.Unit + BitmapLayer.Unit)
+            if (width < BitmapLayer.Unit + BitmapLayer.Unit || height < BitmapLayer.Unit + BitmapLayer.Unit)
             {
                 // ⬛ Rect 0,0,200,200
                 PixelBounds bounds = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, width, height), width, height);
@@ -124,13 +134,11 @@ namespace Luo_Painter.Layers.Models
                 // ⬒ Rect 0,924,1024,100
                 PixelBounds bottomBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Bottom - BitmapLayer.Unit, width, BitmapLayer.Unit), width, BitmapLayer.Unit);
 
-                return new PixelBounds
-                {
-                    Left = leftBar.Left + interpolationBounds.Left,
-                    Top = topBar.Top + interpolationBounds.Top,
-                    Right = rightBar.Right - BitmapLayer.Unit + interpolationBounds.Right,
-                    Bottom = bottomBar.Bottom - BitmapLayer.Unit + interpolationBounds.Bottom,
-                };
+                interpolationBounds.Left += (leftBar == PixelBounds.Zero) ? BitmapLayer.Unit : leftBar.Left;
+                interpolationBounds.Top += (topBar == PixelBounds.Zero) ? BitmapLayer.Unit : topBar.Top;
+                interpolationBounds.Right -= (rightBar == PixelBounds.Zero) ? BitmapLayer.Unit : (BitmapLayer.Unit - rightBar.Right);
+                interpolationBounds.Bottom -= (bottomBar == PixelBounds.Zero) ? BitmapLayer.Unit : (BitmapLayer.Unit - bottomBar.Bottom);
+                return interpolationBounds;
             }
         }
 
