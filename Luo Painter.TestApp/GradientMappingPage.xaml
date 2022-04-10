@@ -1,0 +1,110 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.GradientMappingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.TestApp"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Flyout-->
+        <Flyout x:Name="ColorFlyout" Placement="Top">
+            <ColorPicker x:Name="ColorPicker"
+                ColorSpectrumShape="Ring"
+                IsMoreButtonVisible="False"
+                IsColorSliderVisible="False"
+                IsColorChannelTextInputVisible="False"
+                IsHexInputVisible="False"
+                IsAlphaEnabled="False"
+                IsAlphaSliderVisible="True"
+                IsAlphaTextInputVisible="True" />
+        </Flyout>
+    </FrameworkElement.Resources>
+
+    <Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <xaml:CanvasControl x:Name="CanvasControl"/>
+            <Rectangle Grid.Column="1" Fill="Gray"/>
+            <xaml:CanvasControl x:Name="OriginCanvasControl" Grid.Column="2"/>
+        </Grid>
+
+        <Border Margin="0,70" Padding="12" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <local:GradientStopSelectorWithUI x:Name="Selector" Margin="25,0" Height="50" >
+                <local:GradientStopSelectorWithUI.ItemStyle>
+                    <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                        <Setter Property="Width" Value="50"/>
+                        <Setter Property="Height" Value="50"/>
+                        <Setter Property="Padding" Value="3"/>
+                    </Style>
+                </local:GradientStopSelectorWithUI.ItemStyle>
+                <local:GradientStopSelectorWithUI.ItemTemplate>
+                    <DataTemplate x:DataType="GradientStop">
+                        <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                            <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                    </DataTemplate>
+                </local:GradientStopSelectorWithUI.ItemTemplate>
+            </local:GradientStopSelectorWithUI>
+        </Border>
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <AppBarButton x:Name="AddButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="N"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Add"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Add
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="RemoveButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="R"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Remove"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Remove
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ImageButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="I"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Pictures"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Image
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+
+    </Grid>
+</Page>
