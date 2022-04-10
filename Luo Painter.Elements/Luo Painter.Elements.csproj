@@ -135,6 +135,7 @@
       <DependentUpon>SelectedButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThumbSlider.cs" />
+    <Compile Include="TSelector.cs" />
     <Compile Include="VisibleButton.xaml.cs">
       <DependentUpon>VisibleButton.xaml</DependentUpon>
     </Compile>
