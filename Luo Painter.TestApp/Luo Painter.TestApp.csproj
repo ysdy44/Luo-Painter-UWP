@@ -122,6 +122,9 @@
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PixelBoundsPage.xaml.cs">
+      <DependentUpon>PixelBoundsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GradientMappingPage.xaml.cs">
       <DependentUpon>GradientMappingPage.xaml</DependentUpon>
     </Compile>
@@ -219,6 +222,10 @@
     <Page Include="ArithmeticCompositeEffectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PixelBoundsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="GradientMappingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
