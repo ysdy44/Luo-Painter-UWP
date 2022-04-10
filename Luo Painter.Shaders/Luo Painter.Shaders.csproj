@@ -131,6 +131,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GradientMapping.bin" />
     <Content Include="Liquefaction.bin" />
     <Content Include="SprayGun.txt" />
   </ItemGroup>
@@ -141,6 +142,7 @@
     <None Include="CompileShaders.cmd" />
     <Content Include="GeneralBrush.bin" />
     <None Include="GeneralBrush.shader" />
+    <Content Include="GradientMapping.hlsl" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
     <None Include="SprayGun.shader" />
