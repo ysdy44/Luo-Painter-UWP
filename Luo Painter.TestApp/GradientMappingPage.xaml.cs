@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Elements;
-using Luo_Painter.Shaders;
+﻿using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -10,279 +9,54 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Graphics.Effects;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.TestApp
 {
-    internal class GradientStopSelectorWithUI : GradientStopSelector
+    internal sealed class GradientMesh
     {
-        public Button CurrentButton { get; private set; }
-        public GradientStop CurrentStop { get; private set; }
-        public GradientStop CurrentStopUI { get; private set; }
+        readonly int Length;
+        readonly CanvasRenderTarget Map;
+        public IGraphicsEffectSource Source => this.Map;
 
-        readonly ObservableCollection<GradientStop> Stops = new ObservableCollection<GradientStop>();
-        readonly GradientStopCollection StopsUI = new GradientStopCollection();
-
-        public GradientStopSelectorWithUI()
+        public GradientMesh(ICanvasResourceCreator resourceCreator, int length = 256)
         {
-            base.ItemSource = this.Stops;
-            base.Background = new LinearGradientBrush
-            {
-                StartPoint = new Point(0, 0),
-                EndPoint = new Point(1, 0),
-                GradientStops = this.StopsUI
-            };
-            base.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                foreach (var item in base.Items)
-                {
-                    Canvas.SetLeft(item.Value, base.GetItemLeft(item.Key));
-                    Canvas.SetTop(item.Value, base.GetItemTop(item.Key));
-                }
-            };
-
-
-            base.ItemManipulationStarted += (s, e) =>
-            {
-                UIElement button = e.Container;
-
-                button.RenderTransformOrigin = new Point
-                {
-                    X = Canvas.GetLeft(button) + e.Cumulative.Translation.X + base.Margin.Left,
-                    Y = Canvas.GetTop(button) + e.Cumulative.Translation.Y + base.Margin.Top,
-                };
-
-                int index = -1;
-                foreach (var item in base.Items)
-                {
-                    index++;
-                    if (item.Value == button)
-                    {
-                        Canvas.SetZIndex(button, index);
-                        break;
-                    }
-                }
-            };
-            base.ItemManipulationDelta += (s, e) =>
-            {
-                UIElement button = e.Container;
-
-                // Remove
-                if (base.Count > 2)
-                {
-                    double staringY = button.RenderTransformOrigin.Y;
-                    double y = staringY + e.Cumulative.Translation.Y;
-                    bool isRemove = y < -50;
-
-                    if (isRemove)
-                    {
-                        Canvas.SetTop(button, y - base.Margin.Top);
-                        base.IsHitTestVisible = false;
-                        return;
-                    }
-                    else
-                    {
-                        Canvas.SetTop(button, -base.Margin.Top);
-                        base.IsHitTestVisible = true;
-                    }
-                }
-
-                double staringX = button.RenderTransformOrigin.X;
-                double x = staringX + e.Cumulative.Translation.X;
-                double width = base.ActualWidth;
-                double offsetX = Math.Clamp(x / width, 0, 1);
-                Canvas.SetLeft(button, offsetX * width - base.Margin.Left);
-
-                int index = Canvas.GetZIndex(button);
-                this.Stops[index].Offset = offsetX;
-                this.StopsUI[index].Offset = offsetX;
-            };
-            base.ItemManipulationCompleted += (s, e) =>
-            {
-                UIElement button = e.Container;
-
-                // Remove
-                base.IsHitTestVisible = true;
-                if (base.Count > 2)
-                {
-                    double staringY = button.RenderTransformOrigin.Y;
-                    double y = staringY + e.Cumulative.Translation.Y;
-                    double height = base.ActualHeight;
-                    bool isRemove = y < -height;
-
-                    if (isRemove)
-                    {
-                        this.SetCurrent(button);
-                        this.RemoveCurrent();
-                    }
-                }
-
-                button.RenderTransformOrigin = new Point();
-                Canvas.SetZIndex(button, 0);
-            };
+            this.Length = length;
+            this.Map = new CanvasRenderTarget(resourceCreator, length, 1, 96);
         }
 
-        public void Add(Color color, double offset)
+        public void Render(ICanvasResourceCreator resourceCreator, IEnumerable<GradientStop> stops)
         {
-            this.Stops.Add(new GradientStop { Color = color, Offset = offset });
-            this.StopsUI.Add(new GradientStop { Color = color, Offset = offset });
-        }
-        public bool Interpolation(Point point)
-        {
-            double x = point.X;
-            double width = base.ActualWidth;
-            double offsetX = Math.Clamp(x / width, 0, 1); // 0.5
-
-            //double y = point.Y;
-            //double height = base.ActualHeight;
-            //double offsetY = Math.Clamp(y / height, 0, 1); // 0.5
-
-            GradientStop left = null; // 0
-            GradientStop right = null; // 1
-            foreach (GradientStop item in this.Stops)
-            {
-                double offset = item.Offset;
-                if (offset < offsetX)
-                {
-                    if (left is null) left = item;
-                    else if (item.Offset < left.Offset) continue;
-                    else left = item;
-                }
-                else if (offset > offsetX)
-                {
-                    if (right is null) right = item;
-                    else if (item.Offset > left.Offset) continue;
-                    else right = item;
-                }
-                else return false;
-            }
-
-            if (left is null) return false;
-            if (right is null) return false;
-
-            double length = Math.Abs(right.Offset - left.Offset);
-            double min = Math.Abs(left.Offset - offsetX) / length;
-            double max = Math.Abs(right.Offset - offsetX) / length;
-            Color color = new Color
-            {
-                A = 255,
-                R = (byte)(left.Color.R * min + right.Color.R * max),
-                G = (byte)(left.Color.G * min + right.Color.G * max),
-                B = (byte)(left.Color.B * min + right.Color.B * max),
-            };
-
-            this.Stops.Add(new GradientStop { Color = color, Offset = offsetX });
-            this.StopsUI.Add(new GradientStop { Color = color, Offset = offsetX });
-            return true;
-        }
-        public void Clear()
-        {
-            this.Stops.Clear();
-            this.StopsUI.Clear();
-        }
-
-        public void RemoveCurrent()
-        {
-            this.CurrentButton = null;
-
-            if (this.CurrentStop != null)
-            {
-                this.Stops.Remove(this.CurrentStop);
-                this.CurrentStop = null;
-            }
-
-            if (this.CurrentStopUI != null)
-            {
-                this.StopsUI.Remove(this.CurrentStopUI);
-                this.CurrentStopUI = null;
-            }
-        }
-
-        public void SetCurrentColor(Color color)
-        {
-            if (this.CurrentStop == null) return;
-            this.CurrentStop.Color = color;
-
-            if (this.CurrentStopUI == null) return;
-            this.CurrentStopUI.Color = color;
-        }
-        public void SetCurrentOffset(Point point)
-        {
-            double x = point.X;
-            double width = base.ActualWidth;
-            double offsetX = Math.Clamp(x / width, 0, 1); // 0.5
-
-            if (this.CurrentButton == null) return;
-            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
-
-            if (this.CurrentStop == null) return;
-            this.CurrentStop.Offset = offsetX;
-
-            if (this.CurrentStopUI == null) return;
-            this.CurrentStopUI.Offset = offsetX;
-        }
-
-        public void SetCurrent(Point point, double distance = 20)
-        {
-            double width = base.ActualWidth;
-
-            this.CurrentButton = null;
-            this.CurrentStop = null;
-            foreach (var item in base.Items)
-            {
-                double offset = item.Key.Offset;
-                double x = offset * width;
-
-                if (Math.Abs(x - point.X) < distance)
-                {
-                    this.CurrentButton = item.Value;
-                    this.CurrentStop = item.Key;
-                }
-            }
-            if (this.CurrentStop == null) return;
-
-            foreach (GradientStop item in this.StopsUI)
-            {
-                if (item.Offset == this.CurrentStop.Offset)
-                    this.CurrentStopUI = item;
-            }
-        }
-        public void SetCurrent(object sender)
-        {
-            this.CurrentButton = sender as Button;
-            if (this.CurrentButton == null) return;
-
-            this.CurrentStop = this.CurrentButton.Content as GradientStop;
-            if (this.CurrentStop == null) return;
-
-            foreach (GradientStop item in this.StopsUI)
-            {
-                if (item.Offset == this.CurrentStop.Offset)
-                    this.CurrentStopUI = item;
-            }
-        }
-
-        public IEnumerable<CanvasGradientStop> GetStops()
-        {
-            foreach (GradientStop item in this.Stops)
-            {
-                yield return new CanvasGradientStop
+            IEnumerable<CanvasGradientStop> array =
+                from item
+                in stops
+                select new CanvasGradientStop
                 {
                     Position = (float)item.Offset,
                     Color = item.Color,
                 };
+
+            CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(resourceCreator, array.ToArray())
+            {
+                StartPoint = Vector2.Zero,
+                EndPoint = new Vector2(this.Length, 0),
+            };
+
+            using (CanvasDrawingSession ds = this.Map.CreateDrawingSession())
+            {
+                ds.Units = CanvasUnits.Pixels;
+
+                ds.FillRectangle(0, 0, this.Length, 1, brush);
             }
         }
-
     }
 
     public sealed partial class GradientMappingPage : Page
@@ -292,9 +66,16 @@ namespace Luo_Painter.TestApp
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
         readonly CanvasDevice Device = new CanvasDevice();
-        CanvasBitmap CanvasBitmap;
-        CanvasRenderTarget Map;
+        readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>
+        {
+            [0] = Colors.LightBlue,
+            [0.3333] = Colors.LightSteelBlue,
+            [0.6666] = Colors.LightGoldenrodYellow,
+            [1] = Colors.PaleVioletRed,
+        };
 
+        CanvasBitmap CanvasBitmap;
+        GradientMesh GradientMesh;
         byte[] ShaderCodeBytes;
 
         public GradientMappingPage()
@@ -303,18 +84,11 @@ namespace Luo_Painter.TestApp
             this.ConstructSelectorItems();
             this.ConstructSelector();
             this.ConstructCanvas();
+            base.Loaded += (s, e) => this.Selector.Reset(this.Stops);
         }
 
         private void ConstructSelectorItems()
         {
-            base.Loaded += (s, e) =>
-            {
-                this.Selector.Add(Colors.LightBlue, 0);
-                this.Selector.Add(Colors.LightSteelBlue, 0.3333);
-                this.Selector.Add(Colors.LightGoldenrodYellow, 0.6666);
-                this.Selector.Add(Colors.PaleVioletRed, 1);
-            };
-
             this.Selector.ItemClick += (s, e) =>
             {
                 this.Selector.SetCurrent(s);
@@ -343,7 +117,7 @@ namespace Luo_Painter.TestApp
 
         private void ConstructSelector()
         {
-            this.Selector.ManipulationMode = Windows.UI.Xaml.Input.ManipulationModes.TranslateX;
+            this.Selector.ManipulationMode = ManipulationModes.TranslateX;
             this.Selector.ManipulationStarted += (s, e) =>
             {
                 Point point = e.Position;
@@ -381,6 +155,11 @@ namespace Luo_Painter.TestApp
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
+            this.ResetButton.Click += (s, e) =>
+            {
+                this.Selector.Reset(this.Stops);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
         }
 
         private void ConstructCanvas()
@@ -389,7 +168,7 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.Map = new CanvasRenderTarget(sender, 256, 1, 96);
+                this.GradientMesh = new GradientMesh(sender);
 
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
@@ -407,23 +186,13 @@ namespace Luo_Painter.TestApp
             {
                 if (this.CanvasBitmap == null) return;
 
-                var array = this.Selector.GetStops();
-                CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(this.CanvasControl, array.ToArray())
-                {
-                    StartPoint = new Vector2(0, 0),
-                    EndPoint = new Vector2(256, 0),
-                };
-
-                using (CanvasDrawingSession ds = this.Map.CreateDrawingSession())
-                {
-                    ds.FillRectangle(0, 0, 256, 1, brush);
-                }
+                this.GradientMesh.Render(sender, this.Selector.Source);
 
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
                     Source2BorderMode = EffectBorderMode.Hard,
                     Source1 = this.CanvasBitmap,
-                    Source2 = this.Map
+                    Source2 = this.GradientMesh.Source
                 });
             };
         }

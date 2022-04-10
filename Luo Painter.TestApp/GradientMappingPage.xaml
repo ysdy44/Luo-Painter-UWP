@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.TestApp"
-    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml" xmlns:elements="using:Luo_Painter.Elements"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -49,21 +49,21 @@
                 <SymbolIcon Symbol="Delete"/>
                 <ContentControl Width="12"/>
                 <TextBlock FontWeight="Medium" VerticalAlignment="Center">
-                    Drag to Remove
+                    Drop to Remove
                 </TextBlock>
             </StackPanel>
         </Border>
 
         <Border Margin="0,70" Padding="12" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
-            <local:GradientStopSelectorWithUI x:Name="Selector" Margin="25,0" Height="50" >
-                <local:GradientStopSelectorWithUI.ItemStyle>
+            <elements:GradientStopSelectorWithUI x:Name="Selector" Margin="25,0" Height="50" >
+                <elements:GradientStopSelector.ItemStyle>
                     <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
                         <Setter Property="Width" Value="50"/>
                         <Setter Property="Height" Value="50"/>
                         <Setter Property="Padding" Value="3"/>
                     </Style>
-                </local:GradientStopSelectorWithUI.ItemStyle>
-                <local:GradientStopSelectorWithUI.ItemTemplate>
+                </elements:GradientStopSelector.ItemStyle>
+                <elements:GradientStopSelector.ItemTemplate>
                     <DataTemplate x:DataType="GradientStop">
                         <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
                             <ToolTipService.ToolTip>
@@ -78,12 +78,18 @@
                             </Rectangle>
                         </Border>
                     </DataTemplate>
-                </local:GradientStopSelectorWithUI.ItemTemplate>
-            </local:GradientStopSelectorWithUI>
+                </elements:GradientStopSelector.ItemTemplate>
+            </elements:GradientStopSelectorWithUI>
         </Border>
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
+            <CommandBar.Content>
+                <TextBlock Margin="12,10,2,0">
+                   Drop to Remove ( Y less than -50 )
+                </TextBlock>
+            </CommandBar.Content>
+            
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="N"/>
@@ -93,6 +99,18 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Add
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ResetButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="R"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Refresh"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Reset
                 </AppBarButton.Label>
             </AppBarButton>
 
