@@ -125,6 +125,7 @@
     <Compile Include="LayerType.cs" />
     <Compile Include="Models\BitmapLayer.cs" />
     <Compile Include="Models\BitmapLayer.Region.cs" />
+    <Compile Include="Models\BitmapLayer.PixelBounds.cs" />
     <Compile Include="Models\BitmapLayer.Source.cs" />
     <Compile Include="PaintExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
