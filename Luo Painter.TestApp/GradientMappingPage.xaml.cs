@@ -100,18 +100,22 @@ namespace Luo_Painter.TestApp
 
             this.Selector.ItemManipulationStarted += (s, e) =>
             {
-                e.Handled = true; // ManipulationStarted
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
             this.Selector.ItemManipulationDelta += (s, e) =>
             {
-                e.Handled = true; // ManipulationDelta
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
             this.Selector.ItemManipulationCompleted += (s, e) =>
             {
-                e.Handled = true; // ManipulationCompleted
                 this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.Selector.ItemPreviewKeyDown += (s, e) =>
+            {
+                if (e.Handled)
+                {
+                    this.OriginCanvasControl.Invalidate(); // Invalidate
+                }
             };
         }
 

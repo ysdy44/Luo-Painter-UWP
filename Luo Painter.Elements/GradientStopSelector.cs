@@ -13,6 +13,7 @@ namespace Luo_Painter.Elements
         public event ManipulationStartedEventHandler ItemManipulationStarted;
         public event ManipulationDeltaEventHandler ItemManipulationDelta;
         public event ManipulationCompletedEventHandler ItemManipulationCompleted;
+        public event KeyEventHandler ItemPreviewKeyDown;
 
         #region DependencyProperty
 
@@ -56,6 +57,7 @@ namespace Luo_Painter.Elements
             element.ManipulationStarted -= this.ItemManipulationStarted;
             element.ManipulationDelta -= this.ItemManipulationDelta;
             element.ManipulationCompleted -= this.ItemManipulationCompleted;
+            element.PreviewKeyDown -= this.ItemPreviewKeyDown;
         }
         protected override void AddItemHandle(Button element)
         {
@@ -66,6 +68,7 @@ namespace Luo_Painter.Elements
             element.ManipulationStarted += this.ItemManipulationStarted;
             element.ManipulationDelta += this.ItemManipulationDelta;
             element.ManipulationCompleted += this.ItemManipulationCompleted;
+            element.PreviewKeyDown += this.ItemPreviewKeyDown;
         }
     }
 }

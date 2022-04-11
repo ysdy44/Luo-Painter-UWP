@@ -1,11 +1,12 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation;
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Elements
 {
@@ -61,6 +62,7 @@ namespace Luo_Painter.Elements
                         break;
                     }
                 }
+                e.Handled = true;
             };
             base.ItemManipulationDelta += (s, e) =>
             {
@@ -77,6 +79,7 @@ namespace Luo_Painter.Elements
                     {
                         Canvas.SetTop(button, y - base.Margin.Top);
                         base.IsHitTestVisible = false;
+                        e.Handled = true;
                         return;
                     }
                     else
@@ -95,6 +98,7 @@ namespace Luo_Painter.Elements
                 int index = Canvas.GetZIndex(button);
                 this.Stops[index].Offset = offsetX;
                 this.StopsUI[index].Offset = offsetX;
+                e.Handled = true;
             };
             base.ItemManipulationCompleted += (s, e) =>
             {
@@ -118,6 +122,57 @@ namespace Luo_Painter.Elements
 
                 button.RenderTransformOrigin = new Point();
                 Canvas.SetZIndex(button, 0);
+                e.Handled = true;
+            };
+            base.ItemPreviewKeyDown += (s, e) =>
+            {
+                switch (e.Key)
+                {
+                    case VirtualKey.Delete:
+                        if (base.Count > 2)
+                        {
+                            if (this.CurrentButton is null)
+                                this.SetCurrent(e.OriginalSource);
+                            this.RemoveCurrent();
+                            e.Handled = true;
+                        }
+                        break;
+                    case VirtualKey.Left:
+                        {
+                            if (this.CurrentButton is null)
+                                this.SetCurrent(e.OriginalSource);
+
+                            double offsetX = this.CurrentStop.Offset;
+                            offsetX = Math.Clamp(offsetX - 0.01, 0, 1);
+
+                            this.CurrentStop.Offset = offsetX;
+                            this.CurrentStopUI.Offset = offsetX;
+
+                            double width = base.ActualWidth;
+                            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
+                            e.Handled = true;
+                        }
+                        break;
+                    case VirtualKey.Right:
+                        {
+                            if (this.CurrentButton is null)
+                                this.SetCurrent(e.OriginalSource);
+
+                            double offsetX = this.CurrentStop.Offset;
+                            offsetX = Math.Clamp(offsetX + 0.01, 0, 1);
+
+                            this.CurrentStop.Offset = offsetX;
+                            this.CurrentStopUI.Offset = offsetX;
+
+                            double width = base.ActualWidth;
+                            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
+                            e.Handled = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
             };
         }
 
@@ -242,6 +297,7 @@ namespace Luo_Painter.Elements
                 if (Math.Abs(x - point.X) < distance)
                 {
                     this.CurrentButton = item.Value;
+                    this.CurrentButton.Focus(FocusState.Keyboard);
                     this.CurrentStop = item.Key;
                 }
             }
@@ -257,6 +313,7 @@ namespace Luo_Painter.Elements
         {
             this.CurrentButton = sender as Button;
             if (this.CurrentButton == null) return;
+            this.CurrentButton.Focus(FocusState.Keyboard);
 
             this.CurrentStop = this.CurrentButton.Content as GradientStop;
             if (this.CurrentStop == null) return;
