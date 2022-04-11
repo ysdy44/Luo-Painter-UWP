@@ -11,6 +11,13 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers.Models
 {
+    public enum ThumbnailType
+    {
+        None,
+        Origin,
+        Oversize,
+    }
+
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
@@ -27,6 +34,8 @@ namespace Luo_Painter.Layers.Models
         public ImageSource Thumbnail => this.ThumbnailWriteableBitmap;
         readonly CanvasRenderTarget ThumbnailRenderTarget;
         readonly WriteableBitmap ThumbnailWriteableBitmap;
+        readonly ThumbnailType ThumbnailType;
+        readonly Vector2 ThumbnailScale;
 
 
         //@Construct
@@ -58,6 +67,14 @@ namespace Luo_Painter.Layers.Models
             this.ThumbnailWriteableBitmap = new WriteableBitmap(50, 50);
             this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, 50, 50, 96);
 
+            int wh = Math.Max(width, height);
+            if (wh <= 50) this.ThumbnailType = ThumbnailType.Origin;
+            else if (wh >= 5000) this.ThumbnailType = ThumbnailType.Oversize;
+            else
+            {
+                this.ThumbnailScale = new Vector2(50f / wh);
+                this.ThumbnailType = ThumbnailType.None;
+            }
 
             this.Center = new Vector2((float)width / 2, (float)height / 2);
             this.Width = width;
@@ -131,13 +148,30 @@ namespace Luo_Painter.Layers.Models
             using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
             {
                 ds.Clear(Colors.Transparent);
-                ds.DrawImage(new ScaleEffect
+                switch (this.ThumbnailType)
                 {
-                    Scale = new Vector2(50f / Math.Max(this.Width, this.Height)),
-                    BorderMode = EffectBorderMode.Hard,
-                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    Source = this.SourceRenderTarget,
-                });
+                    case ThumbnailType.Origin:
+                        ds.DrawImage(this.SourceRenderTarget);
+                        break;
+                    case ThumbnailType.Oversize:
+                        ds.DrawImage(new ScaleEffect
+                        {
+                            Scale = new Vector2(0.01f),
+                            BorderMode = EffectBorderMode.Hard,
+                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                            Source = this.SourceRenderTarget,
+                        });
+                        break;
+                    default:
+                        ds.DrawImage(new ScaleEffect
+                        {
+                            Scale = this.ThumbnailScale,
+                            BorderMode = EffectBorderMode.Hard,
+                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                            Source = this.SourceRenderTarget,
+                        });
+                        break;
+                }
             }
 
             byte[] bytes = this.ThumbnailRenderTarget.GetPixelBytes();
