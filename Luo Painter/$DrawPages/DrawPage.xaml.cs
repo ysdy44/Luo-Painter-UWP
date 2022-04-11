@@ -2,6 +2,7 @@
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Layers;
+using Luo_Painter.Options;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
@@ -12,6 +13,8 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter
 {
@@ -56,7 +59,7 @@ namespace Luo_Painter
         #region DependencyProperty
 
 
-        /// <summary> Gets or set the type for <see cref="ToolIcon"/>. </summary>
+        /// <summary> Gets or set the type for <see cref="BlendIcon"/>. </summary>
         public BlendEffectMode Type
         {
             get => (BlendEffectMode)base.GetValue(TypeProperty);
@@ -97,12 +100,62 @@ namespace Luo_Painter
         #endregion
     }
 
+    internal sealed class OptionIcon : Button
+    {
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="OptionIcon"/>. </summary>
+        public OptionType Type
+        {
+            get => (OptionType)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "OptionIcon.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(OptionIcon), new PropertyMetadata(OptionType.None, (sender, e) =>
+        {
+            OptionIcon control = (OptionIcon)sender;
+
+            if (e.NewValue is OptionType value)
+            {
+                // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    control.Background = new ImageBrush
+                    {
+                        ImageSource = bitmap
+                    };
+                    bitmap.UriSource = new Uri(value.GetResource());
+                }
+
+                control.Content = new Border
+                {
+                    Height = 20,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Background = control.BorderBrush,
+                    Child = new TextBlock
+                    {
+                        Text = value.ToString(),
+                        TextTrimming = TextTrimming.CharacterEllipsis,
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    }
+                };
+            }
+        }));
+
+
+        #endregion
+    }
+
 
     internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
     internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
 
     internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendGroupType, BlendEffectMode> { }
     internal sealed class BlendGrouping : Grouping<BlendGroupType, BlendEffectMode> { }
+
+    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionGroupType, OptionType> { }
+    internal sealed class OptionGrouping : Grouping<OptionGroupType, OptionType> { }
 
 
     internal sealed class RadianRange

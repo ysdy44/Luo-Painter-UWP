@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
-    xmlns:blends="using:Luo_Painter.Blends"
+    xmlns:options="using:Luo_Painter.Options"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
     xmlns:tools="using:Luo_Painter.Tools"
@@ -139,6 +139,47 @@
                 </local:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
+
+        <local:OptionGroupingList x:Name="OptionCollection">
+            <local:OptionGrouping Key="Adjustment">
+                <options:OptionType>Gray</options:OptionType>
+                <options:OptionType>Invert</options:OptionType>
+                <options:OptionType>Exposure</options:OptionType>
+                <options:OptionType>Brightness</options:OptionType>
+                <options:OptionType>Saturation</options:OptionType>
+                <options:OptionType>HueRotation</options:OptionType>
+                <options:OptionType>Contrast</options:OptionType>
+                <options:OptionType>Temperature</options:OptionType>
+                <options:OptionType>HighlightsAndShadows</options:OptionType>
+            </local:OptionGrouping>
+            <local:OptionGrouping Key="Effect1">
+                <options:OptionType>GaussianBlur</options:OptionType>
+                <options:OptionType>DirectionalBlur</options:OptionType>
+                <options:OptionType>Sharpen</options:OptionType>
+                <options:OptionType>Shadow</options:OptionType>
+                <options:OptionType>ChromaKey</options:OptionType>
+                <options:OptionType>EdgeDetection</options:OptionType>
+                <options:OptionType>Border</options:OptionType>
+                <options:OptionType>Emboss</options:OptionType>
+                <options:OptionType>Lighting</options:OptionType>
+                <options:OptionType>LuminanceToAlpha</options:OptionType>
+                <options:OptionType>Fog</options:OptionType>
+                <options:OptionType>Sepia</options:OptionType>
+            </local:OptionGrouping>
+            <local:OptionGrouping Key="Effect2">
+                <options:OptionType>Posterize</options:OptionType>
+                <options:OptionType>Colouring</options:OptionType>
+                <options:OptionType>Tint</options:OptionType>
+                <options:OptionType>DiscreteTransfer</options:OptionType>
+                <options:OptionType>Vignette</options:OptionType>
+                <options:OptionType>GammaTransfer</options:OptionType>
+            </local:OptionGrouping>
+            <local:OptionGrouping Key="Effect3">
+                <options:OptionType>Glass</options:OptionType>
+                <options:OptionType>PinchPunch</options:OptionType>
+                <options:OptionType>Morphology</options:OptionType>
+            </local:OptionGrouping>
+        </local:OptionGroupingList>
 
         <local:BlendGrouping x:Name="BlendCollection" Key="None">
             <effects:BlendEffectMode>-1</effects:BlendEffectMode>
@@ -470,6 +511,101 @@
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
             </StackPanel>
+
+            <Button>
+                <Button.Flyout>
+                    <Flyout>
+                        <Grid Width="400">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="240"/>
+                            </Grid.RowDefinitions>
+                            <Button x:Name="OptionTypeButton" Visibility="Collapsed">
+                                <SymbolIcon Symbol="Repair"/>
+                            </Button>
+                            <ListBox                             
+                                SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}"                        
+                                HorizontalAlignment="Center" VerticalAlignment="Center"                            
+                                BorderThickness="1" BorderBrush="{ThemeResource SystemColorControlAccentBrush}"
+                                ItemsSource="{x:Bind OptionCollection}">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Padding" Value="10,2"/>
+                                        <Setter Property="Height" Value="28"/>
+                                        <Setter Property="MinWidth" Value="72"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:OptionGrouping">
+                                        <TextBlock Text="{x:Bind Key}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ListBox>
+                            <FlipView x:Name="FlipView" Grid.Row="1" Background="Transparent" ItemsSource="{x:Bind OptionCollection}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="local:OptionGrouping">
+                                        <ItemsControl ItemsSource="{x:Bind}" >
+
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="Margin" Value="4,2"/>
+                                                    <Setter Property="Width" Value="120"/>
+                                                    <Setter Property="Height" Value="74"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <local:OptionIcon 
+                                                        Padding="0"        
+                                                        FontWeight="Bold"                                 
+                                                        Foreground="{ThemeResource SystemBaseHighColor}" 
+                                                        BorderBrush="{ThemeResource SystemControlBackgroundAltMediumBrush}"
+                                                        HorizontalAlignment="Stretch"                                         
+                                                        VerticalAlignment="Stretch" 
+                                                        HorizontalContentAlignment="Stretch"
+                                                        VerticalContentAlignment="Stretch"                                           
+                                                        Style="{StaticResource TextBlockButtonStyle}"                                        
+                                                        Type="{Binding}"                                           
+                                                        CommandParameter="{Binding}"                                           
+                                                        Command="{Binding ElementName=OptionTypeButton, Path=Command, Mode=OneWay}"
+                                                        />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </FlipView>
+                        </Grid>
+                    </Flyout>
+                </Button.Flyout>
+                <FontIcon Glyph="&#x25D0;" FontSize="26" FontFamily="Segoe UI Emoji">
+                    <UIElement.RenderTransformOrigin>
+                        0.5,0.5
+                    </UIElement.RenderTransformOrigin>
+                    <UIElement.RenderTransform>
+                        <TranslateTransform Y="-1"/>
+                    </UIElement.RenderTransform>
+                </FontIcon>
+            </Button>
+
         </Grid>
 
 
@@ -686,9 +822,6 @@
                 <Button.Command>
                     <local:LayerCommand x:Name="VisualCommand"/>
                 </Button.Command>
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Insert"/>
-                </UIElement.KeyboardAccelerators>
                 <SymbolIcon Symbol="View"/>
             </Button>
 
@@ -819,7 +952,7 @@
                     <x:String>GIF</x:String>
                     <x:String>TIFF</x:String>
                 </ListView>
-
+                
             </StackPanel>
         </ContentDialog>
         <ContentDialog x:Name="SettingDislog" Style="{StaticResource AppContentDialogStyle}">
@@ -876,7 +1009,6 @@
                 </TextBlock>
             </StackPanel>
         </Border>
-
 
     </Grid>
 </Page>
