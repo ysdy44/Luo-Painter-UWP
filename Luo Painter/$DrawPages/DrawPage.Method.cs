@@ -90,10 +90,20 @@ namespace Luo_Painter
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
             {
                 ILayer item = this.ObservableCollection[i];
+
+                float opacity = item.Opacity;
+                if (opacity == 0) continue;
+
                 switch (item.Visibility)
                 {
                     case Visibility.Visible:
-                        ds.DrawImage(item.Source);
+                        ICanvasImage source = item.Source;
+                        if (opacity == 1) ds.DrawImage(source);
+                        else ds.DrawImage(new OpacityEffect
+                        {
+                            Opacity = opacity,
+                            Source = source
+                        });
                         break;
                     case Visibility.Collapsed:
                         break;
@@ -108,15 +118,25 @@ namespace Luo_Painter
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
             {
                 ILayer item = this.ObservableCollection[i];
+
+                float opacity = item.Opacity;
+                if (opacity == 0) continue;
+
                 switch (item.Visibility)
                 {
                     case Visibility.Visible:
-                        ds.DrawImage(new Transform2DEffect
+                        ICanvasImage source = new Transform2DEffect
                         {
                             BorderMode = EffectBorderMode.Hard,
                             InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                             TransformMatrix = matrix,
                             Source = item.Source,
+                        };
+                        if (opacity == 1) ds.DrawImage(source);
+                        else ds.DrawImage(new OpacityEffect
+                        {
+                            Opacity = opacity,
+                            Source = source
                         });
                         break;
                     case Visibility.Collapsed:
@@ -132,15 +152,25 @@ namespace Luo_Painter
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
             {
                 ILayer item = this.ObservableCollection[i];
+
+                float opacity = item.Opacity;
+                if (opacity == 0) continue;
+
                 switch (item.Visibility)
                 {
                     case Visibility.Visible:
-                        ds.DrawImage(new Transform2DEffect
+                        ICanvasImage source = new Transform2DEffect
                         {
                             BorderMode = EffectBorderMode.Hard,
                             InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                             TransformMatrix = matrix,
-                            Source = (id == item.Id) ? mezzanine : item.Source,
+                            Source = (item.Id == id) ? mezzanine : item.Source,
+                        };
+                        if (opacity == 1) ds.DrawImage(source);
+                        else ds.DrawImage(new OpacityEffect
+                        {
+                            Opacity = opacity,
+                            Source = source
                         });
                         break;
                     case Visibility.Collapsed:

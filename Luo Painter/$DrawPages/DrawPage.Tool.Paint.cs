@@ -69,17 +69,18 @@ namespace Luo_Painter
             };
             this.PaintCanvasControl.Draw += (sender, args) =>
             {
+                if (this.InkRender == null) return;
                 args.DrawingSession.DrawImage(this.InkRender.Souce);
             };
 
             this.PaintSizeSlider.ValueChanged += (s, e) =>
             {
                 this.InkSize = (float)e.NewValue;
+                this.PaintSizeSlider2.Value = e.NewValue;
 
+                if (this.InkRender == null) return;
                 this.InkRender.Render(this.InkSize);
                 this.PaintCanvasControl.Invalidate(); // Invalidate
-
-                this.PaintSizeSlider2.Value = e.NewValue;
             };
             this.PaintOpacitySlider.ValueChanged += (s, e) =>
             {

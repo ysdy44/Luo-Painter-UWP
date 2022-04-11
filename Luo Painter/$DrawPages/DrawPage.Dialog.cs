@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
+using Luo_Painter.Elements;
 
 namespace Luo_Painter
 {
@@ -8,7 +9,7 @@ namespace Luo_Painter
 
         private void ConstructDialog()
         {
-            this.ExportButton.Click += async (s, e) => await this.ExportDislog.ShowAsync(ContentDialogPlacement.InPlace);
+            this.ExportButton.Click += async (s, e) => await this.ExportDislog.ShowInstance();
             this.SettingButton.Click += async (s, e) =>
             {
                 float radian = this.Transformer.Radian;
@@ -17,7 +18,7 @@ namespace Luo_Painter
                 float scale = this.Transformer.Scale;
                 this.ScaleSlider.Value = this.ScaleRange.InverseProportion.ConvertYToX(scale);
 
-                await this.SettingDislog.ShowAsync(ContentDialogPlacement.InPlace);
+                await this.SettingDislog.ShowInstance();
             };
 
             this.ExportDislog.PrimaryButtonClick += async (s, e) =>
