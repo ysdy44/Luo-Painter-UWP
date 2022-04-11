@@ -330,9 +330,9 @@
                 <Rectangle Margin="0,4"/>
 
                 <Slider x:Name="OpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
-                    <Slider.Tag>
+                    <FrameworkElement.Tag>
                         Opacity
-                    </Slider.Tag>
+                    </FrameworkElement.Tag>
                     <Slider.Header>
                         <Button MinWidth="50" Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" Style="{StaticResource TextBlockButtonStyle}">
                             <Button.Flyout>
@@ -396,9 +396,9 @@
                     <Rectangle Margin="0,4"/>
 
                     <Slider x:Name="PaintSizeSlider" Height="44" Value="22" Minimum="1" Maximum="500" >
-                        <Slider.Tag>
-                            Opacity
-                        </Slider.Tag>
+                        <FrameworkElement.Tag>
+                            Size
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button MinWidth="50" Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" Style="{StaticResource TextBlockButtonStyle}">
                                 <Button.Flyout>
@@ -413,9 +413,9 @@
                     <Rectangle Margin="0,4"/>
 
                     <Slider x:Name="PaintOpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Opacity
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button MinWidth="50" Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" Style="{StaticResource TextBlockButtonStyle}">
                                 <Button.Flyout>
@@ -520,13 +520,17 @@
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="240"/>
                             </Grid.RowDefinitions>
-                            <Button x:Name="OptionTypeButton" Visibility="Collapsed">
+                            <Button x:Name="OptionTypeButton" Visibility="Collapsed"
+                                    CommandParameter="{x:Null}">
+                                <ButtonBase.Command>
+                                    <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
+                                </ButtonBase.Command>
                                 <SymbolIcon Symbol="Repair"/>
                             </Button>
                             <ListBox                             
                                 SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}"                        
                                 HorizontalAlignment="Center" VerticalAlignment="Center"                            
-                                BorderThickness="1" BorderBrush="{ThemeResource SystemColorControlAccentBrush}"
+                                BorderThickness="1" BorderBrush="{ThemeResource ListViewItemBackgroundSelected}"
                                 ItemsSource="{x:Bind OptionCollection}">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem">
@@ -616,7 +620,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom" 
             Background="{ThemeResource AppBackground}">
-            <Grid x:Name="PaintBrushPanel2" MaxWidth="720">
+            <Grid x:Name="PaintBrushPanel2" MaxWidth="720" Padding="8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="12"/>
@@ -850,14 +854,14 @@
             <Grid>
                 <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
                 <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Ellipse.Fill>
+                    <Shape.Fill>
                         <SolidColorBrush Color="White" />
-                    </Ellipse.Fill>
+                    </Shape.Fill>
                 </Ellipse>
                 <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Ellipse.Fill>
+                    <Shape.Fill>
                         <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
-                    </Ellipse.Fill>
+                    </Shape.Fill>
                 </Ellipse>
             </Grid>
         </Button>
@@ -952,7 +956,6 @@
                     <x:String>GIF</x:String>
                     <x:String>TIFF</x:String>
                 </ListView>
-                
             </StackPanel>
         </ContentDialog>
         <ContentDialog x:Name="SettingDislog" Style="{StaticResource AppContentDialogStyle}">

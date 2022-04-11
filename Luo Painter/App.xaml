@@ -95,7 +95,10 @@
             <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
             <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
             <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
-         
+
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="SystemControlHighlightAltBaseHighBrush" Color="White"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="{ThemeResource SystemAccentColor}"/>
 
             <!--Merged-->
             <ResourceDictionary.MergedDictionaries>

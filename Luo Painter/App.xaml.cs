@@ -31,7 +31,10 @@ namespace Luo_Painter
             Application.Current.Resources["ListViewItemBackgroundSelectedPointerOver"] as SolidColorBrush,
             Application.Current.Resources["ListViewItemBackgroundSelectedPressed"] as SolidColorBrush,
             Application.Current.Resources["HyperlinkButtonForeground"] as SolidColorBrush,
-        }) { }
+
+            Application.Current.Resources["SystemControlHighlightListAccentLowBrush"] as SolidColorBrush,
+            Application.Current.Resources["SystemControlHighlightListAccentMediumBrush"] as SolidColorBrush,
+      }) { }
     }
 
     /// <summary>
