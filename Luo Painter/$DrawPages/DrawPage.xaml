@@ -684,7 +684,7 @@
             <Button x:Name="VisualButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     CommandParameter="{x:Null}">
                 <Button.Command>
-                    <layers:RelayCommand x:Name="VisualCommand"/>
+                    <local:LayerCommand x:Name="VisualCommand"/>
                 </Button.Command>
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Insert"/>

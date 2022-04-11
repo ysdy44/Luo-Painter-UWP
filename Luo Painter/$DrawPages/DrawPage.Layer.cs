@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
@@ -7,12 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 
 namespace Luo_Painter
 {
+    internal class LayerCommand : RelayCommand<ILayer>
+    {
+    }
+
     public sealed partial class DrawPage : Page
     {
         private IEnumerable<string> Ids()
