@@ -23,10 +23,10 @@
         Border,
         Emboss,
         Lighting,
+
         LuminanceToAlpha,
         Fog,
         Sepia,
-
         Posterize,
         Colouring,
         Tint,

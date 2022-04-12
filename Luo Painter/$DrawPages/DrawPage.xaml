@@ -162,11 +162,11 @@
                 <options:OptionType>Border</options:OptionType>
                 <options:OptionType>Emboss</options:OptionType>
                 <options:OptionType>Lighting</options:OptionType>
+            </local:OptionGrouping>
+            <local:OptionGrouping Key="Effect2">
                 <options:OptionType>LuminanceToAlpha</options:OptionType>
                 <options:OptionType>Fog</options:OptionType>
                 <options:OptionType>Sepia</options:OptionType>
-            </local:OptionGrouping>
-            <local:OptionGrouping Key="Effect2">
                 <options:OptionType>Posterize</options:OptionType>
                 <options:OptionType>Colouring</options:OptionType>
                 <options:OptionType>Tint</options:OptionType>
@@ -481,7 +481,7 @@
 
             <Button>
                 <Button.Flyout>
-                    <Flyout>
+                    <Flyout x:Name="OptionFlyout">
                         <Grid Width="400">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
