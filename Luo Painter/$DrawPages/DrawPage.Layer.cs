@@ -57,7 +57,11 @@ namespace Luo_Painter
             {
                 // History
                 int removes2 = this.History.Push(layer.GetVisibilityHistory());
+
                 this.CanvasControl.Invalidate(); // Invalidate
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
             };
             this.LayerButton.Click += (s, e) =>
             {
@@ -137,21 +141,9 @@ namespace Luo_Painter
 
             this.AddButton.Click += (s, e) =>
             {
-                int index = this.LayerListView.SelectedIndex;
-
                 ICanvasResourceCreator sender = this.CanvasControl;
                 BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
-
-                if (index >= 0)
-                {
-                    this.ObservableCollection.Insert(index, bitmapLayer);
-                    this.LayerListView.SelectedIndex = index;
-                }
-                else
-                {
-                    this.ObservableCollection.Add(bitmapLayer);
-                    this.LayerListView.SelectedIndex = 0;
-                }
+                this.Add(bitmapLayer);
             };
 
             //this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();

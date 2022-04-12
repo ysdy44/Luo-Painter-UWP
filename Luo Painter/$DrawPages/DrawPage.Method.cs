@@ -185,12 +185,15 @@ namespace Luo_Painter
         {
             if (reference == null) return null;
 
+            ICanvasResourceCreator sender = this.CanvasControl;
+
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
                 {
                     CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
-                    this.ObservableCollection.Add(new BitmapLayer(this.CanvasControl, bitmap, this.Transformer.Width, this.Transformer.Height));
+                    BitmapLayer bitmapLayer = new BitmapLayer(sender, bitmap, this.Transformer.Width, this.Transformer.Height);
+                    this.Add(bitmapLayer);
                     return true;
                 }
             }
@@ -200,5 +203,21 @@ namespace Luo_Painter
             }
         }
 
+        public void Add(ILayer layer)
+        {
+            int index = this.LayerListView.SelectedIndex;
+
+            if (index >= 0)
+            {
+                this.ObservableCollection.Insert(index, layer);
+                this.LayerListView.SelectedIndex = index;
+            }
+            else
+            {
+                this.ObservableCollection.Add(layer);
+                this.LayerListView.SelectedIndex = 0;
+            }
+        }
+        
     }
 }
