@@ -203,6 +203,18 @@ namespace Luo_Painter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
+        //@Converter
+        private Symbol ColorSpectrumShapeSymbolConverter(bool? value) => value == true ? Symbol.Target : Symbol.Stop;
+        private ColorSpectrumShape ColorSpectrumShapeConverter(bool? value) => value == true ? ColorSpectrumShape.Ring : ColorSpectrumShape.Box;
+        private ColorSpectrumComponents ColorSpectrumComponentsConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return ColorSpectrumComponents.SaturationValue;
+                case 1: return ColorSpectrumComponents.HueSaturation;
+                default: return ColorSpectrumComponents.HueValue;
+            }
+        }
 
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
@@ -217,6 +229,7 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
+            this.ConstructOption();
             this.ConstructTools();
             this.ConstructBlends();
             this.ConstructPaint();

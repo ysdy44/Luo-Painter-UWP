@@ -194,39 +194,6 @@
         </local:BlendGrouping>
 
         <!--Flyout-->
-        <Flyout x:Name="ColorFlyout" Placement="Left">
-            <StackPanel Width="320">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <Button VerticalAlignment="Stretch" Foreground="{StaticResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                        <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
-                    </Button>
-                    <ComboBox x:Name="ColorComboBox" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                    <ComboBox x:Name="ColorShapeComboBox" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                </Grid>
-                <ContentControl Height="12" />
-                <ColorPicker x:Name="ColorPicker" 
-                             Color="Black"  
-                             IsMoreButtonVisible="True" 
-                             IsHexInputVisible="True" 
-                             IsColorSpectrumVisible="True"
-                             IsColorSliderVisible="True"
-                             IsColorPreviewVisible="True"
-                             IsColorChannelTextInputVisible="True"  
-                             IsAlphaTextInputVisible="True"  
-                             IsAlphaSliderVisible="True" 
-                             IsAlphaEnabled="True" 
-                             ColorSpectrumShape="Ring" 
-                             ColorSpectrumComponents="HueSaturation"
-                             />
-            </StackPanel>
-        </Flyout>
         <Flyout x:Name="LayerFlyout" Placement="Left">
             <StackPanel Width="320">
 
@@ -833,7 +800,51 @@
         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource SystemBaseHighColor}" Background="{ThemeResource AppBackgroundLight}" >
             <SymbolIcon Symbol="GlobalNavigationButton"/>
         </Button>
-        <Button x:Name="ColorButton" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource SystemBaseHighColor}" Background="{ThemeResource AppBackgroundLight}" >
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource SystemBaseHighColor}" Background="{ThemeResource AppBackgroundLight}" >
+            <Button.Flyout>
+                <Flyout Placement="Left">
+                    <Grid Width="320" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="12"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="StrawButton" Width="Auto" Height="Auto">
+                                <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
+                            </Button>
+                            <ListBox x:Name="ColorListBox" Grid.Column="1" SelectedIndex="0">
+                                <x:String>Hue</x:String>
+                                <x:String>Value</x:String>
+                                <x:String>Saturation</x:String>
+                            </ListBox>
+                            <ToggleButton x:Name="ColorShapeButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
+                                <SymbolIcon Symbol="{x:Bind ColorSpectrumShapeSymbolConverter(ColorShapeButton.IsChecked), Mode=OneWay}"/>
+                            </ToggleButton>
+                        </Grid>
+                        <ColorPicker x:Name="ColorPicker" 
+                             Grid.Row="2"
+                             Color="Black"  
+                             IsMoreButtonVisible="False" 
+                             IsHexInputVisible="False" 
+                             IsColorSpectrumVisible="True"
+                             IsColorSliderVisible="True"
+                             IsColorPreviewVisible="False"
+                             IsColorChannelTextInputVisible="False"  
+                             IsAlphaTextInputVisible="False"  
+                             IsAlphaSliderVisible="False" 
+                             IsAlphaEnabled="False" 
+                             ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"
+                             ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ColorListBox.SelectedIndex),Mode=OneWay}"
+                             />
+                    </Grid>
+                </Flyout>
+            </Button.Flyout>
             <Grid>
                 <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
                 <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">

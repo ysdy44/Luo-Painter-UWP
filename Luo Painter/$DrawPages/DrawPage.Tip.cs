@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter
 {
@@ -41,28 +42,27 @@ namespace Luo_Painter
 
         private void ConstructColor()
         {
-            this.ColorButton.Click += (s, e) => this.ColorFlyout.ShowAt(this.ColorButton);
-
-            this.ColorComboBox.ItemsSource = Enum.GetValues(typeof(ColorSpectrumComponents));
-            this.ColorComboBox.SelectedItem = this.ColorPicker.ColorSpectrumComponents;
-            this.ColorComboBox.SelectionChanged += (s, e) =>
-            {
-                if (this.ColorComboBox.SelectedItem is ColorSpectrumComponents components)
-                {
-                    this.ColorPicker.ColorSpectrumComponents = components;
-                }
-            };
         }
 
         private void ConstructColorShape()
         {
-            this.ColorShapeComboBox.ItemsSource = Enum.GetValues(typeof(ColorSpectrumShape));
-            this.ColorShapeComboBox.SelectedItem = this.ColorPicker.ColorSpectrumShape;
-            this.ColorShapeComboBox.SelectionChanged += (s, e) =>
+            this.ColorPicker.Loaded += (s, e) =>
             {
-                if (this.ColorShapeComboBox.SelectedItem is ColorSpectrumShape shape)
+                if (s is DependencyObject reference)
                 {
-                    this.ColorPicker.ColorSpectrumShape = shape;
+                    DependencyObject grid = VisualTreeHelper.GetChild(reference, 0); // Grid
+                    DependencyObject stackPanel = VisualTreeHelper.GetChild(grid, 0); // StackPanel
+                    DependencyObject thirdDimensionSliderGrid = VisualTreeHelper.GetChild(stackPanel, 1); // Grid ThirdDimensionSliderGrid Margin 0,12,0,0
+                    DependencyObject rectangle = VisualTreeHelper.GetChild(thirdDimensionSliderGrid, 0); // Rectangle Height 11
+
+                    if (thirdDimensionSliderGrid is FrameworkElement thirdDimensionSliderGrid1)
+                    {
+                        thirdDimensionSliderGrid1.Margin = new Thickness(0);
+                    }
+                    if (rectangle is FrameworkElement rectangle1)
+                    {
+                        rectangle1.Height = 22;
+                    }
                 }
             };
         }
