@@ -126,7 +126,7 @@
                                     x:Name="VisualButton" 
                                     CommandParameter="{x:Null}">
                     <AppBarButton.Command>
-                        <layers:RelayCommand x:Name="VisualCommand"/>
+                        <local:LayerCommand x:Name="VisualCommand"/>
                     </AppBarButton.Command>
                     <AppBarButton.Icon>
                         <SymbolIcon Symbol="View" />

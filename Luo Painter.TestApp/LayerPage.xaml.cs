@@ -15,6 +15,10 @@ using Windows.UI.Xaml.Data;
 
 namespace Luo_Painter.TestApp
 {
+    internal class LayerCommand : RelayCommand<ILayer>
+    {
+    }
+
     public sealed partial class LayerPage : Page
     {
 
