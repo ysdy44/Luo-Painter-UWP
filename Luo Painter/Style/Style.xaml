@@ -4,6 +4,32 @@
     >
 
 
+    <!--ListBox-->
+    <Style TargetType="ListBox">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="ItemContainerStyle" >
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="10,2"/>
+                    <Setter Property="Height" Value="28"/>
+                    <Setter Property="MinWidth" Value="72"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel" >
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
     <!--ToolTip-->
     <Style x:Key="AppToolTipStyle" TargetType="ToolTip">
         <Setter Property="Foreground" Value="White"/>
@@ -107,8 +133,8 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="Fill" Value="{ThemeResource SystemAltLowColor}" />
     </Style>
-    
-    
+
+
     <!--Button-->
     <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}" >
         <Setter Property="Padding" Value="0" />
@@ -123,7 +149,7 @@
         <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}" />
     </Style>
 
-    
+
     <!--Line-->
     <Style TargetType="Line">
         <Setter Property="X1" Value="0" />
@@ -139,7 +165,7 @@
         <Setter Property="Stroke" Value="{ThemeResource SystemAltLowColor}" />
     </Style>
 
-    
+
     <!--Slider-->
     <x:Double x:Key="SliderTrackThemeHeight">3</x:Double>
     <Style TargetType="Slider">

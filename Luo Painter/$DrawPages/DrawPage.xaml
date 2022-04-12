@@ -527,24 +527,7 @@
                                 </ButtonBase.Command>
                                 <SymbolIcon Symbol="Repair"/>
                             </Button>
-                            <ListBox                             
-                                SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}"                        
-                                HorizontalAlignment="Center" VerticalAlignment="Center"                            
-                                BorderThickness="1" BorderBrush="{ThemeResource ListViewItemBackgroundSelected}"
-                                ItemsSource="{x:Bind OptionCollection}">
-                                <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="ListBoxItem">
-                                        <Setter Property="Padding" Value="10,2"/>
-                                        <Setter Property="Height" Value="28"/>
-                                        <Setter Property="MinWidth" Value="72"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    </Style>
-                                </ItemsControl.ItemContainerStyle>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                            <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind OptionCollection}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="local:OptionGrouping">
                                         <TextBlock Text="{x:Bind Key}"/>
