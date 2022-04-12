@@ -9,7 +9,6 @@ namespace Luo_Painter
 
         private void ConstructDialog()
         {
-            this.ExportButton.Click += async (s, e) => await this.ExportDislog.ShowInstance();
             this.SettingButton.Click += async (s, e) =>
             {
                 float radian = this.Transformer.Radian;
@@ -21,7 +20,7 @@ namespace Luo_Painter
                 await this.SettingDislog.ShowInstance();
             };
 
-            this.ExportDislog.PrimaryButtonClick += async (s, e) =>
+            this.ExportButton.Click += async (s, e) =>
             {
                 this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
