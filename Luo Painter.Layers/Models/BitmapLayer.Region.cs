@@ -52,13 +52,13 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public int GetX(int hitIndex) => hitIndex % this.XLength;
-        public int GetY(int hitIndex) => hitIndex / this.XLength;
+        public int GetX(int hitIndex) => hitIndex % this.XLength; // 2
+        public int GetY(int hitIndex) => hitIndex / this.XLength; // 2
 
-        public int GetLeft(int x) => x * BitmapLayer.Unit;
-        public int GetTop(int y) => y * BitmapLayer.Unit;
-        public int GetWidth(int x) => x == this.XDivisor ? this.XRemainder : BitmapLayer.Unit;
-        public int GetHeight(int y) => y == this.YDivisor ? this.YRemainder : BitmapLayer.Unit;
+        public int GetLeft(int x) => x * BitmapLayer.Unit; // 200
+        public int GetTop(int y) => y * BitmapLayer.Unit; // 200
+        public int GetWidth(int x) => x == this.XDivisor ? this.XRemainder : BitmapLayer.Unit; // 500
+        public int GetHeight(int y) => y == this.YDivisor ? this.YRemainder : BitmapLayer.Unit; // 500
 
         public Rect GetRect(int x, int y) => new Rect(this.GetLeft(x), this.GetTop(y), this.GetWidth(x), this.GetHeight(y));
         public Rect GetRect(int hitIndex) => this.GetRect(this.GetX(hitIndex), this.GetY(hitIndex));
@@ -92,98 +92,11 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-
-        public IHistory GetBitmapHistory()
+        public void Hit(Color[] InterpolationColors)
         {
-            BitmapHistory bitmap = new BitmapHistory
-            {
-                Id = base.Id,
-                UndoParameter = new Dictionary<int, IBuffer>(),
-                RedoParameter = new Dictionary<int, IBuffer>(),
-            };
-
             for (int i = 0; i < this.Length; i++)
             {
-                if (this[i] == false) continue;
-                this[i] = false;
-
-                int x = this.GetX(i);
-                int y = this.GetY(i);
-                int left = this.GetLeft(x);
-                int top = this.GetTop(y);
-                int width = this.GetWidth(x);
-                int height = this.GetHeight(y);
-
-                bitmap.UndoParameter[i] = this.OriginRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
-                bitmap.RedoParameter[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
-            }
-
-            return bitmap;
-        }
-        public IHistory GetBitmapClearHistory() => new BitmapClearHistory
-        {
-            Id = base.Id,
-            UndoParameter = this.OriginRenderTarget.GetPixelBytes().AsBuffer()
-        };
-        public bool Undo(IHistory history)
-        {
-            switch (history.Type)
-            {
-                case HistoryType.Visibility:
-                    if (history is VisibilityHistory visibility)
-                    {
-                        base.Visibility = visibility.UndoParameter;
-                        return true;
-                    }
-                    else return false;
-                case HistoryType.Bitmap:
-                    if (history is BitmapHistory bitmap)
-                    {
-                        this.SetPixelBytes(bitmap.UndoParameter);
-                        this.Flush();
-                        this.RenderThumbnail();
-                        return true;
-                    }
-                    else return false;
-                case HistoryType.BitmapClear:
-                    if (history is BitmapClearHistory bitmapClear)
-                    {
-                        this.OriginRenderTarget.SetPixelBytes(bitmapClear.UndoParameter);
-                        this.SourceRenderTarget.SetPixelBytes(bitmapClear.UndoParameter);
-                        this.RenderThumbnail();
-                        return true;
-                    }
-                    else return false;
-                default:
-                    return false;
-            }
-        }
-        public bool Redo(IHistory history)
-        {
-            switch (history.Type)
-            {
-                case HistoryType.Visibility:
-                    if (history is VisibilityHistory visibility)
-                    {
-                        base.Visibility = visibility.RedoParameter;
-                        return true;
-                    }
-                    else return false;
-                case HistoryType.Bitmap:
-                    if (history is BitmapHistory bitmap)
-                    {
-                        this.SetPixelBytes(bitmap.RedoParameter);
-                        this.Flush();
-                        this.RenderThumbnail();
-                        return true;
-                    }
-                    else return false;
-                case HistoryType.BitmapClear:
-                    this.Clear(Colors.Transparent);
-                    this.ClearThumbnail(Colors.Transparent);
-                    return true;
-                default:
-                    return false;
+                this[i] = this.IsTransparent(InterpolationColors[i]) == false;
             }
         }
 
