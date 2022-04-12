@@ -124,6 +124,7 @@
     <Compile Include="IHistory.cs" />
     <Compile Include="Models\BitmapClearHistory.cs" />
     <Compile Include="Models\BitmapHistory.cs" />
+    <Compile Include="Models\BitmapResetHistory.cs" />
     <Compile Include="Models\BlendModeHistory.cs" />
     <Compile Include="Models\OpacityHistory.cs" />
     <Compile Include="Models\VisibilityHistory.cs" />

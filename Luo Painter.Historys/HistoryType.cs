@@ -10,5 +10,7 @@
 
         Bitmap,
         BitmapClear,
+        BitmapReset,
+        
     }
 }
