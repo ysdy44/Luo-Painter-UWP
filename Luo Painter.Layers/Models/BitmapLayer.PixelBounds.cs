@@ -11,6 +11,7 @@ namespace Luo_Painter.Layers.Models
     {
         Transarent,
         Solid,
+        None,
     }
 
     public struct PixelBounds
@@ -87,6 +88,9 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
+        private bool IsTransparent(Color color) => color.A == byte.MinValue;
+        private bool IsSolid(Color color) => color.A == byte.MaxValue;
+
         public Color[] GetInterpolationColors()
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
@@ -107,9 +111,11 @@ namespace Luo_Painter.Layers.Models
         }
 
         public PixelBoundsMode GetInterpolationBoundsMode(Color[] InterpolationColors) =>
-            InterpolationColors.All(c => c.A == byte.MinValue) ?             
-            PixelBoundsMode.Transarent :            
-            PixelBoundsMode.Solid;
+            InterpolationColors.All(this.IsTransparent) ?
+            PixelBoundsMode.Transarent :
+            InterpolationColors.All(this.IsSolid) ?
+            PixelBoundsMode.Solid :
+            PixelBoundsMode.None;
 
         public PixelBounds CreateInterpolationBounds(Color[] InterpolationColors)
         {
