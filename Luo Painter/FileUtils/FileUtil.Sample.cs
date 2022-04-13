@@ -60,14 +60,15 @@ namespace Luo_Painter
         /// </summary>
         /// <param name="resourceCreator"> The resource-creator. </param>
         /// <param name="image"> The image. </param>
-        /// <param name="bounds"> The bounds of image. </param>
+        /// <param name="width"> The width of image. </param>
+        /// <param name="height"> The height of image. </param>
+        /// <param name="dpi"> The file dpi. </param>
         /// <param name="fileChoices"> The file choices. </param>
         /// <param name="suggestedFileName"> The suggested name of file. </param>
         /// <param name="fileFormat"> The file format. </param>
         /// <param name="quality"> The file quality. </param>
-        /// <param name="dpi"> The file dpi. </param>
         /// <returns> Saved successful? </returns>
-        public static async Task<bool?> SaveCanvasImageFile(ICanvasResourceCreator resourceCreator, ICanvasImage image, Rect bounds, string fileChoices = ".Jpeg", string suggestedFileName = "Untitled", CanvasBitmapFileFormat fileFormat = CanvasBitmapFileFormat.Jpeg, float quality = 1.0f, float dpi = 96)
+        public static async Task<bool?> SaveCanvasImageFile(ICanvasResourceCreator resourceCreator, ICanvasImage image, float width, float height, float dpi = 96, string fileChoices = ".Jpeg", string suggestedFileName = "Untitled", CanvasBitmapFileFormat fileFormat = CanvasBitmapFileFormat.Jpeg, float quality = 1.0f)
         {
             // FileSavePicker
             FileSavePicker savePicker = new FileSavePicker
@@ -76,7 +77,7 @@ namespace Luo_Painter
                 SuggestedFileName = suggestedFileName,
                 FileTypeChoices =
                 {
-                    {"JPG", new[] { fileChoices } }
+                    {"DB", new[] { fileChoices } }
                 }
             };
 
@@ -89,7 +90,11 @@ namespace Luo_Painter
             {
                 using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
-                    await CanvasImage.SaveAsync(image, bounds, dpi, resourceCreator, accessStream, fileFormat, quality);
+                    await CanvasImage.SaveAsync(image, new Rect
+                    {
+                        Width = 96 / dpi * width,
+                        Height = 96 / dpi * height,
+                    }, dpi, resourceCreator, accessStream, fileFormat, quality);
                 }
 
                 return true;

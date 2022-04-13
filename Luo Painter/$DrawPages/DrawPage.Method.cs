@@ -15,31 +15,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        private string ToChoices(CanvasBitmapFileFormat format)
-        {
-            switch (format)
-            {
-                case CanvasBitmapFileFormat.Bmp: return ".bmp";
-                case CanvasBitmapFileFormat.Png: return ".png";
-                case CanvasBitmapFileFormat.Jpeg: return ".jpeg";
-                case CanvasBitmapFileFormat.Tiff: return ".tiff";
-                case CanvasBitmapFileFormat.Gif: return ".gif";
-                default: return null;
-            }
-        }
-        private CanvasBitmapFileFormat ToFileFormat(string format)
-        {
-            switch (format)
-            {
-                case "BMP": return CanvasBitmapFileFormat.Bmp;
-                case "PNG": return CanvasBitmapFileFormat.Png;
-                case "JPEG": return CanvasBitmapFileFormat.Jpeg;
-                case "TIFF": return CanvasBitmapFileFormat.Tiff;
-                case "GIF": return CanvasBitmapFileFormat.Gif;
-                default: return CanvasBitmapFileFormat.Jpeg;
-            }
-        }
-
         /// <summary>
         /// Export to ...
         /// </summary>
@@ -47,9 +22,6 @@ namespace Luo_Painter
         {
             // Render
             ICanvasResourceCreator resourceCreator = this.CanvasControl;
-            float width = (float)this.Transformer.Width;
-            float height = (float)this.Transformer.Height;
-            int dpi = int.TryParse(this.DPIComboBox.SelectedItem.ToString(), out int result) ? result : 96;
             bool isClearWhite = true;
 
             using (CanvasCommandList commandList = new CanvasCommandList(resourceCreator))
@@ -61,26 +33,24 @@ namespace Luo_Painter
 
                     if (isClearWhite) ds.Clear(Colors.White);
 
-                    if (dpi == 96)
-                        this.Render(ds);
-                    else
-                        this.Render(ds, Matrix3x2.CreateScale(dpi / 96));
+                    this.Render(ds);
                 }
 
                 // Export
-                CanvasBitmapFileFormat format = this.ToFileFormat(this.FormatComboBox.SelectedItem as string);
                 return await FileUtil.SaveCanvasImageFile
                 (
                     resourceCreator: resourceCreator,
                     image: commandList,
-                    bounds: new Windows.Foundation.Rect(0, 0, width, height),
 
-                    fileChoices: this.ToChoices(format),
+                    width: this.Transformer.Width,
+                    height: this.Transformer.Height,
+                    dpi: this.DPI,
+
+                    fileChoices: this.FileChoices,
                     suggestedFileName: this.ApplicationView.Title,
 
-                    fileFormat: format,
-                    quality: 1,
-                    dpi: dpi
+                    fileFormat: this.FileFormat,
+                    quality: 1
                 );
             }
         }
@@ -218,6 +188,6 @@ namespace Luo_Painter
                 this.LayerListView.SelectedIndex = 0;
             }
         }
-        
+
     }
 }
