@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApplicationTitleBarExtension.cs" />
+    <Compile Include="BackdropBrush.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="DPIExtensions.cs" />
     <Compile Include="GradientStopSelector.cs" />
