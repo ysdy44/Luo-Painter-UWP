@@ -7,99 +7,96 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        double StartingPaneX;
-        SplitViewPanePlacement PanePlacement => (this.LayerTransform.X > 70) ? SplitViewPanePlacement.Right : SplitViewPanePlacement.Left;
+        double StartingToolPaneX;
+        double StartingLayerPaneX;
+
+        SplitViewPanePlacement LayerPanePlacement => (this.LayerTransform.X > 70) ? SplitViewPanePlacement.Right : SplitViewPanePlacement.Left;
+        SplitViewPanePlacement ToolPanePlacement => (this.ToolTransform.X < -70) ? SplitViewPanePlacement.Left : SplitViewPanePlacement.Right;
+
+        private double GetToolTransformX(double value) => Math.Max(-70 - 70, Math.Min(0, value));
+        private double GetLayerTransformX(double value) => Math.Max(0, Math.Min(70 + 70, value));
 
         private void ConstructStoryboard()
         {
-            //this.ShowStoryboard.Completed += (s, e) => this.DismissOverlay.IsHitTestVisible = true;
-            //this.HideStoryboard.Completed += (s, e) => this.DismissOverlay.IsHitTestVisible = false;
-            //this.DismissOverlay.Tapped += (s, e) =>
-            //{
-            //    this.ToolButton.IsChecked = false;
-            //    this.LayerButton.IsChecked = false;
-            //};
-
-            //this.LayerButton.Unchecked += (s, e) =>
-            //{
-            //    this.HideLayerStoryboard.Begin(); // Storyboard
-            //    if (this.ToolButton.IsChecked == false) this.HideStoryboard.Begin(); // Storyboard
-            //};
-            //this.LayerButton.Checked += (s, e) =>
-            //{
-            //    this.ShowLayerStoryboard.Begin(); // Storyboard
-            //    if (this.ToolButton.IsChecked == false)
-            //    {
-            //        this.ShowStoryboard.Begin(); // Storyboard
-            //    }
-            //};
-            //this.LayerButton.Tapped += (s, e) =>
-            //{
-            //    this.HideToolStoryboard.Begin(); // Storyboard
-            //};
-            //this.ShowLayerStoryboard.Completed += (s, e) =>
-            //{
-            //    if (this.ToolButton.Visibility == Visibility.Visible) this.ToolButton.IsChecked = false;
-            //};
-
-            //this.ToolButton.Unchecked += (s, e) =>
-            //{
-            //    this.HideToolStoryboard.Begin(); // Storyboard
-            //    if (this.LayerButton.IsChecked == false) this.HideStoryboard.Begin(); // Storyboard
-            //};
-            //this.ToolButton.Checked += (s, e) =>
-            //{
-            //    this.ShowToolStoryboard.Begin(); // Storyboard
-            //    if (this.LayerButton.IsChecked == false)
-            //    {
-            //        this.ShowStoryboard.Begin(); // Storyboard
-            //    }
-            //};
-            //this.ToolButton.Tapped += (s, e) =>
-            //{
-            //    this.HideLayerStoryboard.Begin(); // Storyboard
-            //};
-            //this.ShowToolStoryboard.Completed += (s, e) =>
-            //{
-            //    if (this.LayerButton.Visibility == Visibility.Visible) this.LayerButton.IsChecked = false;
-            //};
+            this.FullScreenButton.Click += (s, e) => this.HideStoryboard.Begin(); // Storyboard
+            this.UnFullScreenButton.Click += (s, e) => this.ShowStoryboard.Begin(); // Storyboard
         }
 
         private void ConstructSplitStoryboard()
         {
-            this.SplitButton.ManipulationStarted += (s, e) =>
+            this.SplitToolButton.ManipulationStarted += (s, e) =>
             {
-                this.StartingPaneX = this.LayerTransform.X;
-                switch (this.PanePlacement)
+                this.StartingToolPaneX = this.ToolTransform.X;
+                switch (this.ToolPanePlacement)
                 {
-                    case SplitViewPanePlacement.Left: this.SplitIcon.Symbol = Symbol.AlignLeft; break;
-                    case SplitViewPanePlacement.Right: this.SplitIcon.Symbol = Symbol.AlignRight; break;
+                    case SplitViewPanePlacement.Left: this.SplitToolIcon.Symbol = Symbol.AlignLeft; break;
+                    case SplitViewPanePlacement.Right: this.SplitToolIcon.Symbol = Symbol.AlignRight; break;
                 }
-                this.SplitButton.IsEnabled = false;
+                this.SplitToolButton.IsEnabled = false;
             };
-            this.SplitButton.ManipulationDelta += (s, e) =>
+            this.SplitToolButton.ManipulationDelta += (s, e) =>
             {
-                this.LayerTransform.X = Math.Max(0, Math.Min(70 + 70, this.StartingPaneX + e.Cumulative.Translation.X));
-                switch (this.PanePlacement)
+                this.ToolTransform.X = this.GetToolTransformX(this.StartingToolPaneX + e.Cumulative.Translation.X);
+                switch (this.ToolPanePlacement)
                 {
-                    case SplitViewPanePlacement.Left: this.SplitIcon.Symbol = Symbol.AlignLeft; break;
-                    case SplitViewPanePlacement.Right: this.SplitIcon.Symbol = Symbol.AlignRight; break;
+                    case SplitViewPanePlacement.Left: this.SplitToolIcon.Symbol = Symbol.AlignLeft; break;
+                    case SplitViewPanePlacement.Right: this.SplitToolIcon.Symbol = Symbol.AlignRight; break;
                 }
             };
-            this.SplitButton.ManipulationCompleted += (s, e) =>
+            this.SplitToolButton.ManipulationCompleted += (s, e) =>
             {
-                switch (this.PanePlacement)
+                switch (this.ToolPanePlacement)
+                {
+                    case SplitViewPanePlacement.Left: this.ExpandToolStoryboard.Begin(); break;// Storyboard
+                    case SplitViewPanePlacement.Right: this.UnexpandToolStoryboard.Begin(); break;// Storyboard
+                }
+                this.SplitToolIcon.Symbol = Symbol.GlobalNavigationButton;
+                this.SplitToolButton.IsEnabled = true;
+            };
+
+            this.SplitToolButton.Click += (s, e) =>
+            {
+                switch (this.ToolPanePlacement)
+                {
+                    case SplitViewPanePlacement.Left: this.UnexpandToolStoryboard.Begin(); break;// Storyboard
+                    case SplitViewPanePlacement.Right: this.ExpandToolStoryboard.Begin(); break;// Storyboard
+                }
+            };
+
+
+            this.SplitLayerButton.ManipulationStarted += (s, e) =>
+            {
+                this.StartingLayerPaneX = this.LayerTransform.X;
+                switch (this.LayerPanePlacement)
+                {
+                    case SplitViewPanePlacement.Left: this.SplitLayerIcon.Symbol = Symbol.AlignLeft; break;
+                    case SplitViewPanePlacement.Right: this.SplitLayerIcon.Symbol = Symbol.AlignRight; break;
+                }
+                this.SplitLayerButton.IsEnabled = false;
+            };
+            this.SplitLayerButton.ManipulationDelta += (s, e) =>
+            {
+                this.LayerTransform.X = this.GetLayerTransformX(this.StartingLayerPaneX + e.Cumulative.Translation.X);
+                switch (this.LayerPanePlacement)
+                {
+                    case SplitViewPanePlacement.Left: this.SplitLayerIcon.Symbol = Symbol.AlignLeft; break;
+                    case SplitViewPanePlacement.Right: this.SplitLayerIcon.Symbol = Symbol.AlignRight; break;
+                }
+            };
+            this.SplitLayerButton.ManipulationCompleted += (s, e) =>
+            {
+                switch (this.LayerPanePlacement)
                 {
                     case SplitViewPanePlacement.Left: this.UnexpandLayerStoryboard.Begin(); break;// Storyboard
                     case SplitViewPanePlacement.Right: this.ExpandLayerStoryboard.Begin(); break;// Storyboard
                 }
-                this.SplitIcon.Symbol = Symbol.GlobalNavigationButton;
-                this.SplitButton.IsEnabled = true;
+                this.SplitLayerIcon.Symbol = Symbol.GlobalNavigationButton;
+                this.SplitLayerButton.IsEnabled = true;
             };
 
-            this.SplitButton.Click += (s, e) =>
+            this.SplitLayerButton.Click += (s, e) =>
             {
-                switch (this.PanePlacement)
+                switch (this.LayerPanePlacement)
                 {
                     case SplitViewPanePlacement.Left: this.ExpandLayerStoryboard.Begin(); break;// Storyboard
                     case SplitViewPanePlacement.Right: this.UnexpandLayerStoryboard.Begin(); break;// Storyboard

@@ -25,33 +25,54 @@
 
         <!--Storyboard-->
         <Storyboard x:Name="ShowStoryboard" >
-            <DoubleAnimation Duration="0:0:0.1" By="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DismissOverlay" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="-140" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="140" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="HeadTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.15" Storyboard.TargetName="FullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="HideStoryboard" >
-            <DoubleAnimation Duration="0:0:0.1" By="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DismissOverlay" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="-210" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="210" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="-50" Storyboard.TargetProperty="Y" Storyboard.TargetName="HeadTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="50" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
 
         <!--Storyboard-->
-        <Storyboard x:Name="ShowToolStoryboard" >
-            <DoubleAnimation Duration="0:0:0.1" By="-210" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+        <Storyboard x:Name="UnexpandToolStoryboard" >
+            <DoubleAnimation Duration="0:0:0.15" By="-140" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ToolListView" Storyboard.TargetProperty="Width">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="210" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Name="HideToolStoryboard" >
-            <DoubleAnimation Duration="0:0:0.075" By="0" To="-210" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+        <Storyboard x:Name="ExpandToolStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="0" To="-140" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.15" Storyboard.TargetName="ToolListView" Storyboard.TargetProperty="Width">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="70" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
-        <!--Storyboard-->
-        <Storyboard x:Name="ShowLayerStoryboard" >
-            <DoubleAnimation Duration="0:0:0.15" By="222" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
-        </Storyboard>
-        <Storyboard x:Name="HideLayerStoryboard" >
-            <DoubleAnimation Duration="0:0:0.1" By="0" To="222" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
-        </Storyboard>
-
-        <!--Storyboard-->
         <Storyboard x:Name="UnexpandLayerStoryboard" >
             <DoubleAnimation Duration="0:0:0.15" By="140" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayerListView" Storyboard.TargetProperty="Width">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="210" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="ExpandLayerStoryboard" >
             <DoubleAnimation Duration="0:0:0.1" By="0" To="140" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.15" Storyboard.TargetName="LayerListView" Storyboard.TargetProperty="Width">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="70" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
 
         <!--Storyboard-->
@@ -444,21 +465,39 @@
 
 
         <!--Canvas-->
-        <Grid Margin="70,50" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}">
-            <canvas:CanvasVirtualControl x:Name="CanvasControl" />
-        </Grid>
+        <canvas:CanvasVirtualControl x:Name="CanvasControl" />
 
 
         <!--Head-->
+        <Button x:Name="UnFullScreenButton" IsEnabled="False" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <UIElement.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+            </UIElement.KeyboardAccelerators>
+            <SymbolIcon Symbol="BackToWindow"/>
+        </Button>
         <Grid 
             Height="50"
             Margin="70,0" 
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top" 
             Background="{ThemeResource AppBackground}">
+
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform x:Name="HeadTransform" Y="0"/>
+            </UIElement.RenderTransform>
+
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="SettingButton" >
                     <SymbolIcon Symbol="Setting"/>
+                </Button>
+                <Button x:Name="FullScreenButton" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="FullScreen"/>
                 </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -567,6 +606,14 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom" 
             Background="{ThemeResource AppBackground}">
+
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform x:Name="FootTransform" Y="0"/>
+            </UIElement.RenderTransform>
+
             <Grid x:Name="PaintBrushPanel2" MaxWidth="720" Padding="8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -582,34 +629,41 @@
 
 
         <!--Tool-->
-        <ListView x:Name="ToolListView" 
-                      Margin="0,50"
-                      Width="70"
-                      MinHeight="100" 
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Stretch"   
-                      Background="{ThemeResource AppBackground}"
-                      IsItemClickEnabled="True" 
-                      SelectionMode="Single"   
-                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      ItemsSource="{x:Bind ToolCollectionViewSource.View}" >
-
+        <Grid
+            Margin="0,50"
+            Width="210"
+            MinHeight="100" 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Stretch"           
+            Background="{ThemeResource AppBackground}">
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
             </UIElement.RenderTransformOrigin>
             <UIElement.RenderTransform>
-                <TranslateTransform x:Name="ToolTransform" X="0"/>
+                <TranslateTransform x:Name="ToolTransform" X="-140"/>
             </UIElement.RenderTransform>
 
-            <ItemsControl.ItemContainerTransitions>
-                <TransitionCollection>
+            <ListView x:Name="ToolListView" 
+                      Margin="0,50,0,0"
+                      Width="70"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Stretch"     
+                      
+                      IsItemClickEnabled="True" 
+                      SelectionMode="Single"   
+                      
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      ItemsSource="{x:Bind ToolCollectionViewSource.View}" >
 
-                </TransitionCollection>
-            </ItemsControl.ItemContainerTransitions>
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid                           
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid                           
                             ItemWidth="70"
                             ItemHeight="50"
                    
@@ -620,55 +674,64 @@
                             GroupHeaderPlacement="Top"            
                             GroupPadding="0"      
                             />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="MinWidth" Value="55"/>
-                    <Setter Property="Height" Value="55"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="Padding" Value="2,1"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="Transitions">
-                        <Setter.Value>
-                            <TransitionCollection>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="MinWidth" Value="55"/>
+                        <Setter Property="Height" Value="55"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="2,1"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Transitions">
+                            <Setter.Value>
+                                <TransitionCollection>
 
-                            </TransitionCollection>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
+                                </TransitionCollection>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="tools:ToolType">
-                    <local:ToolIcon Type="{x:Bind}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="tools:ToolType">
+                        <local:ToolIcon Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
-            <ItemsControl.GroupStyle>
-                <GroupStyle HidesIfEmpty="True">
-                    <GroupStyle.HeaderContainerStyle>
-                        <Style TargetType="ListViewHeaderItem">
-                            <Setter Property="Margin" Value="0"/>
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="MinHeight" Value="2"/>
-                            <Setter Property="Height" Value="Auto"/>
-                            <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewHeaderItem">
-                                        <Rectangle Height="2" Fill="{ThemeResource AppStroke}" />
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.HeaderContainerStyle>
-                </GroupStyle>
-            </ItemsControl.GroupStyle>
+                <ItemsControl.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True">
+                        <GroupStyle.HeaderContainerStyle>
+                            <Style TargetType="ListViewHeaderItem">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="MinHeight" Value="2"/>
+                                <Setter Property="Height" Value="Auto"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewHeaderItem">
+                                            <Rectangle Height="2" Fill="{ThemeResource AppStroke}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.HeaderContainerStyle>
+                    </GroupStyle>
+                </ItemsControl.GroupStyle>
 
-        </ListView>
+            </ListView>
+
+            <Button x:Name="SplitToolButton" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <UIElement.ManipulationMode>
+                    TranslateX
+                </UIElement.ManipulationMode>
+                <SymbolIcon x:Name="SplitToolIcon" Symbol="GlobalNavigationButton" />
+            </Button>
+
+        </Grid>
 
 
         <!--Layer-->
@@ -688,6 +751,10 @@
 
             <ListView x:Name="LayerListView"  
                       Margin="0,50"
+                      Width="70"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Stretch"
+                      
                       IsItemClickEnabled="True"
                       SelectionMode="Extended"     
               
@@ -740,17 +807,13 @@
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="1" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Image Source="{x:Bind Thumbnail, Mode=OneWay}" />
-                            </Border>
-
                             <TextBlock Grid.Column="2" IsHitTestVisible="False" Margin="6,0" VerticalAlignment="Center" >
-                            <Run Text="{x:Bind Name, Mode=OneWay}"/>                                     
-                            <Run>                         
-                                (                           
-                            </Run><Run Text="{x:Bind Type, Mode=OneWay}"/><Run>                           
-                                )                        
-                            </Run>
+                                <Run Text="{x:Bind Name, Mode=OneWay}"/>                       
+                                <Run>                        
+                                    (                      
+                                </Run><Run Text="{x:Bind Type, Mode=OneWay}"/><Run>                        
+                                    )                       
+                                </Run>
                             </TextBlock>
 
                             <FontIcon Grid.Column="3" IsHitTestVisible="False" Opacity="0.8" Glyph="&#x23A5;" FontSize="18" FontFamily="Segoe UI Symbol"/>
@@ -761,6 +824,10 @@
                                 CommandParameter="{Binding}" 
                                 Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
                                 />
+
+                            <Border Grid.Column="1" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="{x:Bind Thumbnail, Mode=OneWay}" />
+                            </Border>
 
                         </Grid>
                     </DataTemplate>
@@ -783,11 +850,11 @@
                 <SymbolIcon Symbol="Add"/>
             </Button>
 
-            <Button x:Name="SplitButton" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button x:Name="SplitLayerButton" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <UIElement.ManipulationMode>
                     TranslateX
                 </UIElement.ManipulationMode>
-                <SymbolIcon x:Name="SplitIcon" Symbol="GlobalNavigationButton" />
+                <SymbolIcon x:Name="SplitLayerIcon" Symbol="GlobalNavigationButton" />
             </Button>
 
         </Grid>
@@ -795,8 +862,16 @@
 
         <!--Button-->
         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" Background="#FFC003">
+
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform Y="{x:Bind HeadTransform.Y, Mode=OneWay}"/>
+            </UIElement.RenderTransform>
+
             <Button.Flyout>
-                <Flyout Placement="Right">
+                <Flyout x:Name="ExportFlyout" Placement="Right">
                     <Grid Width="320" Height="420" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -810,7 +885,7 @@
                         <TextBlock x:Name="DPITextBlock" Grid.Row="0" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
                             DPI
                         </TextBlock>
-                        <ListBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" Background="{ThemeResource AppBackgroundMediumLight}">
+                        <ListBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" >
                             <ItemsControl.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="MinWidth" Value="45" />
@@ -832,7 +907,7 @@
                         <TextBlock x:Name="FormatTextBlock" Grid.Row="2" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
                             File Format
                         </TextBlock>
-                        <ListBox x:Name="FormatComboBox" Grid.Row="3" SelectedIndex="0" Background="{ThemeResource AppBackgroundMediumLight}">
+                        <ListBox x:Name="FormatComboBox" Grid.Row="3" SelectedIndex="0" >
                             <ItemsControl.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="MinWidth" Value="54" />
@@ -932,6 +1007,14 @@
             <SymbolIcon Symbol="NewWindow"/>
         </Button>
         <Button HorizontalAlignment="Right" VerticalAlignment="Top" Background="{ThemeResource AppBackgroundLight}" >
+
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform Y="{x:Bind HeadTransform.Y, Mode=OneWay}"/>
+            </UIElement.RenderTransform>
+
             <Button.Flyout>
                 <Flyout Placement="Left">
                     <Grid Width="320" Height="420">
@@ -991,6 +1074,14 @@
             </Grid>
         </Button>
         <Button x:Name="LayerButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundLight}" >
+
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform Y="{x:Bind FootTransform.Y, Mode=OneWay}"/>
+            </UIElement.RenderTransform>
+
             <PathIcon>
                 <PathIcon.Data>
                     M11.839,19.464l9.279,-5.4l2.56,1.38l-11.839,6.519l-11.839,-6.519l2.278,-1.38l9.561,5.4Zm0,-4.33l-9.561,-5.471l-2.278,1.319l11.839,6.531l11.839,-6.531l-2.132,-1.319l-9.707,5.471Zm0,-2.069l-11.839,-6.494l11.839,-6.571l11.839,6.571l-11.839,6.494Z
@@ -998,6 +1089,14 @@
             </PathIcon>
         </Button>
         <Button x:Name="ToolButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundLight}" >
+
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform Y="{x:Bind FootTransform.Y, Mode=OneWay}"/>
+            </UIElement.RenderTransform>
+
             <!--Icon-->
             <ContentControl x:Name="ToolIcon">
                 <FrameworkElement.Resources>
