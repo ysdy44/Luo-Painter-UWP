@@ -219,6 +219,7 @@ namespace Luo_Painter
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
 
+        OptionType OptionType = OptionType.None;
 
         public DrawPage()
         {
@@ -229,7 +230,9 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
+            this.ConstructOptions();
             this.ConstructOption();
+
             this.ConstructTools();
             this.ConstructBlends();
             this.ConstructPaint();
