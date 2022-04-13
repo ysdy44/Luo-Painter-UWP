@@ -14,11 +14,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        ToolType ToolType = ToolType.PaintBrush;
-        ToolGroupType ToolGroupType = ToolGroupType.Paint;
-
-        BitmapLayer BitmapLayer;
-
         private void SetToolType(ToolType type)
         {
             // ToolIcon

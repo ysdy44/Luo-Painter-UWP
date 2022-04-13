@@ -98,10 +98,12 @@ namespace Luo_Painter
                         }
 
                         // Layer
-                        if (this.BitmapLayer == null)
+                        if (this.BitmapLayer is null)
                             this.Render(ds, this.Transformer.GetMatrix());
-                        else
+                        else if (this.OptionType == Options.OptionType.None)
                             this.Render(ds, this.Transformer.GetMatrix(), this.BitmapLayer.Id, this.GetInk(this.BitmapLayer));
+                        else
+                            this.Render(ds, this.Transformer.GetMatrix(), this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source));
                     }
                 }
             };

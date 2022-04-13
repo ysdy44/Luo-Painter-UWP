@@ -2,6 +2,7 @@
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Layers;
+using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas.Effects;
@@ -218,8 +219,10 @@ namespace Luo_Painter
 
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
-
-        OptionType OptionType = OptionType.None;
+        BitmapLayer BitmapLayer { get; set; }
+        OptionType OptionType { get; set; } = OptionType.None;
+        ToolType ToolType { get; set; } = ToolType.PaintBrush;
+        ToolGroupType ToolGroupType { get; set; } = ToolGroupType.Paint;
 
         public DrawPage()
         {
