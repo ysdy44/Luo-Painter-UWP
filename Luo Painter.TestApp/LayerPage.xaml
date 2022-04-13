@@ -7,6 +7,7 @@
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
+    xmlns:local="using:Luo_Painter.TestApp"
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
