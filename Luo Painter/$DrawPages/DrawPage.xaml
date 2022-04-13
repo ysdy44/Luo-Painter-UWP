@@ -460,6 +460,52 @@
             <SolidColorBrush Color="Gray"/>
         </Grid.Background>
 
+
+        <!--VisualState-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <!--Phone-->
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--Foot-->
+                        <Setter Target="FootGrid.CornerRadius" Value="0"/>
+                        <Setter Target="FootGrid.Margin" Value="0"/>
+                        <Setter Target="FootGrid.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="FootGrid.BorderThickness" Value="0,1,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Pad-->
+                <VisualState x:Name="Pad">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--Foot-->
+                        <Setter Target="FootGrid.CornerRadius" Value="8,8,0,0"/>
+                        <Setter Target="FootGrid.Margin" Value="90,0"/>
+                        <Setter Target="FootGrid.BorderThickness" Value="1,1,1,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--PC-->
+                <VisualState x:Name="PC">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
         <!--Extension-->
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColor}"/>
 
@@ -515,6 +561,7 @@
                 </Button>
             </StackPanel>
 
+            <!--Option-->
             <Button Background="{ThemeResource AppBackgroundLight}" >
                 <Button.Flyout>
                     <Flyout x:Name="OptionFlyout">
@@ -1105,7 +1152,36 @@
             </ContentControl>
         </Button>
 
+        
+        <!--Foot-->
+        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="222" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppAcrylicOverlayBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="OptionPrimaryButton" Grid.Column="2">
+                <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
+            </Button>
+            <Button x:Name="OptionSecondaryButton" >
+                <SymbolIcon Symbol="Back"/>
+            </Button>
+            <Grid Grid.Column="1">
+                <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" >
+                    <x:String>Normal</x:String>
+                    <x:String>White Paper</x:String>
+                    <x:String>Black Paper</x:String>
+                </ListBox>
+            </Grid>
+            <Grid Grid.ColumnSpan="3" Grid.Row="1">
+            </Grid>
+        </Grid>
 
+        
         <!--Dialog-->
         <ContentDialog x:Name="SettingDislog" Style="{StaticResource AppContentDialogStyle}">
 
