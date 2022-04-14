@@ -12,6 +12,15 @@ namespace Luo_Painter.Elements
             // base.Unloaded += (s, e) => this.Content = null;
             base.Loaded += (s, e) => this.Content = new SelectedButton(this);
         }
+
+        //@Static
+        public static ListViewItem FindAncestor(DependencyObject reference)
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(reference);
+            if (parent == null) return null;
+            else if (parent is ListViewItem result) return result;
+            else return SelectedButtonPresenter.FindAncestor(parent);
+        }
     }
 
     internal sealed partial class SelectedButton : Button
@@ -23,17 +32,8 @@ namespace Luo_Painter.Elements
         internal SelectedButton(SelectedButtonPresenter presenter)
         {
             this.InitializeComponent();
-            this.Ancestor = SelectedButton.FindAncestor(presenter);
+            this.Ancestor = SelectedButtonPresenter.FindAncestor(presenter);
             base.Click += (s, e) => this.Ancestor.IsSelected = !this.Ancestor.IsSelected;
-        }
-
-        //@Static
-        private static ListViewItem FindAncestor(DependencyObject reference)
-        {
-            DependencyObject parent = VisualTreeHelper.GetParent(reference);
-            if (parent == null) return null;
-            else if (parent is ListViewItem result) return result;
-            else return SelectedButton.FindAncestor(parent);
         }
     }
 }
