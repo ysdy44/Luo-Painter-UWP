@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter
 {
-    internal sealed class ToolIcon : ContentPresenter
+    internal sealed class ToolIcon : ContentControl
     {
         #region DependencyProperty
 
@@ -37,22 +37,28 @@ namespace Luo_Painter
 
             if (e.NewValue is ToolType value)
             {
-                control.Content = new ContentControl
-                {
-                    Content = value,
-                    Template = value.GetTemplate(out ResourceDictionary resource),
-                    Resources = resource,
-                };
-                ToolTipService.SetToolTip(control, new ToolTip
-                {
-                    Content = value,
-                    Style = App.Current.Resources["AppToolTipStyle"] as Style
-                });
+                control.Content = value;
+                control.Template = value.GetTemplate(out ResourceDictionary resource);
+                control.Resources = resource;
             }
         }));
 
 
         #endregion
+
+        public ToolIcon()
+        {
+            base.Loaded += (s, e) =>
+            {
+                ListViewItem parent = SelectedButtonPresenter.FindAncestor(this);
+                if (parent is null) return;
+                ToolTipService.SetToolTip(parent, new ToolTip
+                {
+                    Content = this.Type,
+                    Style = App.Current.Resources["AppToolTipStyle"] as Style
+                });
+            };
+        }
     }
 
     internal sealed class BlendIcon : ContentPresenter
@@ -119,6 +125,7 @@ namespace Luo_Painter
 
             if (e.NewValue is OptionType value)
             {
+                control.Content = value.ToString();
                 // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
                 {
                     BitmapImage bitmap = new BitmapImage();
@@ -128,19 +135,6 @@ namespace Luo_Painter
                     };
                     bitmap.UriSource = new Uri(value.GetResource());
                 }
-
-                control.Content = new Border
-                {
-                    Height = 20,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    Background = control.BorderBrush,
-                    Child = new TextBlock
-                    {
-                        Text = value.ToString(),
-                        TextTrimming = TextTrimming.CharacterEllipsis,
-                        HorizontalAlignment = HorizontalAlignment.Center
-                    }
-                };
             }
         }));
 

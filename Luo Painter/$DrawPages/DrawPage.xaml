@@ -224,9 +224,9 @@
                         <ColumnDefinition Width="8"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button x:Name="LayerImageButton" Width="Auto" Height="Auto" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image x:Name="LayerImage" />
-                    </Border>
+                    </Button>
                     <TextBox x:Name="LayerTextBox" Grid.Column="2" >
                         <TextBox.PlaceholderText>
                             Input Text...
@@ -331,7 +331,7 @@
                 </Slider>
 
                 <Rectangle Margin="0,4"/>
-                
+
                 <ListView x:Name="BlendModeListView" 
                                   CornerRadius="4" 
                                   BorderThickness="1"
@@ -370,17 +370,17 @@
             <Grid Width="320">
                 <StackPanel x:Name="PaintBrushPanel" Visibility="Collapsed">
 
-                    <Border BorderThickness="1" Background="White" >
-                        <Border.BorderBrush>
+                    <Button x:Name="PaintRenderButton" Width="Auto" Height="Auto" BorderThickness="1" Background="White" >
+                        <Control.BorderBrush>
                             <LinearGradientBrush  EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#55000000"/>
                                 <GradientStop Color="#55888888" Offset="0.2"/>
                                 <GradientStop Color="#55888888" Offset="0.8"/>
                                 <GradientStop Color="#55ffffff" Offset="1"/>
                             </LinearGradientBrush>
-                        </Border.BorderBrush>
+                        </Control.BorderBrush>
                         <canvas:CanvasControl x:Name="PaintCanvasControl" Width="320" Height="80" />
-                    </Border>
+                    </Button>
 
                     <Rectangle Margin="0,4"/>
 
@@ -413,9 +413,9 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                    
+
                     <Rectangle Margin="0,4"/>
-                    
+
                     <ListView x:Name="PaintBlendModeListView" 
                               CornerRadius="4"                             
                               BorderThickness="1"                               
@@ -519,7 +519,7 @@
             </UIElement.KeyboardAccelerators>
             <SymbolIcon Symbol="BackToWindow"/>
         </Button>
-        <Grid Height="50"  Padding="70,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -529,6 +529,147 @@
             </UIElement.RenderTransform>
 
             <StackPanel Orientation="Horizontal">
+                <Button Foreground="Black" Background="#FFC003">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Q"/>
+                    </UIElement.KeyboardAccelerators>
+
+                    <Button.Flyout>
+                        <Flyout x:Name="ExportFlyout" Placement="Right">
+                            <Grid Width="320" Height="420" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <!--DPI-->
+                                <TextBlock x:Name="DPITextBlock" Grid.Row="0" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
+                                    DPI
+                                </TextBlock>
+                                <ListBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" >
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="MinWidth" Value="45" />
+                                            <Setter Property="Width" Value="53" />
+                                            <Setter Property="Height" Value="40" />
+                                            <Setter Property="Padding" Value="2" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+                                    <x:Int32>72</x:Int32>
+                                    <x:Int32>96</x:Int32>
+                                    <x:Int32>144</x:Int32>
+                                    <x:Int32>192</x:Int32>
+                                    <x:Int32>300</x:Int32>
+                                    <x:Int32>400</x:Int32>
+                                </ListBox>
+
+                                <!--Format-->
+                                <TextBlock x:Name="FormatTextBlock" Grid.Row="2" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
+                                    File Format
+                                </TextBlock>
+                                <ListBox x:Name="FormatComboBox" Grid.Row="3" SelectedIndex="0" >
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="MinWidth" Value="54" />
+                                            <Setter Property="Width" Value="64" />
+                                            <Setter Property="Height" Value="40" />
+                                            <Setter Property="Padding" Value="2" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+                                    <x:String>JPEG</x:String>
+                                    <x:String>PNG</x:String>
+                                    <x:String>BMP</x:String>
+                                    <x:String>GIF</x:String>
+                                    <x:String>TIFF</x:String>
+                                </ListBox>
+
+                                <FlipView Grid.Row="4" Margin="0,10" Background="{ThemeResource AppBackgroundMediumLight}"
+                                          SelectedIndex="{x:Bind FormatComboBox.SelectedIndex, Mode=TwoWay}">
+                                    <HubSection IsHeaderInteractive="True">
+                                        <HubSection.Header>
+                                            JPEG
+                                        </HubSection.Header>
+                                        <DataTemplate>
+                                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
+                                                A JPEG is a type of image format that is saved using the method of lossy compression. <LineBreak/>
+                                                The output image, as result of compression, is a trade-off between storage size and image quality. <LineBreak/>
+                                                Users can adjust the compression level to achieve the desired quality level while at the same time reduce the storage size. <LineBreak/>
+                                                Image quality is negligibly affected if 10:1 compression is applied to the image.  <LineBreak/>
+                                                The higher the compression value, the higher the degradation in image quality.
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </HubSection>
+
+                                    <HubSection IsHeaderInteractive="True">
+                                        <HubSection.Header>
+                                            PNG
+                                        </HubSection.Header>
+                                        <DataTemplate>
+                                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                               
+                                                A PNG file is a Portable Network Graphics file. <LineBreak/>                               
+                                                The format uses lossless compression <LineBreak/>                                  
+                                                and is generally considered the replacement to the GIF image format.
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </HubSection>
+
+                                    <HubSection IsHeaderInteractive="True">
+                                        <HubSection.Header>
+                                            BMP
+                                        </HubSection.Header>
+                                        <DataTemplate>
+                                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                                   
+                                                A basic metabolic panel (BMP) is a group of blood tests. <LineBreak/>                                  
+                                                These tests show how well your kidneys work. <LineBreak/>                                    
+                                                They also show the levels of glucose (sugar) and electrolytes in your blood. <LineBreak/>                                    
+                                                Electrolytes, such as sodium and potassium, affect how your body works.
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </HubSection>
+
+                                    <HubSection IsHeaderInteractive="True">
+                                        <HubSection.Header>
+                                            GIF
+                                        </HubSection.Header>
+                                        <DataTemplate>
+                                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                                    
+                                                A computer file format for the compression and storage of visual digital information <LineBreak/>                                    
+                                                also : <LineBreak/>                                    
+                                                an image or video stored in this format
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </HubSection>
+
+                                    <HubSection IsHeaderInteractive="True">
+                                        <HubSection.Header>
+                                            TIFF
+                                        </HubSection.Header>
+                                        <DataTemplate>
+                                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                                     
+                                                A TIFF, which stands for Tag Image File Format, <LineBreak/>                                    
+                                                is a computer file used to store raster graphics and image information. <LineBreak/>                                   
+                                                A favorite among photographers, <LineBreak/>                                   
+                                                TIFFs are a handy way to store high-quality images before editing <LineBreak/>                                   
+                                                if you want to avoid lossy file formats.
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </HubSection>
+
+                                </FlipView>
+
+                                <Button x:Name="ExportButton" Grid.Row="5" FontWeight="Medium" Width="Auto" Height="32" HorizontalAlignment="Stretch" Foreground="Black" Background="#FFC003">
+                                    Export
+                                </Button>
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>
+                    <SymbolIcon Symbol="NewWindow"/>
+                </Button>
                 <Button x:Name="SettingButton" >
                     <SymbolIcon Symbol="Setting"/>
                 </Button>
@@ -552,10 +693,77 @@
                     </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
+                <Button Background="{ThemeResource AppBackgroundLight}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="E"/>
+                    </UIElement.KeyboardAccelerators>
+
+                    <Button.Flyout>
+                        <Flyout Placement="Left">
+                            <Grid Width="320" Height="420">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="StrawButton" Width="Auto" Height="Auto">
+                                        <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
+                                    </Button>
+                                    <ListBox x:Name="ColorListBox" Grid.Column="1" SelectedIndex="0">
+                                        <x:String>Hue</x:String>
+                                        <x:String>Value</x:String>
+                                        <x:String>Saturation</x:String>
+                                    </ListBox>
+                                    <ToggleButton x:Name="ColorShapeButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
+                                        <SymbolIcon Symbol="{x:Bind ColorSpectrumShapeSymbolConverter(ColorShapeButton.IsChecked), Mode=OneWay}"/>
+                                    </ToggleButton>
+                                </Grid>
+                                <ColorPicker x:Name="ColorPicker" 
+                                             Grid.Row="2"
+                                             Color="Black"  
+                                             IsMoreButtonVisible="False" 
+                                             IsHexInputVisible="False" 
+                                             IsColorSpectrumVisible="True"
+                                             IsColorSliderVisible="True"
+                                             IsColorPreviewVisible="False"
+                                             IsColorChannelTextInputVisible="False"  
+                                             IsAlphaTextInputVisible="False"  
+                                             IsAlphaSliderVisible="False" 
+                                             IsAlphaEnabled="False" 
+                                             ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"
+                                             ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ColorListBox.SelectedIndex),Mode=OneWay}"
+                                             />
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>
+                    <Grid>
+                        <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Shape.Fill>
+                                <SolidColorBrush Color="White" />
+                            </Shape.Fill>
+                        </Ellipse>
+                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Shape.Fill>
+                                <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
+                            </Shape.Fill>
+                        </Ellipse>
+                    </Grid>
+                </Button>
             </StackPanel>
 
             <!--Option-->
             <Button Background="{ThemeResource AppBackgroundLight}" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="W"/>
+                </UIElement.KeyboardAccelerators>
+
                 <Button.Flyout>
                     <Flyout x:Name="OptionFlyout">
                         <Grid Width="400">
@@ -604,18 +812,24 @@
                                                 <DataTemplate>
                                                     <local:OptionIcon 
                                                         Padding="0"        
-                                                        FontWeight="Bold"                                 
-                                                        Foreground="{ThemeResource SystemBaseHighColor}" 
-                                                        BorderBrush="{ThemeResource SystemControlBackgroundAltMediumBrush}"
                                                         HorizontalAlignment="Stretch"                                         
                                                         VerticalAlignment="Stretch" 
                                                         HorizontalContentAlignment="Stretch"
-                                                        VerticalContentAlignment="Stretch"                                           
+                                                        VerticalContentAlignment="Stretch"            
+                                                        Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
                                                         Style="{StaticResource TextBlockButtonStyle}"                                        
                                                         Type="{Binding}"                                           
                                                         CommandParameter="{Binding}"                                           
                                                         Command="{Binding ElementName=OptionTypeButton, Path=Command, Mode=OneWay}"
-                                                        />
+                                                        >
+                                                        <ContentControl.ContentTemplate>
+                                                            <DataTemplate x:DataType="x:String">
+                                                                <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
+                                                                    <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
+                                                                </Border>
+                                                            </DataTemplate>
+                                                        </ContentControl.ContentTemplate>
+                                                    </local:OptionIcon>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
 
@@ -660,6 +874,46 @@
                 <Slider x:Name="PaintOpacitySlider2" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
                 </Slider>
             </Grid>
+
+            <Button x:Name="LayerButton" HorizontalAlignment="Right" Background="{ThemeResource AppBackgroundLight}" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="D"/>
+                </UIElement.KeyboardAccelerators>
+
+                <UIElement.RenderTransformOrigin>
+                    0.5,0.5
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <TranslateTransform Y="{x:Bind FootTransform.Y, Mode=OneWay}"/>
+                </UIElement.RenderTransform>
+
+                <PathIcon>
+                    <PathIcon.Data>
+                        M11.839,19.464l9.279,-5.4l2.56,1.38l-11.839,6.519l-11.839,-6.519l2.278,-1.38l9.561,5.4Zm0,-4.33l-9.561,-5.471l-2.278,1.319l11.839,6.531l11.839,-6.531l-2.132,-1.319l-9.707,5.471Zm0,-2.069l-11.839,-6.494l11.839,-6.571l11.839,6.571l-11.839,6.494Z
+                    </PathIcon.Data>
+                </PathIcon>
+            </Button>
+
+            <Button x:Name="ToolButton" HorizontalAlignment="Left" Background="{ThemeResource AppBackgroundLight}" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="A"/>
+                </UIElement.KeyboardAccelerators>
+
+                <UIElement.RenderTransformOrigin>
+                    0.5,0.5
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <TranslateTransform Y="{x:Bind FootTransform.Y, Mode=OneWay}"/>
+                </UIElement.RenderTransform>
+
+                <!--Icon-->
+                <ContentControl x:Name="ToolIcon">
+                    <FrameworkElement.Resources>
+                        <ResourceDictionary x:Name="ToolResource"/>
+                    </FrameworkElement.Resources>
+                </ContentControl>
+            </Button>
+
         </Grid>
 
 
@@ -885,252 +1139,6 @@
         </Grid>
 
 
-        <!--Button-->
-        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" Background="#FFC003">
-
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform Y="{x:Bind HeadTransform.Y, Mode=OneWay}"/>
-            </UIElement.RenderTransform>
-
-            <Button.Flyout>
-                <Flyout x:Name="ExportFlyout" Placement="Right">
-                    <Grid Width="320" Height="420" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <!--DPI-->
-                        <TextBlock x:Name="DPITextBlock" Grid.Row="0" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
-                            DPI
-                        </TextBlock>
-                        <ListBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" >
-                            <ItemsControl.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="MinWidth" Value="45" />
-                                    <Setter Property="Width" Value="53" />
-                                    <Setter Property="Height" Value="40" />
-                                    <Setter Property="Padding" Value="2" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
-                            <x:Int32>72</x:Int32>
-                            <x:Int32>96</x:Int32>
-                            <x:Int32>144</x:Int32>
-                            <x:Int32>192</x:Int32>
-                            <x:Int32>300</x:Int32>
-                            <x:Int32>400</x:Int32>
-                        </ListBox>
-
-                        <!--Format-->
-                        <TextBlock x:Name="FormatTextBlock" Grid.Row="2" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
-                            File Format
-                        </TextBlock>
-                        <ListBox x:Name="FormatComboBox" Grid.Row="3" SelectedIndex="0" >
-                            <ItemsControl.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="MinWidth" Value="54" />
-                                    <Setter Property="Width" Value="64" />
-                                    <Setter Property="Height" Value="40" />
-                                    <Setter Property="Padding" Value="2" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
-                            <x:String>JPEG</x:String>
-                            <x:String>PNG</x:String>
-                            <x:String>BMP</x:String>
-                            <x:String>GIF</x:String>
-                            <x:String>TIFF</x:String>
-                        </ListBox>
-
-                        <FlipView Grid.Row="4" Margin="0,10" Background="{ThemeResource AppBackgroundMediumLight}"
-                                  SelectedIndex="{x:Bind FormatComboBox.SelectedIndex, Mode=TwoWay}">
-                            <HubSection IsHeaderInteractive="True">
-                                <HubSection.Header>
-                                    JPEG
-                                </HubSection.Header>
-                                <DataTemplate>
-                                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
-                                        A JPEG is a type of image format that is saved using the method of lossy compression. <LineBreak/>
-                                        The output image, as result of compression, is a trade-off between storage size and image quality. <LineBreak/>
-                                        Users can adjust the compression level to achieve the desired quality level while at the same time reduce the storage size. <LineBreak/>
-                                        Image quality is negligibly affected if 10:1 compression is applied to the image.  <LineBreak/>
-                                        The higher the compression value, the higher the degradation in image quality.
-                                    </TextBlock>
-                                </DataTemplate>
-                            </HubSection>
-
-                            <HubSection IsHeaderInteractive="True">
-                                <HubSection.Header>
-                                    PNG
-                                </HubSection.Header>
-                                <DataTemplate>
-                                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
-                                        A PNG file is a Portable Network Graphics file. <LineBreak/>
-                                        The format uses lossless compression <LineBreak/>
-                                        and is generally considered the replacement to the GIF image format.
-                                    </TextBlock>
-                                </DataTemplate>
-                            </HubSection>
-
-                            <HubSection IsHeaderInteractive="True">
-                                <HubSection.Header>
-                                    BMP
-                                </HubSection.Header>
-                                <DataTemplate>
-                                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
-                                        A basic metabolic panel (BMP) is a group of blood tests. <LineBreak/>
-                                        These tests show how well your kidneys work. <LineBreak/>
-                                        They also show the levels of glucose (sugar) and electrolytes in your blood. <LineBreak/>
-                                        Electrolytes, such as sodium and potassium, affect how your body works.
-                                    </TextBlock>
-                                </DataTemplate>
-                            </HubSection>
-
-                            <HubSection IsHeaderInteractive="True">
-                                <HubSection.Header>
-                                    GIF
-                                </HubSection.Header>
-                                <DataTemplate>
-                                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
-                                        A computer file format for the compression and storage of visual digital information <LineBreak/>
-                                        also : <LineBreak/>
-                                        an image or video stored in this format
-                                    </TextBlock>
-                                </DataTemplate>
-                            </HubSection>
-
-                            <HubSection IsHeaderInteractive="True">
-                                <HubSection.Header>
-                                    TIFF
-                                </HubSection.Header>
-                                <DataTemplate>
-                                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
-                                        A TIFF, which stands for Tag Image File Format, <LineBreak/>
-                                        is a computer file used to store raster graphics and image information. <LineBreak/>
-                                        A favorite among photographers, <LineBreak/>
-                                        TIFFs are a handy way to store high-quality images before editing <LineBreak/>
-                                        if you want to avoid lossy file formats.
-                                    </TextBlock>
-                                </DataTemplate>
-                            </HubSection>
-
-                        </FlipView>
-
-                        <Button x:Name="ExportButton" Grid.Row="5" FontWeight="Medium" Width="Auto" Height="32" HorizontalAlignment="Stretch" Foreground="Black" Background="#FFC003">
-                            Export
-                        </Button>
-                    </Grid>
-                </Flyout>
-            </Button.Flyout>
-            <SymbolIcon Symbol="NewWindow"/>
-        </Button>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Background="{ThemeResource AppBackgroundLight}" >
-
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform Y="{x:Bind HeadTransform.Y, Mode=OneWay}"/>
-            </UIElement.RenderTransform>
-
-            <Button.Flyout>
-                <Flyout Placement="Left">
-                    <Grid Width="320" Height="420">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="12"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="StrawButton" Width="Auto" Height="Auto">
-                                <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
-                            </Button>
-                            <ListBox x:Name="ColorListBox" Grid.Column="1" SelectedIndex="0">
-                                <x:String>Hue</x:String>
-                                <x:String>Value</x:String>
-                                <x:String>Saturation</x:String>
-                            </ListBox>
-                            <ToggleButton x:Name="ColorShapeButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="{x:Bind ColorSpectrumShapeSymbolConverter(ColorShapeButton.IsChecked), Mode=OneWay}"/>
-                            </ToggleButton>
-                        </Grid>
-                        <ColorPicker x:Name="ColorPicker" 
-                             Grid.Row="2"
-                             Color="Black"  
-                             IsMoreButtonVisible="False" 
-                             IsHexInputVisible="False" 
-                             IsColorSpectrumVisible="True"
-                             IsColorSliderVisible="True"
-                             IsColorPreviewVisible="False"
-                             IsColorChannelTextInputVisible="False"  
-                             IsAlphaTextInputVisible="False"  
-                             IsAlphaSliderVisible="False" 
-                             IsAlphaEnabled="False" 
-                             ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"
-                             ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ColorListBox.SelectedIndex),Mode=OneWay}"
-                             />
-                    </Grid>
-                </Flyout>
-            </Button.Flyout>
-            <Grid>
-                <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
-                <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Shape.Fill>
-                        <SolidColorBrush Color="White" />
-                    </Shape.Fill>
-                </Ellipse>
-                <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Shape.Fill>
-                        <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
-                    </Shape.Fill>
-                </Ellipse>
-            </Grid>
-        </Button>
-        <Button x:Name="LayerButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundLight}" >
-
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform Y="{x:Bind FootTransform.Y, Mode=OneWay}"/>
-            </UIElement.RenderTransform>
-
-            <PathIcon>
-                <PathIcon.Data>
-                    M11.839,19.464l9.279,-5.4l2.56,1.38l-11.839,6.519l-11.839,-6.519l2.278,-1.38l9.561,5.4Zm0,-4.33l-9.561,-5.471l-2.278,1.319l11.839,6.531l11.839,-6.531l-2.132,-1.319l-9.707,5.471Zm0,-2.069l-11.839,-6.494l11.839,-6.571l11.839,6.571l-11.839,6.494Z
-                </PathIcon.Data>
-            </PathIcon>
-        </Button>
-        <Button x:Name="ToolButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundLight}" >
-
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform Y="{x:Bind FootTransform.Y, Mode=OneWay}"/>
-            </UIElement.RenderTransform>
-
-            <!--Icon-->
-            <ContentControl x:Name="ToolIcon">
-                <FrameworkElement.Resources>
-                    <ResourceDictionary x:Name="ToolResource"/>
-                </FrameworkElement.Resources>
-            </ContentControl>
-        </Button>
-
-        
         <!--Foot-->
         <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="222" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundDark}">
             <Grid.ColumnDefinitions>
