@@ -12,7 +12,7 @@
     xmlns:tools="using:Luo_Painter.Tools"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
@@ -315,14 +315,12 @@
                     </Button>
                 </StackPanel>
 
-                <Rectangle Margin="0,4"/>
-
                 <Slider x:Name="OpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
                     <FrameworkElement.Tag>
                         Opacity
                     </FrameworkElement.Tag>
                     <Slider.Header>
-                        <Button MinWidth="50" Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" Style="{StaticResource TextBlockButtonStyle}">
+                        <Button Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -331,6 +329,9 @@
                         </Button>
                     </Slider.Header>
                 </Slider>
+
+                <Rectangle Margin="0,4"/>
+                
                 <ListView x:Name="BlendModeListView" 
                                   CornerRadius="4" 
                                   BorderThickness="1"
@@ -388,7 +389,7 @@
                             Size
                         </FrameworkElement.Tag>
                         <Slider.Header>
-                            <Button MinWidth="50" Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" Style="{StaticResource TextBlockButtonStyle}">
+                            <Button Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" >
                                 <Button.Flyout>
                                     <Flyout>
 
@@ -397,15 +398,13 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-
-                    <Rectangle Margin="0,4"/>
 
                     <Slider x:Name="PaintOpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
                         <FrameworkElement.Tag>
                             Opacity
                         </FrameworkElement.Tag>
                         <Slider.Header>
-                            <Button MinWidth="50" Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" Style="{StaticResource TextBlockButtonStyle}">
+                            <Button Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" >
                                 <Button.Flyout>
                                     <Flyout>
 
@@ -414,6 +413,9 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
+                    
+                    <Rectangle Margin="0,4"/>
+                    
                     <ListView x:Name="PaintBlendModeListView" 
                               CornerRadius="4"                             
                               BorderThickness="1"                               
@@ -455,11 +457,7 @@
     </FrameworkElement.Resources>
 
 
-    <Grid>
-        <Grid.Background>
-            <SolidColorBrush Color="Gray"/>
-        </Grid.Background>
-
+    <Grid Background="{ThemeResource SystemControlDisabledChromeHighBrush}">
 
         <!--VisualState-->
         <VisualStateManager.VisualStateGroups>
@@ -521,12 +519,7 @@
             </UIElement.KeyboardAccelerators>
             <SymbolIcon Symbol="BackToWindow"/>
         </Button>
-        <Grid 
-            Height="50"
-            Margin="70,0" 
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Top" 
-            Background="{ThemeResource AppBackground}">
+        <Grid Height="50"  Padding="70,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -647,12 +640,7 @@
 
 
         <!--Foot-->
-        <Border 
-            Height="50" 
-            Margin="70,0" 
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Bottom" 
-            Background="{ThemeResource AppBackground}">
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -661,7 +649,7 @@
                 <TranslateTransform x:Name="FootTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <Grid x:Name="PaintBrushPanel2" MaxWidth="720" Padding="8,0">
+            <Grid x:Name="PaintBrushPanel2" Margin="70,0" MaxWidth="720" Padding="8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="12"/>
@@ -672,17 +660,12 @@
                 <Slider x:Name="PaintOpacitySlider2" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
                 </Slider>
             </Grid>
-        </Border>
+        </Grid>
 
 
         <!--Tool-->
-        <Grid
-            Margin="0,50"
-            Width="210"
-            MinHeight="100" 
-            HorizontalAlignment="Left"
-            VerticalAlignment="Stretch"           
-            Background="{ThemeResource AppBackground}">
+        <Grid Margin="0,50" Width="210" MinHeight="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
+
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
             </UIElement.RenderTransformOrigin>
@@ -782,13 +765,8 @@
 
 
         <!--Layer-->
-        <Grid
-            Margin="0,50"
-            Width="210"
-            MinHeight="100" 
-            HorizontalAlignment="Right"
-            VerticalAlignment="Stretch"           
-            Background="{ThemeResource AppBackground}">
+        <Grid Margin="0,50" Width="210" MinHeight="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
+
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
             </UIElement.RenderTransformOrigin>
@@ -1154,7 +1132,7 @@
 
         
         <!--Foot-->
-        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="222" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppAcrylicOverlayBrush}">
+        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="222" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundDark}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -1171,7 +1149,7 @@
                 <SymbolIcon Symbol="Back"/>
             </Button>
             <Grid Grid.Column="1">
-                <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" >
+                <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
                     <x:String>Normal</x:String>
                     <x:String>White Paper</x:String>
                     <x:String>Black Paper</x:String>
@@ -1181,7 +1159,7 @@
             </Grid>
         </Grid>
 
-        
+
         <!--Dialog-->
         <ContentDialog x:Name="SettingDislog" Style="{StaticResource AppContentDialogStyle}">
 
@@ -1199,7 +1177,7 @@
                 </TextBlock>
                 <Slider x:Name="RadianSlider" Value="{x:Bind RadianRange.Range.Default}" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}">
                     <Slider.Header>
-                        <Button x:Name="RadianClearButton" MinWidth="64" Style="{StaticResource TextBlockButtonStyle}">
+                        <Button x:Name="RadianClearButton" >
                             <TextBlock Style="{StaticResource BaseTextBlockStyle}">
                                 <Run Text="{x:Bind RoundConverter(RadianSlider.Value), Mode=OneWay}"/><Run>º</Run>
                             </TextBlock>
@@ -1213,7 +1191,7 @@
                 </TextBlock>
                 <Slider x:Name="ScaleSlider" Value="{x:Bind ScaleRange.XRange.Default}" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}">
                     <Slider.Header>
-                        <Button x:Name="ScaleClearButton" MinWidth="64" Style="{StaticResource TextBlockButtonStyle}">
+                        <Button x:Name="ScaleClearButton" >
                             <TextBlock Style="{StaticResource BaseTextBlockStyle}">
                                 <Run Text="{x:Bind ScaleXToYConverter(ScaleSlider.Value), Mode=OneWay}"/><Run>%</Run>
                             </TextBlock>
