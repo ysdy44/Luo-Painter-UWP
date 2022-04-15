@@ -137,9 +137,6 @@
     </Compile>
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
-    <Compile Include="Options\OptionExtensions.cs" />
-    <Compile Include="Options\OptionGroupType.cs" />
-    <Compile Include="Options\OptionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +310,7 @@
       <Name>Luo Painter.Tools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
