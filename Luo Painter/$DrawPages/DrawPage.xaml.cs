@@ -107,6 +107,42 @@ namespace Luo_Painter
         #endregion
     }
 
+    internal sealed class OptionButton : Button
+    {
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="OptionButton"/>. </summary>
+        public OptionType Type
+        {
+            get => (OptionType)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "OptionButton.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(OptionButton), new PropertyMetadata(OptionType.None, (sender, e) =>
+        {
+            OptionButton control = (OptionButton)sender;
+
+            if (e.NewValue is OptionType value)
+            {
+                control.Content = value.ToString();
+                // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    control.Background = new ImageBrush
+                    {
+                        ImageSource = bitmap
+                    };
+                    bitmap.UriSource = new Uri(value.GetThumbnail());
+                }
+            }
+        }));
+
+
+        #endregion
+    }
+
+
     internal sealed class OptionIcon : Button
     {
         #region DependencyProperty
@@ -126,15 +162,8 @@ namespace Luo_Painter
             if (e.NewValue is OptionType value)
             {
                 control.Content = value.ToString();
-                // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
-                {
-                    BitmapImage bitmap = new BitmapImage();
-                    control.Background = new ImageBrush
-                    {
-                        ImageSource = bitmap
-                    };
-                    bitmap.UriSource = new Uri(value.GetResource());
-                }
+                control.Template = value.GetTemplate(out ResourceDictionary resource);
+                control.Resources = resource;
             }
         }));
 

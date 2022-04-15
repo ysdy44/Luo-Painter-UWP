@@ -810,7 +810,7 @@
 
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <local:OptionIcon 
+                                                    <local:OptionButton 
                                                         Padding="0"        
                                                         HorizontalAlignment="Stretch"                                         
                                                         VerticalAlignment="Stretch" 
@@ -829,7 +829,7 @@
                                                                 </Border>
                                                             </DataTemplate>
                                                         </ContentControl.ContentTemplate>
-                                                    </local:OptionIcon>
+                                                    </local:OptionButton>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
 
