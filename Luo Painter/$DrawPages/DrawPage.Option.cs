@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
+using System.Numerics;
 
 namespace Luo_Painter
 {
@@ -87,7 +88,7 @@ namespace Luo_Painter
                                     this.BitmapLayer = bitmapLayer;
                                     this.CanvasControl.Invalidate(); // Invalidate
 
-                                    this.HideStoryboard.Begin(); // Storyboard
+                                    this.OptionStoryboard.Begin(); // Storyboard
                                     this.FootGrid.Visibility = Visibility.Visible;
                                 }
                                 else

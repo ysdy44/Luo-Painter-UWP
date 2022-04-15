@@ -29,11 +29,17 @@
             <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="140" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="HeadTransform" d:IsOptimized="True"/>
             <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
-            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.15" Storyboard.TargetName="FullScreenButton" Storyboard.TargetProperty="IsEnabled">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OptionSecondaryButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
             </ObjectAnimationUsingKeyFrames>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="IsEnabled">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.15" Storyboard.TargetName="FullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="HideStoryboard" >
@@ -44,7 +50,31 @@
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullScreenButton" Storyboard.TargetProperty="IsEnabled">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
             </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OptionSecondaryButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+            </ObjectAnimationUsingKeyFrames>
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="OptionStoryboard" >
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="-210" Storyboard.TargetProperty="X" Storyboard.TargetName="ToolTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="210" Storyboard.TargetProperty="X" Storyboard.TargetName="LayerTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="-50" Storyboard.TargetProperty="Y" Storyboard.TargetName="HeadTransform" d:IsOptimized="True"/>
+            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="50" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="IsEnabled">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UnFullScreenButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="OptionSecondaryButton" Storyboard.TargetProperty="IsEnabled">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
@@ -513,7 +543,7 @@
 
 
         <!--Head-->
-        <Button x:Name="UnFullScreenButton" IsEnabled="False" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <Button x:Name="UnFullScreenButton" IsEnabled="False" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top">
             <UIElement.KeyboardAccelerators>
                 <KeyboardAccelerator Modifiers="None" Key="Escape"/>
             </UIElement.KeyboardAccelerators>
@@ -693,13 +723,17 @@
                     </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
-                <Button Background="{ThemeResource AppBackgroundLight}" >
+                <Button x:Name="ColorButton" Background="{ThemeResource AppBackgroundLight}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="E"/>
                     </UIElement.KeyboardAccelerators>
 
+                    <UIElement.ManipulationMode>
+                        TranslateX, TranslateY
+                    </UIElement.ManipulationMode>
+
                     <Button.Flyout>
-                        <Flyout Placement="Left">
+                        <Flyout x:Name="ColorFlyout" Placement="Left">
                             <Grid Width="320" Height="420">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="50"/>
@@ -713,6 +747,9 @@
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
                                     <Button x:Name="StrawButton" Width="Auto" Height="Auto">
+                                        <UIElement.ManipulationMode>
+                                            TranslateX, TranslateY
+                                        </UIElement.ManipulationMode>
                                         <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
                                     </Button>
                                     <ListBox x:Name="ColorListBox" Grid.Column="1" SelectedIndex="0">
@@ -1140,7 +1177,7 @@
 
 
         <!--Foot-->
-        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="222" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundDark}">
+        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="440" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundDark}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -1153,7 +1190,10 @@
             <Button x:Name="OptionPrimaryButton" Grid.Column="2">
                 <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
             </Button>
-            <Button x:Name="OptionSecondaryButton" >
+            <Button x:Name="OptionSecondaryButton" IsEnabled="False">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                </UIElement.KeyboardAccelerators>
                 <SymbolIcon Symbol="Back"/>
             </Button>
             <Grid Grid.Column="1">
@@ -1221,6 +1261,9 @@
                 </TextBlock>
             </StackPanel>
         </Border>
+
+        <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
+        <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
 
     </Grid>
 </Page>
