@@ -128,6 +128,38 @@
       <Version>6.2.12</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Thumbnails\Border.jpg" />
+    <Content Include="Thumbnails\Brightness.jpg" />
+    <Content Include="Thumbnails\ChromaKey.jpg" />
+    <Content Include="Thumbnails\Colouring.jpg" />
+    <Content Include="Thumbnails\Contrast.jpg" />
+    <Content Include="Thumbnails\DirectionalBlur.jpg" />
+    <Content Include="Thumbnails\DiscreteTransfer.jpg" />
+    <Content Include="Thumbnails\EdgeDetection.jpg" />
+    <Content Include="Thumbnails\Emboss.jpg" />
+    <Content Include="Thumbnails\Exposure.jpg" />
+    <Content Include="Thumbnails\Fog.jpg" />
+    <Content Include="Thumbnails\GammaTransfer.jpg" />
+    <Content Include="Thumbnails\GaussianBlur.jpg" />
+    <Content Include="Thumbnails\Glass.jpg" />
+    <Content Include="Thumbnails\Gray.jpg" />
+    <Content Include="Thumbnails\HighlightsAndShadows.jpg" />
+    <Content Include="Thumbnails\HueRotation.jpg" />
+    <Content Include="Thumbnails\Invert.jpg" />
+    <Content Include="Thumbnails\Lighting.jpg" />
+    <Content Include="Thumbnails\LuminanceToAlpha.jpg" />
+    <Content Include="Thumbnails\Morphology.jpg" />
+    <Content Include="Thumbnails\PinchPunch.jpg" />
+    <Content Include="Thumbnails\Posterize.jpg" />
+    <Content Include="Thumbnails\Saturation.jpg" />
+    <Content Include="Thumbnails\Sepia.jpg" />
+    <Content Include="Thumbnails\Shadow.jpg" />
+    <Content Include="Thumbnails\Sharpen.jpg" />
+    <Content Include="Thumbnails\Temperature.jpg" />
+    <Content Include="Thumbnails\Tint.jpg" />
+    <Content Include="Thumbnails\Vignette.jpg" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
