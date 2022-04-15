@@ -122,6 +122,9 @@
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EyedropperPage.xaml.cs">
+      <DependentUpon>EyedropperPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PixelBoundsPage.xaml.cs">
       <DependentUpon>PixelBoundsPage.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
     <Page Include="ArithmeticCompositeEffectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EyedropperPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PixelBoundsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
