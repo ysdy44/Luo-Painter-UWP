@@ -1197,6 +1197,27 @@
                 <SymbolIcon Symbol="Back"/>
             </Button>
             <Grid Grid.Column="1">
+                <TextBlock x:Name="ExposureTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Exposure
+                </TextBlock>
+                <TextBlock x:Name="BrightnessTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Brightness
+                </TextBlock>
+                <TextBlock x:Name="SaturationTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Saturation
+                </TextBlock>
+                <TextBlock x:Name="HueRotationTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Hue Rotation
+                </TextBlock>
+                <TextBlock x:Name="ContrastTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Contrast
+                </TextBlock>
+                <TextBlock x:Name="TemperatureTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Temperature
+                </TextBlock>
+                <TextBlock x:Name="HighlightsAndShadowsTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Highlights And Shadows
+                </TextBlock>
                 <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
                     <x:String>Normal</x:String>
                     <x:String>White Paper</x:String>
@@ -1204,6 +1225,240 @@
                 </ListBox>
             </Grid>
             <Grid Grid.ColumnSpan="3" Grid.Row="1">
+
+                <Slider x:Name="ExposureSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="Exposure" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <Slider x:Name="BrightnessSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="Brightness" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <Slider x:Name="SaturationSlider" Visibility="Collapsed" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="Gray" Offset="0"/>
+                            <GradientStop Color="#00A5FF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="Saturation" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <Slider x:Name="HueRotationSlider" Visibility="Collapsed" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="#FFCE3B" Offset="0"/>
+                            <GradientStop Color="#72C075" Offset="0.125"/>
+                            <GradientStop Color="#46A7F6" Offset="0.25"/>
+                            <GradientStop Color="#784BB0" Offset="0.375"/>
+                            <GradientStop Color="#A336B5" Offset="0.5"/>
+                            <GradientStop Color="#EB2E6E"  Offset="0.625"/>
+                            <GradientStop Color="#EC5449" Offset="0.75"/>
+                            <GradientStop Color="#FFA827" Offset="0.875"/>
+                            <GradientStop Color="#FFCE3B" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="HueRotation" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <Slider x:Name="ContrastSlider" Visibility="Collapsed" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="#888888" Offset="0"/>
+
+                            <GradientStop Color="#6D6D6D" Offset="0.4"/>
+                            <GradientStop Color="#909090" Offset="0.5"/>
+
+                            <GradientStop Color="#353535" Offset="0.6"/>
+                            <GradientStop Color="#C9C9C9" Offset="0.7"/>
+
+                            <GradientStop Color="#000000" Offset="0.8"/>
+                            <GradientStop Color="#FFFFFF" Offset="1"/>
+
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="Contrast" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <Slider x:Name="TemperatureSlider" Visibility="Collapsed" Margin="0,0,0,50" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="#3EADF5" Offset="0"/>
+                            <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                            <GradientStop Color="#F99652" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="Temperature" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="TintSlider" Visibility="Collapsed" Margin="0,50,0,0" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="#9680C9" Offset="0"/>
+                            <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                            <GradientStop Color="#80763E" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <ContentControl Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+
+                <Slider x:Name="ShadowsSlider" Visibility="Collapsed" Margin="0,0,0,150" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="Gray" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <local:OptionIcon Type="HighlightsAndShadows" Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="HighlightsSlider" Visibility="Collapsed" Margin="0,50,0,100" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Background>
+                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="Gray" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Slider.Background>
+                    <Slider.Tag>
+                        <ContentControl Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="ClaritySlider" Visibility="Collapsed" Margin="0,100,0,50" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Tag>
+                        <ContentControl Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="BlurSlider" Visibility="Collapsed" Margin="0,150,0,0" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Tag>
+                        <ContentControl Width="70"/>
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                
             </Grid>
         </Grid>
 

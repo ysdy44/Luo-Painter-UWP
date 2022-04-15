@@ -22,6 +22,13 @@ namespace Luo_Painter
         {
             // FootGrid
             this.LuminanceToAlphaComboBox.Visibility = type == OptionType.LuminanceToAlpha ? Visibility.Visible : Visibility.Collapsed;
+            this.ExposureTextBlock.Visibility = this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
+            this.BrightnessTextBlock.Visibility = this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
+            this.SaturationTextBlock.Visibility = this.SaturationSlider.Visibility = type == OptionType.Saturation ? Visibility.Visible : Visibility.Collapsed;
+            this.HueRotationTextBlock.Visibility = this.HueRotationSlider.Visibility = type == OptionType.HueRotation ? Visibility.Visible : Visibility.Collapsed;
+            this.ContrastTextBlock.Visibility = this.ContrastSlider.Visibility = type == OptionType.Contrast ? Visibility.Visible : Visibility.Collapsed;
+            this.TemperatureTextBlock.Visibility = this.TemperatureSlider.Visibility = this.TintSlider.Visibility = type == OptionType.Temperature ? Visibility.Visible : Visibility.Collapsed;
+            this.HighlightsAndShadowsTextBlock.Visibility = this.ShadowsSlider.Visibility = this.HighlightsSlider.Visibility = this.ClaritySlider.Visibility = this.BlurSlider.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ConstructOptions()
@@ -136,6 +143,17 @@ namespace Luo_Painter
         private void ConstructOption()
         {
             this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.ExposureSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.SaturationSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.HueRotationSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.ContrastSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.TemperatureSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.TintSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.ShadowsSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.HighlightsSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.ClaritySlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.BlurSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private ICanvasImage GetPreview(OptionType type, ICanvasImage image)
@@ -154,6 +172,55 @@ namespace Luo_Painter
                     {
                         Source = image
                     };
+                case OptionType.Exposure:
+                    return new ExposureEffect
+                    {
+                        Exposure = (float)this.ExposureSlider.Value / 100,
+                        Source = image
+                    };
+                case OptionType.Brightness:
+                    float brightness = (float)this.ExposureSlider.Value / 100;
+                    return new BrightnessEffect
+                    {
+                        WhitePoint = new Vector2(System.Math.Min(2 - brightness, 1), 1f),
+                        BlackPoint = new Vector2(System.Math.Max(1 - brightness, 0), 0f),
+                        Source = image
+                    };
+                case OptionType.Saturation:
+                    return new SaturationEffect
+                    {
+                        Saturation = (float)this.SaturationSlider.Value / 100,
+                        Source = image
+                    };
+                case OptionType.HueRotation:
+                    return new HueRotationEffect
+                    {
+                        Angle = (float)this.HueRotationSlider.Value / 180 * FanKit.Math.Pi,
+                        Source = image
+                    };
+                case OptionType.Contrast:
+                    return new ContrastEffect
+                    {
+                        Contrast = (float)this.ContrastSlider.Value / 100,
+                        Source = image
+                    };
+                case OptionType.Temperature:
+                    return new TemperatureAndTintEffect
+                    {
+                        Temperature = (float)this.TemperatureSlider.Value / 100,
+                        Tint = (float)this.TintSlider.Value / 100,
+                        Source = image
+                    };
+                case OptionType.HighlightsAndShadows:
+                    return new HighlightsAndShadowsEffect
+                    {
+                        Shadows = (float)this.ShadowsSlider.Value / 100,
+                        Highlights = (float)this.HighlightsSlider.Value / 100,
+                        Clarity = (float)this.ClaritySlider.Value / 100,
+                        MaskBlurAmount = (float)this.BlurSlider.Value / 100,
+                        Source = image
+                    };
+
                 case OptionType.LuminanceToAlpha:
                     switch (this.LuminanceToAlphaComboBox.SelectedIndex)
                     {
@@ -183,6 +250,17 @@ namespace Luo_Painter
                             };
                         default: return image;
                     }
+                case OptionType.Sepia:
+                    return new SepiaEffect
+                    {
+                        Source = image
+                    };
+                case OptionType.Posterize:
+                    return new PosterizeEffect
+                    {
+                        Source = image
+                    };
+
                 default: return image;
             }
         }
