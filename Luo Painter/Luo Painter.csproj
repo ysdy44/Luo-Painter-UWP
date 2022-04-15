@@ -300,6 +300,10 @@
       <Project>{e8193f9b-9c7c-483f-aafb-600011619d5a}</Project>
       <Name>Luo Painter.Layers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Options\Luo Painter.Options.csproj">
+      <Project>{ed8fd210-e644-4130-b622-bbb791e09e8d}</Project>
+      <Name>Luo Painter.Options</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Shaders\Luo Painter.Shaders.csproj">
       <Project>{31ccde60-a61f-438d-a3ef-c26216f5f517}</Project>
       <Name>Luo Painter.Shaders</Name>

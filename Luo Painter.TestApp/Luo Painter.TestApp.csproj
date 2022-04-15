@@ -356,6 +356,10 @@
       <Project>{E8193F9B-9C7C-483F-AAFB-600011619D5A}</Project>
       <Name>Luo Painter.Layers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Options\Luo Painter.Options.csproj">
+      <Project>{ed8fd210-e644-4130-b622-bbb791e09e8d}</Project>
+      <Name>Luo Painter.Options</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Shaders\Luo Painter.Shaders.csproj">
       <Project>{31CCDE60-A61F-438D-A3EF-C26216F5F517}</Project>
       <Name>Luo Painter.Shaders</Name>

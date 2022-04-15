@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luo Painter.TestApp", "Luo 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luo Painter.Blends", "Luo Painter.Blends\Luo Painter.Blends.csproj", "{113BDC6D-952F-477E-9451-4E9D2475B7B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luo Painter.Options", "Luo Painter.Options\Luo Painter.Options.csproj", "{ED8FD210-E644-4130-B622-BBB791E09E8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +215,26 @@ Global
 		{113BDC6D-952F-477E-9451-4E9D2475B7B7}.Release|x64.Build.0 = Release|x64
 		{113BDC6D-952F-477E-9451-4E9D2475B7B7}.Release|x86.ActiveCfg = Release|x86
 		{113BDC6D-952F-477E-9451-4E9D2475B7B7}.Release|x86.Build.0 = Release|x86
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|ARM.ActiveCfg = Debug|ARM
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|ARM.Build.0 = Debug|ARM
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|ARM64.Build.0 = Debug|ARM64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|x64.ActiveCfg = Debug|x64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|x64.Build.0 = Debug|x64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|x86.ActiveCfg = Debug|x86
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Debug|x86.Build.0 = Debug|x86
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|ARM.ActiveCfg = Release|ARM
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|ARM.Build.0 = Release|ARM
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|ARM64.ActiveCfg = Release|ARM64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|ARM64.Build.0 = Release|ARM64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|x64.ActiveCfg = Release|x64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|x64.Build.0 = Release|x64
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|x86.ActiveCfg = Release|x86
+		{ED8FD210-E644-4130-B622-BBB791E09E8D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
