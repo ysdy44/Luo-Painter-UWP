@@ -124,6 +124,9 @@
     <Compile Include="BackdropBrush.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="DPIExtensions.cs" />
+    <Compile Include="Eyedropper.xaml.cs">
+      <DependentUpon>Eyedropper.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GradientStopSelector.cs" />
     <Compile Include="GradientStopSelectorWithUI.cs" />
     <Compile Include="Grouping.cs" />
@@ -151,6 +154,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Eyedropper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SelectedButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
