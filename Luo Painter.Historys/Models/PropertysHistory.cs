@@ -13,6 +13,7 @@ namespace Luo_Painter.Historys.Models
 
     public class PropertysHistory<T> : IPropertysHistory
     {
+        public HistoryMode Mode => HistoryMode.Propertys;
         public HistoryType Type => this.type;
         public HistoryType PropertyType => this.propertyType;
 

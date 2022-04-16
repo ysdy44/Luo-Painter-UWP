@@ -9,6 +9,7 @@
 
     public class PropertyHistory<T> : IPropertyHistory
     {
+        public HistoryMode Mode => HistoryMode.Property;
         public HistoryType Type => this.type;
 
         public string Id => this.id;
