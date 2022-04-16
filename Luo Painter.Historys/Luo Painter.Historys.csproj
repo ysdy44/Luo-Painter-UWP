@@ -122,14 +122,8 @@
   <ItemGroup>
     <Compile Include="HistoryType.cs" />
     <Compile Include="IHistory.cs" />
-    <Compile Include="Models\BitmapClearHistory.cs" />
-    <Compile Include="Models\BitmapHistory.cs" />
-    <Compile Include="Models\BitmapResetHistory.cs" />
-    <Compile Include="Models\BlendModeHistory.cs" />
-    <Compile Include="Models\OpacityHistory.cs" />
     <Compile Include="Models\PropertyHistory.cs" />
     <Compile Include="Models\PropertysHistory.cs" />
-    <Compile Include="Models\VisibilityHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Historys.rd.xml" />
   </ItemGroup>

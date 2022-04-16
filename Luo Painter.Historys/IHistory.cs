@@ -6,10 +6,4 @@ namespace Luo_Painter.Historys
     {
         HistoryType Type { get; }
     }
-
-    public interface IHistory<T> : IHistory
-    {
-        T UndoParameter { get; }
-        T RedoParameter { get; }
-    }
 }
