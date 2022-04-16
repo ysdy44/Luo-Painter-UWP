@@ -293,8 +293,12 @@ namespace Luo_Painter
                     {
                         if (item is IStorageFile file)
                         {
-                            bool? result = await this.AddAsync(file);
-                            if (result == true) count++;
+                            var bitmap = await this.AddAsync(file);
+                            if (bitmap is null) continue;
+                            count++;
+
+                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasControl, bitmap, this.Transformer.Width, this.Transformer.Height);
+                            this.Add(bitmapLayer);
                         }
                     }
                     this.CanvasControl.Invalidate(); // Invalidate

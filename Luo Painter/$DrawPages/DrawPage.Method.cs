@@ -86,25 +86,20 @@ namespace Luo_Painter
             return background;
         }
 
-        public async Task<bool?> AddAsync(IRandomAccessStreamReference reference)
+        public async Task<CanvasBitmap> AddAsync(IRandomAccessStreamReference reference)
         {
-            if (reference == null) return null;
-
-            ICanvasResourceCreator sender = this.CanvasControl;
+            if (reference is null) return null;
 
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
                 {
-                    CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
-                    BitmapLayer bitmapLayer = new BitmapLayer(sender, bitmap, this.Transformer.Width, this.Transformer.Height);
-                    this.Add(bitmapLayer);
-                    return true;
+                    return await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
                 }
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
