@@ -42,61 +42,75 @@ namespace Luo_Painter
 
         public bool Undo(IHistory history)
         {
-            if (history is IPropertyHistory propertyHistory)
+            switch (history.Mode)
             {
-                foreach (ILayer item in this.ObservableCollection)
-                {
-                    if (propertyHistory.Id == item.Id)
+                case HistoryMode.Property:
+                    if (history is IPropertyHistory propertyHistory)
                     {
-                        return item.History(propertyHistory.Type, propertyHistory.UndoParameter);
-                    }
-                }
-                return false;
-            }
-            else if (history is IPropertysHistory propertysHistory)
-            {
-                foreach (string id in propertysHistory.Ids)
-                {
-                    foreach (ILayer item in this.ObservableCollection)
-                    {
-                        if (id == item.Id)
+                        foreach (ILayer item in this.ObservableCollection)
                         {
-                            item.History(propertysHistory.PropertyType, propertysHistory[id]);
+                            if (propertyHistory.Id == item.Id)
+                            {
+                                return item.History(propertyHistory.Type, propertyHistory.UndoParameter);
+                            }
                         }
                     }
-                }
-                return true;
+                    return false;
+                case HistoryMode.Propertys:
+                    if (history is IPropertysHistory propertysHistory)
+                    {
+                        foreach (string id in propertysHistory.Ids)
+                        {
+                            foreach (ILayer item in this.ObservableCollection)
+                            {
+                                if (id == item.Id)
+                                {
+                                    item.History(propertysHistory.PropertyType, propertysHistory[id]);
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                    else return false;
+                default:
+                    return false;
             }
-            else return false;
         }
         public bool Redo(IHistory history)
         {
-            if (history is IPropertyHistory propertyHistory)
+            switch (history.Mode)
             {
-                foreach (ILayer item in this.ObservableCollection)
-                {
-                    if (propertyHistory.Id == item.Id)
+                case HistoryMode.Property:
+                    if (history is IPropertyHistory propertyHistory)
                     {
-                        return item.History(propertyHistory.Type, propertyHistory.RedoParameter);
-                    }
-                }
-                return false;
-            }
-            else if (history is IPropertysHistory propertysHistory)
-            {
-                foreach (string id in propertysHistory.Ids)
-                {
-                    foreach (ILayer item in this.ObservableCollection)
-                    {
-                        if (id == item.Id)
+                        foreach (ILayer item in this.ObservableCollection)
                         {
-                            item.History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
+                            if (propertyHistory.Id == item.Id)
+                            {
+                                return item.History(propertyHistory.Type, propertyHistory.RedoParameter);
+                            }
                         }
                     }
-                }
-                return true;
+                    return false;
+                case HistoryMode.Propertys:
+                    if (history is IPropertysHistory propertysHistory)
+                    {
+                        foreach (string id in propertysHistory.Ids)
+                        {
+                            foreach (ILayer item in this.ObservableCollection)
+                            {
+                                if (id == item.Id)
+                                {
+                                    item.History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                    else return false;
+                default:
+                    return false;
             }
-            else return false;
         }
 
     }
