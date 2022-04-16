@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Options;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -94,16 +95,14 @@ namespace Luo_Painter
                         // Mesh
                         using (ds.CreateLayer(1, this.Mesh.Geometry, this.Transformer.GetMatrix()))
                         {
-                            ds.DrawImage(this.Mesh.Image);
+                            // Layer
+                            if (this.BitmapLayer is null)
+                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
+                            else if (this.OptionType == OptionType.None)
+                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetInk(this.BitmapLayer)));
+                            else
+                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source)));
                         }
-
-                        // Layer
-                        if (this.BitmapLayer is null)
-                            this.Render(ds, this.Transformer.GetMatrix());
-                        else if (this.OptionType == Options.OptionType.None)
-                            this.Render(ds, this.Transformer.GetMatrix(), this.BitmapLayer.Id, this.GetInk(this.BitmapLayer));
-                        else
-                            this.Render(ds, this.Transformer.GetMatrix(), this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source));
                     }
                 }
             };

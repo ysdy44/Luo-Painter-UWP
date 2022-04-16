@@ -20,135 +20,70 @@ namespace Luo_Painter
         /// </summary>
         private async Task<bool?> Export()
         {
-            // Render
-            ICanvasResourceCreator resourceCreator = this.CanvasControl;
-            bool isClearWhite = true;
+            bool isClearWhite = this.FileFormat == CanvasBitmapFileFormat.Jpeg;
 
-            using (CanvasCommandList commandList = new CanvasCommandList(resourceCreator))
-            {
-                using (CanvasDrawingSession ds = commandList.CreateDrawingSession())
+            // Export
+            return await FileUtil.SaveCanvasImageFile
+            (
+                resourceCreator: this.CanvasControl,
+                image: this.Render(new ColorSourceEffect
                 {
-                    //@DPI 
-                    ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                    Color = isClearWhite ? Colors.White : Colors.Transparent
+                }),
 
-                    if (isClearWhite) ds.Clear(Colors.White);
+                width: this.Transformer.Width,
+                height: this.Transformer.Height,
+                dpi: this.DPI,
 
-                    this.Render(ds);
-                }
+                fileChoices: this.FileChoices,
+                suggestedFileName: this.ApplicationView.Title,
 
-                // Export
-                return await FileUtil.SaveCanvasImageFile
-                (
-                    resourceCreator: resourceCreator,
-                    image: commandList,
-
-                    width: this.Transformer.Width,
-                    height: this.Transformer.Height,
-                    dpi: this.DPI,
-
-                    fileChoices: this.FileChoices,
-                    suggestedFileName: this.ApplicationView.Title,
-
-                    fileFormat: this.FileFormat,
-                    quality: 1
-                );
-            }
+                fileFormat: this.FileFormat,
+                quality: 1
+            );
         }
 
-        private void Render(CanvasDrawingSession ds)
+        private ICanvasImage Render(ICanvasImage background)
         {
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
             {
                 ILayer item = this.ObservableCollection[i];
 
-                float opacity = item.Opacity;
-                if (opacity == 0) continue;
-
-                switch (item.Visibility)
-                {
-                    case Visibility.Visible:
-                        ICanvasImage source = item.Source;
-                        if (opacity == 1) ds.DrawImage(source);
-                        else ds.DrawImage(new OpacityEffect
-                        {
-                            Opacity = opacity,
-                            Source = source
-                        });
-                        break;
-                    case Visibility.Collapsed:
-                        break;
-                    default:
-                        break;
-                }
+                background = item.Render(background, item.Source);
             }
+            return background;
         }
 
-        private void Render(CanvasDrawingSession ds, Matrix3x2 matrix)
+        private ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode)
         {
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
             {
                 ILayer item = this.ObservableCollection[i];
 
-                float opacity = item.Opacity;
-                if (opacity == 0) continue;
-
-                switch (item.Visibility)
+                background = item.Render(background, new Transform2DEffect
                 {
-                    case Visibility.Visible:
-                        ICanvasImage source = new Transform2DEffect
-                        {
-                            BorderMode = EffectBorderMode.Hard,
-                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                            TransformMatrix = matrix,
-                            Source = item.Source,
-                        };
-                        if (opacity == 1) ds.DrawImage(source);
-                        else ds.DrawImage(new OpacityEffect
-                        {
-                            Opacity = opacity,
-                            Source = source
-                        });
-                        break;
-                    case Visibility.Collapsed:
-                        break;
-                    default:
-                        break;
-                }
+                    InterpolationMode = interpolationMode,
+                    TransformMatrix = matrix,
+                    Source = item.Source,
+                });
             }
+            return background;
         }
 
-        private void Render(CanvasDrawingSession ds, Matrix3x2 matrix, string id, ICanvasImage mezzanine)
+        private ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine)
         {
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
             {
                 ILayer item = this.ObservableCollection[i];
 
-                float opacity = item.Opacity;
-                if (opacity == 0) continue;
-
-                switch (item.Visibility)
+                background = item.Render(background, new Transform2DEffect
                 {
-                    case Visibility.Visible:
-                        ICanvasImage source = new Transform2DEffect
-                        {
-                            BorderMode = EffectBorderMode.Hard,
-                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                            TransformMatrix = matrix,
-                            Source = (item.Id == id) ? mezzanine : item.Source,
-                        };
-                        if (opacity == 1) ds.DrawImage(source);
-                        else ds.DrawImage(new OpacityEffect
-                        {
-                            Opacity = opacity,
-                            Source = source
-                        });
-                        break;
-                    case Visibility.Collapsed:
-                        break;
-                    default:
-                        break;
-                }
+                    InterpolationMode = interpolationMode,
+                    TransformMatrix = matrix,
+                    Source = (item.Id == id) ? mezzanine : item.Source,
+                });
             }
+            return background;
         }
 
         public async Task<bool?> AddAsync(IRandomAccessStreamReference reference)
