@@ -1,14 +1,17 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
+using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Luo_Painter.Tools;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Numerics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -241,6 +244,7 @@ namespace Luo_Painter
         }
 
         Historian<IHistory> History { get; } = new Historian<IHistory>();
+        IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
         BitmapLayer BitmapLayer { get; set; }
         OptionType OptionType { get; set; } = OptionType.None;
@@ -285,6 +289,7 @@ namespace Luo_Painter
             base.Drop += async (s, e) =>
             {
                 int count = 0;
+                string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
                 if (e.DataView.Contains(StandardDataFormats.StorageItems))
                 {
@@ -293,18 +298,24 @@ namespace Luo_Painter
                     {
                         if (item is IStorageFile file)
                         {
-                            var bitmap = await this.AddAsync(file);
+                            CanvasBitmap bitmap = await this.AddAsync(file);
                             if (bitmap is null) continue;
                             count++;
 
                             BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasControl, bitmap, this.Transformer.Width, this.Transformer.Height);
+                            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
                             this.Add(bitmapLayer);
                         }
                     }
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
 
+                if (count == 0) return;
                 if (count > 1) this.Tip("Add Images", $"{count}"); // Tip
+
+                // History
+                string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                int removes = this.History.Push(new ArrangeHistory(undo, redo));
             };
             base.DragOver += (s, e) =>
             {

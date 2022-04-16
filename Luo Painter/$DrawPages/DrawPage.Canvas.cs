@@ -78,6 +78,7 @@ namespace Luo_Painter
 
                 // Layer
                 BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                this.Layers.Add(bitmapLayer.Id, bitmapLayer);
                 this.ObservableCollection.Add(bitmapLayer);
                 this.LayerListView.SelectedIndex = 0;
 

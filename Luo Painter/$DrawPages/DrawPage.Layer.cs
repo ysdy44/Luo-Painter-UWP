@@ -75,14 +75,15 @@ namespace Luo_Painter
                 {
                     IDictionary<string, Visibility> undoParameters = new Dictionary<string, Visibility>();
 
-                    foreach (ILayer item in this.ObservableCollection)
+                    foreach (string id in ids)
                     {
-                        if (ids.Contains(item.Id))
+                        if (this.Layers.ContainsKey(id))
                         {
-                            if (item.Visibility != redo)
+                            ILayer layer2 = this.Layers[id];
+                            if (layer2.Visibility != redo)
                             {
-                                undoParameters.Add(item.Id, item.Visibility);
-                                item.Visibility = redo;
+                                undoParameters.Add(id, layer2.Visibility);
+                                layer2.Visibility = redo;
                             }
                         }
                     }
@@ -165,11 +166,7 @@ namespace Luo_Painter
         {
             this.ClearButton.Click += (s, e) =>
             {
-                int index = this.LayerListView.SelectedIndex;
-                if (index < 0) return;
-                if (index >= this.ObservableCollection.Count) return;
-
-                if (this.ObservableCollection[index] is BitmapLayer bitmapLayer)
+                if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                 {
                     // History
                     int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory());
@@ -185,8 +182,9 @@ namespace Luo_Painter
 
                 foreach (string id in this.Ids().ToArray())
                 {
-                    if (this.ObservableCollection.FirstOrDefault(c => c.Id == id) is ILayer layer)
+                    if (this.Layers.ContainsKey(id))
                     {
+                        ILayer layer = this.Layers[id];
                         this.ObservableCollection.Remove(layer);
                     }
                 }
@@ -200,9 +198,15 @@ namespace Luo_Painter
 
             this.AddButton.Click += (s, e) =>
             {
-                ICanvasResourceCreator sender = this.CanvasControl;
-                BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
+
+                BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height);
+                this.Layers.Add(bitmapLayer.Id, bitmapLayer);
                 this.Add(bitmapLayer);
+
+                // History
+                string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                int removes = this.History.Push(new ArrangeHistory(undo, redo));
             };
 
             //this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();

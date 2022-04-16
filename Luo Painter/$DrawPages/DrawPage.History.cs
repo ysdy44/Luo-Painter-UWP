@@ -44,16 +44,29 @@ namespace Luo_Painter
         {
             switch (history.Mode)
             {
+                case HistoryMode.Arrange:
+                    if (history is ArrangeHistory arrangeHistory)
+                    {
+                        this.ObservableCollection.Clear();
+                        foreach (string id in arrangeHistory.UndoParameter)
+                        {
+                            if (this.Layers.ContainsKey(id))
+                            {
+                                ILayer layer = this.Layers[id];
+                                this.ObservableCollection.Add(layer);
+                            }
+                        }
+
+                        return true;
+                    }
+                    return false;
                 case HistoryMode.Property:
                     if (history is IPropertyHistory propertyHistory)
                     {
-                        foreach (ILayer item in this.ObservableCollection)
-                        {
-                            if (propertyHistory.Id == item.Id)
-                            {
-                                return item.History(propertyHistory.Type, propertyHistory.UndoParameter);
-                            }
-                        }
+                        if (this.Layers.ContainsKey(propertyHistory.Id))
+                            return this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter);
+                        else
+                            return false;
                     }
                     return false;
                 case HistoryMode.Propertys:
@@ -61,13 +74,8 @@ namespace Luo_Painter
                     {
                         foreach (string id in propertysHistory.Ids)
                         {
-                            foreach (ILayer item in this.ObservableCollection)
-                            {
-                                if (id == item.Id)
-                                {
-                                    item.History(propertysHistory.PropertyType, propertysHistory[id]);
-                                }
-                            }
+                            if (this.Layers.ContainsKey(id))
+                                return this.Layers[id].History(propertysHistory.PropertyType, propertysHistory[id]);
                         }
                         return true;
                     }
@@ -80,16 +88,29 @@ namespace Luo_Painter
         {
             switch (history.Mode)
             {
+                case HistoryMode.Arrange:
+                    if (history is ArrangeHistory arrangeHistory)
+                    {
+                        this.ObservableCollection.Clear();
+                        foreach (string id in arrangeHistory.RedoParameter)
+                        {
+                            if (this.Layers.ContainsKey(id))
+                            {
+                                ILayer layer = this.Layers[id];
+                                this.ObservableCollection.Add(layer);
+                            }
+                        }
+
+                        return true;
+                    }
+                    return false;
                 case HistoryMode.Property:
                     if (history is IPropertyHistory propertyHistory)
                     {
-                        foreach (ILayer item in this.ObservableCollection)
-                        {
-                            if (propertyHistory.Id == item.Id)
-                            {
-                                return item.History(propertyHistory.Type, propertyHistory.RedoParameter);
-                            }
-                        }
+                        if (this.Layers.ContainsKey(propertyHistory.Id))
+                            return this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter);
+                        else
+                            return false;
                     }
                     return false;
                 case HistoryMode.Propertys:
@@ -97,13 +118,8 @@ namespace Luo_Painter
                     {
                         foreach (string id in propertysHistory.Ids)
                         {
-                            foreach (ILayer item in this.ObservableCollection)
-                            {
-                                if (id == item.Id)
-                                {
-                                    item.History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
-                                }
-                            }
+                            if (this.Layers.ContainsKey(id))
+                                return this.Layers[id].History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
                         }
                         return true;
                     }
