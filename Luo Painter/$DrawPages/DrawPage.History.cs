@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Historys;
+using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Windows.UI.Xaml.Controls;
 
@@ -41,27 +42,61 @@ namespace Luo_Painter
 
         public bool Undo(IHistory history)
         {
-            foreach (ILayer item in this.ObservableCollection)
+            if (history is IPropertyHistory propertyHistory)
             {
-                if (item.Id == item.Id)
+                foreach (ILayer item in this.ObservableCollection)
                 {
-                    return item.Undo(history);
+                    if (propertyHistory.Id == item.Id)
+                    {
+                        return item.History(propertyHistory.Type, propertyHistory.UndoParameter);
+                    }
                 }
+                return false;
             }
-
-            return false;
+            else if (history is IPropertysHistory propertysHistory)
+            {
+                foreach (string id in propertysHistory.Ids)
+                {
+                    foreach (ILayer item in this.ObservableCollection)
+                    {
+                        if (id == item.Id)
+                        {
+                            item.History(propertysHistory.PropertyType, propertysHistory[id]);
+                        }
+                    }
+                }
+                return true;
+            }
+            else return false;
         }
         public bool Redo(IHistory history)
         {
-            foreach (ILayer item in this.ObservableCollection)
+            if (history is IPropertyHistory propertyHistory)
             {
-                if (item.Id == item.Id)
+                foreach (ILayer item in this.ObservableCollection)
                 {
-                    return item.Redo(history);
+                    if (propertyHistory.Id == item.Id)
+                    {
+                        return item.History(propertyHistory.Type, propertyHistory.RedoParameter);
+                    }
                 }
+                return false;
             }
-
-            return false;
+            else if (history is IPropertysHistory propertysHistory)
+            {
+                foreach (string id in propertysHistory.Ids)
+                {
+                    foreach (ILayer item in this.ObservableCollection)
+                    {
+                        if (id == item.Id)
+                        {
+                            item.History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
+                        }
+                    }
+                }
+                return true;
+            }
+            else return false;
         }
 
     }

@@ -145,47 +145,44 @@ namespace Luo_Painter.Layers
         }
 
 
-
-        public IHistory GetBlendModeHistory(BlendEffectMode? mode)
+        public virtual bool History(HistoryType type, object parameter)
         {
-            BlendModeHistory blendMode = new BlendModeHistory
+            switch (type)
             {
-                Id = this.Id,
-                UndoParameter = this.BlendMode,
-                RedoParameter = mode
-            };
-
-            this.BlendMode = mode;
-            return blendMode;
-        }
-        public IHistory GetOpacityHistory() => new OpacityHistory
-        {
-            Id = this.Id,
-            UndoParameter = this.StartingOpacity,
-            RedoParameter = this.Opacity,
-        };
-        public IHistory GetVisibilityHistory()
-        {
-            switch (this.Visibility)
-            {
-                case Visibility.Visible:
-                    this.Visibility = Visibility.Collapsed;
-                    return new VisibilityHistory
+                case HistoryType.Name:
+                    if (parameter is string name)
                     {
-                        Id = this.Id,
-                        UndoParameter = Visibility.Visible,
-                        RedoParameter = Visibility.Collapsed
-                    };
-                case Visibility.Collapsed:
-                    this.Visibility = Visibility.Visible;
-                    return new VisibilityHistory
+                        this.Name = name;
+                        return true;
+                    }
+                    else return false;
+                case HistoryType.Opacity:
+                    if (parameter is float opacity)
                     {
-                        Id = this.Id,
-                        UndoParameter = Visibility.Collapsed,
-                        RedoParameter = Visibility.Visible
-                    };
+                        this.Opacity = opacity;
+                        return true;
+                    }
+                    else return false;
+                case HistoryType.BlendMode:
+                    if (parameter is BlendEffectMode blendMode)
+                    {
+                        this.BlendMode = blendMode;
+                        return true;
+                    }
+                    else
+                    {
+                        this.BlendMode = null;
+                        return true;
+                    }
+                case HistoryType.Visibility:
+                    if (parameter is Visibility visibility)
+                    {
+                        this.Visibility = visibility;
+                        return true;
+                    }
+                    else return false;
                 default:
-                    return null;
+                    return false;
             }
         }
 

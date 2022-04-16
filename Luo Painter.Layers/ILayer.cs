@@ -35,11 +35,6 @@ namespace Luo_Painter.Layers
         ICanvasImage Temp { get; }
         ImageSource Thumbnail { get; }
 
-        IHistory GetBlendModeHistory(BlendEffectMode? mode);
-        IHistory GetOpacityHistory();
-        IHistory GetVisibilityHistory();
-        bool Undo(IHistory history);
-        bool Redo(IHistory history);
-  
+        bool History(HistoryType type, object parameter);
     }
 }

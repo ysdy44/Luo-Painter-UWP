@@ -12,12 +12,8 @@ namespace Luo_Painter.Layers.Models
 
         public IHistory GetBitmapHistory()
         {
-            BitmapHistory bitmap = new BitmapHistory
-            {
-                Id = base.Id,
-                UndoParameter = new Dictionary<int, IBuffer>(),
-                RedoParameter = new Dictionary<int, IBuffer>(),
-            };
+            IDictionary<int, IBuffer> undoParameter = new Dictionary<int, IBuffer>();
+            IDictionary<int, IBuffer> redoParameter = new Dictionary<int, IBuffer>();
 
             for (int i = 0; i < this.Length; i++)
             {
@@ -31,95 +27,61 @@ namespace Luo_Painter.Layers.Models
                 int width = this.GetWidth(x);
                 int height = this.GetHeight(y);
 
-                bitmap.UndoParameter[i] = this.OriginRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
-                bitmap.RedoParameter[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
+                undoParameter[i] = this.OriginRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
+                redoParameter[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
             }
 
-            return bitmap;
+            return new PropertyHistory<IDictionary<int, IBuffer>>(HistoryType.Bitmap, base.Id, undoParameter, redoParameter);
         }
-        public IHistory GetBitmapClearHistory() => new BitmapClearHistory
-        {
-            Id = base.Id,
-            UndoParameter = this.OriginRenderTarget.GetPixelBytes().AsBuffer()
-        };
-        public IHistory GetBitmapResetHistory() => new BitmapResetHistory
-        {
-            Id = base.Id,
-            UndoParameter = this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
-            RedoParameter = this.SourceRenderTarget.GetPixelBytes().AsBuffer()
-        };
+        public IHistory GetBitmapClearHistory() => new PropertyHistory<IBuffer>
+        (
+            HistoryType.BitmapClear,
+            base.Id,
+            this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
+            null
+        );
+        public IHistory GetBitmapResetHistory() => new PropertyHistory<IBuffer>
+        (
+            HistoryType.BitmapReset,
+            base.Id,
+            this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
+            this.SourceRenderTarget.GetPixelBytes().AsBuffer()
+        );
 
-        public bool Undo(IHistory history)
+        public override bool History(HistoryType type, object parameter)
         {
-            switch (history.Type)
+            if (base.History(type, parameter)) return true;
+
+            switch (type)
             {
-                case HistoryType.Visibility:
-                    if (history is VisibilityHistory visibility)
-                    {
-                        base.Visibility = visibility.UndoParameter;
-                        return true;
-                    }
-                    else return false;
                 case HistoryType.Bitmap:
-                    if (history is BitmapHistory bitmap)
+                    if (parameter is IDictionary<int, IBuffer> bitmap)
                     {
-                        this.SetPixelBytes(bitmap.UndoParameter);
+                        this.SetPixelBytes(bitmap);
                         this.Flush();
                         this.RenderThumbnail();
                         return true;
                     }
                     else return false;
                 case HistoryType.BitmapClear:
-                    if (history is BitmapClearHistory bitmapClear)
+                    if (parameter is IBuffer bitmapClear)
                     {
-                        this.OriginRenderTarget.SetPixelBytes(bitmapClear.UndoParameter);
-                        this.SourceRenderTarget.SetPixelBytes(bitmapClear.UndoParameter);
+                        this.OriginRenderTarget.SetPixelBytes(bitmapClear);
+                        this.SourceRenderTarget.SetPixelBytes(bitmapClear);
                         this.RenderThumbnail();
                         return true;
                     }
-                    else return false;
+                    else
+                    {
+                        this.Clear(Colors.Transparent);
+                        this.ClearThumbnail(Colors.Transparent);
+                        return true;
+                    }
                 case HistoryType.BitmapReset:
-                    if (history is BitmapResetHistory bitmapReset)
+                    if (parameter is IBuffer bitmapReset)
                     {
-                        this.OriginRenderTarget.SetPixelBytes(bitmapReset.UndoParameter);
-                        this.SourceRenderTarget.SetPixelBytes(bitmapReset.UndoParameter);
-                        this.RenderThumbnail();
-                        return true;
-                    }
-                    else return false;
-                default:
-                    return false;
-            }
-        }
-        public bool Redo(IHistory history)
-        {
-            switch (history.Type)
-            {
-                case HistoryType.Visibility:
-                    if (history is VisibilityHistory visibility)
-                    {
-                        base.Visibility = visibility.RedoParameter;
-                        return true;
-                    }
-                    else return false;
-                case HistoryType.Bitmap:
-                    if (history is BitmapHistory bitmap)
-                    {
-                        this.SetPixelBytes(bitmap.RedoParameter);
-                        this.Flush();
-                        this.RenderThumbnail();
-                        return true;
-                    }
-                    else return false;
-                case HistoryType.BitmapClear:
-                    this.Clear(Colors.Transparent);
-                    this.ClearThumbnail(Colors.Transparent);
-                    return true;
-                case HistoryType.BitmapReset:
-                    if (history is BitmapResetHistory bitmapReset)
-                    {
-                        this.OriginRenderTarget.SetPixelBytes(bitmapReset.RedoParameter);
-                        this.SourceRenderTarget.SetPixelBytes(bitmapReset.RedoParameter);
+                        this.OriginRenderTarget.SetPixelBytes(bitmapReset);
+                        this.SourceRenderTarget.SetPixelBytes(bitmapReset);
                         this.RenderThumbnail();
                         return true;
                     }
