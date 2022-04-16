@@ -21,6 +21,9 @@ namespace Luo_Painter.Layers
 
         Visibility Visibility { get; set; }
 
+        RenderMode RenderMode { get; }
+        ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage);
+
         ICanvasImage Origin { get; }
         ICanvasImage Source { get; }
         ICanvasImage Temp { get; }
