@@ -18,6 +18,23 @@
     <Grid>
         <xaml:CanvasControl x:Name="CanvasControl"/>
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <AppBarToggleButton x:Name="EditModeToggleButton">
+                <AppBarToggleButton.Icon>
+                    <SymbolIcon Symbol="Edit"/>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
+                    编辑模式
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
+
+            <AppBarToggleButton x:Name="AddModeToggleButton" IsEnabled="False">
+                <AppBarToggleButton.Icon>
+                    <SymbolIcon Symbol="Add"/>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
+                    增加节点
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
 
             <AppBarButton x:Name="SelectAllButton" >
                 <UIElement.KeyboardAccelerators>

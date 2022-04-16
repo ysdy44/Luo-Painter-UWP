@@ -1,6 +1,8 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas.Geometry;
+
+using System.Linq;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -22,6 +24,8 @@ namespace Luo_Painter.TestApp
 
         private void ConstructPen()
         {
+            this.EditModeToggleButton.Checked += (s, e) => AddModeToggleButton.IsEnabled = true;
+            this.EditModeToggleButton.Unchecked += (s, e) => AddModeToggleButton.IsEnabled = false;
             this.SelectAllButton.Click += (s, e) =>
             {
                 foreach (Node item in this.Nodes)
@@ -65,8 +69,45 @@ namespace Luo_Painter.TestApp
                 {
                     this.Nodes = new NodeCollection(position, position);
                 }
+                else if (EditModeToggleButton.IsChecked == true)
+                {
+                    if (AddModeToggleButton.IsChecked == true)
+                    {
+                        int id = -1;
+                        for (int i = 0; i < this.Nodes.Count - 1; i++)
+                        {
+                            var item = this.Nodes[i];
+                            item.IsChecked = false;
+
+                            if (id == -1 && item.Point.X > position.X) id = i;
+                        }
+                        if (id == -1)
+                            this.Nodes.PenAdd(new Node
+                            {
+                                Point = position,
+                                LeftControlPoint = position,
+                                RightControlPoint = position,
+                                IsChecked = true,
+                                IsSmooth = false,
+                            });
+                        else
+                            this.Nodes.Insert(id, new Node
+                            {
+                                Point = position,
+                                LeftControlPoint = position,
+                                RightControlPoint = position,
+                                IsChecked = true,
+                                IsSmooth = false,
+                            });
+                    }
+                    else
+                        this.Nodes.SelectionOnlyOne(position, Matrix3x2.Identity);
+                }
                 else
                 {
+                    foreach (var item in this.Nodes)
+                        item.IsChecked = false;
+
                     this.Nodes.PenAdd(new Node
                     {
                         Point = position,
@@ -83,14 +124,34 @@ namespace Luo_Painter.TestApp
             {
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                this.Nodes[this.Nodes.Count - 2].Point = position;
+                if (EditModeToggleButton.IsChecked == true)
+                {
+                    var selItem = this.Nodes.FirstOrDefault(n => n.IsChecked);
+                    if (selItem != null)
+                        selItem.Point = position;
+                }
+                else
+                {
+                    this.Nodes[this.Nodes.Count - 2].Point = position;
+                }
+
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                this.Nodes[this.Nodes.Count - 2].Point = position;
+                if (EditModeToggleButton.IsChecked == true)
+                {
+                    var selItem = this.Nodes.FirstOrDefault(n => n.IsChecked);
+                    if (selItem != null)
+                        selItem.Point = position;
+                }
+                else
+                {
+                    this.Nodes[this.Nodes.Count - 2].Point = position;
+                }
+
                 this.CanvasControl.Invalidate(); // Invalidate
             };
         }
