@@ -122,6 +122,9 @@
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EyedropperPage.xaml.cs">
+      <DependentUpon>EyedropperPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PixelBoundsPage.xaml.cs">
       <DependentUpon>PixelBoundsPage.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
     <Page Include="ArithmeticCompositeEffectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EyedropperPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PixelBoundsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -348,6 +355,10 @@
     <ProjectReference Include="..\Luo Painter.Layers\Luo Painter.Layers.csproj">
       <Project>{E8193F9B-9C7C-483F-AAFB-600011619D5A}</Project>
       <Name>Luo Painter.Layers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Options\Luo Painter.Options.csproj">
+      <Project>{ed8fd210-e644-4130-b622-bbb791e09e8d}</Project>
+      <Name>Luo Painter.Options</Name>
     </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Shaders\Luo Painter.Shaders.csproj">
       <Project>{31CCDE60-A61F-438D-A3EF-C26216F5F517}</Project>
