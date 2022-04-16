@@ -12,12 +12,18 @@ namespace Luo_Painter.Layers
         string Id { get; }
 
         LayerType Type { get; }
+
         string Name { get; set; }
-        BlendEffectMode? BlendMode { get; set; }
+        string StartingName { get; }
+        void CacheName();
 
         float Opacity { get; set; }
         float StartingOpacity { get; }
         void CacheOpacity();
+
+        BlendEffectMode? BlendMode { get; set; }
+        BlendEffectMode? StartingBlendMode { get; }
+        void CacheBlendMode();
 
         Visibility Visibility { get; set; }
 
@@ -34,6 +40,6 @@ namespace Luo_Painter.Layers
         IHistory GetVisibilityHistory();
         bool Undo(IHistory history);
         bool Redo(IHistory history);
-
+  
     }
 }

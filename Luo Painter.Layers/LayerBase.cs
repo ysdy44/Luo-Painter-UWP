@@ -36,19 +36,8 @@ namespace Luo_Painter.Layers
             }
         }
         private string name;
-
-
-        public BlendEffectMode? BlendMode
-        {
-            get => this.blendMode;
-            set
-            {
-                this.blendMode = value;
-                this.RenderMode = this.GetRenderMode();
-                this.OnPropertyChanged(nameof(BlendMode)); // Notify 
-            }
-        }
-        private BlendEffectMode? blendMode;
+        public string StartingName { get; private set; }
+        public void CacheName() => this.StartingName = this.Name;
 
 
         public float Opacity
@@ -64,6 +53,21 @@ namespace Luo_Painter.Layers
         private float opacity = 1;
         public float StartingOpacity { get; private set; }
         public void CacheOpacity() => this.StartingOpacity = this.Opacity;
+
+
+        public BlendEffectMode? BlendMode
+        {
+            get => this.blendMode;
+            set
+            {
+                this.blendMode = value;
+                this.RenderMode = this.GetRenderMode();
+                this.OnPropertyChanged(nameof(BlendMode)); // Notify 
+            }
+        }
+        private BlendEffectMode? blendMode;
+        public BlendEffectMode? StartingBlendMode { get; private set; }
+        public void CacheBlendMode() => this.StartingBlendMode = this.BlendMode;
 
 
         public Visibility Visibility
