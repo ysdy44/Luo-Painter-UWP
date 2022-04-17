@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Historys;
+using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace Luo_Painter.TestApp
                 if (this.History.CanUndo == false) return;
 
                 // History
-                bool result = this.History.Undo(this.BitmapLayer.Undo);
+                bool result = this.History.Undo(this.Undo);
                 if (result == false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -46,7 +47,7 @@ namespace Luo_Painter.TestApp
                 if (this.History.CanRedo == false) return;
 
                 // History
-                bool result = this.History.Redo(this.BitmapLayer.Redo);
+                bool result = this.History.Redo(this.Redo);
                 if (result == false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -71,7 +72,7 @@ namespace Luo_Painter.TestApp
                 if (e.ClickedItem is IHistory item)
                 {
                     int index = this.History.IndexOf(item);
-                    this.History.SetIndex(index, this.BitmapLayer.Undo, this.BitmapLayer.Redo);
+                    this.History.SetIndex(index, this.Undo, this.Redo);
 
                     this.CanvasControl.Invalidate(); // Invalidate
 
@@ -82,7 +83,7 @@ namespace Luo_Painter.TestApp
             };
             this.ClearButton.Click += (s, e) =>
             {
-                this.History.SetIndex(-1, this.BitmapLayer.Undo, this.BitmapLayer.Redo);
+                this.History.SetIndex(-1, this.Undo, this.Redo);
 
                 this.CanvasControl.Invalidate(); // Invalidate
 
@@ -140,6 +141,35 @@ namespace Luo_Painter.TestApp
                 this.RedoButton.IsEnabled = this.History.CanRedo;
                 this.ListView.SelectedIndex = this.History.Index;
             };
+        }
+
+        public bool Undo(IHistory history)
+        {
+            switch (history.Mode)
+            {
+                case HistoryMode.Property:
+                    if (history is IPropertyHistory propertyHistory)
+                    {
+                        return this.BitmapLayer.History(propertyHistory.Type, propertyHistory.UndoParameter);
+                    }
+                    else return false;
+                default:
+                    return false;
+            }
+        }
+        public bool Redo(IHistory history)
+        {
+            switch (history.Mode)
+            {
+                case HistoryMode.Property:
+                    if (history is IPropertyHistory propertyHistory)
+                    {
+                        return this.BitmapLayer.History(propertyHistory.Type, propertyHistory.RedoParameter);
+                    }
+                    else return false;
+                default:
+                    return false;
+            }
         }
 
     }
