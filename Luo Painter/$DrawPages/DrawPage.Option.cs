@@ -20,7 +20,7 @@ namespace Luo_Painter
 
         private void SetOptionType(OptionType type)
         {
-            // FootGrid
+            this.TransformComboBox.Visibility = type == OptionType.Transform ? Visibility.Visible : Visibility.Collapsed;
             this.LuminanceToAlphaComboBox.Visibility = type == OptionType.LuminanceToAlpha ? Visibility.Visible : Visibility.Collapsed;
             this.ExposureTextBlock.Visibility = this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
             this.BrightnessTextBlock.Visibility = this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
@@ -28,7 +28,7 @@ namespace Luo_Painter
             this.HueRotationTextBlock.Visibility = this.HueRotationSlider.Visibility = type == OptionType.HueRotation ? Visibility.Visible : Visibility.Collapsed;
             this.ContrastTextBlock.Visibility = this.ContrastSlider.Visibility = type == OptionType.Contrast ? Visibility.Visible : Visibility.Collapsed;
             this.TemperatureTextBlock.Visibility = this.TemperatureSlider.Visibility = this.TintSlider.Visibility = type == OptionType.Temperature ? Visibility.Visible : Visibility.Collapsed;
-            this.HighlightsAndShadowsTextBlock.Visibility = this.ShadowsSlider.Visibility = this.HighlightsSlider.Visibility = this.ClaritySlider.Visibility = this.BlurSlider.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
+            this.HighlightsAndShadowsTextBlock.Visibility = this.HighlightsAndShadowsPanel.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ConstructOptions()
@@ -89,6 +89,13 @@ namespace Luo_Painter
                             case PixelBoundsMode.None:
                                 if (type.HasPreview())
                                 {
+                                    switch (type)
+                                    {
+                                        case OptionType.Transform:
+                                            this.SetTransform(bitmapLayer, InterpolationColors);
+                                            break;
+                                    }
+
                                     this.OptionType = type;
                                     this.SetOptionType(type);
 
@@ -162,6 +169,8 @@ namespace Luo_Painter
             {
                 case OptionType.None:
                     return image;
+                case OptionType.Transform:
+                    return this.GetTransformPreview(image);
                 case OptionType.Gray:
                     return new GrayscaleEffect
                     {

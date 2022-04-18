@@ -59,7 +59,7 @@ namespace Luo_Painter
         Mesh Mesh;
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTranformShaderCodeBytes;
-        
+
         private void ConstructCanvas()
         {
             this.CanvasControl.SizeChanged += (s, e) =>
@@ -105,6 +105,16 @@ namespace Luo_Painter
                             else
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source)));
                         }
+
+                        switch (this.OptionType)
+                        {
+                            case OptionType.Transform:
+                                ds.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+                                this.DrawTransform(sender, ds);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             };
@@ -122,21 +132,51 @@ namespace Luo_Painter
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.Position = this.ToPosition(point);
-                this.Pressure = properties.Pressure;
-                this.Tool_Start(this.Position);
+                switch (this.OptionType)
+                {
+                    case OptionType.None:
+                        this.Pressure = properties.Pressure;
+                        this.Tool_Start(this.Position);
+                        break;
+                    case OptionType.Transform:
+                        this.Transform_Start(this.Position);
+                        break;
+                    default:
+                        break;
+                }
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
                 Vector2 position = this.ToPosition(point);
-                this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
-                this.Position = position;
-                this.Pressure = properties.Pressure;
+                switch (this.OptionType)
+                {
+                    case OptionType.None:
+                        this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
+                        this.Position = position;
+                        this.Pressure = properties.Pressure;
+                        break;
+                    case OptionType.Transform:
+                        this.Transform_Delta(this.Position, position);
+                        break;
+                    default:
+                        break;
+                }
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                Vector2 position = this.ToPosition(point);
-                this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
-                this.Tool_Complete(position);
+                switch (this.OptionType)
+                {
+                    case OptionType.None:
+                        Vector2 position = this.ToPosition(point);
+                        this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
+                        this.Tool_Complete(position);
+                        break;
+                    case OptionType.Transform:
+                        this.Transform_Complete(this.Position);
+                        break;
+                    default:
+                        break;
+                }
             };
 
 
