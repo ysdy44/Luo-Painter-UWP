@@ -2,6 +2,7 @@
 {
     public enum OptionGroupType
     {
+        More,
         Adjustment,
         Effect1,
         Effect2,

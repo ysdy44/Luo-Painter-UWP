@@ -164,6 +164,14 @@
     <Content Include="Thumbnails\Vignette.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Icons\TransformIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\GradientMappingIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Icons\BrightnessIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

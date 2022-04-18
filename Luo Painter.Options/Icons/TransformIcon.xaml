@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="TransformIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
+            <PathIcon.Data>
+                M18,1.751l-4.5,0l0,-1.751l-4.5,0l-0,1.751l-4.5,0l-0,-1.751l-4.5,0l0,4.5l1.746,0l0,4.068l-1.746,-0l0,4.5l1.746,-0l0,4.068l-1.746,-0l0,4.5l4.5,-0l0,-1.751l4.5,-0l0,1.751l4.5,-0l0,-1.751l4.5,-0l0,1.751l4.5,-0l0,-4.5l-1.746,-0l-0,-4.068l1.746,-0l0,-4.5l-1.746,-0l-0,-4.068l1.746,-0l0,-4.5l-4.5,0l0,1.751Zm-17.025,18.91l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm9,-0l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm9,-0l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm-9.975,-17.912l-4.5,-0l-0,1.751l-1.746,-0l-0,4.068l1.746,-0l-0,4.5l-1.746,-0l-0,4.068l1.746,-0l-0,1.751l4.5,0l-0,-1.751l4.5,-0l-0,1.751l4.5,0l0,-1.751l1.746,-0l0,-4.068l-1.746,-0l0,-4.5l1.746,-0l0,-4.068l-1.746,-0l0,-1.751l-4.5,-0l0,1.751l-4.5,-0l0,-1.751Zm0,10.319l4.5,-0l0,-4.5l-4.5,-0l0,4.5Zm-8.025,-0.975l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm9,-0l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm9,-0l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm-18,-8.568l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm9,-0l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Zm9,-0l2.55,-0l-0,-2.55l-2.55,-0l-0,2.55Z
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>
