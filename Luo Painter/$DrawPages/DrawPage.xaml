@@ -363,11 +363,12 @@
                 <Rectangle Margin="0,4"/>
 
                 <ListView x:Name="BlendModeListView" 
-                                  CornerRadius="4" 
-                                  BorderThickness="1"
-                                  BorderBrush="{ThemeResource AppStroke}"
-                                  Background="{ThemeResource SystemAltLowColor}" 
-                                  ItemsSource="{x:Bind BlendCollection}" >
+                          IsItemClickEnabled="True"                      
+                          CornerRadius="4"                              
+                          BorderThickness="1"                                
+                          BorderBrush="{ThemeResource AppStroke}"                              
+                          Background="{ThemeResource SystemAltLowColor}"                                
+                          ItemsSource="{x:Bind BlendCollection}" >
 
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -400,19 +401,9 @@
             <Grid Width="320">
                 <StackPanel x:Name="PaintBrushPanel" Visibility="Collapsed">
 
-                    <Button x:Name="PaintRenderButton" Width="Auto" Height="Auto" BorderThickness="1" Background="White" >
-                        <Control.BorderBrush>
-                            <LinearGradientBrush  EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#55000000"/>
-                                <GradientStop Color="#55888888" Offset="0.2"/>
-                                <GradientStop Color="#55888888" Offset="0.8"/>
-                                <GradientStop Color="#55ffffff" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Control.BorderBrush>
+                    <Button x:Name="PaintRenderButton" Width="Auto" Height="Auto" Background="Transparent" >
                         <canvas:CanvasControl x:Name="PaintCanvasControl" Width="320" Height="80" />
                     </Button>
-
-                    <Rectangle Margin="0,4"/>
 
                     <Slider x:Name="PaintSizeSlider" Height="44" Value="22" Minimum="1" Maximum="500" >
                         <FrameworkElement.Tag>
@@ -796,58 +787,70 @@
             </StackPanel>
 
             <!--Option-->
-            <Button Background="{ThemeResource AppBackgroundLight}" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="W"/>
-                </UIElement.KeyboardAccelerators>
-
-                <Button.Flyout>
-                    <Flyout x:Name="OptionFlyout">
-                        <Grid Width="400">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="240"/>
-                            </Grid.RowDefinitions>
-                            <Button x:Name="OptionTypeButton" Visibility="Collapsed"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Background="{ThemeResource AppBackgroundLight}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="G"/>
+                    </UIElement.KeyboardAccelerators>
+                    <Viewbox Width="22" Height="22">
+                        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <PathIcon.Data>
+                                M2.913,27.807l2.512,0l0,1.713l-2.44,0c-0.985,0 -1.785,-0.8 -1.785,-1.785l0,-2.44l1.713,0l0,2.512Zm11.419,1.713l-6.851,0l0,-1.713l6.851,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Zm4.496,0l-2.44,0l0,-1.713l2.512,0l0,-2.512l1.713,0l0,2.44c0,0.985 -0.8,1.785 -1.785,1.785Zm1.785,-6.281l-1.713,0l0,-6.851l1.713,0l0,6.851Zm-26.607,0l-1.713,0l0,-6.851l1.713,0l0,6.851Zm26.607,-8.907l-1.713,0l0,-6.851l1.713,0l0,6.851Zm-26.607,0l-1.713,0l0,-6.851l1.713,0l0,6.851Zm26.607,-8.907l-1.713,0l0,-2.512l-2.512,0l0,-1.713l2.44,0c0.985,0 1.785,0.8 1.785,1.785l0,2.44Zm-24.095,-2.512l-2.512,0l0,2.512l-1.713,0l0,-2.44c0,-0.985 0.8,-1.785 1.785,-1.785l2.44,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Z
+                            </PathIcon.Data>
+                        </PathIcon>
+                    </Viewbox>
+                </Button>
+                <Button Background="{ThemeResource AppBackgroundLight}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="W"/>
+                    </UIElement.KeyboardAccelerators>
+                    <Button.Flyout>
+                        <Flyout x:Name="OptionFlyout">
+                            <Grid Width="400">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="240"/>
+                                </Grid.RowDefinitions>
+                                <Button x:Name="OptionTypeButton" Visibility="Visible"
                                     CommandParameter="{x:Null}">
-                                <ButtonBase.Command>
-                                    <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
-                                </ButtonBase.Command>
-                                <SymbolIcon Symbol="Repair"/>
-                            </Button>
-                            <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind OptionCollection}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="local:OptionGrouping">
-                                        <TextBlock Text="{x:Bind Key}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ListBox>
-                            <FlipView x:Name="FlipView" Grid.Row="1" Background="Transparent" ItemsSource="{x:Bind OptionCollection}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="local:OptionGrouping">
-                                        <ItemsControl ItemsSource="{x:Bind}" >
+                                    <ButtonBase.Command>
+                                        <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
+                                    </ButtonBase.Command>
+                                    <SymbolIcon Symbol="Repair"/>
+                                </Button>
+                                <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind OptionCollection}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="local:OptionGrouping">
+                                            <TextBlock Text="{x:Bind Key}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ListBox>
+                                <FlipView x:Name="FlipView" Grid.Row="1" Background="Transparent" ItemsSource="{x:Bind OptionCollection}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="local:OptionGrouping">
+                                            <ItemsControl ItemsSource="{x:Bind}" >
 
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
 
-                                            <ItemsControl.ItemContainerStyle>
-                                                <Style TargetType="ContentPresenter">
-                                                    <Setter Property="Padding" Value="0"/>
-                                                    <Setter Property="Margin" Value="4,2"/>
-                                                    <Setter Property="Width" Value="120"/>
-                                                    <Setter Property="Height" Value="74"/>
-                                                    <Setter Property="BorderThickness" Value="1"/>
-                                                    <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                                </Style>
-                                            </ItemsControl.ItemContainerStyle>
+                                                <ItemsControl.ItemContainerStyle>
+                                                    <Style TargetType="ContentPresenter">
+                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="Margin" Value="4,2"/>
+                                                        <Setter Property="Width" Value="120"/>
+                                                        <Setter Property="Height" Value="74"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                                    </Style>
+                                                </ItemsControl.ItemContainerStyle>
 
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <local:OptionButton 
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <local:OptionButton 
                                                         Padding="0"        
                                                         HorizontalAlignment="Stretch"                                         
                                                         VerticalAlignment="Stretch" 
@@ -859,33 +862,38 @@
                                                         CommandParameter="{Binding}"                                           
                                                         Command="{Binding ElementName=OptionTypeButton, Path=Command, Mode=OneWay}"
                                                         >
-                                                        <ContentControl.ContentTemplate>
-                                                            <DataTemplate x:DataType="x:String">
-                                                                <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
-                                                                    <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
-                                                                </Border>
-                                                            </DataTemplate>
-                                                        </ContentControl.ContentTemplate>
-                                                    </local:OptionButton>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
+                                                            <ContentControl.ContentTemplate>
+                                                                <DataTemplate x:DataType="x:String">
+                                                                    <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
+                                                                        <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
+                                                                    </Border>
+                                                                </DataTemplate>
+                                                            </ContentControl.ContentTemplate>
+                                                        </local:OptionButton>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
 
-                                        </ItemsControl>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </FlipView>
-                        </Grid>
-                    </Flyout>
-                </Button.Flyout>
-                <FontIcon Glyph="&#x25D0;" FontSize="26" FontFamily="Segoe UI Emoji">
-                    <UIElement.RenderTransformOrigin>
-                        0.5,0.5
-                    </UIElement.RenderTransformOrigin>
-                    <UIElement.RenderTransform>
-                        <TranslateTransform Y="-1"/>
-                    </UIElement.RenderTransform>
-                </FontIcon>
-            </Button>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </FlipView>
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>
+                    <Canvas Width="40" Height="40" >
+                        <FontIcon Canvas.Left="12" Canvas.Top="5" Opacity="0.5" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
+                        <FontIcon Canvas.Left="6" Canvas.Top="16" Opacity="0.2" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
+                        <FontIcon Canvas.Left="18" Canvas.Top="16" Opacity="0.8" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
+                    </Canvas>
+                </Button>
+                <Button x:Name="TransformButton" Background="{ThemeResource AppBackgroundLight}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="T"/>
+                    </UIElement.KeyboardAccelerators>
+                    <transformers:Icon/>
+                </Button>
+            </StackPanel>
+
 
         </Grid>
 
@@ -1197,6 +1205,11 @@
                 <SymbolIcon Symbol="Back"/>
             </Button>
             <Grid Grid.Column="1">
+                <ListBox x:Name="TransformComboBox" Visibility="Visible" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
+                    <x:String>Move</x:String>
+                    <x:String>Transform</x:String>
+                    <x:String>Free Transform</x:String>
+                </ListBox>
                 <TextBlock x:Name="ExposureTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
                     Exposure
                 </TextBlock>
@@ -1390,75 +1403,77 @@
                     </Slider.Header>
                 </Slider>
 
-                <Slider x:Name="ShadowsSlider" Visibility="Collapsed" Margin="0,0,0,150" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="Black" Offset="0"/>
-                            <GradientStop Color="Gray" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <Slider.Tag>
-                        <local:OptionIcon Type="HighlightsAndShadows" Width="70"/>
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button>
-                            <Button.Flyout>
-                                <Flyout>
+                <StackPanel x:Name="HighlightsAndShadowsPanel" Visibility="Collapsed">
+                    <Slider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="Gray" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <Slider.Tag>
+                            <local:OptionIcon Type="HighlightsAndShadows" Width="70"/>
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button>
+                                <Button.Flyout>
+                                    <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                <Slider x:Name="HighlightsSlider" Visibility="Collapsed" Margin="0,50,0,100" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="Gray" Offset="0"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <Slider.Tag>
-                        <ContentControl Width="70"/>
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button>
-                            <Button.Flyout>
-                                <Flyout>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                    <Slider x:Name="HighlightsSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Gray" Offset="0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <Slider.Tag>
+                            <ContentControl Width="70"/>
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button>
+                                <Button.Flyout>
+                                    <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                <Slider x:Name="ClaritySlider" Visibility="Collapsed" Margin="0,100,0,50" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Tag>
-                        <ContentControl Width="70"/>
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button>
-                            <Button.Flyout>
-                                <Flyout>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                    <Slider x:Name="ClaritySlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Tag>
+                            <ContentControl Width="70"/>
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button>
+                                <Button.Flyout>
+                                    <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                <Slider x:Name="BlurSlider" Visibility="Collapsed" Margin="0,150,0,0" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Tag>
-                        <ContentControl Width="70"/>
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button>
-                            <Button.Flyout>
-                                <Flyout>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                    <Slider x:Name="BlurSlider" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Tag>
+                            <ContentControl Width="70"/>
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button>
+                                <Button.Flyout>
+                                    <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+
             </Grid>
         </Grid>
 
