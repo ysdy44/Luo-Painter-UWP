@@ -11,6 +11,10 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
         <Setter Property="Background" Value="{ThemeResource AppBackgroundDark}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ItemContainerStyle" >
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
@@ -128,7 +132,7 @@
 
 
     <!--Rectangle-->
-    <Style TargetType="Rectangle">
+    <Style x:Key="AppRectangleStyle" TargetType="Rectangle">
         <Setter Property="MinWidth" Value="1" />
         <Setter Property="MinHeight" Value="1" />
         <Setter Property="MaxHeight" Value="30" />

@@ -264,7 +264,7 @@
                     </TextBox>
                 </Grid>
 
-                <Rectangle Margin="0,4"/>
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                 <StackPanel Spacing="10" Orientation="Horizontal" HorizontalAlignment="Center">
                     <FrameworkElement.Resources>
@@ -360,7 +360,7 @@
                     </Slider.Header>
                 </Slider>
 
-                <Rectangle Margin="0,4"/>
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                 <ListView x:Name="BlendModeListView" 
                           IsItemClickEnabled="True"                      
@@ -435,7 +435,7 @@
                         </Slider.Header>
                     </Slider>
 
-                    <Rectangle Margin="0,4"/>
+                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                     <ListView x:Name="PaintBlendModeListView" 
                               CornerRadius="4"                             
@@ -491,7 +491,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--Foot-->
-                        <Setter Target="FootGrid.CornerRadius" Value="0"/>
+                        <Setter Target="FootBorder.CornerRadius" Value="0"/>
                         <Setter Target="FootGrid.Margin" Value="0"/>
                         <Setter Target="FootGrid.HorizontalAlignment" Value="Stretch"/>
                         <Setter Target="FootGrid.BorderThickness" Value="0,1,0,0"/>
@@ -505,7 +505,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--Foot-->
-                        <Setter Target="FootGrid.CornerRadius" Value="8,8,0,0"/>
+                        <Setter Target="FootBorder.CornerRadius" Value="8,8,0,0"/>
                         <Setter Target="FootGrid.Margin" Value="90,0"/>
                         <Setter Target="FootGrid.BorderThickness" Value="1,1,1,0"/>
                     </VisualState.Setters>
@@ -1185,7 +1185,7 @@
 
 
         <!--Foot-->
-        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" CornerRadius="8" MinWidth="440" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBackgroundDark}">
+        <Grid x:Name="FootGrid" Visibility="Collapsed" Margin="22" MinWidth="440" MaxWidth="1000" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -1195,6 +1195,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Border x:Name="FootBorder" Grid.ColumnSpan="3" Grid.RowSpan="2" CornerRadius="8" Background="{ThemeResource AppBackgroundDark}"/>
             <Button x:Name="OptionPrimaryButton" Grid.Column="2">
                 <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
             </Button>
@@ -1205,7 +1206,7 @@
                 <SymbolIcon Symbol="Back"/>
             </Button>
             <Grid Grid.Column="1">
-                <ListBox x:Name="TransformComboBox" Visibility="Visible" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
+                <ListBox x:Name="TransformComboBox" Visibility="Collapsed" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
                     <x:String>Move</x:String>
                     <x:String>Transform</x:String>
                     <x:String>Free Transform</x:String>
