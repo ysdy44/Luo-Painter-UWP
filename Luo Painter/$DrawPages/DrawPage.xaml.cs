@@ -242,6 +242,7 @@ namespace Luo_Painter
         private bool ReverseBooleanConverter(bool? value) => value == false;
         private string RoundConverter(double value) => $"{(value):0}";
         private string Round2Converter(double value) => $"{(value):0.00}";
+        private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
         //@Converter
         private string ScaleXToYConverter(double value) => this.Round2Converter(this.ScaleRange.InverseProportion.ConvertXToY(value));

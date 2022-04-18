@@ -1288,7 +1288,33 @@
                 </ListBox>
             </Grid>
             <Grid Grid.ColumnSpan="3" Grid.Row="1">
-                
+
+                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Visibility="Collapsed" Margin="32,4" Height="50" >
+                    <elements:GradientStopSelector.ItemStyle>
+                        <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                            <Setter Property="Width" Value="50"/>
+                            <Setter Property="Height" Value="50"/>
+                            <Setter Property="Padding" Value="3"/>
+                        </Style>
+                    </elements:GradientStopSelector.ItemStyle>
+                    <elements:GradientStopSelector.ItemTemplate>
+                        <DataTemplate x:DataType="GradientStop">
+                            <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>
+                                        <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                                <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Border>
+                        </DataTemplate>
+                    </elements:GradientStopSelector.ItemTemplate>
+                </elements:GradientStopSelectorWithUI>
+
                 <Slider x:Name="ExposureSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
                     <Slider.Background>
                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -1526,6 +1552,17 @@
 
             </Grid>
         </Grid>
+
+        <Border IsHitTestVisible="False" CornerRadius="6" Padding="12,3" MinHeight="40" Background="Red" RequestedTheme="Dark" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Visibility="{x:Bind BooleanToVisibilityConverter(GradientMappingSelector.IsHitTestVisible), Mode=OneWay}">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="Delete"/>
+                <ContentControl Width="12"/>
+                <TextBlock x:Name="GradientMappingTipTextBlock" FontWeight="Medium" VerticalAlignment="Center">
+                    Drop to Remove
+                </TextBlock>
+            </StackPanel>
+        </Border>
 
 
         <!--Dialog-->
