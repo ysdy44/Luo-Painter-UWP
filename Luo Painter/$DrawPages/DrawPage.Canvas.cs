@@ -53,9 +53,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        Vector2 Position;
-        float Pressure;
-
         Mesh Mesh;
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTranformShaderCodeBytes;
@@ -131,15 +128,13 @@ namespace Luo_Painter
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.Position = this.ToPosition(point);
                 switch (this.OptionType)
                 {
                     case OptionType.None:
-                        this.Pressure = properties.Pressure;
-                        this.Tool_Start(this.Position);
+                        this.Tool_Start(point, properties);
                         break;
                     case OptionType.Transform:
-                        this.Transform_Start(this.Position);
+                        this.Transform_Start(point, properties);
                         break;
                     default:
                         break;
@@ -147,16 +142,13 @@ namespace Luo_Painter
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
-                Vector2 position = this.ToPosition(point);
                 switch (this.OptionType)
                 {
                     case OptionType.None:
-                        this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
-                        this.Position = position;
-                        this.Pressure = properties.Pressure;
+                        this.Tool_Delta(point, properties);
                         break;
                     case OptionType.Transform:
-                        this.Transform_Delta(this.Position, position);
+                        this.Transform_Delta(point, properties);
                         break;
                     default:
                         break;
@@ -167,12 +159,12 @@ namespace Luo_Painter
                 switch (this.OptionType)
                 {
                     case OptionType.None:
-                        Vector2 position = this.ToPosition(point);
-                        this.Tool_Delta(this.Position, position, this.Pressure, properties.Pressure);
-                        this.Tool_Complete(position);
+                        this.Tool_Delta(point, properties);
+                        this.Tool_Complete(point, properties);
                         break;
                     case OptionType.Transform:
-                        this.Transform_Complete(this.Position);
+                        this.Transform_Delta(point, properties);
+                        this.Transform_Complete(point, properties);
                         break;
                     default:
                         break;

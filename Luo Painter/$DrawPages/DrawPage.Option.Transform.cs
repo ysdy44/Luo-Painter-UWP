@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -115,7 +116,7 @@ namespace Luo_Painter
         }
 
 
-        private void Transform_Start(Vector2 position)
+        private void Transform_Start(Vector2 point, PointerPointProperties properties)
         {
             switch (this.TransformComboBox.SelectedIndex)
             {
@@ -130,7 +131,7 @@ namespace Luo_Painter
             }
         }
 
-        private void Transform_Delta(Vector2 staringPosition, Vector2 position)
+        private void Transform_Delta(Vector2 point, PointerPointProperties properties)
         {
             switch (this.TransformComboBox.SelectedIndex)
             {
@@ -145,7 +146,7 @@ namespace Luo_Painter
             }
         }
 
-        private void Transform_Complete(Vector2 position)
+        private void Transform_Complete(Vector2 point, PointerPointProperties properties)
         {
             switch (this.TransformComboBox.SelectedIndex)
             {

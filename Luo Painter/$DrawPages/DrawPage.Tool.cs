@@ -5,6 +5,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -86,7 +87,7 @@ namespace Luo_Painter
         }
 
 
-        private void Tool_Start(Vector2 position)
+        private void Tool_Start(Vector2 point, PointerPointProperties properties)
         {
             switch (this.ToolType)
             {
@@ -95,24 +96,14 @@ namespace Luo_Painter
                 case ToolType.PaintPencil:
                 case ToolType.PaintEraseBrush:
                 case ToolType.PaintLiquefaction:
-                    {
-                        this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;
-                        if (this.BitmapLayer == null)
-                        {
-                            this.Tip("No Layer", "Create a new Layer?");
-                            return;
-                        }
-
-                        this.BitmapLayer.InkMode = this.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
+                    this.Paint_Start(point, properties);
                     break;
                 default:
                     break;
             }
         }
 
-        private void Tool_Delta(Vector2 staringPosition, Vector2 position, float staringPressure, float pressure)
+        private void Tool_Delta(Vector2 point, PointerPointProperties properties)
         {
             switch (this.ToolType)
             {
@@ -121,15 +112,14 @@ namespace Luo_Painter
                 case ToolType.PaintPencil:
                 case ToolType.PaintEraseBrush:
                 case ToolType.PaintLiquefaction:
-                    if (this.BitmapLayer == null) return;
-                    this.Paint_Delta(this.BitmapLayer, staringPosition, position, staringPressure, pressure, this.ColorPicker.Color);
+                    this.Paint_Delta(point, properties);
                     break;
                 default:
                     break;
             }
         }
 
-        private void Tool_Complete(Vector2 position)
+        private void Tool_Complete(Vector2 point, PointerPointProperties properties)
         {
             switch (this.ToolType)
             {
@@ -138,18 +128,7 @@ namespace Luo_Painter
                 case ToolType.PaintPencil:
                 case ToolType.PaintEraseBrush:
                 case ToolType.PaintLiquefaction:
-                    {
-                        if (this.BitmapLayer == null) return;
-
-                        bool result = this.Paint_Complete(this.BitmapLayer);
-                        if (result == false) return;
-
-                        this.BitmapLayer = null;
-                        this.CanvasControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
+                    this.Paint_Complete(point, properties);
                     break;
                 default:
                     break;

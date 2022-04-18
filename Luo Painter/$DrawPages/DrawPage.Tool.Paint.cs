@@ -1,12 +1,14 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -47,6 +49,10 @@ namespace Luo_Painter
 
     public sealed partial class DrawPage : Page
     {
+
+        Vector2 Point;
+        Vector2 Position;
+        float Pressure;
 
         float InkSize = 22f;
         float InkOpacity = 1;
@@ -114,96 +120,122 @@ namespace Luo_Painter
             };
         }
 
-        private void Paint_Delta(BitmapLayer bitmapLayer, Vector2 staringPosition, Vector2 position, float staringPressure, float pressure, Color color)
+        private void Paint_Start(Vector2 point, PointerPointProperties properties)
         {
-            Rect rect = staringPosition.GetRect(this.InkSize);
-            bitmapLayer.Hit(rect);
+            this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;
+            if (this.BitmapLayer == null)
+            {
+                this.Tip("No Layer", "Create a new Layer?");
+                return;
+            }
 
-            switch (bitmapLayer.InkMode)
+            this.Point = point;
+            this.Position = this.ToPosition(point);
+            this.Pressure = properties.Pressure;
+
+            this.BitmapLayer.InkMode = this.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
+            this.CanvasControl.Invalidate(); // Invalidate
+        }
+        private void Paint_Delta(Vector2 point, PointerPointProperties properties)
+        {
+            if (this.BitmapLayer == null) return;
+
+            Vector2 position = this.ToPosition(point);
+            float pressure = properties.Pressure;
+
+            Rect rect = this.Position.GetRect(this.InkSize);
+            this.BitmapLayer.Hit(rect);
+
+            switch (this.BitmapLayer.InkMode)
             {
                 case InkMode.Dry:
-                    bitmapLayer.FillCircleDry(staringPosition, position, staringPressure, pressure, this.InkSize, color);
+                    this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, pressure, this.InkSize, this.ColorPicker.Color);
                     break;
                 case InkMode.WetWithOpacity:
                 case InkMode.WetWithBlendMode:
                 case InkMode.WetWithOpacityAndBlendMode:
-                    bitmapLayer.FillCircleWet(staringPosition, position, staringPressure, pressure, this.InkSize, color);
+                    this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, pressure, this.InkSize, this.ColorPicker.Color);
                     break;
 
                 case InkMode.EraseDry:
-                    bitmapLayer.ErasingDry(staringPosition, position, staringPressure, pressure, this.InkSize);
+                    this.BitmapLayer.ErasingDry(this.Position, position, this.Pressure, pressure, this.InkSize);
                     break;
                 case InkMode.EraseWetWithOpacity:
-                    bitmapLayer.ErasingWet(staringPosition, position, staringPressure, pressure, this.InkSize);
+                    this.BitmapLayer.ErasingWet(this.Position, position, this.Pressure, pressure, this.InkSize);
                     break;
 
                 case InkMode.Liquefy:
-                    bitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
+                    this.BitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
                     {
                         Source1BorderMode = EffectBorderMode.Hard,
-                        Source1 = bitmapLayer.Source,
+                        Source1 = this.BitmapLayer.Source,
                         Properties =
                         {
-                            ["radius"] = bitmapLayer.ConvertValueToOne(this.InkSize),
-                            ["position"] = bitmapLayer.ConvertValueToOne(staringPosition),
-                            ["targetPosition"] = bitmapLayer.ConvertValueToOne(position),
+                            ["radius"] = this.BitmapLayer.ConvertValueToOne(this.InkSize),
+                            ["position"] = this.BitmapLayer .ConvertValueToOne(this.Position),
+                            ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(position),
                             ["pressure"] = pressure,
                         }
-                    }, RectExtensions.GetRect(staringPosition, position, this.InkSize));
+                    }, RectExtensions.GetRect(this.Position, position, this.InkSize));
                     break;
 
                 default:
                     break;
             }
 
-            this.CanvasControl.Invalidate(); // Invalidate
-            Rect region = RectExtensions.GetRect
-            (
-                this.ToPoint(staringPosition),
-                this.ToPoint(position),
-                this.CanvasControl.Dpi.ConvertPixelsToDips(this.InkSize * this.Transformer.Scale)
-            );
-
+            Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasControl.Dpi.ConvertPixelsToDips(this.InkSize * this.Transformer.Scale));
             if (this.CanvasControl.Size.TryIntersect(ref region))
             {
                 this.CanvasControl.Invalidate(region); // Invalidate
             }
+
+            this.Point = point;
+            this.Position = position;
+            this.Pressure = pressure;
         }
 
-        private bool Paint_Complete(BitmapLayer bitmapLayer)
+        private void Paint_Complete(Vector2 point, PointerPointProperties properties)
         {
-            switch (bitmapLayer.InkMode)
+            if (this.BitmapLayer == null) return;
+
+            switch (this.BitmapLayer.InkMode)
             {
                 case InkMode.None:
-                    return false;
+                    return;
 
                 case InkMode.Dry:
                 case InkMode.EraseDry:
                     // History
-                    int removes = this.History.Push(bitmapLayer.GetBitmapHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
-                    return true;
+                    int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                    this.BitmapLayer.Flush();
+                    this.BitmapLayer.RenderThumbnail();
+                    break;
 
                 case InkMode.Liquefy:
-                    bitmapLayer.ClearTemp();
+                    this.BitmapLayer.ClearTemp();
 
                     // History
-                    int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
-                    return true;
+                    int removes3 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                    this.BitmapLayer.Flush();
+                    this.BitmapLayer.RenderThumbnail();
+                    break;
 
                 default:
-                    bitmapLayer.DrawSource(this.GetInk(bitmapLayer));
-                    bitmapLayer.ClearTemp();
+                    this.BitmapLayer.DrawSource(this.GetInk(this.BitmapLayer));
+                    this.BitmapLayer.ClearTemp();
 
                     // History
-                    int removes2 = this.History.Push(bitmapLayer.GetBitmapHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
-                    return true;
+                    int removes2 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                    this.BitmapLayer.Flush();
+                    this.BitmapLayer.RenderThumbnail();
+                    break;
             }
+
+            this.BitmapLayer = null;
+            this.CanvasControl.Invalidate(); // Invalidate
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
         }
 
 
