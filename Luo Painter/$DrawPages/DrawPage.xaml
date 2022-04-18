@@ -232,6 +232,11 @@
             </local:OptionGrouping>
         </local:OptionGroupingList>
 
+        <local:OptionGrouping x:Name="MoreOptionCollection" Key="More">
+            <options:OptionType>Transform</options:OptionType>
+            <options:OptionType>GradientMapping</options:OptionType>
+        </local:OptionGrouping>
+
         <local:BlendGrouping x:Name="BlendCollection" Key="None">
             <effects:BlendEffectMode>-1</effects:BlendEffectMode>
             <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
@@ -811,7 +816,7 @@
                                     <RowDefinition Height="50"/>
                                     <RowDefinition Height="240"/>
                                 </Grid.RowDefinitions>
-                                <Button x:Name="OptionTypeButton" Visibility="Visible"
+                                <Button x:Name="OptionTypeButton" Visibility="Collapsed"
                                     CommandParameter="{x:Null}">
                                     <ButtonBase.Command>
                                         <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
@@ -886,11 +891,51 @@
                         <FontIcon Canvas.Left="18" Canvas.Top="16" Opacity="0.8" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
                     </Canvas>
                 </Button>
-                <Button x:Name="TransformButton" Background="{ThemeResource AppBackgroundLight}" >
+                <Button x:Name="MoreOptionButton" Background="{ThemeResource AppBackgroundLight}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="T"/>
                     </UIElement.KeyboardAccelerators>
-                    <transformers:Icon/>
+                    <Button.Flyout>
+                        <Flyout x:Name="MoreOptionFlyout">
+                            <StackPanel>
+
+                                <Button x:Name="MoreOptionTypeButton" Visibility="Collapsed"
+                                    CommandParameter="{x:Null}">
+                                    <ButtonBase.Command>
+                                        <local:OptionTypeCommand x:Name="MoreOptionTypeCommand"/>
+                                    </ButtonBase.Command>
+                                    <SymbolIcon Symbol="Repair"/>
+                                </Button>
+
+                                <TextBlock x:Name="MoreOptionTextBlock" Margin="6,4" Style="{StaticResource BaseTextBlockStyle}">
+                                    More Option
+                                </TextBlock>
+
+                                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                                <ItemsControl Width="220" ItemsSource="{x:Bind MoreOptionCollection}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="options:OptionType">
+                                            <local:OptionItem 
+                                            Height="50"        
+                                            HorizontalAlignment="Stretch"                                         
+                                            VerticalAlignment="Stretch" 
+                                            HorizontalContentAlignment="Left"
+                                            VerticalContentAlignment="Center"            
+                                            Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
+                                            Style="{StaticResource TextBlockButtonStyle}"                                        
+                                            Type="{Binding}"                                           
+                                            CommandParameter="{Binding}"                                           
+                                            Command="{Binding ElementName=MoreOptionTypeButton, Path=Command, Mode=OneWay}"
+                                            />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                    <FontIcon Glyph="&#xE10C;" FontFamily="Segoe UI Symbol"/>
                 </Button>
             </StackPanel>
 
@@ -1195,7 +1240,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Border x:Name="FootBorder" Grid.ColumnSpan="3" Grid.RowSpan="2" CornerRadius="8" Background="{ThemeResource AppBackgroundDark}"/>
+            <Border x:Name="FootBorder" Grid.ColumnSpan="3" Grid.RowSpan="2" CornerRadius="8" Background="{ThemeResource AppBackgroundLight}"/>
             <Button x:Name="OptionPrimaryButton" Grid.Column="2">
                 <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
             </Button>
@@ -1206,11 +1251,15 @@
                 <SymbolIcon Symbol="Back"/>
             </Button>
             <Grid Grid.Column="1">
-                <ListBox x:Name="TransformComboBox" Visibility="Collapsed" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
+                <ListBox x:Name="TransformComboBox" Visibility="Collapsed" SelectedIndex="1" >
                     <x:String>Move</x:String>
                     <x:String>Transform</x:String>
                     <x:String>Free Transform</x:String>
                 </ListBox>
+                <TextBlock x:Name="GradientMappingTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                    Gradient Mapping
+                </TextBlock>
+
                 <TextBlock x:Name="ExposureTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
                     Exposure
                 </TextBlock>
@@ -1232,14 +1281,14 @@
                 <TextBlock x:Name="HighlightsAndShadowsTextBlock" Visibility="Collapsed" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
                     Highlights And Shadows
                 </TextBlock>
-                <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" Background="{ThemeResource AppBackgroundLight}">
+                <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" >
                     <x:String>Normal</x:String>
                     <x:String>White Paper</x:String>
                     <x:String>Black Paper</x:String>
                 </ListBox>
             </Grid>
             <Grid Grid.ColumnSpan="3" Grid.Row="1">
-
+                
                 <Slider x:Name="ExposureSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
                     <Slider.Background>
                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -1535,6 +1584,7 @@
 
         <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
         <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
+
 
     </Grid>
 </Page>

@@ -110,34 +110,28 @@ namespace Luo_Painter
         #endregion
     }
 
-    internal sealed class OptionButton : Button
+
+    internal abstract class OptionButtonBase : Button
     {
+        protected abstract void OnTypeChanged(OptionType value);
+
         #region DependencyProperty
 
 
-        /// <summary> Gets or set the type for <see cref="OptionButton"/>. </summary>
+        /// <summary> Gets or set the type for <see cref="OptionButtonBase"/>. </summary>
         public OptionType Type
         {
             get => (OptionType)base.GetValue(TypeProperty);
             set => base.SetValue(TypeProperty, value);
         }
-        /// <summary> Identifies the <see cref = "OptionButton.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(OptionButton), new PropertyMetadata(OptionType.None, (sender, e) =>
+        /// <summary> Identifies the <see cref = "OptionButtonBase.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(OptionButtonBase), new PropertyMetadata(OptionType.None, (sender, e) =>
         {
-            OptionButton control = (OptionButton)sender;
+            OptionButtonBase control = (OptionButtonBase)sender;
 
             if (e.NewValue is OptionType value)
             {
-                control.Content = value.ToString();
-                // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
-                {
-                    BitmapImage bitmap = new BitmapImage();
-                    control.Background = new ImageBrush
-                    {
-                        ImageSource = bitmap
-                    };
-                    bitmap.UriSource = new Uri(value.GetThumbnail());
-                }
+                control.OnTypeChanged(value);
             }
         }));
 
@@ -145,33 +139,59 @@ namespace Luo_Painter
         #endregion
     }
 
-
-    internal sealed class OptionIcon : Button
+    internal sealed class OptionButton : OptionButtonBase
     {
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the type for <see cref="OptionIcon"/>. </summary>
-        public OptionType Type
+        protected override void OnTypeChanged(OptionType value)
         {
-            get => (OptionType)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "OptionIcon.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(OptionIcon), new PropertyMetadata(OptionType.None, (sender, e) =>
-        {
-            OptionIcon control = (OptionIcon)sender;
-
-            if (e.NewValue is OptionType value)
+            base.Content = value.ToString();
+            // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
             {
-                control.Content = value.ToString();
-                control.Template = value.GetTemplate(out ResourceDictionary resource);
-                control.Resources = resource;
+                BitmapImage bitmap = new BitmapImage();
+                base.Background = new ImageBrush
+                {
+                    ImageSource = bitmap
+                };
+                bitmap.UriSource = new Uri(value.GetThumbnail());
             }
-        }));
+        }
+    }
 
+    internal sealed class OptionIcon : OptionButtonBase
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.Content = value.ToString();
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
+            base.Resources = resource;
+        }
+    }
 
-        #endregion
+    internal sealed class OptionItem : OptionButtonBase
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.Content = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Children =
+                {
+                    new ContentControl
+                    {
+                        Content = value,
+                        Template = value.GetTemplate(out ResourceDictionary resource),
+                        Resources = resource,
+                    },
+                    new ContentControl
+                    {
+                        Width = 12
+                    },
+                    new TextBlock
+                    {
+                        Text = value.ToString()
+                    }
+                }
+            };
+        }
     }
 
 

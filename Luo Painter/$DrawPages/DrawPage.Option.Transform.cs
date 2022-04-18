@@ -51,11 +51,6 @@ namespace Luo_Painter
 
         private void ConstructTransform()
         {
-            this.TransformButton.Click += (s, e) =>
-            {
-                this.OptionTypeCommand.Execute(OptionType.Transform);
-            };
-
             this.TransformComboBox.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
         }
 
