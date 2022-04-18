@@ -18,9 +18,11 @@ D2D_PS_ENTRY(main) {
 
 	//使用简单采样 采样第一张纹理的颜色
 	float4 color = D2DGetInput(0).rgba;
+    if (color.a == 0) return color;
+
 	float gray = getGray(color);
-	float2 xy = float2(gray,0.5);
+	float2 xy = float2(gray, 0.5);
 	float4 cc = D2DSampleInput(1, xy);
-	return float4(cc.r, cc.g, cc.b,cc.a);
+	return float4(cc.r, cc.g, cc.b, cc.a);
 }
 
