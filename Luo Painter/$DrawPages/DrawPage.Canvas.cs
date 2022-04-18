@@ -58,7 +58,8 @@ namespace Luo_Painter
 
         Mesh Mesh;
         byte[] LiquefactionShaderCodeBytes;
-
+        byte[] FreeTranformShaderCodeBytes;
+        
         private void ConstructCanvas()
         {
             this.CanvasControl.SizeChanged += (s, e) =>
@@ -112,6 +113,7 @@ namespace Luo_Painter
         private async Task CreateResourcesAsync()
         {
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
+            this.FreeTranformShaderCodeBytes = await ShaderType.FreeTranform.LoadAsync();
         }
 
         private void ConstructOperator()

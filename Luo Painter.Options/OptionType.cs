@@ -4,6 +4,8 @@
     {
         None,
 
+        Transform,
+
         Gray,
         Invert,
         Exposure,
