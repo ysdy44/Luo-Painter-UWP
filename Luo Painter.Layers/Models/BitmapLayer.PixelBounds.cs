@@ -32,6 +32,9 @@ namespace Luo_Painter.Layers.Models
         public int Width() => this.Right - this.Left;
         public int Height() => this.Bottom - this.Top;
 
+        public FanKit.Transformers.TransformerBorder ToBorder() => new FanKit.Transformers.TransformerBorder(this.Left, this.Top, this.Right, this.Bottom);
+        public FanKit.Transformers.TransformerBorder ToBorder(float scale) => new FanKit.Transformers.TransformerBorder(this.Left * scale, this.Top * scale, this.Right * scale, this.Bottom * scale);
+
         public Rect ToRect() => new Rect
         {
             X = this.Left,
@@ -134,35 +137,45 @@ namespace Luo_Painter.Layers.Models
             int width = interpolationBounds.Width();
             int height = interpolationBounds.Height();
 
-            if (width < BitmapLayer.Unit + BitmapLayer.Unit || height < BitmapLayer.Unit + BitmapLayer.Unit)
+            // ⬛ Rect 0,0,200,200
+            PixelBounds bounds = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, width, height), width, height);
+            return new PixelBounds
             {
-                // ⬛ Rect 0,0,200,200
-                PixelBounds bounds = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, width, height), width, height);
-                return new PixelBounds
-                {
-                    Left = bounds.Left + interpolationBounds.Left,
-                    Top = bounds.Top + interpolationBounds.Top,
-                    Right = bounds.Right + interpolationBounds.Left,
-                    Bottom = bounds.Bottom + interpolationBounds.Top
-                };
-            }
-            else
-            {
-                // ◧ Rect 0,0,100,1024
-                PixelBounds leftBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, BitmapLayer.Unit, height), BitmapLayer.Unit, height);
-                // ⬓ Rect 0,0,1024,100
-                PixelBounds topBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, width, BitmapLayer.Unit), width, BitmapLayer.Unit);
-                // ◨ Rect 924,0,100,1024 
-                PixelBounds rightBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Right - BitmapLayer.Unit, interpolationBounds.Top, BitmapLayer.Unit, height), BitmapLayer.Unit, height);
-                // ⬒ Rect 0,924,1024,100
-                PixelBounds bottomBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Bottom - BitmapLayer.Unit, width, BitmapLayer.Unit), width, BitmapLayer.Unit);
+                Left = bounds.Left + interpolationBounds.Left,
+                Top = bounds.Top + interpolationBounds.Top,
+                Right = bounds.Right + interpolationBounds.Left,
+                Bottom = bounds.Bottom + interpolationBounds.Top
+            };
 
-                interpolationBounds.Left += (leftBar == PixelBounds.Zero) ? BitmapLayer.Unit : leftBar.Left;
-                interpolationBounds.Top += (topBar == PixelBounds.Zero) ? BitmapLayer.Unit : topBar.Top;
-                interpolationBounds.Right -= (rightBar == PixelBounds.Zero) ? BitmapLayer.Unit : (BitmapLayer.Unit - rightBar.Right);
-                interpolationBounds.Bottom -= (bottomBar == PixelBounds.Zero) ? BitmapLayer.Unit : (BitmapLayer.Unit - bottomBar.Bottom);
-                return interpolationBounds;
-            }
+            //if (width < BitmapLayer.Unit + BitmapLayer.Unit || height < BitmapLayer.Unit + BitmapLayer.Unit)
+            //{
+            //    // ⬛ Rect 0,0,200,200
+            //    PixelBounds bounds = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, width, height), width, height);
+            //    return new PixelBounds
+            //    {
+            //        Left = bounds.Left + interpolationBounds.Left,
+            //        Top = bounds.Top + interpolationBounds.Top,
+            //        Right = bounds.Right + interpolationBounds.Left,
+            //        Bottom = bounds.Bottom + interpolationBounds.Top
+            //    };
+            //}
+            //else
+            //{
+            //    // ◧ Rect 0,0,100,1024
+            //    PixelBounds leftBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, BitmapLayer.Unit, height), BitmapLayer.Unit, height);
+            //    // ⬓ Rect 0,0,1024,100
+            //    PixelBounds topBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Top, width, BitmapLayer.Unit), width, BitmapLayer.Unit);
+            //    // ◨ Rect 924,0,100,1024 
+            //    PixelBounds rightBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Right - BitmapLayer.Unit, interpolationBounds.Top, BitmapLayer.Unit, height), BitmapLayer.Unit, height);
+            //    // ⬒ Rect 0,924,1024,100
+            //    PixelBounds bottomBar = PixelBounds.CreateFromBytes(this.SourceRenderTarget.GetPixelColors(interpolationBounds.Left, interpolationBounds.Bottom - BitmapLayer.Unit, width, BitmapLayer.Unit), width, BitmapLayer.Unit);
+
+            //    interpolationBounds.Left += (leftBar == PixelBounds.Zero) ? BitmapLayer.Unit : leftBar.Left;
+            //    interpolationBounds.Top += (topBar == PixelBounds.Zero) ? BitmapLayer.Unit : topBar.Top;
+            //    interpolationBounds.Right -= (rightBar == PixelBounds.Zero) ? BitmapLayer.Unit : (BitmapLayer.Unit - rightBar.Right);
+            //    interpolationBounds.Bottom -= (bottomBar == PixelBounds.Zero) ? BitmapLayer.Unit : (BitmapLayer.Unit - bottomBar.Bottom);
+            //    return interpolationBounds;
+            //}
         }
 
     }
