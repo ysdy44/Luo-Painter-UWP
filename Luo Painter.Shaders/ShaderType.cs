@@ -6,5 +6,6 @@
         GeneralBrush,
         SprayGun,
         GradientMapping,
+        FreeTranform,
     }
 }
