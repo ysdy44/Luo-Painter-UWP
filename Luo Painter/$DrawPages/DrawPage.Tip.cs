@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Luo_Painter.Options;
+using System;
+using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -71,23 +73,40 @@ namespace Luo_Painter
                 this.StartingEyedropper.Y = 25;
 
                 bool result = await this.Eyedropper.RenderAsync(this.GetEyedropperTarget());
-                if (result is false) return;
-
-                Window.Current.CoreWindow.PointerCursor = null;
-                this.Eyedropper.Visibility = Visibility.Visible;
             };
             this.ColorButton.ManipulationDelta += (s, e) =>
             {
-                this.StartingEyedropper.X += e.Delta.Translation.X;
-                this.StartingEyedropper.Y += e.Delta.Translation.Y;
-                this.Eyedropper.Move(this.StartingEyedropper);
+                switch (this.Eyedropper.Visibility)
+                {
+                    case Visibility.Collapsed:
+                        if (e.Cumulative.Translation.ToVector2().LengthSquared() > 625)
+                        {
+                            Window.Current.CoreWindow.PointerCursor = null;
+                            this.Eyedropper.Visibility = Visibility.Visible;
+                        }
+                        break;
+                    case Visibility.Visible:
+                        this.StartingEyedropper.X += e.Delta.Translation.X;
+                        this.StartingEyedropper.Y += e.Delta.Translation.Y;
+                        this.Eyedropper.Move(this.StartingEyedropper);
+                        break;
+                    default:
+                        break;
+                }
             };
             this.ColorButton.ManipulationCompleted += (s, e) =>
             {
-                Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
-                this.Eyedropper.Visibility = Visibility.Collapsed;
+                switch (this.Eyedropper.Visibility)
+                {
+                    case Visibility.Visible:
+                        Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
+                        this.Eyedropper.Visibility = Visibility.Collapsed;
 
-                this.ColorPicker.Color = this.Eyedropper.Color;
+                        this.ColorPicker.Color = this.Eyedropper.Color;
+                        break;
+                    default:
+                        break;
+                }
             };
         }
 
@@ -110,6 +129,18 @@ namespace Luo_Painter
 
         private void ConstructColorShape()
         {
+            this.ColorPicker.ColorChanged += (s, e) =>
+            {
+                switch (this.OptionType)
+                {
+                    case OptionType.GradientMapping:
+                        this.GradientMappingColorChanged(e.NewColor);
+                        break;
+                    default:
+                        break;
+                }
+            };
+
             this.ColorPicker.Loaded += (s, e) =>
             {
                 if (s is DependencyObject reference)
