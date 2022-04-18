@@ -283,6 +283,8 @@ namespace Luo_Painter
 
             this.ConstructOptions();
             this.ConstructOption();
+            this.ConstructTransform();
+            this.ConstructGradientMapping();
 
             this.ConstructTools();
             this.ConstructBlends();

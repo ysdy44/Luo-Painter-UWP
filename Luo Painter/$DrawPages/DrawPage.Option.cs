@@ -21,7 +21,8 @@ namespace Luo_Painter
         private void SetOptionType(OptionType type)
         {
             this.TransformComboBox.Visibility = type == OptionType.Transform ? Visibility.Visible : Visibility.Collapsed;
-            this.LuminanceToAlphaComboBox.Visibility = type == OptionType.LuminanceToAlpha ? Visibility.Visible : Visibility.Collapsed;
+            this.GradientMappingTextBlock.Visibility = this.GradientMappingSelector.Visibility = type == OptionType.GradientMapping ? Visibility.Visible : Visibility.Collapsed;
+
             this.ExposureTextBlock.Visibility = this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
             this.BrightnessTextBlock.Visibility = this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
             this.SaturationTextBlock.Visibility = this.SaturationSlider.Visibility = type == OptionType.Saturation ? Visibility.Visible : Visibility.Collapsed;
@@ -29,6 +30,18 @@ namespace Luo_Painter
             this.ContrastTextBlock.Visibility = this.ContrastSlider.Visibility = type == OptionType.Contrast ? Visibility.Visible : Visibility.Collapsed;
             this.TemperatureTextBlock.Visibility = this.TemperatureSlider.Visibility = this.TintSlider.Visibility = type == OptionType.Temperature ? Visibility.Visible : Visibility.Collapsed;
             this.HighlightsAndShadowsTextBlock.Visibility = this.HighlightsAndShadowsPanel.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
+
+            this.LuminanceToAlphaComboBox.Visibility = type == OptionType.LuminanceToAlpha ? Visibility.Visible : Visibility.Collapsed;
+
+            switch (type)
+            {
+                case OptionType.GradientMapping:
+                    this.FootGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    break;
+                default:
+                    this.FootGrid.HorizontalAlignment = HorizontalAlignment.Center;
+                    break;
+            }
         }
 
         private void ConstructOptions()
@@ -68,56 +81,69 @@ namespace Luo_Painter
             this.OptionTypeCommand.Click += (s, type) =>
             {
                 this.OptionFlyout.Hide();
-
-                if (this.LayerListView.SelectedItem is ILayer layer)
-                {
-                    if (layer.Type != LayerType.Bitmap)
-                    {
-                        this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
-                    }
-                    else if (layer is BitmapLayer bitmapLayer)
-                    {
-                        Color[] InterpolationColors = bitmapLayer.GetInterpolationColors();
-                        PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
-
-                        switch (mode)
-                        {
-                            case PixelBoundsMode.Transarent:
-                                this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
-                                break;
-                            case PixelBoundsMode.Solid:
-                            case PixelBoundsMode.None:
-                                if (type.HasPreview())
-                                {
-                                    switch (type)
-                                    {
-                                        case OptionType.Transform:
-                                            this.SetTransform(bitmapLayer, InterpolationColors);
-                                            break;
-                                    }
-
-                                    this.OptionType = type;
-                                    this.SetOptionType(type);
-
-                                    this.BitmapLayer = bitmapLayer;
-                                    this.CanvasControl.Invalidate(); // Invalidate
-
-                                    this.OptionStoryboard.Begin(); // Storyboard
-                                    this.FootGrid.Visibility = Visibility.Visible;
-                                }
-                                else
-                                {
-                                    this.Option(type, mode, InterpolationColors, bitmapLayer);
-                                }
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    this.Tip("No Layer", "Create a new Layer?");
-                }
+                this.OptionClick(type);
             };
+
+            this.MoreOptionTypeCommand.Click += (s, type) =>
+            {
+                this.MoreOptionFlyout.Hide();
+                this.OptionClick(type);
+            };
+        }
+
+        private void OptionClick(OptionType type)
+        {
+            if (this.LayerListView.SelectedItem is ILayer layer)
+            {
+                if (layer.Type != LayerType.Bitmap)
+                {
+                    this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                }
+                else if (layer is BitmapLayer bitmapLayer)
+                {
+                    Color[] InterpolationColors = bitmapLayer.GetInterpolationColors();
+                    PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
+
+                    switch (mode)
+                    {
+                        case PixelBoundsMode.Transarent:
+                            this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                            break;
+                        case PixelBoundsMode.Solid:
+                        case PixelBoundsMode.None:
+                            if (type.HasPreview())
+                            {
+                                switch (type)
+                                {
+                                    case OptionType.Transform:
+                                        this.SetTransform(bitmapLayer, InterpolationColors);
+                                        break;
+                                    case OptionType.GradientMapping:
+                                        this.SetGradientMapping();
+                                        break;
+                                }
+
+                                this.OptionType = type;
+                                this.SetOptionType(type);
+
+                                this.BitmapLayer = bitmapLayer;
+                                this.CanvasControl.Invalidate(); // Invalidate
+
+                                this.OptionStoryboard.Begin(); // Storyboard
+                                this.FootGrid.Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                this.Option(type, mode, InterpolationColors, bitmapLayer);
+                            }
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                this.Tip("No Layer", "Create a new Layer?");
+            }
         }
 
         private void Option(OptionType type, PixelBoundsMode mode, Color[] InterpolationColors, BitmapLayer bitmapLayer)
@@ -171,6 +197,8 @@ namespace Luo_Painter
                     return image;
                 case OptionType.Transform:
                     return this.GetTransformPreview(image);
+                case OptionType.GradientMapping:
+                    return this.GetGradientMappingPreview(image);
                 case OptionType.Gray:
                     return new GrayscaleEffect
                     {

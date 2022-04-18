@@ -74,6 +74,7 @@ namespace Luo_Painter
                 this.Transformer.Fit();
 
                 this.Mesh = new Mesh(sender, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
+                this.GradientMesh = new GradientMesh(sender);
 
                 // Layer
                 BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
