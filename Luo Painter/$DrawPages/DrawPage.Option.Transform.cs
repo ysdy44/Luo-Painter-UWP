@@ -14,13 +14,18 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page
     {
+        Vector2 StaringPosition;
 
         Vector2 Move;
         Vector2 StartingMove;
 
         TransformerBorder Bounds;
 
+        TransformerMode BoundsMode;
+        bool IsBoundsMove;
+
         Transformer BoundsTransformer;
+        Transformer StartingBoundsTransformer;
         Matrix3x2 BoundsMatrix;
 
         Transformer BoundsFreeTransformer;
@@ -59,7 +64,6 @@ namespace Luo_Painter
             switch (this.TransformComboBox.SelectedIndex)
             {
                 case 0:
-                    ds.DrawBound(this.BoundsTransformer, Matrix3x2.CreateTranslation(this.Move) * sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
                     break;
                 case 1:
                     ds.DrawBoundNodes(this.BoundsTransformer, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
@@ -84,8 +88,9 @@ namespace Luo_Painter
                 case 0:
                     return new Transform2DEffect
                     {
-                        TransformMatrix = Matrix3x2.CreateTranslation(this.Move),
+                        BorderMode = EffectBorderMode.Hard,
                         InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                        TransformMatrix = Matrix3x2.CreateTranslation(this.Move),
                         Source = image
                     };
                 case 1:
@@ -118,13 +123,20 @@ namespace Luo_Painter
 
         private void Transform_Start(Vector2 point, PointerPointProperties properties)
         {
+            this.StaringPosition = this.ToPosition(point);
             switch (this.TransformComboBox.SelectedIndex)
             {
                 case 0:
+                    this.StartingMove = this.Move;
                     break;
                 case 1:
+                    this.StartingMove = this.Move;
+                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsTransformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                    this.IsBoundsMove = this.BoundsMode == TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StaringPosition);
+                    this.StartingBoundsTransformer = this.BoundsTransformer;
                     break;
                 case 2:
+                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsFreeTransformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
                     break;
                 default:
                     break;
@@ -133,13 +145,47 @@ namespace Luo_Painter
 
         private void Transform_Delta(Vector2 point, PointerPointProperties properties)
         {
+            Vector2 position = this.ToPosition(point);
             switch (this.TransformComboBox.SelectedIndex)
             {
                 case 0:
+                    this.Move = position - this.StaringPosition + this.StartingMove;
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 1:
+                    this.BoundsTransformer =
+                        this.IsBoundsMove ?
+                        this.StartingBoundsTransformer + (position - this.StaringPosition) :
+                        FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StaringPosition, position, this.StartingBoundsTransformer);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 2:
+                    switch (this.BoundsMode)
+                    {
+                        case TransformerMode.ScaleLeftTop:
+                            this.BoundsFreeTransformer.LeftTop = position;
+                            this.BoundsFreeMatrix = new Matrix4x4(FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance));
+                            this.CanvasControl.Invalidate(); // Invalidate
+                            break;
+                        case TransformerMode.ScaleRightTop:
+                            this.BoundsFreeTransformer.RightTop = position;
+                            this.BoundsFreeMatrix = new Matrix4x4(FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance));
+                            this.CanvasControl.Invalidate(); // Invalidate
+                            break;
+                        case TransformerMode.ScaleRightBottom:
+                            this.BoundsFreeTransformer.RightBottom = position;
+                            this.BoundsFreeMatrix = new Matrix4x4(FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance));
+                            this.CanvasControl.Invalidate(); // Invalidate
+                            break;
+                        case TransformerMode.ScaleLeftBottom:
+                            this.BoundsFreeTransformer.LeftBottom = position;
+                            this.BoundsFreeMatrix = new Matrix4x4(FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance));
+                            this.CanvasControl.Invalidate(); // Invalidate
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
