@@ -9,6 +9,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -18,7 +19,7 @@ namespace Luo_Painter
         readonly BitmapLayer PaintLayer;
         public ICanvasImage Souce => this.PaintLayer.Source;
         public InkRender(CanvasControl sender) => this.PaintLayer = new BitmapLayer(sender, (int)sender.ActualWidth, (int)sender.ActualHeight);
-        public void Render(float size)
+        public void Render(float size, Color color)
         {
             this.PaintLayer.Clear(Colors.Transparent);
 
@@ -40,7 +41,7 @@ namespace Luo_Painter
                 float offsetY = 20 * (float)System.Math.Sin(radian + radian);
                 Vector2 targetPosition = new Vector2(x, height / 2 + offsetY);
 
-                this.PaintLayer.FillCircleDry(position, targetPosition, pressure, targetPressure, space, Colors.Black);
+                this.PaintLayer.FillCircleDry(position, targetPosition, pressure, targetPressure, space, color);
                 position = targetPosition;
                 pressure = targetPressure;
             }
@@ -71,7 +72,15 @@ namespace Luo_Painter
             this.PaintCanvasControl.CreateResources += (sender, args) =>
             {
                 this.InkRender = new InkRender(sender);
-                this.InkRender.Render(this.InkSize);
+                switch (base.ActualTheme)
+                {
+                    case ElementTheme.Light:
+                        this.InkRender.Render(this.InkSize, Colors.Black);
+                        break;
+                    case ElementTheme.Dark:
+                        this.InkRender.Render(this.InkSize, Colors.White);
+                        break;
+                }
             };
             this.PaintCanvasControl.Draw += (sender, args) =>
             {
@@ -84,8 +93,17 @@ namespace Luo_Painter
                 this.InkSize = (float)e.NewValue;
                 this.PaintSizeSlider2.Value = e.NewValue;
 
-                if (this.InkRender == null) return;
-                this.InkRender.Render(this.InkSize);
+                if (this.InkRender == null) return; 
+                
+                switch (base.ActualTheme)
+                {
+                    case ElementTheme.Light:
+                        this.InkRender.Render(this.InkSize, Colors.Black);
+                        break;
+                    case ElementTheme.Dark:
+                        this.InkRender.Render(this.InkSize, Colors.White);
+                        break;
+                }
                 this.PaintCanvasControl.Invalidate(); // Invalidate
             };
             this.PaintOpacitySlider.ValueChanged += (s, e) =>
