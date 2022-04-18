@@ -5,6 +5,7 @@
         None,
 
         Transform,
+        GradientMapping,
 
         Gray,
         Invert,
