@@ -122,6 +122,7 @@
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.cs" />
     <Compile Include="%24DrawPages\DrawPage.Method.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Option.GradientMapping.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.Transform.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Storyboard.cs" />
