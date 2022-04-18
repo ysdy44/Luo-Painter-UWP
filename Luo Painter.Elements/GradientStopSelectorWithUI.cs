@@ -48,8 +48,8 @@ namespace Luo_Painter.Elements
 
                 button.RenderTransformOrigin = new Point
                 {
-                    X = Canvas.GetLeft(button) + e.Cumulative.Translation.X + base.Margin.Left,
-                    Y = Canvas.GetTop(button) + e.Cumulative.Translation.Y + base.Margin.Top,
+                    X = Canvas.GetLeft(button) + e.Cumulative.Translation.X + 25,
+                    Y = Canvas.GetTop(button) + e.Cumulative.Translation.Y + 0,
                 };
 
                 int index = -1;
@@ -77,14 +77,14 @@ namespace Luo_Painter.Elements
 
                     if (isRemove)
                     {
-                        Canvas.SetTop(button, y - base.Margin.Top);
+                        Canvas.SetTop(button, y - 0);
                         base.IsHitTestVisible = false;
                         e.Handled = true;
                         return;
                     }
                     else
                     {
-                        Canvas.SetTop(button, -base.Margin.Top);
+                        Canvas.SetTop(button, -0);
                         base.IsHitTestVisible = true;
                     }
                 }
@@ -93,7 +93,7 @@ namespace Luo_Painter.Elements
                 double x = staringX + e.Cumulative.Translation.X;
                 double width = base.ActualWidth;
                 double offsetX = Math.Clamp(x / width, 0, 1);
-                Canvas.SetLeft(button, offsetX * width - base.Margin.Left);
+                Canvas.SetLeft(button, offsetX * width - 25);
 
                 int index = Canvas.GetZIndex(button);
                 this.Stops[index].Offset = offsetX;
@@ -149,7 +149,7 @@ namespace Luo_Painter.Elements
                             this.CurrentStopUI.Offset = offsetX;
 
                             double width = base.ActualWidth;
-                            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
+                            Canvas.SetLeft(this.CurrentButton, offsetX * width - 25);
                             e.Handled = true;
                         }
                         break;
@@ -165,7 +165,7 @@ namespace Luo_Painter.Elements
                             this.CurrentStopUI.Offset = offsetX;
 
                             double width = base.ActualWidth;
-                            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
+                            Canvas.SetLeft(this.CurrentButton, offsetX * width - 25);
                             e.Handled = true;
                         }
                         break;
