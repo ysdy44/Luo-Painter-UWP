@@ -92,8 +92,10 @@ namespace Luo_Painter.TestApp
                     {
                         ["matrix4"] = new Matrix4x4(matrix),
                         ["distce"] = distance,
-                        ["w"] = 512f,
-                        ["h"] = 512f,
+                        ["left"] = 0f,
+                        ["top"] = 0f,
+                        ["right"] = 512f,
+                        ["bottom"] = 512f,
                     },
                 });
 
