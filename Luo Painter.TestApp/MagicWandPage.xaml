@@ -25,7 +25,7 @@
                 VerticalScrollBarVisibility="Visible"
                 VerticalScrollMode="Enabled">
                 <Grid>
-                <canvas:CanvasControl x:Name="originalCanvas" />
+                <canvas:CanvasControl  x:Name="originalCanvas" />
                     <Ellipse x:Name="e1" Stroke="Black" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" ></Ellipse>
                 </Grid>
             </ScrollViewer>

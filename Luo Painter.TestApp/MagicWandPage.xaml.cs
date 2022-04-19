@@ -85,15 +85,17 @@ namespace Luo_Painter.TestApp
 
             PointerEventHandler func = (s, e) =>
              {
-                 var point = e.GetCurrentPoint((FrameworkElement)s).Position;
-                 Vector3 v3 = new Vector3((float)point.X-15f, (float)point.Y-15f, 0);
+                 var can = (FrameworkElement)s;
+
+                 var point = e.GetCurrentPoint(can).Position;
+                 Vector3 v3 = new Vector3((float)point.X - 15f + can.ActualOffset.X, (float)point.Y - 15f + can.ActualOffset.Y, 0);
                  e1.Translation = e2.Translation = v3;
              };
 
             originalCanvas.PointerMoved += func;
             effectCanvas.PointerMoved += func;
 
-            originalCanvas.Tapped += (s, e) =>
+            TappedEventHandler teh = (s, e) =>
             {
                 if (originalImage == null)
                     return;
@@ -139,6 +141,8 @@ namespace Luo_Painter.TestApp
                 effectCanvas.Invalidate();
             };
 
+            originalCanvas.Tapped += teh;
+            effectCanvas.Tapped += teh;
 
         }
 
