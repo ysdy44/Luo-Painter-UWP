@@ -128,6 +128,9 @@
     <Compile Include="EyedropperPage.xaml.cs">
       <DependentUpon>EyedropperPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MagicWandPage.xaml.cs">
+      <DependentUpon>MagicWandPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PixelBoundsPage.xaml.cs">
       <DependentUpon>PixelBoundsPage.xaml</DependentUpon>
     </Compile>
@@ -234,6 +237,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="EyedropperPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MagicWandPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
