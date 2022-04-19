@@ -137,7 +137,7 @@
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
                         <tools:ToolType>MarqueePolygon</tools:ToolType>
                         <tools:ToolType>MarqueeFreeHand</tools:ToolType>
-                        <tools:ToolType>MarqueeFloodSetect</tools:ToolType>
+                        <tools:ToolType>MarqueeFloodSelect</tools:ToolType>
                         <tools:ToolType>MarqueeSelectionBrush</tools:ToolType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Paint">

@@ -24,7 +24,7 @@
         MarqueePolygon,
         MarqueeFreeHand,
         MarqueeSelectionBrush,
-        MarqueeFloodSetect,
+        MarqueeFloodSelect,
 
         // Geometry0
         GeometryRectangle,
