@@ -86,7 +86,6 @@ namespace Luo_Painter.TestApp
             PointerEventHandler func = (s, e) =>
              {
                  var can = (FrameworkElement)s;
-
                  var point = e.GetCurrentPoint(can).Position;
                  Vector3 v3 = new Vector3((float)point.X - 15f + can.ActualOffset.X, (float)point.Y - 15f + can.ActualOffset.Y, 0);
                  e1.Translation = e2.Translation = v3;
@@ -99,8 +98,8 @@ namespace Luo_Painter.TestApp
             {
                 if (originalImage == null)
                     return;
-
-                var point = e.GetPosition(originalCanvas);
+                var can = (FrameworkElement)s;
+                var point = e.GetPosition(can);
 
                 float threshold = (float)thresholdSlider.Value / 100f;
                 var tr = threshold * 255;
