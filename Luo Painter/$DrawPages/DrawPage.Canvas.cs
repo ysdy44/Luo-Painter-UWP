@@ -55,7 +55,7 @@ namespace Luo_Painter
 
         Mesh Mesh;
         byte[] LiquefactionShaderCodeBytes;
-        byte[] FreeTranformShaderCodeBytes;
+        byte[] FreeTransformShaderCodeBytes;
         byte[] GradientMappingShaderCodeBytes;
 
         private void ConstructCanvas()
@@ -122,7 +122,7 @@ namespace Luo_Painter
         private async Task CreateResourcesAsync()
         {
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
-            this.FreeTranformShaderCodeBytes = await ShaderType.FreeTranform.LoadAsync();
+            this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
             this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
         }
 

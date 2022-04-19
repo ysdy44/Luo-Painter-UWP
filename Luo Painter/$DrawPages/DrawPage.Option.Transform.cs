@@ -97,7 +97,7 @@ namespace Luo_Painter
                         Source = image
                     };
                 case 2:
-                    return new PixelShaderEffect(this.FreeTranformShaderCodeBytes)
+                    return new PixelShaderEffect(this.FreeTransformShaderCodeBytes)
                     {
                         Source1 = image,
                         Properties =

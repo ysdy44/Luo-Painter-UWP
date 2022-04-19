@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    public sealed partial class FreeTranformPage : Page
+    public sealed partial class FreeTransformPage : Page
     {
         readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
@@ -29,7 +29,7 @@ namespace Luo_Painter.TestApp
 
         byte[] ShaderCodeBytes;
 
-        public FreeTranformPage()
+        public FreeTransformPage()
         {
             this.InitializeComponent();
             this.ConstructBitmapTransformer();
@@ -167,7 +167,7 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytes = await ShaderType.FreeTranform.LoadAsync();
+            this.ShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
         }
 
         private void ConstructOperator()

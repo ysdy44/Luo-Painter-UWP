@@ -122,8 +122,8 @@
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FreeTranformPage.xaml.cs">
-      <DependentUpon>FreeTranformPage.xaml</DependentUpon>
+    <Compile Include="FreeTransformPage.xaml.cs">
+      <DependentUpon>FreeTransformPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="EyedropperPage.xaml.cs">
       <DependentUpon>EyedropperPage.xaml</DependentUpon>
@@ -229,7 +229,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FreeTranformPage.xaml">
+    <Page Include="FreeTransformPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
