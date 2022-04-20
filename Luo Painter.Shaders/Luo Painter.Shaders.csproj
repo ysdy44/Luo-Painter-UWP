@@ -131,6 +131,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DottedLine.txt" />
     <Content Include="FreeTransform.hlsl" />
     <Content Include="GradientMapping.bin" />
     <Content Include="Liquefaction.bin" />
@@ -145,6 +146,7 @@
     <Content Include="FreeTransform.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
+    <None Include="DottedLine.shader" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
     <None Include="SprayGun.shader" />

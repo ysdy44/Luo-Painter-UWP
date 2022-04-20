@@ -7,5 +7,6 @@
         SprayGun,
         GradientMapping,
         FreeTransform,
+        DottedLine,
     }
 }

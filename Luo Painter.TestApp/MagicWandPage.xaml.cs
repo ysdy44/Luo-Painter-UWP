@@ -1,4 +1,6 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using Luo_Painter.Shaders;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,20 +38,54 @@ namespace Luo_Painter.TestApp
         int imageWidth;
         int imageHeight;
 
-
+        byte[] dottedLineCode;
+        PixelShaderEffect pse;
         /// <summary>
         /// 用于记录已近检索的像素
         /// </summary>
         Dictionary<Pos, int> tempDir = new Dictionary<Pos, int>();
+        DispatcherTimer timer = new DispatcherTimer();
 
+        float timeCount = 0;
         public MagicWandPage()
         {
             this.InitializeComponent();
             Init();
         }
 
-        void Init()
+        async void Init()
         {
+            {
+                dottedLineCode = await ShaderType.DottedLine.LoadAsync();
+
+                timer.Interval = TimeSpan.FromMilliseconds(500);
+
+                timer.Tick += (s, e) =>
+                {
+                    if (effectImage == null)
+                        return;
+                    timeCount++;
+                    float f =0.5f+(float) Math.Abs(Math.Sin(timeCount))*0.5f;
+                    pse = new PixelShaderEffect(dottedLineCode)
+                    {
+                        Source1 = effectImage,
+                        Properties = { ["time"] =f }
+                    };
+
+                    effectCanvas.Invalidate();
+                };
+
+                timer.Start();
+
+                this.Unloaded += (s, e) =>
+                {
+                    timer.Stop();
+                    timer = null;
+                };
+            }
+
+
+
             selectPicture.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -78,9 +114,9 @@ namespace Luo_Painter.TestApp
 
             effectCanvas.Draw += (s, e) =>
             {
-                if (effectImage == null)
+                if (pse == null)
                     return;
-                e.DrawingSession.DrawImage(effectImage);
+                e.DrawingSession.DrawImage(pse);
             };
 
             PointerEventHandler func = (s, e) =>
@@ -144,6 +180,8 @@ namespace Luo_Painter.TestApp
             effectCanvas.Tapped += teh;
 
         }
+
+
 
         void AddRetrieves(Pos cp, List<Pos> retrieves)
         {
