@@ -122,6 +122,9 @@
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FloodSelectPage.xaml.cs">
+      <DependentUpon>FloodSelectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FreeTransformPage.xaml.cs">
       <DependentUpon>FreeTransformPage.xaml</DependentUpon>
     </Compile>
@@ -231,6 +234,10 @@
     <Page Include="ArithmeticCompositeEffectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FloodSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="FreeTransformPage.xaml">
       <Generator>MSBuild:Compile</Generator>
