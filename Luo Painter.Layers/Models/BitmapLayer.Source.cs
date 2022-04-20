@@ -33,6 +33,8 @@ namespace Luo_Painter.Layers.Models
         readonly CanvasRenderTarget SourceRenderTarget;
         readonly CanvasRenderTarget TempRenderTarget;
 
+        public CanvasDrawingSession CreateSourceDrawingSession() => this.SourceRenderTarget.CreateDrawingSession();
+        public CanvasDrawingSession CreateTempDrawingSession() => this.TempRenderTarget.CreateDrawingSession();
 
         public void DrawSource(ICanvasImage image)
         {
@@ -152,7 +154,7 @@ namespace Luo_Painter.Layers.Models
         }
         public void ErasingWet(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size)
         {
-            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
                 ds.ErasingWet(position, targetPosition, pressure, targetPressure, size);
             }
