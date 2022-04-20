@@ -65,11 +65,20 @@ namespace Luo_Painter.TestApp
                     if (effectImage == null)
                         return;
                     timeCount++;
-                    float f =0.5f+(float) Math.Abs(Math.Sin(timeCount))*0.5f;
+                    float f =(float) Math.Abs(Math.Sin(timeCount));
+                    //float f = (float)(Math.Sin(timeCount));
                     pse = new PixelShaderEffect(dottedLineCode)
                     {
                         Source1 = effectImage,
-                        Properties = { ["time"] =f }
+                        Properties = {
+                            ["time"] =f,
+                            ["lineWidth"]=1f,
+                            ["color1"]= new Vector3(0),
+                            ["color2"]=new Vector3(1),
+                            //
+                            ["lineGap"]=100f,
+                            ["lineSpeed"] =100f,
+                        }
                     };
 
                     effectCanvas.Invalidate();
