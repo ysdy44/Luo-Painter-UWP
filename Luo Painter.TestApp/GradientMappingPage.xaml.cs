@@ -59,6 +59,28 @@ namespace Luo_Painter.TestApp
         }
     }
 
+    internal sealed class GradientStops : Dictionary<double, Color>
+    {
+        readonly Random Ran = new Random();
+        public void Random()
+        {
+            int count = this.Ran.Next(3, 10);
+            float space = 1f / (count - 1);
+
+            base.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                base.Add(i * space, new Color
+                {
+                    A = 255,
+                    R = (byte)this.Ran.Next(0, 256),
+                    G = (byte)this.Ran.Next(0, 256),
+                    B = (byte)this.Ran.Next(0, 256),
+                });
+            }
+        }
+    }
+
     public sealed partial class GradientMappingPage : Page
     {
 
@@ -66,7 +88,7 @@ namespace Luo_Painter.TestApp
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
         readonly CanvasDevice Device = new CanvasDevice();
-        readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>
+        readonly GradientStops Stops = new GradientStops
         {
             [0] = Colors.LightBlue,
             [0.3333] = Colors.LightSteelBlue,
@@ -161,6 +183,7 @@ namespace Luo_Painter.TestApp
             };
             this.ResetButton.Click += (s, e) =>
             {
+                this.Stops.Random();
                 this.Selector.Reset(this.Stops);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
