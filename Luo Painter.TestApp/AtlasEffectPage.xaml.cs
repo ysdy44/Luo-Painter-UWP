@@ -29,12 +29,17 @@ namespace Luo_Painter.TestApp
         Vector2 B;
         bool IsA;
         bool IsB;
-        
+
         public AtlasEffectPage()
         {
             this.InitializeComponent();
+            this.ConstructAtlasEffect();
             this.ConstructCanvas();
             this.ConstructOperator();
+        }
+
+        private void ConstructAtlasEffect()
+        {
             this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);

@@ -32,13 +32,13 @@ namespace Luo_Painter.TestApp
         public FreeTransformPage()
         {
             this.InitializeComponent();
-            this.ConstructBitmapTransformer();
+            this.ConstructFreeTransform();
             this.ConstructCanvas();
             this.ConstructOperator();
         }
 
 
-        private void ConstructBitmapTransformer()
+        private void ConstructFreeTransform()
         {
             this.AddButton.Click += async (s, e) =>
             {

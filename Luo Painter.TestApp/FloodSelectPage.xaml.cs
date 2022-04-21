@@ -18,8 +18,13 @@ namespace Luo_Painter.TestApp
         public FloodSelectPage()
         {
             this.InitializeComponent();
+            this.ConstructFloodSelect();
             this.ConstructCanvas();
             this.ConstructOperator();
+        }
+
+        private void ConstructFloodSelect()
+        {
             this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
