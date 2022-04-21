@@ -8,5 +8,6 @@
         GradientMapping,
         FreeTransform,
         DottedLine,
+        RippleEffect,
     }
 }

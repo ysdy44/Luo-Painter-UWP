@@ -27,6 +27,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.GradientMapping: return "ms-appx:///Luo Painter.Shaders/GradientMapping.bin";
                 case ShaderType.FreeTransform: return "ms-appx:///Luo Painter.Shaders/FreeTransform.bin";
                 case ShaderType.DottedLine: return "ms-appx:///Luo Painter.Shaders/DottedLine.txt";
+                case ShaderType.RippleEffect: return "ms-appx:///Luo Painter.Shaders/RippleEffect.bin";
                 default: return null;
             }
         }
