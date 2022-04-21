@@ -135,6 +135,7 @@
     <Content Include="FreeTransform.hlsl" />
     <Content Include="GradientMapping.bin" />
     <Content Include="Liquefaction.bin" />
+    <Content Include="RippleEffect.hlsl" />
     <Content Include="SprayGun.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,7 @@
     <None Include="DottedLine.shader" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
+    <Content Include="RippleEffect.bin" />
     <None Include="SprayGun.shader" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
