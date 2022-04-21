@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.SkyHeaderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+
+    <FrameworkElement.Resources>
+        <!--Style-->
+        <Style TargetType="Border">
+            <Setter Property="Margin" Value="20,10,20,10" />
+            <Setter Property="Padding" Value="20,0" />
+            <Setter Property="MinHeight" Value="50" />
+            <Setter Property="MaxWidth" Value="800" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
+        </Style>
+    </FrameworkElement.Resources>
+
+
+    <ScrollViewer x:Name="ScrollViewer">
+        <StackPanel>
+
+            <Grid x:Name="ScrollHeader" Canvas.ZIndex="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                    <Ellipse Width="100" Height="100" Fill="{ThemeResource SystemColorControlAccentBrush}"/>
+                </Grid>
+                <Grid x:Name="TitleGrid" Grid.Row="1" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                    <UIElement.ManipulationMode>
+                        TranslateY
+                    </UIElement.ManipulationMode>
+                    <Line HorizontalAlignment="Center" X1="0" X2="40" Y1="12" Y2="12" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="Gray"/>
+                    <TextBlock Margin="18,0" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}">
+                        Title
+                    </TextBlock>
+                    <Button x:Name="CloseButton" Foreground="{ThemeResource AppBarBackgroundThemeBrush}" Width="70" Height="70" HorizontalAlignment="Right" Style="{StaticResource TextBlockButtonStyle}">
+                        <Grid>
+                            <FontIcon Foreground="Gray" Glyph="&#xE91F;" FontFamily="Segoe MDL2 Assets"/>
+                            <FontIcon Glyph="&#xEB90;" FontFamily="Segoe MDL2 Assets"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+            <Border/>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

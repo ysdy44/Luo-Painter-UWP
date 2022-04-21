@@ -210,6 +210,9 @@
     <Compile Include="SelectedButtonPage.xaml.cs">
       <DependentUpon>SelectedButtonPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SkyHeaderPage.xaml.cs">
+      <DependentUpon>SkyHeaderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
     </Compile>
@@ -351,6 +354,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectedButtonPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SkyHeaderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
