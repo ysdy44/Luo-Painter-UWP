@@ -64,7 +64,7 @@ namespace Luo_Painter
                 OptionType type = this.OptionType;
                 BitmapLayer bitmapLayer = this.BitmapLayer;
 
-                Color[] InterpolationColors = bitmapLayer.GetInterpolationColors();
+                Color[] InterpolationColors = bitmapLayer.GetInterpolationColorsBySource();
                 PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
                 this.Option(type, mode, InterpolationColors, bitmapLayer);
 
@@ -101,7 +101,7 @@ namespace Luo_Painter
                 }
                 else if (layer is BitmapLayer bitmapLayer)
                 {
-                    Color[] InterpolationColors = bitmapLayer.GetInterpolationColors();
+                    Color[] InterpolationColors = bitmapLayer.GetInterpolationColorsBySource();
                     PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
 
                     switch (mode)

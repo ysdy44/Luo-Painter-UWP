@@ -36,7 +36,7 @@ namespace Luo_Painter.TestApp
                 bool? result = await this.AddAsync(file);
                 if (result != true) return;
 
-                Color[] colors = this.BitmapLayer.GetInterpolationColors();
+                Color[] colors = this.BitmapLayer.GetInterpolationColorsBySource();
                 this.PixelBoundsMode = this.BitmapLayer.GetInterpolationBoundsMode(colors);
                 this.TextBlock.Text = this.PixelBoundsMode.ToString();
 
