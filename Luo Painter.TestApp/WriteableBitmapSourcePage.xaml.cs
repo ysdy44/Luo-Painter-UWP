@@ -23,7 +23,7 @@ namespace Luo_Painter.TestApp
         readonly CanvasRenderTarget ThumbnailRenderTarget;
         readonly WriteableBitmap ThumbnailWriteableBitmap;
 
-        CanvasBitmap RenderTarget;
+        CanvasBitmap CanvasBitmap;
 
         public WriteableBitmapSourcePage()
         {
@@ -70,9 +70,9 @@ namespace Luo_Painter.TestApp
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
-                using (CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream))
                 {
-                    this.RenderTarget = bitmap;
+                    CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
+                    this.CanvasBitmap = bitmap;
                     return true;
                 }
             }
@@ -89,10 +89,10 @@ namespace Luo_Painter.TestApp
                 ds.Clear(Colors.Transparent);
                 ds.DrawImage(new ScaleEffect
                 {
-                    Scale = new Vector2(50f / Math.Max(this.RenderTarget.SizeInPixels.Width, this.RenderTarget.SizeInPixels.Height)),
+                    Scale = new Vector2(50f / Math.Max(this.CanvasBitmap.SizeInPixels.Width, this.CanvasBitmap.SizeInPixels.Height)),
                     BorderMode = EffectBorderMode.Hard,
                     InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    Source = this.RenderTarget,
+                    Source = this.CanvasBitmap,
                 });
             }
 

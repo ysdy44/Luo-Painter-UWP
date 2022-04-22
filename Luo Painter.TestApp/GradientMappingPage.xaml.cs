@@ -257,8 +257,8 @@ namespace Luo_Painter.TestApp
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
-                using (CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream))
                 {
+                    CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
                     this.CanvasBitmap = bitmap;
                     return true;
                 }
