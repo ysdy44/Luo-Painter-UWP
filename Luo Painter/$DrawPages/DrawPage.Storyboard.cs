@@ -4,6 +4,13 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
+    internal enum FullScreenState
+    {
+        UnFullScreen,
+        FullScreen,
+        Option,
+    }
+
     public sealed partial class DrawPage : Page
     {
 
@@ -16,10 +23,34 @@ namespace Luo_Painter
         private double GetToolTransformX(double value) => Math.Max(-70 - 70, Math.Min(0, value));
         private double GetLayerTransformX(double value) => Math.Max(0, Math.Min(70 + 70, value));
 
+        private void SetFullScreenState(FullScreenState state)
+        {
+            switch (state)
+            {
+                case FullScreenState.UnFullScreen:
+                    this.ShowStoryboard.Begin(); // Storyboard
+                    this.HideStoryboard.Stop(); // Storyboard
+                    this.OptionStoryboard.Stop(); // Storyboard
+                    this.ApplicationView.IsAccent = false;
+                    break;
+                case FullScreenState.FullScreen:
+                    this.HideStoryboard.Begin(); // Storyboard
+                    break;
+                case FullScreenState.Option:
+                    this.OptionStoryboard.Begin(); // Storyboard
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void ConstructStoryboard()
         {
-            this.FullScreenButton.Click += (s, e) => this.HideStoryboard.Begin(); // Storyboard
-            this.UnFullScreenButton.Click += (s, e) => this.ShowStoryboard.Begin(); // Storyboard
+            this.HideStoryboard.Completed += (s, e) => this.ApplicationView.IsAccent = true;
+            this.OptionStoryboard.Completed += (s, e) => this.ApplicationView.IsAccent = true;
+
+            this.FullScreenButton.Click += (s, e) => this.SetFullScreenState(FullScreenState.FullScreen);
+            this.UnFullScreenButton.Click += (s, e) => this.SetFullScreenState(FullScreenState.UnFullScreen);
         }
 
         private void ConstructSplitStoryboard()

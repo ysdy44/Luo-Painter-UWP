@@ -49,11 +49,9 @@ namespace Luo_Painter
 
             this.OptionSecondaryButton.Click += (s, e) =>
             {
-                this.ShowStoryboard.Begin(); // Storyboard
-                this.FootGrid.Visibility = Visibility.Collapsed;
-
                 this.OptionType = OptionType.None;
                 this.SetOptionType(OptionType.None);
+                this.SetFullScreenState(FullScreenState.UnFullScreen);
 
                 this.BitmapLayer = null;
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -70,12 +68,10 @@ namespace Luo_Painter
 
                 this.OptionType = OptionType.None;
                 this.SetOptionType(OptionType.None);
+                this.SetFullScreenState(FullScreenState.UnFullScreen);
 
                 this.BitmapLayer = null;
                 this.CanvasControl.Invalidate(); // Invalidate
-
-                this.ShowStoryboard.Begin(); // Storyboard
-                this.FootGrid.Visibility = Visibility.Collapsed;
             };
 
             this.OptionTypeCommand.Click += (s, type) =>
@@ -125,12 +121,10 @@ namespace Luo_Painter
 
                                 this.OptionType = type;
                                 this.SetOptionType(type);
+                                this.SetFullScreenState(FullScreenState.Option);
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.CanvasControl.Invalidate(); // Invalidate
-
-                                this.OptionStoryboard.Begin(); // Storyboard
-                                this.FootGrid.Visibility = Visibility.Visible;
                             }
                             else
                             {

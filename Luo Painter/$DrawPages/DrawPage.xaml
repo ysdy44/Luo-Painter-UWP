@@ -531,7 +531,7 @@
 
 
         <!--Extension-->
-        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColor}"/>
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColor}" AccentTitleBarColor="{ThemeResource SystemChromeHighColor}"/>
 
 
         <!--Canvas-->
