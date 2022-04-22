@@ -253,6 +253,7 @@
         <local:OptionGrouping x:Name="MoreOptionCollection" Key="More">
             <options:OptionType>Transform</options:OptionType>
             <options:OptionType>GradientMapping</options:OptionType>
+            <options:OptionType>RippleEffect</options:OptionType>
         </local:OptionGrouping>
 
         <local:BlendGrouping x:Name="BlendCollection" Key="None">
@@ -523,6 +524,11 @@
                         <!--Option-->
                         <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
 
+                        <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
+                        <Setter Target="FrequencySlider.Width" Value="Auto"/>
+                        <Setter Target="PhaseSlider.Width" Value="Auto"/>
+                        <Setter Target="AmplitudeSlider.Width" Value="Auto"/>
+
                         <Setter Target="TemperaturePanel.Orientation" Value="Vertical"/>
                         <Setter Target="TemperatureSlider.Width" Value="Auto"/>
                         <Setter Target="TintSlider.Width" Value="Auto"/>
@@ -549,6 +555,11 @@
                         <Setter Target="OptionPanel.Margin" Value="0"/>
                         <!--Option-->
                         <Setter Target="GradientMappingSelector.Width" Value="500"/>
+
+                        <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
+                        <Setter Target="FrequencySlider.Width" Value="Auto"/>
+                        <Setter Target="PhaseSlider.Width" Value="Auto"/>
+                        <Setter Target="AmplitudeSlider.Width" Value="Auto"/>
 
                         <Setter Target="TemperaturePanel.Orientation" Value="Vertical"/>
                         <Setter Target="TemperatureSlider.Width" Value="Auto"/>
@@ -583,6 +594,7 @@
 
         <!--Extension-->
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColor}" AccentTitleBarColor="{ThemeResource SystemChromeHighColor}"/>
+
 
 
         <!--Canvas-->
@@ -1617,6 +1629,54 @@
                         </Slider.Header>
                     </Slider>
                 </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="RippleEffectPanel" Visibility="Collapsed" Orientation="Horizontal">
+                <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Tag>
+                        Frequency
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button x:Name="FrequencyButton" Height="Auto" Background="{ThemeResource AppBackground}"
+                                    Content="{x:Bind FrequencySlider.Value, Mode=OneWay}">
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Tag>
+                        Phase
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button x:Name="PhaseButton" Height="Auto" Background="{ThemeResource AppBackground}"
+                                    Content="{x:Bind PhaseSlider.Value, Mode=OneWay}">
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                    <Slider.Tag>
+                        Amplitude
+                    </Slider.Tag>
+                    <Slider.Header>
+                        <Button x:Name="AmplitudeButton" Height="Auto" Background="{ThemeResource AppBackground}"
+                                    Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}">
+                            <Button.Flyout>
+                                <Flyout>
+
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
             </StackPanel>
 
         </StackPanel>

@@ -25,6 +25,7 @@ namespace Luo_Painter
         {
             this.TransformComboBox.Visibility = type == OptionType.Transform ? Visibility.Visible : Visibility.Collapsed;
             this.GradientMappingSelector.Visibility = type == OptionType.GradientMapping ? Visibility.Visible : Visibility.Collapsed;
+            this.RippleEffectPanel.Visibility = type == OptionType.RippleEffect ? Visibility.Visible : Visibility.Collapsed;
 
             this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
             this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
@@ -149,6 +150,9 @@ namespace Luo_Painter
                                     case OptionType.GradientMapping:
                                         this.SetGradientMapping();
                                         break;
+                                    case OptionType.RippleEffect:
+                                        this.SetRippleEffect(bitmapLayer);
+                                        break;
                                 }
 
                                 this.OptionType = type;
@@ -225,6 +229,8 @@ namespace Luo_Painter
                     return this.GetTransformPreview(image);
                 case OptionType.GradientMapping:
                     return this.GetGradientMappingPreview(image);
+                case OptionType.RippleEffect:
+                    return this.GetRippleEffectPreview(image);
                 case OptionType.Gray:
                     return new GrayscaleEffect
                     {

@@ -57,6 +57,7 @@ namespace Luo_Painter
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTransformShaderCodeBytes;
         byte[] GradientMappingShaderCodeBytes;
+        byte[] RippleEffectShaderCodeBytes;
 
         private void ConstructCanvas()
         {
@@ -111,6 +112,10 @@ namespace Luo_Painter
                                 ds.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
                                 this.DrawTransform(sender, ds);
                                 break;
+                            case OptionType.RippleEffect:
+                                ds.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+                                this.DrawRippleEffect(sender, ds);
+                                break;
                             default:
                                 break;
                         }
@@ -124,6 +129,7 @@ namespace Luo_Painter
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
             this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
             this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
+            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
         }
 
         private void ConstructOperator()
@@ -139,6 +145,9 @@ namespace Luo_Painter
                     case OptionType.Transform:
                         this.Transform_Start(point, properties);
                         break;
+                    case OptionType.RippleEffect:
+                        this.RippleEffect_Start(point, properties);
+                        break;
                     default:
                         break;
                 }
@@ -152,6 +161,9 @@ namespace Luo_Painter
                         break;
                     case OptionType.Transform:
                         this.Transform_Delta(point, properties);
+                        break;
+                    case OptionType.RippleEffect:
+                        this.RippleEffect_Delta(point, properties);
                         break;
                     default:
                         break;
@@ -168,6 +180,10 @@ namespace Luo_Painter
                     case OptionType.Transform:
                         this.Transform_Delta(point, properties);
                         this.Transform_Complete(point, properties);
+                        break;
+                    case OptionType.RippleEffect:
+                        this.RippleEffect_Delta(point, properties);
+                        this.RippleEffect_Complete(point, properties);
                         break;
                     default:
                         break;
