@@ -6,6 +6,7 @@
 
         Transform,
         GradientMapping,
+        RippleEffect,
 
         Gray,
         Invert,
