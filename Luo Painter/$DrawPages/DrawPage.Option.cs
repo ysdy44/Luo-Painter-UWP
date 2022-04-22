@@ -8,6 +8,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using System.Numerics;
+using Windows.Foundation;
 
 namespace Luo_Painter
 {
@@ -18,34 +19,65 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
+        double StartingOptionTitleY;
+
         private void SetOptionType(OptionType type)
         {
             this.TransformComboBox.Visibility = type == OptionType.Transform ? Visibility.Visible : Visibility.Collapsed;
-            this.GradientMappingTextBlock.Visibility = this.GradientMappingSelector.Visibility = type == OptionType.GradientMapping ? Visibility.Visible : Visibility.Collapsed;
+            this.GradientMappingSelector.Visibility = type == OptionType.GradientMapping ? Visibility.Visible : Visibility.Collapsed;
 
-            this.ExposureTextBlock.Visibility = this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
-            this.BrightnessTextBlock.Visibility = this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
-            this.SaturationTextBlock.Visibility = this.SaturationSlider.Visibility = type == OptionType.Saturation ? Visibility.Visible : Visibility.Collapsed;
-            this.HueRotationTextBlock.Visibility = this.HueRotationSlider.Visibility = type == OptionType.HueRotation ? Visibility.Visible : Visibility.Collapsed;
-            this.ContrastTextBlock.Visibility = this.ContrastSlider.Visibility = type == OptionType.Contrast ? Visibility.Visible : Visibility.Collapsed;
-            this.TemperatureTextBlock.Visibility = this.TemperatureSlider.Visibility = this.TintSlider.Visibility = type == OptionType.Temperature ? Visibility.Visible : Visibility.Collapsed;
-            this.HighlightsAndShadowsTextBlock.Visibility = this.HighlightsAndShadowsPanel.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
+            this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
+            this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
+            this.SaturationSlider.Visibility = type == OptionType.Saturation ? Visibility.Visible : Visibility.Collapsed;
+            this.HueRotationSlider.Visibility = type == OptionType.HueRotation ? Visibility.Visible : Visibility.Collapsed;
+            this.ContrastSlider.Visibility = type == OptionType.Contrast ? Visibility.Visible : Visibility.Collapsed;
+            this.TemperaturePanel.Visibility = type == OptionType.Temperature ? Visibility.Visible : Visibility.Collapsed;
+            this.HighlightsAndShadowsPanel.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
 
             this.LuminanceToAlphaComboBox.Visibility = type == OptionType.LuminanceToAlpha ? Visibility.Visible : Visibility.Collapsed;
 
-            switch (type)
+            if (type.HasIcon())
             {
-                case OptionType.GradientMapping:
-                    this.FootGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    break;
-                default:
-                    this.FootGrid.HorizontalAlignment = HorizontalAlignment.Center;
-                    break;
+                this.OptionTransform2.Y = this.OptionTransform.Y = 0;
+
+                this.OptionIcon.Type = type;
+                this.OptionTextBlock.Text = type.ToString();
+                this.OptionTitle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.OptionTitle.Visibility = Visibility.Collapsed;
             }
         }
 
         private void ConstructOptions()
         {
+            this.OptionPanel.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                this.OptionBorder.Width = e.NewSize.Width;
+                if (e.NewSize.Height == e.PreviousSize.Height) return;
+
+                this.OptionBorder.Height = e.NewSize.Height;
+                this.OptionTransform2.Y = this.OptionTransform.Y = 0;
+            };
+
+            this.OptionTitle.ManipulationStarted += (s, e) =>
+            {
+                this.StartingOptionTitleY = this.OptionTransform.Y;
+            };
+            this.OptionTitle.ManipulationDelta += (s, e) =>
+            {
+                if (this.OptionPanel.Margin.Bottom != 0) return;
+
+                this.OptionTransform2.Y = this.OptionTransform.Y =
+                System.Math.Clamp(this.StartingOptionTitleY + e.Cumulative.Translation.Y, 0, this.OptionBorder.Height - 50);
+            };
+            this.OptionTitle.ManipulationCompleted += (s, e) =>
+            {
+            };
 
             this.OptionSecondaryButton.Click += (s, e) =>
             {
