@@ -7,7 +7,8 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using System.Numerics;
 using Windows.Storage.Streams;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -109,6 +110,24 @@ namespace Luo_Painter.Layers.Models
                 int x = this.GetX(hitIndex);
                 int y = this.GetY(hitIndex);
                 this.SourceRenderTarget.SetPixelBytes(bytes, this.GetLeft(x), this.GetTop(y), this.GetWidth(x), this.GetHeight(y));
+            }
+        }
+
+        public void DrawHits(CanvasDrawingSession ds, Color color, CanvasTextFormat textFormat)
+        {
+            for (int i = 0; i < this.Length; i++)
+            {
+                if (this[i] == false) continue;
+
+                int x = this.GetX(i);
+                int y = this.GetY(i);
+                int left = this.GetLeft(x);
+                int top = this.GetTop(y);
+                int width = this.GetWidth(x);
+                int height = this.GetHeight(y);
+
+                ds.DrawRectangle(left, top, width, height, color);
+                ds.DrawText(i.ToString(), left, top, width, height, color, textFormat);
             }
         }
 

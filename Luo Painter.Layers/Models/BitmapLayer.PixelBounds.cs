@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.Graphics.Effects;
 using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
@@ -94,7 +95,17 @@ namespace Luo_Painter.Layers.Models
         private bool IsTransparent(Color color) => color.A == byte.MinValue;
         private bool IsSolid(Color color) => color.A == byte.MaxValue;
 
-        public Color[] GetInterpolationColors()
+        public Color[] GetInterpolationColorsBySource() => this.GetInterpolationColors(this.Source);
+        public Color[] GetInterpolationColorsByDifference() => this.GetInterpolationColors(new LuminanceToAlphaEffect
+        {
+            Source = new BlendEffect
+            {
+                Mode = BlendEffectMode.Difference,
+                Foreground = this.Source,
+                Background = this.Origin
+            }
+        });
+        public Color[] GetInterpolationColors(IGraphicsEffectSource source)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
@@ -106,7 +117,7 @@ namespace Luo_Painter.Layers.Models
                 {
                     Scale = new Vector2(1f / BitmapLayer.Unit),
                     InterpolationMode = CanvasImageInterpolation.Anisotropic,
-                    Source = this.SourceRenderTarget,
+                    Source = source,
                 });
             }
 
