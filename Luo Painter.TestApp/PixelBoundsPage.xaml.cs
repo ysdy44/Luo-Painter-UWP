@@ -1,17 +1,17 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers.Models;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Text;
 using System;
-using FanKit.Transformers;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
-using Luo_Painter.Elements;
-using Luo_Painter.Layers.Models;
 
 namespace Luo_Painter.TestApp
 {
@@ -23,11 +23,22 @@ namespace Luo_Painter.TestApp
         PixelBounds InterpolationBounds; // 5 * 7
         PixelBounds PixelBounds; // 540 * 620
         PixelBoundsMode PixelBoundsMode = PixelBoundsMode.Transarent;
+        readonly CanvasTextFormat TextFormat = new CanvasTextFormat
+        {
+            HorizontalAlignment = CanvasHorizontalAlignment.Center,
+            VerticalAlignment = CanvasVerticalAlignment.Center,
+            FontWeight = FontWeights.Bold
+        };
 
         public PixelBoundsPage()
         {
             this.InitializeComponent();
+            this.ConstructPixelBounds();
             this.ConstructCanvas();
+        }
+
+        private void ConstructPixelBounds()
+        {
             this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -36,14 +47,16 @@ namespace Luo_Painter.TestApp
                 bool? result = await this.AddAsync(file);
                 if (result != true) return;
 
-                Color[] colors = this.BitmapLayer.GetInterpolationColorsBySource();
-                this.PixelBoundsMode = this.BitmapLayer.GetInterpolationBoundsMode(colors);
+                Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
+                this.PixelBoundsMode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
                 this.TextBlock.Text = this.PixelBoundsMode.ToString();
 
                 if (this.PixelBoundsMode != PixelBoundsMode.Transarent)
                 {
-                    this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds(colors);
+                    this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds(InterpolationColors);
                     this.PixelBounds = this.BitmapLayer.CreatePixelBounds(this.InterpolationBounds);
+
+                    this.BitmapLayer.Hit(InterpolationColors);
                 }
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -95,6 +108,8 @@ namespace Luo_Painter.TestApp
                 if (this.PixelBoundsMode == PixelBoundsMode.Transarent) return;
                 args.DrawingSession.DrawRectangle(this.InterpolationBounds.ToRect(BitmapLayer.Unit), Colors.Red, stroke);
                 args.DrawingSession.DrawRectangle(this.PixelBounds.ToRect(), Colors.DodgerBlue, stroke);
+
+                this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat);
             };
         }
 
@@ -121,7 +136,7 @@ namespace Luo_Painter.TestApp
 
         public async Task<bool?> AddAsync(IRandomAccessStreamReference reference)
         {
-            if (reference == null) return null;
+            if (reference is null) return null;
 
             try
             {

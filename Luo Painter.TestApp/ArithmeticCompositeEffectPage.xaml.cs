@@ -199,13 +199,13 @@ namespace Luo_Painter.TestApp
 
         public async Task<bool?> AddAsync(IRandomAccessStreamReference reference, bool isA)
         {
-            if (reference == null) return null;
+            if (reference is null) return null;
 
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
+                using (CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream))
                 {
-                    CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
                     if (isA)
                     {
                         this.ACanvasBitmap = bitmap;
@@ -216,8 +216,8 @@ namespace Luo_Painter.TestApp
                         this.BCanvasBitmap = bitmap;
                         this.BSize = bitmap.Size.ToVector2();
                     }
-                    return true;
                 }
+                return true;
             }
             catch (Exception)
             {

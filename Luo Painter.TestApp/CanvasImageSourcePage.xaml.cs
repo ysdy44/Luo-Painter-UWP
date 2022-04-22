@@ -21,7 +21,7 @@ namespace Luo_Painter.TestApp
 
         readonly CanvasImageSource ThumbnailImageSource = null;
 
-        CanvasBitmap RenderTarget;
+        CanvasBitmap CanvasBitmap;
 
         public CanvasImageSourcePage()
         {
@@ -78,14 +78,14 @@ namespace Luo_Painter.TestApp
 
         public async Task<bool?> AddAsync(IRandomAccessStreamReference reference)
         {
-            if (reference == null) return null;
+            if (reference is null) return null;
 
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
                 {
                     CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
-                    this.RenderTarget = bitmap;
+                    this.CanvasBitmap = bitmap;
                     return true;
                 }
             }
@@ -97,7 +97,7 @@ namespace Luo_Painter.TestApp
 
         private void RenderThumbnail(bool surfaceContentsLost = false)
         {
-            if (this.RenderTarget == null) return;
+            if (this.CanvasBitmap == null) return;
 
             // If the window isn't visible then we cannot update the image source
             if (Window.Current.Visible == false) return;
@@ -113,10 +113,10 @@ namespace Luo_Painter.TestApp
                 {
                     ds.DrawImage(new ScaleEffect
                     {
-                        Scale = new Vector2(50f / Math.Max(this.RenderTarget.SizeInPixels.Width, this.RenderTarget.SizeInPixels.Height)),
+                        Scale = new Vector2(50f / Math.Max(this.CanvasBitmap.SizeInPixels.Width, this.CanvasBitmap.SizeInPixels.Height)),
                         BorderMode = EffectBorderMode.Hard,
                         InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                        Source = this.RenderTarget,
+                        Source = this.CanvasBitmap,
                     });
                 }
             }
