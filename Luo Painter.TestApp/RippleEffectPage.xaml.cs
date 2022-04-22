@@ -1,13 +1,17 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Text;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.UI;
+using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
@@ -18,14 +22,18 @@ namespace Luo_Painter.TestApp
     public sealed partial class RippleEffectPage : Page
     {
 
-        CanvasBitmap CanvasBitmap;
+        BitmapLayer BitmapLayer;
         byte[] ShaderCodeBytes;
 
-        float Frequency = 50;
-        float Phase = 50;
-        float Amplitude = 180;
-        float Spread = 0.5f;
+        Rippler Rippler = Rippler.Zero;
         Vector2 Center;
+
+        readonly CanvasTextFormat TextFormat = new CanvasTextFormat
+        {
+            HorizontalAlignment = CanvasHorizontalAlignment.Center,
+            VerticalAlignment = CanvasVerticalAlignment.Center,
+            FontWeight = FontWeights.Bold
+        };
 
         public RippleEffectPage()
         {
@@ -37,7 +45,21 @@ namespace Luo_Painter.TestApp
 
         private void ConstructRippleEffect()
         {
-            this.Slider.ValueChanged += (s, e) => this.Update((float)(e.NewValue / 100));
+            this.FrequencyRun.Text = this.Rippler.Frequency.ToString();
+            this.PhaseRun.Text = this.Rippler.Phase.ToString();
+            this.AmplitudeRun.Text = this.Rippler.Amplitude.ToString();
+            this.SpreadRun.Text = this.Rippler.Spread.ToString();
+            this.Slider.ValueChanged += (s, e) =>
+            {
+                this.Rippler = new Rippler((float)(e.NewValue / 100));
+
+                this.FrequencyRun.Text = this.Rippler.Frequency.ToString();
+                this.PhaseRun.Text = this.Rippler.Phase.ToString();
+                this.AmplitudeRun.Text = this.Rippler.Amplitude.ToString();
+                this.SpreadRun.Text = this.Rippler.Spread.ToString();
+
+                this.Update();
+            };
             this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -46,33 +68,36 @@ namespace Luo_Painter.TestApp
                 bool? result = await this.AddAsync(file);
                 if (result != true) return;
 
-                this.CanvasControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Update();
             };
 
-            this.FrequencySlider.Value = this.Frequency;
+            this.FrequencySlider.Value = this.Rippler.Frequency;
             this.FrequencySlider.ValueChanged += (s, e) =>
             {
-                this.Frequency = (float)(e.NewValue);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Rippler.Frequency = (float)(e.NewValue);
+                this.FrequencyRun.Text = this.Rippler.Frequency.ToString();
+                this.Update();
             };
-            this.PhaseSlider.Value = this.Phase;
+            this.PhaseSlider.Value = this.Rippler.Phase;
             this.PhaseSlider.ValueChanged += (s, e) =>
             {
-                this.Phase = (float)(e.NewValue);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Rippler.Phase = (float)(e.NewValue);
+                this.PhaseRun.Text = this.Rippler.Phase.ToString();
+                this.Update();
             };
-            this.AmplitudeSlider.Value = this.Amplitude;
+            this.AmplitudeSlider.Value = this.Rippler.Amplitude;
             this.AmplitudeSlider.ValueChanged += (s, e) =>
             {
-                this.Amplitude = (float)(e.NewValue);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Rippler.Amplitude = (float)(e.NewValue);
+                this.AmplitudeRun.Text = this.Rippler.Amplitude.ToString();
+                this.Update();
             };
-            this.SpreadSlider.Value = this.Spread;
+            this.SpreadSlider.Value = this.Rippler.Spread * 100;
             this.SpreadSlider.ValueChanged += (s, e) =>
             {
-                this.Spread = (float)(e.NewValue / 100);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Rippler.Spread = (float)(e.NewValue / 100);
+                this.SpreadRun.Text = this.Rippler.Spread.ToString();
+                this.Update();
             };
         }
 
@@ -84,28 +109,16 @@ namespace Luo_Painter.TestApp
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                if (this.CanvasBitmap is null) return;
+                if (this.BitmapLayer is null) return;
 
-                args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
-                {
-                    Source1 = this.CanvasBitmap,
-                    Properties =
-                    {
-                        ["frequency"] = this.Frequency,
-                        ["phase"] = this.Phase,
-                        ["amplitude"] = this.Amplitude,
-                        ["spread"] = this.Spread,
-                        ["center"] = this.Center,
-                        ["dpi"] = sender.Dpi, // Default value 96f,
-                    },
-                });
+                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                args.DrawingSession.DrawImage(this.BitmapLayer.Source);
 
+                this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat);
+
+                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
                 Vector2 center = sender.Dpi.ConvertPixelsToDips(this.Center);
                 args.DrawingSession.DrawCircle(center, 12, Windows.UI.Colors.Gray);
-
-                float spread = this.Spread * Math.Max(this.CanvasBitmap.SizeInPixels.Width, this.CanvasBitmap.SizeInPixels.Height);
-                float radius = sender.Dpi.ConvertPixelsToDips(spread);
-                args.DrawingSession.DrawCircle(center, radius, Windows.UI.Colors.Gray);
             };
         }
 
@@ -120,41 +133,39 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.Center = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Update();
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
                 this.Center = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Update();
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
                 this.Center = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Update();
             };
         }
 
-        /// <summary>
-        /// https://github.com/microsoft/Windows-universal-samples/blob/main/Samples/D2DCustomEffects/cpp/PixelShader/CustomPixelShaderRenderer.cpp
-        /// </summary>
-        private void Update(float timer)
+        private void Update()
         {
-            float delta = timer;
+            if (this.BitmapLayer is null) return;
 
-            // Stop animating after four seconds.
-            if (delta >= 4) return;
-
-            // Increase the spread over time to make the visible area of the waves spread out.
-            this.Spread = 0.01f + delta / 10.0f;
-
-            // Reduce the amplitude over time to make the waves decay in intensity.
-            this.Amplitude = 60.0f - delta * 15.0f;
-
-            // Reduce the frequency over time to make each individual wave spread out.
-            this.Frequency = 140.0f - delta * 30.0f;
-
-            // Change the phase over time to make each individual wave travel away from the center.
-            this.Phase = -delta * 20.0f;
+            this.BitmapLayer.DrawSource(new PixelShaderEffect(this.ShaderCodeBytes)
+            {
+                Source1 = this.BitmapLayer.Origin,
+                Properties =
+                {
+                    ["frequency"] = this.Rippler.Frequency,
+                    ["phase"] = this.Rippler.Phase,
+                    ["amplitude"] = this.Rippler.Amplitude,
+                    ["spread"] = this.Rippler.Spread,
+                    ["center"] = this.Center,
+                    ["dpi"] = 96f, // Default value 96f,
+                },
+            });
+            Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsByDifference();
+            this.BitmapLayer.Hit(InterpolationColors);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
@@ -182,14 +193,14 @@ namespace Luo_Painter.TestApp
 
         public async Task<bool?> AddAsync(IRandomAccessStreamReference reference)
         {
-            if (reference == null) return null;
+            if (reference is null) return null;
 
             try
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
+                using (CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream))
                 {
-                    CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
-                    this.CanvasBitmap = bitmap;
+                    this.BitmapLayer = new BitmapLayer(this.CanvasControl, bitmap);
                     return true;
                 }
             }

@@ -18,11 +18,28 @@
     <Grid>
 
         <xaml:CanvasControl x:Name="CanvasControl"/>
+        <TextBlock IsHitTestVisible="False">
+            <Run>Frequency</Run>
+            <Run x:Name="FrequencyRun"/>
+            <LineBreak/>
+            
+            <Run>Phase</Run>
+            <Run x:Name="PhaseRun"/>
+            <LineBreak/>
+            
+            <Run>AmplitudeRun</Run>
+            <Run x:Name="AmplitudeRun"/>
+            <LineBreak/>
+            
+            <Run>Spread</Run>
+            <Run x:Name="SpreadRun"/>
+            <LineBreak/>
+        </TextBlock>
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <CommandBar.Content>
-                <Slider x:Name="Slider" Margin="12,10,2,0" MinWidth="200" Value="0" Minimum="0" Maximum="400" />
+                <Slider x:Name="Slider" Margin="12,4,2,0" MinWidth="200" Value="0" Minimum="0" Maximum="2000" />
             </CommandBar.Content>
 
             <AppBarButton>
@@ -32,7 +49,7 @@
                             <TextBlock Style="{StaticResource BaseTextBlockStyle}">
                                 RippleEffect
                             </TextBlock>
-                            <Slider x:Name="FrequencySlider" Value="0" Minimum="0" Maximum="100" >
+                            <Slider x:Name="FrequencySlider" Value="0" Minimum="0" Maximum="300" >
                                 <Slider.Header>
                                     <TextBlock>
                                         <Run>Frequency</Run>
@@ -40,7 +57,7 @@
                                     </TextBlock>
                                 </Slider.Header>
                             </Slider>
-                            <Slider x:Name="PhaseSlider" Value="0" Minimum="0" Maximum="10" >
+                            <Slider x:Name="PhaseSlider" Value="0" Minimum="-100" Maximum="0" >
                                 <Slider.Header>
                                     <TextBlock>
                                         <Run>Phase</Run>
@@ -48,7 +65,7 @@
                                     </TextBlock>
                                 </Slider.Header>
                             </Slider>
-                            <Slider x:Name="AmplitudeSlider" Value="0" Minimum="0" Maximum="360" >
+                            <Slider x:Name="AmplitudeSlider" Value="0" Minimum="0" Maximum="200" >
                                 <Slider.Header>
                                     <TextBlock>
                                         <Run>Amplitude</Run>
@@ -77,7 +94,7 @@
                     Setting
                 </AppBarButton.Label>
             </AppBarButton>
-            
+
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="N"/>
