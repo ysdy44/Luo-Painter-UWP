@@ -22,8 +22,10 @@ namespace Luo_Painter.TestApp
     public sealed partial class RippleEffectPage : Page
     {
 
+        readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
-        byte[] ShaderCodeBytes;
+        byte[] RippleEffectShaderCodeBytes;
+        byte[] DifferenceShaderCodeBytes;
 
         Rippler Rippler = Rippler.Zero;
         Vector2 Center;
@@ -103,6 +105,8 @@ namespace Luo_Painter.TestApp
 
         private void ConstructCanvas()
         {
+            this.CanvasControl.UseSharedDevice = true;
+            this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (s, e) =>
             {
                 e.TrackAsyncAction(CreateResourcesAsync().AsAsyncAction());
@@ -113,6 +117,21 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                 args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+            };
+
+
+            this.OriginCanvasControl.UseSharedDevice = true;
+            this.OriginCanvasControl.CustomDevice = this.Device;
+            this.OriginCanvasControl.Draw += (sender, args) =>
+            {
+                if (this.BitmapLayer is null) return;
+
+                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                args.DrawingSession.DrawImage(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
+                {
+                    Source1 = this.BitmapLayer.Origin,
+                    Source2 = this.BitmapLayer.Source,
+                });
 
                 this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat);
 
@@ -124,7 +143,8 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
+            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
+            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
         }
 
         private void ConstructOperator()
@@ -151,7 +171,7 @@ namespace Luo_Painter.TestApp
         {
             if (this.BitmapLayer is null) return;
 
-            this.BitmapLayer.DrawSource(new PixelShaderEffect(this.ShaderCodeBytes)
+            this.BitmapLayer.DrawSource(new PixelShaderEffect(this.RippleEffectShaderCodeBytes)
             {
                 Source1 = this.BitmapLayer.Origin,
                 Properties =
@@ -164,10 +184,11 @@ namespace Luo_Painter.TestApp
                     ["dpi"] = 96f, // Default value 96f,
                 },
             });
-            Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsByDifference();
+            Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsByShader((this.DifferenceShaderCodeBytes));
             this.BitmapLayer.Hit(InterpolationColors);
 
             this.CanvasControl.Invalidate(); // Invalidate
+            this.OriginCanvasControl.Invalidate(); // Invalidate
         }
 
         public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
