@@ -12,10 +12,6 @@ using Windows.Foundation;
 
 namespace Luo_Painter
 {
-    internal class OptionTypeCommand : RelayCommand<OptionType>
-    {
-    }
-
     public sealed partial class DrawPage : Page
     {
 

@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Edits;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
@@ -194,6 +195,69 @@ namespace Luo_Painter
         }
     }
 
+    internal sealed class EditItem : Button
+    {
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="EditItem"/>. </summary>
+        public EditType Type
+        {
+            get => (EditType)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "EditItem.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(EditType), typeof(EditItem), new PropertyMetadata(EditType.None, (sender, e) =>
+        {
+            EditItem control = (EditItem)sender;
+
+            if (e.NewValue is EditType value)
+            {
+                control.Icon = new ContentControl
+                {
+                    Content = value,
+                    Template = value.GetTemplate(out ResourceDictionary resource),
+                    Resources = resource,
+                };
+                control.Icon.GoToState(control.IsEnabled);
+
+
+                control.Content = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Children =
+                    {
+                        control.Icon,
+                        new ContentControl
+                        {
+                            Width = 12
+                        },
+                        new TextBlock
+                        {
+                            Text = value.ToString()
+                        }
+                    }
+                };
+            }
+        }));
+
+
+        #endregion
+
+        Control Icon;
+        public EditItem()
+        {
+            base.IsEnabledChanged += (s, e) =>
+            {
+                if (this.Icon is null) return;
+                if (e.NewValue is bool value)
+                {
+                    this.Icon.GoToState(value);
+                }
+            };
+        }
+    }
+
 
     internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
     internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
@@ -204,6 +268,10 @@ namespace Luo_Painter
     internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionGroupType, OptionType> { }
     internal sealed class OptionGrouping : Grouping<OptionGroupType, OptionType> { }
 
+    internal sealed class EditGrouping : Grouping<EditGroupType, EditType> { }
+
+    internal class OptionTypeCommand : RelayCommand<OptionType> { }
+    internal class EditTypeCommand : RelayCommand<EditType> { }
 
     internal sealed class RadianRange
     {
