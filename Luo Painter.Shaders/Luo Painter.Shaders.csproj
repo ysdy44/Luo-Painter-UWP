@@ -134,6 +134,7 @@
   <ItemGroup>
     <Content Include="DottedLine.txt" />
     <Content Include="FreeTransform.hlsl" />
+    <Content Include="Difference.hlsl" />
     <Content Include="GradientMapping.bin" />
     <Content Include="Liquefaction.bin" />
     <Content Include="RippleEffect.hlsl" />
@@ -146,6 +147,7 @@
     <None Include="CompileShaders.cmd" />
     <Content Include="GeneralBrush.bin" />
     <Content Include="FreeTransform.bin" />
+    <Content Include="Difference.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
     <None Include="DottedLine.shader" />
