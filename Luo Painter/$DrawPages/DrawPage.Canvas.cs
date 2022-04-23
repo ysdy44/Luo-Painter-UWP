@@ -58,6 +58,7 @@ namespace Luo_Painter
         byte[] FreeTransformShaderCodeBytes;
         byte[] GradientMappingShaderCodeBytes;
         byte[] RippleEffectShaderCodeBytes;
+        byte[] DifferenceShaderCodeBytes;
 
         private void ConstructCanvas()
         {
@@ -130,6 +131,7 @@ namespace Luo_Painter
             this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
             this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
             this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
+            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
         }
 
         private void ConstructOperator()

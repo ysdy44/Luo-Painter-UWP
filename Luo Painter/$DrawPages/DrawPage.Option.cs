@@ -178,23 +178,35 @@ namespace Luo_Painter
 
         private void Option(OptionType type, PixelBoundsMode mode, Color[] InterpolationColors, BitmapLayer bitmapLayer)
         {
-            // History
-            switch (mode)
+            if (type.HasDifference())
             {
-                case PixelBoundsMode.Solid:
-                    bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
-                    int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
-                    break;
-                case PixelBoundsMode.None:
-                    bitmapLayer.Hit(InterpolationColors);
+                bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
+                bitmapLayer.Hit(bitmapLayer.GetInterpolationColorsByShader(this.DifferenceShaderCodeBytes));
 
-                    bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
-                    int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
-                    break;
+                int removes = this.History.Push(bitmapLayer.GetBitmapHistory());
+                bitmapLayer.Flush();
+                bitmapLayer.RenderThumbnail();
+            }
+            else
+            {
+                // History
+                switch (mode)
+                {
+                    case PixelBoundsMode.Solid:
+                        bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
+                        int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
+                        bitmapLayer.Flush();
+                        bitmapLayer.RenderThumbnail();
+                        break;
+                    case PixelBoundsMode.None:
+                        bitmapLayer.Hit(InterpolationColors);
+
+                        bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
+                        int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
+                        bitmapLayer.Flush();
+                        bitmapLayer.RenderThumbnail();
+                        break;
+                }
             }
 
             this.CanvasControl.Invalidate(); // Invalidate
