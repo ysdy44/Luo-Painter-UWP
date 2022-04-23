@@ -38,6 +38,19 @@ namespace Luo_Painter.Options
             }
         }
 
+        public static bool HasDifference(this OptionType type)
+        {
+            switch (type)
+            {
+                case OptionType.Transform:
+                case OptionType.RippleEffect:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
         public static bool HasIcon(this OptionType type)
         {
             switch (type)
