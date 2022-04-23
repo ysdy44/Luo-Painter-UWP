@@ -28,6 +28,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.FreeTransform: return "ms-appx:///Luo Painter.Shaders/FreeTransform.bin";
                 case ShaderType.DottedLine: return "ms-appx:///Luo Painter.Shaders/DottedLine.txt";
                 case ShaderType.RippleEffect: return "ms-appx:///Luo Painter.Shaders/RippleEffect.bin";
+                case ShaderType.Difference: return "ms-appx:///Luo Painter.Shaders/Difference.bin";
                 default: return null;
             }
         }

@@ -23,6 +23,7 @@ call :COMPILE Liquefaction.hlsl   || goto END
 call :COMPILE GradientMapping.hlsl   || goto END
 call :COMPILE FreeTransform.hlsl   || goto END
 call :COMPILE RippleEffect.hlsl   || goto END
+call :COMPILE Difference.hlsl   || goto END
 
 goto END
 

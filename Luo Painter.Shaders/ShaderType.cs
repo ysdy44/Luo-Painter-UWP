@@ -9,5 +9,6 @@
         FreeTransform,
         DottedLine,
         RippleEffect,
+        Difference,
     }
 }
