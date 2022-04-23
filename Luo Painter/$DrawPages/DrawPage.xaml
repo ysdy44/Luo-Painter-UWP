@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
+    xmlns:edits="using:Luo_Painter.Edits"
     xmlns:options="using:Luo_Painter.Options"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
@@ -208,6 +209,29 @@
                 </local:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
+
+        <local:EditGrouping x:Name="EditCollection0" Key="Edit">
+            <edits:EditType>Cut</edits:EditType>
+            <edits:EditType>Duplicate</edits:EditType>
+            <edits:EditType>Copy</edits:EditType>
+            <edits:EditType>Paste</edits:EditType>
+            <edits:EditType>Clear</edits:EditType>
+            <edits:EditType>Extract</edits:EditType>
+            <edits:EditType>Merge</edits:EditType>
+            <edits:EditType>Group</edits:EditType>
+            <edits:EditType>Ungroup</edits:EditType>
+            <edits:EditType>Release</edits:EditType>
+        </local:EditGrouping>
+        <local:EditGrouping x:Name="EditCollection1" Key="Select">
+            <edits:EditType>All</edits:EditType>
+            <edits:EditType>Deselect</edits:EditType>
+            <edits:EditType>Invert</edits:EditType>
+            <edits:EditType>Union</edits:EditType>
+            <edits:EditType>Exclude</edits:EditType>
+            <edits:EditType>Xor</edits:EditType>
+            <edits:EditType>Intersect</edits:EditType>
+            <edits:EditType>ExpandStroke</edits:EditType>
+        </local:EditGrouping>
 
         <local:OptionGroupingList x:Name="OptionCollection">
             <local:OptionGrouping Key="Adjustment">
@@ -599,6 +623,7 @@
 
         <!--Canvas-->
         <canvas:CanvasVirtualControl x:Name="CanvasControl" />
+        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" />
 
 
         <!--Head-->
@@ -860,6 +885,69 @@
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="G"/>
                     </UIElement.KeyboardAccelerators>
+                    <Button.Flyout>
+                        <Flyout x:Name="EditFlyout">
+                            <StackPanel Width="320" MinHeight="420" >
+
+                                <Button x:Name="EditTypeButton" Visibility="Collapsed" 
+                                        CommandParameter="{x:Null}">
+                                    <ButtonBase.Command>
+                                        <local:EditTypeCommand x:Name="EditTypeCommand"/>
+                                    </ButtonBase.Command>
+                                    <SymbolIcon Symbol="Repair"/>
+                                </Button>
+
+                                <TextBlock x:Name="EditTextBlock" Margin="6,4" Style="{StaticResource TitleTextBlockStyle}">
+                                    Edit
+                                </TextBlock>
+
+                                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <ItemsControl Width="156" ItemsSource="{x:Bind EditCollection0}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="edits:EditType">
+                                                <local:EditItem 
+                                                    Margin="0,1"
+                                                    Padding="12,0"
+                                                    Height="40"
+                                                    BorderThickness="1"                                
+                                                    BorderBrush="{ThemeResource AppStroke}"                              
+                                                    Background="{ThemeResource SystemAltLowColor}"     
+                                                    HorizontalAlignment="Stretch" 
+                                                    HorizontalContentAlignment="Left"
+                                                    Type="{Binding}"                                           
+                                                    CommandParameter="{Binding}"                                           
+                                                    Command="{Binding ElementName=EditTypeButton, Path=Command, Mode=OneWay}"
+                                                    />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <ContentControl Width="8" />
+                                    <ItemsControl Width="156" ItemsSource="{x:Bind EditCollection1}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="edits:EditType">
+                                                <local:EditItem 
+                                                    Margin="0,1"
+                                                    Padding="12,0"
+                                                    Height="40"
+                                                    BorderThickness="1"                                
+                                                    BorderBrush="{ThemeResource AppStroke}"                              
+                                                    Background="{ThemeResource SystemAltLowColor}"     
+                                                    HorizontalAlignment="Stretch" 
+                                                    HorizontalContentAlignment="Left"
+                                                    Type="{Binding}"                                           
+                                                    CommandParameter="{Binding}"                                           
+                                                    Command="{Binding ElementName=EditTypeButton, Path=Command, Mode=OneWay}"
+                                                    />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
                     <Viewbox Width="22" Height="22">
                         <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
                             <PathIcon.Data>
@@ -954,7 +1042,7 @@
                         <FontIcon Canvas.Left="18" Canvas.Top="16" Opacity="0.8" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
                     </Canvas>
                 </Button>
-                <Button x:Name="MoreOptionButton" Background="{ThemeResource AppBackgroundLight}" >
+                <Button Background="{ThemeResource AppBackgroundLight}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="T"/>
                     </UIElement.KeyboardAccelerators>
