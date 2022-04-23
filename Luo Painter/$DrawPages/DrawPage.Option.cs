@@ -19,6 +19,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
+        double StartingOptionTitleX;
         double StartingOptionTitleY;
 
         private void SetOptionType(OptionType type)
@@ -39,6 +40,7 @@ namespace Luo_Painter
 
             if (type.HasIcon())
             {
+                this.OptionTransform2.X = this.OptionTransform.X = 0;
                 this.OptionTransform2.Y = this.OptionTransform.Y = 0;
 
                 this.OptionIcon.Type = type;
@@ -62,19 +64,26 @@ namespace Luo_Painter
                 if (e.NewSize.Height == e.PreviousSize.Height) return;
 
                 this.OptionBorder.Height = e.NewSize.Height;
+                this.OptionTransform2.X = this.OptionTransform.X = 0;
                 this.OptionTransform2.Y = this.OptionTransform.Y = 0;
             };
 
             this.OptionTitle.ManipulationStarted += (s, e) =>
             {
+                this.StartingOptionTitleX = this.OptionTransform.X;
                 this.StartingOptionTitleY = this.OptionTransform.Y;
             };
             this.OptionTitle.ManipulationDelta += (s, e) =>
             {
-                if (this.OptionPanel.Margin.Bottom != 0) return;
-
-                this.OptionTransform2.Y = this.OptionTransform.Y =
-                System.Math.Clamp(this.StartingOptionTitleY + e.Cumulative.Translation.Y, 0, this.OptionBorder.Height - 50);
+                if (this.OptionPanel.Margin.Bottom == 0)
+                {
+                    this.OptionTransform2.Y = this.OptionTransform.Y = System.Math.Clamp(this.StartingOptionTitleY + e.Cumulative.Translation.Y, 0, this.OptionBorder.Height - 50);
+                }
+                else
+                {
+                    this.OptionTransform2.X = this.OptionTransform.X = this.StartingOptionTitleX + e.Cumulative.Translation.X;
+                    this.OptionTransform2.Y = this.OptionTransform.Y = this.StartingOptionTitleY + e.Cumulative.Translation.Y;
+                }
             };
             this.OptionTitle.ManipulationCompleted += (s, e) =>
             {

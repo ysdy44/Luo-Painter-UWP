@@ -1343,7 +1343,7 @@
 
                     <StackPanel x:Name="OptionTitle" Visibility="Collapsed" Margin="6,0" Orientation="Horizontal" Background="{ThemeResource AppBackground}">
                         <UIElement.ManipulationMode>
-                            TranslateY
+                            TranslateX, TranslateY
                         </UIElement.ManipulationMode>
                         <local:OptionIcon x:Name="OptionIcon" Width="50" Type="Saturation"/>
                         <TextBlock x:Name="OptionTextBlock" Visibility="Visible" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
