@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="EditExtensions.cs" />
+    <Compile Include="EditGroupType.cs" />
     <Compile Include="EditType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Edits.rd.xml" />

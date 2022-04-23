@@ -28,10 +28,10 @@
         Invert,
 
         // Combine
-        Exclude,
-        Intersect,
         Union,
+        Exclude,
         Xor,
+        Intersect,
 
         ExpandStroke,
     }
