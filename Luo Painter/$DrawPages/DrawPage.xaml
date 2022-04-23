@@ -960,7 +960,7 @@
                     </UIElement.KeyboardAccelerators>
                     <Button.Flyout>
                         <Flyout x:Name="MoreOptionFlyout">
-                            <StackPanel>
+                            <StackPanel Width="320" MinHeight="420" >
 
                                 <Button x:Name="MoreOptionTypeButton" Visibility="Collapsed"
                                     CommandParameter="{x:Null}">
@@ -970,27 +970,28 @@
                                     <SymbolIcon Symbol="Repair"/>
                                 </Button>
 
-                                <TextBlock x:Name="MoreOptionTextBlock" Margin="6,4" Style="{StaticResource BaseTextBlockStyle}">
+                                <TextBlock x:Name="MoreOptionTextBlock" Margin="6,4" Style="{StaticResource TitleTextBlockStyle}">
                                     More Option
                                 </TextBlock>
 
                                 <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
-                                <ItemsControl Width="220" ItemsSource="{x:Bind MoreOptionCollection}">
+                                <ItemsControl ItemsSource="{x:Bind MoreOptionCollection}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="options:OptionType">
                                             <local:OptionItem 
-                                            Height="50"        
-                                            HorizontalAlignment="Stretch"                                         
-                                            VerticalAlignment="Stretch" 
-                                            HorizontalContentAlignment="Left"
-                                            VerticalContentAlignment="Center"            
-                                            Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-                                            Style="{StaticResource TextBlockButtonStyle}"                                        
-                                            Type="{Binding}"                                           
-                                            CommandParameter="{Binding}"                                           
-                                            Command="{Binding ElementName=MoreOptionTypeButton, Path=Command, Mode=OneWay}"
-                                            />
+                                                Margin="0,1"
+                                                Padding="12,0"
+                                                Height="46"
+                                                BorderThickness="1"                                
+                                                BorderBrush="{ThemeResource AppStroke}"                              
+                                                Background="{ThemeResource SystemAltLowColor}"     
+                                                HorizontalAlignment="Stretch" 
+                                                HorizontalContentAlignment="Left"
+                                                Type="{Binding}"                                           
+                                                CommandParameter="{Binding}"                                           
+                                                Command="{Binding ElementName=MoreOptionTypeButton, Path=Command, Mode=OneWay}"
+                                                />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
