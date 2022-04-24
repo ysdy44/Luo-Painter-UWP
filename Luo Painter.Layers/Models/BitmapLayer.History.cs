@@ -33,12 +33,12 @@ namespace Luo_Painter.Layers.Models
 
             return new PropertyHistory<IDictionary<int, IBuffer>>(HistoryType.Bitmap, base.Id, undoParameter, redoParameter);
         }
-        public IHistory GetBitmapClearHistory() => new PropertyHistory<IBuffer>
+        public IHistory GetBitmapClearHistory(Color color) => new PropertyHistory<IBuffer, Color>
         (
             HistoryType.BitmapClear,
             base.Id,
             this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
-            null
+            color
         );
         public IHistory GetBitmapResetHistory() => new PropertyHistory<IBuffer>
         (
@@ -71,12 +71,13 @@ namespace Luo_Painter.Layers.Models
                         this.RenderThumbnail();
                         return true;
                     }
-                    else
+                    else if (parameter is Color color)
                     {
-                        this.Clear(Colors.Transparent);
-                        this.ClearThumbnail(Colors.Transparent);
+                        this.Clear(color);
+                        this.ClearThumbnail(color);
                         return true;
                     }
+                    else return false;
                 case HistoryType.BitmapReset:
                     if (parameter is IBuffer bitmapReset)
                     {

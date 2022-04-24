@@ -169,7 +169,7 @@ namespace Luo_Painter
                 if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                 {
                     // History
-                    int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory());
+                    int removes = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
                     bitmapLayer.Clear(Colors.Transparent);
                     bitmapLayer.ClearThumbnail(Colors.Transparent);
                     this.CanvasControl.Invalidate(); // Invalidate
