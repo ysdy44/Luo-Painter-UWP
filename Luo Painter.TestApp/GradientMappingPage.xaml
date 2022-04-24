@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    
+
     <FrameworkElement.Resources>
         <!--Flyout-->
         <Flyout x:Name="ColorFlyout" Placement="Top">
@@ -26,7 +26,7 @@
         </Flyout>
     </FrameworkElement.Resources>
 
-    
+
     <Grid>
 
         <Grid>
@@ -89,7 +89,7 @@
                    Drop to Remove ( Y less than -50 )
                 </TextBlock>
             </CommandBar.Content>
-            
+
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="N"/>
@@ -111,6 +111,30 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Reset
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ReverseButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="E"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Switch"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Reverse
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="SpaceButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="S"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="AlignCenter"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Space
                 </AppBarButton.Label>
             </AppBarButton>
 
