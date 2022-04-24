@@ -19,7 +19,7 @@ namespace Luo_Painter.Layers.Models
         readonly HashSet<int> Add1Retrieves = new HashSet<int>();
         readonly HashSet<int> Add2Retrieves = new HashSet<int>();
 
-        public bool FloodSelect(Vector2 point, Color color, float tolerance = 0.1f, bool feather = false)
+        public bool FloodSelect(Vector2 point, Color color, bool isContiguous = true, float tolerance = 0.1f, bool feather = false)
         {
             // 1. Get Position and Target
             int px = (int)point.X;
@@ -35,16 +35,24 @@ namespace Luo_Painter.Layers.Models
             // 2. Draw ChromaKeyEffect
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
-                ds.Clear(Windows.UI.Colors.Transparent);
-                ds.DrawImage(new ChromaKeyEffect
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(new AlphaMaskEffect
                 {
-                    Tolerance = tolerance,
-                    Feather = feather,
-                    InvertAlpha = true,
-                    Color = target,
-                    Source = this.SourceRenderTarget,
+                    AlphaMask = new ChromaKeyEffect
+                    {
+                        Tolerance = tolerance,
+                        Feather = feather,
+                        InvertAlpha = true,
+                        Color = target,
+                        Source = this.SourceRenderTarget,
+                    },
+                    Source = new ColorSourceEffect
+                    {
+                        Color = color
+                    },
                 });
             }
+            if (isContiguous is false) return true;
 
 
             // 3. Get Retrieves
