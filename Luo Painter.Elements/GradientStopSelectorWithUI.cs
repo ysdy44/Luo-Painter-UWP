@@ -12,6 +12,9 @@ namespace Luo_Painter.Elements
 {
     public class GradientStopSelectorWithUI : GradientStopSelector
     {
+        //@Delegate
+        public event EventHandler<double> ItemRemoved;
+
         public Button CurrentButton { get; private set; }
         public GradientStop CurrentStop { get; private set; }
         public GradientStop CurrentStopUI { get; private set; }
@@ -116,6 +119,7 @@ namespace Luo_Painter.Elements
                     if (isRemove)
                     {
                         this.SetCurrent(button);
+                        this.ItemRemoved?.Invoke(this, this.CurrentStop.Offset); // Delegate
                         this.RemoveCurrent();
                     }
                 }
@@ -133,6 +137,7 @@ namespace Luo_Painter.Elements
                         {
                             if (this.CurrentButton is null)
                                 this.SetCurrent(e.OriginalSource);
+                            this.ItemRemoved?.Invoke(this, this.CurrentStop.Offset); // Delegate
                             this.RemoveCurrent();
                             e.Handled = true;
                         }
@@ -306,7 +311,10 @@ namespace Luo_Painter.Elements
             foreach (GradientStop item in this.StopsUI)
             {
                 if (item.Offset == this.CurrentStop.Offset)
+                {
                     this.CurrentStopUI = item;
+                    break;
+                }
             }
         }
         public void SetCurrent(object sender)
@@ -321,7 +329,10 @@ namespace Luo_Painter.Elements
             foreach (GradientStop item in this.StopsUI)
             {
                 if (item.Offset == this.CurrentStop.Offset)
+                {
                     this.CurrentStopUI = item;
+                    break;
+                }
             }
         }
 
