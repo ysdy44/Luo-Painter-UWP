@@ -116,8 +116,7 @@ namespace Luo_Painter.Layers.Models
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(Colors.Transparent);
+                ds.Blend = CanvasBlend.Copy;
                 ds.DrawImage(new ScaleEffect
                 {
                     Scale = new Vector2(1f / BitmapLayer.Unit),

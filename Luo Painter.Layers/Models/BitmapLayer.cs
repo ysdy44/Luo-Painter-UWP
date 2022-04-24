@@ -147,7 +147,7 @@ namespace Luo_Painter.Layers.Models
         {
             using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
             {
-                ds.Clear(Colors.Transparent);
+                ds.Blend = CanvasBlend.Copy;
                 switch (this.ThumbnailType)
                 {
                     case ThumbnailType.Origin:

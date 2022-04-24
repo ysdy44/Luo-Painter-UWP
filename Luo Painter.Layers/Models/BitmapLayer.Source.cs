@@ -36,7 +36,6 @@ namespace Luo_Painter.Layers.Models
         public CanvasDrawingSession CreateSourceDrawingSession() => this.SourceRenderTarget.CreateDrawingSession();
         public CanvasDrawingSession CreateTempDrawingSession() => this.TempRenderTarget.CreateDrawingSession();
 
-
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
         public void CopyPixels(BitmapLayer bitmapLayer) => this.SourceRenderTarget.CopyPixelsFromBitmap(bitmapLayer.TempRenderTarget);
 
@@ -46,8 +45,7 @@ namespace Luo_Painter.Layers.Models
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(Colors.Transparent);
+                ds.Blend = CanvasBlend.Copy;
                 ds.DrawImage(image);
             }
         }
