@@ -4,7 +4,7 @@
     {
         None,
 
-        Pixel,
+        Marquee,
         Paint,
 
         Liquefy,
