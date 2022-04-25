@@ -25,6 +25,60 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter
 {
+    internal static class IconExtensions
+    {
+        public static Grid GetGrid(UIElement icon, string text) => new Grid
+        {
+            ColumnDefinitions =
+            {
+                new ColumnDefinition
+                {
+                    Width = GridLength.Auto
+                },
+                new ColumnDefinition
+                {
+                    Width =new GridLength(12)
+                },
+                new ColumnDefinition
+                {
+                    Width =new GridLength(1, GridUnitType.Star)
+                },
+            },
+            Children =
+            {
+                icon,
+                text.GetTextBlock().SetColumn(2)
+            }
+        };
+        public static StackPanel GetStackPanel(UIElement icon, string text) => new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Children =
+            {
+                icon,
+                new ContentControl
+                {
+                    Width = 12
+                },
+                text.GetTextBlock()
+            }
+        };
+        public static TextBlock GetTextBlock(this string text)
+        {
+            return new TextBlock
+            {
+                Text = text,
+                VerticalAlignment = VerticalAlignment.Center,
+                TextTrimming = TextTrimming.CharacterEllipsis,
+            };
+        }
+        public static FrameworkElement SetColumn(this FrameworkElement element, int value)
+        {
+            Grid.SetColumn(element, value);
+            return element;
+        }
+    }
+
     internal sealed class ToolIcon : ContentControl
     {
         #region DependencyProperty
@@ -85,27 +139,12 @@ namespace Luo_Painter
 
             if (e.NewValue is BlendEffectMode value)
             {
-                control.Content = new StackPanel
+                control.Content = IconExtensions.GetStackPanel(new ContentControl
                 {
-                    Orientation = Orientation.Horizontal,
-                    Children =
-                    {
-                        new ContentControl
-                        {
-                            Content = value,
-                            Template = value.GetTemplate(out ResourceDictionary resource, out string title),
-                            Resources = resource,
-                        },
-                        new ContentControl
-                        {
-                            Width = 12
-                        },
-                        new TextBlock
-                        {
-                            Text = title
-                        }
-                    }
-                };
+                    Content = value,
+                    Template = value.GetTemplate(out ResourceDictionary resource, out string title),
+                    Resources = resource,
+                }, title);
             }
         }));
 
@@ -173,27 +212,12 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Content = new StackPanel
+            base.Content = IconExtensions.GetStackPanel(new ContentControl
             {
-                Orientation = Orientation.Horizontal,
-                Children =
-                {
-                    new ContentControl
-                    {
-                        Content = value,
-                        Template = value.GetTemplate(out ResourceDictionary resource),
-                        Resources = resource,
-                    },
-                    new ContentControl
-                    {
-                        Width = 12
-                    },
-                    new TextBlock
-                    {
-                        Text = value.ToString()
-                    }
-                }
-            };
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            }, value.ToString());
         }
     }
 
@@ -215,6 +239,7 @@ namespace Luo_Painter
 
             if (e.NewValue is EditType value)
             {
+                control.CommandParameter = value;
                 control.Icon = new ContentControl
                 {
                     Content = value,
@@ -222,24 +247,7 @@ namespace Luo_Painter
                     Resources = resource,
                 };
                 control.Icon.GoToState(control.IsEnabled);
-
-
-                control.Content = new StackPanel
-                {
-                    Orientation = Orientation.Horizontal,
-                    Children =
-                    {
-                        control.Icon,
-                        new ContentControl
-                        {
-                            Width = 12
-                        },
-                        new TextBlock
-                        {
-                            Text = value.ToString()
-                        }
-                    }
-                };
+                control.Content = IconExtensions.GetGrid(control.Icon, value.ToString());
             }
         }));
 
