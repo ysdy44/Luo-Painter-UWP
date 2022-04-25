@@ -74,8 +74,8 @@ namespace Luo_Painter.Elements
                 // Remove
                 if (base.Count > 2)
                 {
-                    double staringY = button.RenderTransformOrigin.Y;
-                    double y = staringY + e.Cumulative.Translation.Y;
+                    double startingY = button.RenderTransformOrigin.Y;
+                    double y = startingY + e.Cumulative.Translation.Y;
                     bool isRemove = y < -50;
 
                     if (isRemove)
@@ -92,8 +92,8 @@ namespace Luo_Painter.Elements
                     }
                 }
 
-                double staringX = button.RenderTransformOrigin.X;
-                double x = staringX + e.Cumulative.Translation.X;
+                double startingX = button.RenderTransformOrigin.X;
+                double x = startingX + e.Cumulative.Translation.X;
                 double width = base.ActualWidth;
                 double offsetX = Math.Clamp(x / width, 0, 1);
                 Canvas.SetLeft(button, offsetX * width - 25);
@@ -111,8 +111,8 @@ namespace Luo_Painter.Elements
                 base.IsHitTestVisible = true;
                 if (base.Count > 2)
                 {
-                    double staringY = button.RenderTransformOrigin.Y;
-                    double y = staringY + e.Cumulative.Translation.Y;
+                    double startingY = button.RenderTransformOrigin.Y;
+                    double y = startingY + e.Cumulative.Translation.Y;
                     double height = base.ActualHeight;
                     bool isRemove = y < -height;
 
