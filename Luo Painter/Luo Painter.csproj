@@ -126,6 +126,7 @@
     <Compile Include="%24DrawPages\DrawPage.Option.GradientMapping.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.RippleEffect.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.Transform.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Storyboard.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tip.cs" />
