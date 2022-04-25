@@ -390,6 +390,7 @@ namespace Luo_Painter
             this.ConstructTools();
             this.ConstructBlends();
             this.ConstructPaint();
+            this.ConstructMarquee();
 
             this.ConstructHistory();
 

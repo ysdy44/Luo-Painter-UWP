@@ -80,7 +80,8 @@ namespace Luo_Painter
         }
         public void Draw(CanvasDrawingSession ds, CanvasTransformer transformer, IGraphicsEffectSource source)
         {
-            ds.Units = CanvasUnits.Pixels;
+            //@DPI 
+            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
             ds.DrawImage(new InvertEffect
             {
                 Source = new LuminanceToAlphaEffect//Alpha
@@ -123,7 +124,17 @@ namespace Luo_Painter
                 this.DottedLine = new DottedLine(sender);
                 this.Marquee = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
             };
-            this.CanvasAnimatedControl.Draw += (sender, args) => this.DottedLine.Draw(args.DrawingSession, this.Transformer, this.Marquee.Source);
+            this.CanvasAnimatedControl.Draw += (sender, args) =>
+            {
+                this.DottedLine.Draw(args.DrawingSession, this.Transformer, this.Marquee.Source);
+
+                if (this.MarqueeToolType == MarqueeToolType.None) return;
+
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+                args.DrawingSession.Blend = CanvasBlend.Copy;
+                args.DrawingSession.DrawMarqueeTool(sender, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+            };
             this.CanvasAnimatedControl.Update += (sender, args) => this.DottedLine.Update();
 
             this.CanvasControl.SizeChanged += (s, e) =>
