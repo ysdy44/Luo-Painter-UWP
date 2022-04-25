@@ -16,10 +16,6 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
-    internal class LayerCommand : RelayCommand<ILayer>
-    {
-    }
-
     public sealed partial class DrawPage : Page
     {
 

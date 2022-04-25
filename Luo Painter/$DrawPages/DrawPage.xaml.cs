@@ -6,6 +6,7 @@ using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
+using Luo_Painter.Shaders;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -270,8 +272,11 @@ namespace Luo_Painter
 
     internal sealed class EditGrouping : Grouping<EditGroupType, EditType> { }
 
+
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
     internal class EditTypeCommand : RelayCommand<EditType> { }
+    internal class LayerCommand : RelayCommand<ILayer> { }
+
 
     internal sealed class RadianRange
     {
@@ -336,9 +341,26 @@ namespace Luo_Painter
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
         BitmapLayer BitmapLayer { get; set; }
+        BitmapLayer Clipboard { get; set; }
+        BitmapLayer Marquee { get; set; }
         OptionType OptionType { get; set; } = OptionType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
         ToolGroupType ToolGroupType { get; set; } = ToolGroupType.Paint;
+
+        byte[] LiquefactionShaderCodeBytes;
+        byte[] FreeTransformShaderCodeBytes;
+        byte[] GradientMappingShaderCodeBytes;
+        byte[] RippleEffectShaderCodeBytes;
+        byte[] DifferenceShaderCodeBytes;
+
+        private async Task CreateResourcesAsync()
+        {
+            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
+            this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
+            this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
+            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
+            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
+        }
 
         public DrawPage()
         {

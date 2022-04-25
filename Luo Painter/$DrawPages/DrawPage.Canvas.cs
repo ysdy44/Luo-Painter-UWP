@@ -115,13 +115,6 @@ namespace Luo_Painter
 
         Mesh Mesh;
         DottedLine DottedLine;
-        BitmapLayer Marquee;
-
-        byte[] LiquefactionShaderCodeBytes;
-        byte[] FreeTransformShaderCodeBytes;
-        byte[] GradientMappingShaderCodeBytes;
-        byte[] RippleEffectShaderCodeBytes;
-        byte[] DifferenceShaderCodeBytes;
 
         private void ConstructCanvas()
         {
@@ -148,6 +141,7 @@ namespace Luo_Painter
 
                 this.Mesh = new Mesh(sender, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
                 this.GradientMesh = new GradientMesh(sender);
+                this.Clipboard = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
 
                 // Layer
                 BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
@@ -194,15 +188,6 @@ namespace Luo_Painter
                     }
                 }
             };
-        }
-
-        private async Task CreateResourcesAsync()
-        {
-            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
-            this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
-            this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
-            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
-            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
         }
 
         private void ConstructOperator()
