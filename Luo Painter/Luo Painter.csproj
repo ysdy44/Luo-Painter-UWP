@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Dialog.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Edit.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.cs" />
