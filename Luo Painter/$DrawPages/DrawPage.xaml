@@ -210,29 +210,6 @@
             </CollectionViewSource.Source>
         </CollectionViewSource>
 
-        <local:EditGrouping x:Name="EditCollection0" Key="Edit">
-            <edits:EditType>Cut</edits:EditType>
-            <edits:EditType>Duplicate</edits:EditType>
-            <edits:EditType>Copy</edits:EditType>
-            <edits:EditType>Paste</edits:EditType>
-            <edits:EditType>Clear</edits:EditType>
-            <edits:EditType>Extract</edits:EditType>
-            <edits:EditType>Merge</edits:EditType>
-            <edits:EditType>Group</edits:EditType>
-            <edits:EditType>Ungroup</edits:EditType>
-            <edits:EditType>Release</edits:EditType>
-        </local:EditGrouping>
-        <local:EditGrouping x:Name="EditCollection1" Key="Select">
-            <edits:EditType>All</edits:EditType>
-            <edits:EditType>Deselect</edits:EditType>
-            <edits:EditType>Invert</edits:EditType>
-            <edits:EditType>Union</edits:EditType>
-            <edits:EditType>Exclude</edits:EditType>
-            <edits:EditType>Xor</edits:EditType>
-            <edits:EditType>Intersect</edits:EditType>
-            <edits:EditType>ExpandStroke</edits:EditType>
-        </local:EditGrouping>
-
         <local:OptionGroupingList x:Name="OptionCollection">
             <local:OptionGrouping Key="Adjustment">
                 <options:OptionType>Gray</options:OptionType>
@@ -521,11 +498,11 @@
                 <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                 <ListView x:Name="BlendModeListView" 
-                          IsItemClickEnabled="True"                      
-                          CornerRadius="4"                              
-                          BorderThickness="1"                                
-                          BorderBrush="{ThemeResource AppStroke}"                              
-                          Background="{ThemeResource SystemAltLowColor}"                                
+                          IsItemClickEnabled="True"                    
+                          CornerRadius="4"                            
+                          BorderThickness="1"                              
+                          BorderBrush="{ThemeResource AppStroke}"                            
+                          Background="{ThemeResource SystemAltLowColor}"                              
                           ItemsSource="{x:Bind BlendCollection}" >
 
                     <ItemsControl.ItemContainerStyle>
@@ -596,13 +573,13 @@
                     <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                     <ListView x:Name="PaintBlendModeListView" 
-                              CornerRadius="4"                             
-                              BorderThickness="1"                               
-                              BorderBrush="{ThemeResource AppStroke}"                               
-                              Background="{ThemeResource SystemAltLowColor}"      
-                              IsItemClickEnabled="True"                   
-                              SelectionMode="Single"                     
-                              ScrollViewer.VerticalScrollBarVisibility="Hidden"                          
+                              CornerRadius="4"                           
+                              BorderThickness="1"                             
+                              BorderBrush="{ThemeResource AppStroke}"                             
+                              Background="{ThemeResource SystemAltLowColor}"    
+                              IsItemClickEnabled="True"                 
+                              SelectionMode="Single"                   
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"                        
                               ItemsSource="{x:Bind BlendCollection}" >
 
                         <ItemsControl.ItemContainerStyle>
@@ -657,7 +634,7 @@
                         <Setter Target="OptionPanel.HorizontalAlignment" Value="Stretch"/>
                         <!--Option-->
                         <Setter Target= "EditsCanvas.Orientation" Value= "Vertical" />
-                        
+
                         <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
 
                         <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
@@ -734,8 +711,8 @@
 
 
         <!--Canvas-->
-        <canvas:CanvasVirtualControl x:Name="CanvasControl" />
-        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" />
+        <canvas:CanvasVirtualControl x:Name="CanvasControl" FlowDirection="LeftToRight" />
+        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" FlowDirection="LeftToRight" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" />
 
 
         <!--Head-->
@@ -959,14 +936,14 @@
                                 </Grid>
                                 <ColorPicker x:Name="ColorPicker" 
                                              Grid.Row="2"
-                                             Color="Black"  
+                                             Color="Black" 
                                              IsMoreButtonVisible="False" 
                                              IsHexInputVisible="False" 
                                              IsColorSpectrumVisible="True"
                                              IsColorSliderVisible="True"
                                              IsColorPreviewVisible="False"
-                                             IsColorChannelTextInputVisible="False"  
-                                             IsAlphaTextInputVisible="False"  
+                                             IsColorChannelTextInputVisible="False" 
+                                             IsAlphaTextInputVisible="False" 
                                              IsAlphaSliderVisible="False" 
                                              IsAlphaEnabled="False" 
                                              ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"
@@ -1056,15 +1033,15 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <local:OptionButton 
-                                                        Padding="0"        
-                                                        HorizontalAlignment="Stretch"                                         
+                                                        Padding="0"      
+                                                        HorizontalAlignment="Stretch"                                       
                                                         VerticalAlignment="Stretch" 
                                                         HorizontalContentAlignment="Stretch"
-                                                        VerticalContentAlignment="Stretch"            
+                                                        VerticalContentAlignment="Stretch"          
                                                         Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-                                                        Style="{StaticResource TextBlockButtonStyle}"                                        
-                                                        Type="{Binding}"                                           
-                                                        CommandParameter="{Binding}"                                           
+                                                        Style="{StaticResource TextBlockButtonStyle}"                                      
+                                                        Type="{Binding}"                                         
+                                                        CommandParameter="{Binding}"                                         
                                                         Command="{Binding ElementName=OptionTypeButton, Path=Command, Mode=OneWay}"
                                                         >
                                                             <ContentControl.ContentTemplate>
@@ -1120,13 +1097,13 @@
                                                 Margin="0,1"
                                                 Padding="12,0"
                                                 Height="46"
-                                                BorderThickness="1"                                
-                                                BorderBrush="{ThemeResource AppStroke}"                              
-                                                Background="{ThemeResource SystemAltLowColor}"     
+                                                BorderThickness="1"                              
+                                                BorderBrush="{ThemeResource AppStroke}"                            
+                                                Background="{ThemeResource SystemAltLowColor}"   
                                                 HorizontalAlignment="Stretch" 
                                                 HorizontalContentAlignment="Left"
-                                                Type="{Binding}"                                           
-                                                CommandParameter="{Binding}"                                           
+                                                Type="{Binding}"                                         
+                                                CommandParameter="{Binding}"                                         
                                                 Command="{Binding ElementName=MoreOptionTypeButton, Path=Command, Mode=OneWay}"
                                                 />
                                         </DataTemplate>
@@ -1154,7 +1131,7 @@
                 <TranslateTransform x:Name="FootTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <Grid x:Name="PaintBrushPanel2" Margin="70,0" MaxWidth="720" Padding="8,0">
+            <Grid x:Name="PaintBrushPanel2" Visibility="Collapsed" Margin="70,0" MaxWidth="720" Padding="8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="12"/>
@@ -1164,6 +1141,24 @@
                 </Slider>
                 <Slider x:Name="PaintOpacitySlider2" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
                 </Slider>
+            </Grid>
+            <Grid x:Name="MarqueePanel2" Visibility="Collapsed" Margin="70,0" MaxWidth="720" Padding="8,0">
+                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0">
+                    <FontIcon Glyph="&#xE002;" FontSize="14" FontFamily="Segoe UI Symbol" />
+                    <Canvas Width="25" Height="25" >
+                        <FontIcon Canvas.Left="-1" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="7" Canvas.Top="8" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                    </Canvas>
+                    <Canvas Width="25" Height="25" >
+                        <FontIcon Canvas.Top="-6" Glyph="&#x259B;" FontSize="18" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="7" Canvas.Top="7" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                    </Canvas>
+                    <Canvas Width="24" Height="24" >
+                        <FontIcon Canvas.Left="0" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE002;" FontSize="8" FontFamily="Segoe UI Symbol" />
+                    </Canvas>
+                </ListBox>
             </Grid>
 
             <Button x:Name="LayerButton" HorizontalAlignment="Right" Background="{ThemeResource AppBackgroundLight}" >
@@ -1222,10 +1217,10 @@
                       Margin="0,50,0,0"
                       Width="70"
                       HorizontalAlignment="Right"
-                      VerticalAlignment="Stretch"     
+                      VerticalAlignment="Stretch"   
                       
                       IsItemClickEnabled="True" 
-                      SelectionMode="Single"   
+                      SelectionMode="Single" 
                       
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       ItemsSource="{x:Bind ToolCollectionViewSource.View}" >
@@ -1242,12 +1237,12 @@
                             ItemWidth="70"
                             ItemHeight="50"
                    
-                            Orientation="Horizontal"    
+                            Orientation="Horizontal"  
                             MaximumRowsOrColumns="3" 
                     
-                            AreStickyGroupHeadersEnabled="False"     
-                            GroupHeaderPlacement="Top"            
-                            GroupPadding="0"      
+                            AreStickyGroupHeadersEnabled="False"   
+                            GroupHeaderPlacement="Top"          
+                            GroupPadding="0"    
                             />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
@@ -1319,21 +1314,22 @@
                 <TranslateTransform x:Name="LayerTransform" X="140"/>
             </UIElement.RenderTransform>
 
-            <ListView x:Name="LayerListView"  
+            <ListView x:Name="LayerListView" 
                       Margin="0,50"
                       Width="70"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Stretch"
                       
                       IsItemClickEnabled="True"
-                      SelectionMode="Extended"     
+                      SelectionMode="Extended"   
               
                       AllowDrop="True" 
-                      CanReorderItems="True"  
-                      ReorderMode="Enabled"     
+                      CanDragItems="True"
+                      CanReorderItems="True" 
+                      ReorderMode="Enabled"   
            
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      ItemsSource="{x:Bind ObservableCollection, Mode=OneTime}"  
+                      ItemsSource="{x:Bind ObservableCollection, Mode=OneTime}" 
                       >
 
                 <ItemsControl.ItemsPanel>
@@ -1591,7 +1587,7 @@
                         <GradientStop Color="#46A7F6" Offset="0.25"/>
                         <GradientStop Color="#784BB0" Offset="0.375"/>
                         <GradientStop Color="#A336B5" Offset="0.5"/>
-                        <GradientStop Color="#EB2E6E"  Offset="0.625"/>
+                        <GradientStop Color="#EB2E6E" Offset="0.625"/>
                         <GradientStop Color="#EC5449" Offset="0.75"/>
                         <GradientStop Color="#FFA827" Offset="0.875"/>
                         <GradientStop Color="#FFCE3B" Offset="1"/>
@@ -1879,7 +1875,7 @@
                 <TextBlock x:Name="TipTitleTextBlock" FontSize="16" HorizontalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
                     <!--Title-->
                 </TextBlock>
-                <TextBlock x:Name="TipSubtitleTextBlock" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"  Foreground="{ThemeResource AppForeground}" >
+                <TextBlock x:Name="TipSubtitleTextBlock" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
                     <!--Subtitle-->
                 </TextBlock>
             </StackPanel>
