@@ -4,10 +4,10 @@ using Windows.UI.Xaml.Hosting;
 
 namespace Luo_Painter.TestApp
 {
-    public sealed partial class SkyHeaderPage : Page
+    public sealed partial class ShyHeaderPage : Page
     {
         double StartingVerticalOffset;
-        public SkyHeaderPage()
+        public ShyHeaderPage()
         {
             this.InitializeComponent();
             base.Loaded += (s, e) =>
