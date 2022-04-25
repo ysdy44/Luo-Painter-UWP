@@ -129,4 +129,30 @@ namespace Luo_Painter
             }
         }
     }
+
+    public sealed partial class DrawPage : Page
+    {
+        EditTypeCommand EditTypeCommand { get; } = new EditTypeCommand();
+
+        private void ConstructEdits()
+        {
+            this.EditsCanvas.Resizing();
+
+            this.EditButton.Click += (s, e) =>
+            {
+                switch (this.EditsCanvas.Orientation)
+                {
+                    case Orientation.Vertical: this.EditFlyout.ShowAt(this.OptionButton); break;
+                    case Orientation.Horizontal: this.EditFlyout.ShowAt(this.EditButton); break;
+                    default: break;
+                }
+            };
+
+            this.EditTypeCommand.Click += (s, type) =>
+            {
+                this.EditFlyout.Hide();
+            };
+        }
+
+    }
 }

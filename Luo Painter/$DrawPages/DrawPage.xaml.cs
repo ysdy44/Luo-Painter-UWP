@@ -379,6 +379,8 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
+            this.ConstructEdits();
+
             this.ConstructOptions();
             this.ConstructOption();
             this.ConstructTransform();

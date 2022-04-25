@@ -293,6 +293,116 @@
         </local:BlendGrouping>
 
         <!--Flyout-->
+        <Flyout x:Name= "EditFlyout" Placement= "Bottom" >
+            <local:EditsCanvas x:Name= "EditsCanvas" Orientation= "Horizontal" >
+                <FrameworkElement.Resources >
+                    <Style TargetType= "local:EditItem" >
+                        <Setter Property= "Margin" Value= "0" />
+                        <Setter Property= "Padding" Value= "12,0" />
+                        <Setter Property= "Height" Value= "40" />
+                        <Setter Property= "BorderThickness" Value= "1" />
+                        <Setter Property= "BorderBrush" Value= "{ThemeResource AppStroke}" />
+                        <Setter Property= "Background" Value= "{ThemeResource SystemAltLowColor}" />
+                        <Setter Property= "HorizontalAlignment" Value= "Stretch" />
+                        <Setter Property= "HorizontalContentAlignment" Value= "Left" />
+                    </Style >
+                </FrameworkElement.Resources >
+
+                <TextBlock x:Name= "EditEditTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Edit
+                </TextBlock >
+                <TextBlock x:Name= "EditGroupTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Group
+                </TextBlock >
+                <TextBlock x:Name= "EditSelectTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Select
+                </TextBlock >
+                <TextBlock x:Name= "EditCombineTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Combine
+                </TextBlock >
+
+
+                <local:EditItem Type = "Cut" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "X" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Duplicate" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "J" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Copy" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "C" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Paste" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "V" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Clear" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Key= "Back" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+                <local:EditItem Type = "Extract" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Merge" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+
+
+                <local:EditItem Type = "Group" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "R" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Ungroup" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "U" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+                <local:EditItem Type = "Release" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "R" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+
+                <local:EditItem Type = "All" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "A" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Deselect" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "D" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Invert" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "I" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+
+                <local:EditItem Type = "Union" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Exclude" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Xor" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Intersect" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+
+                <local:EditItem Type = "ExpandStroke" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+
+            </local:EditsCanvas>
+        </Flyout>
         <Flyout x:Name="LayerFlyout" Placement="Left">
             <StackPanel Width="320">
 
@@ -546,6 +656,8 @@
                         <Setter Target="OptionPanel.Margin" Value="0"/>
                         <Setter Target="OptionPanel.HorizontalAlignment" Value="Stretch"/>
                         <!--Option-->
+                        <Setter Target= "EditsCanvas.Orientation" Value= "Vertical" />
+
                         <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
 
                         <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
@@ -880,83 +992,20 @@
             </StackPanel>
 
             <!--Option-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Background="{ThemeResource AppBackgroundLight}" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="G"/>
-                    </UIElement.KeyboardAccelerators>
-                    <Button.Flyout>
-                        <Flyout x:Name="EditFlyout">
-                            <StackPanel Width="320" MinHeight="420" >
-
-                                <Button x:Name="EditTypeButton" Visibility="Collapsed" 
-                                        CommandParameter="{x:Null}">
-                                    <ButtonBase.Command>
-                                        <local:EditTypeCommand x:Name="EditTypeCommand"/>
-                                    </ButtonBase.Command>
-                                    <SymbolIcon Symbol="Repair"/>
-                                </Button>
-
-                                <TextBlock x:Name="EditTextBlock" Margin="6,4" Style="{StaticResource TitleTextBlockStyle}">
-                                    Edit
-                                </TextBlock>
-
-                                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <ItemsControl Width="156" ItemsSource="{x:Bind EditCollection0}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="edits:EditType">
-                                                <local:EditItem 
-                                                    Margin="0,1"
-                                                    Padding="12,0"
-                                                    Height="40"
-                                                    BorderThickness="1"                                
-                                                    BorderBrush="{ThemeResource AppStroke}"                              
-                                                    Background="{ThemeResource SystemAltLowColor}"     
-                                                    HorizontalAlignment="Stretch" 
-                                                    HorizontalContentAlignment="Left"
-                                                    Type="{Binding}"                                           
-                                                    CommandParameter="{Binding}"                                           
-                                                    Command="{Binding ElementName=EditTypeButton, Path=Command, Mode=OneWay}"
-                                                    />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <ContentControl Width="8" />
-                                    <ItemsControl Width="156" ItemsSource="{x:Bind EditCollection1}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="edits:EditType">
-                                                <local:EditItem 
-                                                    Margin="0,1"
-                                                    Padding="12,0"
-                                                    Height="40"
-                                                    BorderThickness="1"                                
-                                                    BorderBrush="{ThemeResource AppStroke}"                              
-                                                    Background="{ThemeResource SystemAltLowColor}"     
-                                                    HorizontalAlignment="Stretch" 
-                                                    HorizontalContentAlignment="Left"
-                                                    Type="{Binding}"                                           
-                                                    CommandParameter="{Binding}"                                           
-                                                    Command="{Binding ElementName=EditTypeButton, Path=Command, Mode=OneWay}"
-                                                    />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                    <Viewbox Width="22" Height="22">
-                        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <PathIcon.Data>
+            <StackPanel Orientation= "Horizontal" HorizontalAlignment= "Center" >
+                <Button x:Name= "EditButton" Background= "{ThemeResource AppBackgroundLight}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "None" Key= "G" />
+                    </UIElement.KeyboardAccelerators >
+                    <Viewbox Width= "22" Height= "22" >
+                        <PathIcon HorizontalAlignment= "Center" VerticalAlignment= "Center" >
+                            <PathIcon.Data >
                                 M2.913,27.807l2.512,0l0,1.713l-2.44,0c-0.985,0 -1.785,-0.8 -1.785,-1.785l0,-2.44l1.713,0l0,2.512Zm11.419,1.713l-6.851,0l0,-1.713l6.851,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Zm4.496,0l-2.44,0l0,-1.713l2.512,0l0,-2.512l1.713,0l0,2.44c0,0.985 -0.8,1.785 -1.785,1.785Zm1.785,-6.281l-1.713,0l0,-6.851l1.713,0l0,6.851Zm-26.607,0l-1.713,0l0,-6.851l1.713,0l0,6.851Zm26.607,-8.907l-1.713,0l0,-6.851l1.713,0l0,6.851Zm-26.607,0l-1.713,0l0,-6.851l1.713,0l0,6.851Zm26.607,-8.907l-1.713,0l0,-2.512l-2.512,0l0,-1.713l2.44,0c0.985,0 1.785,0.8 1.785,1.785l0,2.44Zm-24.095,-2.512l-2.512,0l0,2.512l-1.713,0l0,-2.44c0,-0.985 0.8,-1.785 1.785,-1.785l2.44,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Z
                             </PathIcon.Data>
                         </PathIcon>
                     </Viewbox>
                 </Button>
-                <Button Background="{ThemeResource AppBackgroundLight}" >
+                <Button x:Name= "OptionButton" Background="{ThemeResource AppBackgroundLight}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="W"/>
                     </UIElement.KeyboardAccelerators>
