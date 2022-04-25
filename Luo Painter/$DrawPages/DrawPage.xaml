@@ -657,7 +657,7 @@
                         <Setter Target="OptionPanel.HorizontalAlignment" Value="Stretch"/>
                         <!--Option-->
                         <Setter Target= "EditsCanvas.Orientation" Value= "Vertical" />
-
+                        
                         <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
 
                         <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
@@ -1539,7 +1539,7 @@
                 </Slider.Header>
             </Slider>
 
-            <Slider x:Name="BrightnessSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
+            <Slider x:Name="BrightnessSlider" Visibility="Collapsed" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
                 <Slider.Background>
                     <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="Black" Offset="0"/>
@@ -1561,7 +1561,7 @@
                 </Slider.Header>
             </Slider>
 
-            <Slider x:Name="SaturationSlider" Visibility="Collapsed" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+            <Slider x:Name="SaturationSlider" Visibility="Collapsed" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
                 <Slider.Background>
                     <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="Gray" Offset="0"/>
