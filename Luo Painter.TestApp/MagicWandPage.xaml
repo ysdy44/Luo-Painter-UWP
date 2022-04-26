@@ -44,7 +44,20 @@
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button x:Name="selectPicture" Content="选择图片" />
+<<<<<<< Updated upstream
             <Slider x:Name="thresholdSlider" Value="20" Width="200"  StepFrequency="0.1"></Slider>
+=======
+            <Slider Header="容差："
+                x:Name="thresholdSlider"
+                Width="200"
+                StepFrequency="0.1"
+                Value="20" />
+            <Slider Header="蚂蚁线厚度："
+                x:Name="dottedLineThick"
+                Width="200"
+                StepFrequency="1"
+                Value="1" />
+>>>>>>> Stashed changes
         </StackPanel>
     </Grid>
 </Page>

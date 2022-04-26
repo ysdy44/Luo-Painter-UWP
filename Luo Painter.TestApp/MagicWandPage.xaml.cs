@@ -50,6 +50,15 @@ namespace Luo_Painter.TestApp
         float timeCount = 0;
         int scale = 5;
 
+<<<<<<< Updated upstream
+=======
+        Vector2 offset = new Vector2();
+        float scale = 1f;
+        float radin = 0f;
+        //蚂蚁线厚度
+        float lineThick = 1;
+
+>>>>>>> Stashed changes
         public MagicWandPage()
         {
             this.InitializeComponent();
@@ -67,8 +76,38 @@ namespace Luo_Painter.TestApp
                 {
                     if (effectImage == null)
                         return;
+<<<<<<< Updated upstream
                     timeCount++;
                     se = new ScaleEffect()
+=======
+                    var m32 = new Matrix3x2();
+                    m32 = Matrix3x2.CreateScale(scale) * Matrix3x2.CreateRotation(radin, new Vector2(0.5f, 0.5f)) * Matrix3x2.CreateTranslation(offset);
+
+                    var crt = new CanvasRenderTarget(effectCanvas, new Size(20, 20));
+                    using(var ds = crt.CreateDrawingSession())
+                    {
+                        for (int x = 0; x < 2; x++)
+                        {
+                            for (int y = 0; y < 2; y++)
+                            {
+                                Color c = (x + y) % 2 == 0 ? Color.FromArgb(255, 128, 128, 128) : Color.FromArgb(255, 200, 200, 200);
+                                var dx = x * 10;
+                                var dy = y * 10;
+                                ds.FillRectangle(new Rect(dx, dy, 10, 10), c);
+                            }
+                        }
+                    }
+
+                    BorderEffect be = new BorderEffect()
+                    {
+                        Source = crt,
+                         ExtendX = CanvasEdgeBehavior.Wrap,
+                          ExtendY = CanvasEdgeBehavior.Wrap,
+                    };
+
+
+                    Transform2DEffect te = new Transform2DEffect()
+>>>>>>> Stashed changes
                     {
                         Source = effectImage,
                         Scale = new Vector2(scale),
@@ -84,12 +123,18 @@ namespace Luo_Painter.TestApp
                         Source1 = crt,
                         Source1Interpolation = CanvasImageInterpolation.NearestNeighbor,
                         Properties = {
+<<<<<<< Updated upstream
                             ["time"] =timeCount*1.5f,
                             ["lineWidth"]=10f,
+=======
+                            ["time"] =(float)e.Timing.TotalTime.TotalSeconds,
+                            ["lineWidth"]= lineThick ,
+>>>>>>> Stashed changes
                             ["color1"]= new Vector3(0),
                             ["color2"]=new Vector3(1),
                             //
                             ["lineGap"]=100f,
+<<<<<<< Updated upstream
                             ["lineSpeed"] =100f,
                         }
                     };
@@ -97,6 +142,13 @@ namespace Luo_Painter.TestApp
                     var bounds = se.GetBounds(effectCanvas);
 
                     effectCanvas.Invalidate();
+=======
+                            ["lineSpeed"] =1f,
+                            }
+                    };
+                    e.DrawingSession.DrawImage(be);
+                    e.DrawingSession.DrawImage(pse);
+>>>>>>> Stashed changes
                 };
 
                 timer.Start();
@@ -109,6 +161,20 @@ namespace Luo_Painter.TestApp
             }
 
 
+<<<<<<< Updated upstream
+=======
+                var m32 = new Matrix3x2();
+                m32 = Matrix3x2.CreateScale(scale) * Matrix3x2.CreateRotation(radin, new Vector2(0.5f, 0.5f)) * Matrix3x2.CreateTranslation(offset);
+                point = Vector2.Transform(point.ToVector2(), m32).ToPoint();
+                if (point.X < 0 || point.Y < 0 || point.X > imageWidth || point.Y > imageHeight)
+                    return;
+                MagicWand(point);
+                effectImage = CanvasBitmap.CreateFromColors(effectCanvas, effectColors, (int)originalImage.Size.Width, (int)originalImage.Size.Height, 96f);
+                effectCanvas.Invalidate();
+            };
+            originalCanvas.Tapped += CanvasTapped;
+            effectCanvas.Tapped += CanvasTapped;
+>>>>>>> Stashed changes
 
             selectPicture.Click += async (s, e) =>
             {
@@ -137,6 +203,7 @@ namespace Luo_Painter.TestApp
                 e.DrawingSession.DrawImage(originalImage);
             };
 
+<<<<<<< Updated upstream
             effectCanvas.Draw += (s, e) =>
             {
                 if (pse == null)
@@ -151,6 +218,17 @@ namespace Luo_Painter.TestApp
                  Vector3 v3 = new Vector3((float)point.X - 15f + can.ActualOffset.X, (float)point.Y - 15f + can.ActualOffset.Y, 0);
                  e1.Translation = e2.Translation = v3;
              };
+=======
+            originalCanvas.ManipulationDelta += Detal;
+            effectCanvas.ManipulationDelta += Detal;
+
+            dottedLineThick.ValueChanged += (s, e) =>
+            {
+                lineThick = (float)dottedLineThick.Value;
+            };
+        }
+
+>>>>>>> Stashed changes
 
             originalCanvas.PointerMoved += func;
             effectCanvas.PointerMoved += func;
@@ -168,6 +246,7 @@ namespace Luo_Painter.TestApp
                 var tb = threshold * 255;
                 var ta = threshold * 255;
 
+<<<<<<< Updated upstream
                 Pos cp = new Pos((int)Math.Round(point.X), (int)Math.Round(point.Y));
                 Color selectColor = originalColors[cp.X + cp.Y * imageWidth];
 
@@ -178,6 +257,33 @@ namespace Luo_Painter.TestApp
                 List<Pos> retrieves = new List<Pos>();
                 retrieves.Add(cp);
                 while (retrieves.Count > 0)
+=======
+            using (var ds = colorMatchTarget.CreateDrawingSession())
+            {
+                var colorMatchEffect = new PixelShaderEffect(colorMatchCode)
+                {
+                    Source1 = originalImage,
+                    Properties = {
+                    ["threshold"] = threshold,
+                    ["matchColor"] = new Vector4((float)selectColor.R/255,(float)selectColor.G/255,(float)selectColor.B/255,(float)selectColor.A/255)
+                }
+                };
+                ds.Clear(Colors.Transparent);
+                ds.DrawImage(colorMatchEffect);
+            }
+            var tempColor = colorMatchTarget.GetPixelColors();
+            tempDir = new Dictionary<Pos, int>();
+            tempDir.Add(cp, 1);
+            List<Pos> retrieves = new List<Pos>();
+            retrieves.Add(cp);
+            while (retrieves.Count > 0)
+            {
+                var p = retrieves[0];
+                retrieves.RemoveAt(0);
+                var index = p.X + p.Y * imageWidth;
+                Color currentColor = tempColor[index];
+                if (currentColor.A > 0)
+>>>>>>> Stashed changes
                 {
                     var p = retrieves[0];
                     retrieves.RemoveAt(0);
