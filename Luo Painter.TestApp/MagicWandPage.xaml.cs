@@ -40,18 +40,21 @@ namespace Luo_Painter.TestApp
 
         byte[] dottedLineCode;
         PixelShaderEffect pse;
-        CanvasRenderTarget crt;
+
         /// <summary>
         /// 用于记录已近检索的像素
         /// </summary>
         Dictionary<Pos, int> tempDir = new Dictionary<Pos, int>();
-        DispatcherTimer timer = new DispatcherTimer();
+
 
         Vector2 offset = new Vector2();
         float scale = 1f;
         float radin = 0f;
         //蚂蚁线厚度
         float lineThick = 1;
+        private CanvasRenderTarget effectTarget;
+        private CanvasRenderTarget colorMatchTarget;
+        private byte[] colorMatchCode;
 
         public MagicWandPage()
         {
@@ -61,56 +64,14 @@ namespace Luo_Painter.TestApp
 
         async void Init()
         {
+
+            dottedLineCode = await ShaderType.DottedLine.LoadAsync();
+            colorMatchCode = await ShaderType.ColorMatch.LoadAsync();
+            this.Unloaded += (s, e) =>
             {
-                dottedLineCode = await ShaderType.DottedLine.LoadAsync();
-
-                timer.Interval = TimeSpan.FromMilliseconds(100);
-
-                timer.Tick += (s, e) =>
-                {
-                    if (effectImage == null)
-                        return;
-                    timeCount++;
-                    se = new ScaleEffect()
-                    {
-                        Source = effectImage,
-                        Scale = new Vector2(scale),
-                    };
-
-                    using (var ds = crt.CreateDrawingSession())
-                    {
-                        ds.DrawImage(se);
-                    }
-
-                    pse = new PixelShaderEffect(dottedLineCode)
-                    {
-                        Source1 = crt,
-                        Source1Interpolation = CanvasImageInterpolation.NearestNeighbor,
-                        Properties = {
-                            ["time"] =timeCount*1.5f,
-                            ["lineWidth"]=10f,
-                            ["color1"]= new Vector3(0),
-                            ["color2"]=new Vector3(1),
-                            //
-                            ["lineGap"]=100f,
-                            ["lineSpeed"] =100f,
-                        }
-                    };
-
-                    var bounds = se.GetBounds(effectCanvas);
-
-                    effectCanvas.Invalidate();
-                };
-
-                timer.Start();
-
-                this.Unloaded += (s, e) =>
-                {
-                    timer.Stop();
-                    timer = null;
-                };
-            }
-
+                effectCanvas = null;
+                originalCanvas = null;
+            };
 
 
             selectPicture.Click += async (s, e) =>
@@ -121,15 +82,16 @@ namespace Luo_Painter.TestApp
                     originalImage = await CanvasBitmap.LoadAsync(CanvasDevice.GetSharedDevice(), await file.OpenReadAsync());
                     originalColors = originalImage.GetPixelColors();
                     effectColors = new Color[originalColors.Length];
-                    effectCanvas.Width = originalCanvas.Width = originalImage.Size.Width;
-                    effectCanvas.Height = originalCanvas.Height = originalImage.Size.Height;
-                    effectImage = CanvasBitmap.CreateFromColors(effectCanvas, effectColors, (int)originalImage.Size.Width, (int)originalImage.Size.Height, 96f);
-                    crt = new CanvasRenderTarget(effectCanvas, new Size(effectImage.Size.Width * scale, effectImage.Size.Height * scale));
-
                     imageWidth = (int)originalImage.Size.Width;
                     imageHeight = (int)originalImage.Size.Height;
+                    effectImage = CanvasBitmap.CreateFromColors(effectCanvas, effectColors, (int)originalImage.Size.Width, (int)originalImage.Size.Height, 96f);
+                   
+                    colorMatchTarget = new CanvasRenderTarget(CanvasDevice.GetSharedDevice(), imageWidth,imageHeight,96f);
+                    effectTarget =new CanvasRenderTarget(effectCanvas,new Size(1920,1080));
+
+
                     originalCanvas.Invalidate();
-                    effectCanvas.Invalidate();
+                   
                 }
             };
 
@@ -137,6 +99,14 @@ namespace Luo_Painter.TestApp
             {
                 if (originalImage == null)
                     return;
+
+                var m32 = new Matrix3x2();
+                m32 = Matrix3x2.CreateScale(scale) * Matrix3x2.CreateRotation(radin, new Vector2(0.5f, 0.5f)) * Matrix3x2.CreateTranslation(offset);
+                Transform2DEffect te = new Transform2DEffect()
+                {
+                    Source = originalImage,
+                    TransformMatrix = m32,
+                };
                 e.DrawingSession.DrawImage(originalImage);
             };
 
@@ -146,9 +116,8 @@ namespace Luo_Painter.TestApp
                         return;
                     var m32 = new Matrix3x2();
                     m32 = Matrix3x2.CreateScale(scale) * Matrix3x2.CreateRotation(radin, new Vector2(0.5f, 0.5f)) * Matrix3x2.CreateTranslation(offset);
-
                     var crt = new CanvasRenderTarget(effectCanvas, new Size(20, 20));
-                    using(var ds = crt.CreateDrawingSession())
+                    using (var ds = crt.CreateDrawingSession())
                     {
                         for (int x = 0; x < 2; x++)
                         {
@@ -165,8 +134,8 @@ namespace Luo_Painter.TestApp
                     BorderEffect be = new BorderEffect()
                     {
                         Source = crt,
-                         ExtendX = CanvasEdgeBehavior.Wrap,
-                          ExtendY = CanvasEdgeBehavior.Wrap,
+                        ExtendX = CanvasEdgeBehavior.Wrap,
+                        ExtendY = CanvasEdgeBehavior.Wrap,
                     };
 
 
@@ -198,7 +167,7 @@ namespace Luo_Painter.TestApp
                     e.DrawingSession.DrawImage(pse);
                 };
 
-            PointerEventHandler func = (s, e) =>
+            PointerEventHandler PointMoved = (s, e) =>
              {
                  var can = (FrameworkElement)s;
                  var point = e.GetCurrentPoint(can).Position;
@@ -206,10 +175,10 @@ namespace Luo_Painter.TestApp
                  e1.Translation = e2.Translation = v3;
              };
 
-            originalCanvas.PointerMoved += func;
-            effectCanvas.PointerMoved += func;
+            originalCanvas.PointerMoved += PointMoved;
+            effectCanvas.PointerMoved += PointMoved;
 
-            TappedEventHandler teh = (s, e) =>
+            TappedEventHandler CanvasTapped = (s, e) =>
             {
                 if (originalImage == null)
                     return;

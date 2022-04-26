@@ -20,27 +20,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ScrollViewer
-                HorizontalScrollMode="Enabled"
-                VerticalScrollBarVisibility="Visible"
-                VerticalScrollMode="Enabled">
-                <Grid>
-                    
-                <canvas:CanvasControl   x:Name="originalCanvas" />
-                    <Ellipse x:Name="e1" Stroke="Black" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" ></Ellipse>
-                </Grid>
-            </ScrollViewer>
-            <ScrollViewer
-                Grid.Column="1"
-                HorizontalScrollMode="Enabled"
-                VerticalScrollBarVisibility="Visible"
-                VerticalScrollMode="Enabled">
-                <Grid>
-                    <canvas:CanvasControl x:Name="effectCanvas" />
-                    <Ellipse x:Name="e2" Stroke="Black" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" ></Ellipse>
-
-                </Grid>
-            </ScrollViewer>
+            <Grid Margin="10">
+                <canvas:CanvasControl   x:Name="originalCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" />
+                <Ellipse x:Name="e1" Stroke="Black" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" ></Ellipse>
+            </Grid>
+            <Grid Margin="10" Grid.Column="1">
+                <canvas:CanvasAnimatedControl x:Name="effectCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" />
+                <Ellipse x:Name="e2" Stroke="Black" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" ></Ellipse>
+            </Grid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button x:Name="selectPicture" Content="选择图片" />
