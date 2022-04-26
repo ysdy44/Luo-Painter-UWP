@@ -77,7 +77,12 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Complete += (point, properties) =>
             {
                 if (this.BitmapLayer is null) return;
-                this.BitmapLayer.FloodSelect(point, Windows.UI.Colors.DodgerBlue);
+
+                bool isContiguous = this.ContiguousButton.IsOn;
+                float tolerance = (float)(this.Slider.Value / 100);
+                bool feather = this.FeatherButton.IsOn;
+
+                this.BitmapLayer.FloodSelect(point, Windows.UI.Colors.DodgerBlue, isContiguous, tolerance, feather);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
         }
