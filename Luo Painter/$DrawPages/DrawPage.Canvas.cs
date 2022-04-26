@@ -1,14 +1,17 @@
-﻿using Luo_Painter.Elements;
+﻿using FanKit.Transformers;
+using Luo_Painter.Elements;
 using Luo_Painter.Options;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Graphics.Effects;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -50,18 +53,90 @@ namespace Luo_Painter
         }
     }
 
+    internal sealed class DottedLine
+    {
+        public readonly CanvasLinearGradientBrush DottedLineBrush;
+        public Matrix3x2 DottedLineTransform = Matrix3x2.Identity;
+
+        public DottedLine(ICanvasResourceCreator resourceCreator)
+        {
+            this.DottedLineBrush = new CanvasLinearGradientBrush(resourceCreator, new CanvasGradientStop[]
+            {
+                new CanvasGradientStop
+                {
+                    Color = Windows.UI.Colors.White,
+                    Position = 0
+                },
+                new CanvasGradientStop
+                {
+                    Color = Windows.UI.Colors.Black,
+                    Position = 1
+                }
+            }, CanvasEdgeBehavior.Mirror, CanvasAlphaMode.Premultiplied)
+            {
+                StartPoint = Vector2.Zero,
+                EndPoint = new Vector2(12)
+            };
+        }
+        public void Draw(CanvasDrawingSession ds, CanvasTransformer transformer, IGraphicsEffectSource source)
+        {
+            //@DPI 
+            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+            ds.DrawImage(new InvertEffect
+            {
+                Source = new LuminanceToAlphaEffect//Alpha
+                {
+                    Source = new EdgeDetectionEffect//Edge
+                    {
+                        Amount = 1,
+                        Source = new Transform2DEffect
+                        {
+                            BorderMode = EffectBorderMode.Hard,
+                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                            TransformMatrix = transformer.GetMatrix(),
+                            Source = source
+                        }
+                    }
+                }
+            });
+
+            ds.Blend = CanvasBlend.Min;
+            ds.FillRectangle(0, 0, transformer.ControlWidth, transformer.ControlHeight, this.DottedLineBrush);
+        }
+        public void Update()
+        {
+            this.DottedLineTransform.M31--;
+            this.DottedLineTransform.M32--;
+            this.DottedLineBrush.Transform = this.DottedLineTransform;
+        }
+    }
+
     public sealed partial class DrawPage : Page
     {
 
         Mesh Mesh;
-        byte[] LiquefactionShaderCodeBytes;
-        byte[] FreeTransformShaderCodeBytes;
-        byte[] GradientMappingShaderCodeBytes;
-        byte[] RippleEffectShaderCodeBytes;
-        byte[] DifferenceShaderCodeBytes;
+        DottedLine DottedLine;
 
         private void ConstructCanvas()
         {
+            this.CanvasAnimatedControl.CreateResources += (sender, args) =>
+            {
+                this.DottedLine = new DottedLine(sender);
+                this.Marquee = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+            };
+            this.CanvasAnimatedControl.Draw += (sender, args) =>
+            {
+                this.DottedLine.Draw(args.DrawingSession, this.Transformer, this.Marquee.Source);
+
+                if (this.MarqueeToolType == MarqueeToolType.None) return;
+
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+                args.DrawingSession.Blend = CanvasBlend.Copy;
+                args.DrawingSession.DrawMarqueeTool(sender, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+            };
+            this.CanvasAnimatedControl.Update += (sender, args) => this.DottedLine.Update();
+
             this.CanvasControl.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
@@ -77,6 +152,7 @@ namespace Luo_Painter
 
                 this.Mesh = new Mesh(sender, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
                 this.GradientMesh = new GradientMesh(sender);
+                this.Clipboard = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
 
                 // Layer
                 BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
@@ -123,15 +199,6 @@ namespace Luo_Painter
                     }
                 }
             };
-        }
-
-        private async Task CreateResourcesAsync()
-        {
-            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
-            this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
-            this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
-            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
-            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
         }
 
         private void ConstructOperator()

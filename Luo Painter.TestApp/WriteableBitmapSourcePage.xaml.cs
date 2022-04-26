@@ -86,7 +86,7 @@ namespace Luo_Painter.TestApp
         {
             using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
             {
-                ds.Clear(Colors.Transparent);
+                ds.Blend = CanvasBlend.Copy;
                 ds.DrawImage(new ScaleEffect
                 {
                     Scale = new Vector2(50f / Math.Max(this.CanvasBitmap.SizeInPixels.Width, this.CanvasBitmap.SizeInPixels.Height)),

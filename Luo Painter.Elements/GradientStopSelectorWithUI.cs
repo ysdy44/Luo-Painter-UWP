@@ -12,6 +12,9 @@ namespace Luo_Painter.Elements
 {
     public class GradientStopSelectorWithUI : GradientStopSelector
     {
+        //@Delegate
+        public event EventHandler<double> ItemRemoved;
+
         public Button CurrentButton { get; private set; }
         public GradientStop CurrentStop { get; private set; }
         public GradientStop CurrentStopUI { get; private set; }
@@ -71,8 +74,8 @@ namespace Luo_Painter.Elements
                 // Remove
                 if (base.Count > 2)
                 {
-                    double staringY = button.RenderTransformOrigin.Y;
-                    double y = staringY + e.Cumulative.Translation.Y;
+                    double startingY = button.RenderTransformOrigin.Y;
+                    double y = startingY + e.Cumulative.Translation.Y;
                     bool isRemove = y < -50;
 
                     if (isRemove)
@@ -89,8 +92,8 @@ namespace Luo_Painter.Elements
                     }
                 }
 
-                double staringX = button.RenderTransformOrigin.X;
-                double x = staringX + e.Cumulative.Translation.X;
+                double startingX = button.RenderTransformOrigin.X;
+                double x = startingX + e.Cumulative.Translation.X;
                 double width = base.ActualWidth;
                 double offsetX = Math.Clamp(x / width, 0, 1);
                 Canvas.SetLeft(button, offsetX * width - 25);
@@ -108,14 +111,15 @@ namespace Luo_Painter.Elements
                 base.IsHitTestVisible = true;
                 if (base.Count > 2)
                 {
-                    double staringY = button.RenderTransformOrigin.Y;
-                    double y = staringY + e.Cumulative.Translation.Y;
+                    double startingY = button.RenderTransformOrigin.Y;
+                    double y = startingY + e.Cumulative.Translation.Y;
                     double height = base.ActualHeight;
                     bool isRemove = y < -height;
 
                     if (isRemove)
                     {
                         this.SetCurrent(button);
+                        this.ItemRemoved?.Invoke(this, this.CurrentStop.Offset); // Delegate
                         this.RemoveCurrent();
                     }
                 }
@@ -133,6 +137,7 @@ namespace Luo_Painter.Elements
                         {
                             if (this.CurrentButton is null)
                                 this.SetCurrent(e.OriginalSource);
+                            this.ItemRemoved?.Invoke(this, this.CurrentStop.Offset); // Delegate
                             this.RemoveCurrent();
                             e.Handled = true;
                         }
@@ -306,7 +311,10 @@ namespace Luo_Painter.Elements
             foreach (GradientStop item in this.StopsUI)
             {
                 if (item.Offset == this.CurrentStop.Offset)
+                {
                     this.CurrentStopUI = item;
+                    break;
+                }
             }
         }
         public void SetCurrent(object sender)
@@ -321,7 +329,10 @@ namespace Luo_Painter.Elements
             foreach (GradientStop item in this.StopsUI)
             {
                 if (item.Offset == this.CurrentStop.Offset)
+                {
                     this.CurrentStopUI = item;
+                    break;
+                }
             }
         }
 

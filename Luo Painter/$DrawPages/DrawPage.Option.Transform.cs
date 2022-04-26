@@ -14,8 +14,8 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page
     {
-        Vector2 StaringPosition;
-
+        Vector2 StartingPosition;
+        
         Vector2 Move;
         Vector2 StartingMove;
 
@@ -118,7 +118,7 @@ namespace Luo_Painter
 
         private void Transform_Start(Vector2 point, PointerPointProperties properties)
         {
-            this.StaringPosition = this.ToPosition(point);
+            this.StartingPosition = this.ToPosition(point);
             switch (this.TransformComboBox.SelectedIndex)
             {
                 case 0:
@@ -127,7 +127,7 @@ namespace Luo_Painter
                 case 1:
                     this.StartingMove = this.Move;
                     this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsTransformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                    this.IsBoundsMove = this.BoundsMode == TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StaringPosition);
+                    this.IsBoundsMove = this.BoundsMode == TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
                     this.StartingBoundsTransformer = this.BoundsTransformer;
                     break;
                 case 2:
@@ -144,14 +144,14 @@ namespace Luo_Painter
             switch (this.TransformComboBox.SelectedIndex)
             {
                 case 0:
-                    this.Move = position - this.StaringPosition + this.StartingMove;
+                    this.Move = position - this.StartingPosition + this.StartingMove;
                     this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 1:
                     this.BoundsTransformer =
                         this.IsBoundsMove ?
-                        this.StartingBoundsTransformer + (position - this.StaringPosition) :
-                        FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StaringPosition, position, this.StartingBoundsTransformer);
+                        this.StartingBoundsTransformer + (position - this.StartingPosition) :
+                        FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
                     this.CanvasControl.Invalidate(); // Invalidate
                     break;

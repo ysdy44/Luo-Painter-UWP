@@ -76,7 +76,8 @@ namespace Luo_Painter.TestApp
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                this.BitmapLayer.FloodSelect(point);
+                if (this.BitmapLayer is null) return;
+                this.BitmapLayer.FloodSelect(point, Windows.UI.Colors.DodgerBlue);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
         }

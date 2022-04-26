@@ -31,6 +31,10 @@ namespace Luo_Painter
             }
 
             // FootGrid
+            this.MarqueePanel2.Visibility =
+            groupType == ToolGroupType.Marquee ? Visibility.Visible : Visibility.Collapsed;
+
+            // FootGrid
             this.PaintBrushPanel.Visibility =
             this.PaintBrushPanel2.Visibility =
             groupType == ToolGroupType.Paint ? Visibility.Visible : Visibility.Collapsed;
@@ -98,6 +102,14 @@ namespace Luo_Painter
                 case ToolType.PaintLiquefaction:
                     this.Paint_Start(point, properties);
                     break;
+                case ToolType.MarqueeRectangular:
+                case ToolType.MarqueeElliptical:
+                case ToolType.MarqueePolygon:
+                case ToolType.MarqueeFreeHand:
+                case ToolType.MarqueeSelectionBrush:
+                    // case ToolType.MarqueeFloodSelect:
+                    this.Marquee_Start(point);
+                    break;
                 default:
                     break;
             }
@@ -114,6 +126,14 @@ namespace Luo_Painter
                 case ToolType.PaintLiquefaction:
                     this.Paint_Delta(point, properties);
                     break;
+                case ToolType.MarqueeRectangular:
+                case ToolType.MarqueeElliptical:
+                case ToolType.MarqueePolygon:
+                case ToolType.MarqueeFreeHand:
+                case ToolType.MarqueeSelectionBrush:
+                    // case ToolType.MarqueeFloodSelect:
+                    this.Marquee_Delta(point);
+                    break;
                 default:
                     break;
             }
@@ -129,6 +149,14 @@ namespace Luo_Painter
                 case ToolType.PaintEraseBrush:
                 case ToolType.PaintLiquefaction:
                     this.Paint_Complete(point, properties);
+                    break;
+                case ToolType.MarqueeRectangular:
+                case ToolType.MarqueeElliptical:
+                case ToolType.MarqueePolygon:
+                case ToolType.MarqueeFreeHand:
+                case ToolType.MarqueeSelectionBrush:
+                case ToolType.MarqueeFloodSelect:
+                    this.Marquee_Complete(point);
                     break;
                 default:
                     break;

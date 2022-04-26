@@ -43,15 +43,15 @@ namespace Luo_Painter.Layers.Models
         public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, int width, int height) : this(resourceCreator, bitmapLayer.SourceRenderTarget, width, height) { }
         public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap) : this(resourceCreator, bitmap, (int)bitmap.SizeInPixels.Width, (int)bitmap.SizeInPixels.Height) { }
 
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap, int width, int height) : this(resourceCreator, width, height)
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, ICanvasImage image, int width, int height) : this(resourceCreator, width, height)
         {
             using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
             {
-                ds.DrawImage(bitmap);
+                ds.DrawImage(image);
             }
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
             {
-                ds.DrawImage(bitmap);
+                ds.DrawImage(image);
             }
 
             this.RenderThumbnail();
@@ -147,7 +147,7 @@ namespace Luo_Painter.Layers.Models
         {
             using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
             {
-                ds.Clear(Colors.Transparent);
+                ds.Blend = CanvasBlend.Copy;
                 switch (this.ThumbnailType)
                 {
                     case ThumbnailType.Origin:

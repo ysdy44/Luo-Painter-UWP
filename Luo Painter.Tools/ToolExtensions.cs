@@ -25,7 +25,7 @@ namespace Luo_Painter.Tools
             {
                 case ToolGroupType.None: return Colors.Transparent;
 
-                case ToolGroupType.Pixel: return Color.FromArgb(255, 153, 50, 204);
+                case ToolGroupType.Marquee: return Color.FromArgb(255, 153, 50, 204);
                 case ToolGroupType.Paint: return Color.FromArgb(255, 255, 0, 0);
 
                 case ToolGroupType.Liquefy: return Color.FromArgb(255, 255, 165, 0);

@@ -16,10 +16,6 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
-    internal class LayerCommand : RelayCommand<ILayer>
-    {
-    }
-
     public sealed partial class DrawPage : Page
     {
 
@@ -169,10 +165,14 @@ namespace Luo_Painter
                 if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                 {
                     // History
-                    int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory());
+                    int removes = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
                     bitmapLayer.Clear(Colors.Transparent);
                     bitmapLayer.ClearThumbnail(Colors.Transparent);
+
                     this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                    this.RedoButton.IsEnabled = this.History.CanRedo;
                 }
             };
 
@@ -207,6 +207,9 @@ namespace Luo_Painter
                 // History
                 string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
                 int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
             };
 
             //this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();
@@ -330,6 +333,9 @@ namespace Luo_Painter
                     int removes = this.History.Push(new PropertyHistory<string>(HistoryType.Name, item.Id, item.StartingName, redo));
                 }
             }
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
         }
 
         private void OpacityHistory(float undo, float redo)
@@ -357,6 +363,9 @@ namespace Luo_Painter
                     int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Id, item.StartingOpacity, redo));
                 }
             }
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
         }
 
         private void BlendModeHistory(BlendEffectMode? undo, BlendEffectMode? redo)
@@ -384,6 +393,9 @@ namespace Luo_Painter
                     int removes = this.History.Push(new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, item.Id, item.StartingBlendMode, redo));
                 }
             }
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
         }
 
     }

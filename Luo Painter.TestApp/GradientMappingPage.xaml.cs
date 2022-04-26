@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Shaders;
+﻿using Luo_Painter.Elements;
+using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -59,28 +60,6 @@ namespace Luo_Painter.TestApp
         }
     }
 
-    internal sealed class GradientStops : Dictionary<double, Color>
-    {
-        readonly Random Ran = new Random();
-        public void Random()
-        {
-            int count = this.Ran.Next(3, 10);
-            float space = 1f / (count - 1);
-
-            base.Clear();
-            for (int i = 0; i < count; i++)
-            {
-                base.Add(i * space, new Color
-                {
-                    A = 255,
-                    R = (byte)this.Ran.Next(0, 256),
-                    G = (byte)this.Ran.Next(0, 256),
-                    B = (byte)this.Ran.Next(0, 256),
-                });
-            }
-        }
-    }
-
     public sealed partial class GradientMappingPage : Page
     {
 
@@ -103,16 +82,67 @@ namespace Luo_Painter.TestApp
         public GradientMappingPage()
         {
             this.InitializeComponent();
+            this.ConstructGradientMapping();
             this.ConstructSelectorItems();
             this.ConstructSelector();
             this.ConstructCanvas();
             base.Loaded += (s, e) => this.Selector.Reset(this.Stops);
         }
 
+        private void ConstructGradientMapping()
+        {
+            this.AddButton.Click += async (s, e) =>
+            {
+                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file == null) return;
+
+                bool? result = await this.AddAsync(file);
+                if (result != true) return;
+
+                this.CanvasControl.Invalidate(); // Invalidate
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+
+            this.ResetButton.Click += (s, e) =>
+            {
+                this.Stops.Random();
+
+                this.Selector.Reset(this.Stops);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.ReverseButton.Click += (s, e) =>
+            {
+                bool result = this.Stops.Reverse(this.Selector.Source);
+                if (result is false) return;
+
+                this.Selector.Reset(this.Stops);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+            this.SpaceButton.Click += (s, e) =>
+            {
+                bool result = this.Stops.Space(this.Selector.Source);
+                if (result is false) return;
+
+                this.Selector.Reset(this.Stops);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+
+            this.ColorPicker.ColorChanged += (s, e) =>
+            {
+                if (this.Stops.Enabled) return;
+
+                this.Selector.SetCurrentColor(e.NewColor);
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+            };
+        }
+
         private void ConstructSelectorItems()
         {
             this.Selector.ItemClick += (s, e) =>
             {
+                if (this.Stops.Enabled) return;
+                this.Stops.Start();
+
                 this.Selector.SetCurrent(s);
                 if (this.Selector.CurrentStop == null) return;
 
@@ -130,6 +160,7 @@ namespace Luo_Painter.TestApp
             };
             this.Selector.ItemManipulationCompleted += (s, e) =>
             {
+                this.Stops.Start();
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
             this.Selector.ItemPreviewKeyDown += (s, e) =>
@@ -161,30 +192,6 @@ namespace Luo_Painter.TestApp
             this.Selector.ManipulationCompleted += (s, e) =>
             {
                 this.Selector.SetCurrentOffset(e.Position);
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-
-            this.ColorPicker.ColorChanged += (s, e) =>
-            {
-                this.Selector.SetCurrentColor(e.NewColor);
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-
-            this.AddButton.Click += async (s, e) =>
-            {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
-
-                bool? result = await this.AddAsync(file);
-                if (result != true) return;
-
-                this.CanvasControl.Invalidate(); // Invalidate
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.ResetButton.Click += (s, e) =>
-            {
-                this.Stops.Random();
-                this.Selector.Reset(this.Stops);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
         }

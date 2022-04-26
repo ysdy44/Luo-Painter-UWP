@@ -17,9 +17,9 @@ namespace Luo_Painter
 
         bool IsRipplerPoint;
         Vector2 RipplerCenter;
-        Vector2 StaringRipplerCenter;
+        Vector2 StartingRipplerCenter;
         Vector2 RipplerPoint;
-        Vector2 StaringRipplerPoint;
+        Vector2 StartingRipplerPoint;
 
         private void SetRippleEffect(BitmapLayer bitmapLayer)
         {
@@ -91,16 +91,16 @@ namespace Luo_Painter
         private void RippleEffect_Start(Vector2 point, PointerPointProperties properties)
         {
             this.IsRipplerPoint = FanKit.Math.InNodeRadius(point, this.ToPoint(this.RipplerPoint));
-            this.StaringPosition = this.ToPosition(point);
-            this.StaringRipplerCenter = this.RipplerCenter;
-            this.StaringRipplerPoint = this.RipplerPoint;
+            this.StartingPosition = this.ToPosition(point);
+            this.StartingRipplerCenter = this.RipplerCenter;
+            this.StartingRipplerPoint = this.RipplerPoint;
         }
 
         private void RippleEffect_Delta(Vector2 point, PointerPointProperties properties)
         {
             Vector2 position = this.ToPosition(point);
-            Vector2 move = position - this.StaringPosition;
-            this.RipplerPoint = move + this.StaringRipplerPoint;
+            Vector2 move = position - this.StartingPosition;
+            this.RipplerPoint = move + this.StartingRipplerPoint;
 
             if (this.IsRipplerPoint)
             {
@@ -110,7 +110,7 @@ namespace Luo_Painter
             }
             else
             {
-                this.RipplerCenter = move + this.StaringRipplerCenter;
+                this.RipplerCenter = move + this.StartingRipplerCenter;
             }
 
             this.CanvasControl.Invalidate(); // Invalidate

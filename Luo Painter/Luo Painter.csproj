@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Dialog.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Edit.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="%24DrawPages\DrawPage.Option.GradientMapping.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.RippleEffect.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.Transform.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Storyboard.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tip.cs" />
@@ -257,6 +259,10 @@
     <ProjectReference Include="..\Luo Painter.Blends\Luo Painter.Blends.csproj">
       <Project>{113BDC6D-952F-477E-9451-4E9D2475B7B7}</Project>
       <Name>Luo Painter.Blends</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Edits\Luo Painter.Edits.csproj">
+      <Project>{19337d6a-a971-482b-8976-f1647f1dca67}</Project>
+      <Name>Luo Painter.Edits</Name>
     </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Elements\Luo Painter.Elements.csproj">
       <Project>{df0fe13f-3d6d-432d-aca9-1d2b6009c843}</Project>

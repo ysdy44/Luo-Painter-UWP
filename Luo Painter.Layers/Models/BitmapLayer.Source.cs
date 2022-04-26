@@ -36,14 +36,16 @@ namespace Luo_Painter.Layers.Models
         public CanvasDrawingSession CreateSourceDrawingSession() => this.SourceRenderTarget.CreateDrawingSession();
         public CanvasDrawingSession CreateTempDrawingSession() => this.TempRenderTarget.CreateDrawingSession();
 
+        public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
+        public void CopyPixels(BitmapLayer bitmapLayer) => this.SourceRenderTarget.CopyPixelsFromBitmap(bitmapLayer.TempRenderTarget);
+
         public void DrawSource(ICanvasImage image)
         {
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(Colors.Transparent);
+                ds.Blend = CanvasBlend.Copy;
                 ds.DrawImage(image);
             }
         }
@@ -74,18 +76,6 @@ namespace Luo_Painter.Layers.Models
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 ds.Clear(Colors.Transparent);
-            }
-        }
-
-        public void Flush()
-        {
-            using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(Colors.Transparent);
-                ds.DrawImage(this.SourceRenderTarget);
             }
         }
 
@@ -157,6 +147,27 @@ namespace Luo_Painter.Layers.Models
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
                 ds.ErasingWet(position, targetPosition, pressure, targetPressure, size);
+            }
+        }
+
+
+        public void Marquee(Vector2 position, Vector2 targetPosition, float strokeWidth, bool isErasing)
+        {
+            if (isErasing)
+            {
+                using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+                {
+                    ds.Blend = CanvasBlend.Copy;
+
+                    ds.DrawLine(position, targetPosition, Colors.Transparent, strokeWidth, PaintExtensions.CanvasStrokeStyle);
+                }
+            }
+            else
+            {
+                using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+                {
+                    ds.DrawLine(position, targetPosition, Colors.DodgerBlue, strokeWidth, PaintExtensions.CanvasStrokeStyle);
+                }
             }
         }
 

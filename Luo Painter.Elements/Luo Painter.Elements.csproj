@@ -127,6 +127,7 @@
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GradientStops.cs" />
     <Compile Include="GradientStopSelector.cs" />
     <Compile Include="GradientStopSelectorWithUI.cs" />
     <Compile Include="Grouping.cs" />

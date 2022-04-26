@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
+    xmlns:edits="using:Luo_Painter.Edits"
     xmlns:options="using:Luo_Painter.Options"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
@@ -150,7 +151,7 @@
         <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
                 <local:ToolGroupingList x:Name="ToolCollection">
-                    <local:ToolGrouping Key="Pixel">
+                    <local:ToolGrouping Key="Marquee">
                         <tools:ToolType>MarqueeRectangular</tools:ToolType>
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
                         <tools:ToolType>MarqueePolygon</tools:ToolType>
@@ -269,6 +270,116 @@
         </local:BlendGrouping>
 
         <!--Flyout-->
+        <Flyout x:Name= "EditFlyout" Placement= "Bottom" >
+            <local:EditsCanvas x:Name= "EditsCanvas" Orientation= "Horizontal" >
+                <FrameworkElement.Resources >
+                    <Style TargetType= "local:EditItem" >
+                        <Setter Property= "Margin" Value= "0" />
+                        <Setter Property= "Padding" Value= "12,0" />
+                        <Setter Property= "Height" Value= "40" />
+                        <Setter Property= "BorderThickness" Value= "1" />
+                        <Setter Property= "BorderBrush" Value= "{ThemeResource AppStroke}" />
+                        <Setter Property= "Background" Value= "{ThemeResource SystemAltLowColor}" />
+                        <Setter Property= "HorizontalAlignment" Value= "Stretch" />
+                        <Setter Property= "HorizontalContentAlignment" Value= "Left" />
+                    </Style >
+                </FrameworkElement.Resources >
+
+                <TextBlock x:Name= "EditEditTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Edit
+                </TextBlock >
+                <TextBlock x:Name= "EditGroupTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Group
+                </TextBlock >
+                <TextBlock x:Name= "EditSelectTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Select
+                </TextBlock >
+                <TextBlock x:Name= "EditCombineTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                    Combine
+                </TextBlock >
+
+
+                <local:EditItem Type = "Cut" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "X" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Duplicate" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "J" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Copy" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "C" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Paste" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "V" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Clear" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Key= "Back" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+                <local:EditItem Type = "Extract" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Merge" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+
+
+                <local:EditItem Type = "Group" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "R" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Ungroup" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "U" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+                <local:EditItem Type = "Release" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "R" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+
+                <local:EditItem Type = "All" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "A" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Deselect" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "D" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Invert" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "I" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+
+                <local:EditItem Type = "Union" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Exclude" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Xor" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Intersect" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+
+                <local:EditItem Type = "ExpandStroke" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+
+            </local:EditsCanvas>
+        </Flyout>
         <Flyout x:Name="LayerFlyout" Placement="Left">
             <StackPanel Width="320">
 
@@ -387,11 +498,11 @@
                 <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                 <ListView x:Name="BlendModeListView" 
-                          IsItemClickEnabled="True"                      
-                          CornerRadius="4"                              
-                          BorderThickness="1"                                
-                          BorderBrush="{ThemeResource AppStroke}"                              
-                          Background="{ThemeResource SystemAltLowColor}"                                
+                          IsItemClickEnabled="True"                    
+                          CornerRadius="4"                            
+                          BorderThickness="1"                              
+                          BorderBrush="{ThemeResource AppStroke}"                            
+                          Background="{ThemeResource SystemAltLowColor}"                              
                           ItemsSource="{x:Bind BlendCollection}" >
 
                     <ItemsControl.ItemContainerStyle>
@@ -462,13 +573,13 @@
                     <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                     <ListView x:Name="PaintBlendModeListView" 
-                              CornerRadius="4"                             
-                              BorderThickness="1"                               
-                              BorderBrush="{ThemeResource AppStroke}"                               
-                              Background="{ThemeResource SystemAltLowColor}"      
-                              IsItemClickEnabled="True"                   
-                              SelectionMode="Single"                     
-                              ScrollViewer.VerticalScrollBarVisibility="Hidden"                          
+                              CornerRadius="4"                           
+                              BorderThickness="1"                             
+                              BorderBrush="{ThemeResource AppStroke}"                             
+                              Background="{ThemeResource SystemAltLowColor}"    
+                              IsItemClickEnabled="True"                 
+                              SelectionMode="Single"                   
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"                        
                               ItemsSource="{x:Bind BlendCollection}" >
 
                         <ItemsControl.ItemContainerStyle>
@@ -522,6 +633,8 @@
                         <Setter Target="OptionPanel.Margin" Value="0"/>
                         <Setter Target="OptionPanel.HorizontalAlignment" Value="Stretch"/>
                         <!--Option-->
+                        <Setter Target= "EditsCanvas.Orientation" Value= "Vertical" />
+
                         <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
 
                         <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
@@ -598,7 +711,8 @@
 
 
         <!--Canvas-->
-        <canvas:CanvasVirtualControl x:Name="CanvasControl" />
+        <canvas:CanvasVirtualControl x:Name="CanvasControl" FlowDirection="LeftToRight" />
+        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" FlowDirection="LeftToRight" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" />
 
 
         <!--Head-->
@@ -822,14 +936,14 @@
                                 </Grid>
                                 <ColorPicker x:Name="ColorPicker" 
                                              Grid.Row="2"
-                                             Color="Black"  
+                                             Color="Black" 
                                              IsMoreButtonVisible="False" 
                                              IsHexInputVisible="False" 
                                              IsColorSpectrumVisible="True"
                                              IsColorSliderVisible="True"
                                              IsColorPreviewVisible="False"
-                                             IsColorChannelTextInputVisible="False"  
-                                             IsAlphaTextInputVisible="False"  
+                                             IsColorChannelTextInputVisible="False" 
+                                             IsAlphaTextInputVisible="False" 
                                              IsAlphaSliderVisible="False" 
                                              IsAlphaEnabled="False" 
                                              ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"
@@ -855,20 +969,20 @@
             </StackPanel>
 
             <!--Option-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Background="{ThemeResource AppBackgroundLight}" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="G"/>
-                    </UIElement.KeyboardAccelerators>
-                    <Viewbox Width="22" Height="22">
-                        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <PathIcon.Data>
+            <StackPanel Orientation= "Horizontal" HorizontalAlignment= "Center" >
+                <Button x:Name= "EditButton" Background= "{ThemeResource AppBackgroundLight}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "None" Key= "G" />
+                    </UIElement.KeyboardAccelerators >
+                    <Viewbox Width= "22" Height= "22" >
+                        <PathIcon HorizontalAlignment= "Center" VerticalAlignment= "Center" >
+                            <PathIcon.Data >
                                 M2.913,27.807l2.512,0l0,1.713l-2.44,0c-0.985,0 -1.785,-0.8 -1.785,-1.785l0,-2.44l1.713,0l0,2.512Zm11.419,1.713l-6.851,0l0,-1.713l6.851,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Zm4.496,0l-2.44,0l0,-1.713l2.512,0l0,-2.512l1.713,0l0,2.44c0,0.985 -0.8,1.785 -1.785,1.785Zm1.785,-6.281l-1.713,0l0,-6.851l1.713,0l0,6.851Zm-26.607,0l-1.713,0l0,-6.851l1.713,0l0,6.851Zm26.607,-8.907l-1.713,0l0,-6.851l1.713,0l0,6.851Zm-26.607,0l-1.713,0l0,-6.851l1.713,0l0,6.851Zm26.607,-8.907l-1.713,0l0,-2.512l-2.512,0l0,-1.713l2.44,0c0.985,0 1.785,0.8 1.785,1.785l0,2.44Zm-24.095,-2.512l-2.512,0l0,2.512l-1.713,0l0,-2.44c0,-0.985 0.8,-1.785 1.785,-1.785l2.44,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Zm8.907,0l-6.851,0l0,-1.713l6.851,0l0,1.713Z
                             </PathIcon.Data>
                         </PathIcon>
                     </Viewbox>
                 </Button>
-                <Button Background="{ThemeResource AppBackgroundLight}" >
+                <Button x:Name= "OptionButton" Background="{ThemeResource AppBackgroundLight}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="W"/>
                     </UIElement.KeyboardAccelerators>
@@ -919,15 +1033,15 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <local:OptionButton 
-                                                        Padding="0"        
-                                                        HorizontalAlignment="Stretch"                                         
+                                                        Padding="0"      
+                                                        HorizontalAlignment="Stretch"                                       
                                                         VerticalAlignment="Stretch" 
                                                         HorizontalContentAlignment="Stretch"
-                                                        VerticalContentAlignment="Stretch"            
+                                                        VerticalContentAlignment="Stretch"          
                                                         Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-                                                        Style="{StaticResource TextBlockButtonStyle}"                                        
-                                                        Type="{Binding}"                                           
-                                                        CommandParameter="{Binding}"                                           
+                                                        Style="{StaticResource TextBlockButtonStyle}"                                      
+                                                        Type="{Binding}"                                         
+                                                        CommandParameter="{Binding}"                                         
                                                         Command="{Binding ElementName=OptionTypeButton, Path=Command, Mode=OneWay}"
                                                         >
                                                             <ContentControl.ContentTemplate>
@@ -954,7 +1068,7 @@
                         <FontIcon Canvas.Left="18" Canvas.Top="16" Opacity="0.8" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
                     </Canvas>
                 </Button>
-                <Button x:Name="MoreOptionButton" Background="{ThemeResource AppBackgroundLight}" >
+                <Button Background="{ThemeResource AppBackgroundLight}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="T"/>
                     </UIElement.KeyboardAccelerators>
@@ -983,13 +1097,13 @@
                                                 Margin="0,1"
                                                 Padding="12,0"
                                                 Height="46"
-                                                BorderThickness="1"                                
-                                                BorderBrush="{ThemeResource AppStroke}"                              
-                                                Background="{ThemeResource SystemAltLowColor}"     
+                                                BorderThickness="1"                              
+                                                BorderBrush="{ThemeResource AppStroke}"                            
+                                                Background="{ThemeResource SystemAltLowColor}"   
                                                 HorizontalAlignment="Stretch" 
                                                 HorizontalContentAlignment="Left"
-                                                Type="{Binding}"                                           
-                                                CommandParameter="{Binding}"                                           
+                                                Type="{Binding}"                                         
+                                                CommandParameter="{Binding}"                                         
                                                 Command="{Binding ElementName=MoreOptionTypeButton, Path=Command, Mode=OneWay}"
                                                 />
                                         </DataTemplate>
@@ -1017,7 +1131,7 @@
                 <TranslateTransform x:Name="FootTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <Grid x:Name="PaintBrushPanel2" Margin="70,0" MaxWidth="720" Padding="8,0">
+            <Grid x:Name="PaintBrushPanel2" Visibility="Collapsed" Margin="70,0" MaxWidth="720" Padding="8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="12"/>
@@ -1027,6 +1141,24 @@
                 </Slider>
                 <Slider x:Name="PaintOpacitySlider2" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
                 </Slider>
+            </Grid>
+            <Grid x:Name="MarqueePanel2" Visibility="Collapsed" Margin="70,0" MaxWidth="720" Padding="8,0">
+                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0">
+                    <FontIcon Glyph="&#xE002;" FontSize="14" FontFamily="Segoe UI Symbol" />
+                    <Canvas Width="25" Height="25" >
+                        <FontIcon Canvas.Left="-1" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="7" Canvas.Top="8" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                    </Canvas>
+                    <Canvas Width="25" Height="25" >
+                        <FontIcon Canvas.Top="-6" Glyph="&#x259B;" FontSize="18" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="7" Canvas.Top="7" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                    </Canvas>
+                    <Canvas Width="24" Height="24" >
+                        <FontIcon Canvas.Left="0" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE002;" FontSize="8" FontFamily="Segoe UI Symbol" />
+                    </Canvas>
+                </ListBox>
             </Grid>
 
             <Button x:Name="LayerButton" HorizontalAlignment="Right" Background="{ThemeResource AppBackgroundLight}" >
@@ -1085,10 +1217,10 @@
                       Margin="0,50,0,0"
                       Width="70"
                       HorizontalAlignment="Right"
-                      VerticalAlignment="Stretch"     
+                      VerticalAlignment="Stretch"   
                       
                       IsItemClickEnabled="True" 
-                      SelectionMode="Single"   
+                      SelectionMode="Single" 
                       
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       ItemsSource="{x:Bind ToolCollectionViewSource.View}" >
@@ -1105,12 +1237,12 @@
                             ItemWidth="70"
                             ItemHeight="50"
                    
-                            Orientation="Horizontal"    
+                            Orientation="Horizontal"  
                             MaximumRowsOrColumns="3" 
                     
-                            AreStickyGroupHeadersEnabled="False"     
-                            GroupHeaderPlacement="Top"            
-                            GroupPadding="0"      
+                            AreStickyGroupHeadersEnabled="False"   
+                            GroupHeaderPlacement="Top"          
+                            GroupPadding="0"    
                             />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
@@ -1182,21 +1314,22 @@
                 <TranslateTransform x:Name="LayerTransform" X="140"/>
             </UIElement.RenderTransform>
 
-            <ListView x:Name="LayerListView"  
+            <ListView x:Name="LayerListView" 
                       Margin="0,50"
                       Width="70"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Stretch"
                       
                       IsItemClickEnabled="True"
-                      SelectionMode="Extended"     
+                      SelectionMode="Extended"   
               
                       AllowDrop="True" 
-                      CanReorderItems="True"  
-                      ReorderMode="Enabled"     
+                      CanDragItems="True"
+                      CanReorderItems="True" 
+                      ReorderMode="Enabled"   
            
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      ItemsSource="{x:Bind ObservableCollection, Mode=OneTime}"  
+                      ItemsSource="{x:Bind ObservableCollection, Mode=OneTime}" 
                       >
 
                 <ItemsControl.ItemsPanel>
@@ -1402,7 +1535,7 @@
                 </Slider.Header>
             </Slider>
 
-            <Slider x:Name="BrightnessSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
+            <Slider x:Name="BrightnessSlider" Visibility="Collapsed" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
                 <Slider.Background>
                     <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="Black" Offset="0"/>
@@ -1424,7 +1557,7 @@
                 </Slider.Header>
             </Slider>
 
-            <Slider x:Name="SaturationSlider" Visibility="Collapsed" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+            <Slider x:Name="SaturationSlider" Visibility="Collapsed" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
                 <Slider.Background>
                     <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="Gray" Offset="0"/>
@@ -1454,7 +1587,7 @@
                         <GradientStop Color="#46A7F6" Offset="0.25"/>
                         <GradientStop Color="#784BB0" Offset="0.375"/>
                         <GradientStop Color="#A336B5" Offset="0.5"/>
-                        <GradientStop Color="#EB2E6E"  Offset="0.625"/>
+                        <GradientStop Color="#EB2E6E" Offset="0.625"/>
                         <GradientStop Color="#EC5449" Offset="0.75"/>
                         <GradientStop Color="#FFA827" Offset="0.875"/>
                         <GradientStop Color="#FFCE3B" Offset="1"/>
@@ -1742,7 +1875,7 @@
                 <TextBlock x:Name="TipTitleTextBlock" FontSize="16" HorizontalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
                     <!--Title-->
                 </TextBlock>
-                <TextBlock x:Name="TipSubtitleTextBlock" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"  Foreground="{ThemeResource AppForeground}" >
+                <TextBlock x:Name="TipSubtitleTextBlock" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
                     <!--Subtitle-->
                 </TextBlock>
             </StackPanel>

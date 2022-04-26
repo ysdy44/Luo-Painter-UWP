@@ -1,10 +1,12 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Edits;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
+using Luo_Painter.Shaders;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -13,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -22,6 +25,60 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter
 {
+    internal static class IconExtensions
+    {
+        public static Grid GetGrid(UIElement icon, string text) => new Grid
+        {
+            ColumnDefinitions =
+            {
+                new ColumnDefinition
+                {
+                    Width = GridLength.Auto
+                },
+                new ColumnDefinition
+                {
+                    Width =new GridLength(12)
+                },
+                new ColumnDefinition
+                {
+                    Width =new GridLength(1, GridUnitType.Star)
+                },
+            },
+            Children =
+            {
+                icon,
+                text.GetTextBlock().SetColumn(2)
+            }
+        };
+        public static StackPanel GetStackPanel(UIElement icon, string text) => new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Children =
+            {
+                icon,
+                new ContentControl
+                {
+                    Width = 12
+                },
+                text.GetTextBlock()
+            }
+        };
+        public static TextBlock GetTextBlock(this string text)
+        {
+            return new TextBlock
+            {
+                Text = text,
+                VerticalAlignment = VerticalAlignment.Center,
+                TextTrimming = TextTrimming.CharacterEllipsis,
+            };
+        }
+        public static FrameworkElement SetColumn(this FrameworkElement element, int value)
+        {
+            Grid.SetColumn(element, value);
+            return element;
+        }
+    }
+
     internal sealed class ToolIcon : ContentControl
     {
         #region DependencyProperty
@@ -82,27 +139,12 @@ namespace Luo_Painter
 
             if (e.NewValue is BlendEffectMode value)
             {
-                control.Content = new StackPanel
+                control.Content = IconExtensions.GetStackPanel(new ContentControl
                 {
-                    Orientation = Orientation.Horizontal,
-                    Children =
-                    {
-                        new ContentControl
-                        {
-                            Content = value,
-                            Template = value.GetTemplate(out ResourceDictionary resource, out string title),
-                            Resources = resource,
-                        },
-                        new ContentControl
-                        {
-                            Width = 12
-                        },
-                        new TextBlock
-                        {
-                            Text = title
-                        }
-                    }
-                };
+                    Content = value,
+                    Template = value.GetTemplate(out ResourceDictionary resource, out string title),
+                    Resources = resource,
+                }, title);
             }
         }));
 
@@ -170,25 +212,57 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Content = new StackPanel
+            base.Content = IconExtensions.GetStackPanel(new ContentControl
             {
-                Orientation = Orientation.Horizontal,
-                Children =
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            }, value.ToString());
+        }
+    }
+
+    internal sealed class EditItem : Button
+    {
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="EditItem"/>. </summary>
+        public EditType Type
+        {
+            get => (EditType)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "EditItem.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(EditType), typeof(EditItem), new PropertyMetadata(EditType.None, (sender, e) =>
+        {
+            EditItem control = (EditItem)sender;
+
+            if (e.NewValue is EditType value)
+            {
+                control.CommandParameter = value;
+                control.Icon = new ContentControl
                 {
-                    new ContentControl
-                    {
-                        Content = value,
-                        Template = value.GetTemplate(out ResourceDictionary resource),
-                        Resources = resource,
-                    },
-                    new ContentControl
-                    {
-                        Width = 12
-                    },
-                    new TextBlock
-                    {
-                        Text = value.ToString()
-                    }
+                    Content = value,
+                    Template = value.GetTemplate(out ResourceDictionary resource),
+                    Resources = resource,
+                };
+                control.Icon.GoToState(control.IsEnabled);
+                control.Content = IconExtensions.GetGrid(control.Icon, value.ToString());
+            }
+        }));
+
+
+        #endregion
+
+        Control Icon;
+        public EditItem()
+        {
+            base.IsEnabledChanged += (s, e) =>
+            {
+                if (this.Icon is null) return;
+                if (e.NewValue is bool value)
+                {
+                    this.Icon.GoToState(value);
                 }
             };
         }
@@ -203,6 +277,13 @@ namespace Luo_Painter
 
     internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionGroupType, OptionType> { }
     internal sealed class OptionGrouping : Grouping<OptionGroupType, OptionType> { }
+
+    internal sealed class EditGrouping : Grouping<EditGroupType, EditType> { }
+
+
+    internal class OptionTypeCommand : RelayCommand<OptionType> { }
+    internal class EditTypeCommand : RelayCommand<EditType> { }
+    internal class LayerCommand : RelayCommand<ILayer> { }
 
 
     internal sealed class RadianRange
@@ -268,9 +349,26 @@ namespace Luo_Painter
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
         BitmapLayer BitmapLayer { get; set; }
+        BitmapLayer Clipboard { get; set; }
+        BitmapLayer Marquee { get; set; }
         OptionType OptionType { get; set; } = OptionType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
         ToolGroupType ToolGroupType { get; set; } = ToolGroupType.Paint;
+
+        byte[] LiquefactionShaderCodeBytes;
+        byte[] FreeTransformShaderCodeBytes;
+        byte[] GradientMappingShaderCodeBytes;
+        byte[] RippleEffectShaderCodeBytes;
+        byte[] DifferenceShaderCodeBytes;
+
+        private async Task CreateResourcesAsync()
+        {
+            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
+            this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
+            this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
+            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
+            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
+        }
 
         public DrawPage()
         {
@@ -281,6 +379,8 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
+            this.ConstructEdits();
+
             this.ConstructOptions();
             this.ConstructOption();
             this.ConstructTransform();
@@ -290,6 +390,7 @@ namespace Luo_Painter
             this.ConstructTools();
             this.ConstructBlends();
             this.ConstructPaint();
+            this.ConstructMarquee();
 
             this.ConstructHistory();
 
@@ -340,6 +441,11 @@ namespace Luo_Painter
                 // History
                 string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
                 int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+                this.CanvasControl.Invalidate(); // Invalidate
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
             };
             base.DragOver += (s, e) =>
             {

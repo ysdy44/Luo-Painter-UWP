@@ -12,10 +12,6 @@ using Windows.Foundation;
 
 namespace Luo_Painter
 {
-    internal class OptionTypeCommand : RelayCommand<OptionType>
-    {
-    }
-
     public sealed partial class DrawPage : Page
     {
 
@@ -269,11 +265,11 @@ namespace Luo_Painter
                         Source = image
                     };
                 case OptionType.Brightness:
-                    float brightness = (float)this.ExposureSlider.Value / 100;
+                    float brightness = (float)this.BrightnessSlider.Value / 100;
                     return new BrightnessEffect
                     {
-                        WhitePoint = new Vector2(System.Math.Min(2 - brightness, 1), 1f),
-                        BlackPoint = new Vector2(System.Math.Max(1 - brightness, 0), 0f),
+                        WhitePoint = new Vector2(System.Math.Clamp(2 - brightness, 0, 1), 1),
+                        BlackPoint = new Vector2(System.Math.Clamp(1 - brightness, 0, 1), 0),
                         Source = image
                     };
                 case OptionType.Saturation:

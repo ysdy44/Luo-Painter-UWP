@@ -7,7 +7,12 @@
         object RedoParameter { get; }
     }
 
-    public class PropertyHistory<T> : IPropertyHistory
+    public class PropertyHistory<T> : PropertyHistory<T, T>
+    {
+        public PropertyHistory(HistoryType type, string id, T undoParameter, T redoParameter) : base(type, id, undoParameter, redoParameter) { }
+    }
+
+    public class PropertyHistory<TUndo, TRedo> : IPropertyHistory
     {
         public HistoryMode Mode => HistoryMode.Property;
         public HistoryType Type => this.type;
@@ -18,10 +23,10 @@
 
         readonly HistoryType type;
         readonly string id;
-        readonly T undoParameter;
-        readonly T redoParameter;
+        readonly TUndo undoParameter;
+        readonly TRedo redoParameter;
 
-        public PropertyHistory(HistoryType type, string id, T undoParameter, T redoParameter)
+        public PropertyHistory(HistoryType type, string id, TUndo undoParameter, TRedo redoParameter)
         {
             this.type = type;
             this.id = id;
