@@ -30,12 +30,17 @@ D2D_PS_ENTRY(main)
 	//左边
 	float la = D2DSampleInput(0, p + float2(-w, 0)).a;
 	float ra = D2DSampleInput(0, p + float2(w, 0)).a;
-	float scale = time * lineSpeed;
+
 	if (ta != 0 || ba != 0 || la != 0 || ra != 0) {
-		//绘制蚂蚁线
-		float2 p = D2DGetInputCoordinate(0).xy;
-		float3 dottedLine = lerp(color1, color2, fmod(ceil(scale + p.x * lineGap) + ceil(scale + p.y * lineGap), 2));
-		return float4(dottedLine, 1);
+
+	float2 pos = p * lineGap;
+	pos.x += time * lineSpeed;
+	float radin = 0.785;
+	float x = frac(cos(radin) * pos.x + sin(radin) * pos.y);
+	//绘制蚂蚁线
+	
+	float3 dottedLine = lerp(color1, color2, abs(x * 2 - 1));
+	return float4(dottedLine, col.a + 1);
 	}
 	return float4(0, 0, 0, 0);
 }

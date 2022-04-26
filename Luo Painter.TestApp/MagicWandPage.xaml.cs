@@ -34,12 +34,13 @@ namespace Luo_Painter.TestApp
         CanvasBitmap effectImage;
         Color[] originalColors;
         Color[] effectColors;
-
+        ScaleEffect se;
         int imageWidth;
         int imageHeight;
 
         byte[] dottedLineCode;
         PixelShaderEffect pse;
+        CanvasRenderTarget crt;
         /// <summary>
         /// 用于记录已近检索的像素
         /// </summary>
@@ -47,6 +48,8 @@ namespace Luo_Painter.TestApp
         DispatcherTimer timer = new DispatcherTimer();
 
         float timeCount = 0;
+        int scale = 5;
+
         public MagicWandPage()
         {
             this.InitializeComponent();
@@ -58,21 +61,31 @@ namespace Luo_Painter.TestApp
             {
                 dottedLineCode = await ShaderType.DottedLine.LoadAsync();
 
-                timer.Interval = TimeSpan.FromMilliseconds(500);
+                timer.Interval = TimeSpan.FromMilliseconds(100);
 
                 timer.Tick += (s, e) =>
                 {
                     if (effectImage == null)
                         return;
                     timeCount++;
-                    float f =(float) Math.Abs(Math.Sin(timeCount));
-                    //float f = (float)(Math.Sin(timeCount));
+                    se = new ScaleEffect()
+                    {
+                        Source = effectImage,
+                        Scale = new Vector2(scale),
+                    };
+
+                    using (var ds = crt.CreateDrawingSession())
+                    {
+                        ds.DrawImage(se);
+                    }
+
                     pse = new PixelShaderEffect(dottedLineCode)
                     {
-                        Source1 = effectImage,
+                        Source1 = crt,
+                        Source1Interpolation = CanvasImageInterpolation.NearestNeighbor,
                         Properties = {
-                            ["time"] =f,
-                            ["lineWidth"]=1f,
+                            ["time"] =timeCount*1.5f,
+                            ["lineWidth"]=10f,
                             ["color1"]= new Vector3(0),
                             ["color2"]=new Vector3(1),
                             //
@@ -80,6 +93,8 @@ namespace Luo_Painter.TestApp
                             ["lineSpeed"] =100f,
                         }
                     };
+
+                    var bounds = se.GetBounds(effectCanvas);
 
                     effectCanvas.Invalidate();
                 };
@@ -106,6 +121,7 @@ namespace Luo_Painter.TestApp
                     effectCanvas.Width = originalCanvas.Width = originalImage.Size.Width;
                     effectCanvas.Height = originalCanvas.Height = originalImage.Size.Height;
                     effectImage = CanvasBitmap.CreateFromColors(effectCanvas, effectColors, (int)originalImage.Size.Width, (int)originalImage.Size.Height, 96f);
+                    crt = new CanvasRenderTarget(effectCanvas, new Size(effectImage.Size.Width * scale, effectImage.Size.Height * scale));
 
                     imageWidth = (int)originalImage.Size.Width;
                     imageHeight = (int)originalImage.Size.Height;
@@ -189,8 +205,6 @@ namespace Luo_Painter.TestApp
             effectCanvas.Tapped += teh;
 
         }
-
-
 
         void AddRetrieves(Pos cp, List<Pos> retrieves)
         {
