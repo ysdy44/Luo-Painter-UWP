@@ -10,5 +10,6 @@
         DottedLine,
         RippleEffect,
         Difference,
+        ColorMatch,
     }
 }
