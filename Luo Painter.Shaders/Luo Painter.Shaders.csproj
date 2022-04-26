@@ -132,6 +132,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ColorMatch.txt" />
     <Content Include="DottedLine.txt" />
     <Content Include="FreeTransform.hlsl" />
     <Content Include="Difference.hlsl" />
@@ -144,6 +145,7 @@
     <Content Include="Liquefaction.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ColorMatch.shader" />
     <None Include="CompileShaders.cmd" />
     <Content Include="GeneralBrush.bin" />
     <Content Include="FreeTransform.bin" />
