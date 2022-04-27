@@ -42,6 +42,42 @@
                 </AppBarButton.Label>
             </AppBarButton>
 
+            <AppBarButton>
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="S"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Setting"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Setting
+                </AppBarButton.Label>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel Width="333">
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                                Contiguous
+                            </TextBlock>
+                            <ToggleSwitch x:Name="ContiguousButton" IsOn="True" />
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                                Tolerance
+                            </TextBlock>
+                            <Slider x:Name="Slider" Value="10" Minimum="0" Maximum="100" >
+                                <Slider.Header>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind Slider.Value, Mode=OneWay}"/><Run>%</Run>
+                                    </TextBlock>
+                                </Slider.Header>
+                            </Slider>
+                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                                Feather
+                            </TextBlock>
+                            <ToggleSwitch x:Name="FeatherButton" IsOn="False" />
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
             <AppBarButton x:Name="ClearButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Delete"/>
