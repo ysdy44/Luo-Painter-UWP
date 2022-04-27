@@ -1,12 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
 using System;
-using System.IO;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers.Models
@@ -22,6 +17,15 @@ namespace Luo_Painter.Layers.Models
 
 
         public LayerType Type => LayerType.Bitmap;
+
+
+        public ICanvasImage Origin => this.OriginRenderTarget;
+        public ICanvasImage Source => this.SourceRenderTarget;
+        public ICanvasImage Temp => this.TempRenderTarget;
+
+        readonly CanvasRenderTarget OriginRenderTarget;
+        readonly CanvasRenderTarget SourceRenderTarget;
+        readonly CanvasRenderTarget TempRenderTarget;
 
 
         //@Construct
@@ -102,29 +106,52 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public void Shade(PixelShaderEffect shader, Rect rect)
+        public CanvasDrawingSession CreateSourceDrawingSession() => this.SourceRenderTarget.CreateDrawingSession();
+        public CanvasDrawingSession CreateTempDrawingSession() => this.TempRenderTarget.CreateDrawingSession();
+
+
+        public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
+        public void CopyPixels(BitmapLayer bitmapLayer) => this.SourceRenderTarget.CopyPixelsFromBitmap(bitmapLayer.TempRenderTarget);
+
+
+        public void DrawSource(ICanvasImage image)
         {
-            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(image);
+            }
+        }
+
+
+        public void Clear(Color color)
+        {
+            using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                ds.DrawImage(new CropEffect
-                {
-                    SourceRectangle = rect,
-                    Source = shader
-                });
+                ds.Clear(color);
             }
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                ds.DrawImage(new CropEffect
-                {
-                    SourceRectangle = rect,
-                    Source = this.TempRenderTarget
-                });
+                ds.Clear(color);
+            }
+        }
+
+        public void ClearTemp()
+        {
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.Clear(Colors.Transparent);
             }
         }
 

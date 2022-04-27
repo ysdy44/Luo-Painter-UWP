@@ -35,6 +35,33 @@ namespace Luo_Painter.Layers.Models
         public InkMode InkMode { get; set; }
 
 
+        public void Shade(PixelShaderEffect shader, Windows.Foundation.Rect rect)
+        {
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawImage(new CropEffect
+                {
+                    SourceRectangle = rect,
+                    Source = shader
+                });
+            }
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawImage(new CropEffect
+                {
+                    SourceRectangle = rect,
+                    Source = this.TempRenderTarget
+                });
+            }
+        }
+
+
         public CompositeEffect GetWeting(float opacity) => new CompositeEffect
         {
             Sources =
