@@ -213,6 +213,9 @@
     <Compile Include="ShyHeaderPage.xaml.cs">
       <DependentUpon>ShyHeaderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SwitchPresenterPage.xaml.cs">
+      <DependentUpon>SwitchPresenterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
     </Compile>
@@ -358,6 +361,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ShyHeaderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SwitchPresenterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

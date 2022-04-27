@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.SwitchPresenterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.TestApp"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+        <local:AnimalSwitchPresenter x:Name="SwitchPresenter" >
+            <local:AnimalCase Value="Cat">
+                🐈
+            </local:AnimalCase>
+            <local:AnimalCase Value="Dog">
+                🐕
+            </local:AnimalCase>
+            <local:AnimalCase Value="Bunny">
+                🐇
+            </local:AnimalCase>
+            <local:AnimalCase Value="Llama">
+                🦙
+            </local:AnimalCase>
+            <local:AnimalCase Value="Parrot">
+                🦜
+            </local:AnimalCase>
+            <local:AnimalCase Value="Squirrel">
+                🐿
+            </local:AnimalCase>
+        </local:AnimalSwitchPresenter>
+
+        <ListView >
+
+        </ListView>
+        
+    </Grid>
+</Page>
