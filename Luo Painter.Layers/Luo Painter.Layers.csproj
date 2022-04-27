@@ -126,6 +126,7 @@
     <Compile Include="Models\BitmapLayer.cs" />
     <Compile Include="Models\BitmapLayer.FloodSelect.cs" />
     <Compile Include="Models\BitmapLayer.History.cs" />
+    <Compile Include="Models\BitmapLayer.Paint.cs" />
     <Compile Include="Models\BitmapLayer.Region.cs" />
     <Compile Include="Models\BitmapLayer.PixelBounds.cs" />
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
