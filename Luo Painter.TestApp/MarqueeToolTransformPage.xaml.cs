@@ -22,7 +22,6 @@ namespace Luo_Painter.TestApp
         BitmapLayer BitmapLayer;
 
         Vector2 StartingPosition;
-        float Time;
         byte[] ShaderCodeBytes;
 
         public MarqueeToolTransformPage()
@@ -44,11 +43,21 @@ namespace Luo_Painter.TestApp
         public void ConstructCanvas()
         {
             //Canvas
+            this.CanvasControl.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                Vector2 size = this.CanvasControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
+                this.Transformer.ControlWidth = size.X;
+                this.Transformer.ControlHeight = size.Y;
+            };
             this.CanvasControl.UseSharedDevice = true;
             this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.BitmapLayer = new BitmapLayer(sender, 512, 512);
+                this.BitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                this.Transformer.Fit();
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasControl.Draw += (sender, args) =>
@@ -56,23 +65,29 @@ namespace Luo_Painter.TestApp
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
+                args.DrawingSession.DrawCard(new ColorSourceEffect
+                {
+                    Color = Colors.White
+                }, this.Transformer, Colors.Black);
+
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
                     Source1 = this.BitmapLayer.Source,
                     Properties =
                     {
-                        ["time"] = this.Time,
+                        ["time"] = (float)args.Timing.UpdateCount,
+                        ["lineWidth"] = sender.Dpi.ConvertDipsToPixels(2),
                         ["left"] = 0f,
                         ["top"] = 0f,
-                        ["right"] = 512f,
-                        ["bottom"] = 512f,
+                        ["right"] = (float)this.Transformer.Width,
+                        ["bottom"] = (float)this.Transformer.Height,
+                        ["matrix3x2"] = this.Transformer.GetInverseMatrix(),
                     },
                 });
             };
-            this.CanvasControl.Update += (sender, args) =>
-            {
-                this.Time++;
-            };
+            //this.CanvasControl.Update += (sender, args) =>
+            //{
+            //};
 
 
             this.ToolCanvasControl.UseSharedDevice = true;
@@ -82,7 +97,7 @@ namespace Luo_Painter.TestApp
             };
             this.ToolCanvasControl.Draw += (sender, args) =>
             {
-                Matrix3x2 matrix = this.CanvasControl.Dpi.ConvertPixelsToDips();
+                Matrix3x2 matrix = this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
                 args.DrawingSession.DrawMarqueeTool(sender, MarqueeToolType.Elliptical, this.MarqueeTool, matrix);
             };
         }
@@ -97,29 +112,79 @@ namespace Luo_Painter.TestApp
             //Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.StartingPosition = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.MarqueeTool.Start(point, MarqueeToolType.Elliptical, false, false);
+                this.StartingPosition = Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
+                this.MarqueeTool.Start(this.StartingPosition, MarqueeToolType.Elliptical, false, false);
 
                 this.CanvasControl.Paused = true;
                 this.ToolCanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                Vector2 position = Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
                 this.MarqueeTool.Delta(this.StartingPosition, position, MarqueeToolType.Elliptical, false, false);
                 this.ToolCanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
+                Vector2 position = Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
+                bool redraw = this.MarqueeTool.Complete(this.StartingPosition, position, MarqueeToolType.Elliptical, false, false);
+                if (redraw is false) return;
+
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateSourceDrawingSession())
                 {
                     ds.FillMarqueeMaskl(this.CanvasControl, MarqueeToolType.Elliptical, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
                 }
 
-                this.MarqueeTool.Complete(this.StartingPosition, point, MarqueeToolType.Elliptical, false, false);
-
                 this.CanvasControl.Paused = false;
                 this.ToolCanvasControl.Invalidate(); // Invalidate
+            };
+
+
+            // Right
+            this.Operator.Right_Start += (point) =>
+            {
+                this.Transformer.CacheMove(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Right_Delta += (point) =>
+            {
+                this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Right_Complete += (point) =>
+            {
+                this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+
+            // Double
+            this.Operator.Double_Start += (center, space) =>
+            {
+                this.Transformer.CachePinch(this.CanvasControl.Dpi.ConvertDipsToPixels(center), this.CanvasControl.Dpi.ConvertDipsToPixels(space));
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Double_Delta += (center, space) =>
+            {
+                this.Transformer.Pinch(this.CanvasControl.Dpi.ConvertDipsToPixels(center), this.CanvasControl.Dpi.ConvertDipsToPixels(space));
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Double_Complete += (center, space) =>
+            {
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+            // Wheel
+            this.Operator.Wheel_Changed += (point, space) =>
+            {
+                if (space > 0)
+                    this.Transformer.ZoomIn(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
+                else
+                    this.Transformer.ZoomOut(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
+
+                this.CanvasControl.Invalidate(); // Invalidate
             };
         }
 
