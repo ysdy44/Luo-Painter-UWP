@@ -150,26 +150,5 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-
-        public void Marquee(Vector2 position, Vector2 targetPosition, float strokeWidth, bool isErasing)
-        {
-            if (isErasing)
-            {
-                using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-                {
-                    ds.Blend = CanvasBlend.Copy;
-
-                    ds.DrawLine(position, targetPosition, Colors.Transparent, strokeWidth, PaintExtensions.CanvasStrokeStyle);
-                }
-            }
-            else
-            {
-                using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-                {
-                    ds.DrawLine(position, targetPosition, Colors.DodgerBlue, strokeWidth, PaintExtensions.CanvasStrokeStyle);
-                }
-            }
-        }
-
     }
 }
