@@ -90,8 +90,8 @@ namespace Luo_Painter.TestApp
                     Source1 = this.BitmapLayer.Source,
                     Properties =
                     {
-                        ["matrix4"] = new Matrix4x4(matrix),
-                        ["distce"] = distance,
+                        ["matrix3x2"] = matrix,
+                        ["zdistance"] = distance,
                         ["left"] = 0f,
                         ["top"] = 0f,
                         ["right"] = 512f,

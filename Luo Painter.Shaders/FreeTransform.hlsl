@@ -3,32 +3,29 @@
 #define D2D_REQUIRES_SCENE_POSITION
 #include "d2d1effecthelpers.hlsli"
 
-float4x4 matrix4;
-float2 distce;
+float3x2 matrix3x2;
+float2 zdistance;
 float left;
 float top;
 float right;
 float bottom;
 
-float2 transform(float2 p, float4x4 mat)
-{
-    float x = mat[0][0] * p.x + mat[1][0] * p.y + mat[3][0];
-    float y = mat[0][1] * p.x + mat[1][1] * p.y + mat[3][1];
-    return float2(x, y);
-}
-
 D2D_PS_ENTRY(main)
 {
+    float2 p = D2DGetScenePosition().xy;
 
-	// 当前位置
-float2 p = D2DGetScenePosition().xy;
+    float x = matrix3x2[0][0] * p.x + matrix3x2[1][0] * p.y + matrix3x2[2][0];
+    float y = matrix3x2[0][1] * p.x + matrix3x2[1][1] * p.y + matrix3x2[2][1];
 
-float2 up = transform(p, matrix4) / (1 + dot(p, distce));
-	if (up.x >= left && up.x <= right && up.y >=top && up.y <= bottom)
-	{
-float4 color = D2DSampleInputAtPosition(0, up).rgba;
-		return
-color;
-	}
-	return float4(0, 0, 0, 0);
+    float dotted = 1 + dot(p, zdistance);
+
+    float ux = x / dotted;
+    float uy = y / dotted;
+     
+    if (ux < left) return float4(0, 0, 0, 0);
+    if (ux > right) return float4(0, 0, 0, 0);
+    if (uy < top) return float4(0, 0, 0, 0);
+    if (uy > bottom) return float4(0, 0, 0, 0);
+
+    return D2DSampleInputAtPosition(0, float2(ux, uy));
 }
