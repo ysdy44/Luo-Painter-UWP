@@ -18,7 +18,7 @@
         <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
                 <local:ToolGroupingList x:Name="ToolGroupingList">
-                    <local:ToolGrouping Key="Pixel">
+                    <local:ToolGrouping Key="Marquee">
                         <tools:ToolType>MarqueeRectangular</tools:ToolType>
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
                         <tools:ToolType>MarqueePolygon</tools:ToolType>
