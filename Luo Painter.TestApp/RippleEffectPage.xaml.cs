@@ -184,8 +184,12 @@ namespace Luo_Painter.TestApp
                     ["dpi"] = 96f, // Default value 96f,
                 },
             });
-            Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsByShader((this.DifferenceShaderCodeBytes));
-            this.BitmapLayer.Hit(InterpolationColors);
+
+            this.BitmapLayer.Hit(this.BitmapLayer.GetInterpolationColors(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
+            {
+                Source1 = this.BitmapLayer.Source,
+                Source2 = this.BitmapLayer.Origin
+            }));
 
             this.CanvasControl.Invalidate(); // Invalidate
             this.OriginCanvasControl.Invalidate(); // Invalidate

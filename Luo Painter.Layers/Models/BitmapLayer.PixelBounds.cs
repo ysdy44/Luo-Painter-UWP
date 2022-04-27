@@ -105,11 +105,6 @@ namespace Luo_Painter.Layers.Models
                 Background = this.Origin
             }
         });
-        public Color[] GetInterpolationColorsByShader(byte[] shaderCode) => this.GetInterpolationColors(new PixelShaderEffect(shaderCode)
-        {
-            Source1 = this.Source,
-            Source2 = this.Origin
-        });
         public Color[] GetInterpolationColors(IGraphicsEffectSource source)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())

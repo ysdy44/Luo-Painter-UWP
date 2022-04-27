@@ -186,8 +186,13 @@ namespace Luo_Painter
             if (type.HasDifference())
             {
                 bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
-                bitmapLayer.Hit(bitmapLayer.GetInterpolationColorsByShader(this.DifferenceShaderCodeBytes));
+                bitmapLayer.Hit(bitmapLayer.GetInterpolationColors(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
+                {
+                    Source1 = bitmapLayer.Source,
+                    Source2 = bitmapLayer.Origin
+                }));
 
+                // History
                 int removes = this.History.Push(bitmapLayer.GetBitmapHistory());
                 bitmapLayer.Flush();
                 bitmapLayer.RenderThumbnail();
