@@ -360,6 +360,7 @@ namespace Luo_Painter
         byte[] GradientMappingShaderCodeBytes;
         byte[] RippleEffectShaderCodeBytes;
         byte[] DifferenceShaderCodeBytes;
+        byte[] DottedLineTransformShaderCodeBytes;
 
         private async Task CreateResourcesAsync()
         {
@@ -368,6 +369,10 @@ namespace Luo_Painter
             this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
             this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
             this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
+        }
+        private async Task CreateDottedLineResourcesAsync()
+        {
+            this.DottedLineTransformShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
         }
 
         public DrawPage()

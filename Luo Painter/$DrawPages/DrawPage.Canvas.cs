@@ -53,80 +53,37 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class DottedLine
-    {
-        public readonly CanvasLinearGradientBrush DottedLineBrush;
-        public Matrix3x2 DottedLineTransform = Matrix3x2.Identity;
-
-        public DottedLine(ICanvasResourceCreator resourceCreator)
-        {
-            this.DottedLineBrush = new CanvasLinearGradientBrush(resourceCreator, new CanvasGradientStop[]
-            {
-                new CanvasGradientStop
-                {
-                    Color = Windows.UI.Colors.White,
-                    Position = 0
-                },
-                new CanvasGradientStop
-                {
-                    Color = Windows.UI.Colors.Black,
-                    Position = 1
-                }
-            }, CanvasEdgeBehavior.Mirror, CanvasAlphaMode.Premultiplied)
-            {
-                StartPoint = Vector2.Zero,
-                EndPoint = new Vector2(12)
-            };
-        }
-        public void Draw(CanvasDrawingSession ds, CanvasTransformer transformer, IGraphicsEffectSource source)
-        {
-            //@DPI 
-            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-            ds.DrawImage(new InvertEffect
-            {
-                Source = new LuminanceToAlphaEffect//Alpha
-                {
-                    Source = new EdgeDetectionEffect//Edge
-                    {
-                        Amount = 1,
-                        Source = new Transform2DEffect
-                        {
-                            BorderMode = EffectBorderMode.Hard,
-                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                            TransformMatrix = transformer.GetMatrix(),
-                            Source = source
-                        }
-                    }
-                }
-            });
-
-            ds.Blend = CanvasBlend.Min;
-            ds.FillRectangle(0, 0, transformer.ControlWidth, transformer.ControlHeight, this.DottedLineBrush);
-        }
-        public void Update()
-        {
-            this.DottedLineTransform.M31--;
-            this.DottedLineTransform.M32--;
-            this.DottedLineBrush.Transform = this.DottedLineTransform;
-        }
-    }
-
     public sealed partial class DrawPage : Page
     {
 
         Mesh Mesh;
-        DottedLine DottedLine;
 
         private void ConstructCanvas()
         {
             this.CanvasAnimatedControl.CreateResources += (sender, args) =>
             {
-                this.DottedLine = new DottedLine(sender);
                 this.Marquee = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                args.TrackAsyncAction(this.CreateDottedLineResourcesAsync().AsAsyncAction());
             };
             this.CanvasAnimatedControl.Draw += (sender, args) =>
             {
-                this.DottedLine.Draw(args.DrawingSession, this.Transformer, this.Marquee.Source);
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                args.DrawingSession.DrawImage(new PixelShaderEffect(this.DottedLineTransformShaderCodeBytes)
+                {
+                    Source1 = this.Marquee.Source,
+                    Properties =
+                    {
+                        ["time"] = (float)args.Timing.UpdateCount,
+                        ["lineWidth"] = sender.Dpi.ConvertDipsToPixels(2),
+                        ["left"] = 0f,
+                        ["top"] = 0f,
+                        ["right"] = (float)this.Transformer.Width,
+                        ["bottom"] = (float)this.Transformer.Height,
+                        ["matrix3x2"] = this.Transformer.GetInverseMatrix(),
+                    },
+                });
 
                 if (this.MarqueeToolType == MarqueeToolType.None) return;
 
@@ -135,7 +92,9 @@ namespace Luo_Painter
                 args.DrawingSession.Blend = CanvasBlend.Copy;
                 args.DrawingSession.DrawMarqueeTool(sender, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
             };
-            this.CanvasAnimatedControl.Update += (sender, args) => this.DottedLine.Update();
+            //this.CanvasAnimatedControl.Update += (sender, args) =>
+            //{
+            //};
 
             this.CanvasControl.SizeChanged += (s, e) =>
             {
