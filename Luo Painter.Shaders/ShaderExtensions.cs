@@ -30,6 +30,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.RippleEffect: return "ms-appx:///Luo Painter.Shaders/RippleEffect.bin";
                 case ShaderType.Difference: return "ms-appx:///Luo Painter.Shaders/Difference.bin";
                 case ShaderType.ColorMatch: return "ms-appx:///Luo Painter.Shaders/ColorMatch.txt";
+                case ShaderType.DottedLineTransform: return "ms-appx:///Luo Painter.Shaders/DottedLineTransform.bin";
                 default: return null;
             }
         }
