@@ -15,14 +15,14 @@ namespace Luo_Painter.Layers.Models
                 {
                     ds.Blend = CanvasBlend.Copy;
 
-                    ds.DrawLine(position, targetPosition, Colors.Transparent, strokeWidth, PaintExtensions.CanvasStrokeStyle);
+                    ds.DrawLine(position, targetPosition, Colors.Transparent, strokeWidth, BitmapLayer.CanvasStrokeStyle);
                 }
             }
             else
             {
                 using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
                 {
-                    ds.DrawLine(position, targetPosition, Colors.DodgerBlue, strokeWidth, PaintExtensions.CanvasStrokeStyle);
+                    ds.DrawLine(position, targetPosition, Colors.DodgerBlue, strokeWidth, BitmapLayer.CanvasStrokeStyle);
                 }
             }
         }
