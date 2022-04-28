@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.DirectionDistancePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Luo_Painter.TestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <canvas:CanvasControl  x:Name="originalCanvas"></canvas:CanvasControl>
+            <canvas:CanvasControl Background="Black" Grid.Column="1" x:Name="effectCanvas"></canvas:CanvasControl>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button x:Name="selectPicture" Content="选择图片"></Button>
+            <Button x:Name="action" Content="执行"></Button>
+            <Slider Width="200" Header="距离" Value="20" x:Name="disSlider"></Slider>
+        </StackPanel>
+    </Grid>
+</Page>
