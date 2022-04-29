@@ -26,6 +26,7 @@
             <Button x:Name="selectPicture" Content="选择图片"></Button>
             <Button x:Name="action" Content="执行"></Button>
             <Slider Width="200" Header="距离" Value="20" x:Name="disSlider"></Slider>
+            <Button Content="导出" x:Name="export"></Button>
         </StackPanel>
     </Grid>
 </Page>

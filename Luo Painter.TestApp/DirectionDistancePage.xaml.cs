@@ -12,6 +12,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -39,15 +40,64 @@ namespace Luo_Painter.TestApp
         public DirectionDistancePage()
         {
             this.InitializeComponent();
-            Init();
+            InitCanvas();
+            InitButton();
         }
 
-        private void Init()
+        void InitButton()
         {
             selectPicture.Click += (s, e) =>
             {
                 SingleImage();
             };
+
+            action.Click += (s, e) =>
+            {
+                if (originalImage == null)
+                    return;
+                GenarateDirectionDistanceEffect();
+            };
+
+            export.Click += async (s, e) =>
+            {
+                if (effectImage == null)
+                    return;
+                FileSavePicker savePicker = new FileSavePicker
+                {
+                    DefaultFileExtension = ".png",
+                    SuggestedFileName = "有向距离场",
+                    SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+                    FileTypeChoices =
+                {
+                    ["png"] = new List<string>
+                    {
+                        ".png"
+                    },
+                    ["jpg"]=new List<string>
+                    {
+                        ".jpg"
+                    }
+                }
+                };
+
+                StorageFile saveFile = await savePicker.PickSaveFileAsync();
+                if(saveFile != null)
+                {
+                    var type = saveFile.FileType == ".png" ? CanvasBitmapFileFormat.Png : CanvasBitmapFileFormat.Jpeg;
+
+                    using (IRandomAccessStream stream = await saveFile.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        await effectImage.SaveAsync(stream, type);
+                        await stream.FlushAsync();
+                    }
+                    
+                }
+
+            };
+        }
+        private void InitCanvas()
+        {
+
 
             originalCanvas.Draw += (s, e) =>
             {
@@ -55,7 +105,6 @@ namespace Luo_Painter.TestApp
                     return;
                 e.DrawingSession.DrawImage(originalImage);
             };
-
             bool pressed = false;
             Point pos = new Point();
             float scale = 1f;
@@ -124,12 +173,7 @@ namespace Luo_Painter.TestApp
             };
 
 
-            action.Click += (s, e) =>
-            {
-                if (originalImage == null)
-                    return;
-                GenarateDirectionDistanceEffect();
-            };
+
         }
 
         void GenarateDirectionDistanceEffect()
@@ -171,7 +215,7 @@ namespace Luo_Painter.TestApp
             }
 
             //由左，从下至上寻找 这是有问题后多加的循环
-            for (int x = 0;x<imageWidth;x++)
+            for (int x = 0; x < imageWidth; x++)
             {
                 for (int y = imageHeight - 1; y >= 0; y--)
                 {
@@ -201,9 +245,9 @@ namespace Luo_Painter.TestApp
                 }
             }
             //由右，从下至上寻找 这是有问题后多加的循环
-            for (int x = imageWidth-1; x >0; x--)
+            for (int x = imageWidth - 1; x > 0; x--)
             {
-                for (int y = 0;y<imageHeight;y++)
+                for (int y = 0; y < imageHeight; y++)
                 {
                     var item = distanceDatas[x, y];
                     int index = x + imageWidth * y;
@@ -239,7 +283,7 @@ namespace Luo_Painter.TestApp
                     int index = x + imageWidth * y;
                     if (item.Color.R < 255)
                     {
-                        targetColor[index] = Colors.Red;
+                        targetColor[index] = Colors.Black;
                         continue;
                     }
                     //左边
@@ -255,7 +299,7 @@ namespace Luo_Painter.TestApp
                     if (item.Distance < double.PositiveInfinity)
                     {
                         Color color = ShaderFunction.Lerp(Colors.Black, Colors.White, ShaderFunction.Smoothstep(0, distance, item.Distance));
-       
+
                         targetColor[index] = color;
                     }
                 }
