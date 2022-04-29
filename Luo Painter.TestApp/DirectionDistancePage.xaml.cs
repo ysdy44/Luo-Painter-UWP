@@ -79,20 +79,16 @@ namespace Luo_Painter.TestApp
                     }
                 }
                 };
-
                 StorageFile saveFile = await savePicker.PickSaveFileAsync();
                 if(saveFile != null)
                 {
                     var type = saveFile.FileType == ".png" ? CanvasBitmapFileFormat.Png : CanvasBitmapFileFormat.Jpeg;
-
                     using (IRandomAccessStream stream = await saveFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
                         await effectImage.SaveAsync(stream, type);
                         await stream.FlushAsync();
                     }
-                    
                 }
-
             };
         }
         private void InitCanvas()
