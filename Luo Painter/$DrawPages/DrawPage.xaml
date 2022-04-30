@@ -482,12 +482,14 @@
                     </Button>
                 </StackPanel>
 
-                <Slider x:Name="OpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
+                <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" >
                     <FrameworkElement.Tag>
                         Opacity
                     </FrameworkElement.Tag>
                     <Slider.Header>
-                        <Button Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" >
+                        <Button Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" 
+                                Padding="4,0" MinWidth="44" Height="28"
+                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -496,8 +498,6 @@
                         </Button>
                     </Slider.Header>
                 </Slider>
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                 <ListView x:Name="BlendModeListView" 
                           IsItemClickEnabled="True"                    
@@ -539,16 +539,18 @@
                 <local:ToolGroupCase GroupValue="Paint">
                     <StackPanel>
 
-                        <Button x:Name="PaintRenderButton" Width="Auto" Height="Auto" Background="Transparent" >
+                        <Button x:Name="PaintRenderButton" Style="{StaticResource TextBlockButtonStyle}">
                             <canvas:CanvasControl x:Name="PaintCanvasControl" Width="320" Height="80" />
                         </Button>
 
-                        <Slider x:Name="PaintSizeSlider" Height="44" Value="22" Minimum="1" Maximum="500" >
+                        <Slider x:Name="PaintSizeSlider" Value="22" Minimum="1" Maximum="500" >
                             <FrameworkElement.Tag>
                                 Size
                             </FrameworkElement.Tag>
                             <Slider.Header>
-                                <Button Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" >
+                                <Button Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" 
+                                        Padding="4,0" MinWidth="44" Height="28"
+                                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                     <Button.Flyout>
                                         <Flyout>
 
@@ -558,12 +560,14 @@
                             </Slider.Header>
                         </Slider>
 
-                        <Slider x:Name="PaintOpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
+                        <Slider x:Name="PaintOpacitySlider" Value="100" Minimum="0" Maximum="100" >
                             <FrameworkElement.Tag>
                                 Opacity
                             </FrameworkElement.Tag>
                             <Slider.Header>
-                                <Button Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" >
+                                <Button Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" 
+                                        Padding="4,0" MinWidth="44" Height="28"
+                                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                     <Button.Flyout>
                                         <Flyout>
 
@@ -572,8 +576,6 @@
                                 </Button>
                             </Slider.Header>
                         </Slider>
-
-                        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
                         <ListView x:Name="PaintBlendModeListView" 
                               CornerRadius="4"                           
@@ -720,7 +722,7 @@
 
 
         <!--Head-->
-        <Button x:Name="UnFullScreenButton" IsEnabled="False" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <Button x:Name="UnFullScreenButton" IsEnabled="False" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource AppButtonStyle}">
             <UIElement.KeyboardAccelerators>
                 <KeyboardAccelerator Modifiers="None" Key="Escape"/>
             </UIElement.KeyboardAccelerators>
@@ -736,7 +738,7 @@
             </UIElement.RenderTransform>
 
             <StackPanel Orientation="Horizontal">
-                <Button Foreground="Black" Background="#FFC003">
+                <Button Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Q"/>
                     </UIElement.KeyboardAccelerators>
@@ -877,10 +879,10 @@
                     </Button.Flyout>
                     <SymbolIcon Symbol="NewWindow"/>
                 </Button>
-                <Button x:Name="SettingButton" >
+                <Button x:Name="SettingButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <SymbolIcon Symbol="Setting"/>
                 </Button>
-                <Button x:Name="FullScreenButton" >
+                <Button x:Name="FullScreenButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                     </UIElement.KeyboardAccelerators>
@@ -888,19 +890,19 @@
                 </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="UndoButton" IsEnabled="False">
+                <Button x:Name="UndoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                     </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Undo"/>
                 </Button>
-                <Button x:Name="RedoButton" IsEnabled="False">
+                <Button x:Name="RedoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                     </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
-                <Button x:Name="ColorButton" Background="{ThemeResource AppBackgroundLight}" >
+                <Button x:Name="ColorButton" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="E"/>
                     </UIElement.KeyboardAccelerators>
@@ -923,7 +925,7 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button x:Name="StrawButton" Width="Auto" Height="Auto">
+                                    <Button x:Name="StrawButton" Width="Auto" Height="Auto" Style="{StaticResource TextBlockButtonStyle}">
                                         <UIElement.ManipulationMode>
                                             TranslateX, TranslateY
                                         </UIElement.ManipulationMode>
@@ -974,7 +976,7 @@
 
             <!--Option-->
             <StackPanel Orientation= "Horizontal" HorizontalAlignment= "Center" >
-                <Button x:Name= "EditButton" Background= "{ThemeResource AppBackgroundLight}" >
+                <Button x:Name= "EditButton" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators >
                         <KeyboardAccelerator Modifiers= "None" Key= "G" />
                     </UIElement.KeyboardAccelerators >
@@ -986,7 +988,7 @@
                         </PathIcon>
                     </Viewbox>
                 </Button>
-                <Button x:Name= "OptionButton" Background="{ThemeResource AppBackgroundLight}" >
+                <Button x:Name= "OptionButton" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="W"/>
                     </UIElement.KeyboardAccelerators>
@@ -1072,7 +1074,7 @@
                         <FontIcon Canvas.Left="18" Canvas.Top="16" Opacity="0.8" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
                     </Canvas>
                 </Button>
-                <Button Background="{ThemeResource AppBackgroundLight}" >
+                <Button Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="T"/>
                     </UIElement.KeyboardAccelerators>
@@ -1169,7 +1171,7 @@
                 </local:ToolGroupCase>
             </local:ToolGroupSwitchPresenter>
 
-            <Button x:Name="LayerButton" HorizontalAlignment="Right" Background="{ThemeResource AppBackgroundLight}" >
+            <Button x:Name="LayerButton" HorizontalAlignment="Right" Style="{StaticResource AppButtonStyle}">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="D"/>
                 </UIElement.KeyboardAccelerators>
@@ -1188,7 +1190,7 @@
                 </PathIcon>
             </Button>
 
-            <Button x:Name="ToolButton" HorizontalAlignment="Left" Background="{ThemeResource AppBackgroundLight}" >
+            <Button x:Name="ToolButton" HorizontalAlignment="Left" Style="{StaticResource AppButtonStyle}">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="A"/>
                 </UIElement.KeyboardAccelerators>
@@ -1212,7 +1214,7 @@
 
 
         <!--Tool-->
-        <Grid Margin="0,50" Width="210" MinHeight="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
+        <Grid Margin="0,49" Width="211" MinHeight="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -1302,7 +1304,7 @@
 
             </ListView>
 
-            <Button x:Name="SplitToolButton" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="SplitToolButton" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
                 <UIElement.ManipulationMode>
                     TranslateX
                 </UIElement.ManipulationMode>
@@ -1313,7 +1315,7 @@
 
 
         <!--Layer-->
-        <Grid Margin="0,50" Width="210" MinHeight="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
+        <Grid Margin="0,49" Width="211" MinHeight="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -1417,14 +1419,14 @@
                 <SymbolIcon Symbol="View"/>
             </Button>
 
-            <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource AppButtonStyle}">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Insert"/>
                 </UIElement.KeyboardAccelerators>
                 <SymbolIcon Symbol="Add"/>
             </Button>
 
-            <Button x:Name="SplitLayerButton" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button x:Name="SplitLayerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
                 <UIElement.ManipulationMode>
                     TranslateX
                 </UIElement.ManipulationMode>
@@ -1459,10 +1461,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="OptionPrimaryButton" Grid.Column="2">
+                <Button x:Name="OptionPrimaryButton" Grid.Column="2" Style="{StaticResource AppButtonStyle}">
                     <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Button x:Name="OptionSecondaryButton" IsEnabled="False">
+                <Button x:Name="OptionSecondaryButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                     </UIElement.KeyboardAccelerators>
@@ -1532,8 +1534,9 @@
                     Exposure
                 </Slider.Tag>
                 <Slider.Header>
-                    <Button x:Name="ExposureButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind ExposureSlider.Value, Mode=OneWay}">
+                    <Button x:Name="ExposureButton" Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
+                            Padding="4,0" MinWidth="70" Height="28"
+                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -1554,8 +1557,9 @@
                     Brightness
                 </Slider.Tag>
                 <Slider.Header>
-                    <Button x:Name="BrightnessButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}">
+                    <Button x:Name="BrightnessButton" Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
+                            Padding="4,0" MinWidth="70" Height="28"
+                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -1576,8 +1580,9 @@
                     Saturation
                 </Slider.Tag>
                 <Slider.Header>
-                    <Button x:Name="SaturationButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind SaturationSlider.Value, Mode=OneWay}">
+                    <Button x:Name="SaturationButton" Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
+                            Padding="4,0" MinWidth="70" Height="28"
+                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -1605,8 +1610,9 @@
                     HueRotation
                 </Slider.Tag>
                 <Slider.Header>
-                    <Button x:Name="HueRotationButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}">
+                    <Button x:Name="HueRotationButton" Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
+                            Padding="4,0" MinWidth="70" Height="28"
+                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -1636,8 +1642,9 @@
                     Contrast
                 </Slider.Tag>
                 <Slider.Header>
-                    <Button x:Name="ContrastButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind ContrastSlider.Value, Mode=OneWay}">
+                    <Button x:Name="ContrastButton" Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
+                            Padding="4,0" MinWidth="70" Height="28"
+                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -1660,8 +1667,9 @@
                         Temperature
                     </Slider.Tag>
                     <Slider.Header>
-                        <Button x:Name="TemperatureButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}">
+                        <Button x:Name="TemperatureButton" Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" MinWidth="70" Height="28"
+                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -1682,8 +1690,9 @@
                         Tint
                     </Slider.Tag>
                     <Slider.Header>
-                        <Button x:Name="TintButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind TintSlider.Value, Mode=OneWay}">
+                        <Button x:Name="TintButton" Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" MinWidth="70" Height="28"
+                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -1707,8 +1716,9 @@
                             Shadows
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="ShadowsButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}">
+                            <Button x:Name="ShadowsButton" Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
                                     <Flyout>
 
@@ -1728,8 +1738,9 @@
                             Highlights
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="HighlightsButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}">
+                            <Button x:Name="HighlightsButton" Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
                                     <Flyout>
 
@@ -1745,8 +1756,9 @@
                             Clarity
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="ClarityButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind ClaritySlider.Value, Mode=OneWay}">
+                            <Button x:Name="ClarityButton" Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
                                     <Flyout>
 
@@ -1760,8 +1772,9 @@
                             Blur
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="BlurButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind BlurSlider.Value, Mode=OneWay}">
+                            <Button x:Name="BlurButton" Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
                                     <Flyout>
 
@@ -1779,8 +1792,9 @@
                         Frequency
                     </Slider.Tag>
                     <Slider.Header>
-                        <Button x:Name="FrequencyButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind FrequencySlider.Value, Mode=OneWay}">
+                        <Button x:Name="FrequencyButton" Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -1794,8 +1808,9 @@
                         Phase
                     </Slider.Tag>
                     <Slider.Header>
-                        <Button x:Name="PhaseButton" IsEnabled="False" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind PhaseSlider.Value, Mode=OneWay}">
+                        <Button x:Name="PhaseButton" Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -1809,8 +1824,9 @@
                         Amplitude
                     </Slider.Tag>
                     <Slider.Header>
-                        <Button x:Name="AmplitudeButton" Height="Auto" Background="{ThemeResource AppBackground}"
-                                    Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}">
+                        <Button x:Name="AmplitudeButton" Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                             <Button.Flyout>
                                 <Flyout>
 
@@ -1852,8 +1868,10 @@
                 </TextBlock>
                 <Slider x:Name="RadianSlider" Value="{x:Bind RadianRange.Range.Default}" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}">
                     <Slider.Header>
-                        <Button x:Name="RadianClearButton" >
-                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                        <Button x:Name="RadianClearButton" 
+                                Padding="4,0" MinWidth="44" Height="28"
+                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                            <TextBlock>
                                 <Run Text="{x:Bind RoundConverter(RadianSlider.Value), Mode=OneWay}"/><Run>º</Run>
                             </TextBlock>
                         </Button>
@@ -1866,8 +1884,10 @@
                 </TextBlock>
                 <Slider x:Name="ScaleSlider" Value="{x:Bind ScaleRange.XRange.Default}" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}">
                     <Slider.Header>
-                        <Button x:Name="ScaleClearButton" >
-                            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                        <Button x:Name="ScaleClearButton" 
+                                Padding="4,0" MinWidth="44" Height="28"
+                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                            <TextBlock>
                                 <Run Text="{x:Bind ScaleXToYConverter(ScaleSlider.Value), Mode=OneWay}"/><Run>%</Run>
                             </TextBlock>
                         </Button>
