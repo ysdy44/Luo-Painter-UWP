@@ -96,9 +96,10 @@ namespace Luo_Painter.Elements
                     if (item.Value.Equals(value))
                     {
                         base.Content = item.Content;
-                        break;
+                        return;
                     }
                 }
+                base.Content = null;
             }
         }
     }

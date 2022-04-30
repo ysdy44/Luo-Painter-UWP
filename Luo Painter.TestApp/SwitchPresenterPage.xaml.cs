@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
 namespace Luo_Painter.TestApp
@@ -25,6 +26,14 @@ namespace Luo_Painter.TestApp
         {
             this.InitializeComponent();
             this.SwitchPresenter.Value = Animal.Cat;
+            this.ListView.ItemsSource = Enum.GetValues(typeof(Animal));
+            this.ListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is Animal item)
+                {
+                    this.SwitchPresenter.Value = item;
+                }
+            };
         }
     }
 }

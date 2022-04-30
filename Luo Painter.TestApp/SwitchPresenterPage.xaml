@@ -9,31 +9,38 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <Grid>
-        <local:AnimalSwitchPresenter x:Name="SwitchPresenter" >
-            <local:AnimalCase Value="Cat">
-                🐈
-            </local:AnimalCase>
-            <local:AnimalCase Value="Dog">
-                🐕
-            </local:AnimalCase>
-            <local:AnimalCase Value="Bunny">
-                🐇
-            </local:AnimalCase>
-            <local:AnimalCase Value="Llama">
-                🦙
-            </local:AnimalCase>
-            <local:AnimalCase Value="Parrot">
-                🦜
-            </local:AnimalCase>
-            <local:AnimalCase Value="Squirrel">
-                🐿
-            </local:AnimalCase>
-        </local:AnimalSwitchPresenter>
+    <ListView x:Name="ListView" Grid.Row="1" IsItemClickEnabled="True">
+        <ListView.Header>
+            <Border 
+                Margin="12" MaxWidth="400" MaxHeight="400"
+                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <Viewbox>
+                    <local:AnimalSwitchPresenter x:Name="SwitchPresenter" >
+                        <local:AnimalCase Value="Cat" >
+                            🐈
+                        </local:AnimalCase>
+                        <local:AnimalCase Value="Dog">
+                            🐕
+                        </local:AnimalCase>
+                        <local:AnimalCase Value="Bunny">
+                            🐇
+                        </local:AnimalCase>
+                        <local:AnimalCase Value="Llama">
+                            🦙
+                        </local:AnimalCase>
+                        <local:AnimalCase Value="Parrot">
+                            🦜
+                        </local:AnimalCase>
+                        <local:AnimalCase Value="Squirrel">
+                            🐿
+                        </local:AnimalCase>
+                    </local:AnimalSwitchPresenter>
+                </Viewbox>
+            </Border>
 
-        <ListView >
+        </ListView.Header>
+        <!--Animals-->
+    </ListView>
 
-        </ListView>
-        
-    </Grid>
 </Page>
