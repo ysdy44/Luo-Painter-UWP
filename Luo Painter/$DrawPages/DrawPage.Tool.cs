@@ -20,24 +20,10 @@ namespace Luo_Painter
             // ToolIcon
             this.ToolResource.Source = new Uri(type.GetResource());
             this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
-        }
-        private void SetToolGroupType(ToolGroupType groupType)
-        {
-            // Brush
-            Color color = groupType.GetColor();
-            foreach (SolidColorBrush item in this.ApplicationBrushes)
-            {
-                item.Color = color;
-            }
 
-            // FootGrid
-            this.MarqueePanel2.Visibility =
-            groupType == ToolGroupType.Marquee ? Visibility.Visible : Visibility.Collapsed;
-
-            // FootGrid
-            this.PaintBrushPanel.Visibility =
-            this.PaintBrushPanel2.Visibility =
-            groupType == ToolGroupType.Paint ? Visibility.Visible : Visibility.Collapsed;
+            ToolGroupType groupType = this.ToolCollection[type];
+            this.ToolGroupSwitchPresenter.EvaluateCases(groupType, type);
+            this.ToolGroupSwitchPresenter2.EvaluateCases(groupType, type);
         }
 
 
@@ -50,8 +36,7 @@ namespace Luo_Painter
             };
 
             this.SetToolType(this.ToolType);
-            this.SetToolGroupType(this.ToolGroupType);
-            this.ToolListView.SelectedIndex = this.ToolCollection.IndexOf(ToolType.PaintBrush);
+            this.ToolListView.SelectedIndex = this.ToolCollection.IndexOf(this.ToolType);
             this.ToolListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is ToolType item)
@@ -59,12 +44,6 @@ namespace Luo_Painter
                     if (this.ToolType == item) return;
                     this.ToolType = item;
                     this.SetToolType(item);
-
-                    ToolGroupType groupType = this.ToolCollection[item];
-
-                    if (this.ToolGroupType == groupType) return;
-                    this.ToolGroupType = groupType;
-                    this.SetToolGroupType(groupType);
                 }
             };
         }

@@ -535,46 +535,47 @@
             </StackPanel>
         </Flyout>
         <Flyout x:Name="ToolFlyout" Placement="Left">
-            <Grid Width="320">
-                <StackPanel x:Name="PaintBrushPanel" Visibility="Collapsed">
+            <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
+                <local:ToolGroupCase GroupValue="Paint">
+                    <StackPanel>
 
-                    <Button x:Name="PaintRenderButton" Width="Auto" Height="Auto" Background="Transparent" >
-                        <canvas:CanvasControl x:Name="PaintCanvasControl" Width="320" Height="80" />
-                    </Button>
+                        <Button x:Name="PaintRenderButton" Width="Auto" Height="Auto" Background="Transparent" >
+                            <canvas:CanvasControl x:Name="PaintCanvasControl" Width="320" Height="80" />
+                        </Button>
 
-                    <Slider x:Name="PaintSizeSlider" Height="44" Value="22" Minimum="1" Maximum="500" >
-                        <FrameworkElement.Tag>
-                            Size
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" >
-                                <Button.Flyout>
-                                    <Flyout>
+                        <Slider x:Name="PaintSizeSlider" Height="44" Value="22" Minimum="1" Maximum="500" >
+                            <FrameworkElement.Tag>
+                                Size
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button Content="{x:Bind PaintSizeSlider.Value, Mode=OneWay}" >
+                                    <Button.Flyout>
+                                        <Flyout>
 
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
 
-                    <Slider x:Name="PaintOpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
-                        <FrameworkElement.Tag>
-                            Opacity
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" >
-                                <Button.Flyout>
-                                    <Flyout>
+                        <Slider x:Name="PaintOpacitySlider" Height="44" Value="100" Minimum="0" Maximum="100" >
+                            <FrameworkElement.Tag>
+                                Opacity
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button Content="{x:Bind PaintOpacitySlider.Value, Mode=OneWay}" >
+                                    <Button.Flyout>
+                                        <Flyout>
 
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
 
-                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+                        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
-                    <ListView x:Name="PaintBlendModeListView" 
+                        <ListView x:Name="PaintBlendModeListView" 
                               CornerRadius="4"                           
                               BorderThickness="1"                             
                               BorderBrush="{ThemeResource AppStroke}"                             
@@ -584,33 +585,34 @@
                               ScrollViewer.VerticalScrollBarVisibility="Hidden"                        
                               ItemsSource="{x:Bind BlendCollection}" >
 
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="MinWidth" Value="70"/>
-                                <Setter Property="MinHeight" Value="40"/>
-                                <Setter Property="Height" Value="40"/>
-                                <Setter Property="Padding" Value="20,4"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="MinWidth" Value="70"/>
+                                    <Setter Property="MinHeight" Value="40"/>
+                                    <Setter Property="Height" Value="40"/>
+                                    <Setter Property="Padding" Value="20,4"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
 
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection>
+                            <ItemsControl.ItemContainerTransitions>
+                                <TransitionCollection>
 
-                            </TransitionCollection>
-                        </ItemsControl.ItemContainerTransitions>
+                                </TransitionCollection>
+                            </ItemsControl.ItemContainerTransitions>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="effects:BlendEffectMode">
-                                <local:BlendIcon Type="{x:Bind}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="effects:BlendEffectMode">
+                                    <local:BlendIcon Type="{x:Bind}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                    </ListView>
-                </StackPanel>
-            </Grid>
+                        </ListView>
+                    </StackPanel>
+                </local:ToolGroupCase>
+            </local:ToolGroupSwitchPresenter>
         </Flyout>
     </FrameworkElement.Resources>
 
@@ -1133,35 +1135,39 @@
                 <TranslateTransform x:Name="FootTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <Grid x:Name="PaintBrushPanel2" Visibility="Collapsed" Margin="70,0" MaxWidth="720" Padding="8,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Slider x:Name="PaintSizeSlider2" Grid.Column="0" Value="22" Minimum="1" Maximum="500" >
-                </Slider>
-                <Slider x:Name="PaintOpacitySlider2" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
-                </Slider>
-            </Grid>
-            <Grid x:Name="MarqueePanel2" Visibility="Collapsed" Margin="70,0" MaxWidth="720" Padding="8,0">
-                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0">
-                    <FontIcon Glyph="&#xE002;" FontSize="14" FontFamily="Segoe UI Symbol" />
-                    <Canvas Width="25" Height="25" >
-                        <FontIcon Canvas.Left="-1" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
-                        <FontIcon Canvas.Left="7" Canvas.Top="8" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
-                    </Canvas>
-                    <Canvas Width="25" Height="25" >
-                        <FontIcon Canvas.Top="-6" Glyph="&#x259B;" FontSize="18" FontFamily="Segoe UI Symbol" />
-                        <FontIcon Canvas.Left="7" Canvas.Top="7" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
-                    </Canvas>
-                    <Canvas Width="24" Height="24" >
-                        <FontIcon Canvas.Left="0" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
-                        <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
-                        <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE002;" FontSize="8" FontFamily="Segoe UI Symbol" />
-                    </Canvas>
-                </ListBox>
-            </Grid>
+            <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter2" Margin="70,0" MaxWidth="720" Padding="8,0" >
+                <local:ToolGroupCase GroupValue="Paint">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider x:Name="PaintSizeSlider2" Grid.Column="0" Value="22" Minimum="1" Maximum="500" >
+                        </Slider>
+                        <Slider x:Name="PaintOpacitySlider2" Grid.Column="2" Value="100" Minimum="0" Maximum="100" >
+                        </Slider>
+                    </Grid>
+                </local:ToolGroupCase>
+                <local:ToolGroupCase GroupValue="Marquee">
+                    <ListBox x:Name="MarqueeComboBox" SelectedIndex="0">
+                        <FontIcon Glyph="&#xE002;" FontSize="14" FontFamily="Segoe UI Symbol" />
+                        <Canvas Width="25" Height="25" >
+                            <FontIcon Canvas.Left="-1" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                            <FontIcon Canvas.Left="7" Canvas.Top="8" Glyph="&#xE002;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        </Canvas>
+                        <Canvas Width="25" Height="25" >
+                            <FontIcon Canvas.Top="-6" Glyph="&#x259B;" FontSize="18" FontFamily="Segoe UI Symbol" />
+                            <FontIcon Canvas.Left="7" Canvas.Top="7" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                        </Canvas>
+                        <Canvas Width="24" Height="24" >
+                            <FontIcon Canvas.Left="0" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                            <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+                            <FontIcon Canvas.Left="6" Canvas.Top="6" Glyph="&#xE002;" FontSize="8" FontFamily="Segoe UI Symbol" />
+                        </Canvas>
+                    </ListBox>
+                </local:ToolGroupCase>
+            </local:ToolGroupSwitchPresenter>
 
             <Button x:Name="LayerButton" HorizontalAlignment="Right" Background="{ThemeResource AppBackgroundLight}" >
                 <UIElement.KeyboardAccelerators>
@@ -1788,7 +1794,7 @@
                         Phase
                     </Slider.Tag>
                     <Slider.Header>
-                        <Button x:Name="PhaseButton" Height="Auto" Background="{ThemeResource AppBackground}"
+                        <Button x:Name="PhaseButton" IsEnabled="False" Height="Auto" Background="{ThemeResource AppBackground}"
                                     Content="{x:Bind PhaseSlider.Value, Mode=OneWay}">
                             <Button.Flyout>
                                 <Flyout>

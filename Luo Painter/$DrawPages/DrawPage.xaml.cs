@@ -20,6 +20,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -315,6 +316,13 @@ namespace Luo_Painter
     }
 
 
+    [ContentProperty(Name = nameof(Content))]
+    internal class ToolGroupCase : GroupCase<ToolGroupType, ToolType> { }
+
+    [ContentProperty(Name = nameof(SwitchCases))]
+    internal class ToolGroupSwitchPresenter : SwitchGroupPresenter<ToolGroupType, ToolType> { }
+
+
     public sealed partial class DrawPage : Page
     {
 
@@ -353,7 +361,6 @@ namespace Luo_Painter
         BitmapLayer Marquee { get; set; }
         OptionType OptionType { get; set; } = OptionType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
-        ToolGroupType ToolGroupType { get; set; } = ToolGroupType.Paint;
 
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTransformShaderCodeBytes;
