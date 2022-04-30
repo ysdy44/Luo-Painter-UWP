@@ -165,9 +165,6 @@
                         <tools:ToolType>PaintPencil</tools:ToolType>
                         <tools:ToolType>PaintEraseBrush</tools:ToolType>
                         <tools:ToolType>PaintLiquefaction</tools:ToolType>
-                        <tools:ToolType>PatternGrid</tools:ToolType>
-                        <tools:ToolType>PatternDiagonal</tools:ToolType>
-                        <tools:ToolType>PatternSpotted</tools:ToolType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Vector">
                         <tools:ToolType>Cursor</tools:ToolType>
@@ -205,6 +202,11 @@
                         <tools:ToolType>GeometryArrow</tools:ToolType>
                         <tools:ToolType>GeometryCapsule</tools:ToolType>
                         <tools:ToolType>GeometryHeart</tools:ToolType>
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Pattern">
+                        <tools:ToolType>PatternGrid</tools:ToolType>
+                        <tools:ToolType>PatternDiagonal</tools:ToolType>
+                        <tools:ToolType>PatternSpotted</tools:ToolType>
                     </local:ToolGrouping>
                 </local:ToolGroupingList>
             </CollectionViewSource.Source>

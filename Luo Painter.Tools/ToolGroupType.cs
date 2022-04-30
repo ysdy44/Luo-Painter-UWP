@@ -12,6 +12,8 @@
 
         Vector,
         Geometry,
+        Pattern,
+
         Curve,
         Text,
         ThreeDimensions,
