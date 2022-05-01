@@ -403,12 +403,11 @@ namespace Luo_Painter
             this.ConstructBlends();
             this.ConstructPaint();
             this.ConstructMarquee();
-
+            this.ConstructVector();
+            
             this.ConstructHistory();
 
             this.ConstructDialog();
-            this.ConstructRadian();
-            this.ConstructScale();
 
             this.ConstructStoryboard();
             this.ConstructSplitStoryboard();
