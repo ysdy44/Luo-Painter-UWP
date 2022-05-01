@@ -18,6 +18,8 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -326,15 +328,23 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
+        //@Key
+        private bool IsKeyDown(VirtualKey key) => Window.Current.CoreWindow.GetKeyState(key).HasFlag(CoreVirtualKeyStates.Down);
+        private bool IsCtrl => this.IsKeyDown(VirtualKey.Control);
+        private bool IsShift => this.IsKeyDown(VirtualKey.Shift);
+        private bool IsAlt => this.IsKeyDown(VirtualKey.Menu);
+        private bool IsSpace => this.IsKeyDown(VirtualKey.Space);
+
         //@Converter
         private bool ReverseBooleanConverter(bool value) => !value;
         private bool ReverseBooleanConverter(bool? value) => value == false;
         private string RoundConverter(double value) => $"{(value):0}";
-        private string Round2Converter(double value) => $"{(value):0.00}";
+        private string Round2Converter(double value) => $"{value:0.00}";
+        private string PercentageConverter(double value) => $"{value * 100:0}";
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
         //@Converter
-        private string ScaleXToYConverter(double value) => this.Round2Converter(this.ScaleRange.InverseProportion.ConvertXToY(value));
+        private string ScaleXToYConverter(double value) => this.PercentageConverter(this.ScaleRange.InverseProportion.ConvertXToY(value));
 
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
@@ -404,11 +414,10 @@ namespace Luo_Painter
             this.ConstructPaint();
             this.ConstructMarquee();
             this.ConstructVector();
-            
+
             this.ConstructHistory();
 
             this.ConstructDialog();
-
             this.ConstructStoryboard();
             this.ConstructSplitStoryboard();
 
