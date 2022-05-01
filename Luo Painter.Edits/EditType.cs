@@ -14,6 +14,7 @@
 
         Extract,
         Merge,
+        Flatten,
 
         // Group
         Group,
@@ -24,8 +25,11 @@
         // Select
         All,
         Deselect,
+        Invert, 
+        Pixel,
 
-        Invert,
+        Feather,
+        Transform,
 
         // Combine
         Union,
@@ -34,5 +38,18 @@
         Intersect,
 
         ExpandStroke,
+
+        // Setup
+        Crop,
+
+        Stretch,
+
+        FlipHorizontal,
+        FlipVertical,
+
+        LeftTurn,
+        RightTurn,
+        OverTurn,
+
     }
 }

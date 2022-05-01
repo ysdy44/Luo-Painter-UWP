@@ -7,5 +7,6 @@
         Group,
         Select,
         Combine,
+        Setup,
     }
 }

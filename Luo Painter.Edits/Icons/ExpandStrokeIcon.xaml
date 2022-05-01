@@ -23,7 +23,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
-            <Canvas x:Name="Canvas" Width="40" Height="40" >
+            <Border x:Name="Border" Width="40" Height="40" >
 
                 <Polygon x:Name="BluePolygon" StrokeThickness="3" Stroke="DodgerBlue">
                     <Polygon.Points>
@@ -31,7 +31,7 @@
                     </Polygon.Points>
                 </Polygon>
 
-            </Canvas>
+            </Border>
         </Viewbox>
     </ControlTemplate>
 
