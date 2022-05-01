@@ -287,16 +287,16 @@
                     </Style >
                 </FrameworkElement.Resources >
 
-                <TextBlock x:Name= "EditEditTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                <TextBlock x:Name= "EditEditTextBlock" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
                     Edit
                 </TextBlock >
-                <TextBlock x:Name= "EditGroupTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                <TextBlock x:Name= "EditGroupTextBlock" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
                     Group
                 </TextBlock >
-                <TextBlock x:Name= "EditSelectTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                <TextBlock x:Name= "EditSelectTextBlock" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
                     Select
                 </TextBlock >
-                <TextBlock x:Name= "EditCombineTextBlock" Style= "{StaticResource BaseTextBlockStyle}" >
+                <TextBlock x:Name= "EditCombineTextBlock" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
                     Combine
                 </TextBlock >
 
@@ -340,7 +340,8 @@
                 <local:EditItem Type = "Flatten" Command= "{x:Bind EditTypeCommand}" >
                     <UIElement.KeyboardAccelerators >
                         <KeyboardAccelerator Modifiers= "Control" Key= "F" />
-                    </UIElement.KeyboardAccelerators >      </local:EditItem>
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
 
 
                 <local:EditItem Type = "Group" Command= "{x:Bind EditTypeCommand}" >
@@ -639,7 +640,7 @@
                     <StackPanel>
 
                         <!--Radian-->
-                        <TextBlock x:Name="RadianTextBlock" Style="{StaticResource BaseTextBlockStyle}">
+                        <TextBlock x:Name="RadianTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                             Radian
                         </TextBlock>
                         <Slider x:Name="RadianSlider" Value="{x:Bind RadianRange.Range.Default}" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}">
@@ -680,7 +681,7 @@
                         <Rectangle Margin="0,8" Style="{StaticResource AppRectangleStyle}"/>
 
                         <!--Scale-->
-                        <TextBlock x:Name="ScaleTextBlock" Style="{StaticResource BaseTextBlockStyle}">
+                        <TextBlock x:Name="ScaleTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                             Scale
                         </TextBlock>
                         <Slider x:Name="ScaleSlider" Value="{x:Bind ScaleRange.XRange.Default}" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}">
@@ -721,7 +722,7 @@
                         <Rectangle Margin="0,8" Style="{StaticResource AppRectangleStyle}"/>
 
                         <!--Remote-->
-                        <TextBlock x:Name="RemoteTextBlock" Style="{StaticResource BaseTextBlockStyle}">
+                        <TextBlock x:Name="RemoteTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                             Remote
                         </TextBlock>
                         <transformers:RemoteControl x:Name="RemoteControl"
@@ -863,7 +864,7 @@
                     </UIElement.KeyboardAccelerators>
 
                     <Button.Flyout>
-                        <Flyout x:Name="ExportFlyout" Placement="Right">
+                        <Flyout Placement="Right">
                             <Grid Width="320" Height="420" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -874,7 +875,7 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <!--DPI-->
-                                <TextBlock x:Name="DPITextBlock" Grid.Row="0" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
+                                <TextBlock x:Name="DPITextBlock" Grid.Row="0" Margin="2,8,2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                                     DPI
                                 </TextBlock>
                                 <ListBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" >
@@ -896,7 +897,7 @@
                                 </ListBox>
 
                                 <!--Format-->
-                                <TextBlock x:Name="FormatTextBlock" Grid.Row="2" Margin="2,8,2,4" Style="{StaticResource BaseTextBlockStyle}">
+                                <TextBlock x:Name="FormatTextBlock" Grid.Row="2" Margin="2,8,2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                                     File Format
                                 </TextBlock>
                                 <ListBox x:Name="FormatComboBox" Grid.Row="3" SelectedIndex="0" >
@@ -990,7 +991,7 @@
 
                                 </FlipView>
 
-                                <Button x:Name="ExportButton" Grid.Row="5" FontWeight="Medium" Width="Auto" Height="32" HorizontalAlignment="Stretch" Foreground="Black" Background="#FFC003">
+                                <Button x:Name="ExportButton" Grid.Row="5" Padding="0" Width="Auto" Height="32" Foreground="Black" Background="#FFC003" HorizontalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
                                     Export
                                 </Button>
                             </Grid>
@@ -1019,7 +1020,7 @@
                                     </Style >
                                 </FrameworkElement.Resources >
 
-
+                                
                                 <TextBlock x:Name="SetupTextBlock" Margin="6,4" Style="{StaticResource TitleTextBlockStyle}">
                                     Document settings
                                 </TextBlock>
