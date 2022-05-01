@@ -89,6 +89,9 @@ namespace Luo_Painter
                     // case ToolType.MarqueeFloodSelect:
                     this.Marquee_Start(point);
                     break;
+                case ToolType.View:
+                    this.View_Start(point);
+                    break;
                 default:
                     break;
             }
@@ -113,6 +116,9 @@ namespace Luo_Painter
                     // case ToolType.MarqueeFloodSelect:
                     this.Marquee_Delta(point);
                     break;
+                case ToolType.View:
+                    this.View_Delta(point);
+                    break;
                 default:
                     break;
             }
@@ -136,6 +142,9 @@ namespace Luo_Painter
                 case ToolType.MarqueeSelectionBrush:
                 case ToolType.MarqueeFloodSelect:
                     this.Marquee_Complete(point);
+                    break;
+                case ToolType.View:
+                    this.View_Complete(point);
                     break;
                 default:
                     break;

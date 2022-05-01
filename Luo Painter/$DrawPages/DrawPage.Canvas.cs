@@ -220,21 +220,9 @@ namespace Luo_Painter
 
 
             // Right
-            this.Operator.Right_Start += (point) =>
-            {
-                this.Transformer.CacheMove(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-            this.Operator.Right_Delta += (point) =>
-            {
-                this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-            this.Operator.Right_Complete += (point) =>
-            {
-                this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
+            this.Operator.Right_Start += this.View_Start;
+            this.Operator.Right_Delta += this.View_Delta;
+            this.Operator.Right_Complete += this.View_Complete;
 
 
             // Double
