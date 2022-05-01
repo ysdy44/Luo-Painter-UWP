@@ -1020,7 +1020,7 @@
                                     </Style >
                                 </FrameworkElement.Resources >
 
-                                
+
                                 <TextBlock x:Name="SetupTextBlock" Margin="6,4" Style="{StaticResource TitleTextBlockStyle}">
                                     Document settings
                                 </TextBlock>
@@ -1639,284 +1639,86 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="OptionPrimaryButton" Grid.Column="2" Style="{StaticResource AppButtonStyle}">
+                <Button x:Name="OptionPrimaryButton" Grid.Column="2" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Button x:Name="OptionSecondaryButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
+                <Button x:Name="OptionSecondaryButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                     </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Back"/>
                 </Button>
-                <Grid Grid.Column="1">
 
-                    <ListBox x:Name="TransformComboBox" Visibility="Collapsed" SelectedIndex="1" >
-                        <x:String>Move</x:String>
-                        <x:String>Transform</x:String>
-                        <x:String>Free Transform</x:String>
-                    </ListBox>
+                <local:OptionSwitchPresenter x:Name="OptionSwitchPresenter2" Grid.Column="1">
+                    <local:OptionCase Value="Transform">
+                        <ListBox x:Name="TransformComboBox" SelectedIndex="1" >
+                            <x:String>Move</x:String>
+                            <x:String>Transform</x:String>
+                            <x:String>Free Transform</x:String>
+                        </ListBox>
+                    </local:OptionCase>
+                    <local:OptionCase Value="LuminanceToAlpha">
+                        <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" >
+                            <x:String>Normal</x:String>
+                            <x:String>White Paper</x:String>
+                            <x:String>Black Paper</x:String>
+                        </ListBox>
+                    </local:OptionCase>
+                </local:OptionSwitchPresenter>
 
-                    <ListBox x:Name="LuminanceToAlphaComboBox" Visibility="Collapsed" SelectedIndex="1" >
-                        <x:String>Normal</x:String>
-                        <x:String>White Paper</x:String>
-                        <x:String>Black Paper</x:String>
-                    </ListBox>
+                <StackPanel x:Name="OptionTitle" Visibility="Collapsed" Grid.Column="1" Margin="6,0" Orientation="Horizontal" Background="{ThemeResource AppBackground}">
+                    <UIElement.ManipulationMode>
+                        TranslateX, TranslateY
+                    </UIElement.ManipulationMode>
+                    <local:OptionIcon x:Name="OptionIcon" Width="50" Type="Saturation"/>
+                    <TextBlock x:Name="OptionTextBlock" Visibility="Visible" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
+                </StackPanel>
 
-                    <StackPanel x:Name="OptionTitle" Visibility="Collapsed" Margin="6,0" Orientation="Horizontal" Background="{ThemeResource AppBackground}">
-                        <UIElement.ManipulationMode>
-                            TranslateX, TranslateY
-                        </UIElement.ManipulationMode>
-                        <local:OptionIcon x:Name="OptionIcon" Width="50" Type="Saturation"/>
-                        <TextBlock x:Name="OptionTextBlock" Visibility="Visible" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
-                    </StackPanel>
-
-                </Grid>
             </Grid>
 
             <ContentControl Height="2"/>
 
-            <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Visibility="Collapsed" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
-                <elements:GradientStopSelector.ItemStyle>
-                    <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                        <Setter Property="Width" Value="50"/>
-                        <Setter Property="Height" Value="50"/>
-                        <Setter Property="Padding" Value="3"/>
-                    </Style>
-                </elements:GradientStopSelector.ItemStyle>
-                <elements:GradientStopSelector.ItemTemplate>
-                    <DataTemplate x:DataType="GradientStop">
-                        <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
-                            <ToolTipService.ToolTip>
-                                <ToolTip>
-                                    <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                            <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Border>
-                    </DataTemplate>
-                </elements:GradientStopSelector.ItemTemplate>
-            </elements:GradientStopSelectorWithUI>
-
-            <Slider x:Name="ExposureSlider" Visibility="Collapsed" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                <Slider.Background>
-                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="Black" Offset="0"/>
-                        <GradientStop Color="White" Offset="1"/>
-                    </LinearGradientBrush>
-                </Slider.Background>
-                <Slider.Tag>
-                    Exposure
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button x:Name="ExposureButton" Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
-                            Padding="4,0" MinWidth="70" Height="28"
-                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
-
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-
-            <Slider x:Name="BrightnessSlider" Visibility="Collapsed" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                <Slider.Background>
-                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="Black" Offset="0"/>
-                        <GradientStop Color="White" Offset="1"/>
-                    </LinearGradientBrush>
-                </Slider.Background>
-                <Slider.Tag>
-                    Brightness
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button x:Name="BrightnessButton" Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
-                            Padding="4,0" MinWidth="70" Height="28"
-                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
-
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-
-            <Slider x:Name="SaturationSlider" Visibility="Collapsed" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                <Slider.Background>
-                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="Gray" Offset="0"/>
-                        <GradientStop Color="#00A5FF" Offset="1"/>
-                    </LinearGradientBrush>
-                </Slider.Background>
-                <Slider.Tag>
-                    Saturation
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button x:Name="SaturationButton" Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
-                            Padding="4,0" MinWidth="70" Height="28"
-                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
-
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-
-            <Slider x:Name="HueRotationSlider" Visibility="Collapsed" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                <Slider.Background>
-                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="#FFCE3B" Offset="0"/>
-                        <GradientStop Color="#72C075" Offset="0.125"/>
-                        <GradientStop Color="#46A7F6" Offset="0.25"/>
-                        <GradientStop Color="#784BB0" Offset="0.375"/>
-                        <GradientStop Color="#A336B5" Offset="0.5"/>
-                        <GradientStop Color="#EB2E6E" Offset="0.625"/>
-                        <GradientStop Color="#EC5449" Offset="0.75"/>
-                        <GradientStop Color="#FFA827" Offset="0.875"/>
-                        <GradientStop Color="#FFCE3B" Offset="1"/>
-                    </LinearGradientBrush>
-                </Slider.Background>
-                <Slider.Tag>
-                    HueRotation
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button x:Name="HueRotationButton" Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
-                            Padding="4,0" MinWidth="70" Height="28"
-                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
-
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-
-            <Slider x:Name="ContrastSlider" Visibility="Collapsed" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                <Slider.Background>
-                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="#888888" Offset="0"/>
-
-                        <GradientStop Color="#6D6D6D" Offset="0.4"/>
-                        <GradientStop Color="#909090" Offset="0.5"/>
-
-                        <GradientStop Color="#353535" Offset="0.6"/>
-                        <GradientStop Color="#C9C9C9" Offset="0.7"/>
-
-                        <GradientStop Color="#000000" Offset="0.8"/>
-                        <GradientStop Color="#FFFFFF" Offset="1"/>
-
-                    </LinearGradientBrush>
-                </Slider.Background>
-                <Slider.Tag>
-                    Contrast
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button x:Name="ContrastButton" Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
-                            Padding="4,0" MinWidth="70" Height="28"
-                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
-
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-
-            <StackPanel x:Name="TemperaturePanel" Visibility="Collapsed" Orientation="Horizontal">
-                <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="#3EADF5" Offset="0"/>
-                            <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                            <GradientStop Color="#F99652" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <Slider.Tag>
-                        Temperature
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button x:Name="TemperatureButton" Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="#9680C9" Offset="0"/>
-                            <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                            <GradientStop Color="#80763E" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <Slider.Tag>
-                        Tint
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button x:Name="TintButton" Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </StackPanel>
-
-            <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" Visibility="Collapsed">
-                <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
-                    <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+            <local:OptionSwitchPresenter x:Name="OptionSwitchPresenter" >
+                <local:OptionCase Value="GradientMapping">
+                    <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
+                        <elements:GradientStopSelector.ItemStyle>
+                            <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                                <Setter Property="Width" Value="50"/>
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="Padding" Value="3"/>
+                            </Style>
+                        </elements:GradientStopSelector.ItemStyle>
+                        <elements:GradientStopSelector.ItemTemplate>
+                            <DataTemplate x:DataType="GradientStop">
+                                <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                    <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+                            </DataTemplate>
+                        </elements:GradientStopSelector.ItemTemplate>
+                    </elements:GradientStopSelectorWithUI>
+                </local:OptionCase>
+                <local:OptionCase Value="Exposure">
+                    <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Black" Offset="0"/>
-                                <GradientStop Color="Gray" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <Slider.Tag>
-                            Shadows
-                        </Slider.Tag>
-                        <Slider.Header>
-                            <Button x:Name="ShadowsButton" Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="Gray" Offset="0"/>
                                 <GradientStop Color="White" Offset="1"/>
                             </LinearGradientBrush>
                         </Slider.Background>
                         <Slider.Tag>
-                            Highlights
+                            Exposure
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="HighlightsButton" Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
+                            <Button x:Name="ExposureButton" Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
                                     Padding="4,0" MinWidth="70" Height="28"
                                     BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
@@ -1927,14 +1729,20 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </StackPanel>
-                <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
-                    <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                </local:OptionCase>
+                <local:OptionCase Value="Brightness">
+                    <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
                         <Slider.Tag>
-                            Clarity
+                            Brightness
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="ClarityButton" Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
+                            <Button x:Name="BrightnessButton" Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
                                     BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
@@ -1945,12 +1753,20 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                    <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
+                </local:OptionCase>
+                <local:OptionCase Value="Saturation">
+                    <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Gray" Offset="0"/>
+                                <GradientStop Color="#00A5FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
                         <Slider.Tag>
-                            Blur
+                            Saturation
                         </Slider.Tag>
                         <Slider.Header>
-                            <Button x:Name="BlurButton" Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
+                            <Button x:Name="SaturationButton" Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
                                     BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
                                 <Button.Flyout>
@@ -1961,60 +1777,261 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </StackPanel>
-            </StackPanel>
-
-            <StackPanel x:Name="RippleEffectPanel" Visibility="Collapsed" Orientation="Horizontal">
-                <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Tag>
-                        Frequency
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button x:Name="FrequencyButton" Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
+                </local:OptionCase>
+                <local:OptionCase Value="HueRotation">
+                    <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#FFCE3B" Offset="0"/>
+                                <GradientStop Color="#72C075" Offset="0.125"/>
+                                <GradientStop Color="#46A7F6" Offset="0.25"/>
+                                <GradientStop Color="#784BB0" Offset="0.375"/>
+                                <GradientStop Color="#A336B5" Offset="0.5"/>
+                                <GradientStop Color="#EB2E6E" Offset="0.625"/>
+                                <GradientStop Color="#EC5449" Offset="0.75"/>
+                                <GradientStop Color="#FFA827" Offset="0.875"/>
+                                <GradientStop Color="#FFCE3B" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <Slider.Tag>
+                            HueRotation
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button x:Name="HueRotationButton" Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
                                     BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
+                                <Button.Flyout>
+                                    <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Tag>
-                        Phase
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button x:Name="PhaseButton" Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"            
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </local:OptionCase>
+                <local:OptionCase Value="Contrast">
+                    <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#888888" Offset="0"/>
+
+                                <GradientStop Color="#6D6D6D" Offset="0.4"/>
+                                <GradientStop Color="#909090" Offset="0.5"/>
+
+                                <GradientStop Color="#353535" Offset="0.6"/>
+                                <GradientStop Color="#C9C9C9" Offset="0.7"/>
+
+                                <GradientStop Color="#000000" Offset="0.8"/>
+                                <GradientStop Color="#FFFFFF" Offset="1"/>
+
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <Slider.Tag>
+                            Contrast
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button x:Name="ContrastButton" Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
                                     BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
+                                <Button.Flyout>
+                                    <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-                <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Tag>
-                        Amplitude
-                    </Slider.Tag>
-                    <Slider.Header>
-                        <Button x:Name="AmplitudeButton" Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"            
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                </local:OptionCase>
+                <local:OptionCase Value="Temperature">
+                    <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
+                        <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#3EADF5" Offset="0"/>
+                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                                    <GradientStop Color="#F99652" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <Slider.Tag>
+                                Temperature
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="TemperatureButton" Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
+                                        Padding="4,0" MinWidth="70" Height="28"
+                                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#9680C9" Offset="0"/>
+                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                                    <GradientStop Color="#80763E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <Slider.Tag>
+                                Tint
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="TintButton" Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
+                                        Padding="4,0" MinWidth="70" Height="28"
+                                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+                </local:OptionCase>
+                <local:OptionCase Value="HighlightsAndShadows">
+                    <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" Visibility="Collapsed">
+                        <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
+                            <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <Slider.Background>
+                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="Gray" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Slider.Background>
+                                <Slider.Tag>
+                                    Shadows
+                                </Slider.Tag>
+                                <Slider.Header>
+                                    <Button x:Name="ShadowsButton" Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
+                                            Padding="4,0" MinWidth="70" Height="28"
+                                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                            <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <Slider.Background>
+                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="Gray" Offset="0"/>
+                                        <GradientStop Color="White" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Slider.Background>
+                                <Slider.Tag>
+                                    Highlights
+                                </Slider.Tag>
+                                <Slider.Header>
+                                    <Button x:Name="HighlightsButton" Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
+                                            Padding="4,0" MinWidth="70" Height="28"
+                                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                        </StackPanel>
+                        <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
+                            <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <Slider.Tag>
+                                    Clarity
+                                </Slider.Tag>
+                                <Slider.Header>
+                                    <Button x:Name="ClarityButton" Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
+                                            Padding="4,0" MinWidth="70" Height="28"
+                                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                            <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
+                                <Slider.Tag>
+                                    Blur
+                                </Slider.Tag>
+                                <Slider.Header>
+                                    <Button x:Name="BlurButton" Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
+                                            Padding="4,0" MinWidth="70" Height="28"
+                                            BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                        </StackPanel>
+                    </StackPanel>
+
+                </local:OptionCase>
+                <local:OptionCase Value="RippleEffect">
+                    <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
+                        <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Tag>
+                                Frequency
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="FrequencyButton" Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
                                     BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
+                                    <Button.Flyout>
+                                        <Flyout>
 
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Tag>
+                                Phase
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="PhaseButton" Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                    <Button.Flyout>
+                                        <Flyout>
 
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Tag>
+                                Amplitude
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="AmplitudeButton" Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+
+                </local:OptionCase>
+            </local:OptionSwitchPresenter>
         </StackPanel>
 
         <Border IsHitTestVisible="False" CornerRadius="6" Padding="12,3" MinHeight="40" Background="Red" RequestedTheme="Dark" HorizontalAlignment="Center" VerticalAlignment="Center"

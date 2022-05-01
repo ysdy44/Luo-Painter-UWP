@@ -20,19 +20,8 @@ namespace Luo_Painter
 
         private void SetOptionType(OptionType type)
         {
-            this.TransformComboBox.Visibility = type == OptionType.Transform ? Visibility.Visible : Visibility.Collapsed;
-            this.GradientMappingSelector.Visibility = type == OptionType.GradientMapping ? Visibility.Visible : Visibility.Collapsed;
-            this.RippleEffectPanel.Visibility = type == OptionType.RippleEffect ? Visibility.Visible : Visibility.Collapsed;
-
-            this.ExposureSlider.Visibility = type == OptionType.Exposure ? Visibility.Visible : Visibility.Collapsed;
-            this.BrightnessSlider.Visibility = type == OptionType.Brightness ? Visibility.Visible : Visibility.Collapsed;
-            this.SaturationSlider.Visibility = type == OptionType.Saturation ? Visibility.Visible : Visibility.Collapsed;
-            this.HueRotationSlider.Visibility = type == OptionType.HueRotation ? Visibility.Visible : Visibility.Collapsed;
-            this.ContrastSlider.Visibility = type == OptionType.Contrast ? Visibility.Visible : Visibility.Collapsed;
-            this.TemperaturePanel.Visibility = type == OptionType.Temperature ? Visibility.Visible : Visibility.Collapsed;
-            this.HighlightsAndShadowsPanel.Visibility = type == OptionType.HighlightsAndShadows ? Visibility.Visible : Visibility.Collapsed;
-
-            this.LuminanceToAlphaComboBox.Visibility = type == OptionType.LuminanceToAlpha ? Visibility.Visible : Visibility.Collapsed;
+            this.OptionSwitchPresenter.Value = type;
+            this.OptionSwitchPresenter2.Value = type;
 
             if (type.HasIcon())
             {

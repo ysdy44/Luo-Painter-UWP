@@ -319,6 +319,13 @@ namespace Luo_Painter
 
 
     [ContentProperty(Name = nameof(Content))]
+    internal class OptionCase : Case<OptionType> { }
+
+    [ContentProperty(Name = nameof(SwitchCases))]
+    internal class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
+
+
+    [ContentProperty(Name = nameof(Content))]
     internal class ToolGroupCase : GroupCase<ToolGroupType, ToolType> { }
 
     [ContentProperty(Name = nameof(SwitchCases))]
