@@ -19,7 +19,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        IList<ILayer> ChangedLayers = new List<ILayer>();
+        readonly IList<ILayer> ChangedLayers = new List<ILayer>();
         bool HasChangedLayers;
         bool NameChanged;
         bool OpacityChanged;
@@ -61,6 +61,50 @@ namespace Luo_Painter
 
         private void ConstructLayers()
         {
+            this.LayerListView.DragItemsStarting += (s, e) =>
+            {
+                if (this.HasChangedLayers) return;
+                this.HasChangedLayers = true;
+
+                foreach (ILayer item in this.ObservableCollection)
+                {
+                    this.ChangedLayers.Add(item);
+                }
+            };
+            this.LayerListView.DragItemsCompleted += (s, e) =>
+            {
+                switch (e.DropResult)
+                {
+                    case Windows.ApplicationModel.DataTransfer.DataPackageOperation.None:
+                        break;
+                    case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy:
+                        break;
+                    case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move:
+                        {
+                            if (this.HasChangedLayers == false) break;
+                            this.HasChangedLayers = false;
+
+                            if (this.ChangedLayers.Count == 0) break;
+
+                            // History
+                            string[] undo = this.ChangedLayers.Select(c => c.Id).ToArray();
+                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+                            this.ChangedLayers.Clear();
+                            this.CanvasControl.Invalidate(); // Invalidate
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                    case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Link:
+                        break;
+                    default:
+                        break;
+                }
+            };
+
             this.VisualCommand.Click += (s, layer) =>
             {
                 Visibility undo = layer.Visibility;
