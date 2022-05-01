@@ -44,7 +44,7 @@ namespace Luo_Painter
                 case ToolType.MarqueeFreeHand:
                     this.MarqueeToolType = this.GetMarqueeToolType(this.ToolType);
                     this.StartingPosition = this.Position = this.ToPosition(point);
-                    this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, false, false);
+                    this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
                     break;
                 case ToolType.MarqueeSelectionBrush:
                     this.Position = this.ToPosition(point);
@@ -62,7 +62,7 @@ namespace Luo_Painter
                 case ToolType.MarqueePolygon:
                 case ToolType.MarqueeFreeHand:
                     this.Position = this.ToPosition(point);
-                    this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, false, false);
+                    this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
                     break;
                 case ToolType.MarqueeSelectionBrush:
                     Vector2 position = this.ToPosition(point);
@@ -83,18 +83,20 @@ namespace Luo_Painter
                 case ToolType.MarqueeElliptical:
                 case ToolType.MarqueePolygon:
                 case ToolType.MarqueeFreeHand:
-                    this.Position = this.ToPosition(point);
-                    bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, false, false);
-                    if (redraw is false) break;
-
-                    using (CanvasDrawingSession ds = this.Marquee.CreateSourceDrawingSession())
                     {
-                        //@DPI 
-                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        this.Position = this.ToPosition(point);
+                        bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+                        if (redraw is false) break;
 
-                        ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
+                        using (CanvasDrawingSession ds = this.Marquee.CreateSourceDrawingSession())
+                        {
+                            //@DPI 
+                            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                            ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
+                        }
+                        this.MarqueeToolType = MarqueeToolType.None;
                     }
-                    this.MarqueeToolType = MarqueeToolType.None;
                     break;
                 case ToolType.MarqueeSelectionBrush:
                     {
