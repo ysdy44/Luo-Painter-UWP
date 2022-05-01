@@ -328,9 +328,19 @@
                 </local:EditItem>
 
                 <local:EditItem Type = "Extract" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "E" />
+                    </UIElement.KeyboardAccelerators >
                 </local:EditItem>
                 <local:EditItem Type = "Merge" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "M" />
+                    </UIElement.KeyboardAccelerators >
                 </local:EditItem>
+                <local:EditItem Type = "Flatten" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "F" />
+                    </UIElement.KeyboardAccelerators >      </local:EditItem>
 
 
                 <local:EditItem Type = "Group" Command= "{x:Bind EditTypeCommand}" >
@@ -365,6 +375,16 @@
                     <UIElement.KeyboardAccelerators >
                         <KeyboardAccelerator Modifiers= "Control" Key= "I" />
                     </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Pixel" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers= "Control" Key= "P" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+
+                <local:EditItem Type = "Feather" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Transform" Command= "{x:Bind EditTypeCommand}" >
                 </local:EditItem>
 
 
@@ -980,6 +1000,51 @@
                 </Button>
                 <Button x:Name="SettingButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <SymbolIcon Symbol="Setting"/>
+                </Button>
+                <Button x:Name="SetupButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                    <Button.Flyout>
+                        <Flyout x:Name="SetupFlyout" Placement="Bottom">
+                            <StackPanel Width="320" >
+
+                                <FrameworkElement.Resources >
+                                    <Style TargetType= "local:EditItem" >
+                                        <Setter Property= "Margin" Value= "0,1" />
+                                        <Setter Property= "Padding" Value= "12,0" />
+                                        <Setter Property= "Height" Value= "40" />
+                                        <Setter Property= "BorderThickness" Value= "1" />
+                                        <Setter Property= "BorderBrush" Value= "{ThemeResource AppStroke}" />
+                                        <Setter Property= "Background" Value= "{ThemeResource SystemAltLowColor}" />
+                                        <Setter Property= "HorizontalAlignment" Value= "Stretch" />
+                                        <Setter Property= "HorizontalContentAlignment" Value= "Left" />
+                                    </Style >
+                                </FrameworkElement.Resources >
+
+
+                                <TextBlock x:Name="SetupTextBlock" Margin="6,4" Style="{StaticResource TitleTextBlockStyle}">
+                                    Document settings
+                                </TextBlock>
+
+                                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                                <local:EditItem Type = "Crop" Command= "{x:Bind EditTypeCommand}" />
+
+                                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                                <local:EditItem Type = "Stretch" Command= "{x:Bind EditTypeCommand}" />
+
+                                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                                <local:EditItem Type = "FlipHorizontal" Command= "{x:Bind EditTypeCommand}" />
+                                <local:EditItem Type = "FlipVertical" Command= "{x:Bind EditTypeCommand}" />
+
+                                <local:EditItem Type = "LeftTurn" Command= "{x:Bind EditTypeCommand}" />
+                                <local:EditItem Type = "RightTurn" Command= "{x:Bind EditTypeCommand}" />
+                                <local:EditItem Type = "OverTurn" Command= "{x:Bind EditTypeCommand}" />
+
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                    <SymbolIcon Symbol="Crop"/>
                 </Button>
                 <Button x:Name="FullScreenButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
                     <UIElement.KeyboardAccelerators>
