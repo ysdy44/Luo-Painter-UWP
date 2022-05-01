@@ -72,8 +72,6 @@ namespace Luo_Painter
 
             this.ExportButton.Click += async (s, e) =>
             {
-                this.ExportFlyout.Hide();
-
                 this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
                 bool? result = await this.Export();
