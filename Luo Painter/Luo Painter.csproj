@@ -141,8 +141,20 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditButton.xaml.cs">
+      <DependentUpon>EditButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MoreOptionButton.xaml.cs">
+      <DependentUpon>MoreOptionButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OptionButton.xaml.cs">
+      <DependentUpon>OptionButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SetupButton.xaml.cs">
+      <DependentUpon>SetupButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ToolListView.xaml.cs">
       <DependentUpon>ToolListView.xaml</DependentUpon>
@@ -238,7 +250,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\EditButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\LayerListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MoreOptionButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OptionButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SetupButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
