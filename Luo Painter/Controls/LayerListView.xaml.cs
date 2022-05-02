@@ -37,7 +37,7 @@ namespace Luo_Painter.Controls
 
         double StartingX;
         SplitViewPanePlacement Placement => (this.TranslateTransform.X > 70) ? SplitViewPanePlacement.Left : SplitViewPanePlacement.Right;
-        private double GetX(double value) => Math.Max(-70 - 70, Math.Min(0, value));
+        private double GetX(double value) => Math.Max(0, Math.Min(70 + 70, value));
 
         public bool isExpanded;
         public bool IsExpanded
@@ -123,12 +123,12 @@ namespace Luo_Painter.Controls
             };
             this.SplitButton.ManipulationCompleted += (s, e) =>
             {
-                this.IsExpanded = this.Placement is SplitViewPanePlacement.Left;
+                this.IsExpanded = this.Placement is SplitViewPanePlacement.Right;
                 this.SplitIcon.Symbol = Symbol.GlobalNavigationButton;
                 this.SplitButton.IsEnabled = true;
             };
 
-            this.SplitButton.Click += (s, e) => this.IsExpanded = this.Placement is SplitViewPanePlacement.Right;
+            this.SplitButton.Click += (s, e) => this.IsExpanded = this.Placement is SplitViewPanePlacement.Left;
         }
 
         //@Strings

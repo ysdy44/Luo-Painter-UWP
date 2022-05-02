@@ -14,40 +14,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal sealed class InkRender
-    {
-        readonly BitmapLayer PaintLayer;
-        public ICanvasImage Souce => this.PaintLayer.Source;
-        public InkRender(CanvasControl sender) => this.PaintLayer = new BitmapLayer(sender, (int)sender.ActualWidth, (int)sender.ActualHeight);
-        public void Render(float size, Color color)
-        {
-            this.PaintLayer.Clear(Colors.Transparent);
-
-            float width = this.PaintLayer.Width;
-            float height = this.PaintLayer.Height;
-            float space = System.Math.Max(2, size / height * 2);
-
-            Vector2 position = new Vector2(10, height / 2 + 3.90181f);
-            float pressure = 0.001f;
-
-            for (float x = 10; x < width - 10; x += space)
-            {
-                // 0 ~ Π
-                float radian = x / width * FanKit.Math.Pi;
-
-                // Sin 0 ~ Π ︵
-                float targetPressure = (float)System.Math.Sin(radian);
-                // Sin 0 ~ 2Π ~
-                float offsetY = 20 * (float)System.Math.Sin(radian + radian);
-                Vector2 targetPosition = new Vector2(x, height / 2 + offsetY);
-
-                this.PaintLayer.FillCircleDry(position, targetPosition, pressure, targetPressure, space, color);
-                position = targetPosition;
-                pressure = targetPressure;
-            }
-        }
-    }
-
     public sealed partial class DrawPage : Page
     {
 
@@ -55,87 +21,30 @@ namespace Luo_Painter
         Vector2 Position;
         float Pressure;
 
-        float InkSize = 22f;
-        float InkOpacity = 1;
-        BlendEffectMode? InkBlendMode = null;
+        //float InkSize = 22f;
+        //float InkOpacity = 1;
+        //BlendEffectMode? InkBlendMode = null;
 
-        InkRender InkRender;
-
-        private void SetPaint()
-        {
-            this.PaintSizeSlider.Value = this.PaintSizeSlider2.Value;
-            this.PaintOpacitySlider.Value = this.PaintOpacitySlider2.Value;
-        }
+        //private void SetPaint()
+        //{
+        //    this.PaintSizeSlider.Value = this.PaintSizeSlider2.Value;
+        //    this.PaintOpacitySlider.Value = this.PaintOpacitySlider2.Value;
+        //}
 
         private void ConstructPaint()
         {
-            this.PaintCanvasControl.CreateResources += (sender, args) =>
-            {
-                this.InkRender = new InkRender(sender);
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light:
-                        this.InkRender.Render(this.InkSize, Colors.Black);
-                        break;
-                    case ElementTheme.Dark:
-                        this.InkRender.Render(this.InkSize, Colors.White);
-                        break;
-                }
-            };
-            this.PaintCanvasControl.Draw += (sender, args) =>
-            {
-                if (this.InkRender == null) return;
-                args.DrawingSession.DrawImage(this.InkRender.Souce);
-            };
+            //this.PaintSizeSlider2.ValueChanged += (s, e) =>
+            //{
+            //    this.Tip("Size", $"{e.NewValue}"); // Tip
 
-            this.PaintSizeSlider.ValueChanged += (s, e) =>
-            {
-                this.InkSize = (float)e.NewValue;
-                this.PaintSizeSlider2.Value = e.NewValue;
+            //    this.InkSize = (float)e.NewValue;
+            //};
+            //this.PaintOpacitySlider2.ValueChanged += (s, e) =>
+            //{
+            //    this.Tip("Opacity", $"{e.NewValue:0.00}%"); // Tip
 
-                if (this.InkRender == null) return; 
-                
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light:
-                        this.InkRender.Render(this.InkSize, Colors.Black);
-                        break;
-                    case ElementTheme.Dark:
-                        this.InkRender.Render(this.InkSize, Colors.White);
-                        break;
-                }
-                this.PaintCanvasControl.Invalidate(); // Invalidate
-            };
-            this.PaintOpacitySlider.ValueChanged += (s, e) =>
-            {
-                this.InkOpacity = (float)(e.NewValue / 100);
-                this.PaintCanvasControl.Opacity = this.InkOpacity;
-
-                this.PaintOpacitySlider2.Value = e.NewValue;
-            };
-            this.PaintBlendModeListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is BlendEffectMode item)
-                {
-                    bool isNone = item.IsNone();
-
-                    if (isNone) this.InkBlendMode = null;
-                    else this.InkBlendMode = item;
-                }
-            };
-
-            this.PaintSizeSlider2.ValueChanged += (s, e) =>
-            {
-                this.Tip("Size", $"{e.NewValue}"); // Tip
-
-                this.InkSize = (float)e.NewValue;
-            };
-            this.PaintOpacitySlider2.ValueChanged += (s, e) =>
-            {
-                this.Tip("Opacity", $"{e.NewValue:0.00}%"); // Tip
-
-                this.InkOpacity = (float)(e.NewValue / 100);
-            };
+            //    this.InkOpacity = (float)(e.NewValue / 100);
+            //};
         }
 
         private void Paint_Start(Vector2 point, PointerPointProperties properties)
@@ -151,7 +60,7 @@ namespace Luo_Painter
             this.Position = this.ToPosition(point);
             this.Pressure = properties.Pressure;
 
-            this.BitmapLayer.InkMode = this.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
+            this.BitmapLayer.InkMode = this.PaintTool.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
             this.CanvasControl.Invalidate(); // Invalidate
         }
         private void Paint_Delta(Vector2 point, PointerPointProperties properties)
@@ -161,25 +70,25 @@ namespace Luo_Painter
             Vector2 position = this.ToPosition(point);
             float pressure = properties.Pressure;
 
-            Rect rect = this.Position.GetRect(this.InkSize);
+            Rect rect = this.Position.GetRect(this.PaintTool.InkSize);
             this.BitmapLayer.Hit(rect);
 
             switch (this.BitmapLayer.InkMode)
             {
                 case InkMode.Dry:
-                    this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, pressure, this.InkSize, this.ColorPicker.Color);
+                    this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorButton.Color);
                     break;
                 case InkMode.WetWithOpacity:
                 case InkMode.WetWithBlendMode:
                 case InkMode.WetWithOpacityAndBlendMode:
-                    this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, pressure, this.InkSize, this.ColorPicker.Color);
+                    this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorButton.Color);
                     break;
 
                 case InkMode.EraseDry:
-                    this.BitmapLayer.ErasingDry(this.Position, position, this.Pressure, pressure, this.InkSize);
+                    this.BitmapLayer.ErasingDry(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize);
                     break;
                 case InkMode.EraseWetWithOpacity:
-                    this.BitmapLayer.ErasingWet(this.Position, position, this.Pressure, pressure, this.InkSize);
+                    this.BitmapLayer.ErasingWet(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize);
                     break;
 
                 case InkMode.Liquefy:
@@ -189,19 +98,19 @@ namespace Luo_Painter
                         Source1 = this.BitmapLayer.Source,
                         Properties =
                         {
-                            ["radius"] = this.BitmapLayer.ConvertValueToOne(this.InkSize),
+                            ["radius"] = this.BitmapLayer.ConvertValueToOne(this.PaintTool.InkSize),
                             ["position"] = this.BitmapLayer .ConvertValueToOne(this.Position),
                             ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(position),
                             ["pressure"] = pressure,
                         }
-                    }, RectExtensions.GetRect(this.Position, position, this.InkSize));
+                    }, RectExtensions.GetRect(this.Position, position, this.PaintTool.InkSize));
                     break;
 
                 default:
                     break;
             }
 
-            Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasControl.Dpi.ConvertPixelsToDips(this.InkSize * this.Transformer.Scale));
+            Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasControl.Dpi.ConvertPixelsToDips(this.PaintTool.InkSize * this.Transformer.Scale));
             if (this.CanvasControl.Size.TryIntersect(ref region))
             {
                 this.CanvasControl.Invalidate(region); // Invalidate
@@ -239,7 +148,7 @@ namespace Luo_Painter
                     break;
 
                 default:
-                    this.BitmapLayer.DrawSource(this.GetInk(this.BitmapLayer));
+                    this.BitmapLayer.DrawSource(this.PaintTool.GetInk(this.BitmapLayer));
                     this.BitmapLayer.ClearTemp();
 
                     // History
@@ -254,46 +163,6 @@ namespace Luo_Painter
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;
-        }
-
-
-        private ICanvasImage GetInk(BitmapLayer bitmapLayer)
-        {
-            switch (bitmapLayer.InkMode)
-            {
-                case InkMode.WetWithOpacity:
-                    return bitmapLayer.GetWeting(this.InkOpacity);
-                case InkMode.WetWithBlendMode:
-                    return bitmapLayer.GetWeting(this.InkBlendMode.Value);
-                case InkMode.WetWithOpacityAndBlendMode:
-                    return bitmapLayer.GetWeting(this.InkOpacity, this.InkBlendMode.Value);
-
-                case InkMode.EraseWetWithOpacity:
-                    return bitmapLayer.GetEraseWeting(this.InkOpacity);
-
-                default:
-                    return bitmapLayer.Source;
-            }
-        }
-
-        private InkMode GetInkMode(bool isErase, bool isLiquefaction)
-        {
-            if (isLiquefaction) return InkMode.Liquefy;
-
-            if (isErase)
-            {
-                if (this.InkOpacity == 1f) return InkMode.EraseDry;
-                else return InkMode.EraseWetWithOpacity;
-            }
-
-            if (this.InkBlendMode.HasValue == false)
-            {
-                if (this.InkOpacity == 1f) return InkMode.Dry;
-                else return InkMode.WetWithOpacity;
-            }
-
-            if (this.InkOpacity == 1f) return InkMode.WetWithBlendMode;
-            else return InkMode.WetWithOpacityAndBlendMode;
         }
 
     }

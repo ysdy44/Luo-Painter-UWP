@@ -108,6 +108,7 @@ namespace Luo_Painter
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 this.Transformer.Fit();
+                this.ViewTool.Construct(this.Transformer);
 
                 this.Mesh = new Mesh(sender, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
                 this.GradientMesh = new GradientMesh(sender);
@@ -137,7 +138,7 @@ namespace Luo_Painter
                             if (this.BitmapLayer is null)
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                             else if (this.OptionType == OptionType.None)
-                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetInk(this.BitmapLayer)));
+                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.PaintTool.GetInk(this.BitmapLayer)));
                             else
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source)));
                         }
@@ -241,6 +242,8 @@ namespace Luo_Painter
             this.Operator.Double_Complete += (center, space) =>
             {
                 this.CanvasControl.Invalidate(); // Invalidate
+
+                this.ViewTool.Construct(this.Transformer);
             };
 
             // Wheel
@@ -251,10 +254,11 @@ namespace Luo_Painter
                 else
                     this.Transformer.ZoomOut(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
 
-
                 this.Tip("Zoom", $"{this.Transformer.Scale * 100:0.00}%"); // Tip
 
                 this.CanvasControl.Invalidate(); // Invalidate
+
+                this.ViewTool.Construct(this.Transformer);
             };
         }
 

@@ -15,58 +15,40 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        private void SetToolType(ToolType type)
-        {
-            // ToolIcon
-            this.ToolResource.Source = new Uri(type.GetResource());
-            this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
-
-            ToolGroupType groupType = this.ToolCollection[type];
-            this.ToolGroupSwitchPresenter.EvaluateCases(groupType, type);
-            this.ToolGroupSwitchPresenter2.EvaluateCases(groupType, type);
-        }
-
-
         private void ConstructTools()
         {
-            this.ToolButton.Click += (s, e) =>
+            this.ToolListView.ItemClick += (groupType, type) =>
             {
-                this.SetPaint();
-                this.ToolFlyout.ShowAt(this.ToolButton);
-            };
+                this.ToolType = type;
 
-            this.SetToolType(this.ToolType);
-            this.ToolListView.SelectedIndex = this.ToolCollection.IndexOf(this.ToolType);
-            this.ToolListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is ToolType item)
-                {
-                    if (this.ToolType == item) return;
-                    this.ToolType = item;
-                    this.SetToolType(item);
-                }
+                this.ToolResource.Source = new Uri(type.GetResource());
+                this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
+
+                this.ToolGroupSwitchPresenter.EvaluateCases(groupType, type);
+                this.ToolGroupSwitchPresenter2.EvaluateCases(groupType, type);
             };
+            this.ToolListView.Construct(this.ToolType);
         }
 
         private void ConstructBlends()
         {
-            this.PaintBlendModeListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
-            this.PaintBlendModeListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is BlendEffectMode item)
-                {
-                    if (item.IsNone())
-                    {
-                        if (this.InkBlendMode == null) return;
-                        this.InkBlendMode = null;
-                    }
-                    else
-                    {
-                        if (this.InkBlendMode == item) return;
-                        this.InkBlendMode = item;
-                    }
-                }
-            };
+            //this.PaintBlendModeListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
+            //this.PaintBlendModeListView.ItemClick += (s, e) =>
+            //{
+            //    if (e.ClickedItem is BlendEffectMode item)
+            //    {
+            //        if (item.IsNone())
+            //        {
+            //            if (this.InkBlendMode == null) return;
+            //            this.InkBlendMode = null;
+            //        }
+            //        else
+            //        {
+            //            if (this.InkBlendMode == item) return;
+            //            this.InkBlendMode = item;
+            //        }
+            //    }
+            //};
         }
 
 

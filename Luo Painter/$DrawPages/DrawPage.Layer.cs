@@ -19,11 +19,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        readonly IList<ILayer> ChangedLayers = new List<ILayer>();
         bool HasChangedLayers;
-        bool NameChanged;
-        bool OpacityChanged;
-        bool BlendModeChanged;
 
         private IEnumerable<string> Ids()
         {
@@ -36,29 +32,6 @@ namespace Luo_Painter
             }
         }
 
-        private void SetLayer(ILayer layer)
-        {
-            if (layer == null)
-            {
-                this.LayerImage.Source = null;
-                this.LayerTextBox.Text = string.Empty;
-                this.OpacitySlider.Value = 100;
-                this.OpacitySlider.IsEnabled = false;
-                this.BlendModeListView.IsEnabled = false;
-                this.BlendModeListView.SelectedIndex = -1;
-            }
-            else
-            {
-                this.LayerImage.Source = layer.Thumbnail;
-                this.LayerTextBox.Text = layer.Name ?? string.Empty;
-                this.OpacitySlider.IsEnabled = true;
-                this.OpacitySlider.Value = layer.Opacity * 100;
-                this.BlendModeListView.IsEnabled = true;
-                this.BlendModeListView.SelectedIndex = layer.BlendMode.HasValue ? this.BlendCollection.IndexOf(layer.BlendMode.Value) : 0;
-            }
-        }
-
-
         private void ConstructLayers()
         {
             this.LayerListView.DragItemsStarting += (s, e) =>
@@ -68,7 +41,7 @@ namespace Luo_Painter
 
                 foreach (ILayer item in this.ObservableCollection)
                 {
-                    this.ChangedLayers.Add(item);
+                    this.LayerTool.ChangedLayers.Add(item);
                 }
             };
             this.LayerListView.DragItemsCompleted += (s, e) =>
@@ -84,14 +57,14 @@ namespace Luo_Painter
                             if (this.HasChangedLayers == false) break;
                             this.HasChangedLayers = false;
 
-                            if (this.ChangedLayers.Count == 0) break;
+                            if (this.LayerTool.ChangedLayers.Count == 0) break;
 
                             // History
-                            string[] undo = this.ChangedLayers.Select(c => c.Id).ToArray();
+                            string[] undo = this.LayerTool.ChangedLayers.Select(c => c.Id).ToArray();
                             string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
                             int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
-                            this.ChangedLayers.Clear();
+                            this.LayerTool.ChangedLayers.Clear();
                             this.CanvasControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
@@ -105,7 +78,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.VisualCommand.Click += (s, layer) =>
+            this.LayerListView.VisualClick += (s, layer) =>
             {
                 Visibility undo = layer.Visibility;
                 Visibility redo = layer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
@@ -146,101 +119,24 @@ namespace Luo_Painter
 
             this.LayerButton.Click += (s, e) =>
             {
-                this.LayerFlyout.ShowAt(this.AddButton);
+                this.LayerFlyout.ShowAt(this.LayerListView.PlacementTarget);
             };
 
             this.LayerFlyout.Closed += (s, e) =>
             {
-                this.LayerTextBox.TextChanged -= this.LayerTextBox_TextChanged;
-                this.OpacitySlider.ValueChanged -= this.OpacitySlider_ValueChanged;
-                this.BlendModeListView.ItemClick -= this.BlendModeListView_ItemClick;
-
-                if (this.HasChangedLayers == false) return;
-                this.HasChangedLayers = false;
-
-                if (this.ChangedLayers.Count == 0) return;
-
-                if (this.NameChanged)
-                {
-                    this.NameChanged = false;
-                    string redo = this.LayerTextBox.Text;
-                    this.NameHistory(string.Empty, redo);
-                }
-
-                if (this.OpacityChanged)
-                {
-                    this.OpacityChanged = false;
-                    float redo = (float)(this.OpacitySlider.Value / 100);
-                    this.OpacityHistory(1, redo);
-                }
-
-                if (this.BlendModeChanged)
-                {
-                    this.BlendModeChanged = false;
-                    if (this.BlendModeListView.SelectedItem is BlendEffectMode item)
-                    {
-                        if (item.IsNone()) this.BlendModeHistory(null, null);
-                        else this.BlendModeHistory(null, item);
-                    }
-                    else this.BlendModeHistory(null, null);
-                }
-
-                this.ChangedLayers.Clear();
+                this.LayerTool.Closed();
             };
 
             this.LayerFlyout.Opened += (s, e) =>
             {
-                this.SetLayer(this.LayerListView.SelectedItem as ILayer);
-
-                this.LayerTextBox.TextChanged -= this.LayerTextBox_TextChanged;
-                this.OpacitySlider.ValueChanged -= this.OpacitySlider_ValueChanged;
-                this.BlendModeListView.ItemClick -= this.BlendModeListView_ItemClick;
-
-                this.LayerTextBox.TextChanged += this.LayerTextBox_TextChanged;
-                this.OpacitySlider.ValueChanged += this.OpacitySlider_ValueChanged;
-                this.BlendModeListView.ItemClick += this.BlendModeListView_ItemClick;
+                this.LayerTool.SetLayer(this.LayerListView.SelectedItem as ILayer);
+                this.LayerTool.Opened();
             };
         }
 
         private void ConstructLayer()
         {
-            this.ClearButton.Click += (s, e) =>
-            {
-                if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
-                {
-                    // History
-                    int removes = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                    bitmapLayer.Clear(Colors.Transparent);
-                    bitmapLayer.ClearThumbnail(Colors.Transparent);
-
-                    this.CanvasControl.Invalidate(); // Invalidate
-
-                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                }
-            };
-
-            this.RemoveButton.Click += (s, e) =>
-            {
-                int startingIndex = this.LayerListView.SelectedIndex;
-
-                foreach (string id in this.Ids().ToArray())
-                {
-                    if (this.Layers.ContainsKey(id))
-                    {
-                        ILayer layer = this.Layers[id];
-                        this.ObservableCollection.Remove(layer);
-                    }
-                }
-
-                int index = Math.Min(startingIndex, this.ObservableCollection.Count - 1);
-                this.LayerListView.SelectedIndex = index;
-                this.SetLayer(this.LayerListView.SelectedItem as ILayer);
-
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-
-            this.AddButton.Click += (s, e) =>
+            this.LayerListView.AddClick += (s, e) =>
             {
                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
@@ -257,189 +153,165 @@ namespace Luo_Painter
             };
 
             //this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();
-        }
 
-
-        private void LayerTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string name = this.LayerTextBox.Text;
-
-            if (this.HasChangedLayers == false)
+            this.LayerTool.NameChanged += (hasChanged, name) =>
             {
-                this.HasChangedLayers = true;
-                this.NameChanged = true;
-
-                foreach (object item in this.LayerListView.SelectedItems)
+                if (hasChanged)
                 {
-                    if (item is ILayer layer)
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
                     {
-                        this.ChangedLayers.Add(layer);
-                        layer.CacheName();
-                        layer.Name = name;
+                        item.Name = name;
                     }
                 }
-            }
-            else
-            {
-                foreach (ILayer item in this.ChangedLayers)
+                else
                 {
-                    item.Name = name;
-                }
-            }
-        }
-
-        private void OpacitySlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            float opacity = (float)(e.NewValue / 100);
-
-            if (this.HasChangedLayers == false)
-            {
-                this.HasChangedLayers = true;
-                this.OpacityChanged = true;
-
-                foreach (object item in this.LayerListView.SelectedItems)
-                {
-                    if (item is ILayer layer)
-                    {
-                        this.ChangedLayers.Add(layer);
-                        layer.CacheOpacity();
-                        layer.Opacity = opacity;
-                    }
-                }
-                this.CanvasControl.Invalidate(); // Invalidate
-            }
-            else
-            {
-                foreach (ILayer item in this.ChangedLayers)
-                {
-                    item.Opacity = opacity;
-                }
-                this.CanvasControl.Invalidate(); // Invalidate
-            }
-        }
-
-        private void BlendModeListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (e.ClickedItem is BlendEffectMode item2)
-            {
-                BlendEffectMode? blendMode = item2.IsNone() ? (BlendEffectMode?)null : item2;
-
-                if (this.HasChangedLayers == false)
-                {
-                    this.HasChangedLayers = true;
-                    this.BlendModeChanged = true;
-
                     foreach (object item in this.LayerListView.SelectedItems)
                     {
                         if (item is ILayer layer)
                         {
-                            this.ChangedLayers.Add(layer);
+                            this.LayerTool.ChangedLayers.Add(layer);
+                            layer.CacheName();
+                            layer.Name = name;
+                        }
+                    }
+                }
+            };
+            this.LayerTool.OpacityChanged += (hasChanged, opacity) =>
+            {
+                if (hasChanged)
+                {
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
+                    {
+                        item.Opacity = opacity;
+                    }
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+                else
+                {
+                    foreach (object item in this.LayerListView.SelectedItems)
+                    {
+                        if (item is ILayer layer)
+                        {
+                            this.LayerTool.ChangedLayers.Add(layer);
+                            layer.CacheOpacity();
+                            layer.Opacity = opacity;
+                        }
+                    }
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
+            this.LayerTool.BlendModeChanged += (hasChanged, blendMode) =>
+            {
+                if (hasChanged)
+                {
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
+                    {
+                        item.BlendMode = blendMode;
+                    }
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+                else
+                {
+                    foreach (object item in this.LayerListView.SelectedItems)
+                    {
+                        if (item is ILayer layer)
+                        {
+                            this.LayerTool.ChangedLayers.Add(layer);
                             layer.CacheBlendMode();
                             layer.BlendMode = blendMode;
                         }
                     }
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
+            };
+
+            this.LayerTool.NameHistory += (undo, redo) =>
+            {
+                if (this.LayerTool.ChangedLayers.Count > 1)
+                {
+                    IDictionary<string, string> undoParameters = new Dictionary<string, string>();
+
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
+                    {
+                        if (item.Name != redo)
+                        {
+                            undoParameters.Add(item.Id, item.StartingName);
+                        }
+                    }
+
+                    // History
+                    int removes = this.History.Push(new PropertysHistory<string>(HistoryType.Names, HistoryType.Name, undoParameters, undo, redo));
+                }
                 else
                 {
-                    foreach (ILayer item in this.ChangedLayers)
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
                     {
-                        item.BlendMode = blendMode;
-                    }
-                    this.CanvasControl.Invalidate(); // Invalidate
-                }
-            }
-        }
-
-
-        private void NameHistory(string undo, string redo)
-        {
-            if (this.ChangedLayers.Count > 1)
-            {
-                IDictionary<string, string> undoParameters = new Dictionary<string, string>();
-
-                foreach (ILayer item in this.ChangedLayers)
-                {
-                    if (item.Name != redo)
-                    {
-                        undoParameters.Add(item.Id, item.StartingName);
+                        // History
+                        int removes = this.History.Push(new PropertyHistory<string>(HistoryType.Name, item.Id, item.StartingName, redo));
                     }
                 }
 
-                // History
-                int removes = this.History.Push(new PropertysHistory<string>(HistoryType.Names, HistoryType.Name, undoParameters, undo, redo));
-            }
-            else
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
+            };
+            this.LayerTool.OpacityHistory += (undo, redo) =>
             {
-                foreach (ILayer item in this.ChangedLayers)
+                if (this.LayerTool.ChangedLayers.Count > 1)
                 {
+                    IDictionary<string, float> undoParameters = new Dictionary<string, float>();
+
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
+                    {
+                        if (item.Opacity != redo)
+                        {
+                            undoParameters.Add(item.Id, item.StartingOpacity);
+                        }
+                    }
+
                     // History
-                    int removes = this.History.Push(new PropertyHistory<string>(HistoryType.Name, item.Id, item.StartingName, redo));
+                    int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacitys, HistoryType.Opacity, undoParameters, undo, redo));
                 }
-            }
-
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
-        }
-
-        private void OpacityHistory(float undo, float redo)
-        {
-            if (this.ChangedLayers.Count > 1)
-            {
-                IDictionary<string, float> undoParameters = new Dictionary<string, float>();
-
-                foreach (ILayer item in this.ChangedLayers)
+                else
                 {
-                    if (item.Opacity != redo)
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
                     {
-                        undoParameters.Add(item.Id, item.StartingOpacity);
+                        // History
+                        int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Id, item.StartingOpacity, redo));
                     }
                 }
 
-                // History
-                int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacitys, HistoryType.Opacity, undoParameters, undo, redo));
-            }
-            else
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
+            };
+            this.LayerTool.BlendModeHistory += (undo, redo) =>
             {
-                foreach (ILayer item in this.ChangedLayers)
+                if (this.LayerTool.ChangedLayers.Count > 1)
                 {
-                    // History
-                    int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Id, item.StartingOpacity, redo));
-                }
-            }
+                    IDictionary<string, BlendEffectMode?> undoParameters = new Dictionary<string, BlendEffectMode?>();
 
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
-        }
-
-        private void BlendModeHistory(BlendEffectMode? undo, BlendEffectMode? redo)
-        {
-            if (this.ChangedLayers.Count > 1)
-            {
-                IDictionary<string, BlendEffectMode?> undoParameters = new Dictionary<string, BlendEffectMode?>();
-
-                foreach (ILayer item in this.ChangedLayers)
-                {
-                    if (item.BlendMode != redo)
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
                     {
-                        undoParameters.Add(item.Id, item.StartingBlendMode);
+                        if (item.BlendMode != redo)
+                        {
+                            undoParameters.Add(item.Id, item.StartingBlendMode);
+                        }
+                    }
+
+                    // History
+                    int removes = this.History.Push(new PropertysHistory<BlendEffectMode?>(HistoryType.BlendModes, HistoryType.BlendMode, undoParameters, undo, redo));
+                }
+                else
+                {
+                    foreach (ILayer item in this.LayerTool.ChangedLayers)
+                    {
+                        // History
+                        int removes = this.History.Push(new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, item.Id, item.StartingBlendMode, redo));
                     }
                 }
 
-                // History
-                int removes = this.History.Push(new PropertysHistory<BlendEffectMode?>(HistoryType.BlendModes, HistoryType.BlendMode, undoParameters, undo, redo));
-            }
-            else
-            {
-                foreach (ILayer item in this.ChangedLayers)
-                {
-                    // History
-                    int removes = this.History.Push(new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, item.Id, item.StartingBlendMode, redo));
-                }
-            }
-
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
+            };
         }
 
     }

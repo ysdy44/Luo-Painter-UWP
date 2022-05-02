@@ -20,7 +20,7 @@ namespace Luo_Painter
         /// </summary>
         private async Task<bool?> Export()
         {
-            bool isClearWhite = this.FileFormat == CanvasBitmapFileFormat.Jpeg;
+            bool isClearWhite = this.ExportButton.FileFormat == CanvasBitmapFileFormat.Jpeg;
 
             // Export
             return await FileUtil.SaveCanvasImageFile
@@ -33,12 +33,12 @@ namespace Luo_Painter
 
                 width: this.Transformer.Width,
                 height: this.Transformer.Height,
-                dpi: this.DPI,
+                dpi: this.ExportButton.DPI,
 
-                fileChoices: this.FileChoices,
+                fileChoices: this.ExportButton.FileChoices,
                 suggestedFileName: this.ApplicationView.Title,
 
-                fileFormat: this.FileFormat,
+                fileFormat: this.ExportButton.FileFormat,
                 quality: 1
             );
         }

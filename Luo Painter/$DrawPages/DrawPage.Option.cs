@@ -101,15 +101,13 @@ namespace Luo_Painter
                 this.CanvasControl.Invalidate(); // Invalidate
             };
 
-            this.OptionTypeCommand.Click += (s, type) =>
+            this.OptionButton.ItemClick += (s, type) =>
             {
-                this.OptionFlyout.Hide();
                 this.OptionClick(type);
             };
 
-            this.MoreOptionTypeCommand.Click += (s, type) =>
+            this.MoreOptionButton.ItemClick += (s, type) =>
             {
-                this.MoreOptionFlyout.Hide();
                 this.OptionClick(type);
             };
         }
