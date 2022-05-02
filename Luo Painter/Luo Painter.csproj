@@ -143,6 +143,15 @@
     </Compile>
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
+    <Compile Include="Luo Painter.Tools\LayerTool.xaml.cs">
+      <DependentUpon>LayerTool.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Tools\PaintTool.xaml.cs">
+      <DependentUpon>PaintTool.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Tools\ViewTool.xaml.cs">
+      <DependentUpon>ViewTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +229,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="%24MainPages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Tools\LayerTool.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Tools\PaintTool.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Tools\ViewTool.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,0 +1,103 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Tools.LayerTool"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.Tools"
+    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    Width="320"
+    >
+
+    <StackPanel>
+
+        <Grid Height="80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="LayerImageButton" Width="Auto" Height="Auto" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image x:Name="LayerImage" />
+            </Button>
+            <TextBox x:Name="LayerTextBox" Grid.Column="2" >
+                <TextBox.PlaceholderText>
+                    Input Text...
+                </TextBox.PlaceholderText>
+            </TextBox>
+        </Grid>
+
+        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+        <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" >
+            <FrameworkElement.Tag>
+                Opacity
+            </FrameworkElement.Tag>
+            <Slider.Header>
+                <Button Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" 
+                        Padding="4,0" MinWidth="44" Height="28"
+                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                    <Button.Flyout>
+                        <Flyout>
+
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Slider.Header>
+        </Slider>
+
+        <ListView x:Name="BlendModeListView"                             
+                  CornerRadius="4"                               
+                  BorderThickness="1"                                 
+                  BorderBrush="{ThemeResource AppStroke}"                               
+                  Background="{ThemeResource SystemAltLowColor}"                              
+                  IsItemClickEnabled="True"                              
+                  SelectionMode="Single"            
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                  >
+
+            <ItemsControl.ItemsSource>
+                <local:BlendList x:Name="BlendCollection">
+                    <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                </local:BlendList>
+            </ItemsControl.ItemsSource>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="MinWidth" Value="70"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="Padding" Value="20,4"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="effects:BlendEffectMode">
+                    <local:BlendIcon Type="{x:Bind}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ListView>
+        
+    </StackPanel>
+</UserControl>
