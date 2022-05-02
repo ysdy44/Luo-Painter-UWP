@@ -14,27 +14,28 @@ namespace Luo_Painter
     public class EditsCanvas : Canvas
     {
 
-        readonly BitmapSize HSize = new BitmapSize { Width = 400, Height = 377 };
+        readonly BitmapSize HSize = new BitmapSize { Width = 400, Height = 412 };
         readonly BitmapSize HItemSize = new BitmapSize { Width = 128, Height = 40 };
         readonly BitmapSize[] HCoordinates = new BitmapSize[]
         {
             new BitmapSize{ Width = 4, Height = 4 }, /// <see cref="EditGroupType.Edit"/>
-            new BitmapSize{ Width = 276, Height = 4 }, /// <see cref="EditGroupType.Group"/>
+            new BitmapSize{ Width = 276, Height = 248 }, /// <see cref="EditGroupType.Group"/>
             new BitmapSize{ Width = 140, Height = 4 }, /// <see cref="EditGroupType.Select"/>
-            new BitmapSize{ Width = 140, Height = 290 }, /// <see cref="EditGroupType.Combine"/>
+            new BitmapSize{ Width = 276, Height = 4 }, /// <see cref="EditGroupType.Combine"/>
 
             new BitmapSize{ Width = 0, Height = 28 }, /// <see cref="EditType.Cut"/>
             new BitmapSize{ Width = 0, Height = 70 }, /// <see cref="EditType.Duplicate"/>
             new BitmapSize{ Width = 0, Height = 112 }, /// <see cref="EditType.Copy"/>
             new BitmapSize{ Width = 0, Height = 154 }, /// <see cref="EditType.Paste"/>
             new BitmapSize{ Width = 0, Height = 196 }, /// <see cref="EditType.Clear"/>
-            new BitmapSize{ Width = 0, Height = 244 }, /// <see cref="EditType.Extract"/>
-            new BitmapSize{ Width = 0, Height = 286 }, /// <see cref="EditType.Merge"/>
-            new BitmapSize{ Width = 0, Height = 328 }, /// <see cref="EditType.Flatten"/>
+            new BitmapSize{ Width = 0, Height = 238 }, /// <see cref="EditType.Remove"/>
+            new BitmapSize{ Width = 0, Height = 286 }, /// <see cref="EditType.Extract"/>
+            new BitmapSize{ Width = 0, Height = 328 }, /// <see cref="EditType.Merge"/>
+            new BitmapSize{ Width = 0, Height = 370 }, /// <see cref="EditType.Flatten"/>
 
             new BitmapSize{ Width = 272, Height = 271}, /// <see cref="EditType.Group"/>
             new BitmapSize{ Width = 272, Height = 313 }, /// <see cref="EditType.Ungroup"/>
-            new BitmapSize{ Width = 136, Height = 313 }, /// <see cref="EditType.Release"/>
+            new BitmapSize{ Width = 272, Height = 361 }, /// <see cref="EditType.Release"/>
 
             new BitmapSize{ Width = 136, Height = 28 }, /// <see cref="EditType.All"/>
             new BitmapSize{ Width = 136, Height = 70 }, /// <see cref="EditType.Deselect"/>
@@ -42,6 +43,8 @@ namespace Luo_Painter
             new BitmapSize{ Width = 136, Height = 154 }, /// <see cref="EditType.Pixel"/>
             new BitmapSize{ Width = 136, Height = 202 }, /// <see cref="EditType.Feather"/>
             new BitmapSize{ Width = 136, Height = 244 }, /// <see cref="EditType.Transform"/>
+            new BitmapSize{ Width = 136, Height = 286 }, /// <see cref="EditType.Grow"/>
+            new BitmapSize{ Width = 136, Height = 328 }, /// <see cref="EditType.Shrink"/>
 
             new BitmapSize{ Width = 272, Height = 28 }, /// <see cref="EditType.Union"/>
             new BitmapSize{ Width = 272, Height = 70 }, /// <see cref="EditType.Exclude"/>
@@ -50,27 +53,28 @@ namespace Luo_Painter
             new BitmapSize{ Width = 272, Height = 202 }, /// <see cref="EditType.ExpandStroke"/>
         };
 
-        readonly BitmapSize VEditSize = new BitmapSize { Width = 320, Height = 528 };
+        readonly BitmapSize VEditSize = new BitmapSize { Width = 320, Height = 612 };
         readonly BitmapSize VEditItemSize = new BitmapSize { Width = 156, Height = 40 };
         readonly BitmapSize[] VEditCoordinates = new BitmapSize[]
         {
             new BitmapSize{ Width = 4, Height = 4 }, /// <see cref="EditGroupType.Edit"/>
-            new BitmapSize{ Width = 4, Height = 373 }, /// <see cref="EditGroupType.Group"/>
+            new BitmapSize{ Width = 4, Height = 415 }, /// <see cref="EditGroupType.Group"/>
             new BitmapSize{ Width = 168, Height = 4 }, /// <see cref="EditGroupType.Select"/>
-            new BitmapSize{ Width = 168, Height = 289 }, /// <see cref="EditGroupType.Combine"/>
+            new BitmapSize{ Width = 168, Height = 373 }, /// <see cref="EditGroupType.Combine"/>
 
             new BitmapSize{ Width = 0, Height = 28 }, /// <see cref="EditType.Cut"/>
             new BitmapSize{ Width = 0, Height = 70 }, /// <see cref="EditType.Duplicate"/>
             new BitmapSize{ Width = 0, Height = 112 }, /// <see cref="EditType.Copy"/>
             new BitmapSize{ Width = 0, Height = 154 }, /// <see cref="EditType.Paste"/>
             new BitmapSize{ Width = 0, Height = 196 }, /// <see cref="EditType.Clear"/>
-            new BitmapSize{ Width = 0, Height = 244 }, /// <see cref="EditType.Extract"/>
-            new BitmapSize{ Width = 0, Height = 286 }, /// <see cref="EditType.Merge"/>
-            new BitmapSize{ Width = 0, Height = 328 }, /// <see cref="EditType.Flatten"/>
+            new BitmapSize{ Width = 0, Height = 244 }, /// <see cref="EditType.Remove"/>
+            new BitmapSize{ Width = 0, Height = 286 }, /// <see cref="EditType.Extract"/>
+            new BitmapSize{ Width = 0, Height = 328 }, /// <see cref="EditType.Merge"/>
+            new BitmapSize{ Width = 0, Height = 370 }, /// <see cref="EditType.Flatten"/>
 
-            new BitmapSize{ Width = 0, Height = 397 }, /// <see cref="EditType.Group"/>
-            new BitmapSize{ Width = 0, Height = 445 }, /// <see cref="EditType.Ungroup"/>
-            new BitmapSize{ Width = 0, Height = 487 }, /// <see cref="EditType.Release"/>
+            new BitmapSize{ Width = 0, Height = 439 }, /// <see cref="EditType.Group"/>
+            new BitmapSize{ Width = 0, Height = 481 }, /// <see cref="EditType.Ungroup"/>
+            new BitmapSize{ Width = 0, Height = 529 }, /// <see cref="EditType.Release"/>
 
             new BitmapSize{ Width = 164, Height = 28 }, /// <see cref="EditType.All"/>
             new BitmapSize{ Width = 164, Height = 70 }, /// <see cref="EditType.Deselect"/>
@@ -78,12 +82,14 @@ namespace Luo_Painter
             new BitmapSize{ Width = 164, Height = 154 }, /// <see cref="EditType.Pixel"/>
             new BitmapSize{ Width = 164, Height = 202 }, /// <see cref="EditType.Feather"/>
             new BitmapSize{ Width = 164, Height = 244 }, /// <see cref="EditType.Transform"/>
+            new BitmapSize{ Width = 164, Height = 286 }, /// <see cref="EditType.Grow"/>
+            new BitmapSize{ Width = 164, Height = 328 }, /// <see cref="EditType.Shrink"/>
        
-            new BitmapSize{ Width = 164, Height = 313 }, /// <see cref="EditType.Union"/>
-            new BitmapSize{ Width = 164, Height = 355 }, /// <see cref="EditType.Exclude"/>
-            new BitmapSize{ Width = 164, Height = 397 }, /// <see cref="EditType.Xor"/>
-            new BitmapSize{ Width = 164, Height = 439 }, /// <see cref="EditType.Intersect"/>
-            new BitmapSize{ Width = 164, Height = 487 }, /// <see cref="EditType.ExpandStroke"/>
+            new BitmapSize{ Width = 164, Height = 397 }, /// <see cref="EditType.Union"/>
+            new BitmapSize{ Width = 164, Height = 439 }, /// <see cref="EditType.Exclude"/>
+            new BitmapSize{ Width = 164, Height = 481 }, /// <see cref="EditType.Xor"/>
+            new BitmapSize{ Width = 164, Height = 523 }, /// <see cref="EditType.Intersect"/>
+            new BitmapSize{ Width = 164, Height = 571 }, /// <see cref="EditType.ExpandStroke"/>
         };
 
         #region DependencyProperty
@@ -308,6 +314,28 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
+                    case EditType.Remove:
+                        {
+                            int index = this.LayerListView.SelectedIndex;
+                            if (index < 0) break;
+                            if (index + 1 >= this.ObservableCollection.Count) break;
+
+                            foreach (string id in this.Ids().ToArray())
+                            {
+                                if (this.Layers.ContainsKey(id))
+                                {
+                                    ILayer layer = this.Layers[id];
+                                    this.ObservableCollection.Remove(layer);
+                                }
+                            }
+
+                            int index2 = System.Math.Min(index, this.ObservableCollection.Count - 1);
+                            this.LayerListView.SelectedIndex = index2;
+                            this.SetLayer(this.LayerListView.SelectedItem as ILayer);
+
+                            this.CanvasControl.Invalidate(); // Invalidate
+                        }
+                        break;
                     case EditType.Extract:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
@@ -427,6 +455,10 @@ namespace Luo_Painter
                     case EditType.Feather:
                         break;
                     case EditType.Transform:
+                        break;
+                    case EditType.Grow:
+                        break;
+                    case EditType.Shrink:
                         break;
                     case EditType.Union:
                         break;

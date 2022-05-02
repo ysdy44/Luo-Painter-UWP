@@ -321,9 +321,15 @@
                         <KeyboardAccelerator Modifiers= "Control" Key= "V" />
                     </UIElement.KeyboardAccelerators >
                 </local:EditItem>
+
                 <local:EditItem Type = "Clear" Command= "{x:Bind EditTypeCommand}" >
                     <UIElement.KeyboardAccelerators >
                         <KeyboardAccelerator Key= "Back" />
+                    </UIElement.KeyboardAccelerators >
+                </local:EditItem>
+                <local:EditItem Type = "Remove" Command= "{x:Bind EditTypeCommand}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Key= "Delete" />
                     </UIElement.KeyboardAccelerators >
                 </local:EditItem>
 
@@ -386,6 +392,10 @@
                 <local:EditItem Type = "Feather" Command= "{x:Bind EditTypeCommand}" >
                 </local:EditItem>
                 <local:EditItem Type = "Transform" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Grow" Command= "{x:Bind EditTypeCommand}" >
+                </local:EditItem>
+                <local:EditItem Type = "Shrink" Command= "{x:Bind EditTypeCommand}" >
                 </local:EditItem>
 
 

@@ -11,6 +11,7 @@
         Paste,
 
         Clear,
+        Remove,
 
         Extract,
         Merge,
@@ -25,11 +26,13 @@
         // Select
         All,
         Deselect,
-        Invert, 
+        Invert,
         Pixel,
 
         Feather,
         Transform,
+        Grow,
+        Shrink,
 
         // Combine
         Union,
