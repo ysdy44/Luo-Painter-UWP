@@ -75,5 +75,17 @@ namespace Luo_Painter.Layers.Models
             return this.GetBitmapResetHistory();
         }
 
+        public IHistory Pixel(BitmapLayer bitmapLayer, Color color)
+        {
+            this.TempRenderTarget.CopyPixelsFromBitmap(bitmapLayer.SourceRenderTarget);
+            using (CanvasDrawingSession ds = this.CreateDrawingSession())
+            {
+                ds.Clear(color);
+                ds.DrawImage(this.Temp, 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationIn);
+            }
+
+            return this.GetBitmapResetHistory();
+        }
+
     }
 }

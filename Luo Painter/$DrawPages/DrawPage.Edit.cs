@@ -65,7 +65,7 @@ namespace Luo_Painter
                             {
                                 int index = this.LayerListView.SelectedIndex;
                                 if (index < 0) break;
-                                if (index + 1 >= this.ObservableCollection.Count) break;
+                                if (index + 1 > this.ObservableCollection.Count) break;
 
                                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
@@ -116,7 +116,7 @@ namespace Luo_Painter
                             }
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
-                            if (index + 1 >= this.ObservableCollection.Count) break;
+                            if (index + 1 > this.ObservableCollection.Count) break;
 
                             string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
@@ -155,7 +155,7 @@ namespace Luo_Painter
                                         // History
                                         int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
                                         bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
-                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source); 
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
                                         bitmapLayer.ClearThumbnail(Colors.Transparent);
                                         break;
                                 }
@@ -165,6 +165,28 @@ namespace Luo_Painter
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                    case EditType.Remove:
+                        {
+                            int index = this.LayerListView.SelectedIndex;
+                            if (index < 0) break;
+                            if (index + 1 > this.ObservableCollection.Count) break;
+
+                            foreach (string id in this.Ids().ToArray())
+                            {
+                                if (this.Layers.ContainsKey(id))
+                                {
+                                    ILayer layer = this.Layers[id];
+                                    this.ObservableCollection.Remove(layer);
+                                }
+                            }
+
+                            int index2 = System.Math.Min(index, this.ObservableCollection.Count - 1);
+                            this.LayerListView.SelectedIndex = index2;
+                            this.LayerTool.SetLayer(this.LayerListView.SelectedItem as ILayer);
+
+                            this.CanvasControl.Invalidate(); // Invalidate
                         }
                         break;
                     case EditType.Extract:
@@ -182,7 +204,7 @@ namespace Luo_Painter
 
                                 int index = this.LayerListView.SelectedIndex;
                                 if (index < 0) break;
-                                if (index + 1 >= this.ObservableCollection.Count) break;
+                                if (index + 1 > this.ObservableCollection.Count) break;
 
                                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
@@ -215,7 +237,7 @@ namespace Luo_Painter
                         {
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
-                            if (index + 1 >= this.ObservableCollection.Count) break;
+                            if (index + 2 > this.ObservableCollection.Count) break;
 
                             if (this.ObservableCollection[index] is ILayer current)
                             {
@@ -236,6 +258,8 @@ namespace Luo_Painter
                                     string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
                                     int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
+                                    this.CanvasControl.Invalidate(); // Invalidate
+
                                     this.UndoButton.IsEnabled = this.History.CanUndo;
                                     this.RedoButton.IsEnabled = this.History.CanRedo;
                                 }
@@ -243,6 +267,31 @@ namespace Luo_Painter
                         }
                         break;
                     case EditType.Flatten:
+                        {
+                            int index = this.LayerListView.SelectedIndex;
+                            if (index < 0) break;
+                            if (index + 1 > this.ObservableCollection.Count) break;
+                            if (1 >= this.ObservableCollection.Count) break;
+
+                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
+
+                            ICanvasImage image = this.Render(Colors.Red);
+                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasControl, image, this.Transformer.Width, this.Transformer.Height);
+                            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
+
+                            this.ObservableCollection.Clear();
+                            this.ObservableCollection.Add(bitmapLayer);
+                            this.LayerListView.SelectedIndex = 0;
+
+                            // History
+                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+                            this.CanvasControl.Invalidate(); // Invalidate
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
                         break;
                     case EditType.Group:
                         break;
@@ -284,10 +333,24 @@ namespace Luo_Painter
                         }
                         break;
                     case EditType.Pixel:
+                        {
+                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
+                            {
+                                // History
+                                int removes = this.History.Push(this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue));
+
+                                this.UndoButton.IsEnabled = this.History.CanUndo;
+                                this.RedoButton.IsEnabled = this.History.CanRedo;
+                            }
+                        }
                         break;
                     case EditType.Feather:
                         break;
                     case EditType.Transform:
+                        break;
+                    case EditType.Grow:
+                        break;
+                    case EditType.Shrink:
                         break;
                     case EditType.Union:
                         break;
