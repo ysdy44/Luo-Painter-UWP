@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="ExcludeIcon" TargetType="ContentControl">
+        <Canvas Width="25" Height="25" >
+            <FontIcon Canvas.Top="-6" Glyph="&#x259B;" FontSize="18" FontFamily="Segoe UI Symbol" />
+            <FontIcon Canvas.Left="7" Canvas.Top="7" Glyph="&#xE003;" FontSize="12" FontFamily="Segoe UI Symbol" />
+        </Canvas>
+    </ControlTemplate>
+
+</ResourceDictionary>

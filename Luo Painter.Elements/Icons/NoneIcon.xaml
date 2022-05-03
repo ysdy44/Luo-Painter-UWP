@@ -1,0 +1,9 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="NoneIcon" TargetType="ContentControl">
+        <Rectangle Width="23" Height="10" StrokeThickness="1" Stroke="White" Fill="Black" />
+    </ControlTemplate>
+
+</ResourceDictionary>
