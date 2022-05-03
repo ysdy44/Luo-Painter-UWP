@@ -116,6 +116,7 @@ namespace Luo_Painter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
+        CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
@@ -200,7 +201,7 @@ namespace Luo_Painter
                             if (bitmap is null) continue;
                             count++;
 
-                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasControl, bitmap, this.Transformer.Width, this.Transformer.Height);
+                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
                             this.Layers.Add(bitmapLayer.Id, bitmapLayer);
                             this.Add(bitmapLayer);
                         }

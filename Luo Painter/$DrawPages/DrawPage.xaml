@@ -216,8 +216,8 @@
 
 
         <!--Canvas-->
-        <canvas:CanvasVirtualControl x:Name="CanvasControl" FlowDirection="LeftToRight" />
-        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" FlowDirection="LeftToRight" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" />
+        <canvas:CanvasVirtualControl x:Name="CanvasControl" FlowDirection="LeftToRight" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" FlowDirection="LeftToRight" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
 
 
         <!--Head-->

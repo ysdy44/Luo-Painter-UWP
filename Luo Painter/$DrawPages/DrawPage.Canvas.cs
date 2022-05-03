@@ -62,7 +62,7 @@ namespace Luo_Painter
         {
             this.CanvasAnimatedControl.CreateResources += (sender, args) =>
             {
-                this.Marquee = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                this.Marquee = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
                 args.TrackAsyncAction(this.CreateDottedLineResourcesAsync().AsAsyncAction());
             };
             this.CanvasAnimatedControl.Draw += (sender, args) =>
@@ -90,7 +90,7 @@ namespace Luo_Painter
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
                 args.DrawingSession.Blend = CanvasBlend.Copy;
-                args.DrawingSession.DrawMarqueeTool(sender, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
             };
             //this.CanvasAnimatedControl.Update += (sender, args) =>
             //{
@@ -110,12 +110,12 @@ namespace Luo_Painter
                 this.Transformer.Fit();
                 this.ViewTool.Construct(this.Transformer);
 
-                this.Mesh = new Mesh(sender, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
-                this.GradientMesh = new GradientMesh(sender);
-                this.Clipboard = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                this.Mesh = new Mesh(this.CanvasDevice, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
+                this.GradientMesh = new GradientMesh(this.CanvasDevice);
+                this.Clipboard = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
                 // Layer
-                BitmapLayer bitmapLayer = new BitmapLayer(sender, this.Transformer.Width, this.Transformer.Height);
+                BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
                 this.Layers.Add(bitmapLayer.Id, bitmapLayer);
                 this.ObservableCollection.Add(bitmapLayer);
                 this.LayerListView.SelectedIndex = 0;

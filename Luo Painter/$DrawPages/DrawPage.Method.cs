@@ -15,7 +15,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        private ICanvasImage Transparent => new CanvasCommandList(this.CanvasControl);
+        private ICanvasImage Transparent => new CanvasCommandList(this.CanvasDevice);
         private ICanvasImage White => new ColorSourceEffect
         {
             Color = Colors.White
@@ -31,7 +31,7 @@ namespace Luo_Painter
             // Export
             return await FileUtil.SaveCanvasImageFile
             (
-                resourceCreator: this.CanvasControl,
+                resourceCreator: this.CanvasDevice,
                 image: this.Render(isClearWhite ? this.White : this.Transparent),
 
                 width: this.Transformer.Width,
@@ -126,7 +126,7 @@ namespace Luo_Painter
             {
                 using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
                 {
-                    return await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
+                    return await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
                 }
             }
             catch (Exception)

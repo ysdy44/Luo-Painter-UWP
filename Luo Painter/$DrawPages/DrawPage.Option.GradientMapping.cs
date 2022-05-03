@@ -68,7 +68,7 @@ namespace Luo_Painter
         private void SetGradientMapping()
         {
             this.GradientMappingSelector.Reset(this.Stops);
-            this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+            this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
         }
 
 
@@ -84,24 +84,24 @@ namespace Luo_Painter
 
             this.GradientMappingSelector.ItemManipulationStarted += (s, e) =>
             {
-                this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ItemManipulationDelta += (s, e) =>
             {
-                this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ItemManipulationCompleted += (s, e) =>
             {
-                this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ItemPreviewKeyDown += (s, e) =>
             {
                 if (e.Handled)
                 {
-                    this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                    this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -115,19 +115,19 @@ namespace Luo_Painter
                 if (result is false) return;
 
                 this.GradientMappingSelector.SetCurrent(point);
-                this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ManipulationDelta += (s, e) =>
             {
                 this.GradientMappingSelector.SetCurrentOffset(e.Position);
-                this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ManipulationCompleted += (s, e) =>
             {
                 this.GradientMappingSelector.SetCurrentOffset(e.Position);
-                this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
         }
@@ -147,7 +147,7 @@ namespace Luo_Painter
         private void GradientMappingColorChanged(Color color)
         {
             this.GradientMappingSelector.SetCurrentColor(color);
-            this.GradientMesh.Render(this.CanvasControl, this.GradientMappingSelector.Source);
+            this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
