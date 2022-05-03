@@ -2,10 +2,39 @@
 using Luo_Painter.Elements;
 using System;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Tools
 {
+    internal sealed class ElementIcon : ContentControl
+    {
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="ElementIcon"/>. </summary>
+        public ElementType Type
+        {
+            get => (ElementType)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "ElementIcon.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(ElementType), typeof(ElementIcon), new PropertyMetadata(ElementType.None, (sender, e) =>
+        {
+            ElementIcon control = (ElementIcon)sender;
+
+            if (e.NewValue is ElementType value)
+            {
+                control.Content = value;
+                control.Template = value.GetTemplate(out ResourceDictionary resource);
+                control.Resources = resource;
+            }
+        }));
+
+
+        #endregion
+    }
+
     internal sealed class RadianRange
     {
         public Range Range { get; } = new Range
