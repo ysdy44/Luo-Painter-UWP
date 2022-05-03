@@ -6,6 +6,13 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers.Models
 {
+    public enum BitmapType
+    {
+        Origin,
+        Source,
+        Temp,
+    }
+
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
@@ -22,6 +29,19 @@ namespace Luo_Painter.Layers.Models
         public ICanvasImage Origin => this.OriginRenderTarget;
         public ICanvasImage Source => this.SourceRenderTarget;
         public ICanvasImage Temp => this.TempRenderTarget;
+
+        private CanvasRenderTarget this[BitmapType type]
+        {
+            get
+            {
+                switch (type)
+                {
+                    case BitmapType.Origin: return this.OriginRenderTarget;
+                    case BitmapType.Temp: return this.TempRenderTarget;
+                    default: return this.SourceRenderTarget;
+                }
+            }
+        }
 
         readonly CanvasRenderTarget OriginRenderTarget;
         readonly CanvasRenderTarget SourceRenderTarget;
@@ -113,6 +133,20 @@ namespace Luo_Painter.Layers.Models
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
         public void CopyPixels(BitmapLayer bitmapLayer) => this.SourceRenderTarget.CopyPixelsFromBitmap(bitmapLayer.TempRenderTarget);
 
+        public void CopyPixels(BitmapLayer source, BitmapType sourceType = BitmapType.Source, BitmapType destinationType = BitmapType.Source) => this[destinationType].CopyPixelsFromBitmap(source[sourceType]);
+
+        public CanvasDrawingSession CreateDrawingSession(BitmapType type = BitmapType.Source) => this[type].CreateDrawingSession();
+
+        public void DrawCopy(ICanvasImage image, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(image);
+            }
+        }
 
         public void DrawSource(ICanvasImage image)
         {
@@ -125,6 +159,13 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
+        public void Clear(Color color, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                ds.Clear(color);
+            }
+        }
 
         public void Clear(Color color)
         {

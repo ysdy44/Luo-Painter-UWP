@@ -18,7 +18,7 @@ namespace Luo_Painter.Layers.Models
 
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
-        
+
         public ImageSource Thumbnail => this.ThumbnailWriteableBitmap;
 
         readonly CanvasRenderTarget ThumbnailRenderTarget;

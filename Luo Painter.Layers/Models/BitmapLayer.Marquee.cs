@@ -37,7 +37,7 @@ namespace Luo_Painter.Layers.Models
         public void Copy(BitmapLayer bitmapLayer, BitmapLayer marquee)
         {
             this.TempRenderTarget.CopyPixelsFromBitmap(marquee.SourceRenderTarget);
-            using (CanvasDrawingSession ds = this.CreateSourceDrawingSession())
+            using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.Blend = CanvasBlend.Copy;
                 ds.DrawImage(new AlphaMaskEffect
@@ -54,7 +54,7 @@ namespace Luo_Painter.Layers.Models
             Rect rect = bounds.ToRect(BitmapLayer.Unit);
 
             this.TempRenderTarget.CopyPixelsFromBitmap(marquee.SourceRenderTarget);
-            using (CanvasDrawingSession ds = this.CreateSourceDrawingSession())
+            using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.DrawImage(this.Temp, (float)rect.Left, (float)rect.Top, rect, 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
             }
@@ -66,7 +66,7 @@ namespace Luo_Painter.Layers.Models
         public IHistory Invert(Color color)
         {
             this.TempRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
-            using (CanvasDrawingSession ds = this.CreateSourceDrawingSession())
+            using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.Clear(color);
                 ds.DrawImage(this.Temp, 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);

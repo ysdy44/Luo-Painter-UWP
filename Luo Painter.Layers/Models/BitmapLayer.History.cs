@@ -73,7 +73,8 @@ namespace Luo_Painter.Layers.Models
                     }
                     else if (parameter is Color color)
                     {
-                        this.Clear(color);
+                        this.Clear(color, BitmapType.Origin);
+                        this.Clear(color, BitmapType.Source);
                         this.ClearThumbnail(color);
                         return true;
                     }
