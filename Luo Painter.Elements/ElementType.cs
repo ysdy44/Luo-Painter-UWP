@@ -3,9 +3,16 @@
     public enum ElementType
     {
         // None
+        Edit,
+        Layer,
+        Option,
+        MoreOption,
+
         SnapToTick,
+
         ResetRadian,
         ResetScale,
+
         ConvertToCurves,
 
         // CompositeModes
