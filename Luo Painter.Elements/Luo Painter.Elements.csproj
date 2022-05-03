@@ -124,6 +124,9 @@
     <Compile Include="BackdropBrush.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="DPIExtensions.cs" />
+    <Compile Include="ElementExtensions.cs" />
+    <Compile Include="ElementGroupType.cs" />
+    <Compile Include="ElementType.cs" />
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
