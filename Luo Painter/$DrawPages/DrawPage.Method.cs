@@ -46,6 +46,35 @@ namespace Luo_Painter
             );
         }
 
+
+        private int FillContainsPoint(Vector2 point)
+        {
+            for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
+            {
+                ILayer item = this.ObservableCollection[i];
+                if (item.FillContainsPoint(point)) return i;
+            }
+
+            return -1;
+        }
+
+        private bool TryFillContainsPoint(Vector2 point, out ILayer layer)
+        {
+            for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
+            {
+                ILayer item = this.ObservableCollection[i];
+                if (item.FillContainsPoint(point))
+                {
+                    layer = item;
+                    return true;
+                }
+            }
+
+            layer = null;
+            return false;
+        }
+
+
         private ICanvasImage Render(ICanvasImage background)
         {
             for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
