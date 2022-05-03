@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
+    xmlns:tools="using:Luo_Painter.Tools"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"
@@ -52,6 +53,6 @@
         </Flyout>
     </Button.Flyout>
 
-    <FontIcon Glyph="&#xE10C;" FontFamily="Segoe UI Symbol"/>
+    <tools:ElementIcon Type="MoreOption"/>
 
 </Button>

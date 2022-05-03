@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:options="using:Luo_Painter.Options"
+    xmlns:tools="using:Luo_Painter.Tools"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"
@@ -140,10 +141,6 @@
         </Flyout>
     </Button.Flyout>
 
-    <Canvas Width="40" Height="40" >
-        <FontIcon Canvas.Left="12" Canvas.Top="5" Opacity="0.5" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
-        <FontIcon Canvas.Left="6" Canvas.Top="16" Opacity="0.2" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
-        <FontIcon Canvas.Left="18" Canvas.Top="16" Opacity="0.8" Glyph="&#xE91F;" FontSize="16" FontFamily="Segoe MDL2 Assets"/>
-    </Canvas>
+    <tools:ElementIcon Type="Option"/>
 
 </Button>
