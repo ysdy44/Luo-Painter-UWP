@@ -19,13 +19,29 @@ namespace Luo_Painter.Layers.Models
         readonly HashSet<int> Add1Retrieves = new HashSet<int>();
         readonly HashSet<int> Add2Retrieves = new HashSet<int>();
 
+
+        public bool FillContainsPoint(Vector2 point)
+        {
+            // 1. Get Position and Target
+            int px = (int)point.X;
+            int py = (int)point.Y;
+
+            bool hasTarget = px >= 0 && px < this.Width && py >= 0 && py < this.Height;
+            if (hasTarget is false) return false;
+
+            Color target = this.SourceRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+            if (target.A is byte.MinValue) return false;
+
+            return true;
+        }
+
         public bool FloodSelect(Vector2 point, Color color, bool isContiguous = true, float tolerance = 0.1f, bool feather = false)
         {
             // 1. Get Position and Target
             int px = (int)point.X;
             int py = (int)point.Y;
 
-            bool hasTarget = (px >= 0 && px < this.Width && py >= 0 && py < this.Height);
+            bool hasTarget = px >= 0 && px < this.Width && py >= 0 && py < this.Height;
             if (hasTarget is false) return false;
 
             Color target = this.SourceRenderTarget.GetPixelColors(px, py, 1, 1).Single();

@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.ComponentModel;
+using System.Numerics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -36,5 +37,8 @@ namespace Luo_Painter.Layers
         ImageSource Thumbnail { get; }
 
         bool History(HistoryType type, object parameter);
+
+        bool FillContainsPoint(Vector2 point);
+
     }
 }
