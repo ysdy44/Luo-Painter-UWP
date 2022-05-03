@@ -15,6 +15,12 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
+        private ICanvasImage Transparent => new CanvasCommandList(this.CanvasControl);
+        private ICanvasImage White => new ColorSourceEffect
+        {
+            Color = Colors.White
+        };
+
         /// <summary>
         /// Export to ...
         /// </summary>
@@ -26,10 +32,7 @@ namespace Luo_Painter
             return await FileUtil.SaveCanvasImageFile
             (
                 resourceCreator: this.CanvasControl,
-                image: this.Render(new ColorSourceEffect
-                {
-                    Color = isClearWhite ? Colors.White : Colors.Transparent
-                }),
+                image: this.Render(isClearWhite ? this.White : this.Transparent),
 
                 width: this.Transformer.Width,
                 height: this.Transformer.Height,
