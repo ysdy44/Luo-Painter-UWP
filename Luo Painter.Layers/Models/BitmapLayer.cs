@@ -126,12 +126,7 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public CanvasDrawingSession CreateSourceDrawingSession() => this.SourceRenderTarget.CreateDrawingSession();
-        public CanvasDrawingSession CreateTempDrawingSession() => this.TempRenderTarget.CreateDrawingSession();
-
-
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
-        public void CopyPixels(BitmapLayer bitmapLayer) => this.SourceRenderTarget.CopyPixelsFromBitmap(bitmapLayer.TempRenderTarget);
 
         public void CopyPixels(BitmapLayer source, BitmapType sourceType = BitmapType.Source, BitmapType destinationType = BitmapType.Source) => this[destinationType].CopyPixelsFromBitmap(source[sourceType]);
 
@@ -148,51 +143,11 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        public void DrawSource(ICanvasImage image)
-        {
-            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-                ds.Blend = CanvasBlend.Copy;
-                ds.DrawImage(image);
-            }
-        }
-
         public void Clear(Color color, BitmapType type = BitmapType.Source)
         {
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
             {
                 ds.Clear(color);
-            }
-        }
-
-        public void Clear(Color color)
-        {
-            using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(color);
-            }
-            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(color);
-            }
-        }
-
-        public void ClearTemp()
-        {
-            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(Colors.Transparent);
             }
         }
 
