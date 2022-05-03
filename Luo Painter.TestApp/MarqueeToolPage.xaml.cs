@@ -34,7 +34,8 @@ namespace Luo_Painter.TestApp
         {
             this.ResetButton.Tapped += (s, e) =>
             {
-                this.BitmapLayer.Clear(Colors.Transparent);
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
             };
         }
 
@@ -127,7 +128,7 @@ namespace Luo_Painter.TestApp
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                using (CanvasDrawingSession ds = this.BitmapLayer.CreateSourceDrawingSession())
+                using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
                     ds.FillMarqueeMaskl(this.CanvasControl, MarqueeToolType.Rectangular, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
                 }

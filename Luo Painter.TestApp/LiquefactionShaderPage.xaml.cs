@@ -160,7 +160,7 @@ namespace Luo_Painter.TestApp
                 // History
                 this.History.Push(this.BitmapLayer.GetBitmapHistory());
                 this.BitmapLayer.Flush();
-                this.BitmapLayer.ClearTemp();
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
                 this.BitmapLayer.RenderThumbnail();
 
                 this.CanvasControl.Invalidate(); // Invalidate

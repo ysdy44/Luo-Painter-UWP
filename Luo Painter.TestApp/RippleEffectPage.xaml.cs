@@ -171,7 +171,7 @@ namespace Luo_Painter.TestApp
         {
             if (this.BitmapLayer is null) return;
 
-            this.BitmapLayer.DrawSource(new PixelShaderEffect(this.RippleEffectShaderCodeBytes)
+            this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.RippleEffectShaderCodeBytes)
             {
                 Source1 = this.BitmapLayer.Origin,
                 Properties =

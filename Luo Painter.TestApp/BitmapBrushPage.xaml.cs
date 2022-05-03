@@ -57,7 +57,8 @@ namespace Luo_Painter.TestApp
             };
             this.ClearButton.Click += (s, e) =>
             {
-                this.BitmapLayer.Clear(Colors.Transparent);
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -194,14 +195,14 @@ namespace Luo_Painter.TestApp
 
                         // 1.  Origin + Temp => Source
                         await Task.Delay(400);
-                        this.BitmapLayer.DrawSource(this.GetInk());
+                        this.BitmapLayer.DrawCopy(this.GetInk());
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
 
                         // 2. Temp => 0
                         await Task.Delay(400);
-                        this.BitmapLayer.ClearTemp();
+                        this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate

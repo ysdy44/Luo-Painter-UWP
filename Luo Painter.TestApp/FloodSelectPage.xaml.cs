@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
@@ -38,7 +39,7 @@ namespace Luo_Painter.TestApp
             };
             this.ClearButton.Click += (s, e) =>
             {
-                this.BitmapLayer.ClearTemp();
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
         }
