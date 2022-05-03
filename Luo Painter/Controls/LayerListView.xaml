@@ -27,17 +27,26 @@
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="ListView" Storyboard.TargetProperty="Width">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="70" />
             </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="SelectedButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="NoneStoryboard" >
             <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="140" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
             <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.15" Storyboard.TargetName="ListView" Storyboard.TargetProperty="Width">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="70" />
             </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="SelectedButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="ExpandStoryboard" >
             <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ListView" Storyboard.TargetProperty="Width">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="210" />
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="SelectedButton" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
     </FrameworkElement.Resources>
@@ -100,14 +109,15 @@
             <DataTemplate x:DataType="layers:ILayer">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0"/>
-                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="66"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="2" IsHitTestVisible="False" Margin="6,0" VerticalAlignment="Center" >
+                    <TextBlock Grid.Column="2" IsHitTestVisible="False" VerticalAlignment="Center" 
+                                Visibility="{Binding ElementName=SelectedButton, Path=Visibility, Mode=OneWay}" >
                         <Run Text="{x:Bind Name, Mode=OneWay}"/>                                                   
                         <Run>
                             (
@@ -116,13 +126,15 @@
                         </Run>
                     </TextBlock>
 
-                    <FontIcon Grid.Column="3" IsHitTestVisible="False" Opacity="0.8" Glyph="&#x23A5;" FontSize="18" FontFamily="Segoe UI Symbol"/>
+                    <FontIcon Grid.Column="3" IsHitTestVisible="False" Opacity="0.8" Glyph="&#x23A5;" FontSize="18" FontFamily="Segoe UI Symbol"
+                               Visibility="{Binding ElementName=SelectedButton, Path=Visibility, Mode=OneWay}" />
 
-                    <elements:SelectedButtonPresenter/>
+                    <elements:SelectedButtonPresenter Visibility="{Binding ElementName=SelectedButton, Path=Visibility, Mode=OneWay}"/>
                     <elements:VisibleButton Grid.Column="4"
                                 Visible="{x:Bind Visibility, Mode=OneWay}"
                                 CommandParameter="{Binding}" 
                                 Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
+                                Visibility="{Binding ElementName=SelectedButton, Path=Visibility, Mode=OneWay}"
                                 />
 
                     <Border Grid.Column="1" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -134,6 +146,10 @@
         </ItemsControl.ItemTemplate>
 
     </ListView>
+
+    <ContentControl Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" >
+        <SymbolIcon x:Name="SelectedButton" Visibility="Collapsed" Symbol="SelectAll"/>
+    </ContentControl>
 
     <Button x:Name="VisualButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     CommandParameter="{x:Null}">
