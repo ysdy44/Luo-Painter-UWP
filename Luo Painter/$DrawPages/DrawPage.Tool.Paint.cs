@@ -139,7 +139,7 @@ namespace Luo_Painter
                     break;
 
                 case InkMode.Liquefy:
-                    this.BitmapLayer.ClearTemp();
+                    this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
                     // History
                     int removes3 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
@@ -148,8 +148,8 @@ namespace Luo_Painter
                     break;
 
                 default:
-                    this.BitmapLayer.DrawSource(this.PaintTool.GetInk(this.BitmapLayer));
-                    this.BitmapLayer.ClearTemp();
+                    this.BitmapLayer.DrawCopy(this.PaintTool.GetInk(this.BitmapLayer));
+                    this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
                     // History
                     int removes2 = this.History.Push(this.BitmapLayer.GetBitmapHistory());

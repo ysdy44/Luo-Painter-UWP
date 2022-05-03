@@ -21,7 +21,8 @@ namespace Luo_Painter.Tools
         public InkRender(CanvasControl sender) => this.PaintLayer = new BitmapLayer(sender, (int)sender.ActualWidth, (int)sender.ActualHeight);
         public void Render(float size, Color color)
         {
-            this.PaintLayer.Clear(Colors.Transparent);
+            this.PaintLayer.Clear(Colors.Transparent, BitmapType.Origin);
+            this.PaintLayer.Clear(Colors.Transparent, BitmapType.Source);
 
             float width = this.PaintLayer.Width;
             float height = this.PaintLayer.Height;

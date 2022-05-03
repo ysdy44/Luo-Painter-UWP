@@ -88,7 +88,7 @@ namespace Luo_Painter
                         bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
                         if (redraw is false) break;
 
-                        using (CanvasDrawingSession ds = this.Marquee.CreateSourceDrawingSession())
+                        using (CanvasDrawingSession ds = this.Marquee.CreateDrawingSession())
                         {
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
@@ -114,7 +114,7 @@ namespace Luo_Painter
                         bool result = bitmapLayer.FloodSelect(this.ToPosition(point), Windows.UI.Colors.DodgerBlue);
                         if (result)
                         {
-                            this.Marquee.CopyPixels(bitmapLayer);
+                            this.Marquee.CopyPixels(bitmapLayer, BitmapType.Temp);
 
                             // History
                             int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());

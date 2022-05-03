@@ -172,7 +172,7 @@ namespace Luo_Painter
         {
             if (type.HasDifference())
             {
-                bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
+                bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
                 bitmapLayer.Hit(bitmapLayer.GetInterpolationColors(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
                 {
                     Source1 = bitmapLayer.Source,
@@ -190,7 +190,7 @@ namespace Luo_Painter
                 switch (mode)
                 {
                     case PixelBoundsMode.Solid:
-                        bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
+                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
                         int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
                         bitmapLayer.Flush();
                         bitmapLayer.RenderThumbnail();
@@ -198,7 +198,7 @@ namespace Luo_Painter
                     case PixelBoundsMode.None:
                         bitmapLayer.Hit(InterpolationColors);
 
-                        bitmapLayer.DrawSource(this.GetPreview(type, bitmapLayer.Origin));
+                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
                         int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
                         bitmapLayer.Flush();
                         bitmapLayer.RenderThumbnail();

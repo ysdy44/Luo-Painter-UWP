@@ -44,7 +44,8 @@ namespace Luo_Painter
 
                                         // History
                                         int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                                        bitmapLayer.Clear(Colors.Transparent);
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
                                         bitmapLayer.ClearThumbnail(Colors.Transparent);
                                         break;
                                 }
@@ -153,7 +154,8 @@ namespace Luo_Painter
                                     default:
                                         // History
                                         int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                                        bitmapLayer.Clear(Colors.Transparent);
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source); 
                                         bitmapLayer.ClearThumbnail(Colors.Transparent);
                                         break;
                                 }
@@ -252,7 +254,8 @@ namespace Luo_Painter
                         {
                             // History
                             int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue));
-                            this.Marquee.Clear(Colors.DodgerBlue);
+                            this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
+                            this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
                             this.Marquee.ClearThumbnail(Colors.DodgerBlue);
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
@@ -263,7 +266,8 @@ namespace Luo_Painter
                         {
                             // History
                             int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.Transparent));
-                            this.Marquee.Clear(Colors.Transparent);
+                            this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
+                            this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
                             this.Marquee.ClearThumbnail(Colors.Transparent);
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
