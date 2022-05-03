@@ -111,17 +111,6 @@
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
 
-        <!--Storyboard-->
-        <Storyboard x:Name="ShowTipStoryboard" >
-            <DoubleAnimation Duration="0:0:0.15" By="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="TipBorder" d:IsOptimized="True"/>
-        </Storyboard>
-        <Storyboard x:Name="HideTipStoryboard" >
-            <DoubleAnimation Duration="0:0:0.1" By="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="TipBorder" d:IsOptimized="True"/>
-        </Storyboard>
-
-
-
-
         <!--Flyout-->
         <Flyout x:Name="LayerFlyout" Placement="Left">
             <tools:LayerTool x:Name="LayerTool"/>
@@ -837,16 +826,7 @@
 
 
         <!--Tip-->
-        <Border x:Name="TipBorder" Visibility="Collapsed" IsHitTestVisible="False" Padding="12,2" CornerRadius="4" MinWidth="60" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource AppAcrylicOverlayBrush}">
-            <StackPanel>
-                <TextBlock x:Name="TipTitleTextBlock" FontSize="16" HorizontalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
-                    <!--Title-->
-                </TextBlock>
-                <TextBlock x:Name="TipSubtitleTextBlock" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
-                    <!--Subtitle-->
-                </TextBlock>
-            </StackPanel>
-        </Border>
+        <controls:ToastTip x:Name="ToastTip" Visibility="Collapsed" IsHitTestVisible="False" />
 
         <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
         <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
