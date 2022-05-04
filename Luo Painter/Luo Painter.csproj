@@ -117,7 +117,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Dialog.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
     <Compile Include="%24DrawPages\DrawPage.Edit.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
@@ -128,8 +128,6 @@
     <Compile Include="%24DrawPages\DrawPage.Option.Transform.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Storyboard.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Tip.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
     <Compile Include="App.xaml.cs">

@@ -123,7 +123,7 @@ namespace Luo_Painter
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
-        bool IsFullScreen { get; set; } 
+        bool IsFullScreen { get; set; }
         OptionType OptionType { get; set; } = OptionType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
 
@@ -165,20 +165,14 @@ namespace Luo_Painter
             this.ConstructRippleEffect();
 
             this.ConstructTools();
-            this.ConstructBlends();
-            this.ConstructPaint();
             this.ConstructMarquee();
             this.ConstructVector();
 
             this.ConstructHistory();
 
             this.ConstructDialog();
-            this.ConstructStoryboard();
-            this.ConstructSplitStoryboard();
-
-            this.ConstructTip();
             this.ConstructColor();
-            this.ConstructColorShape();
+            this.ConstructStoryboard();
 
 
             this.ApplicationView.Title = "*Untitled";

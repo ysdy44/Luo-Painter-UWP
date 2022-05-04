@@ -21,32 +21,6 @@ namespace Luo_Painter
         Vector2 Position;
         float Pressure;
 
-        //float InkSize = 22f;
-        //float InkOpacity = 1;
-        //BlendEffectMode? InkBlendMode = null;
-
-        //private void SetPaint()
-        //{
-        //    this.PaintSizeSlider.Value = this.PaintSizeSlider2.Value;
-        //    this.PaintOpacitySlider.Value = this.PaintOpacitySlider2.Value;
-        //}
-
-        private void ConstructPaint()
-        {
-            //this.PaintSizeSlider2.ValueChanged += (s, e) =>
-            //{
-            //    this.Tip("Size", $"{e.NewValue}"); // Tip
-
-            //    this.InkSize = (float)e.NewValue;
-            //};
-            //this.PaintOpacitySlider2.ValueChanged += (s, e) =>
-            //{
-            //    this.Tip("Opacity", $"{e.NewValue:0.00}%"); // Tip
-
-            //    this.InkOpacity = (float)(e.NewValue / 100);
-            //};
-        }
-
         private void Paint_Start(Vector2 point, PointerPointProperties properties)
         {
             this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;

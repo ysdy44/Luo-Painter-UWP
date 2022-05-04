@@ -30,27 +30,6 @@ namespace Luo_Painter
             this.ToolListView.Construct(this.ToolType);
         }
 
-        private void ConstructBlends()
-        {
-            //this.PaintBlendModeListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
-            //this.PaintBlendModeListView.ItemClick += (s, e) =>
-            //{
-            //    if (e.ClickedItem is BlendEffectMode item)
-            //    {
-            //        if (item.IsNone())
-            //        {
-            //            if (this.InkBlendMode == null) return;
-            //            this.InkBlendMode = null;
-            //        }
-            //        else
-            //        {
-            //            if (this.InkBlendMode == item) return;
-            //            this.InkBlendMode = item;
-            //        }
-            //    }
-            //};
-        }
-
 
         private void Tool_Start(Vector2 point, PointerPointProperties properties)
         {
