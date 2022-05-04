@@ -149,7 +149,7 @@ namespace Luo_Painter
 
                                 this.OptionType = type;
                                 this.SetOptionType(type);
-                                this.SetFullScreenState(FullScreenState.Option);
+                                this.SetFullScreenState(FullScreenState.Writeable);
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.CanvasControl.Invalidate(); // Invalidate

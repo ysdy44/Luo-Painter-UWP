@@ -69,14 +69,20 @@ namespace Luo_Painter.Elements
         /// <summary> Gets or set the state for <see cref="ApplicationViewTitleBar"/>. </summary>
         public bool IsAccent
         {
-            get => this.isAccent;
-            set
-            {
-                this.Color = value ? this.AccentTitleBarColor : this.TitleBarColor;
-                this.isAccent = value;
-            }
+            get => (bool)base.GetValue(IsAccentProperty);
+            set => base.SetValue(IsAccentProperty, value);
         }
-        private bool isAccent;
+        /// <summary> Identifies the <see cref = "ApplicationTitleBarExtension.IsAccent" /> dependency property. </summary>
+        public static readonly DependencyProperty IsAccentProperty = DependencyProperty.Register(nameof(IsAccent), typeof(bool), typeof(ApplicationTitleBarExtension), new PropertyMetadata(false, (sender, e) =>
+        {
+            ApplicationTitleBarExtension control = (ApplicationTitleBarExtension)sender;
+
+            if (e.NewValue is bool value)
+            {
+                control.Color = value ? control.AccentTitleBarColor : control.TitleBarColor;
+            }
+        }));
+
 
         #endregion
 

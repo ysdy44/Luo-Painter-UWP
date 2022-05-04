@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -8,40 +9,57 @@ namespace Luo_Painter
     {
         UnFullScreen,
         FullScreen,
-        Option,
+        Writeable,
     }
 
     public sealed partial class DrawPage : Page
     {
 
-        private void SetFullScreenState(FullScreenState state)
+        FullScreenState State;
+        private async void SetFullScreenState(FullScreenState state)
         {
+            if (this.State == state) return;
+
             switch (state)
             {
                 case FullScreenState.UnFullScreen:
-                    this.ShowStoryboard.Begin(); // Storyboard
-                    this.HideStoryboard.Stop(); // Storyboard
-                    this.OptionStoryboard.Stop(); // Storyboard
-                    this.ApplicationView.IsAccent = false;
+                    this.ToolListView.IsShow = true;
+                    this.LayerListView.IsShow = true;
+                    VisualStateManager.GoToState(this, nameof(UnFullScreen), useTransitions: true);
                     break;
                 case FullScreenState.FullScreen:
-                    this.HideStoryboard.Begin(); // Storyboard
+                    this.ToolListView.IsShow = false;
+                    this.LayerListView.IsShow = false;
+                    VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
                     break;
-                case FullScreenState.Option:
-                    this.OptionStoryboard.Begin(); // Storyboard
+                case FullScreenState.Writeable:
+                    this.ToolListView.IsShow = false;
+                    this.LayerListView.IsShow = false;
+                    VisualStateManager.GoToState(this, nameof(Writeable), useTransitions: true);
                     break;
                 default:
                     break;
             }
+
+            await Task.Delay(200);
+            this.State = state;
         }
 
         private void ConstructStoryboard()
         {
-            this.HideStoryboard.Completed += (s, e) => this.ApplicationView.IsAccent = true;
-            this.OptionStoryboard.Completed += (s, e) => this.ApplicationView.IsAccent = true;
-
-            this.FullScreenButton.Click += (s, e) => this.SetFullScreenState(FullScreenState.FullScreen);
             this.UnFullScreenButton.Click += (s, e) => this.SetFullScreenState(FullScreenState.UnFullScreen);
+            this.FullScreenButton.Click += (s, e) =>
+            {
+                switch (this.State)
+                {
+                    case FullScreenState.UnFullScreen:
+                        this.SetFullScreenState(FullScreenState.FullScreen);
+                        break;
+                    default:
+                        this.SetFullScreenState(FullScreenState.UnFullScreen);
+                        break;
+                }
+            };
         }
 
         private void ConstructSplitStoryboard()
