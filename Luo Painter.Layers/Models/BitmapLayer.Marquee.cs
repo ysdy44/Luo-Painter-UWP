@@ -30,33 +30,25 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        public void Copy(BitmapLayer bitmapLayer)
+
+        public AlphaMaskEffect GetMask(BitmapLayer marquee)
         {
-            this.SourceRenderTarget.CopyPixelsFromBitmap(bitmapLayer.SourceRenderTarget);
-        }
-        public void Copy(BitmapLayer bitmapLayer, BitmapLayer marquee)
-        {
-            this.TempRenderTarget.CopyPixelsFromBitmap(marquee.SourceRenderTarget);
-            using (CanvasDrawingSession ds = this.CreateDrawingSession())
+            return new AlphaMaskEffect
             {
-                ds.Blend = CanvasBlend.Copy;
-                ds.DrawImage(new AlphaMaskEffect
-                {
-                    Source = bitmapLayer.SourceRenderTarget,
-                    AlphaMask = this.Temp
-                });
-            }
+                Source = this.Source,
+                AlphaMask = marquee.SourceRenderTarget
+            };
         }
+
 
         public IHistory Clear(BitmapLayer marquee, Color[] interpolationColors)
         {
             PixelBounds bounds = marquee.CreateInterpolationBounds(interpolationColors);
             Rect rect = bounds.ToRect(BitmapLayer.Unit);
 
-            this.TempRenderTarget.CopyPixelsFromBitmap(marquee.SourceRenderTarget);
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
-                ds.DrawImage(this.Temp, (float)rect.Left, (float)rect.Top, rect, 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
+                ds.DrawImage(marquee.SourceRenderTarget, (float)rect.Left, (float)rect.Top, rect, 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
             }
             this.Hit(interpolationColors);
 

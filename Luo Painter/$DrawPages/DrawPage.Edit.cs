@@ -32,7 +32,7 @@ namespace Luo_Painter
                                 switch (mode)
                                 {
                                     case PixelBoundsMode.None:
-                                        this.Clipboard.Copy(bitmapLayer, this.Marquee);
+                                        this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
 
                                         // History
                                         int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
@@ -40,7 +40,7 @@ namespace Luo_Painter
                                         bitmapLayer.RenderThumbnail();
                                         break;
                                     default:
-                                        this.Clipboard.Copy(bitmapLayer);
+                                        this.Clipboard.CopyPixels(bitmapLayer);
 
                                         // History
                                         int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
@@ -69,7 +69,7 @@ namespace Luo_Painter
 
                                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
-                                BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer.Source, this.Transformer.Width, this.Transformer.Height);
+                                BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer);
                                 this.Layers.Add(bitmapLayer2.Id, bitmapLayer2);
                                 this.ObservableCollection.Insert(index, bitmapLayer2);
                                 this.LayerListView.SelectedIndex = index;
@@ -93,10 +93,10 @@ namespace Luo_Painter
                                 switch (mode)
                                 {
                                     case PixelBoundsMode.None:
-                                        this.Clipboard.Copy(bitmapLayer, this.Marquee);
+                                        this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
                                         break;
                                     default:
-                                        this.Clipboard.Copy(bitmapLayer);
+                                        this.Clipboard.CopyPixels(bitmapLayer);
                                         break;
                                 }
 
@@ -208,16 +208,14 @@ namespace Luo_Painter
 
                                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
-                                BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+                                BitmapLayer bitmapLayer2;
                                 switch (mode)
                                 {
                                     case PixelBoundsMode.None:
-                                        bitmapLayer2.Copy(bitmapLayer, this.Marquee);
-                                        bitmapLayer2.RenderThumbnail();
+                                        bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer.GetMask(this.Marquee), this.Transformer.Width, this.Transformer.Height);
                                         break;
                                     default:
-                                        bitmapLayer2.Copy(bitmapLayer);
-                                        bitmapLayer2.RenderThumbnail();
+                                        bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer);
                                         break;
                                 }
                                 this.Layers.Add(bitmapLayer2.Id, bitmapLayer2);
