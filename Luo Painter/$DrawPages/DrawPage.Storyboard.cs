@@ -5,60 +5,61 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal enum FullScreenState
-    {
-        UnFullScreen,
-        FullScreen,
-        Writeable,
-    }
-
     public sealed partial class DrawPage : Page
     {
 
-        FullScreenState State;
-        private async void SetFullScreenState(FullScreenState state)
+        bool StateLock;
+        private async void SetFullScreenState(bool isFullScreen, bool isWriteable)
         {
-            if (this.State == state) return;
+            if (this.StateLock is true) return;
+            this.StateLock = true;
 
-            switch (state)
+            if (isWriteable)
             {
-                case FullScreenState.UnFullScreen:
-                    this.ToolListView.IsShow = true;
-                    this.LayerListView.IsShow = true;
-                    VisualStateManager.GoToState(this, nameof(UnFullScreen), useTransitions: true);
-                    break;
-                case FullScreenState.FullScreen:
-                    this.ToolListView.IsShow = false;
-                    this.LayerListView.IsShow = false;
-                    VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
-                    break;
-                case FullScreenState.Writeable:
-                    this.ToolListView.IsShow = false;
-                    this.LayerListView.IsShow = false;
-                    VisualStateManager.GoToState(this, nameof(Writeable), useTransitions: true);
-                    break;
-                default:
-                    break;
+                this.ToolListView.IsShow = false;
+                this.LayerListView.IsShow = false;
+                VisualStateManager.GoToState(this, nameof(Writeable), useTransitions: true);
+            }
+            else if (isFullScreen)
+            {
+                this.ToolListView.IsShow = false;
+                this.LayerListView.IsShow = false;
+                VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
+            }
+            else
+            {
+                this.ToolListView.IsShow = true;
+                this.LayerListView.IsShow = true;
+                VisualStateManager.GoToState(this, nameof(UnFullScreen), useTransitions: true);
             }
 
             await Task.Delay(200);
-            this.State = state;
+            this.StateLock = false;
         }
 
         private void ConstructStoryboard()
         {
-            this.UnFullScreenButton.Click += (s, e) => this.SetFullScreenState(FullScreenState.UnFullScreen);
+            this.UnFullScreenButton.Click += (s, e) =>
+            {
+                this.IsFullScreen = false;
+                this.SetFullScreenState(this.IsFullScreen, this.OptionType != default);
+            };
             this.FullScreenButton.Click += (s, e) =>
             {
-                switch (this.State)
+                if (this.OptionType == default)
                 {
-                    case FullScreenState.UnFullScreen:
-                        this.SetFullScreenState(FullScreenState.FullScreen);
-                        break;
-                    default:
-                        this.SetFullScreenState(FullScreenState.UnFullScreen);
-                        break;
+                    this.IsFullScreen = !this.IsFullScreen;
                 }
+                else
+                {
+                    this.IsFullScreen = false;
+
+                    this.OptionType = default;
+                    this.SetOptionType(default);
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+
+                this.SetFullScreenState(this.IsFullScreen, false);
             };
         }
 

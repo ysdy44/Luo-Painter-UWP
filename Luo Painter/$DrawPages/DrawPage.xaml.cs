@@ -123,6 +123,7 @@ namespace Luo_Painter
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
+        bool IsFullScreen { get; set; } 
         OptionType OptionType { get; set; } = OptionType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
 
