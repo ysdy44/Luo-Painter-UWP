@@ -16,8 +16,8 @@
     </Page.Resources>
 
     <Grid>
-        <canvas:CanvasAnimatedControl x:Name="CanvasControl"/>
-        <canvas:CanvasControl x:Name="ToolCanvasControl" IsHitTestVisible="False"/>
+        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl"/>
+        <canvas:CanvasControl x:Name="CanvasControl" IsHitTestVisible="False"/>
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <AppBarButton x:Name="ResetButton" >

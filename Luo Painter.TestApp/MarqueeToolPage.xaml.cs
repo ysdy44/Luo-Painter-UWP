@@ -42,9 +42,9 @@ namespace Luo_Painter.TestApp
         public void ConstructCanvas()
         {
             //Canvas
-            this.CanvasControl.UseSharedDevice = true;
-            this.CanvasControl.CustomDevice = this.Device;
-            this.CanvasControl.CreateResources += (sender, args) =>
+            this.CanvasAnimatedControl.UseSharedDevice = true;
+            this.CanvasAnimatedControl.CustomDevice = this.Device;
+            this.CanvasAnimatedControl.CreateResources += (sender, args) =>
             {
                 this.BitmapLayer = new BitmapLayer(sender, 512, 512);
                 this.Brush = new CanvasLinearGradientBrush(sender, new CanvasGradientStop[]
@@ -75,7 +75,7 @@ namespace Luo_Painter.TestApp
                     EndPoint = new Vector2(12)
                 };
             };
-            this.CanvasControl.Draw += (sender, args) =>
+            this.CanvasAnimatedControl.Draw += (sender, args) =>
             {
                 args.DrawingSession.DrawImage(new InvertEffect
                 {
@@ -91,7 +91,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Blend = CanvasBlend.Min;
                 args.DrawingSession.FillRectangle(0, 0, (float)sender.Size.Width, (float)sender.Size.Height, this.Brush);
             };
-            this.CanvasControl.Update += (sender, args) =>
+            this.CanvasAnimatedControl.Update += (sender, args) =>
             {
                 this.BrushTransform.M31--;
                 this.BrushTransform.M32--;
@@ -99,12 +99,12 @@ namespace Luo_Painter.TestApp
             };
 
 
-            this.ToolCanvasControl.UseSharedDevice = true;
-            this.ToolCanvasControl.CustomDevice = this.Device;
-            this.ToolCanvasControl.CreateResources += (sender, args) =>
+            this.CanvasControl.UseSharedDevice = true;
+            this.CanvasControl.CustomDevice = this.Device;
+            this.CanvasControl.CreateResources += (sender, args) =>
             {
             };
-            this.ToolCanvasControl.Draw += (sender, args) =>
+            this.CanvasControl.Draw += (sender, args) =>
             {
                 args.DrawingSession.DrawMarqueeTool(sender, MarqueeToolType.Rectangular, this.MarqueeTool);
             };
@@ -118,25 +118,25 @@ namespace Luo_Painter.TestApp
                 this.StartingPosition = point;
                 this.MarqueeTool.Start(point, MarqueeToolType.Rectangular, false, false);
 
-                this.CanvasControl.Paused = true;
-                this.ToolCanvasControl.Invalidate(); // Invalidate
+                this.CanvasAnimatedControl.Paused = true;
+                this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
                 this.MarqueeTool.Delta(this.StartingPosition, point, MarqueeToolType.Rectangular, false, false);
-                this.ToolCanvasControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    ds.FillMarqueeMaskl(this.CanvasControl, MarqueeToolType.Rectangular, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
+                    ds.FillMarqueeMaskl(this.CanvasAnimatedControl, MarqueeToolType.Rectangular, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
                 }
 
                 this.MarqueeTool.Complete(this.StartingPosition, point, MarqueeToolType.Rectangular, false, false);
 
-                this.CanvasControl.Paused = false;
-                this.ToolCanvasControl.Invalidate(); // Invalidate
+                this.CanvasAnimatedControl.Paused = false;
+                this.CanvasControl.Invalidate(); // Invalidate
             };
         }
 
