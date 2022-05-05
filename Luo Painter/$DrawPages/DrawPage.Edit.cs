@@ -168,26 +168,7 @@ namespace Luo_Painter
                         }
                         break;
                     case EditType.Remove:
-                        {
-                            int index = this.LayerListView.SelectedIndex;
-                            if (index < 0) break;
-                            if (index + 1 > this.ObservableCollection.Count) break;
-
-                            foreach (string id in this.Ids().ToArray())
-                            {
-                                if (this.Layers.ContainsKey(id))
-                                {
-                                    ILayer layer = this.Layers[id];
-                                    this.ObservableCollection.Remove(layer);
-                                }
-                            }
-
-                            int index2 = System.Math.Min(index, this.ObservableCollection.Count - 1);
-                            this.LayerListView.SelectedIndex = index2;
-                            this.LayerTool.SetLayer(this.LayerListView.SelectedItem as ILayer);
-
-                            this.CanvasControl.Invalidate(); // Invalidate
-                        }
+                        this.Remove();
                         break;
                     case EditType.Extract:
                         {
@@ -325,6 +306,8 @@ namespace Luo_Painter
                         {
                             // History
                             int removes = this.History.Push(this.Marquee.Invert(Colors.DodgerBlue));
+                            this.Marquee.Flush();
+                            this.Marquee.RenderThumbnail();
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -336,6 +319,8 @@ namespace Luo_Painter
                             {
                                 // History
                                 int removes = this.History.Push(this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue));
+                                this.Marquee.Flush();
+                                this.Marquee.RenderThumbnail();
 
                                 this.UndoButton.IsEnabled = this.History.CanUndo;
                                 this.RedoButton.IsEnabled = this.History.CanRedo;

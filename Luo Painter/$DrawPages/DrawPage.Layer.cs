@@ -9,6 +9,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -138,11 +139,15 @@ namespace Luo_Painter
         {
             this.LayerListView.AddClick += (s, e) =>
             {
+                int index = this.LayerListView.SelectedIndex;
                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
                 BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
                 this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-                this.Add(bitmapLayer);
+                if (index >= 0)
+                    this.ObservableCollection.Insert(index, bitmapLayer);
+                else
+                    this.ObservableCollection.Add(bitmapLayer);
 
                 // History
                 string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
@@ -150,7 +155,10 @@ namespace Luo_Painter
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
+                this.LayerListView.SelectedIndex = System.Math.Max(0, index);
             };
+            this.LayerListView.ImageClick += async (s, e) => this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop));
+            this.LayerListView.RemoveClick += (s, e) => this.Remove();
 
             //this.SelectAllButton.Click += (s, e) => this.LayerListView.SelectAll();
 

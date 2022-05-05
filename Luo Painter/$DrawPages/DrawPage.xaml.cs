@@ -182,39 +182,10 @@ namespace Luo_Painter
             base.AllowDrop = true;
             base.Drop += async (s, e) =>
             {
-                int count = 0;
-                string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
                 if (e.DataView.Contains(StandardDataFormats.StorageItems))
                 {
-                    IReadOnlyList<IStorageItem> items = await e.DataView.GetStorageItemsAsync();
-                    foreach (IStorageItem item in items)
-                    {
-                        if (item is IStorageFile file)
-                        {
-                            CanvasBitmap bitmap = await this.AddAsync(file);
-                            if (bitmap is null) continue;
-                            count++;
-
-                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-                            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-                            this.Add(bitmapLayer);
-                        }
-                    }
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.AddAsync(from file in await e.DataView.GetStorageItemsAsync() where file is IStorageFile select file as IStorageFile);
                 }
-
-                if (count == 0) return;
-                if (count > 1) this.Tip("Add Images", $"{count}"); // Tip
-
-                // History
-                string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-                this.CanvasControl.Invalidate(); // Invalidate
-
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
             };
             base.DragOver += (s, e) =>
             {
