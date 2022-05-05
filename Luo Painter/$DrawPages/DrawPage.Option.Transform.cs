@@ -51,7 +51,7 @@ namespace Luo_Painter
 
         private void ConstructTransform()
         {
-            this.TransformComboBox.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.TransformComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
         private void DrawTransform(CanvasVirtualControl sender, CanvasDrawingSession ds)
@@ -126,12 +126,12 @@ namespace Luo_Painter
                     break;
                 case 1:
                     this.StartingMove = this.Move;
-                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsTransformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
                     this.IsBoundsMove = this.BoundsMode == TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
                     this.StartingBoundsTransformer = this.BoundsTransformer;
                     break;
                 case 2:
-                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsFreeTransformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsFreeTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
                     break;
                 default:
                     break;
@@ -145,7 +145,7 @@ namespace Luo_Painter
             {
                 case 0:
                     this.Move = position - this.StartingPosition + this.StartingMove;
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
                     break;
                 case 1:
                     this.BoundsTransformer =
@@ -153,7 +153,7 @@ namespace Luo_Painter
                         this.StartingBoundsTransformer + (position - this.StartingPosition) :
                         FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
                     break;
                 case 2:
                     switch (this.BoundsMode)
@@ -161,22 +161,22 @@ namespace Luo_Painter
                         case TransformerMode.ScaleLeftTop:
                             this.BoundsFreeTransformer.LeftTop = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-                            this.CanvasControl.Invalidate(); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
                             break;
                         case TransformerMode.ScaleRightTop:
                             this.BoundsFreeTransformer.RightTop = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-                            this.CanvasControl.Invalidate(); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
                             break;
                         case TransformerMode.ScaleRightBottom:
                             this.BoundsFreeTransformer.RightBottom = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-                            this.CanvasControl.Invalidate(); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
                             break;
                         case TransformerMode.ScaleLeftBottom:
                             this.BoundsFreeTransformer.LeftBottom = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-                            this.CanvasControl.Invalidate(); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
                             break;
                         default:
                             break;

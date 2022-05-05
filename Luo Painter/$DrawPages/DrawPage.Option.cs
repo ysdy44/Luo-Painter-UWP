@@ -81,7 +81,7 @@ namespace Luo_Painter
                 this.SetFullScreenState(this.IsFullScreen, false);
 
                 this.BitmapLayer = null;
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
             this.OptionPrimaryButton.Click += (s, e) =>
@@ -98,7 +98,7 @@ namespace Luo_Painter
                 this.SetFullScreenState(this.IsFullScreen, false);
 
                 this.BitmapLayer = null;
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
             this.OptionButton.ItemClick += (s, type) =>
@@ -152,7 +152,7 @@ namespace Luo_Painter
                                 this.SetFullScreenState(this.IsFullScreen, true);
 
                                 this.BitmapLayer = bitmapLayer;
-                                this.CanvasControl.Invalidate(); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                             }
                             else
                             {
@@ -206,7 +206,7 @@ namespace Luo_Painter
                 }
             }
 
-            this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -214,18 +214,18 @@ namespace Luo_Painter
 
         private void ConstructOption()
         {
-            this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.ExposureSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.SaturationSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.HueRotationSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.ContrastSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.TemperatureSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.TintSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.ShadowsSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.HighlightsSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.ClaritySlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.BlurSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ExposureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.SaturationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.HueRotationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ContrastSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.TemperatureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.TintSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ShadowsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.HighlightsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ClaritySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.BlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
         private ICanvasImage GetPreview(OptionType type, ICanvasImage image)

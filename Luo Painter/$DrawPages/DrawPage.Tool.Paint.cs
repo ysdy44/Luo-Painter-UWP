@@ -35,7 +35,7 @@ namespace Luo_Painter
             this.Pressure = properties.Pressure;
 
             this.BitmapLayer.InkMode = this.PaintTool.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
-            this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
         private void Paint_Delta(Vector2 point, PointerPointProperties properties)
         {
@@ -84,10 +84,10 @@ namespace Luo_Painter
                     break;
             }
 
-            Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasControl.Dpi.ConvertPixelsToDips(this.PaintTool.InkSize * this.Transformer.Scale));
-            if (this.CanvasControl.Size.TryIntersect(ref region))
+            Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.PaintTool.InkSize * this.Transformer.Scale));
+            if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
             {
-                this.CanvasControl.Invalidate(region); // Invalidate
+                this.CanvasVirtualControl.Invalidate(region); // Invalidate
             }
 
             this.Point = point;
@@ -133,7 +133,7 @@ namespace Luo_Painter
             }
 
             this.BitmapLayer = null;
-            this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;

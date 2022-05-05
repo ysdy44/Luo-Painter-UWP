@@ -39,17 +39,17 @@ namespace Luo_Painter
             this.FrequencySlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Frequency = (float)(e.NewValue);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.PhaseSlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Phase = (float)(e.NewValue);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.AmplitudeSlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Amplitude = (float)(e.NewValue);
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
         }
 
@@ -113,7 +113,7 @@ namespace Luo_Painter
                 this.RipplerCenter = move + this.StartingRipplerCenter;
             }
 
-            this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
         private void RippleEffect_Complete(Vector2 point, PointerPointProperties properties)

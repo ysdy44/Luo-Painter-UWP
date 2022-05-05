@@ -142,7 +142,7 @@ namespace Luo_Painter
             this.LayerListView.SelectedIndex = index2;
             this.LayerTool.SetLayer(this.LayerListView.SelectedItem as ILayer);
 
-            this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
         public async void AddAsync(IEnumerable<IStorageFile> items)
@@ -186,7 +186,7 @@ namespace Luo_Painter
             string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
             int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
-            this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;

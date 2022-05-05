@@ -96,16 +96,16 @@ namespace Luo_Painter
             //{
             //};
 
-            this.CanvasControl.SizeChanged += (s, e) =>
+            this.CanvasVirtualControl.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                Vector2 size = this.CanvasControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
+                Vector2 size = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
                 this.Transformer.ControlWidth = size.X;
                 this.Transformer.ControlHeight = size.Y;
             };
-            this.CanvasControl.CreateResources += (sender, args) =>
+            this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
                 this.Transformer.Fit();
                 this.ViewTool.Construct(this.Transformer);
@@ -122,7 +122,7 @@ namespace Luo_Painter
 
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
-            this.CanvasControl.RegionsInvalidated += (sender, args) =>
+            this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>
             {
                 foreach (Rect region in args.InvalidatedRegions)
                 {
@@ -229,19 +229,19 @@ namespace Luo_Painter
             // Double
             this.Operator.Double_Start += (center, space) =>
             {
-                this.Transformer.CachePinch(this.CanvasControl.Dpi.ConvertDipsToPixels(center), this.CanvasControl.Dpi.ConvertDipsToPixels(space));
+                this.Transformer.CachePinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.Operator.Double_Delta += (center, space) =>
             {
-                this.Transformer.Pinch(this.CanvasControl.Dpi.ConvertDipsToPixels(center), this.CanvasControl.Dpi.ConvertDipsToPixels(space));
+                this.Transformer.Pinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                 this.ViewTool.Construct(this.Transformer);
             };
@@ -250,13 +250,13 @@ namespace Luo_Painter
             this.Operator.Wheel_Changed += (point, space) =>
             {
                 if (space > 0)
-                    this.Transformer.ZoomIn(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
+                    this.Transformer.ZoomIn(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), 1.05f);
                 else
-                    this.Transformer.ZoomOut(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
+                    this.Transformer.ZoomOut(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), 1.05f);
 
                 this.Tip("Zoom", $"{this.Transformer.Scale * 100:0.00}%"); // Tip
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                 this.ViewTool.Construct(this.Transformer);
             };

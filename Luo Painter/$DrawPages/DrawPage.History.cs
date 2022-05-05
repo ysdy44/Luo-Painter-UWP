@@ -18,7 +18,7 @@ namespace Luo_Painter
                 bool result = this.History.Undo(this.Undo);
                 if (result == false) return;
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -32,7 +32,7 @@ namespace Luo_Painter
                 bool result = this.History.Redo(this.Redo);
                 if (result == false) return;
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;

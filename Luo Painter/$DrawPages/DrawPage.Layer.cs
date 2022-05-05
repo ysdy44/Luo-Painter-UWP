@@ -66,7 +66,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
                             this.LayerTool.ChangedLayers.Clear();
-                            this.CanvasControl.Invalidate(); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -112,7 +112,7 @@ namespace Luo_Painter
                     int removes = this.History.Push(new PropertyHistory<Visibility>(HistoryType.Visibility, layer.Id, undo, redo));
                 }
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -192,7 +192,7 @@ namespace Luo_Painter
                     {
                         item.Opacity = opacity;
                     }
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Luo_Painter
                             layer.Opacity = opacity;
                         }
                     }
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
                 }
             };
             this.LayerTool.BlendModeChanged += (hasChanged, blendMode) =>
@@ -216,7 +216,7 @@ namespace Luo_Painter
                     {
                         item.BlendMode = blendMode;
                     }
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
                 }
                 else
                 {
@@ -229,7 +229,7 @@ namespace Luo_Painter
                             layer.BlendMode = blendMode;
                         }
                     }
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
                 }
             };
 

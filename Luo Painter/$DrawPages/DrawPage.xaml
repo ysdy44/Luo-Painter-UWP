@@ -21,7 +21,7 @@
 
     <FrameworkElement.Resources>
         <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasVirtualControl}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
         <!--Flyout-->
@@ -195,7 +195,7 @@
 
 
         <!--Canvas-->
-        <canvas:CanvasVirtualControl x:Name="CanvasControl" FlowDirection="LeftToRight" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+        <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" FlowDirection="LeftToRight" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
         <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" FlowDirection="LeftToRight" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
 
 
