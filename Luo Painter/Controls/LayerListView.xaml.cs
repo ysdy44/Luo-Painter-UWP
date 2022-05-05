@@ -6,6 +6,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
@@ -14,26 +15,12 @@ namespace Luo_Painter.Controls
     public sealed partial class LayerListView : Grid
     {
         //@Delegate
-        public event RoutedEventHandler AddClick
-        {
-            remove => this.AddButton.Click -= value;
-            add => this.AddButton.Click += value;
-        }
-        public event EventHandler<ILayer> VisualClick
-        {
-            remove => this.VisualCommand.Click -= value;
-            add => this.VisualCommand.Click += value;
-        }
-        public event DragItemsStartingEventHandler DragItemsStarting
-        {
-            remove => this.ListView.DragItemsStarting -= value;
-            add => this.ListView.DragItemsStarting += value;
-        }
-        public event TypedEventHandler<ListViewBase, DragItemsCompletedEventArgs> DragItemsCompleted
-        {
-            remove => this.ListView.DragItemsCompleted -= value;
-            add => this.ListView.DragItemsCompleted += value;
-        }
+        public event RoutedEventHandler AddClick { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
+        public event RoutedEventHandler ImageClick { remove => this.ImageButton.Click -= value; add => this.ImageButton.Click += value; }
+        public event RoutedEventHandler RemoveClick { remove => this.RemoveButton.Click -= value; add => this.RemoveButton.Click += value; }
+        public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
+        public event DragItemsStartingEventHandler DragItemsStarting { remove => this.ListView.DragItemsStarting -= value; add => this.ListView.DragItemsStarting += value; }
+        public event TypedEventHandler<ListViewBase, DragItemsCompletedEventArgs> DragItemsCompleted { remove => this.ListView.DragItemsCompleted -= value; add => this.ListView.DragItemsCompleted += value; }
 
         double StartingX;
         SplitViewPanePlacement Placement => (this.TranslateTransform.X > 70) ? SplitViewPanePlacement.Left : SplitViewPanePlacement.Right;
@@ -97,6 +84,7 @@ namespace Luo_Painter.Controls
             set => this.ListView.SelectedIndex = value;
         }
         public object ItemsSource { set => this.ListView.ItemsSource = value; }
+        public ImageSource MarqueeSource { set => this.Image.Source = value; }
 
         //@Construct
         public LayerListView()

@@ -145,11 +145,27 @@
             </DataTemplate>
         </ItemsControl.ItemTemplate>
 
-    </ListView>
+        <ListView.Header>
+            <Grid Height="55" Background="{ThemeResource AppBackgroundLight}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="69"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="MarqueeTextBlock" Grid.Column="2" IsHitTestVisible="False" VerticalAlignment="Center" 
+                                Visibility="{x:Bind SelectedButton.Visibility, Mode=OneWay}" >
+                    Marquee
+                </TextBlock>
+                <Border Grid.Column="1" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image x:Name="Image"/>
+                </Border>
+                <ContentControl x:Name="SelectedButton" Width="32" Visibility="Collapsed" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                    <SymbolIcon Symbol="SelectAll" />
+                </ContentControl>
+            </Grid>
+        </ListView.Header>
 
-    <ContentControl Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" >
-        <SymbolIcon x:Name="SelectedButton" Visibility="Collapsed" Symbol="SelectAll"/>
-    </ContentControl>
+    </ListView>
 
     <Button x:Name="VisualButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     CommandParameter="{x:Null}">
@@ -159,12 +175,20 @@
         <SymbolIcon Symbol="View"/>
     </Button>
 
-    <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource AppButtonStyle}">
-        <UIElement.KeyboardAccelerators>
-            <KeyboardAccelerator Modifiers="None" Key="Insert"/>
-        </UIElement.KeyboardAccelerators>
-        <SymbolIcon Symbol="Add"/>
-    </Button>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+        <Button x:Name="AddButton" Style="{StaticResource AppButtonStyle}">
+            <UIElement.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="None" Key="Insert"/>
+            </UIElement.KeyboardAccelerators>
+            <SymbolIcon Symbol="Add"/>
+        </Button>
+        <Button x:Name="ImageButton" Style="{StaticResource AppButtonStyle}">
+            <SymbolIcon Symbol="Pictures"/>
+        </Button>
+        <Button x:Name="RemoveButton" Style="{StaticResource AppButtonStyle}">
+            <SymbolIcon Symbol="Delete"/>
+        </Button>
+    </StackPanel>
 
     <Button x:Name="SplitButton" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
         <UIElement.ManipulationMode>
