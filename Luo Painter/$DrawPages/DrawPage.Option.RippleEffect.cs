@@ -53,7 +53,7 @@ namespace Luo_Painter
             };
         }
 
-        private void DrawRippleEffect(CanvasVirtualControl sender, CanvasDrawingSession ds)
+        private void DrawRippleEffect(CanvasControl sender, CanvasDrawingSession ds)
         {
             Vector2 center = this.ToPoint(this.RipplerCenter);
             Vector2 point = this.ToPoint(this.RipplerPoint);
@@ -114,6 +114,7 @@ namespace Luo_Painter
             }
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private void RippleEffect_Complete(Vector2 point, PointerPointProperties properties)

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics.Effects;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -60,15 +61,59 @@ namespace Luo_Painter
 
         private void ConstructCanvas()
         {
+            this.Canvas.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                Vector2 size = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
+                this.Transformer.ControlWidth = size.X;
+                this.Transformer.ControlHeight = size.Y;
+
+                this.CanvasControl.Width =
+                this.CanvasAnimatedControl.Width =
+                this.CanvasVirtualControl.Width = e.NewSize.Width;
+
+                this.CanvasControl.Height =
+                this.CanvasAnimatedControl.Height =
+                this.CanvasVirtualControl.Height = e.NewSize.Height;
+            };
+
+            this.CanvasControl.Draw += (sender, args) =>
+            {
+                args.DrawingSession.Blend = CanvasBlend.Copy;
+
+                switch (this.OptionType)
+                {
+                    case OptionType.None:
+                        //@DPI 
+                        if (this.MarqueeToolType == MarqueeToolType.None) break;
+
+                        args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                        break;
+                    case OptionType.Transform:
+                        this.DrawTransform(sender, args.DrawingSession);
+                        break;
+                    case OptionType.RippleEffect:
+                        this.DrawRippleEffect(sender, args.DrawingSession);
+                        break;
+                    default:
+                        break;
+                }
+            };
+
             this.CanvasAnimatedControl.CreateResources += (sender, args) =>
             {
                 this.Marquee = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+                this.Marquee.RenderThumbnail();
+                this.LayerListView.MarqueeSource = this.Marquee.Thumbnail;
                 args.TrackAsyncAction(this.CreateDottedLineResourcesAsync().AsAsyncAction());
             };
             this.CanvasAnimatedControl.Draw += (sender, args) =>
             {
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                args.DrawingSession.Blend = CanvasBlend.Copy;
 
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.DottedLineTransformShaderCodeBytes)
                 {
@@ -84,27 +129,8 @@ namespace Luo_Painter
                         ["matrix3x2"] = this.Transformer.GetInverseMatrix(),
                     },
                 });
-
-                if (this.MarqueeToolType == MarqueeToolType.None) return;
-
-                //@DPI 
-                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
-                args.DrawingSession.Blend = CanvasBlend.Copy;
-                args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
             };
-            //this.CanvasAnimatedControl.Update += (sender, args) =>
-            //{
-            //};
 
-            this.CanvasVirtualControl.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                Vector2 size = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
-                this.Transformer.ControlWidth = size.X;
-                this.Transformer.ControlHeight = size.Y;
-            };
             this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
                 this.Transformer.Fit();
@@ -141,20 +167,6 @@ namespace Luo_Painter
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.PaintTool.GetInk(this.BitmapLayer)));
                             else
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source)));
-                        }
-
-                        switch (this.OptionType)
-                        {
-                            case OptionType.Transform:
-                                ds.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
-                                this.DrawTransform(sender, ds);
-                                break;
-                            case OptionType.RippleEffect:
-                                ds.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
-                                this.DrawRippleEffect(sender, ds);
-                                break;
-                            default:
-                                break;
                         }
                     }
                 }
@@ -232,6 +244,9 @@ namespace Luo_Painter
                 this.Transformer.CachePinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                this.CanvasAnimatedControl.Paused = true;
+                this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
             };
             this.Operator.Double_Delta += (center, space) =>
             {
@@ -242,6 +257,9 @@ namespace Luo_Painter
             this.Operator.Double_Complete += (center, space) =>
             {
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                this.CanvasAnimatedControl.Paused = this.OptionType != default;
+                this.CanvasAnimatedControl.Visibility = this.CanvasAnimatedControl.Paused ? Visibility.Collapsed : Visibility.Visible;
 
                 this.ViewTool.Construct(this.Transformer);
             };

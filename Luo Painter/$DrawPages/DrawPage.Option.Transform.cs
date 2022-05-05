@@ -51,10 +51,14 @@ namespace Luo_Painter
 
         private void ConstructTransform()
         {
-            this.TransformComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.TransformComboBox.SelectionChanged += (s, e) =>
+            {
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
         }
 
-        private void DrawTransform(CanvasVirtualControl sender, CanvasDrawingSession ds)
+        private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds)
         {
             switch (this.TransformComboBox.SelectedIndex)
             {
@@ -73,7 +77,6 @@ namespace Luo_Painter
                 default:
                     break;
             }
-
         }
 
         private ICanvasImage GetTransformPreview(ICanvasImage image)
@@ -145,7 +148,9 @@ namespace Luo_Painter
             {
                 case 0:
                     this.Move = position - this.StartingPosition + this.StartingMove;
+              
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 1:
                     this.BoundsTransformer =
@@ -153,7 +158,9 @@ namespace Luo_Painter
                         this.StartingBoundsTransformer + (position - this.StartingPosition) :
                         FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+     
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 2:
                     switch (this.BoundsMode)
@@ -161,22 +168,30 @@ namespace Luo_Painter
                         case TransformerMode.ScaleLeftTop:
                             this.BoundsFreeTransformer.LeftTop = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
+                  
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
                             break;
                         case TransformerMode.ScaleRightTop:
                             this.BoundsFreeTransformer.RightTop = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
+                      
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
                             break;
                         case TransformerMode.ScaleRightBottom:
                             this.BoundsFreeTransformer.RightBottom = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
+                         
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
                             break;
                         case TransformerMode.ScaleLeftBottom:
                             this.BoundsFreeTransformer.LeftBottom = position;
                             this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
+                      
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
                             break;
                         default:
                             break;

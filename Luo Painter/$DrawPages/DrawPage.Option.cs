@@ -76,12 +76,17 @@ namespace Luo_Painter
 
             this.OptionSecondaryButton.Click += (s, e) =>
             {
-                this.OptionType = OptionType.None;
-                this.SetOptionType(OptionType.None);
+                this.OptionType = default;
+                this.SetOptionType(default);
                 this.SetFullScreenState(this.IsFullScreen, false);
 
                 this.BitmapLayer = null;
+
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+
+                this.CanvasAnimatedControl.Paused = false;
+                this.CanvasAnimatedControl.Visibility = Visibility.Visible;
             };
 
             this.OptionPrimaryButton.Click += (s, e) =>
@@ -93,12 +98,17 @@ namespace Luo_Painter
                 PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
                 this.Option(type, mode, InterpolationColors, bitmapLayer);
 
-                this.OptionType = OptionType.None;
-                this.SetOptionType(OptionType.None);
+                this.OptionType = default;
+                this.SetOptionType(default);
                 this.SetFullScreenState(this.IsFullScreen, false);
 
                 this.BitmapLayer = null;
+
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+
+                this.CanvasAnimatedControl.Paused = false;
+                this.CanvasAnimatedControl.Visibility = Visibility.Visible;
             };
 
             this.OptionButton.ItemClick += (s, type) =>
@@ -152,7 +162,12 @@ namespace Luo_Painter
                                 this.SetFullScreenState(this.IsFullScreen, true);
 
                                 this.BitmapLayer = bitmapLayer;
+
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
+
+                                this.CanvasAnimatedControl.Paused = true;
+                                this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
                             }
                             else
                             {

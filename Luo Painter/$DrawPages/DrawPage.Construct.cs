@@ -108,7 +108,11 @@ namespace Luo_Painter
 
                     this.OptionType = default;
                     this.SetOptionType(default);
+
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.CanvasAnimatedControl.Paused = false;
+                    this.CanvasAnimatedControl.Visibility = Visibility.Visible;
                 }
 
                 this.SetFullScreenState(this.IsFullScreen, false);

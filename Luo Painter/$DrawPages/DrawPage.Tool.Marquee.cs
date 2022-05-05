@@ -45,6 +45,8 @@ namespace Luo_Painter
                     this.MarqueeToolType = this.GetMarqueeToolType(this.ToolType);
                     this.StartingPosition = this.Position = this.ToPosition(point);
                     this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+                
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case ToolType.MarqueeSelectionBrush:
                     this.Position = this.ToPosition(point);
@@ -63,6 +65,8 @@ namespace Luo_Painter
                 case ToolType.MarqueeFreeHand:
                     this.Position = this.ToPosition(point);
                     this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+             
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case ToolType.MarqueeSelectionBrush:
                     Vector2 position = this.ToPosition(point);
@@ -95,6 +99,13 @@ namespace Luo_Painter
 
                             ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
                         }
+
+                        // History
+                        int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
+                        this.Marquee.Flush();
+                        this.Marquee.RenderThumbnail();
+
+                        this.CanvasControl.Invalidate(); // Invalidate
                         this.MarqueeToolType = MarqueeToolType.None;
                     }
                     break;
@@ -103,6 +114,7 @@ namespace Luo_Painter
                         // History
                         int removes = this.History.Push(this.Marquee.GetBitmapHistory());
                         this.Marquee.Flush();
+                        this.Marquee.RenderThumbnail();
 
                         this.UndoButton.IsEnabled = this.History.CanUndo;
                         this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -119,6 +131,7 @@ namespace Luo_Painter
                             // History
                             int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
                             this.Marquee.Flush();
+                            this.Marquee.RenderThumbnail();
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;

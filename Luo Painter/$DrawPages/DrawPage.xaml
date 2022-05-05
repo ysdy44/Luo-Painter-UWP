@@ -21,7 +21,7 @@
 
     <FrameworkElement.Resources>
         <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasVirtualControl}"/>
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind Canvas}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
         <!--Flyout-->
@@ -31,7 +31,7 @@
     </FrameworkElement.Resources>
 
 
-    <Grid Background="{ThemeResource SystemControlDisabledChromeHighBrush}">
+    <Grid>
 
         <!--VisualState-->
         <VisualStateManager.VisualStateGroups>
@@ -136,6 +136,7 @@
                         <Setter Target = "ApplicationView.IsAccent" Value="True"/>
                         <Setter Target = "HeadTransform.Y" Value="-50"/>
                         <Setter Target = "FootTransform.Y" Value="50"/>
+                        <Setter Target = "UnFullScreenButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -193,17 +194,19 @@
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColor}" AccentTitleBarColor="{ThemeResource SystemChromeHighColor}"/>
 
 
-
         <!--Canvas-->
-        <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" FlowDirection="LeftToRight" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" FlowDirection="LeftToRight" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+        <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Background="{ThemeResource SystemControlDisabledChromeHighBrush}" >
+            <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" IsHitTestVisible="False" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+            <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+            <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+        </Canvas>
 
 
         <!--Head-->
-        <Button x:Name="UnFullScreenButton" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+        <Button x:Name="UnFullScreenButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource AppButtonStyle}">
             <SymbolIcon Symbol="BackToWindow"/>
         </Button>
-        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -618,7 +621,7 @@
                     </StackPanel>
                 </local:OptionCase>
                 <local:OptionCase Value="HighlightsAndShadows">
-                    <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" Visibility="Collapsed">
+                    <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
                         <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
                             <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
                                 <Slider.Background>
