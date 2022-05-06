@@ -67,7 +67,13 @@ namespace Luo_Painter.Elements
         double H;
         double U;
         double V;
+
         ExpanderPlacementMode Placement = ExpanderPlacementMode.Top;
+        double PlacementTargetW;
+        double PlacementTargetH;
+        Point PlacementTargetPosition;
+
+        bool IsFristOpen = true;
 
 
         /// <summary> Gets a value that indicates whether the <see cref = "Expander" /> is open. </summary>
@@ -114,10 +120,15 @@ namespace Luo_Painter.Elements
                 this.W = e.NewSize.Width;
                 this.H = e.NewSize.Height;
 
-                if (this.IsLoaded is false) return;
-
-                this.SetLeft(Canvas.GetLeft(this));
-                this.SetTop(Canvas.GetTop(this));
+                if (this.IsFristOpen)
+                {
+                    this.ShowBegin();
+                }
+                else if (this.IsLoaded)
+                {
+                    this.SetLeft(Canvas.GetLeft(this));
+                    this.SetTop(Canvas.GetTop(this));
+                }
             };
         }
 
@@ -210,7 +221,7 @@ namespace Luo_Painter.Elements
             switch (this.Thumb.Visibility)
             {
                 case Visibility.Visible:
-                    this.Hide(ExpanderPlacementMode.Center);
+                    this.Hide();
                     this.Thumb.Visibility = Visibility.Collapsed;
                     this.SymbolIcon.Symbol = Symbol.Pin;
                     this.PinChanged?.Invoke(this, true); // Delegate
@@ -229,7 +240,13 @@ namespace Luo_Painter.Elements
         /// <summary>
         /// Closes the <see cref = "Expander" />.
         /// </summary>
-        public void Hide() => this.Hide(this.Placement);
+        public void Hide()
+        {
+            if (this.IsOpen is false) return;
+            this.HideBegin();
+            this.Placement = ExpanderPlacementMode.Center;
+            this.IsOpen = false;
+        }
         /// <summary>
         /// Shows the <see cref = "Expander" /> placed.
         /// </summary>
@@ -247,12 +264,28 @@ namespace Luo_Painter.Elements
         public void ShowAt(FrameworkElement placementTarget, ExpanderPlacementMode placement)
         {
             if (this.IsOpen) return;
+            this.IsOpen = true;
 
-            double w = placementTarget.ActualWidth;
-            double h = placementTarget.ActualHeight;
-            Point position = placementTarget.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
+            this.PlacementTargetW = placementTarget.ActualWidth;
+            this.PlacementTargetH = placementTarget.ActualHeight;
+            this.PlacementTargetPosition = placementTarget.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
 
-            switch (placement)
+            this.Placement = placement;
+
+            if (this.IsFristOpen)
+            {
+                this.RootGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.ShowBegin();
+            }
+        }
+
+
+        private void ShowBegin()
+        {
+            switch (this.Placement)
             {
                 case ExpanderPlacementMode.Center:
                     this.SetLeft(this.U / 2 - this.W / 2);
@@ -262,75 +295,70 @@ namespace Luo_Painter.Elements
                     switch (base.FlowDirection)
                     {
                         case FlowDirection.LeftToRight:
-                            this.SetLeft(position.X - this.W);
+                            this.SetLeft(this.PlacementTargetPosition.X - this.W);
                             break;
                         case FlowDirection.RightToLeft:
-                            this.SetLeft(this.U - this.W - w);
+                            this.SetLeft(this.U - this.W - this.PlacementTargetW);
                             break;
                         default:
                             break;
                     }
-                    this.SetTop(position.Y + h / 2 - this.H / 2);
+                    this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH / 2 - this.H / 2);
                     this.ShowRightStoryboard.Begin(); // Storyboard
                     break;
                 case ExpanderPlacementMode.Top:
                     switch (base.FlowDirection)
                     {
                         case FlowDirection.LeftToRight:
-                            this.SetLeft(position.X + w / 2 - this.W / 2);
+                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
                             break;
                         case FlowDirection.RightToLeft:
-                            this.SetLeft(position.X + w / 2 - this.W / 2);
+                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
                             break;
                         default:
                             break;
                     }
-                    this.SetTop(position.Y - this.H);
+                    this.SetTop(this.PlacementTargetPosition.Y - this.H);
                     this.ShowBottomStoryboard.Begin(); // Storyboard
                     break;
                 case ExpanderPlacementMode.Right:
                     switch (base.FlowDirection)
                     {
                         case FlowDirection.LeftToRight:
-                            this.SetLeft(position.X + w);
+                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW);
                             break;
                         case FlowDirection.RightToLeft:
-                            this.SetLeft(w);
+                            this.SetLeft(this.PlacementTargetW);
                             break;
                         default:
                             break;
                     }
-                    this.SetTop(position.Y + h / 2 - this.H / 2);
+                    this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH / 2 - this.H / 2);
                     this.ShowLeftStoryboard.Begin(); // Storyboard
                     break;
                 case ExpanderPlacementMode.Bottom:
                     switch (base.FlowDirection)
                     {
                         case FlowDirection.LeftToRight:
-                            this.SetLeft(position.X + w / 2 - this.W / 2);
+                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
                             break;
                         case FlowDirection.RightToLeft:
-                            this.SetLeft(position.X + w / 2 - this.W / 2);
+                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
                             break;
                         default:
                             break;
                     }
-                    this.SetTop(position.Y + h);
+                    this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH);
                     this.ShowTopStoryboard.Begin(); // Storyboard
                     break;
                 default:
                     break;
             }
             this.ShowStoryboard.Begin(); // Storyboard
-
-            this.Placement = placement;
-            this.IsOpen = true;
         }
-        private void Hide(ExpanderPlacementMode placement)
+        private void HideBegin()
         {
-            if (this.IsOpen is false) return;
-
-            switch (placement)
+            switch (this.Placement)
             {
                 case ExpanderPlacementMode.Left:
                     this.HideRightStoryboard.Begin(); // Storyboard
@@ -348,8 +376,6 @@ namespace Luo_Painter.Elements
                     break;
             }
             this.HideStoryboard.Begin(); // Storyboard
-
-            this.IsOpen = false;
         }
 
 
