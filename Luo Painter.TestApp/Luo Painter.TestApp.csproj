@@ -219,6 +219,9 @@
     <Compile Include="SelectedButtonPage.xaml.cs">
       <DependentUpon>SelectedButtonPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShaderTestPage.xaml.cs">
+      <DependentUpon>ShaderTestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShyHeaderPage.xaml.cs">
       <DependentUpon>ShyHeaderPage.xaml</DependentUpon>
     </Compile>
@@ -378,6 +381,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectedButtonPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ShaderTestPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
