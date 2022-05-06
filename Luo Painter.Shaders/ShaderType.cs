@@ -12,5 +12,7 @@
         Difference,
         ColorMatch,
         DottedLineTransform,
+        BlackOrWhite,
+        
     }
 }
