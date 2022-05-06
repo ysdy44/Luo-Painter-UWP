@@ -125,6 +125,9 @@
     <Compile Include="DirectionDistancePage.xaml.cs">
       <DependentUpon>DirectionDistancePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExpanderPage.xaml.cs">
+      <DependentUpon>ExpanderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FloodSelectPage.xaml.cs">
       <DependentUpon>FloodSelectPage.xaml</DependentUpon>
     </Compile>
@@ -251,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DirectionDistancePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExpanderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
