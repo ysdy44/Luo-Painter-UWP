@@ -8,26 +8,22 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Canvas>
 
-        <StackPanel Width="240" RequestedTheme="Dark" Background="DodgerBlue" >
-            <local:TitelGrid Height="40" RequestedTheme="Light" Background="White">
-                <TextBlock Margin="12" VerticalAlignment="Center">
-                    Titel
-                </TextBlock>
-            </local:TitelGrid>
-            <ListView>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-                <x:String>Content</x:String>
-            </ListView>
-        </StackPanel>
-        
-    </Canvas>
+    <Grid>
+        <ToggleButton x:Name="ToggleButton" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            On/Off
+        </ToggleButton>
+        <ToggleButton x:Name="LeftToggleButton" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            On/Off
+        </ToggleButton>
+        <ToggleButton x:Name="TopToggleButton" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            On/Off
+        </ToggleButton>
+        <ToggleButton x:Name="RightToggleButton" HorizontalAlignment="Right" VerticalAlignment="Center" >
+            On/Off
+        </ToggleButton>
+        <ToggleButton x:Name="BottomToggleButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            On/Off
+        </ToggleButton>
+    </Grid>
 </Page>
