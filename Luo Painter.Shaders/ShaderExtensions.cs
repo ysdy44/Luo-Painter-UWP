@@ -32,7 +32,11 @@ namespace Luo_Painter.Shaders
                 case ShaderType.ColorMatch: return "ms-appx:///Luo Painter.Shaders/ColorMatch.txt";
                 case ShaderType.DottedLineTransform: return "ms-appx:///Luo Painter.Shaders/DottedLineTransform.bin";
                 case ShaderType.BlackOrWhite: return "ms-appx:///Luo Painter.Shaders/BlackOrWhite.txt";
-              
+                case ShaderType.SDFMorph: return "ms-appx:///Luo Painter.Shaders/SDFMorph.txt";
+                case ShaderType.FilmicEffect: return "ms-appx:///Luo Painter.Shaders/FilmicEffect.bin";
+                case ShaderType.LuminanceHeatmapEffect: return "ms-appx:///Luo Painter.Shaders/LuminanceHeatmapEffect.bin";
+                case ShaderType.ReinhardEffect: return "ms-appx:///Luo Painter.Shaders/ReinhardEffect.bin";
+                case ShaderType.SdrOverlayEffect: return "ms-appx:///Luo Painter.Shaders/SdrOverlayEffect.bin";
                 default: return null;
             }
         }

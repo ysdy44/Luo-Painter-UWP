@@ -13,6 +13,10 @@
         ColorMatch,
         DottedLineTransform,
         BlackOrWhite,
-        
+        SDFMorph,
+        FilmicEffect,
+        LuminanceHeatmapEffect,
+        ReinhardEffect,
+        SdrOverlayEffect
     }
 }

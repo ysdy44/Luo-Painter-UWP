@@ -137,11 +137,15 @@
     <Content Include="ColorMatch.txt" />
     <Content Include="DottedLine.txt" />
     <Content Include="DottedLineTransform.hlsl" />
+    <Content Include="FilmicEffect.hlsl" />
     <Content Include="FreeTransform.hlsl" />
     <Content Include="Difference.hlsl" />
     <Content Include="GradientMapping.bin" />
     <Content Include="Liquefaction.bin" />
+    <Content Include="LuminanceHeatmapEffect.hlsl" />
+    <Content Include="ReinhardEffect.hlsl" />
     <Content Include="RippleEffect.hlsl" />
+    <Content Include="SdrOverlayEffect.hlsl" />
     <Content Include="SprayGun.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -155,12 +159,16 @@
     <Content Include="FreeTransform.bin" />
     <Content Include="Difference.bin" />
     <Content Include="DottedLineTransform.bin" />
+    <None Include="FilmicEffect.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
     <None Include="DottedLine.shader" />
+    <None Include="LuminanceHeatmapEffect.bin" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
     <Content Include="RippleEffect.bin" />
+    <None Include="ReinhardEffect.bin" />
+    <None Include="SdrOverlayEffect.bin" />
     <None Include="SprayGun.shader" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
