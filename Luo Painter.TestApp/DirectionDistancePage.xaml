@@ -19,7 +19,18 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <canvas:CanvasControl  x:Name="originalCanvas"></canvas:CanvasControl>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <canvas:CanvasControl  x:Name="originalCanvas"></canvas:CanvasControl>
+                <StackPanel Grid.Row="1">
+                    <Slider x:Name="colorSlide" Header="颜色值：" Maximum="255" Value="128" StepFrequency="1" Minimum="-255" Grid.Row="1"></Slider>
+                    <Slider x:Name="thresholseSlide" Header="阈值：" Maximum="1" StepFrequency="0.01" Grid.Row="1"></Slider>
+                </StackPanel>
+              
+            </Grid>
             <canvas:CanvasControl Background="Black" Grid.Column="1" x:Name="effectCanvas"></canvas:CanvasControl>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
