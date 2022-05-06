@@ -127,6 +127,9 @@
     <Compile Include="ElementExtensions.cs" />
     <Compile Include="ElementGroupType.cs" />
     <Compile Include="ElementType.cs" />
+    <Compile Include="Expander.xaml.cs">
+      <DependentUpon>Expander.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Expander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Eyedropper.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

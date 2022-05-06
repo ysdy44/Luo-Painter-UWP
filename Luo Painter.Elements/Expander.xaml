@@ -1,0 +1,269 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    >
+
+
+    <Style TargetType="local:Expander">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Background" Value="{ThemeResource FlyoutBackgroundThemeBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource FlyoutBorderThemeBrush}" />
+        <Setter Property="BorderThickness" Value="{ThemeResource FlyoutBorderThemeThickness}" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="{ThemeResource FlyoutContentThemePadding}" />
+        <Setter Property="MinWidth" Value="{ThemeResource FlyoutThemeMinWidth}" />
+        <Setter Property="MaxWidth" Value="{ThemeResource FlyoutThemeMaxWidth}" />
+        <Setter Property="MinHeight" Value="{ThemeResource FlyoutThemeMinHeight}" />
+        <Setter Property="MaxHeight" Value="{ThemeResource FlyoutThemeMaxHeight}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Expander">
+                    <Grid x:Name="RootGrid" 
+                          IsHitTestVisible="False"
+                          Visibility="Collapsed" 
+                          Opacity="0"
+                          CornerRadius="4"
+                          Padding="0,4" 
+                          BorderThickness="{TemplateBinding BorderThickness}" 
+                          BorderBrush="{TemplateBinding BorderBrush}" 
+                          Background="{TemplateBinding Background}" 
+                          >
+
+
+                        <FrameworkElement.Resources>
+                            <!--Storyboard-->
+                            <Storyboard x:Key="HideStoryboard" >
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="IsHitTestVisible">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.2" From="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="RootGrid" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Key="ShowStoryboard" >
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="IsHitTestVisible">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="RootGrid" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+
+                            <Storyboard x:Key="HideLeftStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="-32" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="ShowLeftStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.2" From="-32" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="HideTopStoryboard" >
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="-32" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Key="ShowTopStoryboard" >
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.2" From="-32" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+
+                            <Storyboard x:Key="HideRightStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="32" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="ShowRightStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.2" From="32" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="HideBottomStoryboard" >
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="32" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Key="ShowBottomStoryboard" >
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0:0:0.2" From="32" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </FrameworkElement.Resources>
+
+
+                        <UIElement.RenderTransformOrigin>
+                            0.5,0.5
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <TranslateTransform x:Name="TranslateTransform" X="0" Y="0"/>
+                        </UIElement.RenderTransform>
+
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="42" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+
+                        <!--Head-->
+                        <Thumb x:Name="Thumb" Visibility="Collapsed" >
+                            <Thumb.Template>
+                                <ControlTemplate TargetType="Thumb">
+                                    <Grid Background="Transparent">
+
+                                        <!--VisualState-->
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="PointerOver">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPointerOver" />
+                                                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPressed" />
+                                                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Disabled" />
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+
+                                        <Border x:Name="Background"                              
+                                                IsHitTestVisible="False"                           
+                                                Width="36" 
+                                                Height="6" 
+                                                Margin="3" 
+                                                VerticalAlignment="Top" 
+                                                CornerRadius="{TemplateBinding CornerRadius}" 
+                                                BorderThickness="{TemplateBinding BorderThickness}"            
+                                                BorderBrush="{TemplateBinding BorderBrush}"            
+                                                Background="{TemplateBinding Background}"           
+                                                />
+                                        <Border x:Name="BackgroundPointerOver"                            
+                                                Opacity="0" 
+                                                IsHitTestVisible="False"
+                                                Width="36"
+                                                Height="6" 
+                                                Margin="3" 
+                                                VerticalAlignment="Top" 
+                                                CornerRadius="{TemplateBinding CornerRadius}"          
+                                                BorderThickness="{TemplateBinding BorderThickness}"              
+                                                BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}"             
+                                                Background="{ThemeResource ThumbBackgroundPointerOver}"              
+                                                />
+                                        <Border x:Name="BackgroundPressed"                              
+                                                Opacity="0" 
+                                                IsHitTestVisible="False"
+                                                Width="36" 
+                                                Height="6"
+                                                Margin="3" 
+                                                VerticalAlignment="Top" 
+                                                CornerRadius="{TemplateBinding CornerRadius}"          
+                                                Background="{ThemeResource ThumbBackgroundPressed}"             
+                                                BorderBrush="{ThemeResource ThumbBorderBrushPressed}"              
+                                                BorderThickness="{TemplateBinding BorderThickness}"                
+                                                />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+
+                        <TextBlock 
+                            Margin="16,0"
+                            IsHitTestVisible="false" 
+                            FontWeight="Medium" 
+                            TextTrimming="CharacterEllipsis" 
+                            FontSize="20" 
+                            TextWrapping="Wrap" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource SubheaderTextBlockStyle}"
+                            Text="{TemplateBinding Title}"
+                            />
+
+                        <StackPanel HorizontalAlignment="Right" Background="Transparent">
+                            <Button x:Name="Button" Width="44" Height="42" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                                <SymbolIcon x:Name="SymbolIcon" Symbol="Pin" />
+                            </Button>
+                        </StackPanel>
+
+
+                        <!--Body-->
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Grid.Row="1" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          />
+
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>
