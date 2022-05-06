@@ -31,6 +31,8 @@ namespace Luo_Painter.Shaders
                 case ShaderType.Difference: return "ms-appx:///Luo Painter.Shaders/Difference.bin";
                 case ShaderType.ColorMatch: return "ms-appx:///Luo Painter.Shaders/ColorMatch.txt";
                 case ShaderType.DottedLineTransform: return "ms-appx:///Luo Painter.Shaders/DottedLineTransform.bin";
+                case ShaderType.BlackOrWhite: return "ms-appx:///Luo Painter.Shaders/BlackOrWhite.txt";
+              
                 default: return null;
             }
         }
