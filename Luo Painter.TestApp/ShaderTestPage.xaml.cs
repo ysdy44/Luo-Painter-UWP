@@ -51,7 +51,7 @@ namespace Luo_Painter.TestApp
 
         async Task LoadShaderCode()
         {
-            sdfMorphCode = await ShaderType.SDFMorph.LoadAsync();
+ 
             filmicCode = await ShaderType.FilmicEffect.LoadAsync();
             luminanceHeatmapCode = await ShaderType.LuminanceHeatmapEffect.LoadAsync();
             reinhardCode = await ShaderType.ReinhardEffect.LoadAsync();

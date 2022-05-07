@@ -159,16 +159,16 @@
     <Content Include="FreeTransform.bin" />
     <Content Include="Difference.bin" />
     <Content Include="DottedLineTransform.bin" />
-    <None Include="FilmicEffect.bin" />
+    <Content Include="FilmicEffect.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
     <None Include="DottedLine.shader" />
-    <None Include="LuminanceHeatmapEffect.bin" />
+    <Content Include="LuminanceHeatmapEffect.bin" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
     <Content Include="RippleEffect.bin" />
-    <None Include="ReinhardEffect.bin" />
-    <None Include="SdrOverlayEffect.bin" />
+    <Content Include="ReinhardEffect.bin" />
+    <Content Include="SdrOverlayEffect.bin" />
     <None Include="SprayGun.shader" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
