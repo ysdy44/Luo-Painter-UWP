@@ -46,8 +46,9 @@ namespace Luo_Painter
         private void View_Start(Vector2 point)
         {
             this.Transformer.CacheMove(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
-         
+
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
 
             this.CanvasAnimatedControl.Paused = true;
             this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
@@ -55,13 +56,16 @@ namespace Luo_Painter
         private void View_Delta(Vector2 point)
         {
             this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
+
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
         }
         private void View_Complete(Vector2 point)
         {
             this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
-      
+
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
 
             this.CanvasAnimatedControl.Paused = this.OptionType != default;
             this.CanvasAnimatedControl.Visibility = this.CanvasAnimatedControl.Paused ? Visibility.Collapsed : Visibility.Visible;

@@ -244,6 +244,7 @@ namespace Luo_Painter
                 this.Transformer.CachePinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
 
                 this.CanvasAnimatedControl.Paused = true;
                 this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
@@ -253,10 +254,12 @@ namespace Luo_Painter
                 this.Transformer.Pinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Double_Complete += (center, space) =>
             {
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
 
                 this.CanvasAnimatedControl.Paused = this.OptionType != default;
                 this.CanvasAnimatedControl.Visibility = this.CanvasAnimatedControl.Paused ? Visibility.Collapsed : Visibility.Visible;
@@ -275,6 +278,7 @@ namespace Luo_Painter
                 this.Tip("Zoom", $"{this.Transformer.Scale * 100:0.00}%"); // Tip
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
 
                 this.ViewTool.Construct(this.Transformer);
             };
