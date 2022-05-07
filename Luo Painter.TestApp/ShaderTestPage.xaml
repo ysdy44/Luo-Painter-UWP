@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.ShaderTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Luo_Painter.TestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="3*" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <canvas:CanvasAnimatedControl x:Name="effectCanvas"></canvas:CanvasAnimatedControl>
+            <canvas:CanvasAnimatedControl Grid.Column="1" x:Name="effectCanvas1"></canvas:CanvasAnimatedControl>
+            <canvas:CanvasAnimatedControl Grid.Column="2" x:Name="effectCanvas2"></canvas:CanvasAnimatedControl>
+            <canvas:CanvasAnimatedControl Grid.Column="3" x:Name="effectCanvas3"></canvas:CanvasAnimatedControl>
+        </Grid>
+
+       
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Grid x:Name="originalPanel1" Background="Orange" >
+                    <TextBlock Text="原图1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Image Height="200" Width="200" x:Name="originalImage1"></Image>
+                </Grid>
+                <Grid Margin="20 0 0 0" x:Name="sdfPanel1" Background="Orange">
+                    <TextBlock Text="Sdf1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Image Height="200"  CanDrag="True" x:Name="sdfImage1" Width="200"></Image>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Grid x:Name="originalPanel2"   Background="Orange">
+                    <TextBlock Text="原图2"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Image Height="200"  x:Name="originalImage2" Width="200"></Image>
+                </Grid>
+                <Grid Margin="20 0 0 0" x:Name="sdfPanel2" Background="Orange" >
+                    <TextBlock Text="Sdf2" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Image Height="200" x:Name="sdfImage2" Width="200"></Image>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
