@@ -119,7 +119,6 @@ namespace Luo_Painter.Elements
             if (args == top) return;
 
             Canvas.SetZIndex(sender, top);
-            sender.Title = Canvas.GetZIndex(sender).ToString();
 
             foreach (Expander item in this.Items)
             {
@@ -136,7 +135,6 @@ namespace Luo_Painter.Elements
                         if (index == 0) break;
 
                         Canvas.SetZIndex(item, index - 1);
-                        item.Title = Canvas.GetZIndex(item).ToString();
                         break;
                     default:
                         break;

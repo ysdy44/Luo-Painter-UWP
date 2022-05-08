@@ -161,12 +161,12 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="42" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
 
                         <!--Head-->
-                        <Thumb x:Name="Thumb" Visibility="Collapsed" >
+                        <Thumb x:Name="Thumb" >
                             <Thumb.Template>
                                 <ControlTemplate TargetType="Thumb">
                                     <Grid Background="Transparent">
@@ -251,12 +251,9 @@
 
 
                         <!--Body-->
-                        <ContentPresenter x:Name="ContentPresenter"
-                                          Grid.Row="1" 
-                                          Margin="{TemplateBinding Padding}" 
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          />
+                        <ScrollViewer Grid.Row="1" Margin="{TemplateBinding Padding}" >
+                            <ContentPresenter x:Name="ContentPresenter" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </ScrollViewer>
 
 
                     </Grid>
