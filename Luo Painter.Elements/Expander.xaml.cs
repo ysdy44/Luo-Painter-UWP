@@ -1,9 +1,11 @@
-﻿using Windows.Foundation;
-using Windows.UI.Core;
+﻿using System.Collections.Generic;
+using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Luo_Painter.Elements
@@ -18,6 +20,129 @@ namespace Luo_Painter.Elements
         Top,
         Right,
         Bottom,
+    }
+
+    /// <summary>
+    /// State of <see cref="Expander"/>.
+    /// </summary>
+    public enum ExpanderState
+    {
+        Hide,
+        Flyout,
+        Overlay,
+    }
+
+    /// <summary>
+    /// LightDismissOverlay for <see cref="Expander"/>.
+    /// </summary>
+    public sealed class ExpanderLightDismissOverlay : Canvas
+    {
+        readonly Stack<Expander> Items = new Stack<Expander>();
+        readonly SolidColorBrush Transparent = new SolidColorBrush(Colors.Transparent);
+
+        //@Construct     
+        /// <summary>
+        /// Initializes a Expander. 
+        /// </summary>
+        public ExpanderLightDismissOverlay()
+        {
+            base.Unloaded += (s, e) =>
+            {
+                foreach (Expander item in this.Items)
+                {
+                    item.StateChanged -= this.StateChanged;
+                    item.OnZIndexChanging -= this.OnZIndexChanging;
+
+                    base.SizeChanged -= item.CanvasSizeChanged;
+                }
+                this.Items.Clear();
+            };
+            base.Loaded += (s, e) =>
+            {
+                foreach (UIElement item in base.Children)
+                {
+                    if (item is Expander expander)
+                    {
+                        this.Items.Push(expander);
+                        expander.StateChanged += this.StateChanged;
+                        expander.OnZIndexChanging += this.OnZIndexChanging;
+
+                        expander.CanvasSizeChanged(base.ActualWidth, base.ActualHeight);
+                        base.SizeChanged += expander.CanvasSizeChanged;
+                    }
+                }
+            };
+            base.PointerPressed += (s, e) =>
+            {
+                foreach (Expander item in this.Items)
+                {
+                    switch (item.State)
+                    {
+                        case ExpanderState.Flyout:
+                            item.Hide();
+                            break;
+                    }
+                }
+                base.Background = null;
+            };
+        }
+
+        private void StateChanged(Expander sender, ExpanderState args)
+        {
+            switch (args)
+            {
+                case ExpanderState.Hide:
+                case ExpanderState.Overlay:
+                    base.Background = null;
+                    foreach (Expander item in this.Items)
+                    {
+                        item.IsHitTestVisible = true;
+                    }
+                    Canvas.SetZIndex(sender, 0);
+                    break;
+                case ExpanderState.Flyout:
+                    base.Background = this.Transparent;
+                    foreach (Expander item in this.Items)
+                    {
+                        item.IsHitTestVisible = false;
+                    }
+                    sender.IsHitTestVisible = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OnZIndexChanging(Expander sender, int args)
+        {
+            int top = base.Children.Count - 1;
+            if (args == top) return;
+
+            Canvas.SetZIndex(sender, top);
+            sender.Title = Canvas.GetZIndex(sender).ToString();
+
+            foreach (Expander item in this.Items)
+            {
+                switch (item.State)
+                {
+                    case ExpanderState.Hide:
+                        break;
+                    case ExpanderState.Flyout:
+                        break;
+                    case ExpanderState.Overlay:
+                        if (item == sender) break;
+
+                        int index = Canvas.GetZIndex(item);
+                        if (index == 0) break;
+
+                        Canvas.SetZIndex(item, index - 1);
+                        item.Title = Canvas.GetZIndex(item).ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     /// <summary> 
@@ -42,7 +167,8 @@ namespace Luo_Painter.Elements
     {
 
         //@Delegate
-        public event TypedEventHandler<Expander, bool> PinChanged;
+        internal event TypedEventHandler<Expander, ExpanderState> StateChanged;
+        internal event TypedEventHandler<Expander, int> OnZIndexChanging;
 
 
         Storyboard HideStoryboard;
@@ -76,8 +202,8 @@ namespace Luo_Painter.Elements
         bool IsFristOpen = true;
 
 
-        /// <summary> Gets a value that indicates whether the <see cref = "Expander" /> is open. </summary>
-        public bool IsOpen { get; private set; }
+        /// <summary> Gets a state that indicates whether the <see cref = "Expander" />. </summary>
+        public ExpanderState State { get; private set; }
 
 
         #region DependencyProperty
@@ -103,12 +229,6 @@ namespace Luo_Painter.Elements
         public Expander()
         {
             this.DefaultStyleKey = typeof(Expander);
-            this.U = Window.Current.Bounds.Width;
-            this.V = Window.Current.Bounds.Height;
-
-            base.Unloaded += (s, e) => Window.Current.SizeChanged -= this.WindowSizeChanged;
-            base.Loaded += (s, e) => Window.Current.SizeChanged += this.WindowSizeChanged;
-
             base.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
@@ -122,6 +242,7 @@ namespace Luo_Painter.Elements
 
                 if (this.IsFristOpen)
                 {
+                    this.IsFristOpen = false;
                     this.ShowBegin();
                 }
                 else if (this.IsLoaded)
@@ -191,20 +312,67 @@ namespace Luo_Painter.Elements
             this.SymbolIcon = base.GetTemplateChild(nameof(SymbolIcon)) as SymbolIcon;
         }
 
-
-        private void WindowSizeChanged(object sender, WindowSizeChangedEventArgs e)
+        /// <inheritdoc/>
+        internal void CanvasSizeChanged(double u, double v)
         {
-            this.U = e.Size.Width;
-            this.V = e.Size.Height;
+            this.U = u;
+            this.V = v;
 
-            this.SetLeft(Canvas.GetLeft(this));
-            this.SetTop(Canvas.GetTop(this));
+            base.MaxWidth = u;
+            base.MaxHeight = v;
+        }
+        /// <inheritdoc/>
+        internal void CanvasSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize == Size.Empty) return;
+            if (e.NewSize == e.PreviousSize) return;
+
+            this.CanvasSizeChanged(e.NewSize.Width, e.NewSize.Height);
+
+            switch (this.State)
+            {
+                case ExpanderState.Hide:
+                    break;
+                case ExpanderState.Flyout:
+                    this.Placement = ExpanderPlacementMode.Center;
+                    this.HideBegin();
+
+                    this.SymbolIcon.Symbol = Symbol.Pin;
+                    this.State = ExpanderState.Hide;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    break;
+                case ExpanderState.Overlay:
+                    this.SetLeft(Canvas.GetLeft(this));
+                    this.SetTop(Canvas.GetTop(this));
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
         {
             this.X = Canvas.GetLeft(this);
             this.Y = Canvas.GetTop(this);
+
+            switch (this.State)
+            {
+                case ExpanderState.Hide:
+                    break;
+                case ExpanderState.Flyout:
+                    this.Placement = ExpanderPlacementMode.Center;
+
+                    this.SymbolIcon.Symbol = Symbol.UnPin;
+                    this.State = ExpanderState.Overlay;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    break;
+                case ExpanderState.Overlay:
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    break;
+                default:
+                    break;
+            }
         }
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -216,20 +384,24 @@ namespace Luo_Painter.Elements
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Thumb is null) return;
-
-            switch (this.Thumb.Visibility)
+            switch (this.State)
             {
-                case Visibility.Visible:
-                    this.Hide();
-                    this.Thumb.Visibility = Visibility.Collapsed;
-                    this.SymbolIcon.Symbol = Symbol.Pin;
-                    this.PinChanged?.Invoke(this, true); // Delegate
+                case ExpanderState.Hide:
                     break;
-                case Visibility.Collapsed:
-                    this.Thumb.Visibility = Visibility.Visible;
+                case ExpanderState.Flyout:
+                    this.Placement = ExpanderPlacementMode.Center;
+
                     this.SymbolIcon.Symbol = Symbol.UnPin;
-                    this.PinChanged?.Invoke(this, false); // Delegate
+                    this.State = ExpanderState.Overlay;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    break;
+                case ExpanderState.Overlay:
+                    this.HideBegin();
+
+                    this.SymbolIcon.Symbol = Symbol.Pin;
+                    this.State = ExpanderState.Hide;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
                     break;
                 default:
                     break;
@@ -242,19 +414,49 @@ namespace Luo_Painter.Elements
         /// </summary>
         public void Hide()
         {
-            if (this.IsOpen is false) return;
-            this.HideBegin();
-            this.Placement = ExpanderPlacementMode.Center;
-            this.IsOpen = false;
+            switch (this.State)
+            {
+                case ExpanderState.Hide:
+                    break;
+                case ExpanderState.Flyout:
+                    this.Placement = ExpanderPlacementMode.Center;
+                    this.HideBegin();
+
+                    this.SymbolIcon.Symbol = Symbol.Pin;
+                    this.State = ExpanderState.Hide;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    break;
+                case ExpanderState.Overlay:
+                    this.HideBegin();
+
+                    this.SymbolIcon.Symbol = Symbol.Pin;
+                    this.State = ExpanderState.Hide;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// Shows the <see cref = "Expander" /> placed.
         /// </summary>
         public void Show()
         {
-            if (this.IsOpen) return;
-            this.ShowStoryboard.Begin(); // Storyboard
-            this.IsOpen = true;
+            switch (this.State)
+            {
+                case ExpanderState.Hide:
+                    this.ShowStoryboard.Begin(); // Storyboard
+                    this.State = ExpanderState.Flyout;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    break;
+                case ExpanderState.Flyout:
+                    break;
+                case ExpanderState.Overlay:
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// Shows the <see cref = "Expander" /> placed in relation to the specified element.
@@ -263,22 +465,69 @@ namespace Luo_Painter.Elements
         /// <param name="placement"> Gets or sets the default placement to be used for the <see cref = "Expander" />, in relation to its placement target. </param>
         public void ShowAt(FrameworkElement placementTarget, ExpanderPlacementMode placement)
         {
-            if (this.IsOpen) return;
-            this.IsOpen = true;
-
-            this.PlacementTargetW = placementTarget.ActualWidth;
-            this.PlacementTargetH = placementTarget.ActualHeight;
-            this.PlacementTargetPosition = placementTarget.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
-
-            this.Placement = placement;
-
-            if (this.IsFristOpen)
+            switch (this.State)
             {
-                this.RootGrid.Visibility = Visibility.Visible;
+                case ExpanderState.Hide:
+                    this.PlacementTargetW = placementTarget.ActualWidth;
+                    this.PlacementTargetH = placementTarget.ActualHeight;
+                    this.PlacementTargetPosition = placementTarget.TransformToVisual(base.Parent as UIElement).TransformPoint(new Point(0, 0));
+
+                    this.Placement = placement;
+
+                    if (this.IsFristOpen)
+                        this.RootGrid.Visibility = Visibility.Visible;
+                    else
+                        this.ShowBegin();
+
+                    this.State = ExpanderState.Flyout;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    break;
+                case ExpanderState.Flyout:
+                    break;
+                case ExpanderState.Overlay:
+                    break;
+                default:
+                    break;
             }
-            else
+        }
+        /// <summary>
+        /// Show or Hide.
+        /// </summary>
+        /// <param name="placementTarget"> The element to use as the <see cref = "Expander" />'s placement target. </param>
+        /// <param name="placement"> Gets or sets the default placement to be used for the <see cref = "Expander" />, in relation to its placement target. </param>
+        public void Toggle(FrameworkElement placementTarget, ExpanderPlacementMode placement)
+        {
+            switch (this.State)
             {
-                this.ShowBegin();
+                case ExpanderState.Hide:
+                    this.PlacementTargetW = placementTarget.ActualWidth;
+                    this.PlacementTargetH = placementTarget.ActualHeight;
+                    this.PlacementTargetPosition = placementTarget.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
+
+                    this.Placement = placement;
+
+                    if (this.IsFristOpen)
+                        this.RootGrid.Visibility = Visibility.Visible;
+                    else
+                        this.ShowBegin();
+
+                    this.State = ExpanderState.Flyout;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    break;
+                case ExpanderState.Flyout:
+                    this.Placement = ExpanderPlacementMode.Center;
+                    this.HideBegin();
+
+                    this.SymbolIcon.Symbol = Symbol.Pin;
+                    this.State = ExpanderState.Hide;
+                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                    break;
+                case ExpanderState.Overlay:
+                    break;
+                default:
+                    break;
             }
         }
 

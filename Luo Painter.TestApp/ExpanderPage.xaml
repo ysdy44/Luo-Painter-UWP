@@ -1,29 +1,47 @@
 ﻿<Page
     x:Class="Luo_Painter.TestApp.ExpanderPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Luo_Painter.TestApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
 
 
     <Grid>
-        <ToggleButton x:Name="ToggleButton" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            On/Off
-        </ToggleButton>
-        <ToggleButton x:Name="LeftToggleButton" HorizontalAlignment="Left" VerticalAlignment="Center" >
-            On/Off
-        </ToggleButton>
-        <ToggleButton x:Name="TopToggleButton" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            On/Off
-        </ToggleButton>
-        <ToggleButton x:Name="RightToggleButton" HorizontalAlignment="Right" VerticalAlignment="Center" >
-            On/Off
-        </ToggleButton>
-        <ToggleButton x:Name="BottomToggleButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-            On/Off
-        </ToggleButton>
+        
+        <Button x:Name="Button" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            Center
+        </Button>
+        <Button x:Name="LeftButton" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            Right
+        </Button>
+        <Button x:Name="TopButton" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            Bottom
+        </Button>
+        <Button x:Name="RightButton" HorizontalAlignment="Right" VerticalAlignment="Center" >
+            Left
+        </Button>
+        <Button x:Name="BottomButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            Top
+        </Button>
+
+        <elements:ExpanderLightDismissOverlay>
+            <elements:Expander x:Name="Expander" Title="Title" Background="DodgerBlue" >
+                <ListView Width="320" >
+                    <x:String>0</x:String>
+                    <x:String>1</x:String>
+                    <x:String>2</x:String>
+                    <x:String>3</x:String>
+                    <x:String>4</x:String>
+                    <x:String>5</x:String>
+                    <x:String>6</x:String>
+                    <x:String>7</x:String>
+                </ListView>
+            </elements:Expander>
+        </elements:ExpanderLightDismissOverlay>
+
     </Grid>
 </Page>
