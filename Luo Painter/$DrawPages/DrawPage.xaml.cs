@@ -28,61 +28,6 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter
 {
-    internal static class IconExtensions
-    {
-        public static Grid GetGrid(UIElement icon, string text) => new Grid
-        {
-            ColumnDefinitions =
-            {
-                new ColumnDefinition
-                {
-                    Width = GridLength.Auto
-                },
-                new ColumnDefinition
-                {
-                    Width =new GridLength(12)
-                },
-                new ColumnDefinition
-                {
-                    Width =new GridLength(1, GridUnitType.Star)
-                },
-            },
-            Children =
-            {
-                icon,
-                text.GetTextBlock().SetColumn(2)
-            }
-        };
-        public static StackPanel GetStackPanel(UIElement icon, string text) => new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            Children =
-            {
-                icon,
-                new ContentControl
-                {
-                    Width = 12
-                },
-                text.GetTextBlock()
-            }
-        };
-        public static TextBlock GetTextBlock(this string text)
-        {
-            return new TextBlock
-            {
-                Text = text,
-                VerticalAlignment = VerticalAlignment.Center,
-                TextTrimming = TextTrimming.CharacterEllipsis,
-            };
-        }
-        public static FrameworkElement SetColumn(this FrameworkElement element, int value)
-        {
-            Grid.SetColumn(element, value);
-            return element;
-        }
-    }
-
-
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : Case<OptionType> { }
 
