@@ -9,33 +9,8 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    internal sealed class ToolIcon : ContentControl
+    internal sealed class ToolIcon : TIcon<ToolType>
     {
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the type for <see cref="ToolIcon"/>. </summary>
-        public ToolType Type
-        {
-            get => (ToolType)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "ToolIcon.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(ToolType), typeof(ToolIcon), new PropertyMetadata(ToolType.None, (sender, e) =>
-        {
-            ToolIcon control = (ToolIcon)sender;
-
-            if (e.NewValue is ToolType value)
-            {
-                control.Content = value;
-                control.Template = value.GetTemplate(out ResourceDictionary resource);
-                control.Resources = resource;
-            }
-        }));
-
-
-        #endregion
-
         public ToolIcon()
         {
             base.Loaded += (s, e) =>
@@ -48,6 +23,12 @@ namespace Luo_Painter.Controls
                     Style = App.Current.Resources["AppToolTipStyle"] as Style
                 });
             };
+        }
+        protected override void OnTypeChanged(ToolType value)
+        {
+            base.Content = value;
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
+            base.Resources = resource;
         }
     }
 

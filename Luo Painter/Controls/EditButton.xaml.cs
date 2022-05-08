@@ -118,38 +118,8 @@ namespace Luo_Painter.Controls
         }
     }
 
-    internal sealed class EditItem : Button
+    internal sealed class EditItem : TButton<EditType>
     {
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the type for <see cref="EditItem"/>. </summary>
-        public EditType Type
-        {
-            get => (EditType)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "EditItem.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(EditType), typeof(EditItem), new PropertyMetadata(EditType.None, (sender, e) =>
-        {
-            EditItem control = (EditItem)sender;
-
-            if (e.NewValue is EditType value)
-            {
-                control.CommandParameter = value;
-                control.Icon = new ContentControl
-                {
-                    Content = value,
-                    Template = value.GetTemplate(out ResourceDictionary resource),
-                    Resources = resource,
-                };
-                control.Icon.GoToState(control.IsEnabled);
-                control.Content = IconExtensions.GetGrid(control.Icon, value.ToString());
-            }
-        }));
-
-
-        #endregion
 
         Control Icon;
         public EditItem()
@@ -162,6 +132,19 @@ namespace Luo_Painter.Controls
                     this.Icon.GoToState(value);
                 }
             };
+        }
+
+        protected override void OnTypeChanged(EditType value)
+        {
+            base.CommandParameter = value;
+            this.Icon = new ContentControl
+            {
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            };
+            this.Icon.GoToState(base.IsEnabled);
+            base.Content = TIconExtensions.GetGrid(this.Icon, value.ToString());
         }
     }
 

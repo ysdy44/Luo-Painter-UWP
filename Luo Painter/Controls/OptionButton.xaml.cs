@@ -9,40 +9,12 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Controls
 {
-    internal abstract class OptionItemBase : Button
-    {
-        protected abstract void OnTypeChanged(OptionType value);
-
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the type for <see cref="OptionItemBase"/>. </summary>
-        public OptionType Type
-        {
-            get => (OptionType)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "OptionItemBase.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(OptionItemBase), new PropertyMetadata(OptionType.None, (sender, e) =>
-        {
-            OptionItemBase control = (OptionItemBase)sender;
-
-            if (e.NewValue is OptionType value)
-            {
-                control.OnTypeChanged(value);
-            }
-        }));
-
-
-        #endregion
-    }
-
-    internal sealed class OptionItem : OptionItemBase
+    internal sealed class OptionItem : TButton<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {
             base.CommandParameter = value;
-            base.Content = IconExtensions.GetStackPanel(new ContentControl
+            base.Content = TIconExtensions.GetStackPanel(new ContentControl
             {
                 Content = value,
                 Template = value.GetTemplate(out ResourceDictionary resource),
@@ -51,7 +23,7 @@ namespace Luo_Painter.Controls
         }
     }
 
-    internal sealed class OptionImage : OptionItemBase
+    internal sealed class OptionImage : TButton<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {
@@ -68,7 +40,7 @@ namespace Luo_Painter.Controls
         }
     }
 
-    internal sealed class OptionIcon : OptionItemBase
+    internal sealed class OptionIcon : TButton<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {

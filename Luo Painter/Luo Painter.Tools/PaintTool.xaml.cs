@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Edits;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
@@ -49,35 +50,17 @@ namespace Luo_Painter.Tools
         }
     }
 
-    internal sealed class BlendIcon : ContentPresenter
+    internal sealed class BlendIcon : TIcon<BlendEffectMode>
     {
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the type for <see cref="BlendIcon"/>. </summary>
-        public BlendEffectMode Type
+        protected override void OnTypeChanged(BlendEffectMode value)
         {
-            get => (BlendEffectMode)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "BlendIcon.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(BlendEffectMode), typeof(BlendIcon), new PropertyMetadata(BlendEffectMode.Multiply, (sender, e) =>
-        {
-            BlendIcon control = (BlendIcon)sender;
-
-            if (e.NewValue is BlendEffectMode value)
+            base.Content = TIconExtensions.GetStackPanel(new ContentControl
             {
-                control.Content = IconExtensions.GetStackPanel(new ContentControl
-                {
-                    Content = value,
-                    Template = value.GetTemplate(out ResourceDictionary resource, out string title),
-                    Resources = resource,
-                }, title);
-            }
-        }));
-
-
-        #endregion
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource, out string title),
+                Resources = resource,
+            }, title);
+        }
     }
 
     internal sealed class BlendList : List<BlendEffectMode> { }
