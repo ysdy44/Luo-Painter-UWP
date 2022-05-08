@@ -1,0 +1,89 @@
+﻿using Windows.Foundation;
+using Windows.UI;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
+
+namespace Luo_Painter.Elements
+{
+    /// <summary>
+    /// AlignmentGrid is used to display a grid to help aligning controls
+    /// </summary>
+    public sealed class AlignmentGrid : Canvas
+    {
+        /// <summary>
+        /// Step for <see cref="AlignmentGrid"/>'s lines, Default 20.
+        /// </summary>
+        public const int Step = 20;
+
+        readonly SolidColorBrush LineBrush = new SolidColorBrush(Color.FromArgb(38, 127, 127, 127));
+
+        int Column;
+        int Row;
+
+        /// <summary>
+        /// Rebuild all lines by interpolated size.
+        /// </summary>
+        /// <param name="size"> The source size. </param>
+        /// <param name="lazy"> The lazy space. </param>
+        /// <returns><c>true</c> if the change is greater than lazy space; otherwise, <c>false</c>.</returns>
+        public bool RebuildWithInterpolation(Size size, int lazy = 5)
+        {
+            // 1. Interpolation
+            int column = lazy + (int)(size.Width / AlignmentGrid.Step);
+            int row = lazy + (int)(size.Height / AlignmentGrid.Step);
+
+            // 2. Column & Row
+            if (System.Math.Abs(this.Column - column) + System.Math.Abs(this.Row - row) < lazy) return false;
+            this.Rebuild(column, row);
+            return true;
+        }
+
+        /// <summary>
+        /// Rebuild all lines.
+        /// </summary>
+        /// <param name="column"> The source column. </param>
+        /// <param name="row"> The source row. </param>
+        public void Rebuild(int column, int row)
+        {
+            this.Column = column;
+            this.Row = row;
+
+            // 3. Width & Height
+            int width = this.Column * AlignmentGrid.Step;
+            int height = this.Row * AlignmentGrid.Step;
+            base.Width = width;
+            base.Height = height;
+
+            // 4. Lines
+            base.Children.Clear();
+            for (int x = 0; x < this.Column; x++)
+            {
+                int left = x * AlignmentGrid.Step;
+                base.Children.Add(new Line
+                {
+                    X1 = left,
+                    X2 = left,
+                    Y1 = 0,
+                    Y2 = height,
+                    StrokeThickness = 1,
+                    Stroke = this.LineBrush
+                });
+            }
+            for (int y = 0; y < this.Row; y++)
+            {
+                int top = y * AlignmentGrid.Step;
+                base.Children.Add(new Line
+                {
+                    X1 = 0,
+                    X2 = width,
+                    Y1 = top,
+                    Y2 = top,
+                    StrokeThickness = 1,
+                    Stroke = this.LineBrush
+                });
+            }
+        }
+
+    }
+}
