@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AlignmentGridPage.xaml.cs">
+      <DependentUpon>AlignmentGridPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
@@ -252,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AlignmentGridPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ArithmeticCompositeEffectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -18,8 +18,14 @@ namespace Luo_Painter.Elements
 
         readonly SolidColorBrush LineBrush = new SolidColorBrush(Color.FromArgb(38, 127, 127, 127));
 
-        int Column;
-        int Row;
+        /// <summary>
+        /// Column for <see cref="AlignmentGrid"/>'s lines, Default 0.
+        /// </summary>
+        public int Column { get; private set; }
+        /// <summary>
+        /// Row for <see cref="AlignmentGrid"/>'s lines, Default 0.
+        /// </summary>
+        public int Row { get; private set; }
 
         /// <summary>
         /// Rebuild all lines by interpolated size.

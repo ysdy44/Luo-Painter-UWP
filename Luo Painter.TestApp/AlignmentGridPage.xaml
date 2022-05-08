@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.AlignmentGridPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Canvas>
+        <elements:AlignmentGrid x:Name="AlignmentGrid" IsHitTestVisible="False"/>
+
+        <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+            <LineBreak/>
+            <Run>AlignmentGrid</Run>
+            <LineBreak/>
+            <LineBreak/>
+            <Run>Rebuild:</Run>
+            <Run x:Name="RebuildRun">False</Run>
+            <LineBreak/>
+            <Run>Column:</Run>
+            <Run x:Name="ColumnRun">0</Run>
+            <LineBreak/>
+            <Run>Row:</Run>
+            <Run x:Name="RowRun">0</Run>
+            <LineBreak/>
+            <Run>Width:</Run>
+            <Run x:Name="WidthRun">0</Run>
+            <LineBreak/>
+            <Run>Height:</Run>
+            <Run x:Name="HeightRun">0</Run>
+            <LineBreak/>
+        </TextBlock>
+    </Canvas>
+
+</Page>
