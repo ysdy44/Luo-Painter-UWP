@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ExportButton : Button
+    public sealed partial class ExportButton : Grid
     {
 
         //@Delegate
