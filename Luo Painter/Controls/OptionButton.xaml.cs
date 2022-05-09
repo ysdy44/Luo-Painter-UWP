@@ -55,7 +55,7 @@ namespace Luo_Painter.Controls
 
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
 
-    public sealed partial class OptionButton : Button
+    public sealed partial class OptionButton : Grid
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick
@@ -68,7 +68,6 @@ namespace Luo_Painter.Controls
         public OptionButton()
         {
             this.InitializeComponent();
-            this.ItemClick += (s, e) => this.OptionFlyout.Hide();
         }
 
         //@Strings
