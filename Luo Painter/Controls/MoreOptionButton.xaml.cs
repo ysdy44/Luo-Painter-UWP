@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class MoreOptionButton : Button
+    public sealed partial class MoreOptionButton : StackPanel
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick
@@ -18,7 +18,6 @@ namespace Luo_Painter.Controls
         public MoreOptionButton()
         {
             this.InitializeComponent();
-            this.ItemClick += (s, e) => this.MoreOptionFlyout.Hide();
         }
 
         //@Strings
