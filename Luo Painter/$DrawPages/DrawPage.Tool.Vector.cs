@@ -66,6 +66,7 @@ namespace Luo_Painter
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasAnimatedControl.Invalidate(); // Invalidate
 
             this.CanvasAnimatedControl.Paused = this.OptionType != default;
             this.CanvasAnimatedControl.Visibility = this.CanvasAnimatedControl.Paused ? Visibility.Collapsed : Visibility.Visible;
