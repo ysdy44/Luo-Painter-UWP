@@ -231,7 +231,12 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <controls:ExportButton x:Name="ExportButton" />
+            <Button x:Name="ExportPlacementTarget" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Q"/>
+                </UIElement.KeyboardAccelerators>
+                <SymbolIcon Symbol="NewWindow"/>
+            </Button>
 
             <ScrollViewer Grid.Column="1" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal">
@@ -261,22 +266,10 @@
 
             <ScrollViewer Grid.Column="2" HorizontalContentAlignment="Right" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="ToolButton" HorizontalAlignment="Left" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="ToolPlacementTarget" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="A"/>
                         </UIElement.KeyboardAccelerators>
-                        <Button.Flyout>
-                            <Flyout Placement="Bottom">
-                                <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
-                                    <local:ToolGroupCase GroupValue="Paint">
-                                        <tools:PaintTool x:Name="PaintTool" />
-                                    </local:ToolGroupCase>
-                                    <local:ToolGroupCase GroupValue="Vector" Value="View">
-                                        <tools:ViewTool x:Name="ViewTool" />
-                                    </local:ToolGroupCase>
-                                </local:ToolGroupSwitchPresenter>
-                            </Flyout>
-                        </Button.Flyout>
                         <!--Icon-->
                         <ContentControl x:Name="ToolIcon">
                             <FrameworkElement.Resources>
@@ -284,10 +277,27 @@
                             </FrameworkElement.Resources>
                         </ContentControl>
                     </Button>
-                    <controls:EditButton x:Name="EditButton" Orientation="Horizontal" />
-                    <controls:OptionButton x:Name="OptionButton" />
-                    <controls:MoreOptionButton x:Name="MoreOptionButton" />
-                    <controls:SetupButton x:Name="SetupButton" />
+                    <Button x:Name="EditPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                        <UIElement.KeyboardAccelerators >
+                            <KeyboardAccelerator Modifiers= "None" Key= "G" />
+                        </UIElement.KeyboardAccelerators >
+                        <tools:ElementIcon Type="Edit"/>
+                    </Button>
+                    <Button x:Name="OptionPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="W"/>
+                        </UIElement.KeyboardAccelerators>
+                        <tools:ElementIcon Type="Option"/>
+                    </Button>
+                    <Button x:Name="MoreOptionPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="T"/>
+                        </UIElement.KeyboardAccelerators>
+                        <tools:ElementIcon Type="MoreOption"/>
+                    </Button>
+                    <Button x:Name="SetupPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                        <SymbolIcon Symbol="Crop"/>
+                    </Button>
                     <Button x:Name="LayerButton" HorizontalAlignment="Right" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="D"/>
@@ -773,6 +783,38 @@
             </local:OptionSwitchPresenter>
         </StackPanel>
 
+
+        <!--Expander-->
+        <elements:ExpanderLightDismissOverlay>
+            <elements:Expander x:Name="ExportMenu" Title="Export" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:ExportButton x:Name="ExportButton"/>
+            </elements:Expander>
+            <elements:Expander x:Name="ToolMenu" Title="Tool" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
+                    <local:ToolGroupCase GroupValue="Paint">
+                        <tools:PaintTool x:Name="PaintTool" />
+                    </local:ToolGroupCase>
+                    <local:ToolGroupCase GroupValue="Vector" Value="View">
+                        <tools:ViewTool x:Name="ViewTool" />
+                    </local:ToolGroupCase>
+                </local:ToolGroupSwitchPresenter>
+            </elements:Expander>
+            <elements:Expander x:Name="EditMenu" Title="Edit" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:EditButton x:Name="EditButton" Orientation="Horizontal" />
+            </elements:Expander>
+            <elements:Expander x:Name="OptionMenu" Title="Option" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:OptionButton x:Name="OptionButton" />
+            </elements:Expander>
+            <elements:Expander x:Name="MoreOptionMenu" Title="More Options" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:MoreOptionButton x:Name="MoreOptionButton" />
+            </elements:Expander>
+            <elements:Expander x:Name="SetupMenu" Title="Setup" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:SetupButton x:Name="SetupButton" />
+            </elements:Expander>
+        </elements:ExpanderLightDismissOverlay>
+
+
+        <!--Tip-->
         <Border IsHitTestVisible="False" CornerRadius="6" Padding="12,3" MinHeight="40" Background="Red" RequestedTheme="Dark" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Visibility="{x:Bind BooleanToVisibilityConverter(GradientMappingSelector.IsHitTestVisible), Mode=OneWay}">
             <StackPanel Orientation="Horizontal">

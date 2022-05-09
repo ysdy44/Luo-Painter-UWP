@@ -91,7 +91,7 @@ namespace Luo_Painter
         {
             this.DottedLineTransformShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
         }
-
+       
         public DrawPage()
         {
             this.InitializeComponent();
@@ -121,6 +121,12 @@ namespace Luo_Painter
 
 
             this.ApplicationView.Title = "*Untitled";
+            this.ExportPlacementTarget.Click += (s, e) => this.ExportMenu.Toggle(this.ExportPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.ToolPlacementTarget.Click += (s, e) => this.ToolMenu.Toggle(this.ToolPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.EditPlacementTarget.Click += (s, e) => this.EditMenu.Toggle(this.EditPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.OptionPlacementTarget.Click += (s, e) => this.OptionMenu.Toggle(this.OptionPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.MoreOptionPlacementTarget.Click += (s, e) => this.MoreOptionMenu.Toggle(this.MoreOptionPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.SetupPlacementTarget.Click += (s, e) => this.SetupMenu.Toggle(this.SetupPlacementTarget, ExpanderPlacementMode.Bottom);
 
 
             // Drag and Drop 
