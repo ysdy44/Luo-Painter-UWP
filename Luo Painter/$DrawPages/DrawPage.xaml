@@ -204,7 +204,7 @@
 
 
         <!--Head-->
-        <Button x:Name="UnFullScreenButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+        <Button x:Name="UnFullScreenButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
             <SymbolIcon Symbol="BackToWindow"/>
         </Button>
         <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{ThemeResource AppBackground}">
@@ -226,22 +226,22 @@
 
             <ScrollViewer Grid.Column="1" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="SettingButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="SettingButton" Style="{StaticResource AppButtonStyle}">
                         <SymbolIcon Symbol="Setting"/>
                     </Button>
-                    <Button x:Name="UndoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="UndoButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
-                    <Button x:Name="RedoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="RedoButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Redo"/>
                     </Button>
-                    <Button x:Name="FullScreenButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="FullScreenButton" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                         </UIElement.KeyboardAccelerators>
@@ -375,10 +375,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="OptionPrimaryButton" Grid.Column="2" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                <Button x:Name="OptionPrimaryButton" Grid.Column="2" Style="{StaticResource AppButtonStyle}">
                     <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Button x:Name="OptionSecondaryButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                <Button x:Name="OptionSecondaryButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
                     <SymbolIcon Symbol="Back"/>
                 </Button>
 

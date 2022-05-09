@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"
-    Background="Transparent"
     Style="{StaticResource AppButtonStyle}"
     >
 
