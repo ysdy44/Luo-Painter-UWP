@@ -70,6 +70,8 @@ namespace Luo_Painter
                 this.Transformer.ControlWidth = size.X;
                 this.Transformer.ControlHeight = size.Y;
 
+                this.AlignmentGrid.RebuildWithInterpolation(e.NewSize);
+
                 this.CanvasControl.Width =
                 this.CanvasAnimatedControl.Width =
                 this.CanvasVirtualControl.Width = e.NewSize.Width;
