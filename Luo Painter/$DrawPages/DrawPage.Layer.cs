@@ -120,7 +120,7 @@ namespace Luo_Painter
 
             this.LayerButton.Click += (s, e) =>
             {
-                this.LayerFlyout.ShowAt(this.LayerListView.PlacementTarget);
+                this.LayerFlyout.ShowAt(this.LayerButton);
             };
 
             this.LayerFlyout.Closed += (s, e) =>

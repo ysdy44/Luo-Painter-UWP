@@ -155,7 +155,6 @@
                         <Setter Target = "OptionBorder.Visibility" Value="Visible"/>
                         <Setter Target = "OptionPanel.Visibility" Value="Visible"/>
                         <Setter Target = "OptionSecondaryButton.IsEnabled" Value="True"/>
-                        <Setter Target = "EditButton.IsEnabled" Value="False"/>
                         <Setter Target = "ApplicationView.IsAccent" Value="True"/>
                         <Setter Target = "HeadTransform.Y" Value="-50"/>
                         <Setter Target = "FootTransform.Y" Value="50"/>
