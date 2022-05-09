@@ -216,42 +216,78 @@
                 <TranslateTransform x:Name="HeadTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <StackPanel Orientation="Horizontal">
-                <controls:ExportButton x:Name="ExportButton" />
-                <Button x:Name="SettingButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
-                    <SymbolIcon Symbol="Setting"/>
-                </Button>
-                <controls:SetupButton x:Name="SetupButton" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
 
-                <Button x:Name="FullScreenButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Escape"/>
-                    </UIElement.KeyboardAccelerators>
-                    <SymbolIcon Symbol="FullScreen"/>
-                </Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="UndoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="Z"/>
-                    </UIElement.KeyboardAccelerators>
-                    <SymbolIcon Symbol="Undo"/>
-                </Button>
-                <Button x:Name="RedoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="Y"/>
-                    </UIElement.KeyboardAccelerators>
-                    <SymbolIcon Symbol="Redo"/>
-                </Button>
-                <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
-            </StackPanel>
+            <controls:ExportButton x:Name="ExportButton" />
 
-            <!--Option-->
-            <StackPanel Orientation= "Horizontal" HorizontalAlignment= "Center" >
-                <controls:EditButton x:Name="EditButton" Orientation="Horizontal" />
-                <controls:OptionButton x:Name="OptionButton" />
-                <controls:MoreOptionButton x:Name="MoreOptionButton" />
-            </StackPanel>
+            <ScrollViewer Grid.Column="1" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SettingButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                        <SymbolIcon Symbol="Setting"/>
+                    </Button>
+                    <Button x:Name="UndoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Z"/>
+                        </UIElement.KeyboardAccelerators>
+                        <SymbolIcon Symbol="Undo"/>
+                    </Button>
+                    <Button x:Name="RedoButton" IsEnabled="False" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Y"/>
+                        </UIElement.KeyboardAccelerators>
+                        <SymbolIcon Symbol="Redo"/>
+                    </Button>
+                    <Button x:Name="FullScreenButton" Background="Transparent" Style="{StaticResource AppButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                        </UIElement.KeyboardAccelerators>
+                        <SymbolIcon Symbol="FullScreen"/>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Grid.Column="2" HorizontalContentAlignment="Right" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="ToolButton" HorizontalAlignment="Left" Style="{StaticResource AppButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="A"/>
+                        </UIElement.KeyboardAccelerators>
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
+                                    <local:ToolGroupCase GroupValue="Paint">
+                                        <tools:PaintTool x:Name="PaintTool" />
+                                    </local:ToolGroupCase>
+                                    <local:ToolGroupCase GroupValue="Vector" Value="View">
+                                        <tools:ViewTool x:Name="ViewTool" />
+                                    </local:ToolGroupCase>
+                                </local:ToolGroupSwitchPresenter>
+                            </Flyout>
+                        </Button.Flyout>
+                        <!--Icon-->
+                        <ContentControl x:Name="ToolIcon">
+                            <FrameworkElement.Resources>
+                                <ResourceDictionary x:Name="ToolResource"/>
+                            </FrameworkElement.Resources>
+                        </ContentControl>
+                    </Button>
+                    <controls:EditButton x:Name="EditButton" Orientation="Horizontal" />
+                    <controls:OptionButton x:Name="OptionButton" />
+                    <controls:MoreOptionButton x:Name="MoreOptionButton" />
+                    <controls:SetupButton x:Name="SetupButton" />
+                    <Button x:Name="LayerButton" HorizontalAlignment="Right" Style="{StaticResource AppButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="D"/>
+                        </UIElement.KeyboardAccelerators>
+                        <tools:ElementIcon Type="Layer"/>
+                    </Button>
+                    <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
+                </StackPanel>
+            </ScrollViewer>
 
         </Grid>
 
@@ -302,37 +338,6 @@
                     </Grid>
                 </local:ToolGroupCase>
             </local:ToolGroupSwitchPresenter>
-
-            <Button x:Name="LayerButton" HorizontalAlignment="Right" Style="{StaticResource AppButtonStyle}">
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="D"/>
-                </UIElement.KeyboardAccelerators>
-                <tools:ElementIcon Type="Layer"/>
-            </Button>
-
-            <Button x:Name="ToolButton" HorizontalAlignment="Left" Style="{StaticResource AppButtonStyle}">
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="A"/>
-                </UIElement.KeyboardAccelerators>
-                <Button.Flyout>
-                    <Flyout Placement="Right">
-                        <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
-                            <local:ToolGroupCase GroupValue="Paint">
-                                <tools:PaintTool x:Name="PaintTool" />
-                            </local:ToolGroupCase>
-                            <local:ToolGroupCase GroupValue="Vector" Value="View">
-                                <tools:ViewTool x:Name="ViewTool" />
-                            </local:ToolGroupCase>
-                        </local:ToolGroupSwitchPresenter>
-                    </Flyout>
-                </Button.Flyout>
-                <!--Icon-->
-                <ContentControl x:Name="ToolIcon">
-                    <FrameworkElement.Resources>
-                        <ResourceDictionary x:Name="ToolResource"/>
-                    </FrameworkElement.Resources>
-                </ContentControl>
-            </Button>
 
         </Grid>
 
