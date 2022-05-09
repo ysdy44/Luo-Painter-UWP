@@ -10,7 +10,7 @@ namespace Luo_Painter.Controls
 {
     internal class EditTypeCommand : RelayCommand<EditType> { }
 
-    internal class EditsCanvas : Canvas
+    public sealed partial class EditButton : Canvas
     {
 
         readonly BitmapSize HSize = new BitmapSize { Width = 400, Height = 412 };
@@ -148,7 +148,7 @@ namespace Luo_Painter.Controls
         }
     }
 
-    public sealed partial class EditButton : Button
+    public sealed partial class EditButton : Canvas
     {
         //@Delegate
         public event EventHandler<EditType> ItemClick
@@ -173,36 +173,18 @@ namespace Luo_Painter.Controls
 
             if (e.NewValue is Orientation value)
             {
-                control.Canvas.Resizing(value);
+                control.Resizing(value);
             }
         }));
 
 
         #endregion
-
+        
         //@Construct
         public EditButton()
         {
             this.InitializeComponent();
-            this.Canvas.Resizing(this.Orientation);
-            this.ItemClick += (s, e) => this.EditFlyout.Hide();
-            base.Click += (s, e) =>
-           {
-               switch (this.Orientation)
-               {
-                   case Orientation.Vertical:
-                       if (base.Parent is FrameworkElement element)
-                       {
-                           this.EditFlyout.ShowAt(element);
-                       }
-                       break;
-                   case Orientation.Horizontal:
-                       this.EditFlyout.ShowAt(this);
-                       break;
-                   default:
-                       break;
-               }
-           };
+            this.Resizing(this.Orientation);
         }
 
         //@Strings
