@@ -35,32 +35,20 @@ namespace Luo_Painter.Controls
     internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
     internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
 
-    public sealed partial class ToolListView : Grid
+    public sealed partial class ToolListView : Canvas
     {
         //@Delegate
         public event TypedEventHandler<ToolGroupType, ToolType> ItemClick;
 
+        //@Converter
+        private Visibility DoubleToVisibilityConverter(double value) => value == 0 ? Visibility.Collapsed : Visibility.Visible;
+        private double ReverseDoubleConverter(double value) => -value;
+        private double ListViewLeftConverter(double value) => value - System.Math.Clamp((int)(value / 70 + 0.5), 1, 6) * 70;
+        private double ListViewWidthConverter(double value) => this.ListViewWidthConverter(value, 1);
+        private double ListViewWidthConverter(double value, int min) => System.Math.Clamp((int)(value / 70 + 0.5), min, 6) * 70;
+        private double ThumbeTopConverter(double value) => value / 2 - 60;
+
         double StartingX;
-        SplitViewPanePlacement Placement => (this.TranslateTransform.X < -70) ? SplitViewPanePlacement.Left : SplitViewPanePlacement.Right;
-        private double GetX(double value) => Math.Max(-70 - 70, Math.Min(0, value));
-
-        public bool isExpanded;
-        public bool IsExpanded
-        {
-            get => this.isExpanded;
-            set
-            {
-                this.isExpanded = value;
-
-                if (this.IsShow)
-                {
-                    if (value)
-                        this.ExpandStoryboard.Begin();
-                    else
-                        this.NoneStoryboard.Begin();
-                }
-            }
-        }
 
         #region DependencyProperty
 
@@ -79,12 +67,7 @@ namespace Luo_Painter.Controls
             if (e.NewValue is bool value)
             {
                 if (value)
-                {
-                    if (control.IsExpanded)
-                        control.ExpandStoryboard.Begin();
-                    else
-                        control.NoneStoryboard.Begin();
-                }
+                    control.ShowStoryboard.Begin();
                 else
                     control.HideStoryboard.Begin();
             }
@@ -97,35 +80,17 @@ namespace Luo_Painter.Controls
         public ToolListView()
         {
             this.InitializeComponent();
-
-            this.SplitButton.ManipulationStarted += (s, e) =>
+            this.Thumb.DragStarted += (s, e) => this.StartingX = base.Width;
+            this.Thumb.DragDelta += (s, e) => base.Width = System.Math.Clamp(this.StartingX += e.HorizontalChange, 0, 6 * 70);
+            this.Thumb.DragCompleted += (s, e) => base.Width = this.ListViewWidthConverter(this.StartingX, 0);
+            base.SizeChanged += (s, e) =>
             {
-                this.StartingX = this.TranslateTransform.X;
-                switch (this.Placement)
-                {
-                    case SplitViewPanePlacement.Left: this.SplitIcon.Symbol = Symbol.AlignLeft; break;
-                    case SplitViewPanePlacement.Right: this.SplitIcon.Symbol = Symbol.AlignRight; break;
-                }
-                this.SplitButton.IsEnabled = false;
-            };
-            this.SplitButton.ManipulationDelta += (s, e) =>
-            {
-                this.TranslateTransform.X = this.GetX(this.StartingX + e.Cumulative.Translation.X);
-                switch (this.Placement)
-                {
-                    case SplitViewPanePlacement.Left: this.SplitIcon.Symbol = Symbol.AlignLeft; break;
-                    case SplitViewPanePlacement.Right: this.SplitIcon.Symbol = Symbol.AlignRight; break;
-                }
-            };
-            this.SplitButton.ManipulationCompleted += (s, e) =>
-            {
-                this.IsExpanded = this.Placement is SplitViewPanePlacement.Right;
-                this.SplitIcon.Symbol = Symbol.GlobalNavigationButton;
-                this.SplitButton.IsEnabled = true;
-            };
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+                if (e.NewSize.Height == e.PreviousSize.Height) return;
 
-            this.SplitButton.Click += (s, e) => this.IsExpanded = this.Placement is SplitViewPanePlacement.Left;
-
+                this.ListView.Height = e.NewSize.Height;
+            };
             this.ListView.ItemClick += (s, e) =>
             {
                 if (this.ItemClick is null) return;
