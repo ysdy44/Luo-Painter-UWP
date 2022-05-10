@@ -32,7 +32,7 @@
 
         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
 
-        <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" >
+        <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
             <FrameworkElement.Tag>
                 Opacity
             </FrameworkElement.Tag>

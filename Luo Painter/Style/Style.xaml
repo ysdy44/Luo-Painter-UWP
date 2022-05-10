@@ -172,7 +172,7 @@
 
 
     <!--Slider-->
-    <Style TargetType="Slider">
+    <Style x:Key="AppDefaultSliderStyle" TargetType="Slider">
         <Setter Property="Background" Value="{ThemeResource AppBackgroundLight}" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
         <Setter Property="Foreground" Value="{ThemeResource SliderTrackValueFill}" />
@@ -355,7 +355,7 @@
                 Background="{ThemeResource SliderContainerBackground}"
                 Control.IsTemplateFocusTarget="True">
                             <Grid x:Name="HorizontalTemplate" MinHeight="{ThemeResource SliderHorizontalHeight}">
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />

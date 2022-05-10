@@ -33,7 +33,7 @@
     <TextBlock x:Name="RadianTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
         Radian
     </TextBlock>
-    <Slider x:Name="RadianSlider" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}">
+    <Slider x:Name="RadianSlider" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
         <Button x:Name="RadianButton"
                 Padding="4,0" MinWidth="44" Height="28"
@@ -70,7 +70,7 @@
     <TextBlock x:Name="ScaleTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
         Scale
     </TextBlock>
-    <Slider x:Name="ScaleSlider" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}">
+    <Slider x:Name="ScaleSlider" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
         <Button x:Name="ScaleButton"
             Padding="4,0" MinWidth="44" Height="28"

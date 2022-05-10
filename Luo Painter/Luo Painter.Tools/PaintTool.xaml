@@ -17,7 +17,7 @@
         <canvas:CanvasControl x:Name="CanvasControl" Width="320" Height="80" />
     </Button>
 
-    <Slider x:Name="SizeSlider" Value="22" Minimum="1" Maximum="500" >
+    <Slider x:Name="SizeSlider" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppDefaultSliderStyle}" >
         <FrameworkElement.Tag>
             Size
         </FrameworkElement.Tag>
@@ -34,7 +34,7 @@
         </Slider.Header>
     </Slider>
 
-    <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" >
+    <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
         <FrameworkElement.Tag>
             Opacity
         </FrameworkElement.Tag>
