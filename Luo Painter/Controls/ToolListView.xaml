@@ -184,8 +184,8 @@
 
     <Line
           IsHitTestVisible="False" 
-          X1="{x:Bind Width, Mode=OneWay}"
-          X2="{x:Bind Width, Mode=OneWay}" 
+          X1="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}"
+          X2="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}" 
           Y1="0"
           Y2="{x:Bind ThumbeTopConverter(ListView.Height), Mode=OneWay}" 
           StrokeThickness="1" 
@@ -194,8 +194,8 @@
     
     <Line
           IsHitTestVisible="False" 
-          X1="{x:Bind Width, Mode=OneWay}"
-          X2="{x:Bind Width, Mode=OneWay}" 
+          X1="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}"
+          X2="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}" 
           Y1="{x:Bind ThumbeTopConverter(ListView.Height), Mode=OneWay}" 
           Y2="{x:Bind ListView.Height, Mode=OneWay}"
           StrokeThickness="1"
@@ -204,7 +204,7 @@
     
     <Border
             CornerRadius="0,8,8,0" 
-            Canvas.Left="{x:Bind Width, Mode=OneWay}" 
+            Canvas.Left="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}" 
             Canvas.Top="{x:Bind ThumbeTopConverter(ListView.Height), Mode=OneWay}" 
             Width="22" 
             Height="120"

@@ -46,6 +46,7 @@ namespace Luo_Painter.Controls
         private double ListViewLeftConverter(double value) => value - System.Math.Clamp((int)(value / 70 + 0.5), 1, 6) * 70;
         private double ListViewWidthConverter(double value) => this.ListViewWidthConverter(value, 1);
         private double ListViewWidthConverter(double value, int min) => System.Math.Clamp((int)(value / 70 + 0.5), min, 6) * 70;
+        private double ThumbeLeftConverter(double value) => value - 1;
         private double ThumbeTopConverter(double value) => value / 2 - 60;
 
         double StartingX;
