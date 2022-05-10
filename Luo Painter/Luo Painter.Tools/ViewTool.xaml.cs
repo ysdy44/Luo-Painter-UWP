@@ -17,6 +17,19 @@ namespace Luo_Painter.Tools
         }
     }
 
+    internal sealed class ElementItem : TIcon<ElementType>
+    {
+        protected override void OnTypeChanged(ElementType value)
+        {
+            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            {
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            }, value.ToString());
+        }
+    }
+
     internal sealed class RadianRange
     {
         public Range Range { get; } = new Range
@@ -45,7 +58,7 @@ namespace Luo_Painter.Tools
         public ScaleRange() => this.XRange = this.InverseProportion.ConvertYToX(this.YRange);
     }
 
-    public sealed partial class ViewTool : UserControl
+    public sealed partial class ViewTool : StackPanel, IGroupCase<ToolGroupType, ToolType>
     {
         //@Delegate
         public event EventHandler<float> RadianValueChanged;
@@ -58,6 +71,11 @@ namespace Luo_Painter.Tools
 
         //@Content
         public RemoteControl RemoteControl => this.RemoteControlCore;
+
+        //@Interface
+        public object Content => this;
+        public ToolGroupType GroupValue => ToolGroupType.Vector;
+        public ToolType Value => ToolType.View;
 
         //@Construct
         public ViewTool()
@@ -88,6 +106,14 @@ namespace Luo_Painter.Tools
         {
             this.RadianSlider.Value = transformer.Radian * 180 / System.Math.PI;
             this.ScaleSlider.Value = this.ScaleRange.InverseProportion.ConvertYToX(transformer.Scale);
+        }
+
+        public void OnNavigatedTo()
+        {
+        }
+
+        public void OnNavigatedFrom()
+        {
         }
 
     }

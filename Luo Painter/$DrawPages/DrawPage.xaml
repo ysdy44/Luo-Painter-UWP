@@ -794,12 +794,8 @@
             </elements:Expander>
             <elements:Expander x:Name="ToolMenu" Title="Tool" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
-                    <local:ToolGroupCase GroupValue="Paint">
-                        <tools:PaintTool x:Name="PaintTool" />
-                    </local:ToolGroupCase>
-                    <local:ToolGroupCase GroupValue="Vector" Value="View">
-                        <tools:ViewTool x:Name="ViewTool" />
-                    </local:ToolGroupCase>
+                    <tools:PaintTool x:Name="PaintTool" />
+                    <tools:ViewTool x:Name="ViewTool" />
                 </local:ToolGroupSwitchPresenter>
             </elements:Expander>
             <elements:Expander x:Name="EditMenu" Title="Edit" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >

@@ -65,7 +65,7 @@ namespace Luo_Painter.Tools
 
     internal sealed class BlendList : List<BlendEffectMode> { }
 
-    public sealed partial class PaintTool : UserControl
+    public sealed partial class PaintTool : StackPanel, IGroupCase<ToolGroupType, ToolType>
     {
 
         public float InkSize { get; private set; } = 22f;
@@ -73,6 +73,11 @@ namespace Luo_Painter.Tools
         public BlendEffectMode? InkBlendMode { get; private set; } = null;
 
         InkRender InkRender;
+
+        //@Interface
+        public object Content => this;
+        public ToolGroupType GroupValue => ToolGroupType.Paint;
+        public ToolType Value => default;
 
         //@Construct
         public PaintTool()
@@ -192,6 +197,14 @@ namespace Luo_Painter.Tools
 
             if (this.InkOpacity == 1f) return InkMode.WetWithBlendMode;
             else return InkMode.WetWithOpacityAndBlendMode;
+        }
+
+        public void OnNavigatedTo()
+        {
+        }
+
+        public void OnNavigatedFrom()
+        {
         }
 
     }
