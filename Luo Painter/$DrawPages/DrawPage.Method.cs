@@ -140,7 +140,6 @@ namespace Luo_Painter
 
             int index2 = System.Math.Min(index, this.ObservableCollection.Count - 1);
             this.LayerListView.SelectedIndex = index2;
-            this.LayerTool.SetLayer(this.LayerListView.SelectedItem as ILayer);
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }

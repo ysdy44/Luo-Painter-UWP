@@ -24,10 +24,6 @@
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind Canvas}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
-        <!--Flyout-->
-        <Flyout x:Name="LayerFlyout" Placement="Left">
-            <tools:LayerTool x:Name="LayerTool"/>
-        </Flyout>
     </FrameworkElement.Resources>
 
 
@@ -297,7 +293,7 @@
                     <Button x:Name="SetupPlacementTarget" Style="{StaticResource AppButtonStyle}" >
                         <SymbolIcon Symbol="Crop"/>
                     </Button>
-                    <Button x:Name="LayerButton" HorizontalAlignment="Right" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="LayerPlacementTarget" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="D"/>
                         </UIElement.KeyboardAccelerators>
@@ -378,7 +374,7 @@
 
 
         <!--Layer-->
-        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
+        <controls:LayerListView x:Name="LayerListView" SelectedItemChanged="{x:Bind LayerButton.SelectedItemChanged}" ItemsSource="{x:Bind ObservableCollection}" />
 
 
         <!--Foot-->
@@ -825,6 +821,9 @@
             </elements:Expander>
             <elements:Expander x:Name="SetupMenu" Title="Setup" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:SetupButton x:Name="SetupButton" />
+            </elements:Expander>
+            <elements:Expander x:Name="LayerMenu" Title="Layer" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:LayerButton x:Name="LayerButton"/>
             </elements:Expander>
             <elements:Expander x:Name="ColorMenu" Title="Color" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
