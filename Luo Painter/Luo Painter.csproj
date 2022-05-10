@@ -151,6 +151,9 @@
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SimulateCanvas.xaml.cs">
+      <DependentUpon>SimulateCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToastTip.xaml.cs">
       <DependentUpon>ToastTip.xaml</DependentUpon>
     </Compile>
@@ -270,6 +273,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LayerListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SimulateCanvas.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

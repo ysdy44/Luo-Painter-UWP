@@ -1,0 +1,105 @@
+﻿<Canvas
+    x:Class="Luo_Painter.Controls.SimulateCanvas"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Visibility="Collapsed"
+    >
+
+
+    <FrameworkElement.Resources>
+        <!--Brush-->
+        <LinearGradientBrush x:Key="Brush1" StartPoint="0.5,0" EndPoint="0.5,1" >
+            <GradientStop Color="#F6F6F8" Offset="0"/>
+            <GradientStop Color="#F5F6F6" Offset="0.1"/>
+            <GradientStop Color="#E7E9EC" Offset="0.25"/>
+            <GradientStop Color="#D3D6DC" Offset="0.5"/>
+            <GradientStop Color="#C5C8D1" Offset="0.75"/>
+            <GradientStop Color="#B5BAC4" Offset="0.9"/>
+            <GradientStop Color="#A3A7B1" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="Brush2" StartPoint="0.5,1" EndPoint="0.5,0" >
+            <GradientStop Color="#F6F6F8" Offset="0"/>
+            <GradientStop Color="#F5F6F6" Offset="0.1"/>
+            <GradientStop Color="#E7E9EC" Offset="0.25"/>
+            <GradientStop Color="#D3D6DC" Offset="0.5"/>
+            <GradientStop Color="#C5C8D1" Offset="0.75"/>
+            <GradientStop Color="#B5BAC4" Offset="0.9"/>
+            <GradientStop Color="#A3A7B1" Offset="1"/>
+        </LinearGradientBrush>
+        <!--Style-->
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="BorderBrush" Value="#88888888"/>
+            <Setter Property="Background" Value="{StaticResource Brush1}"/>
+        </Style>
+        <Style x:Key="ShapeStyle" TargetType="Shape">
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Stroke" Value="White"/>
+            <Setter Property="Fill" Value="DodgerBlue"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </FrameworkElement.Resources>
+
+
+    <Line x:Name="XLineWhite" Visibility="Collapsed" StrokeThickness="3" Stroke="White" />
+    <Line x:Name="YLineWhite" Visibility="Collapsed" StrokeThickness="3" Stroke="White" />
+    <Line x:Name="XLineBlack" Visibility="Collapsed" StrokeThickness="1" Stroke="Black" />
+    <Line x:Name="YLineBlack" Visibility="Collapsed" StrokeThickness="1" Stroke="Black" />
+
+
+    <!--Pointer-->
+    <Thumb x:Name="PointerThumb" Visibility="Collapsed" Width="60" Height="60" >
+        <Thumb.Template>
+            <ControlTemplate>
+                <Border x:Name="RootGrid" Style="{StaticResource BorderStyle}" >
+
+                    <!--VisualState-->
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="PointerOver">
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Polygon" />
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Polygon" />
+                                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid" >
+                                        <DiscreteObjectKeyFrame Value="{StaticResource Brush2}" />
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Disabled" />
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+
+                    <Polygon x:Name="Polygon" Style="{StaticResource ShapeStyle}" >
+                        <Polygon.Points>
+                            8,0 8,34.5 17,24 32,22.5
+                        </Polygon.Points>
+                    </Polygon>
+
+                </Border>
+            </ControlTemplate>
+        </Thumb.Template>
+    </Thumb>
+
+
+    <!--Marble-->
+    <Border x:Name="MarbleBorder" Visibility="Collapsed" Style="{StaticResource BorderStyle}" >
+        <UIElement.ManipulationMode>
+            All
+        </UIElement.ManipulationMode>
+        <Ellipse Width="26" Height="26" Style="{StaticResource ShapeStyle}" />
+    </Border>
+
+
+</Canvas>
