@@ -188,7 +188,7 @@ namespace Luo_Painter
                     this.StartingToolShow = this.ToolListView.IsShow;//&& this.ToolListView.Width > 70;
                     this.StartingLayerShow = this.LayerListView.IsShow;//&& this.LayerListView.Width > 70;
                 }
-                this.Tool_Start(point, properties);
+                this.Tool_Start(point, properties.Pressure);
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
@@ -199,7 +199,7 @@ namespace Luo_Painter
                     if (this.StartingLayerShow && this.LayerListView.IsShow && point.X < base.ActualWidth && point.X > base.ActualWidth - this.LayerListView.Width)
                         this.LayerListView.IsShow = false;
                 }
-                this.Tool_Delta(point, properties);
+                this.Tool_Delta(point, properties.Pressure);
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
@@ -208,7 +208,7 @@ namespace Luo_Painter
                     this.ToolListView.IsShow = this.StartingToolShow;
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
-                this.Tool_Complete(point, properties);
+                this.Tool_Complete(point, properties.Pressure);
             };
 
 

@@ -31,7 +31,7 @@ namespace Luo_Painter
         }
 
 
-        private void Tool_Start(Vector2 point, PointerPointProperties properties)
+        private void Tool_Start(Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)
             {
@@ -43,7 +43,7 @@ namespace Luo_Painter
                         case ToolType.PaintPencil:
                         case ToolType.PaintEraseBrush:
                         case ToolType.PaintLiquefaction:
-                            this.Paint_Start(point, properties);
+                            this.Paint_Start(point, pressure);
                             break;
                         case ToolType.MarqueeRectangular:
                         case ToolType.MarqueeElliptical:
@@ -61,17 +61,17 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Transform:
-                    this.Transform_Start(point, properties);
+                    this.Transform_Start(point);
                     break;
                 case OptionType.RippleEffect:
-                    this.RippleEffect_Start(point, properties);
+                    this.RippleEffect_Start(point);
                     break;
                 default:
                     break;
             }
         }
 
-        private void Tool_Delta(Vector2 point, PointerPointProperties properties)
+        private void Tool_Delta(Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)
             {
@@ -83,7 +83,7 @@ namespace Luo_Painter
                         case ToolType.PaintPencil:
                         case ToolType.PaintEraseBrush:
                         case ToolType.PaintLiquefaction:
-                            this.Paint_Delta(point, properties);
+                            this.Paint_Delta(point, pressure);
                             break;
                         case ToolType.MarqueeRectangular:
                         case ToolType.MarqueeElliptical:
@@ -101,17 +101,17 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Transform:
-                    this.Transform_Delta(point, properties);
+                    this.Transform_Delta(point);
                     break;
                 case OptionType.RippleEffect:
-                    this.RippleEffect_Delta(point, properties);
+                    this.RippleEffect_Delta(point);
                     break;
                 default:
                     break;
             }
         }
 
-        private void Tool_Complete(Vector2 point, PointerPointProperties properties)
+        private void Tool_Complete(Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)
             {
@@ -123,7 +123,7 @@ namespace Luo_Painter
                         case ToolType.PaintPencil:
                         case ToolType.PaintEraseBrush:
                         case ToolType.PaintLiquefaction:
-                            this.Paint_Complete(point, properties);
+                            this.Paint_Complete(point, pressure);
                             break;
                         case ToolType.MarqueeRectangular:
                         case ToolType.MarqueeElliptical:
@@ -141,10 +141,10 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Transform:
-                    this.Transform_Complete(point, properties);
+                    this.Transform_Complete(point);
                     break;
                 case OptionType.RippleEffect:
-                    this.RippleEffect_Complete(point, properties);
+                    this.RippleEffect_Complete(point);
                     break;
                 default:
                     break;

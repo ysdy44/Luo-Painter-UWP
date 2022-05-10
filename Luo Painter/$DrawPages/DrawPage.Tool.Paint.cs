@@ -21,7 +21,7 @@ namespace Luo_Painter
         Vector2 Position;
         float Pressure;
 
-        private void Paint_Start(Vector2 point, PointerPointProperties properties)
+        private void Paint_Start(Vector2 point, float pressure)
         {
             this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;
             if (this.BitmapLayer == null)
@@ -32,17 +32,16 @@ namespace Luo_Painter
 
             this.Point = point;
             this.Position = this.ToPosition(point);
-            this.Pressure = properties.Pressure;
+            this.Pressure = pressure;
 
             this.BitmapLayer.InkMode = this.PaintTool.GetInkMode(this.ToolType == ToolType.PaintEraseBrush, this.ToolType == ToolType.PaintLiquefaction);
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
-        private void Paint_Delta(Vector2 point, PointerPointProperties properties)
+        private void Paint_Delta(Vector2 point, float pressure)
         {
             if (this.BitmapLayer == null) return;
 
             Vector2 position = this.ToPosition(point);
-            float pressure = properties.Pressure;
 
             Rect rect = this.Position.GetRect(this.PaintTool.InkSize);
             this.BitmapLayer.Hit(rect);
@@ -95,7 +94,7 @@ namespace Luo_Painter
             this.Pressure = pressure;
         }
 
-        private void Paint_Complete(Vector2 point, PointerPointProperties properties)
+        private void Paint_Complete(Vector2 point, float pressure)
         {
             if (this.BitmapLayer == null) return;
 

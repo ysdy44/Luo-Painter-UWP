@@ -119,7 +119,7 @@ namespace Luo_Painter
         }
 
 
-        private void Transform_Start(Vector2 point, PointerPointProperties properties)
+        private void Transform_Start(Vector2 point)
         {
             this.StartingPosition = this.ToPosition(point);
             switch (this.TransformComboBox.SelectedIndex)
@@ -141,7 +141,7 @@ namespace Luo_Painter
             }
         }
 
-        private void Transform_Delta(Vector2 point, PointerPointProperties properties)
+        private void Transform_Delta(Vector2 point)
         {
             Vector2 position = this.ToPosition(point);
             switch (this.TransformComboBox.SelectedIndex)
@@ -202,7 +202,7 @@ namespace Luo_Painter
             }
         }
 
-        private void Transform_Complete(Vector2 point, PointerPointProperties properties)
+        private void Transform_Complete(Vector2 point)
         {
             switch (this.TransformComboBox.SelectedIndex)
             {

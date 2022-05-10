@@ -88,7 +88,7 @@ namespace Luo_Painter
         }
 
 
-        private void RippleEffect_Start(Vector2 point, PointerPointProperties properties)
+        private void RippleEffect_Start(Vector2 point)
         {
             this.IsRipplerPoint = FanKit.Math.InNodeRadius(point, this.ToPoint(this.RipplerPoint));
             this.StartingPosition = this.ToPosition(point);
@@ -96,7 +96,7 @@ namespace Luo_Painter
             this.StartingRipplerPoint = this.RipplerPoint;
         }
 
-        private void RippleEffect_Delta(Vector2 point, PointerPointProperties properties)
+        private void RippleEffect_Delta(Vector2 point)
         {
             Vector2 position = this.ToPosition(point);
             Vector2 move = position - this.StartingPosition;
@@ -117,7 +117,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
-        private void RippleEffect_Complete(Vector2 point, PointerPointProperties properties)
+        private void RippleEffect_Complete(Vector2 point)
         {
         }
 
