@@ -7,11 +7,12 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorButton : Button
+    public sealed partial class ColorButton : Grid
     {
         //@Converter
         private Symbol ColorSpectrumShapeSymbolConverter(bool? value) => value == true ? Symbol.Target : Symbol.Stop;
@@ -40,6 +41,7 @@ namespace Luo_Painter.Controls
         public ColorButton()
         {
             this.InitializeComponent();
+            this.ConstructStraw();
             this.ColorPicker.ColorChanged += this.ColorChanged;
             this.ColorPicker.Loaded += (s, e) =>
             {
@@ -60,67 +62,65 @@ namespace Luo_Painter.Controls
                     }
                 }
             };
+        }
 
-            base.Click += (s, e) =>
+        public async void ManipulationStarted2(object sender, ManipulationStartedRoutedEventArgs e)
+        {
+            if (this.Eyedropper is null) return;
+
+            this.StartingPosition.X = Window.Current.Bounds.Width - 35;
+            this.StartingPosition.Y = 25;
+
+            bool result = await this.Eyedropper.RenderAsync(this.GetTarget());
+        }
+
+        public void ManipulationDelta2(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            if (this.Eyedropper is null) return;
+
+            switch (this.Eyedropper.Visibility)
             {
-                this.ColorFlyout.Placement = FlyoutPlacementMode.Left;
-                this.ColorFlyout.ShowAt(this);
-            };
-            base.ManipulationStarted += async (s, e) =>
+                case Visibility.Collapsed:
+                    if (e.Cumulative.Translation.ToVector2().LengthSquared() > 625)
+                    {
+                        Window.Current.CoreWindow.PointerCursor = null;
+                        this.Eyedropper.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Visibility.Visible:
+                    this.StartingPosition.X += e.Delta.Translation.X;
+                    this.StartingPosition.Y += e.Delta.Translation.Y;
+                    this.Eyedropper.Move(this.StartingPosition);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void ManipulationCompleted2(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            if (this.Eyedropper is null) return;
+
+            switch (this.Eyedropper.Visibility)
             {
-                if (this.Eyedropper is null) return;
+                case Visibility.Visible:
+                    Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
+                    this.Eyedropper.Visibility = Visibility.Collapsed;
 
-                this.StartingPosition.X = Window.Current.Bounds.Width - 35;
-                this.StartingPosition.Y = 25;
+                    this.ColorPicker.Color = this.Eyedropper.Color;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-                bool result = await this.Eyedropper.RenderAsync(this.GetTarget());
-            };
-            base.ManipulationDelta += (s, e) =>
-            {
-                if (this.Eyedropper is null) return;
-
-                switch (this.Eyedropper.Visibility)
-                {
-                    case Visibility.Collapsed:
-                        if (e.Cumulative.Translation.ToVector2().LengthSquared() > 625)
-                        {
-                            Window.Current.CoreWindow.PointerCursor = null;
-                            this.Eyedropper.Visibility = Visibility.Visible;
-                        }
-                        break;
-                    case Visibility.Visible:
-                        this.StartingPosition.X += e.Delta.Translation.X;
-                        this.StartingPosition.Y += e.Delta.Translation.Y;
-                        this.Eyedropper.Move(this.StartingPosition);
-                        break;
-                    default:
-                        break;
-                }
-            };
-            base.ManipulationCompleted += (s, e) =>
-            {
-                if (this.Eyedropper is null) return;
-
-                switch (this.Eyedropper.Visibility)
-                {
-                    case Visibility.Visible:
-                        Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
-                        this.Eyedropper.Visibility = Visibility.Collapsed;
-
-                        this.ColorPicker.Color = this.Eyedropper.Color;
-                        break;
-                    default:
-                        break;
-                }
-            };
-
-
+        public void ConstructStraw()
+        {
             this.StrawButton.Click += async (s, e) =>
             {
                 if (this.ClickEyedropper is null) return;
 
                 this.StartingPosition = this.StrawButton.TransformToVisual(Window.Current.Content).TransformPoint(new Point(20, 20));
-                this.ColorFlyout.Hide();
 
                 bool result = await this.ClickEyedropper.RenderAsync(this.GetTarget());
                 if (result is false) return;
@@ -155,8 +155,6 @@ namespace Luo_Painter.Controls
             this.ColorPicker.ColorChanged -= this.ColorChanged;
             {
                 this.ColorPicker.Color = color;
-                this.ColorFlyout.Placement = placementMode;
-                this.ColorFlyout.ShowAt(placementTarget);
             }
             this.ColorPicker.ColorChanged += this.ColorChanged;
         }
