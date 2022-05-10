@@ -265,5 +265,12 @@ namespace Luo_Painter
             };
         }
 
+        private void ConstructSimulater()
+        {
+            this.SimulateCanvas.Start += (point) => this.Tool_Start(point);
+            this.SimulateCanvas.Delta += (point) => this.Tool_Delta(point);
+            this.SimulateCanvas.Complete += (point) => this.Tool_Complete(point);
+        }
+
     }
 }

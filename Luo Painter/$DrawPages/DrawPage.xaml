@@ -782,7 +782,11 @@
             </local:OptionSwitchPresenter>
         </StackPanel>
 
+        
+        <!--Simulate-->
+        <controls:SimulateCanvas x:Name="SimulateCanvas" />
 
+        
         <!--Expander-->
         <elements:ExpanderLightDismissOverlay>
             <elements:Expander x:Name="ExportMenu" Title="Export" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
