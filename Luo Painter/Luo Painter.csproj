@@ -148,6 +148,9 @@
     <Compile Include="Controls\ExportButton.xaml.cs">
       <DependentUpon>ExportButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LayerButton.xaml.cs">
+      <DependentUpon>LayerButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
@@ -271,6 +274,10 @@
     <Page Include="Controls\ExportButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LayerButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LayerListView.xaml">
       <Generator>MSBuild:Compile</Generator>
