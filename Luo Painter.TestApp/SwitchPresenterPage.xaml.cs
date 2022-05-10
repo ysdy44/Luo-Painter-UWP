@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Luo_Painter.Elements;
+using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
@@ -15,7 +17,28 @@ namespace Luo_Painter.TestApp
     }
 
     [ContentProperty(Name = nameof(Content))]
-    internal class AnimalCase : Elements.Case<Animal> { }
+    internal class AnimalCase : DependencyObject, ICase<Animal>
+    {
+        public object Content
+        {
+            get => (object)base.GetValue(ContentProperty);
+            set => base.SetValue(ContentProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Content"/> property. </summary>
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(AnimalCase), new PropertyMetadata(null));
+
+        public Animal Value
+        {
+            get => (Animal)base.GetValue(ValueProperty);
+            set => base.SetValue(ValueProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Value"/> property. </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(Animal), typeof(AnimalCase), new PropertyMetadata(default(Animal)));
+
+        public void OnNavigatedTo() { }
+
+        public void OnNavigatedFrom() { }
+    }
 
     [ContentProperty(Name = nameof(SwitchCases))]
     internal class AnimalSwitchPresenter : Elements.SwitchPresenter<Animal> { }

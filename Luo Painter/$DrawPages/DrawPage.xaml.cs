@@ -29,14 +29,64 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace Luo_Painter
 {
     [ContentProperty(Name = nameof(Content))]
-    internal class OptionCase : Case<OptionType> { }
+    internal class OptionCase : DependencyObject, ICase<OptionType>
+    {
+        public object Content
+        {
+            get => (object)base.GetValue(ContentProperty);
+            set => base.SetValue(ContentProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Content"/> property. </summary>
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(OptionCase), new PropertyMetadata(null));
+
+        public OptionType Value
+        {
+            get => (OptionType)base.GetValue(ValueProperty);
+            set => base.SetValue(ValueProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Value"/> property. </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(OptionType), typeof(OptionCase), new PropertyMetadata(default(OptionType)));
+
+        public void OnNavigatedTo() { }
+
+        public void OnNavigatedFrom() { }
+    }
 
     [ContentProperty(Name = nameof(SwitchCases))]
     internal class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
 
 
     [ContentProperty(Name = nameof(Content))]
-    internal class ToolGroupCase : GroupCase<ToolGroupType, ToolType> { }
+    internal class ToolGroupCase : DependencyObject, IGroupCase<ToolGroupType, ToolType>
+    {
+        public object Content
+        {
+            get => (object)base.GetValue(ContentProperty);
+            set => base.SetValue(ContentProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Content"/> property. </summary>
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(ToolGroupCase), new PropertyMetadata(null));
+
+        public ToolGroupType GroupValue
+        {
+            get => (ToolGroupType)base.GetValue(GroupValueProperty);
+            set => base.SetValue(GroupValueProperty, value);
+        }
+        /// <summary> Identifies the <see cref="GroupValue"/> property. </summary>
+        public static readonly DependencyProperty GroupValueProperty = DependencyProperty.Register(nameof(ToolGroupType), typeof(ToolGroupType), typeof(ToolGroupCase), new PropertyMetadata(default(ToolGroupType)));
+
+        public ToolType Value
+        {
+            get => (ToolType)base.GetValue(ValueProperty);
+            set => base.SetValue(ValueProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Value"/> property. </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(ToolType), typeof(ToolGroupCase), new PropertyMetadata(default(ToolType)));
+
+        public void OnNavigatedTo() { }
+
+        public void OnNavigatedFrom() { }
+    }
 
     [ContentProperty(Name = nameof(SwitchCases))]
     internal class ToolGroupSwitchPresenter : SwitchGroupPresenter<ToolGroupType, ToolType> { }
@@ -91,14 +141,14 @@ namespace Luo_Painter
         {
             this.DottedLineTransformShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
         }
-       
+
         public DrawPage()
         {
             this.InitializeComponent();
             this.ConstructCanvas();
             this.ConstructOperator();
             this.ConstructSimulater();
-            
+
             this.ConstructLayers();
             this.ConstructLayer();
 

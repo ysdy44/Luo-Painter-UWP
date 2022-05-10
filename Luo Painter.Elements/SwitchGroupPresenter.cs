@@ -9,60 +9,45 @@ using Windows.UI.Xaml.Markup;
 namespace Luo_Painter.Elements
 {
     /// <summary>
-    /// An collection of <see cref="GroupCase{GroupType, Type}"/> to help with XAML interop.
+    /// An collection of <see cref="IGroupCase{GroupType, Type}"/> to help with XAML interop.
     /// </summary>
-    public class GroupCaseCollection : DependencyObjectCollection { }
-
+    public sealed class GroupCaseCollection : DependencyObjectCollection { }
 
     /// <summary>
-    /// <see cref="GroupCase{GroupType, Type}"/> is the value container for the <see cref="SwitchGroupPresenter{GroupType, Type}"/>.
+    /// <see cref="IGroupCase{GroupType, Type}"/> is the value container for the <see cref="SwitchGroupPresenter{GroupType, Type}"/>.
     /// </summary>
-    [ContentProperty(Name = nameof(Content))]
-    public class GroupCase<GroupType, Type> : DependencyObject
+    public interface IGroupCase<GroupType, Type>
         where GroupType : Enum
         where Type : Enum
     {
         /// <summary>
-        /// Gets or sets the Content to display when this case is active.
+        /// Gets the Content to display when this case is active.
         /// </summary>
-        public object Content
-        {
-            get => (object)base.GetValue(ContentProperty);
-            set => base.SetValue(ContentProperty, value);
-        }
-        /// <summary> Identifies the <see cref="Content"/> property. </summary>
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(GroupCase<GroupType, Type>), new PropertyMetadata(null));
+        object Content { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="GroupValue"/> that this case represents. If it matches the <see cref="SwitchGroupPresenter.GroupValue"/> this case's <see cref="Content"/> will be displayed in the presenter.
+        /// Gets the <see cref="GroupValue"/> that this case represents. If it matches the <see cref="SwitchGroupPresenter.GroupValue"/> this case's <see cref="Content"/> will be displayed in the presenter.
         /// </summary>
-        public GroupType GroupValue
-        {
-            get => (GroupType)base.GetValue(GroupValueProperty);
-            set => base.SetValue(GroupValueProperty, value);
-        }
-        /// <summary> Identifies the <see cref="GroupValue"/> property. </summary>
-        public static readonly DependencyProperty GroupValueProperty = DependencyProperty.Register(nameof(GroupType), typeof(GroupType), typeof(GroupCase<GroupType, Type>), new PropertyMetadata(default(GroupType)));
+        GroupType GroupValue { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Value"/> that this case represents. If it matches the <see cref="SwitchGroupPresenter.Value"/> this case's <see cref="Content"/> will be displayed in the presenter.
+        /// Gets the <see cref="Value"/> that this case represents. If it matches the <see cref="SwitchGroupPresenter.Value"/> this case's <see cref="Content"/> will be displayed in the presenter.
         /// </summary>
-        public Type Value
-        {
-            get => (Type)base.GetValue(ValueProperty);
-            set => base.SetValue(ValueProperty, value);
-        }
-        /// <summary> Identifies the <see cref="Value"/> property. </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(Type), typeof(GroupCase<GroupType, Type>), new PropertyMetadata(default(Type)));
+        Type Value { get; }
+
+        /// <summary> The current tool becomes the active case. </summary>
+        void OnNavigatedTo();
+
+        /// <summary> The current page does not become an active case. </summary>
+        void OnNavigatedFrom();
     }
-
 
     /// <summary>
     /// The <see cref="SwitchGroupPresenter{GroupType, Type}"/> is a <see cref="ContentPresenter"/> which can allow a developer to mimic a <c>switch</c> statement within XAML.
-    /// When provided a set of <see cref="GroupCase{GroupType, Type}"/>s and a <see cref="Value"/>, it will pick the matching <see cref="GroupCase{GroupType, Type}"/> with the corresponding <see cref="GroupCase.Value"/>.
+    /// When provided a set of <see cref="IGroupCase{GroupType, Type}"/>s and a <see cref="Value"/>, it will pick the matching <see cref="IGroupCase{GroupType, Type}"/> with the corresponding <see cref="IGroupCase.Value"/>.
     /// </summary>
     [ContentProperty(Name = nameof(SwitchCases))]
-    public partial class SwitchGroupPresenter<GroupType, Type> : ContentPresenter
+    public class SwitchGroupPresenter<GroupType, Type> : ContentPresenter
         where GroupType : Enum
         where Type : Enum
     {
@@ -76,13 +61,13 @@ namespace Luo_Painter.Elements
             }
             else
             {
-                foreach (GroupCase<GroupType, Type> item in this.SwitchCases)
+                foreach (IGroupCase<GroupType, Type> item in this.SwitchCases)
                 {
                     if (item.GroupValue.Equals(groupValue))
                     {
                         if (item.Value.Equals(default(Type)) || item.Value.Equals(value))
                         {
-                            if (base.Content != item.Content) base.Content = item.Content;
+                            base.Content = item.Content;
                             return;
                         }
                     }

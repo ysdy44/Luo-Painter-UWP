@@ -9,45 +9,38 @@ using Windows.UI.Xaml.Markup;
 namespace Luo_Painter.Elements
 {
     /// <summary>
-    /// An collection of <see cref="Case"/> to help with XAML interop.
+    /// An collection of <see cref="ICase{T}"/> to help with XAML interop.
     /// </summary>
     public class CaseCollection : DependencyObjectCollection { }
 
 
     /// <summary>
-    /// <see cref="Case"/> is the value container for the <see cref="SwitchPresenter"/>.
+    /// <see cref="ICase{T}"/> is the value container for the <see cref="SwitchPresenter{T}"/>.
     /// </summary>
-    [ContentProperty(Name = nameof(Content))]
-    public class Case<T> : DependencyObject
+    public interface ICase<T>
         where T : Enum
     {
         /// <summary>
         /// Gets or sets the Content to display when this case is active.
         /// </summary>
-        public object Content
-        {
-            get => (object)base.GetValue(ContentProperty);
-            set => base.SetValue(ContentProperty, value);
-        }
-        /// <summary> Identifies the <see cref="Content"/> property. </summary>
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(Case<T>), new PropertyMetadata(null));
+        object Content { get; }
 
         /// <summary>
         /// Gets or sets the <see cref="Value"/> that this case represents. If it matches the <see cref="SwitchPresenter.Value"/> this case's <see cref="Content"/> will be displayed in the presenter.
         /// </summary>
-        public T Value
-        {
-            get => (T)base.GetValue(ValueProperty);
-            set => base.SetValue(ValueProperty, value);
-        }
-        /// <summary> Identifies the <see cref="Value"/> property. </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(T), typeof(Case<T>), new PropertyMetadata(default(T)));
+        T Value { get; }
+
+        /// <summary> The current tool becomes the active case. </summary>
+        void OnNavigatedTo();
+
+        /// <summary> The current page does not become an active case. </summary>
+        void OnNavigatedFrom();
     }
 
 
     /// <summary>
-    /// The <see cref="SwitchPresenter"/> is a <see cref="ContentPresenter"/> which can allow a developer to mimic a <c>switch</c> statement within XAML.
-    /// When provided a set of <see cref="Case"/>s and a <see cref="Value"/>, it will pick the matching <see cref="Case"/> with the corresponding <see cref="Case.Value"/>.
+    /// The <see cref="SwitchPresenter{T}"/> is a <see cref="ContentPresenter"/> which can allow a developer to mimic a <c>switch</c> statement within XAML.
+    /// When provided a set of <see cref="ICase{T}"/>s and a <see cref="Value"/>, it will pick the matching <see cref="ICase{T}"/> with the corresponding <see cref="ICase.Value"/>.
     /// </summary>
     [ContentProperty(Name = nameof(SwitchCases))]
     public partial class SwitchPresenter<T> : ContentPresenter
@@ -91,7 +84,7 @@ namespace Luo_Painter.Elements
             }
             else
             {
-                foreach (Case<T> item in this.SwitchCases)
+                foreach (ICase<T> item in this.SwitchCases)
                 {
                     if (item.Value.Equals(value))
                     {
