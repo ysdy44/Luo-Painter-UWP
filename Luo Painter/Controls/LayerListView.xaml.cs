@@ -6,6 +6,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
@@ -15,6 +16,7 @@ namespace Luo_Painter.Controls
     public sealed partial class LayerListView : Canvas
     {
         //@Delegate
+        public event EventHandler<ILayer> SelectedItemChanged;
         public event RoutedEventHandler AddClick { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
         public event RoutedEventHandler ImageClick { remove => this.ImageButton.Click -= value; add => this.ImageButton.Click += value; }
         public event RoutedEventHandler RemoveClick { remove => this.RemoveButton.Click -= value; add => this.RemoveButton.Click += value; }
@@ -31,6 +33,8 @@ namespace Luo_Painter.Controls
         private Visibility SelectedVisibilityConverter(double value) => value > 35 + 70 ? Visibility.Visible : Visibility.Collapsed;
 
         double StartingX;
+
+        long SelectedItemToken;
 
         #region DependencyProperty
 
@@ -83,6 +87,28 @@ namespace Luo_Painter.Controls
                 if (e.NewSize.Height == e.PreviousSize.Height) return;
 
                 this.ListView.Height = e.NewSize.Height;
+            };
+            base.Unloaded += (s, e) =>
+            {
+                // Unregister Listener
+                this.ListView.UnregisterPropertyChangedCallback(Selector.SelectedItemProperty, this.SelectedItemToken);
+            };
+            base.Loaded += (s, e) =>
+            {
+                // Register Listener
+                this.SelectedItemToken = this.ListView.RegisterPropertyChangedCallback(Selector.SelectedItemProperty, (sender, prop) =>
+                {
+                    ListView control = (ListView)sender;
+
+                    if (control.GetValue(prop) is ILayer value)
+                    {
+                        this.SelectedItemChanged?.Invoke(this, value);//Delegate
+                    }
+                    else
+                    {
+                        this.SelectedItemChanged?.Invoke(this, null);//Delegate
+                    }
+                });
             };
         }
 
