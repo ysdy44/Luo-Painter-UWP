@@ -303,7 +303,23 @@
                         </UIElement.KeyboardAccelerators>
                         <tools:ElementIcon Type="Layer"/>
                     </Button>
-                    <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
+                    <Button x:Name="ColorPlacementTarget" Style="{StaticResource AppButtonStyle}" 
+                            ManipulationStarted="{x:Bind ColorButton.ManipulationStarted2}"
+                            ManipulationDelta="{x:Bind ColorButton.ManipulationDelta2}"
+                            ManipulationCompleted="{x:Bind ColorButton.ManipulationCompleted2}"
+                            >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="E"/>
+                        </UIElement.KeyboardAccelerators>
+                        <UIElement.ManipulationMode>
+                            TranslateX, TranslateY
+                        </UIElement.ManipulationMode>
+                        <Grid>
+                            <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
+                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorButton.BorderBrush}" />
+                        </Grid>
+                    </Button>
                 </StackPanel>
             </ScrollViewer>
 
@@ -782,11 +798,11 @@
             </local:OptionSwitchPresenter>
         </StackPanel>
 
-        
+
         <!--Simulate-->
         <controls:SimulateCanvas x:Name="SimulateCanvas" />
 
-        
+
         <!--Expander-->
         <elements:ExpanderLightDismissOverlay>
             <elements:Expander x:Name="ExportMenu" Title="Export" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
@@ -809,6 +825,9 @@
             </elements:Expander>
             <elements:Expander x:Name="SetupMenu" Title="Setup" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:SetupButton x:Name="SetupButton" />
+            </elements:Expander>
+            <elements:Expander x:Name="ColorMenu" Title="Color" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
             </elements:Expander>
         </elements:ExpanderLightDismissOverlay>
 

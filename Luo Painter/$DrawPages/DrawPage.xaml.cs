@@ -178,6 +178,7 @@ namespace Luo_Painter
             this.OptionPlacementTarget.Click += (s, e) => this.OptionMenu.Toggle(this.OptionPlacementTarget, ExpanderPlacementMode.Bottom);
             this.MoreOptionPlacementTarget.Click += (s, e) => this.MoreOptionMenu.Toggle(this.MoreOptionPlacementTarget, ExpanderPlacementMode.Bottom);
             this.SetupPlacementTarget.Click += (s, e) => this.SetupMenu.Toggle(this.SetupPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.ColorPlacementTarget.Click += (s, e) => this.ColorMenu.Toggle(this.ColorPlacementTarget, ExpanderPlacementMode.Bottom);
 
 
             // Drag and Drop 
