@@ -188,21 +188,7 @@ namespace Luo_Painter
                     this.StartingToolShow = this.ToolListView.IsShow;//&& this.ToolListView.Width > 70;
                     this.StartingLayerShow = this.LayerListView.IsShow;//&& this.LayerListView.Width > 70;
                 }
-
-                switch (this.OptionType)
-                {
-                    case OptionType.None:
-                        this.Tool_Start(point, properties);
-                        break;
-                    case OptionType.Transform:
-                        this.Transform_Start(point, properties);
-                        break;
-                    case OptionType.RippleEffect:
-                        this.RippleEffect_Start(point, properties);
-                        break;
-                    default:
-                        break;
-                }
+                this.Tool_Start(point, properties);
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
@@ -213,21 +199,7 @@ namespace Luo_Painter
                     if (this.StartingLayerShow && this.LayerListView.IsShow && point.X < base.ActualWidth && point.X > base.ActualWidth - this.LayerListView.Width)
                         this.LayerListView.IsShow = false;
                 }
-
-                switch (this.OptionType)
-                {
-                    case OptionType.None:
-                        this.Tool_Delta(point, properties);
-                        break;
-                    case OptionType.Transform:
-                        this.Transform_Delta(point, properties);
-                        break;
-                    case OptionType.RippleEffect:
-                        this.RippleEffect_Delta(point, properties);
-                        break;
-                    default:
-                        break;
-                }
+                this.Tool_Delta(point, properties);
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
@@ -236,24 +208,7 @@ namespace Luo_Painter
                     this.ToolListView.IsShow = this.StartingToolShow;
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
-
-                switch (this.OptionType)
-                {
-                    case OptionType.None:
-                        this.Tool_Delta(point, properties);
-                        this.Tool_Complete(point, properties);
-                        break;
-                    case OptionType.Transform:
-                        this.Transform_Delta(point, properties);
-                        this.Transform_Complete(point, properties);
-                        break;
-                    case OptionType.RippleEffect:
-                        this.RippleEffect_Delta(point, properties);
-                        this.RippleEffect_Complete(point, properties);
-                        break;
-                    default:
-                        break;
-                }
+                this.Tool_Complete(point, properties);
             };
 
 
