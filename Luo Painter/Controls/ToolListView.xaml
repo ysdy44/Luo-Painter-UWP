@@ -189,7 +189,7 @@
           Y1="0"
           Y2="{x:Bind ThumbeTopConverter(ListView.Height), Mode=OneWay}" 
           StrokeThickness="1" 
-          Stroke="{ThemeResource AppBarBorderThemeBrush}" 
+          Stroke="{ThemeResource AppStroke}" 
           />
     
     <Line
@@ -199,7 +199,7 @@
           Y1="{x:Bind ThumbeTopConverter(ListView.Height), Mode=OneWay}" 
           Y2="{x:Bind ListView.Height, Mode=OneWay}"
           StrokeThickness="1"
-          Stroke="{ThemeResource AppBarBorderThemeBrush}" 
+          Stroke="{ThemeResource AppStroke}" 
           />
     
     <Border
@@ -209,7 +209,7 @@
             Width="22" 
             Height="120"
             BorderThickness="0,1,1,1" 
-            BorderBrush="{ThemeResource AppBarBorderThemeBrush}" 
+            BorderBrush="{ThemeResource AppStroke}" 
             Background="{ThemeResource SystemControlAcrylicElementBrush}" 
             Visibility="{x:Bind IsShow,Mode=OneWay}"           
             >

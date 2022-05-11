@@ -211,7 +211,7 @@
         <Button x:Name="UnFullScreenButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
             <SymbolIcon Symbol="BackToWindow"/>
         </Button>
-        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{ThemeResource AppBackground}">
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
@@ -226,7 +226,7 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ExportPlacementTarget" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
+            <Button x:Name="ExportPlacementTarget" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Q"/>
                 </UIElement.KeyboardAccelerators>
@@ -235,22 +235,22 @@
 
             <ScrollViewer Grid.Column="1" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="SettingButton" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="SettingButton" BorderThickness="1" BorderBrush="red" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
                         <SymbolIcon Symbol="Setting"/>
                     </Button>
-                    <Button x:Name="UndoButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="UndoButton" IsEnabled="False" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
-                    <Button x:Name="RedoButton" IsEnabled="False" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="RedoButton" IsEnabled="False" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Redo"/>
                     </Button>
-                    <Button x:Name="FullScreenButton" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="FullScreenButton" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                         </UIElement.KeyboardAccelerators>
@@ -321,9 +321,9 @@
 
         </Grid>
 
-
+        
         <!--Foot-->
-        <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter2" CornerRadius="8" Margin="70,20" Padding="8,0" MinWidth="440" MaxWidth="720" MinHeight="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+        <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter2" CornerRadius="8" Margin="70,20" Padding="8,0" MinWidth="440" MaxWidth="720" MinHeight="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
