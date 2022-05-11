@@ -37,8 +37,8 @@
                     </Polygon.Points>
                 </Polygon>
 
-                <FontIcon x:Name="WhiteFontIcon1" Canvas.Left="5" Canvas.Top="8" Glyph="&#x2950;" FontSize="28" FontFamily="Segoe UI Symbol" Foreground="White" />
-                <FontIcon x:Name="WhiteFontIcon2" Canvas.Left="30" Canvas.Top="0" Glyph="&#x294F;" FontSize="24" FontFamily="Segoe UI Symbol" Foreground="White" />
+                <FontIcon x:Name="WhiteFontIcon1" Canvas.Left="5" Canvas.Top="8" Glyph="&#x2950;" FontSize="28" FontFamily="Segoe UI Symbol"  />
+                <FontIcon x:Name="WhiteFontIcon2" Canvas.Left="30" Canvas.Top="0" Glyph="&#x294F;" FontSize="24" FontFamily="Segoe UI Symbol"  />
 
             </Canvas>
         </Viewbox>

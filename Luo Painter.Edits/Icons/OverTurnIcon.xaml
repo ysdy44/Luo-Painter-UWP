@@ -30,7 +30,7 @@
             
                 <Rectangle Width="28" Height="10" Canvas.Left="2" Canvas.Top="18" Fill="Gray"/>
 
-                <FontIcon x:Name="WhiteFontIcon" Canvas.Left="0" Canvas.Top="1" Glyph="&#xE0F2;" FontSize="20" FontFamily="Segoe UI Symbol" Foreground="White"/>
+                <FontIcon x:Name="WhiteFontIcon" Canvas.Left="0" Canvas.Top="1" Glyph="&#xE0F2;" FontSize="20" FontFamily="Segoe UI Symbol" />
 
             </Canvas>
         </Viewbox>
