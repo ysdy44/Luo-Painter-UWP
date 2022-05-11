@@ -235,22 +235,22 @@
 
             <ScrollViewer Grid.Column="1" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="SettingButton" BorderThickness="1" BorderBrush="red" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="SettingButton" Style="{StaticResource AppTextBlockButtonStyle}">
                         <SymbolIcon Symbol="Setting"/>
                     </Button>
-                    <Button x:Name="UndoButton" IsEnabled="False" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="UndoButton" IsEnabled="False" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
-                    <Button x:Name="RedoButton" IsEnabled="False" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="RedoButton" IsEnabled="False" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Redo"/>
                     </Button>
-                    <Button x:Name="FullScreenButton" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="FullScreenButton" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                         </UIElement.KeyboardAccelerators>

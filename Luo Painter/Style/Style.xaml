@@ -152,6 +152,18 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style x:Key="AppTextBlockButtonStyle" TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}" >
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Width" Value="70" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}" />
+        <Setter Property="Background" Value="{ThemeResource AppBackgroundDark}" />
     </Style>
 
 
