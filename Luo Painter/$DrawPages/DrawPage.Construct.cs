@@ -60,20 +60,20 @@ namespace Luo_Painter
         }
 
 
-        bool StateLock;
-        private async void SetFullScreenState(bool isFullScreen, bool isWriteable)
+        private void SetFullScreenState(bool isFullScreen, bool isWriteable)
         {
-            if (this.StateLock is true) return;
-            this.StateLock = true;
-
             if (isWriteable)
             {
+                this.ExpanderLightDismissOverlay.Hide();
+
                 this.ToolListView.IsShow = false;
                 this.LayerListView.IsShow = false;
                 VisualStateManager.GoToState(this, nameof(Writeable), useTransitions: true);
             }
             else if (isFullScreen)
             {
+                this.ExpanderLightDismissOverlay.Hide();
+
                 this.ToolListView.IsShow = false;
                 this.LayerListView.IsShow = false;
                 VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
@@ -84,9 +84,6 @@ namespace Luo_Painter
                 this.LayerListView.IsShow = true;
                 VisualStateManager.GoToState(this, nameof(UnFullScreen), useTransitions: true);
             }
-
-            await Task.Delay(200);
-            this.StateLock = false;
         }
 
         private void ConstructStoryboard()
@@ -96,7 +93,7 @@ namespace Luo_Painter
                 this.IsFullScreen = false;
                 this.SetFullScreenState(this.IsFullScreen, this.OptionType != default);
             };
-            this.FullScreenButton.Click += (s, e) =>
+            this.FullScreenButton.Click += async (s, e) =>
             {
                 if (this.OptionType == default)
                 {
@@ -116,6 +113,10 @@ namespace Luo_Painter
                 }
 
                 this.SetFullScreenState(this.IsFullScreen, false);
+
+                this.FullScreenKey.IsEnabled = false;
+                await Task.Delay(200);
+                this.FullScreenKey.IsEnabled = true;
             };
         }
 

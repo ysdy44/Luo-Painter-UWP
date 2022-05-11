@@ -42,10 +42,11 @@ namespace Luo_Painter.Elements
 
         //@Construct     
         /// <summary>
-        /// Initializes a Expander. 
+        /// Initializes a ExpanderLightDismissOverlay. 
         /// </summary>
         public ExpanderLightDismissOverlay()
         {
+            base.PointerPressed += (s, e) => this.Hide();
             base.Unloaded += (s, e) =>
             {
                 foreach (Expander item in this.Items)
@@ -72,19 +73,23 @@ namespace Luo_Painter.Elements
                     }
                 }
             };
-            base.PointerPressed += (s, e) =>
+        }
+
+        /// <summary>
+        /// Hide all flyout.
+        /// </summary>
+        public void Hide()
+        {
+            foreach (Expander item in this.Items)
             {
-                foreach (Expander item in this.Items)
+                switch (item.State)
                 {
-                    switch (item.State)
-                    {
-                        case ExpanderState.Flyout:
-                            item.Hide();
-                            break;
-                    }
+                    case ExpanderState.Flyout:
+                        item.Hide();
+                        break;
                 }
-                base.Background = null;
-            };
+            }
+            base.Background = null;
         }
 
         private void StateChanged(Expander sender, ExpanderState args)

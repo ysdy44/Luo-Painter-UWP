@@ -252,7 +252,7 @@
                     </Button>
                     <Button x:Name="FullScreenButton" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                            <KeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="FullScreen"/>
                     </Button>
@@ -321,7 +321,7 @@
 
         </Grid>
 
-        
+
         <!--Foot-->
         <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter2" CornerRadius="8" Margin="70,20" Padding="8,0" MinWidth="440" MaxWidth="720" MinHeight="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
@@ -800,7 +800,7 @@
 
 
         <!--Expander-->
-        <elements:ExpanderLightDismissOverlay>
+        <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
             <elements:Expander x:Name="ExportMenu" Title="Export" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:ExportButton x:Name="ExportButton"/>
             </elements:Expander>
