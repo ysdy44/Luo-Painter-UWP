@@ -226,8 +226,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.CanvasControl.Invalidate(); // Invalidate
 
-                this.CanvasAnimatedControl.Paused = true;
-                this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
+                this.SetCanvasState(true);
             };
             this.Operator.Double_Delta += (center, space) =>
             {
@@ -238,12 +237,7 @@ namespace Luo_Painter
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-                this.CanvasAnimatedControl.Invalidate(); // Invalidate
-
-                this.CanvasAnimatedControl.Paused = this.OptionType != default;
-                this.CanvasAnimatedControl.Visibility = this.CanvasAnimatedControl.Paused ? Visibility.Collapsed : Visibility.Visible;
+                this.SetCanvasState(this.OptionType != default);
 
                 this.ViewTool.Construct(this.Transformer);
             };

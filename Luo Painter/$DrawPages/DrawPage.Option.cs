@@ -76,39 +76,24 @@ namespace Luo_Painter
 
             this.OptionSecondaryButton.Click += (s, e) =>
             {
+                this.BitmapLayer = null;
                 this.OptionType = default;
                 this.SetOptionType(default);
                 this.SetFullScreenState(this.IsFullScreen, false);
-
-                this.BitmapLayer = null;
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-
-                this.CanvasAnimatedControl.Paused = false;
-                this.CanvasAnimatedControl.Visibility = Visibility.Visible;
+                this.SetCanvasState(false);
             };
 
             this.OptionPrimaryButton.Click += (s, e) =>
             {
-                OptionType type = this.OptionType;
-                BitmapLayer bitmapLayer = this.BitmapLayer;
+                Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
+                PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
+                this.Option(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
 
-                Color[] InterpolationColors = bitmapLayer.GetInterpolationColorsBySource();
-                PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
-                this.Option(type, mode, InterpolationColors, bitmapLayer);
-
+                this.BitmapLayer = null;
                 this.OptionType = default;
                 this.SetOptionType(default);
                 this.SetFullScreenState(this.IsFullScreen, false);
-
-                this.BitmapLayer = null;
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-
-                this.CanvasAnimatedControl.Paused = false;
-                this.CanvasAnimatedControl.Visibility = Visibility.Visible;
+                this.SetCanvasState(false);
             };
 
             this.OptionButton.ItemClick += (s, type) =>
@@ -157,17 +142,11 @@ namespace Luo_Painter
                                         break;
                                 }
 
+                                this.BitmapLayer = bitmapLayer;
                                 this.OptionType = type;
                                 this.SetOptionType(type);
                                 this.SetFullScreenState(this.IsFullScreen, true);
-
-                                this.BitmapLayer = bitmapLayer;
-
-                                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                                this.CanvasControl.Invalidate(); // Invalidate
-
-                                this.CanvasAnimatedControl.Paused = true;
-                                this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
+                                this.SetCanvasState(true);
                             }
                             else
                             {

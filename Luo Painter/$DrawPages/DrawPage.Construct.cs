@@ -86,33 +86,61 @@ namespace Luo_Painter
             }
         }
 
+
+        private void SetCanvasState(bool isPaused)
+        {
+            if (this.CanvasAnimatedControl.Paused == isPaused) return;
+
+            if (isPaused)
+            {
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+
+                this.CanvasAnimatedControl.Paused = true;
+                this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasAnimatedControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+
+                this.CanvasAnimatedControl.Paused = false;
+                this.CanvasAnimatedControl.Visibility = Visibility.Visible;
+            }
+        }
+
+
         private void ConstructStoryboard()
         {
             this.UnFullScreenButton.Click += (s, e) =>
             {
                 this.IsFullScreen = false;
-                this.SetFullScreenState(this.IsFullScreen, this.OptionType != default);
+                this.SetFullScreenState(false, this.OptionType != default);
             };
             this.FullScreenButton.Click += async (s, e) =>
             {
                 if (this.OptionType == default)
                 {
-                    this.IsFullScreen = !this.IsFullScreen;
+                    if (this.IsFullScreen)
+                    {
+                        this.IsFullScreen = false;
+                        this.SetFullScreenState(false, false);
+                    }
+                    else
+                    {
+                        this.IsFullScreen = true;
+                        this.SetFullScreenState(true, false);
+                    }
                 }
                 else
                 {
                     this.IsFullScreen = false;
-
                     this.OptionType = default;
                     this.SetOptionType(default);
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.CanvasAnimatedControl.Paused = false;
-                    this.CanvasAnimatedControl.Visibility = Visibility.Visible;
+                    this.SetFullScreenState(false, false);
+                    this.SetCanvasState(default);
                 }
-
-                this.SetFullScreenState(this.IsFullScreen, false);
 
                 this.FullScreenKey.IsEnabled = false;
                 await Task.Delay(200);
