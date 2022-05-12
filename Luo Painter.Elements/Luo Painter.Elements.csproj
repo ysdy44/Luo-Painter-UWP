@@ -134,6 +134,7 @@
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlexPanel.cs" />
     <Compile Include="GradientStops.cs" />
     <Compile Include="GradientStopSelector.cs" />
     <Compile Include="GradientStopSelectorWithUI.cs" />
