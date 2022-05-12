@@ -23,22 +23,38 @@ namespace Luo_Painter.Elements
     }
 
     /// <summary>
-    /// State of <see cref="Expander"/>.
-    /// </summary>
-    public enum ExpanderState
-    {
-        Hide,
-        Flyout,
-        Overlay,
-    }
-
-    /// <summary>
     /// LightDismissOverlay for <see cref="Expander"/>.
     /// </summary>
     public sealed class ExpanderLightDismissOverlay : Canvas
     {
         readonly Stack<Expander> Items = new Stack<Expander>();
         readonly SolidColorBrush Transparent = new SolidColorBrush(Colors.Transparent);
+
+        #region DependencyProperty
+
+
+        /// <summary> Gets a state that indicates whether the <see cref = "ExpanderLightDismissOverlay" />. </summary>
+        public bool FullScreen
+        {
+            get => (bool)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "ExpanderLightDismissOverlay.FullScreen" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(FullScreen), typeof(bool), typeof(ExpanderLightDismissOverlay), new PropertyMetadata(false, (sender, e) =>
+        {
+            ExpanderLightDismissOverlay control = (ExpanderLightDismissOverlay)sender;
+
+            if (e.NewValue is bool value)
+            {
+                foreach (Expander item in control.Items)
+                {
+                    item.SetFullScreen(value);
+                }
+            }
+        }));
+
+
+        #endregion
 
         //@Construct     
         /// <summary>
@@ -51,7 +67,8 @@ namespace Luo_Painter.Elements
             {
                 foreach (Expander item in this.Items)
                 {
-                    item.StateChanged -= this.StateChanged;
+                    item.IsFlyoutChanged -= this.IsFlyoutChanged;
+                    item.IsShowChanged -= this.IsShowChanged;
                     item.OnZIndexChanging -= this.OnZIndexChanging;
 
                     base.SizeChanged -= item.CanvasSizeChanged;
@@ -65,9 +82,11 @@ namespace Luo_Painter.Elements
                     if (item is Expander expander)
                     {
                         this.Items.Push(expander);
-                        expander.StateChanged += this.StateChanged;
+                        expander.IsFlyoutChanged += this.IsFlyoutChanged;
+                        expander.IsShowChanged += this.IsShowChanged;
                         expander.OnZIndexChanging += this.OnZIndexChanging;
 
+                        expander.FullScreen = this.FullScreen;
                         expander.CanvasSizeChanged(base.ActualWidth, base.ActualHeight);
                         base.SizeChanged += expander.CanvasSizeChanged;
                     }
@@ -82,36 +101,48 @@ namespace Luo_Painter.Elements
         {
             foreach (Expander item in this.Items)
             {
-                switch (item.State)
-                {
-                    case ExpanderState.Flyout:
-                        item.Hide();
-                        break;
-                }
+                if (item.IsFlyout) item.Hide();
             }
             base.Background = null;
         }
 
-        private void StateChanged(Expander sender, ExpanderState args)
+        private void IsFlyoutChanged(Expander sender, bool isFlyout)
         {
-            switch (args)
+            if (isFlyout)
             {
-                case ExpanderState.Hide:
-                case ExpanderState.Overlay:
-                    base.Background = null;
-                    foreach (Expander item in this.Items)
-                    {
-                        item.IsHitTestVisible = true;
-                    }
-                    Canvas.SetZIndex(sender, 0);
+                base.Background = this.Transparent;
+                foreach (Expander item in this.Items)
+                {
+                    item.IsHitTestVisible = false;
+                }
+                sender.IsHitTestVisible = true;
+            }
+            else
+            {
+                base.Background = null;
+                foreach (Expander item in this.Items)
+                {
+                    item.IsHitTestVisible = true;
+                }
+                Canvas.SetZIndex(sender, 0);
+            }
+        }
+
+        private void IsShowChanged(Expander sender, bool isFlyout)
+        {
+            switch (sender.FullScreen)
+            {
+                case false:
                     break;
-                case ExpanderState.Flyout:
-                    base.Background = this.Transparent;
+                case true:
                     foreach (Expander item in this.Items)
                     {
-                        item.IsHitTestVisible = false;
+                        if (item.IsFlyout)
+                        {
+                            if (item == sender) continue;
+                            item.Hide();
+                        }
                     }
-                    sender.IsHitTestVisible = true;
                     break;
                 default:
                     break;
@@ -127,22 +158,15 @@ namespace Luo_Painter.Elements
 
             foreach (Expander item in this.Items)
             {
-                switch (item.State)
+                if (item.IsFlyout) continue;
+                if (item.IsShow)
                 {
-                    case ExpanderState.Hide:
-                        break;
-                    case ExpanderState.Flyout:
-                        break;
-                    case ExpanderState.Overlay:
-                        if (item == sender) break;
+                    if (item == sender) continue;
 
-                        int index = Canvas.GetZIndex(item);
-                        if (index == 0) break;
+                    int index = Canvas.GetZIndex(item);
+                    if (index == 0) continue;
 
-                        Canvas.SetZIndex(item, index - 1);
-                        break;
-                    default:
-                        break;
+                    Canvas.SetZIndex(item, index - 1);
                 }
             }
         }
@@ -170,7 +194,8 @@ namespace Luo_Painter.Elements
     {
 
         //@Delegate
-        internal event TypedEventHandler<Expander, ExpanderState> StateChanged;
+        internal event TypedEventHandler<Expander, bool> IsFlyoutChanged;
+        internal event TypedEventHandler<Expander, bool> IsShowChanged;
         internal event TypedEventHandler<Expander, int> OnZIndexChanging;
 
 
@@ -202,14 +227,12 @@ namespace Luo_Painter.Elements
         double PlacementTargetH;
         Point PlacementTargetPosition;
 
-        bool IsFristOpen = true;
+        internal bool FullScreen;
+        internal bool IsFlyout;
+        internal bool IsShow;
 
 
-        /// <summary> Gets a state that indicates whether the <see cref = "Expander" />. </summary>
-        public ExpanderState State { get; private set; }
-
-
-        #region DependencyProperty
+        #region DependencyProperty 
 
 
         /// <summary> Gets or sets <see cref = "Expander" />'s title. </summary>
@@ -243,15 +266,21 @@ namespace Luo_Painter.Elements
                 this.W = e.NewSize.Width;
                 this.H = e.NewSize.Height;
 
-                if (this.IsFristOpen)
+                switch (this.FullScreen)
                 {
-                    this.IsFristOpen = false;
-                    this.ShowBegin();
-                }
-                else if (this.IsLoaded)
-                {
-                    this.SetLeft(Canvas.GetLeft(this));
-                    this.SetTop(Canvas.GetTop(this));
+                    case false:
+                        if (this.U == 0) break;
+                        if (this.V == 0) break;
+                        if (this.IsLoaded)
+                        {
+                            this.SetLeft(Canvas.GetLeft(this));
+                            this.SetTop(Canvas.GetTop(this));
+                        }
+                        break;
+                    case true:
+                        break;
+                    default:
+                        break;
                 }
             };
         }
@@ -315,6 +344,15 @@ namespace Luo_Painter.Elements
             this.SymbolIcon = base.GetTemplateChild(nameof(SymbolIcon)) as SymbolIcon;
         }
 
+
+        /// <inheritdoc/>
+        internal void SetFullScreen(bool value)
+        {
+            this.Hide();
+            this.FullScreen = value;
+            this.RootGrid.CornerRadius = new CornerRadius(value ? 0 : 4);
+            this.RootGrid.BorderThickness = new Thickness(value ? 0 : 1);
+        }
         /// <inheritdoc/>
         internal void CanvasSizeChanged(double u, double v)
         {
@@ -323,6 +361,23 @@ namespace Luo_Painter.Elements
 
             base.MaxWidth = u;
             base.MaxHeight = v;
+            switch (this.FullScreen)
+            {
+                case false:
+                    base.Width = base.MinWidth + base.Padding.Left + base.Padding.Right;
+                    base.Height = double.NaN;
+                    break;
+                case true:
+                    if (this.IsFlyout) break;
+                    if (this.IsShow)
+                    {
+                        base.Width = u;
+                        base.Height = v;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         /// <inheritdoc/>
         internal void CanvasSizeChanged(object sender, SizeChangedEventArgs e)
@@ -332,21 +387,27 @@ namespace Luo_Painter.Elements
 
             this.CanvasSizeChanged(e.NewSize.Width, e.NewSize.Height);
 
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
-                    break;
-                case ExpanderState.Flyout:
-                    this.Placement = ExpanderPlacementMode.Center;
-                    this.HideBegin();
+                case false:
+                    if (this.IsFlyout)
+                    {
+                        this.Placement = ExpanderPlacementMode.Center;
+                        this.HideBegin();
 
-                    this.SymbolIcon.Symbol = Symbol.Pin;
-                    this.State = ExpanderState.Hide;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                        this.SymbolIcon.Symbol = Symbol.Pin;
+                        this.IsFlyout = false;
+                        this.IsShow = false;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                    }
+                    else if (this.IsShow)
+                    {
+                        this.SetLeft(Canvas.GetLeft(this));
+                        this.SetTop(Canvas.GetTop(this));
+                    }
                     break;
-                case ExpanderState.Overlay:
-                    this.SetLeft(Canvas.GetLeft(this));
-                    this.SetTop(Canvas.GetTop(this));
+                case true:
                     break;
                 default:
                     break;
@@ -355,23 +416,31 @@ namespace Luo_Painter.Elements
 
         private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
         {
-            this.X = Canvas.GetLeft(this);
-            this.Y = Canvas.GetTop(this);
-
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
-                    break;
-                case ExpanderState.Flyout:
-                    this.Placement = ExpanderPlacementMode.Center;
+                case false:
+                    this.X = Canvas.GetLeft(this);
+                    this.Y = Canvas.GetTop(this);
 
-                    this.SymbolIcon.Symbol = Symbol.UnPin;
-                    this.State = ExpanderState.Overlay;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    if (this.IsFlyout)
+                    {
+                        this.Placement = ExpanderPlacementMode.Center;
+
+                        this.SymbolIcon.Symbol = Symbol.UnPin;
+                        this.IsFlyout = false;
+                        this.IsShow = true;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    }
+                    else if (this.IsShow)
+                    {
+                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    }
                     break;
-                case ExpanderState.Overlay:
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                case true:
+                    this.X = 0;
+                    this.Y = 0;
                     break;
                 default:
                     break;
@@ -379,32 +448,59 @@ namespace Luo_Painter.Elements
         }
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            this.X += e.HorizontalChange;
-            this.Y += e.VerticalChange;
-            this.SetLeft(this.X);
-            this.SetTop(this.Y);
+            switch (this.FullScreen)
+            {
+                case false:
+                    this.X += e.HorizontalChange;
+                    this.Y += e.VerticalChange;
+                    this.SetLeft(this.X);
+                    this.SetTop(this.Y);
+                    break;
+                case true:
+                    this.Y += e.VerticalChange;
+                    this.SetTop(this.Y);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
-                    break;
-                case ExpanderState.Flyout:
-                    this.Placement = ExpanderPlacementMode.Center;
+                case false:
+                    if (this.IsFlyout)
+                    {
+                        this.Placement = ExpanderPlacementMode.Center;
 
-                    this.SymbolIcon.Symbol = Symbol.UnPin;
-                    this.State = ExpanderState.Overlay;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
-                    break;
-                case ExpanderState.Overlay:
-                    this.HideBegin();
+                        this.SymbolIcon.Symbol = Symbol.UnPin;
+                        this.IsFlyout = false;
+                        this.IsShow = true;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    }
+                    else if (this.IsShow)
+                    {
+                        this.HideBegin();
 
-                    this.SymbolIcon.Symbol = Symbol.Pin;
-                    this.State = ExpanderState.Hide;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                        this.SymbolIcon.Symbol = Symbol.Pin;
+                        this.IsFlyout = false;
+                        this.IsShow = false;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                    }
+                    break;
+                case true:
+                    this.HideBottomStoryboard.Begin(); // Storyboard
+                    this.HideStoryboard.Begin(); // Storyboard
+
+                    this.SymbolIcon.Symbol = Symbol.Cancel;
+                    this.IsFlyout = false;
+                    this.IsShow = false;
+                    this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                    this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
                     break;
                 default:
                     break;
@@ -417,24 +513,41 @@ namespace Luo_Painter.Elements
         /// </summary>
         public void Hide()
         {
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
-                    break;
-                case ExpanderState.Flyout:
-                    this.Placement = ExpanderPlacementMode.Center;
-                    this.HideBegin();
+                case false:
+                    if (this.IsFlyout)
+                    {
+                        this.Placement = ExpanderPlacementMode.Center;
+                        this.HideBegin();
 
-                    this.SymbolIcon.Symbol = Symbol.Pin;
-                    this.State = ExpanderState.Hide;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    break;
-                case ExpanderState.Overlay:
-                    this.HideBegin();
+                        this.SymbolIcon.Symbol = Symbol.Pin;
+                        this.IsFlyout = false;
+                        this.IsShow = false;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                    }
+                    else if (this.IsShow)
+                    {
+                        this.HideBegin();
 
-                    this.SymbolIcon.Symbol = Symbol.Pin;
-                    this.State = ExpanderState.Hide;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
+                        this.SymbolIcon.Symbol = Symbol.Pin;
+                        this.IsFlyout = false;
+                        this.IsShow = false;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                    }
+                    break;
+                case true:
+                    if (this.IsShow)
+                    {
+                        this.HideBottomStoryboard.Begin(); // Storyboard
+                        this.HideStoryboard.Begin(); // Storyboard
+
+                        this.SymbolIcon.Symbol = Symbol.Cancel;
+                        this.IsShow = false;
+                        this.IsFlyout = false;
+                    }
                     break;
                 default:
                     break;
@@ -445,17 +558,37 @@ namespace Luo_Painter.Elements
         /// </summary>
         public void Show()
         {
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
+                case false:
+                    if (this.IsFlyout) break;
+                    else if (this.IsShow) break;
+                    else
+                    {
+                        base.Width = double.NaN;
+                        base.Height = double.NaN;
+
+                        this.ShowStoryboard.Begin(); // Storyboard
+
+                        this.IsShow = true;
+                        this.IsFlyout = true;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    }
+                    break;
+                case true:
+                    Canvas.SetLeft(this, 0);
+                    Canvas.SetTop(this, 0);
+                    base.Width = this.U;
+                    base.Height = this.V;
+
+                    this.ShowBottomStoryboard.Begin(); // Storyboard
                     this.ShowStoryboard.Begin(); // Storyboard
-                    this.State = ExpanderState.Flyout;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
-                    break;
-                case ExpanderState.Flyout:
-                    break;
-                case ExpanderState.Overlay:
+
+                    this.SymbolIcon.Symbol = Symbol.Cancel;
+                    this.IsShow = true;
+                    this.IsFlyout = false;
                     break;
                 default:
                     break;
@@ -468,27 +601,42 @@ namespace Luo_Painter.Elements
         /// <param name="placement"> Gets or sets the default placement to be used for the <see cref = "Expander" />, in relation to its placement target. </param>
         public void ShowAt(FrameworkElement placementTarget, ExpanderPlacementMode placement)
         {
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
-                    this.PlacementTargetW = placementTarget.ActualWidth;
-                    this.PlacementTargetH = placementTarget.ActualHeight;
-                    this.PlacementTargetPosition = placementTarget.TransformToVisual(base.Parent as UIElement).TransformPoint(new Point(0, 0));
-
-                    this.Placement = placement;
-
-                    if (this.IsFristOpen)
-                        this.RootGrid.Visibility = Visibility.Visible;
+                case false:
+                    if (this.IsFlyout) break;
+                    else if (this.IsShow) break;
                     else
+                    {
+                        this.PlacementTargetW = placementTarget.ActualWidth;
+                        this.PlacementTargetH = placementTarget.ActualHeight;
+                        this.PlacementTargetPosition = placementTarget.TransformToVisual(base.Parent as UIElement).TransformPoint(new Point(0, 0));
+
+                        this.Placement = placement;
+
                         this.ShowBegin();
 
-                    this.State = ExpanderState.Flyout;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                        this.IsFlyout = true;
+                        this.IsShow = true;
+                        this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                        this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
+                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    }
                     break;
-                case ExpanderState.Flyout:
-                    break;
-                case ExpanderState.Overlay:
+                case true:
+                    Canvas.SetLeft(this, 0);
+                    Canvas.SetTop(this, 0);
+                    base.Width = this.U;
+                    base.Height = this.V;
+
+                    this.ShowBottomStoryboard.Begin(); // Storyboard
+                    this.ShowStoryboard.Begin(); // Storyboard
+
+                    this.SymbolIcon.Symbol = Symbol.Cancel;
+                    this.IsShow = true;
+                    this.IsFlyout = false;
+                    this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                    this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
                     break;
                 default:
                     break;
@@ -501,33 +649,16 @@ namespace Luo_Painter.Elements
         /// <param name="placement"> Gets or sets the default placement to be used for the <see cref = "Expander" />, in relation to its placement target. </param>
         public void Toggle(FrameworkElement placementTarget, ExpanderPlacementMode placement)
         {
-            switch (this.State)
+            switch (this.FullScreen)
             {
-                case ExpanderState.Hide:
-                    this.PlacementTargetW = placementTarget.ActualWidth;
-                    this.PlacementTargetH = placementTarget.ActualHeight;
-                    this.PlacementTargetPosition = placementTarget.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
-
-                    this.Placement = placement;
-
-                    if (this.IsFristOpen)
-                        this.RootGrid.Visibility = Visibility.Visible;
-                    else
-                        this.ShowBegin();
-
-                    this.State = ExpanderState.Flyout;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                case false:
+                    if (this.IsFlyout) this.Hide();
+                    else if (this.IsShow) break;
+                    else this.ShowAt(placementTarget, placement);
                     break;
-                case ExpanderState.Flyout:
-                    this.Placement = ExpanderPlacementMode.Center;
-                    this.HideBegin();
-
-                    this.SymbolIcon.Symbol = Symbol.Pin;
-                    this.State = ExpanderState.Hide;
-                    this.StateChanged?.Invoke(this, this.State); // Delegate
-                    break;
-                case ExpanderState.Overlay:
+                case true:
+                    if (this.IsShow) this.Hide();
+                    else this.Show();
                     break;
                 default:
                     break;
@@ -632,7 +763,7 @@ namespace Luo_Painter.Elements
 
 
         private void SetLeft(double value) => Canvas.SetLeft(this, this.W >= this.U ? 0 : System.Math.Clamp(value, 0, this.U - this.W));
-        private void SetTop(double value) => Canvas.SetTop(this, this.H >= this.V ? 0 : System.Math.Clamp(value, 0, this.V - this.H));
+        private void SetTop(double value) => Canvas.SetTop(this, System.Math.Clamp(value, 0, this.V - 50));
 
     }
 }
