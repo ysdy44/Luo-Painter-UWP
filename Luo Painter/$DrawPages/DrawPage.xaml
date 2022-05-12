@@ -39,6 +39,8 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
+                        <Setter Target="EditButton.FullScreen" Value="True"/>
                         <!--Foot-->
                         <Setter Target="ToolGroupSwitchPresenter2.CornerRadius" Value="0"/>
                         <Setter Target="ToolGroupSwitchPresenter2.Margin" Value="0"/>
@@ -233,7 +235,7 @@
                 <SymbolIcon Symbol="NewWindow"/>
             </Button>
 
-            <ScrollViewer Grid.Column="1" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="SettingButton" Style="{StaticResource AppTextBlockButtonStyle}">
                         <SymbolIcon Symbol="Setting"/>
@@ -259,7 +261,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <ScrollViewer Grid.Column="2" HorizontalContentAlignment="Right" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+            <ScrollViewer Grid.Column="2" HorizontalContentAlignment="Right" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="ToolPlacementTarget" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
@@ -801,31 +803,31 @@
 
         <!--Expander-->
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-            <elements:Expander x:Name="ExportMenu" Title="Export" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="ExportMenu" Title="Export" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:ExportButton x:Name="ExportButton"/>
             </elements:Expander>
-            <elements:Expander x:Name="ToolMenu" Title="Tool" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" Width="320" >
+            <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+                <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" >
                     <tools:PaintTool x:Name="PaintTool" />
                     <tools:ViewTool x:Name="ViewTool" />
                 </local:ToolGroupSwitchPresenter>
             </elements:Expander>
-            <elements:Expander x:Name="EditMenu" Title="Edit" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="EditMenu" Title="Edit" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:EditButton x:Name="EditButton" Orientation="Horizontal" />
             </elements:Expander>
-            <elements:Expander x:Name="OptionMenu" Title="Option" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="OptionMenu" Title="Option" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:OptionButton x:Name="OptionButton" />
             </elements:Expander>
-            <elements:Expander x:Name="MoreOptionMenu" Title="More Options" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="MoreOptionMenu" Title="More Options" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:MoreOptionButton x:Name="MoreOptionButton" />
             </elements:Expander>
-            <elements:Expander x:Name="SetupMenu" Title="Setup" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="SetupMenu" Title="Setup" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:SetupButton x:Name="SetupButton" />
             </elements:Expander>
-            <elements:Expander x:Name="LayerMenu" Title="Layer" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="LayerMenu" Title="Layer" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:LayerButton x:Name="LayerButton"/>
             </elements:Expander>
-            <elements:Expander x:Name="ColorMenu" Title="Color" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
+            <elements:Expander x:Name="ColorMenu" Title="Color" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
             </elements:Expander>
         </elements:ExpanderLightDismissOverlay>
