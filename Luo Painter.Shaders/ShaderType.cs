@@ -17,6 +17,7 @@
         FilmicEffect,
         LuminanceHeatmapEffect,
         ReinhardEffect,
-        SdrOverlayEffect
+        SdrOverlayEffect,
+        LalphaMask,
     }
 }
