@@ -546,7 +546,7 @@ namespace Luo_Painter.TestApp
 
         public static Matrix3x2 EvalCenterdTransform(double canvasWidth, double canvasHeight, double imageWidth, double imageHeight)
         {
-            float f = (float)Math.Min(canvasWidth / imageWidth, canvasHeight / imageWidth);
+            float f = (float)Math.Min(canvasWidth / imageWidth, canvasHeight / imageHeight);
             float ox = (float)(canvasWidth - imageWidth * f) / 2;
             float oy = (float)(canvasHeight - imageHeight * f) / 2;
             Matrix3x2 matrix3X2 = Matrix3x2.CreateScale(f) * Matrix3x2.CreateTranslation(ox, oy);

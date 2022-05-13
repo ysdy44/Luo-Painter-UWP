@@ -141,6 +141,8 @@
     <Content Include="FreeTransform.hlsl" />
     <Content Include="Difference.hlsl" />
     <Content Include="GradientMapping.bin" />
+    <Content Include="LalphaMask.hlsl" />
+    <Content Include="LalphaMask.txt" />
     <Content Include="Liquefaction.bin" />
     <Content Include="LuminanceHeatmapEffect.hlsl" />
     <Content Include="ReinhardEffect.hlsl" />
