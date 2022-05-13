@@ -23,8 +23,6 @@
         MarqueeElliptical,
         MarqueePolygon,
         MarqueeFreeHand,
-        MarqueeSelectionBrush,
-        MarqueeFloodSelect,
 
         SelectionFlood,
         SelectionBrush,
