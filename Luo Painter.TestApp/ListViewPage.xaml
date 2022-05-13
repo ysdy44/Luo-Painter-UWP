@@ -23,8 +23,10 @@
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
                         <tools:ToolType>MarqueePolygon</tools:ToolType>
                         <tools:ToolType>MarqueeFreeHand</tools:ToolType>
-                        <tools:ToolType>MarqueeFloodSelect</tools:ToolType>
-                        <tools:ToolType>MarqueeSelectionBrush</tools:ToolType>
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Selection">
+                        <tools:ToolType>SelectionFlood</tools:ToolType>
+                        <tools:ToolType>SelectionBrush</tools:ToolType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Paint">
                         <tools:ToolType>PaintBrush</tools:ToolType>

@@ -35,8 +35,10 @@
                         <tools:ToolType>MarqueeElliptical</tools:ToolType>
                         <tools:ToolType>MarqueePolygon</tools:ToolType>
                         <tools:ToolType>MarqueeFreeHand</tools:ToolType>
-                        <tools:ToolType>MarqueeFloodSelect</tools:ToolType>
-                        <tools:ToolType>MarqueeSelectionBrush</tools:ToolType>
+                    </local:ToolGrouping>
+                    <local:ToolGrouping Key="Selection">
+                        <tools:ToolType>SelectionFlood</tools:ToolType>
+                        <tools:ToolType>SelectionBrush</tools:ToolType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Paint">
                         <tools:ToolType>PaintBrush</tools:ToolType>
@@ -191,7 +193,7 @@
           StrokeThickness="1" 
           Stroke="{ThemeResource AppStroke}" 
           />
-    
+
     <Line
           IsHitTestVisible="False" 
           X1="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}"
@@ -201,7 +203,7 @@
           StrokeThickness="1"
           Stroke="{ThemeResource AppStroke}" 
           />
-    
+
     <Border
             CornerRadius="0,8,8,0" 
             Canvas.Left="{x:Bind ThumbeLeftConverter(Width), Mode=OneWay}" 

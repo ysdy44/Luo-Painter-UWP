@@ -5,6 +5,8 @@
         None,
 
         Marquee,
+        Selection,
+
         Paint,
 
         Liquefy,
