@@ -26,6 +26,9 @@
         MarqueeSelectionBrush,
         MarqueeFloodSelect,
 
+        SelectionFlood,
+        SelectionBrush,
+
         // Geometry0
         GeometryRectangle,
         GeometryEllipse,

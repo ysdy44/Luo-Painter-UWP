@@ -1,4 +1,6 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Elements;
+using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas.Effects;
@@ -49,9 +51,10 @@ namespace Luo_Painter
                         case ToolType.MarqueeElliptical:
                         case ToolType.MarqueePolygon:
                         case ToolType.MarqueeFreeHand:
-                        case ToolType.MarqueeSelectionBrush:
-                            // case ToolType.MarqueeFloodSelect:
                             this.Marquee_Start(point);
+                            break;
+                        case ToolType.SelectionBrush:
+                            this.Position = this.ToPosition(point);
                             break;
                         case ToolType.View:
                             this.View_Start(point);
@@ -89,9 +92,13 @@ namespace Luo_Painter
                         case ToolType.MarqueeElliptical:
                         case ToolType.MarqueePolygon:
                         case ToolType.MarqueeFreeHand:
-                        case ToolType.MarqueeSelectionBrush:
-                            // case ToolType.MarqueeFloodSelect:
                             this.Marquee_Delta(point);
+                            break;
+                        case ToolType.SelectionBrush:
+                            Vector2 position = this.ToPosition(point);
+                            this.Marquee.Marquee(this.Position, position, 32, false);
+                            this.Marquee.Hit(RectExtensions.GetRect(this.Position, position, 32));
+                            this.Position = position;
                             break;
                         case ToolType.View:
                             this.View_Delta(point);
@@ -129,9 +136,28 @@ namespace Luo_Painter
                         case ToolType.MarqueeElliptical:
                         case ToolType.MarqueePolygon:
                         case ToolType.MarqueeFreeHand:
-                        case ToolType.MarqueeSelectionBrush:
-                        case ToolType.MarqueeFloodSelect:
                             this.Marquee_Complete(point);
+                            break;
+                        case ToolType.SelectionFlood:
+                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
+                            {
+                                this.SelectionFlood(point, bitmapLayer);
+                            }
+                            break;
+                        case ToolType.SelectionBrush:
+                            {
+                                // History
+                                int removes = this.History.Push(this.Marquee.GetBitmapHistory());
+                                this.Marquee.Flush();
+                                this.Marquee.RenderThumbnail();
+
+                                this.UndoButton.IsEnabled = this.History.CanUndo;
+                                this.RedoButton.IsEnabled = this.History.CanRedo;
+                            }
+                            break;
+                        case ToolType.Cursor:
+                            this.Position = this.ToPosition(point);
+                            this.LayerListView.SelectedIndex = this.FillContainsPoint(this.Position);
                             break;
                         case ToolType.View:
                             this.View_Complete(point);

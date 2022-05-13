@@ -36,117 +36,64 @@ namespace Luo_Painter
 
         private void Marquee_Start(Vector2 point)
         {
-            switch (this.ToolType)
-            {
-                case ToolType.MarqueeRectangular:
-                case ToolType.MarqueeElliptical:
-                case ToolType.MarqueePolygon:
-                case ToolType.MarqueeFreeHand:
-                    this.MarqueeToolType = this.GetMarqueeToolType(this.ToolType);
-                    this.StartingPosition = this.Position = this.ToPosition(point);
-                    this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
-                
-                    this.CanvasControl.Invalidate(); // Invalidate
-                    break;
-                case ToolType.MarqueeSelectionBrush:
-                    this.Position = this.ToPosition(point);
-                    break;
-                default:
-                    break;
-            }
+            this.MarqueeToolType = this.GetMarqueeToolType(this.ToolType);
+            this.StartingPosition = this.Position = this.ToPosition(point);
+            this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
         private void Marquee_Delta(Vector2 point)
         {
-            switch (this.ToolType)
-            {
-                case ToolType.MarqueeRectangular:
-                case ToolType.MarqueeElliptical:
-                case ToolType.MarqueePolygon:
-                case ToolType.MarqueeFreeHand:
-                    this.Position = this.ToPosition(point);
-                    this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
-             
-                    this.CanvasControl.Invalidate(); // Invalidate
-                    break;
-                case ToolType.MarqueeSelectionBrush:
-                    Vector2 position = this.ToPosition(point);
-                    this.Marquee.Marquee(this.Position, position, 32, false);
-                    this.Marquee.Hit(RectExtensions.GetRect(this.Position, position, 32));
-                    this.Position = position;
-                    break;
-                default:
-                    break;
-            }
+            this.Position = this.ToPosition(point);
+            this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private void Marquee_Complete(Vector2 point)
         {
-            switch (this.ToolType)
+            this.Position = this.ToPosition(point);
+            bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            if (redraw is false) return;
+
+            using (CanvasDrawingSession ds = this.Marquee.CreateDrawingSession())
             {
-                case ToolType.MarqueeRectangular:
-                case ToolType.MarqueeElliptical:
-                case ToolType.MarqueePolygon:
-                case ToolType.MarqueeFreeHand:
-                    {
-                        this.Position = this.ToPosition(point);
-                        bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
-                        if (redraw is false) break;
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                        using (CanvasDrawingSession ds = this.Marquee.CreateDrawingSession())
-                        {
-                            //@DPI 
-                            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                            ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
-                        }
-
-                        // History
-                        int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
-                        this.Marquee.Flush();
-                        this.Marquee.RenderThumbnail();
-
-                        this.CanvasControl.Invalidate(); // Invalidate
-                        this.MarqueeToolType = MarqueeToolType.None;
-                    }
-                    break;
-                case ToolType.MarqueeSelectionBrush:
-                    {
-                        // History
-                        int removes = this.History.Push(this.Marquee.GetBitmapHistory());
-                        this.Marquee.Flush();
-                        this.Marquee.RenderThumbnail();
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case ToolType.MarqueeFloodSelect:
-                    if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
-                    {
-                        bool result = bitmapLayer.FloodSelect(this.ToPosition(point), Windows.UI.Colors.DodgerBlue);
-                        if (result)
-                        {
-                            this.Marquee.CopyPixels(bitmapLayer, BitmapType.Temp);
-
-                            // History
-                            int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
-                            this.Marquee.Flush();
-                            this.Marquee.RenderThumbnail();
-
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                        }
-                        else
-                        {
-                            this.Tip("No Pixel", "The current Pixel is Transparent.");
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
             }
+
+            // History
+            int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
+            this.Marquee.Flush();
+            this.Marquee.RenderThumbnail();
+
+            this.CanvasControl.Invalidate(); // Invalidate
+            this.MarqueeToolType = MarqueeToolType.None;
         }
 
+        private void SelectionFlood(Vector2 point, BitmapLayer bitmapLayer)
+        {
+            this.Position = this.ToPosition(point);
+            bool result = bitmapLayer.FloodSelect(this.Position, Windows.UI.Colors.DodgerBlue);
+            if (result)
+            {
+                this.Marquee.CopyPixels(bitmapLayer, BitmapType.Temp);
+
+                // History
+                int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
+                this.Marquee.Flush();
+                this.Marquee.RenderThumbnail();
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
+            }
+            else
+            {
+                this.Tip("No Pixel", "The current Pixel is Transparent.");
+            }
+        }
 
         private MarqueeToolType GetMarqueeToolType(ToolType type)
         {
