@@ -37,6 +37,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.LuminanceHeatmapEffect: return "ms-appx:///Luo Painter.Shaders/LuminanceHeatmapEffect.bin";
                 case ShaderType.ReinhardEffect: return "ms-appx:///Luo Painter.Shaders/ReinhardEffect.bin";
                 case ShaderType.SdrOverlayEffect: return "ms-appx:///Luo Painter.Shaders/SdrOverlayEffect.bin";
+                case ShaderType.LalphaMask: return "ms-appx:///Luo Painter.Shaders/LalphaMask.txt";
                 default: return null;
             }
         }
