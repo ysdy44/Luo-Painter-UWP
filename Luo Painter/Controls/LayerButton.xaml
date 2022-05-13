@@ -10,7 +10,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    Width="320"
     >
 
     <Grid Height="80">

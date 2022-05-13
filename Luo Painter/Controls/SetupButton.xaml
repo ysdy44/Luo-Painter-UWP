@@ -6,9 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="50"
-    d:DesignWidth="50"
-    Width="320"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
     >
 
     <FrameworkElement.Resources>

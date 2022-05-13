@@ -7,12 +7,9 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    Width="320" 
-    Height="420" 
     >
 
     <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
         <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
@@ -23,123 +20,102 @@
         <TextBlock x:Name="DPITextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
             DPI
         </TextBlock>
-        <Canvas Height="42">
-            <ListBox x:Name="DPIComboBox" SelectedIndex="1" >
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="MinWidth" Value="45" />
-                        <Setter Property="Width" Value="52.9" />
-                        <Setter Property="Height" Value="40" />
-                        <Setter Property="Padding" Value="2" />
-                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <x:Int32>72</x:Int32>
-                <x:Int32>96</x:Int32>
-                <x:Int32>144</x:Int32>
-                <x:Int32>192</x:Int32>
-                <x:Int32>300</x:Int32>
-                <x:Int32>400</x:Int32>
-            </ListBox>
-        </Canvas>
+        <ListBox x:Name="DPIComboBox" SelectedIndex="1" >
+            <x:Int32>72</x:Int32>
+            <x:Int32>96</x:Int32>
+            <x:Int32>144</x:Int32>
+            <x:Int32>192</x:Int32>
+            <x:Int32>300</x:Int32>
+            <x:Int32>400</x:Int32>
+        </ListBox>
 
         <!--Format-->
         <TextBlock x:Name="FormatTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
             File Format
         </TextBlock>
-        <Canvas Height="42">
-            <ListBox x:Name="FormatComboBox" SelectedIndex="0" >
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="MinWidth" Value="54" />
-                        <Setter Property="Width" Value="63.3" />
-                        <Setter Property="Height" Value="40" />
-                        <Setter Property="Padding" Value="2" />
-                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <x:String>JPEG</x:String>
-                <x:String>PNG</x:String>
-                <x:String>BMP</x:String>
-                <x:String>GIF</x:String>
-                <x:String>TIFF</x:String>
-            </ListBox>
-        </Canvas>
-    </StackPanel>
+        <ListBox x:Name="FormatComboBox" SelectedIndex="0" >
+            <x:String>JPEG</x:String>
+            <x:String>PNG</x:String>
+            <x:String>BMP</x:String>
+            <x:String>GIF</x:String>
+            <x:String>TIFF</x:String>
+        </ListBox>
 
-    <FlipView Grid.Row="1" Margin="0,10" Background="{ThemeResource AppBackgroundMediumLight}"
+        <FlipView Grid.Row="1" Height="200" VerticalAlignment="Top" Background="{ThemeResource AppBackgroundMediumLight}"
               SelectedIndex="{x:Bind FormatComboBox.SelectedIndex, Mode=TwoWay}">
-        <HubSection IsHeaderInteractive="True">
-            <HubSection.Header>
-                JPEG
-            </HubSection.Header>
-            <DataTemplate>
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
+            <HubSection IsHeaderInteractive="True">
+                <HubSection.Header>
+                    JPEG
+                </HubSection.Header>
+                <DataTemplate>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
                     A JPEG is a type of image format that is saved using the method of lossy compression. <LineBreak/>
                     The output image, as result of compression, is a trade-off between storage size and image quality. <LineBreak/>
                     Users can adjust the compression level to achieve the desired quality level while at the same time reduce the storage size. <LineBreak/>
                     Image quality is negligibly affected if 10:1 compression is applied to the image.  <LineBreak/>
                     The higher the compression value, the higher the degradation in image quality.
-                </TextBlock>
-            </DataTemplate>
-        </HubSection>
+                    </TextBlock>
+                </DataTemplate>
+            </HubSection>
 
-        <HubSection IsHeaderInteractive="True">
-            <HubSection.Header>
-                PNG
-            </HubSection.Header>
-            <DataTemplate>
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}"> 
+            <HubSection IsHeaderInteractive="True">
+                <HubSection.Header>
+                    PNG
+                </HubSection.Header>
+                <DataTemplate>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}"> 
                     A PNG file is a Portable Network Graphics file. <LineBreak/>        
                     The format uses lossless compression <LineBreak/>
                     and is generally considered the replacement to the GIF image format.
-                </TextBlock>
-            </DataTemplate>
-        </HubSection>
+                    </TextBlock>
+                </DataTemplate>
+            </HubSection>
 
-        <HubSection IsHeaderInteractive="True">
-            <HubSection.Header>
-                BMP
-            </HubSection.Header>
-            <DataTemplate>
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                       
+            <HubSection IsHeaderInteractive="True">
+                <HubSection.Header>
+                    BMP
+                </HubSection.Header>
+                <DataTemplate>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                       
                     A basic metabolic panel (BMP) is a group of blood tests. <LineBreak/>                      
                     These tests show how well your kidneys work. <LineBreak/>                        
                     They also show the levels of glucose (sugar) and electrolytes in your blood. <LineBreak/>                        
                     Electrolytes, such as sodium and potassium, affect how your body works.
-                </TextBlock>
-            </DataTemplate>
-        </HubSection>
+                    </TextBlock>
+                </DataTemplate>
+            </HubSection>
 
-        <HubSection IsHeaderInteractive="True">
-            <HubSection.Header>
-                GIF
-            </HubSection.Header>
-            <DataTemplate>
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                        
+            <HubSection IsHeaderInteractive="True">
+                <HubSection.Header>
+                    GIF
+                </HubSection.Header>
+                <DataTemplate>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                        
                     A computer file format for the compression and storage of visual digital information <LineBreak/>                        
                     also : <LineBreak/>                        
                     an image or video stored in this format
-                </TextBlock>
-            </DataTemplate>
-        </HubSection>
+                    </TextBlock>
+                </DataTemplate>
+            </HubSection>
 
-        <HubSection IsHeaderInteractive="True">
-            <HubSection.Header>
-                TIFF
-            </HubSection.Header>
-            <DataTemplate>
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                         
+            <HubSection IsHeaderInteractive="True">
+                <HubSection.Header>
+                    TIFF
+                </HubSection.Header>
+                <DataTemplate>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">                         
                     A TIFF, which stands for Tag Image File Format, <LineBreak/>                        
                     is a computer file used to store raster graphics and image information. <LineBreak/>                       
                     A favorite among photographers, <LineBreak/>                       
                     TIFFs are a handy way to store high-quality images before editing <LineBreak/>                       
                     if you want to avoid lossy file formats.
-                </TextBlock>
-            </DataTemplate>
-        </HubSection>
+                    </TextBlock>
+                </DataTemplate>
+            </HubSection>
 
-    </FlipView>
+        </FlipView>
+
+    </StackPanel>
 
     <Button x:Name="Button" Grid.Row="2" Padding="0" Width="Auto" Height="32" Foreground="Black" Background="#FFC003" HorizontalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
         Export

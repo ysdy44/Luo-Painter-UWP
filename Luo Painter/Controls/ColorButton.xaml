@@ -5,10 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="50"
-    d:DesignWidth="50"
-    Width="320" 
-    Height="420"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
     >
 
     <Grid.BorderBrush>
