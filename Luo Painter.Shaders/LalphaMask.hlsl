@@ -14,8 +14,8 @@ D2D_PS_ENTRY(main) {
 float4 area = D2DGetInput(0);
 //判断选区是否有颜色，如果有则返回效果图像素，否则返回原图像素
 if(area.a>0){
-return D2DGetInput(1);
-}
 return D2DGetInput(2);
+}
+return D2DGetInput(1);
 
 }
