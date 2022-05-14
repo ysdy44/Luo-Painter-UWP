@@ -92,6 +92,9 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
+        public readonly PixelBounds Bounds; // 0, 0, 250, 250
+        readonly CanvasRenderTarget Interpolation;
+
         private bool IsTransparent(Color color) => color.A == byte.MinValue;
         private bool IsSolid(Color color) => color.A == byte.MaxValue;
 
@@ -107,7 +110,7 @@ namespace Luo_Painter.Layers.Models
         });
         public Color[] GetInterpolationColors(IGraphicsEffectSource source)
         {
-            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            using (CanvasDrawingSession ds = this.Interpolation.CreateDrawingSession())
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
@@ -116,11 +119,21 @@ namespace Luo_Painter.Layers.Models
                 {
                     Scale = new Vector2(1f / BitmapLayer.Unit),
                     InterpolationMode = CanvasImageInterpolation.Anisotropic,
-                    Source = source,
+                    Source = new BorderEffect
+                    {
+                        ExtendX = CanvasEdgeBehavior.Mirror,
+                        ExtendY = CanvasEdgeBehavior.Mirror,
+                        Source = new CropEffect
+                        {
+                            SourceRectangle = new Rect(0, 0, this.Width, this.Height),
+                            BorderMode = EffectBorderMode.Hard,
+                            Source = source
+                        }
+                    }
                 });
             }
 
-            return this.TempRenderTarget.GetPixelColors(0, 0, this.XLength, this.YLength);
+            return this.Interpolation.GetPixelColors();
         }
 
         public PixelBoundsMode GetInterpolationBoundsMode(Color[] InterpolationColors) =>

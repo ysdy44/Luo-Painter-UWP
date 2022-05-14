@@ -123,6 +123,15 @@ namespace Luo_Painter.Layers.Models
             }
 
             this.Hits = new bool[this.XLength * this.YLength];
+
+            this.Bounds = new PixelBounds
+            {
+                Left = 0,
+                Top = 0,
+                Right = width,
+                Bottom = height,
+            };
+            this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
 
 
@@ -140,6 +149,18 @@ namespace Luo_Painter.Layers.Models
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                 ds.Blend = CanvasBlend.Copy;
                 ds.DrawImage(image);
+            }
+        }
+        public void DrawCopy(ICanvasImage image1, ICanvasImage image2, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(image1);
+                ds.Blend = CanvasBlend.SourceOver;
+                ds.DrawImage(image2);
             }
         }
 
