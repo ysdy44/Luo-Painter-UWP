@@ -107,66 +107,99 @@ namespace Luo_Painter
             };
         }
 
-        private void OptionClick(OptionType type)
+        private bool OptionClick(OptionType type)
         {
             if (this.LayerListView.SelectedItem is ILayer layer)
             {
                 if (layer.Type != LayerType.Bitmap)
                 {
                     this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                    return false;
                 }
-                else if (layer is BitmapLayer bitmapLayer)
+
+                if (layer is BitmapLayer bitmapLayer)
                 {
-                    Color[] InterpolationColors = bitmapLayer.GetInterpolationColorsBySource();
-                    PixelBoundsMode mode = bitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
+                    SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
 
-                    switch (mode)
+                    if (state is SelectionType.None)
                     {
-                        case PixelBoundsMode.Transarent:
-                            this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
-                            break;
-                        case PixelBoundsMode.Solid:
-                        case PixelBoundsMode.None:
-                            if (type.HasPreview())
-                            {
-                                switch (type)
-                                {
-                                    case OptionType.Transform:
-                                        this.SetTransform(bitmapLayer, InterpolationColors);
-                                        break;
-                                    case OptionType.GradientMapping:
-                                        this.SetGradientMapping();
-                                        break;
-                                    case OptionType.RippleEffect:
-                                        this.SetRippleEffect(bitmapLayer);
-                                        break;
-                                }
+                        this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                        return false;
+                    }
 
-                                this.BitmapLayer = bitmapLayer;
-                                this.OptionType = type;
-                                this.SetOptionType(type);
-                                this.SetFullScreenState(this.IsFullScreen, true);
-                                this.SetCanvasState(true);
-                            }
-                            else
+                    if (type.HasPreview() is false)
+                    {
+                        this.Option(type, mode, InterpolationColors, bitmapLayer);
+                        return true;
+                    }
+
+                    switch (type)
+                    {
+                        case OptionType.Transform:
+                            switch (state)
                             {
-                                this.Option(type, mode, InterpolationColors, bitmapLayer);
+                                case SelectionType.PixelBounds:
+                                    {
+                                        PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
+                                        PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds);
+                                        this.SetTransform(bounds);
+                                    }
+                                    break;
+                                case SelectionType.MarqueePixelBounds:
+                                    {
+                                        PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
+                                        PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
+                                        this.SetTransform(bounds);
+                                    }
+                                    break;
+                                default:
+                                    this.SetTransform(bitmapLayer.Bounds);
+                                    break;
                             }
+                            break;
+                        case OptionType.GradientMapping:
+                            this.SetGradientMapping();
+                            break;
+                        case OptionType.RippleEffect:
+                            this.SetRippleEffect(bitmapLayer);
                             break;
                     }
+
+                    this.BitmapLayer = bitmapLayer;
+                    this.SelectionType = state;
+                    this.OptionType = type;
+                    this.SetOptionType(type);
+                    this.SetFullScreenState(this.IsFullScreen, true);
+                    this.SetCanvasState(true);
+                    return true;
                 }
             }
-            else
-            {
-                this.Tip("No Layer", "Create a new Layer?");
-            }
+
+            this.Tip("No Layer", "Create a new Layer?");
+            return false;
         }
 
         private void Option(OptionType type, PixelBoundsMode mode, Color[] InterpolationColors, BitmapLayer bitmapLayer)
         {
             if (type.HasDifference())
             {
-                bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                switch (this.SelectionType)
+                {
+                    case SelectionType.MarqueePixelBounds:
+                        bitmapLayer.DrawCopy(new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
+                        {
+                            Source1 = this.Marquee.Source,
+                            Source2 = bitmapLayer.Origin,
+                        }, this.GetPreview(type, new AlphaMaskEffect
+                        {
+                            AlphaMask = this.Marquee.Source,
+                            Source = bitmapLayer.Origin,
+                        }));
+                        break;
+                    default:
+                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                        break;
+                }
                 bitmapLayer.Hit(bitmapLayer.GetInterpolationColors(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
                 {
                     Source1 = bitmapLayer.Source,
@@ -192,7 +225,20 @@ namespace Luo_Painter
                     case PixelBoundsMode.None:
                         bitmapLayer.Hit(InterpolationColors);
 
-                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                        switch (this.SelectionType)
+                        {
+                            case SelectionType.MarqueePixelBounds:
+                                bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                                {
+                                    Source1 = this.Marquee.Source,
+                                    Source2 = bitmapLayer.Origin,
+                                    Source3 = this.GetPreview(type, bitmapLayer.Origin)
+                                });
+                                break;
+                            default:
+                                bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                                break;
+                        }
                         int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
                         bitmapLayer.Flush();
                         bitmapLayer.RenderThumbnail();
