@@ -88,6 +88,22 @@ namespace Luo_Painter
             {
                 args.DrawingSession.Blend = CanvasBlend.Copy;
 
+                if (this.EditType != default)
+                {
+                    //@DPI 
+                    args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                    args.DrawingSession.Transform = this.Transformer.GetMatrix();
+
+                    args.DrawingSession.DrawImage(new OpacityEffect
+                    {
+                        Opacity = 0.5f,
+                        Source = this.GetTransformPreview(this.Marquee.Source)
+                    });
+
+                    args.DrawingSession.Transform = Matrix3x2.Identity;
+                    args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+                }
+
                 switch (this.OptionType)
                 {
                     case OptionType.None:
@@ -166,7 +182,7 @@ namespace Luo_Painter
                         using (ds.CreateLayer(1, this.Mesh.Geometry, this.Transformer.GetMatrix()))
                         {
                             // Layer
-                            if (this.BitmapLayer is null)
+                            if (this.EditType != default || this.BitmapLayer is null)
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                             else
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
@@ -175,7 +191,7 @@ namespace Luo_Painter
                 }
             };
         }
-       
+
         private ICanvasImage GetMezzanine()
         {
             if (this.OptionType == default)

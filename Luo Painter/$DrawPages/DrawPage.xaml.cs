@@ -121,6 +121,7 @@ namespace Luo_Painter
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.None;
+        EditType EditType { get; set; } = EditType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
 
         byte[] LiquefactionShaderCodeBytes;
