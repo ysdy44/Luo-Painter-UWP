@@ -40,7 +40,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
-                        <Setter Target="EditButton.FullScreen" Value="True"/>
                         <!--Foot-->
                         <Setter Target="ToolGroupSwitchPresenter2.CornerRadius" Value="0"/>
                         <Setter Target="ToolGroupSwitchPresenter2.Margin" Value="0"/>
@@ -54,8 +53,6 @@
                         <Setter Target="OptionPanel.Margin" Value="0"/>
                         <Setter Target="OptionPanel.HorizontalAlignment" Value="Stretch"/>
                         <!--Option-->
-                        <Setter Target= "EditButton.Orientation" Value= "Vertical" />
-
                         <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
 
                         <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
@@ -813,7 +810,7 @@
                 </local:ToolGroupSwitchPresenter>
             </elements:Expander>
             <elements:Expander x:Name="EditMenu" Title="Edit" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:EditButton x:Name="EditButton" Orientation="Horizontal" />
+                <controls:EditButton x:Name="EditButton" />
             </elements:Expander>
             <elements:Expander x:Name="OptionMenu" Title="Option" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <controls:OptionButton x:Name="OptionButton" />
