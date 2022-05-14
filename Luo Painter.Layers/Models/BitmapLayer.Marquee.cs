@@ -69,15 +69,25 @@ namespace Luo_Painter.Layers.Models
             };
         }
 
+        public IHistory Add(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession())
+            {
+                ds.DrawImage(marquee[type]);
+            }
+            this.Hit(interpolationColors);
 
-        public IHistory Clear(BitmapLayer marquee, Color[] interpolationColors)
+            return this.GetBitmapHistory();
+        }
+
+        public IHistory Clear(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
         {
             PixelBounds bounds = marquee.CreateInterpolationBounds(interpolationColors);
             Rect rect = bounds.ToRect(BitmapLayer.Unit);
 
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
-                ds.DrawImage(marquee.SourceRenderTarget, (float)rect.Left, (float)rect.Top, rect, 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
+                ds.DrawImage(marquee[type], (float)rect.Left, (float)rect.Top, rect, 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
             }
             this.Hit(interpolationColors);
 
@@ -86,23 +96,21 @@ namespace Luo_Painter.Layers.Models
 
         public IHistory Invert(Color color)
         {
-            this.TempRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.Clear(color);
-                ds.DrawImage(this.Temp, 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
+                ds.DrawImage(this.OriginRenderTarget, 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
             }
 
             return this.GetBitmapResetHistory();
         }
 
-        public IHistory Pixel(BitmapLayer bitmapLayer, Color color)
+        public IHistory Pixel(BitmapLayer bitmapLayer, Color color, BitmapType type = BitmapType.Source)
         {
-            this.TempRenderTarget.CopyPixelsFromBitmap(bitmapLayer.SourceRenderTarget);
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.Clear(color);
-                ds.DrawImage(this.Temp, 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationIn);
+                ds.DrawImage(bitmapLayer[type], 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationIn);
             }
 
             return this.GetBitmapResetHistory();
