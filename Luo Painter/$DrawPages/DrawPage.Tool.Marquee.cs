@@ -1,10 +1,11 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Elements;
+using Luo_Painter.Edits;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -73,25 +74,44 @@ namespace Luo_Painter
             this.MarqueeToolType = MarqueeToolType.None;
         }
 
-        private void SelectionFlood(Vector2 point, BitmapLayer bitmapLayer)
+        private bool SelectionFlood(Vector2 point, BitmapLayer bitmapLayer, bool isSubtract)
         {
             this.Position = this.ToPosition(point);
             bool result = bitmapLayer.FloodSelect(this.Position, Windows.UI.Colors.DodgerBlue);
-            if (result)
-            {
-                this.Marquee.CopyPixels(bitmapLayer, BitmapType.Temp);
 
-                // History
-                int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
-                this.Marquee.Flush();
-                this.Marquee.RenderThumbnail();
-
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
-            }
-            else
+            if (result is false)
             {
                 this.Tip("No Pixel", "The current Pixel is Transparent.");
+                return false;
+            }
+
+            ICanvasImage floodSelect = bitmapLayer.Temp;
+            Color[] interpolationColors = this.Marquee.GetInterpolationColors(floodSelect);
+            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+            switch (mode)
+            {
+                case PixelBoundsMode.Transarent:
+                    this.Tip("No Pixel", "The Marquee is Transparent.");
+                    return false;
+                case PixelBoundsMode.Solid:
+                    this.EditButton.Execute(isSubtract ? EditType.Deselect : EditType.All);
+                    return true;
+                default:
+                    // History
+                    int removes = this.History.Push
+                    (
+                        isSubtract ?
+                        this.Marquee.Clear(bitmapLayer, interpolationColors, BitmapType.Temp) :
+                        this.Marquee.Add(bitmapLayer, interpolationColors, BitmapType.Temp)
+                    );
+
+                    this.Marquee.Flush();
+                    this.Marquee.RenderThumbnail();
+
+                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                    return true;
             }
         }
 
