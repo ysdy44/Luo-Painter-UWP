@@ -113,7 +113,7 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        public void DrawHits(CanvasDrawingSession ds, Color color, CanvasTextFormat textFormat)
+        public void DrawHits(CanvasDrawingSession ds, Color color, CanvasTextFormat textFormat, Func<int, string> text)
         {
             for (int i = 0; i < this.Length; i++)
             {
@@ -127,7 +127,7 @@ namespace Luo_Painter.Layers.Models
                 int height = this.GetHeight(y);
 
                 ds.DrawRectangle(left, top, width, height, color);
-                ds.DrawText(i.ToString(), left, top, width, height, color, textFormat);
+                ds.DrawText(text(i), left, top, width, height, color, textFormat);
             }
         }
 

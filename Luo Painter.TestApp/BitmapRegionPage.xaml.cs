@@ -42,7 +42,7 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.DrawRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.Red);
 
-                this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat);
+                this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat, (i) => i.ToString());
             };
         }
 

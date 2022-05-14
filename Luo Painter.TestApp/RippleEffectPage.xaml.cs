@@ -133,7 +133,7 @@ namespace Luo_Painter.TestApp
                     Source2 = this.BitmapLayer.Source,
                 });
 
-                this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat);
+                this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat, (i) => i.ToString());
 
                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
                 Vector2 center = sender.Dpi.ConvertPixelsToDips(this.Center);
