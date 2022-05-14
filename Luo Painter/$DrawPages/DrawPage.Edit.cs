@@ -2,6 +2,7 @@
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System.Linq;
 using Windows.Graphics.Imaging;
@@ -328,12 +329,16 @@ namespace Luo_Painter
                         }
                         break;
                     case EditType.Feather:
+                        this.EditClick(EditType.Feather);
                         break;
                     case EditType.Transform:
+                        this.EditClick(EditType.Transform);
                         break;
                     case EditType.Grow:
+                        this.EditClick(EditType.Grow);
                         break;
                     case EditType.Shrink:
+                        this.EditClick(EditType.Shrink);
                         break;
                     case EditType.Union:
                         break;
@@ -371,6 +376,51 @@ namespace Luo_Painter
                         break;
                 }
             };
+        }
+
+        private bool EditClick(EditType type)
+        {
+            Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+            if (mode is PixelBoundsMode.Transarent)
+            {
+                this.Tip("No Pixel", "The Marquee is Transparent.");
+                return false;
+            }
+
+            switch (type)
+            {
+                case EditType.Feather:
+                    break;
+                case EditType.Transform:
+                    switch (mode)
+                    {
+                        case PixelBoundsMode.None:
+                            PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(interpolationColors);
+                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
+                            this.SetTransform(bounds);
+                            break;
+                        default:
+                            this.SetTransform(this.Marquee.Bounds);
+                            break;
+                    }
+
+                    this.OptionType = OptionType.Transform;
+                    this.SetOptionType(OptionType.Transform);
+                    break;
+                case EditType.Grow:
+                    break;
+                case EditType.Shrink:
+                    break;
+                default:
+                    break;
+            }
+
+            this.EditType = type;
+            this.SetFullScreenState(this.IsFullScreen, true);
+            this.SetCanvasState(true);
+            return true;
         }
 
     }

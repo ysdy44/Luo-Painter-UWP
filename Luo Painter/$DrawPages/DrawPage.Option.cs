@@ -77,6 +77,7 @@ namespace Luo_Painter
             this.OptionSecondaryButton.Click += (s, e) =>
             {
                 this.BitmapLayer = null;
+                this.EditType = default;
                 this.OptionType = default;
                 this.SetOptionType(default);
                 this.SetFullScreenState(this.IsFullScreen, false);
@@ -85,11 +86,21 @@ namespace Luo_Painter
 
             this.OptionPrimaryButton.Click += (s, e) =>
             {
-                Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
-                PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
-                this.Option(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+                if (this.EditType != default)
+                {
+                    Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                    PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
+                    this.Option(this.OptionType, mode, InterpolationColors, this.Marquee);
+                }
+                else if (this.OptionType != default)
+                {
+                    Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
+                    PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
+                    this.Option(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+                }
 
                 this.BitmapLayer = null;
+                this.EditType = default;
                 this.OptionType = default;
                 this.SetOptionType(default);
                 this.SetFullScreenState(this.IsFullScreen, false);
