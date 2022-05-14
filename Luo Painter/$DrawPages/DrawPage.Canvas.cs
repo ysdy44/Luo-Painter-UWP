@@ -168,14 +168,49 @@ namespace Luo_Painter
                             // Layer
                             if (this.BitmapLayer is null)
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
-                            else if (this.OptionType == OptionType.None)
-                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.PaintTool.GetInk(this.BitmapLayer)));
                             else
-                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetPreview(this.OptionType, this.BitmapLayer.Source)));
+                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
                         }
                     }
                 }
             };
+        }
+       
+        private ICanvasImage GetMezzanine()
+        {
+            if (this.OptionType == default)
+                return this.PaintTool.GetInk(this.BitmapLayer);
+
+            switch (this.SelectionType)
+            {
+                case SelectionType.MarqueePixelBounds:
+                    if (this.OptionType.HasDifference())
+                        return new CompositeEffect
+                        {
+                            Sources =
+                            {
+                                new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
+                                {
+                                    Source1 = this.Marquee.Source,
+                                    Source2 = this.BitmapLayer.Source,
+                                },
+                                this.GetPreview(this.OptionType, new AlphaMaskEffect
+                                {
+                                    AlphaMask =this.Marquee.Source,
+                                    Source = this.BitmapLayer.Source
+                                })
+                            }
+                        };
+                    else
+                        return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                        {
+                            Source1 = this.Marquee.Source,
+                            Source2 = this.BitmapLayer.Origin,
+                            Source3 = this.GetPreview(this.OptionType, this.BitmapLayer.Origin)
+                        };
+                default:
+                    return this.GetPreview(this.OptionType, this.BitmapLayer.Source);
+            }
         }
 
         private void ConstructOperator()
@@ -222,10 +257,6 @@ namespace Luo_Painter
             this.Operator.Double_Start += (center, space) =>
             {
                 this.Transformer.CachePinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-
                 this.SetCanvasState(true);
             };
             this.Operator.Double_Delta += (center, space) =>

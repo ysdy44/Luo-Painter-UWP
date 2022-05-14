@@ -119,6 +119,7 @@ namespace Luo_Painter
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
         bool IsFullScreen { get; set; }
+        SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
 
@@ -128,6 +129,8 @@ namespace Luo_Painter
         byte[] RippleEffectShaderCodeBytes;
         byte[] DifferenceShaderCodeBytes;
         byte[] DottedLineTransformShaderCodeBytes;
+        byte[] LalphaMaskShaderCodeBytes;
+        byte[] RalphaMaskShaderCodeBytes;
 
         private async Task CreateResourcesAsync()
         {
@@ -136,6 +139,8 @@ namespace Luo_Painter
             this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
             this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
             this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
+            this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
+            this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();
         }
         private async Task CreateDottedLineResourcesAsync()
         {
@@ -180,7 +185,7 @@ namespace Luo_Painter
             this.SetupPlacementTarget.Click += (s, e) => this.SetupMenu.Toggle(this.SetupPlacementTarget, ExpanderPlacementMode.Bottom);
             this.LayerPlacementTarget.Click += (s, e) => this.LayerMenu.Toggle(this.LayerPlacementTarget, ExpanderPlacementMode.Bottom);
             this.ColorPlacementTarget.Click += (s, e) => this.ColorMenu.Toggle(this.ColorPlacementTarget, ExpanderPlacementMode.Bottom);
-            
+
 
             // Drag and Drop 
             base.AllowDrop = true;
