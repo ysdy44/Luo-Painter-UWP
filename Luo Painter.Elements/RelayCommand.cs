@@ -19,11 +19,12 @@ namespace Luo_Painter.Elements
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter) => parameter != default;
+        public void Execute(T item) => this.Click?.Invoke(this, item);//Delegate
         public void Execute(object parameter)
         {
             if (parameter is T item)
             {
-                this.Click?.Invoke(this, item);//Delegate
+                this.Execute(item);
             }
         }
     }

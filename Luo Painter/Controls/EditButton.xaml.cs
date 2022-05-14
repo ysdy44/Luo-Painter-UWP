@@ -49,6 +49,7 @@ namespace Luo_Painter.Controls
             remove => this.EditTypeCommand.Click -= value;
             add => this.EditTypeCommand.Click += value;
         }
+        public void Execute(EditType item) => this.EditTypeCommand.Execute(item);
 
         //@Construct
         public EditButton()
