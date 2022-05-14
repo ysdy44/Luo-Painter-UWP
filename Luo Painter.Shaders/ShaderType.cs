@@ -19,5 +19,6 @@
         ReinhardEffect,
         SdrOverlayEffect,
         LalphaMask,
+        RalphaMask,
     }
 }

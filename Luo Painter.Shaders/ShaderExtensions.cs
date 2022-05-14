@@ -38,6 +38,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.ReinhardEffect: return "ms-appx:///Luo Painter.Shaders/ReinhardEffect.bin";
                 case ShaderType.SdrOverlayEffect: return "ms-appx:///Luo Painter.Shaders/SdrOverlayEffect.bin";
                 case ShaderType.LalphaMask: return "ms-appx:///Luo Painter.Shaders/LalphaMask.txt";
+                case ShaderType.RalphaMask: return "ms-appx:///Luo Painter.Shaders/RalphaMask.bin";
                 default: return null;
             }
         }
