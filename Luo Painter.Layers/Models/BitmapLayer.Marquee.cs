@@ -7,8 +7,37 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
+    public enum SelectionType
+    {
+        None,
+        All,
+        PixelBounds,
+        MarqueePixelBounds
+    }
+
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
+
+        public SelectionType GetSelection(BitmapLayer marquee, out Color[] InterpolationColors, out PixelBoundsMode mode)
+        {
+            InterpolationColors = marquee.GetInterpolationColorsBySource();
+            mode = marquee.GetInterpolationBoundsMode(InterpolationColors);
+
+            switch (mode)
+            {
+                case PixelBoundsMode.Solid: return SelectionType.All;
+                case PixelBoundsMode.None: return SelectionType.MarqueePixelBounds;
+                default:
+                    InterpolationColors = this.GetInterpolationColorsBySource();
+                    mode = this.GetInterpolationBoundsMode(InterpolationColors);
+                    switch (mode)
+                    {
+                        case PixelBoundsMode.Solid: return SelectionType.All;
+                        case PixelBoundsMode.None: return SelectionType.PixelBounds;
+                        default: return SelectionType.None;
+                    }
+            }
+        }
 
         public void Marquee(Vector2 position, Vector2 targetPosition, float strokeWidth, bool isErasing)
         {
