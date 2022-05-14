@@ -345,11 +345,17 @@
                 </Grid>
             </local:ToolGroupCase>
             <local:ToolGroupCase GroupValue="Marquee">
-                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0">
-                    <tools:ElementIcon Type="New"/>
-                    <tools:ElementIcon Type="Union"/>
-                    <tools:ElementIcon Type="Exclude"/>
-                    <tools:ElementIcon Type="Simultaneously"/>
+                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0">
+                    <tools:ElementItem Type="New"/>
+                    <tools:ElementItem Type="Union"/>
+                    <tools:ElementItem Type="Exclude"/>
+                    <tools:ElementItem Type="Simultaneously"/>
+                </ListBox>
+            </local:ToolGroupCase>
+            <local:ToolGroupCase GroupValue="Selection">
+                <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0">
+                    <tools:ElementItem Type="Add"/>
+                    <tools:ElementItem Type="Subtract"/>
                 </ListBox>
             </local:ToolGroupCase>
             <local:ToolGroupCase GroupValue="Vector" Value="View">
