@@ -104,19 +104,24 @@ namespace Luo_Painter
                     args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
                 }
 
-                switch (this.OptionType)
+                switch (this.FootType)
                 {
-                    case OptionType.None:
-                        //@DPI 
-                        if (this.MarqueeToolType == MarqueeToolType.None) break;
-
-                        args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                        break;
-                    case OptionType.Transform:
+                    case FootType.MarqueeTransform:
                         this.DrawTransform(sender, args.DrawingSession);
                         break;
-                    case OptionType.RippleEffect:
+                    case FootType.Transform:
+                        this.DrawTransform(sender, args.DrawingSession);
+                        break;
+                    case FootType.GradientMapping:
+                        break;
+                    case FootType.RippleEffect:
                         this.DrawRippleEffect(sender, args.DrawingSession);
+                        break;
+                    case FootType.Marquee:
+                        //@DPI 
+                        if (this.MarqueeToolType == default) break;
+
+                        args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
                         break;
                     default:
                         break;
@@ -200,7 +205,7 @@ namespace Luo_Painter
             switch (this.SelectionType)
             {
                 case SelectionType.MarqueePixelBounds:
-                    if (this.OptionType.HasDifference())
+                    if (this.FootType.HasDifference())
                         return new CompositeEffect
                         {
                             Sources =
@@ -210,9 +215,9 @@ namespace Luo_Painter
                                     Source1 = this.Marquee.Source,
                                     Source2 = this.BitmapLayer.Source,
                                 },
-                                this.GetPreview(this.OptionType, new AlphaMaskEffect
+                                this.GetPreview(this.FootType, new AlphaMaskEffect
                                 {
-                                    AlphaMask =this.Marquee.Source,
+                                    AlphaMask = this.Marquee.Source,
                                     Source = this.BitmapLayer.Source
                                 })
                             }
@@ -222,10 +227,10 @@ namespace Luo_Painter
                         {
                             Source1 = this.Marquee.Source,
                             Source2 = this.BitmapLayer.Origin,
-                            Source3 = this.GetPreview(this.OptionType, this.BitmapLayer.Origin)
+                            Source3 = this.GetPreview(this.FootType, this.BitmapLayer.Origin)
                         };
                 default:
-                    return this.GetPreview(this.OptionType, this.BitmapLayer.Source);
+                    return this.GetPreview(this.FootType, this.BitmapLayer.Source);
             }
         }
 

@@ -50,14 +50,18 @@ namespace Luo_Painter
                                         bitmapLayer.ClearThumbnail(Colors.Transparent);
                                         break;
                                 }
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                this.UndoButton.IsEnabled = this.History.CanUndo;
+                                this.RedoButton.IsEnabled = this.History.CanRedo;
+
+                                this.PhaseButton.IsEnabled = true;
                             }
-
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-
-                            this.PhaseButton.IsEnabled = true;
+                            else
+                            {
+                                this.Tip("No Layer", "Create a new Layer?");
+                            }
                         }
                         break;
                     case EditType.Duplicate:
@@ -81,6 +85,10 @@ namespace Luo_Painter
 
                                 this.UndoButton.IsEnabled = this.History.CanUndo;
                                 this.RedoButton.IsEnabled = this.History.CanRedo;
+                            }
+                            else
+                            {
+                                this.Tip("No Layer", "Create a new Layer?");
                             }
                         }
                         break;
@@ -407,9 +415,6 @@ namespace Luo_Painter
                             this.SetTransform(this.Marquee.Bounds);
                             break;
                     }
-
-                    this.OptionType = OptionType.Transform;
-                    this.SetOptionType(OptionType.Transform);
                     break;
                 case EditType.Grow:
                     break;
@@ -419,7 +424,10 @@ namespace Luo_Painter
                     break;
             }
 
+            this.FootType = this.SetFootType(type, default, this.ToolType);
             this.EditType = type;
+            this.OptionType = default;
+            this.SetOptionType(default);
             this.SetCanvasState(true);
             return true;
         }
