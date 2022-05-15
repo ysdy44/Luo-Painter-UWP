@@ -110,26 +110,17 @@ namespace Luo_Painter
             };
             this.FullScreenButton.Click += async (s, e) =>
             {
-                if (this.OptionType == default)
+                if (this.FootType.HasHead()) return;
+
+                if (this.IsFullScreen)
                 {
-                    if (this.IsFullScreen)
-                    {
-                        this.IsFullScreen = false;
-                        this.SetFullScreenState(false);
-                    }
-                    else
-                    {
-                        this.IsFullScreen = true;
-                        this.SetFullScreenState(true);
-                    }
+                    this.IsFullScreen = false;
+                    this.SetFullScreenState(false);
                 }
                 else
                 {
-                    this.IsFullScreen = false;
-                    this.OptionType = default;
-                    this.SetOptionType(default);
-                    this.SetFullScreenState(false);
-                    this.SetCanvasState(default);
+                    this.IsFullScreen = true;
+                    this.SetFullScreenState(true);
                 }
 
                 this.FullScreenKey.IsEnabled = false;

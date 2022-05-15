@@ -34,10 +34,20 @@ namespace Luo_Painter
                 this.FootSwitchPresenter2.Value = type;
             }
 
+            if (type.HasHead())
+            {
+                this.FootHead.Visibility = Visibility.Visible;
+                this.HeadLeftScrollViewer.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.FootHead.Visibility = Visibility.Collapsed;
+                this.HeadLeftScrollViewer.Visibility = Visibility.Visible;
+            }
+
             this.FootTransform2.X = this.FootTransform.X = 0;
             this.FootTransform2.Y = this.FootTransform.Y = 0;
 
-            this.FootHead.Visibility = type.HasHead() ? Visibility.Visible : Visibility.Collapsed;
             return type;
         }
 
