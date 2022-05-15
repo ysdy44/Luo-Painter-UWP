@@ -39,7 +39,37 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--Head-->
+                        <Setter Target = "HeadLeftTransform.X" Value="-60"/>
+                        <Setter Target = "HeadLeftTransform.Y" Value="49"/>
+                        
+                        <Setter Target = "HeadLeftScrollViewer.(Grid.Column)" Value="2"/>
+                        <Setter Target = "HeadLeftScrollViewer.Padding" Value="24,0"/>
+                        <Setter Target = "HeadLeftScrollViewer.HorizontalAlignment" Value="Left"/>
+                        <Setter Target = "HeadLeftScrollViewer.VerticalAlignment" Value="Top"/>
+                        <Setter Target = "HeadLeftScrollViewer.BorderThickness" Value="1,0,1,1"/>
+                        <Setter Target = "HeadLeftScrollViewer.BorderBrush" Value="{ThemeResource AppStroke}"/>
+                        <Setter Target = "HeadLeftScrollViewer.Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
+
+                        <Setter Target = "SettingButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+                        <Setter Target = "UndoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+                        <Setter Target = "RedoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+                        <Setter Target = "FullScreenButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+
+                        <!--Head-->
+                        <Setter Target = "ExportPlacementTarget.Width" Value="60"/>
+                        
+                        <Setter Target = "ToolPlacementTarget.Width" Value="60"/>
+                        <Setter Target = "EditPlacementTarget.Width" Value="60"/>
+                        <Setter Target = "OptionPlacementTarget.Width" Value="60"/>
+                        <Setter Target = "MoreOptionPlacementTarget.Width" Value="60"/>
+                        <Setter Target = "SetupPlacementTarget.Width" Value="60"/>
+                        <Setter Target = "LayerPlacementTarget.Width" Value="60"/>
+                        <Setter Target = "ColorPlacementTarget.Width" Value="60"/>
+
+                        <!--Expander-->
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
+
                         <!--Foot-->
                         <Setter Target="ToolGroupSwitchPresenter2.CornerRadius" Value="0"/>
                         <Setter Target="ToolGroupSwitchPresenter2.Margin" Value="0"/>
@@ -79,6 +109,27 @@
                         <AdaptiveTrigger MinWindowWidth="600"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--Head-->
+                        <Setter Target = "HeadLeftTransform.X" Value="-70"/>
+                        <Setter Target = "HeadLeftTransform.Y" Value="49"/>
+                        
+                        <Setter Target = "HeadLeftScrollViewer.(Grid.Column)" Value="2"/>
+                        <Setter Target = "HeadLeftScrollViewer.Padding" Value="24,0"/>
+                        <Setter Target = "HeadLeftScrollViewer.HorizontalAlignment" Value="Left"/>
+                        <Setter Target = "HeadLeftScrollViewer.VerticalAlignment" Value="Top"/>
+                        <Setter Target = "HeadLeftScrollViewer.BorderThickness" Value="1,0,1,1"/>
+                        <Setter Target = "HeadLeftScrollViewer.BorderBrush" Value="{ThemeResource AppStroke}"/>
+                        <Setter Target = "HeadLeftScrollViewer.Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
+                        
+                        <Setter Target = "SettingButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+                        <Setter Target = "UndoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+                        <Setter Target = "RedoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+                        <Setter Target = "FullScreenButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
+
+                        <!--Expander-->
+                        <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
+                        <Setter Target="ExpanderLightDismissOverlay.Half" Value="True"/>
+
                         <!--Foot-->
                         <Setter Target="ToolGroupSwitchPresenter2.CornerRadius" Value="8,8,0,0"/>
                         <Setter Target="ToolGroupSwitchPresenter2.Margin" Value="0"/>
@@ -138,8 +189,11 @@
                 <VisualState x:Name="FullScreen">
                     <VisualState.Setters>
                         <Setter Target = "ApplicationView.IsAccent" Value="True"/>
+                        
                         <Setter Target = "HeadTransform.Y" Value="-50"/>
-                        <Setter Target = "FootTransform.Y" Value="50"/>
+                        <Setter Target = "FootTransform.Y" Value="100"/>
+                        <Setter Target = "HeadLeftScrollViewer.Opacity" Value="0"/>
+                        
                         <Setter Target = "UnFullScreenButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -150,9 +204,12 @@
                         <Setter Target = "OptionBorder.Visibility" Value="Visible"/>
                         <Setter Target = "OptionPanel.Visibility" Value="Visible"/>
                         <Setter Target = "OptionSecondaryButton.IsEnabled" Value="True"/>
+                        
                         <Setter Target = "ApplicationView.IsAccent" Value="True"/>
+                        
                         <Setter Target = "HeadTransform.Y" Value="-50"/>
-                        <Setter Target = "FootTransform.Y" Value="50"/>
+                        <Setter Target = "FootTransform.Y" Value="100"/>
+                        <Setter Target = "HeadLeftScrollViewer.Opacity" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -174,7 +231,7 @@
                         </VisualTransition.GeneratedEasingFunction>
                         <Storyboard>
                             <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="-50" Storyboard.TargetProperty="Y" Storyboard.TargetName="HeadTransform" d:IsOptimized="True"/>
-                            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="50" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
+                            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="100" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
                         </Storyboard>
                     </VisualTransition>
                     <!--Writeable-->
@@ -184,7 +241,7 @@
                         </VisualTransition.GeneratedEasingFunction>
                         <Storyboard>
                             <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="-50" Storyboard.TargetProperty="Y" Storyboard.TargetName="HeadTransform" d:IsOptimized="True"/>
-                            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="50" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
+                            <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="100" Storyboard.TargetProperty="Y" Storyboard.TargetName="FootTransform" d:IsOptimized="True"/>
                         </Storyboard>
                     </VisualTransition>
                 </VisualStateGroup.Transitions>
@@ -221,8 +278,8 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Button x:Name="ExportPlacementTarget" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
@@ -232,24 +289,30 @@
                 <SymbolIcon Symbol="NewWindow"/>
             </Button>
 
-            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+            <ScrollViewer x:Name="HeadLeftScrollViewer" Grid.Column="1" MinHeight="40" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+                <UIElement.RenderTransformOrigin>
+                    0.5,0.5
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <TranslateTransform x:Name="HeadLeftTransform" X="0" Y="0"/>
+                </UIElement.RenderTransform>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="SettingButton" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <Button x:Name="SettingButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                         <SymbolIcon Symbol="Setting"/>
                     </Button>
-                    <Button x:Name="UndoButton" IsEnabled="False" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
-                    <Button x:Name="RedoButton" IsEnabled="False" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Redo"/>
                     </Button>
-                    <Button x:Name="FullScreenButton" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <Button x:Name="FullScreenButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape"/>
                         </UIElement.KeyboardAccelerators>
