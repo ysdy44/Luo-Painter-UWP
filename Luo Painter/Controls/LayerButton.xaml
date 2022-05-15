@@ -10,6 +10,7 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
+    Spacing="8"
     >
 
     <Grid Height="80">
@@ -28,16 +29,15 @@
         </TextBox>
     </Grid>
 
-    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-
-    <elements:ThumbSlider x:Name="OpacitySliderCore" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
-        <FrameworkElement.Tag>
-            Opacity
-        </FrameworkElement.Tag>
+    <!--Opacity-->
+    <TextBlock x:Name="OpacityTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+        Opacity
+    </TextBlock>
+    <elements:ThumbSlider x:Name="OpacitySliderCore" Margin="0,-12" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
             <Button Content="{x:Bind OpacitySliderCore.Value, Mode=OneWay}" 
                         Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                 <Button.Flyout>
                     <Flyout>
 
@@ -46,16 +46,19 @@
             </Button>
         </Slider.Header>
     </elements:ThumbSlider>
+    <ListView x:Name="ListViewListView" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}">
+        <x:Int32>0</x:Int32>
+        <x:Int32>25</x:Int32>
+        <x:Int32>50</x:Int32>
+        <x:Int32>75</x:Int32>
+        <x:Int32>100</x:Int32>
+    </ListView>
 
-    <ListView x:Name="BlendModeListView"                             
-                  CornerRadius="4"                               
-                  BorderThickness="1"                                 
-                  BorderBrush="{ThemeResource AppStroke}"                               
-                  Background="{ThemeResource SystemAltLowColor}"                              
-                  IsItemClickEnabled="True"                              
-                  SelectionMode="Single"            
-                  ScrollViewer.VerticalScrollBarVisibility="Hidden" 
-                  >
+    <!--BlendMode-->
+    <TextBlock x:Name="BlendModeTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+        Blend Mode
+    </TextBlock>
+    <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
 
         <ItemsControl.ItemsSource>
             <tools:BlendList x:Name="BlendCollection">
@@ -70,24 +73,6 @@
                 <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
             </tools:BlendList>
         </ItemsControl.ItemsSource>
-
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="MinWidth" Value="70"/>
-                <Setter Property="MinHeight" Value="40"/>
-                <Setter Property="Height" Value="40"/>
-                <Setter Property="Padding" Value="20,4"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-            </Style>
-        </ItemsControl.ItemContainerStyle>
-
-        <ItemsControl.ItemContainerTransitions>
-            <TransitionCollection>
-
-            </TransitionCollection>
-        </ItemsControl.ItemContainerTransitions>
 
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="effects:BlendEffectMode">

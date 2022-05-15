@@ -10,21 +10,22 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    Width="320"
+    Spacing="8"
     >
 
-    <Button x:Name="Button" Style="{StaticResource TextBlockButtonStyle}">
-        <canvas:CanvasControl x:Name="CanvasControl" Width="320" Height="80" />
+    <Button x:Name="Button" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Style="{StaticResource TextBlockButtonStyle}">
+        <canvas:CanvasControl x:Name="CanvasControl" Width="320" Height="68" />
     </Button>
 
-    <Slider x:Name="SizeSlider" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppDefaultSliderStyle}" >
-        <FrameworkElement.Tag>
-            Size
-        </FrameworkElement.Tag>
+    <!--Size-->
+    <TextBlock x:Name="SizeTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+        Size
+    </TextBlock>
+    <Slider x:Name="SizeSlider" Margin="0,-12" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
             <Button Content="{x:Bind SizeSlider.Value, Mode=OneWay}" 
                         Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                 <Button.Flyout>
                     <Flyout>
 
@@ -34,14 +35,15 @@
         </Slider.Header>
     </Slider>
 
-    <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
-        <FrameworkElement.Tag>
-            Opacity
-        </FrameworkElement.Tag>
+    <!--Opacity-->
+    <TextBlock x:Name="OpacityTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+        Opacity
+    </TextBlock>
+    <Slider x:Name="OpacitySlider" Margin="0,-12" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
             <Button Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" 
                         Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush= "{ThemeResource AppStroke}" Background= "{ThemeResource SystemAltLowColor}" >
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                 <Button.Flyout>
                     <Flyout>
 
@@ -51,15 +53,11 @@
         </Slider.Header>
     </Slider>
 
-    <ListView x:Name="BlendModeListView"                             
-                  CornerRadius="4"                               
-                  BorderThickness="1"                                 
-                  BorderBrush="{ThemeResource AppStroke}"                               
-                  Background="{ThemeResource SystemAltLowColor}"                              
-                  IsItemClickEnabled="True"                              
-                  SelectionMode="Single"            
-                  ScrollViewer.VerticalScrollBarVisibility="Hidden" 
-                  >
+    <!--BlendMode-->
+    <TextBlock x:Name="BlendModeTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+        Blend Mode
+    </TextBlock>
+    <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
 
         <ItemsControl.ItemsSource>
             <local:BlendList x:Name="BlendCollection">
@@ -74,24 +72,6 @@
                 <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
             </local:BlendList>
         </ItemsControl.ItemsSource>
-
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="MinWidth" Value="70"/>
-                <Setter Property="MinHeight" Value="40"/>
-                <Setter Property="Height" Value="40"/>
-                <Setter Property="Padding" Value="20,4"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-            </Style>
-        </ItemsControl.ItemContainerStyle>
-
-        <ItemsControl.ItemContainerTransitions>
-            <TransitionCollection>
-
-            </TransitionCollection>
-        </ItemsControl.ItemContainerTransitions>
 
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="effects:BlendEffectMode">

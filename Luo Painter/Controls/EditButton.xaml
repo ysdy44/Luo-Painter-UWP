@@ -13,18 +13,7 @@
     <FrameworkElement.Resources>
         <!--Command-->
         <local:EditTypeCommand x:Name="EditTypeCommand"/>
-        <!--Style-->
-        <Style TargetType= "local:EditItem" >
-            <Setter Property= "Margin" Value= "0,1" />
-            <Setter Property= "Padding" Value= "12,0" />
-            <Setter Property= "Height" Value= "40" />
-            <Setter Property= "BorderThickness" Value= "1" />
-            <Setter Property= "BorderBrush" Value= "{ThemeResource AppStroke}" />
-            <Setter Property= "Background" Value= "{ThemeResource SystemAltLowColor}" />
-            <Setter Property= "HorizontalAlignment" Value= "Stretch" />
-            <Setter Property= "HorizontalContentAlignment" Value= "Left" />
-        </Style >
-    </FrameworkElement.Resources >
+    </FrameworkElement.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="50"/>
@@ -40,143 +29,141 @@
         </ListBoxItem>
     </ListBox>
 
-    <FlipView x:Name="FlipView" Grid.Row="1" Height="414" Background="Transparent" >
+    <FlipView x:Name="FlipView" Grid.Row="1" Height="416" Background="Transparent" >
         <FlipViewItem>
-            <Grid>
+            <Grid ColumnSpacing="6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="6"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <TextBlock x:Name= "EditEditTextBlock" Margin="4,0" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
+                <StackPanel Spacing="2">
+                    <TextBlock x:Name="EditEditTextBlock" Margin="4,2" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                         Edit
                     </TextBlock>
-                    <local:EditItem Type = "Cut" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Cut" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "X" />
+                            <KeyboardAccelerator Modifiers="Control" Key="X" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Duplicate" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Duplicate" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "J" />
+                            <KeyboardAccelerator Modifiers="Control" Key="J" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Copy" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Copy" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "C" />
+                            <KeyboardAccelerator Modifiers="Control" Key="C" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Paste" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Paste" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "V" />
+                            <KeyboardAccelerator Modifiers="Control" Key="V" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-                    <local:EditItem Type = "Clear" Command= "{x:Bind EditTypeCommand}" >
+                    <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+                    <local:EditItem Type="Clear" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Key= "Back" />
+                            <KeyboardAccelerator Key="Back" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Remove" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Remove" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Key= "Delete" />
+                            <KeyboardAccelerator Key="Delete" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-                    <local:EditItem Type = "Extract" Command= "{x:Bind EditTypeCommand}" >
+                    <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+                    <local:EditItem Type="Extract" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "E" />
+                            <KeyboardAccelerator Modifiers="Control" Key="E" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Merge" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Merge" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "M" />
+                            <KeyboardAccelerator Modifiers="Control" Key="M" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Flatten" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Flatten" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "F" />
+                            <KeyboardAccelerator Modifiers="Control" Key="F" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
                 </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <TextBlock x:Name= "EditSelectTextBlock" Margin="4,0" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock x:Name="EditSelectTextBlock" Margin="4,2" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                         Select
                     </TextBlock>
-                    <local:EditItem Type = "All" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="All" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "A" />
+                            <KeyboardAccelerator Modifiers="Control" Key="A" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Deselect" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Deselect" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "D" />
+                            <KeyboardAccelerator Modifiers="Control" Key="D" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Invert" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Invert" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "I" />
+                            <KeyboardAccelerator Modifiers="Control" Key="I" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Pixel" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Pixel" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "P" />
+                            <KeyboardAccelerator Modifiers="Control" Key="P" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-                    <local:EditItem Type = "Feather" Command= "{x:Bind EditTypeCommand}" >
+                    <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+                    <local:EditItem Type="Feather" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <local:EditItem Type = "Transform" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Transform" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <local:EditItem Type = "Grow" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Grow" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <local:EditItem Type = "Shrink" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Shrink" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
                 </StackPanel>
             </Grid>
         </FlipViewItem>
         <FlipViewItem>
-            <Grid>
+            <Grid ColumnSpacing="6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="6"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <TextBlock x:Name= "EditCombineTextBlock" Margin="4,0" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
+                <StackPanel Spacing="2">
+                    <TextBlock x:Name="EditCombineTextBlock" Margin="4,2" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                         Combine
                     </TextBlock>
-                    <local:EditItem Type = "Union" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Union" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <local:EditItem Type = "Exclude" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Exclude" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <local:EditItem Type = "Xor" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Xor" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <local:EditItem Type = "Intersect" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Intersect" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
-                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-                    <local:EditItem Type = "ExpandStroke" Command= "{x:Bind EditTypeCommand}" >
+                    <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+                    <local:EditItem Type="ExpandStroke" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                     </local:EditItem>
                 </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <TextBlock x:Name= "EditGroupTextBlock" Margin="4,0" Foreground="{ThemeResource AppForeground}" Style= "{StaticResource BaseTextBlockStyle}" >
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock x:Name="EditGroupTextBlock" Margin="4,2" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                         Group
                     </TextBlock>
-                    <local:EditItem Type = "Group" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Group" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "R" />
+                            <KeyboardAccelerator Modifiers="Control" Key="R" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <local:EditItem Type = "Ungroup" Command= "{x:Bind EditTypeCommand}" >
+                    <local:EditItem Type="Ungroup" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "U" />
+                            <KeyboardAccelerator Modifiers="Control" Key="U" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
-                    <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-                    <local:EditItem Type = "Release" Command= "{x:Bind EditTypeCommand}" >
+                    <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+                    <local:EditItem Type="Release" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers= "Control" Key= "R" />
+                            <KeyboardAccelerator Modifiers="Control" Key="R" />
                         </UIElement.KeyboardAccelerators >
                     </local:EditItem>
                 </StackPanel>

@@ -14,21 +14,10 @@
     <FrameworkElement.Resources>
         <!--Command-->
         <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
-        <!--Style-->
-        <Style TargetType= "local:OptionItem" >
-            <Setter Property= "Margin" Value= "0,1" />
-            <Setter Property= "Padding" Value= "12,0" />
-            <Setter Property= "Height" Value= "40" />
-            <Setter Property= "BorderThickness" Value= "1" />
-            <Setter Property= "BorderBrush" Value= "{ThemeResource AppStroke}" />
-            <Setter Property= "Background" Value= "{ThemeResource SystemAltLowColor}" />
-            <Setter Property= "HorizontalAlignment" Value= "Stretch" />
-            <Setter Property= "HorizontalContentAlignment" Value= "Left" />
-        </Style >
     </FrameworkElement.Resources>
 
-    <local:OptionItem Type = "Transform" Command= "{x:Bind OptionTypeCommand}" />
-    <local:OptionItem Type = "GradientMapping" Command= "{x:Bind OptionTypeCommand}" />
-    <local:OptionItem Type = "RippleEffect" Command= "{x:Bind OptionTypeCommand}" />
+    <local:OptionItem Type = "Transform" Command= "{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+    <local:OptionItem Type = "GradientMapping" Command= "{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+    <local:OptionItem Type = "RippleEffect" Command= "{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
 
 </StackPanel>
