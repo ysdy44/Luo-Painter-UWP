@@ -27,7 +27,6 @@
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="FontWeight" Value="Medium"/>
-                    <Setter Property="Padding" Value="10,2"/>
                     <Setter Property="Height" Value="40"/>
                     <Setter Property="MinWidth" Value="72"/>
                     <Setter Property="Padding" Value="14,2" />
@@ -40,6 +39,78 @@
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--ListView-->
+    <Style x:Key="AppListBoxListViewStyle"  TargetType="ListView">
+        <Setter Property="SelectedIndex" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="SelectionMode" Value="None"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <elements:FlexPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="FontWeight" Value="Medium"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="MinWidth" Value="50"/>
+                    <Setter Property="Padding" Value="14,2" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerTransitions">
+            <Setter.Value>
+                <TransitionCollection>
+
+                </TransitionCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--ListView-->
+    <Style x:Key="AppListViewStyle"  TargetType="ListView">
+        <Setter Property="SelectedIndex" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="MinWidth" Value="70"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="Padding" Value="20,4"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerTransitions">
+            <Setter.Value>
+                <TransitionCollection>
+
+                </TransitionCollection>
             </Setter.Value>
         </Setter>
     </Style>
@@ -63,11 +134,14 @@
 
 
     <!--ContentDialog-->
+    <Thickness x:Key="ContentDialogPadding">16,14</Thickness>
+    <x:Double x:Key="ContentDialogMinWidth">352</x:Double>
     <Style x:Key="AppContentDialogStyle" TargetType="ContentDialog">
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{ThemeResource AppBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
         <Setter Property="Background" Value="{ThemeResource AppAcrylicOverlayBrush}" />
         <Setter Property="PrimaryButtonStyle" Value="{ThemeResource TextBlockButtonStyle}" />
         <Setter Property="SecondaryButtonStyle" Value="{ThemeResource TextBlockButtonStyle}" />
@@ -134,8 +208,9 @@
     <!--TextBox-->
     <Style TargetType="TextBox">
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
         <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
     </Style>
 
@@ -172,8 +247,20 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}" />
-        <Setter Property="Background" Value="{ThemeResource AppBackgroundDark}" />
+        <Setter Property="Background" Value="{ThemeResource AppBackgroundMediumDark}" />
     </Style>
+
+
+    <!--Button-->
+    <Style x:Key="AppBorderButtonStyle" TargetType="Button" >
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+    </Style >
 
 
     <!--Line-->
