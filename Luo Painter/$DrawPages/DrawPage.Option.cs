@@ -15,66 +15,63 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        double StartingOptionTitleX;
-        double StartingOptionTitleY;
+        double StartingFootTitleX;
+        double StartingFootTitleY;
 
         private void SetOptionType(OptionType type)
         {
-            this.OptionSwitchPresenter.Value = type;
-            this.OptionSwitchPresenter2.Value = type;
-
             if (type.HasIcon())
             {
-                this.OptionTransform2.X = this.OptionTransform.X = 0;
-                this.OptionTransform2.Y = this.OptionTransform.Y = 0;
+                this.FootTransform2.X = this.FootTransform.X = 0;
+                this.FootTransform2.Y = this.FootTransform.Y = 0;
 
                 this.OptionIcon.Type = type;
                 this.OptionTextBlock.Text = type.ToString();
-                this.OptionTitle.Visibility = Visibility.Visible;
+                this.FootTitle.Visibility = Visibility.Visible;
             }
             else
             {
-                this.OptionTitle.Visibility = Visibility.Collapsed;
+                this.FootTitle.Visibility = Visibility.Collapsed;
             }
         }
 
         private void ConstructOptions()
         {
-            this.OptionPanel.SizeChanged += (s, e) =>
+            this.FootPanel.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                this.OptionBorder.Width = e.NewSize.Width;
+                this.FootBorder.Width = e.NewSize.Width;
                 if (e.NewSize.Height == e.PreviousSize.Height) return;
 
-                this.OptionBorder.Height = e.NewSize.Height;
-                this.OptionTransform2.X = this.OptionTransform.X = 0;
-                this.OptionTransform2.Y = this.OptionTransform.Y = 0;
+                this.FootBorder.Height = e.NewSize.Height;
+                this.FootTransform2.X = this.FootTransform.X = 0;
+                this.FootTransform2.Y = this.FootTransform.Y = 0;
             };
 
-            this.OptionTitle.ManipulationStarted += (s, e) =>
+            this.FootTitle.ManipulationStarted += (s, e) =>
             {
-                this.StartingOptionTitleX = this.OptionTransform.X;
-                this.StartingOptionTitleY = this.OptionTransform.Y;
+                this.StartingFootTitleX = this.FootTransform.X;
+                this.StartingFootTitleY = this.FootTransform.Y;
             };
-            this.OptionTitle.ManipulationDelta += (s, e) =>
+            this.FootTitle.ManipulationDelta += (s, e) =>
             {
-                if (this.OptionPanel.Margin.Bottom == 0)
+                if (this.FootPanel.Margin.Bottom == 0)
                 {
-                    this.OptionTransform2.Y = this.OptionTransform.Y = System.Math.Clamp(this.StartingOptionTitleY + e.Cumulative.Translation.Y, 0, this.OptionBorder.Height - 50);
+                    this.FootTransform2.Y = this.FootTransform.Y = System.Math.Clamp(this.StartingFootTitleY + e.Cumulative.Translation.Y, 0, this.FootBorder.Height - 50);
                 }
                 else
                 {
-                    this.OptionTransform2.X = this.OptionTransform.X = this.StartingOptionTitleX + e.Cumulative.Translation.X;
-                    this.OptionTransform2.Y = this.OptionTransform.Y = this.StartingOptionTitleY + e.Cumulative.Translation.Y;
+                    this.FootTransform2.X = this.FootTransform.X = this.StartingFootTitleX + e.Cumulative.Translation.X;
+                    this.FootTransform2.Y = this.FootTransform.Y = this.StartingFootTitleY + e.Cumulative.Translation.Y;
                 }
             };
-            this.OptionTitle.ManipulationCompleted += (s, e) =>
+            this.FootTitle.ManipulationCompleted += (s, e) =>
             {
             };
 
-            this.OptionSecondaryButton.Click += (s, e) =>
+            this.FootSecondaryButton.Click += (s, e) =>
             {
                 this.BitmapLayer = null;
                 this.EditType = default;
@@ -83,7 +80,7 @@ namespace Luo_Painter
                 this.SetCanvasState(false);
             };
 
-            this.OptionPrimaryButton.Click += (s, e) =>
+            this.FootPrimaryButton.Click += (s, e) =>
             {
                 if (this.EditType != default)
                 {

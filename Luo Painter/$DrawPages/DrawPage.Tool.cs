@@ -27,7 +27,11 @@ namespace Luo_Painter
                 this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
 
                 this.ToolGroupSwitchPresenter.EvaluateCases(groupType, type);
-                this.ToolGroupSwitchPresenter2.EvaluateCases(groupType, type);
+
+                this.EditType = default;
+                this.OptionType = default;
+                this.SetOptionType(default);
+                this.SetCanvasState(default);
             };
             this.ToolListView.Construct(this.ToolType);
         }

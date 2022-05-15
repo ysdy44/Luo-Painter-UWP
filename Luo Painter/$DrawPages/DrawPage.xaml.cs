@@ -29,7 +29,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace Luo_Painter
 {
     [ContentProperty(Name = nameof(Content))]
-    internal class OptionCase : DependencyObject, ICase<OptionType>
+    internal class FootCase : DependencyObject, ICase<FootType>
     {
         public object Content
         {
@@ -37,15 +37,15 @@ namespace Luo_Painter
             set => base.SetValue(ContentProperty, value);
         }
         /// <summary> Identifies the <see cref="Content"/> property. </summary>
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(OptionCase), new PropertyMetadata(null));
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(FootCase), new PropertyMetadata(null));
 
-        public OptionType Value
+        public FootType Value
         {
-            get => (OptionType)base.GetValue(ValueProperty);
+            get => (FootType)base.GetValue(ValueProperty);
             set => base.SetValue(ValueProperty, value);
         }
         /// <summary> Identifies the <see cref="Value"/> property. </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(OptionType), typeof(OptionCase), new PropertyMetadata(default(OptionType)));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(FootType), typeof(FootCase), new PropertyMetadata(default(FootType)));
 
         public void OnNavigatedTo() { }
 
@@ -53,7 +53,7 @@ namespace Luo_Painter
     }
 
     [ContentProperty(Name = nameof(SwitchCases))]
-    internal class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
+    internal class FootSwitchPresenter : SwitchPresenter<FootType> { }
 
 
     [ContentProperty(Name = nameof(Content))]
