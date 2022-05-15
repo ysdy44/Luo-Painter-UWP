@@ -36,11 +36,11 @@ namespace Luo_Painter.Elements
         /// <summary> Gets a state that indicates whether the <see cref = "ExpanderLightDismissOverlay" />. </summary>
         public bool FullScreen
         {
-            get => (bool)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
+            get => (bool)base.GetValue(FullScreenProperty);
+            set => base.SetValue(FullScreenProperty, value);
         }
         /// <summary> Identifies the <see cref = "ExpanderLightDismissOverlay.FullScreen" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(FullScreen), typeof(bool), typeof(ExpanderLightDismissOverlay), new PropertyMetadata(false, (sender, e) =>
+        public static readonly DependencyProperty FullScreenProperty = DependencyProperty.Register(nameof(FullScreen), typeof(bool), typeof(ExpanderLightDismissOverlay), new PropertyMetadata(false, (sender, e) =>
         {
             ExpanderLightDismissOverlay control = (ExpanderLightDismissOverlay)sender;
 
@@ -49,6 +49,27 @@ namespace Luo_Painter.Elements
                 foreach (Expander item in control.Items)
                 {
                     item.SetFullScreen(value);
+                }
+            }
+        }));
+
+
+        /// <summary> Gets a state that indicates whether the <see cref = "ExpanderLightDismissOverlay" />. </summary>
+        public bool Half
+        {
+            get => (bool)base.GetValue(HalfProperty);
+            set => base.SetValue(HalfProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "ExpanderLightDismissOverlay.Half" /> dependency property. </summary>
+        public static readonly DependencyProperty HalfProperty = DependencyProperty.Register(nameof(Half), typeof(bool), typeof(ExpanderLightDismissOverlay), new PropertyMetadata(false, (sender, e) =>
+        {
+            ExpanderLightDismissOverlay control = (ExpanderLightDismissOverlay)sender;
+
+            if (e.NewValue is bool value)
+            {
+                foreach (Expander item in control.Items)
+                {
+                    item.SetHalf(value);
                 }
             }
         }));
@@ -87,6 +108,7 @@ namespace Luo_Painter.Elements
                         expander.OnZIndexChanging += this.OnZIndexChanging;
 
                         expander.FullScreen = this.FullScreen;
+                        expander.Half = this.Half;
                         expander.CanvasSizeChanged(base.ActualWidth, base.ActualHeight);
                         base.SizeChanged += expander.CanvasSizeChanged;
                     }
@@ -228,6 +250,7 @@ namespace Luo_Painter.Elements
         Point PlacementTargetPosition;
 
         internal bool FullScreen;
+        internal bool Half;
         internal bool IsFlyout;
         internal bool IsShow;
 
@@ -350,9 +373,34 @@ namespace Luo_Painter.Elements
         {
             this.Hide();
             this.FullScreen = value;
-            this.RootGrid.CornerRadius = new CornerRadius(value ? 0 : 4);
-            this.RootGrid.BorderThickness = new Thickness(value ? 0 : 1);
+
+            if (value)
+            {
+                this.X = 0;
+                this.Y = 0;
+                Canvas.SetLeft(this, 0);
+                Canvas.SetTop(this, 0);
+            }
+
+            VisualStateManager.GoToState(this, value ? (this.Half ? "Pad" : "Phone") : "PC", false);
         }
+        /// <inheritdoc/>
+        internal void SetHalf(bool value)
+        {
+            this.Hide();
+            this.Half = value;
+
+            if (value)
+            {
+                this.X = 0;
+                this.Y = 0;
+                Canvas.SetLeft(this, 0);
+                Canvas.SetTop(this, 0);
+            }
+
+            VisualStateManager.GoToState(this, this.FullScreen ? (value ? "Pad" : "Phone") : "PC", false);
+        }
+
         /// <inheritdoc/>
         internal void CanvasSizeChanged(double u, double v)
         {
@@ -416,12 +464,12 @@ namespace Luo_Painter.Elements
 
         private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
         {
+            this.X = Canvas.GetLeft(this);
+            this.Y = Canvas.GetTop(this);
+
             switch (this.FullScreen)
             {
                 case false:
-                    this.X = Canvas.GetLeft(this);
-                    this.Y = Canvas.GetTop(this);
-
                     if (this.IsFlyout)
                     {
                         this.Placement = ExpanderPlacementMode.Center;
@@ -431,20 +479,12 @@ namespace Luo_Painter.Elements
                         this.IsShow = true;
                         this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
                         this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
-                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
                     }
-                    else if (this.IsShow)
-                    {
-                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
-                    }
-                    break;
-                case true:
-                    this.X = 0;
-                    this.Y = 0;
                     break;
                 default:
                     break;
             }
+                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
         }
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -452,17 +492,21 @@ namespace Luo_Painter.Elements
             {
                 case false:
                     this.X += e.HorizontalChange;
-                    this.Y += e.VerticalChange;
                     this.SetLeft(this.X);
-                    this.SetTop(this.Y);
                     break;
                 case true:
-                    this.Y += e.VerticalChange;
-                    this.SetTop(this.Y);
-                    break;
-                default:
+                    switch (this.Half)
+                    {
+                        case true:
+                            this.X += e.HorizontalChange;
+                            this.SetLeft(this.X);
+                            break;
+                    }
                     break;
             }
+
+            this.Y += e.VerticalChange;
+            this.SetTop(this.Y);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -578,9 +622,17 @@ namespace Luo_Painter.Elements
                     }
                     break;
                 case true:
-                    Canvas.SetLeft(this, 0);
-                    Canvas.SetTop(this, 0);
-                    base.Width = this.U;
+                    switch (this.Half)
+                    {
+                        case false:
+                            base.Width = this.U;
+                            break;
+                        case true:
+                            base.Width = base.MinWidth + base.Padding.Left + base.Padding.Right;
+                            break;
+                        default:
+                            break;
+                    }
                     base.Height = this.V;
 
                     this.ShowBottomStoryboard.Begin(); // Storyboard
@@ -589,6 +641,7 @@ namespace Luo_Painter.Elements
                     this.SymbolIcon.Symbol = Symbol.Cancel;
                     this.IsShow = true;
                     this.IsFlyout = false;
+                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
                     break;
                 default:
                     break;
