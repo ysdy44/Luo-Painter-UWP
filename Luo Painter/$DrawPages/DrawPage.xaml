@@ -198,21 +198,6 @@
                     </VisualState.Setters>
                 </VisualState>
 
-                <!--Writeable-->
-                <VisualState x:Name="Writeable">
-                    <VisualState.Setters>
-                        <Setter Target = "OptionBorder.Visibility" Value="Visible"/>
-                        <Setter Target = "OptionPanel.Visibility" Value="Visible"/>
-                        <Setter Target = "OptionSecondaryButton.IsEnabled" Value="True"/>
-                        
-                        <Setter Target = "ApplicationView.IsAccent" Value="True"/>
-                        
-                        <Setter Target = "HeadTransform.Y" Value="-50"/>
-                        <Setter Target = "FootTransform.Y" Value="100"/>
-                        <Setter Target = "HeadLeftScrollViewer.Opacity" Value="0"/>
-                    </VisualState.Setters>
-                </VisualState>
-
                 <VisualStateGroup.Transitions>
                     <!--Show-->
                     <VisualTransition From="{x:Null}" To="Show" GeneratedDuration="0:0:0.2">

@@ -60,20 +60,10 @@ namespace Luo_Painter
         }
 
 
-        private void SetFullScreenState(bool isFullScreen, bool isWriteable)
+        private void SetFullScreenState(bool isFullScreen)
         {
-            if (isWriteable)
+            if (isFullScreen)
             {
-                this.ExpanderLightDismissOverlay.Hide();
-
-                this.ToolListView.IsShow = false;
-                this.LayerListView.IsShow = false;
-                VisualStateManager.GoToState(this, nameof(Writeable), useTransitions: true);
-            }
-            else if (isFullScreen)
-            {
-                this.ExpanderLightDismissOverlay.Hide();
-
                 this.ToolListView.IsShow = false;
                 this.LayerListView.IsShow = false;
                 VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
@@ -116,7 +106,7 @@ namespace Luo_Painter
             this.UnFullScreenButton.Click += (s, e) =>
             {
                 this.IsFullScreen = false;
-                this.SetFullScreenState(false, this.OptionType != default);
+                this.SetFullScreenState(false);
             };
             this.FullScreenButton.Click += async (s, e) =>
             {
@@ -125,12 +115,12 @@ namespace Luo_Painter
                     if (this.IsFullScreen)
                     {
                         this.IsFullScreen = false;
-                        this.SetFullScreenState(false, false);
+                        this.SetFullScreenState(false);
                     }
                     else
                     {
                         this.IsFullScreen = true;
-                        this.SetFullScreenState(true, false);
+                        this.SetFullScreenState(true);
                     }
                 }
                 else
@@ -138,7 +128,7 @@ namespace Luo_Painter
                     this.IsFullScreen = false;
                     this.OptionType = default;
                     this.SetOptionType(default);
-                    this.SetFullScreenState(false, false);
+                    this.SetFullScreenState(false);
                     this.SetCanvasState(default);
                 }
 

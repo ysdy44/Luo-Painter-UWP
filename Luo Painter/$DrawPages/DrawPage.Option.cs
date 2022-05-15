@@ -80,7 +80,6 @@ namespace Luo_Painter
                 this.EditType = default;
                 this.OptionType = default;
                 this.SetOptionType(default);
-                this.SetFullScreenState(this.IsFullScreen, false);
                 this.SetCanvasState(false);
             };
 
@@ -103,7 +102,6 @@ namespace Luo_Painter
                 this.EditType = default;
                 this.OptionType = default;
                 this.SetOptionType(default);
-                this.SetFullScreenState(this.IsFullScreen, false);
                 this.SetCanvasState(false);
             };
 
@@ -120,6 +118,8 @@ namespace Luo_Painter
 
         private bool OptionClick(OptionType type)
         {
+            this.ExpanderLightDismissOverlay.Hide();
+
             if (this.LayerListView.SelectedItem is ILayer layer)
             {
                 if (layer.Type != LayerType.Bitmap)
@@ -180,7 +180,6 @@ namespace Luo_Painter
                     this.SelectionType = state;
                     this.OptionType = type;
                     this.SetOptionType(type);
-                    this.SetFullScreenState(this.IsFullScreen, true);
                     this.SetCanvasState(true);
                     return true;
                 }

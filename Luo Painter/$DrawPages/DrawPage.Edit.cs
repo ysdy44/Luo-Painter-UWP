@@ -380,6 +380,8 @@ namespace Luo_Painter
 
         private bool EditClick(EditType type)
         {
+            this.ExpanderLightDismissOverlay.Hide();
+
             Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -418,7 +420,6 @@ namespace Luo_Painter
             }
 
             this.EditType = type;
-            this.SetFullScreenState(this.IsFullScreen, true);
             this.SetCanvasState(true);
             return true;
         }
