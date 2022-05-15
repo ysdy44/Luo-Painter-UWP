@@ -99,17 +99,22 @@ namespace Luo_Painter.Controls
                 this.SelectedItemToken = this.ListView.RegisterPropertyChangedCallback(Selector.SelectedItemProperty, (sender, prop) =>
                 {
                     ListView control = (ListView)sender;
-
-                    if (control.GetValue(prop) is ILayer value)
-                    {
-                        this.SelectedItemChanged?.Invoke(this, value);//Delegate
-                    }
-                    else
-                    {
-                        this.SelectedItemChanged?.Invoke(this, null);//Delegate
-                    }
+                    this.OnSelectedItemChanged(control.GetValue(prop));
                 });
             };
+        }
+
+        public void OnSelectedItemChanged() => this.OnSelectedItemChanged(this.SelectedItem);
+        private void OnSelectedItemChanged(object obj)
+        {
+            if (obj is ILayer value)
+            {
+                this.SelectedItemChanged?.Invoke(this, value);//Delegate
+            }
+            else
+            {
+                this.SelectedItemChanged?.Invoke(this, null);//Delegate
+            }
         }
 
         //@Strings

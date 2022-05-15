@@ -12,6 +12,7 @@ namespace Luo_Painter.Controls
     {
         //@Delegate
         public event TypedEventHandler<string, string> NameHistory;
+        public event TypedEventHandler<float, float> OpacityHistory;
         public event TypedEventHandler<BlendEffectMode?, BlendEffectMode?> BlendModeHistory;
 
         public ThumbSlider OpacitySlider => this.OpacitySliderCore;
@@ -34,6 +35,27 @@ namespace Luo_Painter.Controls
                 this.NameHistory?.Invoke(this.StartingName, name); // Delegate
             };
 
+            this.OpacitySlider.ValueChangedUnfocused += (s, e) =>
+            {
+                float undo = (float)(e.OldValue / 100);
+                float redo = (float)(e.NewValue / 100);
+
+                this.OpacityHistory?.Invoke(undo, redo); // Delegate
+            };
+
+            this.ListViewListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is int item)
+                {
+                    float undo = (float)(this.OpacitySlider.Value / 100);
+                    float redo = (float)item / 100;
+
+                    this.OpacityHistory?.Invoke(undo, redo); // Delegate
+
+                    this.OpacitySlider.Value = item;
+                }
+            };
+
             this.BlendModeListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is BlendEffectMode item2)
@@ -52,7 +74,7 @@ namespace Luo_Painter.Controls
         {
         }
 
-        public void SelectedItemChanged(object sender, ILayer layer)
+        public void SetSelectedItem(ILayer layer)
         {
             if (layer is null)
             {

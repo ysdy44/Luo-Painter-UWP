@@ -66,7 +66,21 @@ namespace Luo_Painter
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.UndoParameter);
                         else if (this.Layers.ContainsKey(propertyHistory.Id))
-                            return this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter);
+                        {
+                            if (this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter))
+                            {
+                                switch (propertyHistory.Type)
+                                {
+                                    case HistoryType.Opacity:
+                                    case HistoryType.BlendMode:
+                                        this.LayerListView.OnSelectedItemChanged();
+                                        return true;
+                                    default:
+                                        return true;
+                                }
+                            }
+                            else return false;
+                        }
                         else
                             return false;
                     }
@@ -112,7 +126,21 @@ namespace Luo_Painter
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.RedoParameter);
                         else if (this.Layers.ContainsKey(propertyHistory.Id))
-                            return this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter);
+                        {
+                            if (this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter))
+                            {
+                                switch (propertyHistory.Type)
+                                {
+                                    case HistoryType.Opacity:
+                                    case HistoryType.BlendMode:
+                                        this.LayerListView.OnSelectedItemChanged();
+                                        return true;
+                                    default:
+                                        return true;
+                                }
+                            }
+                            else return false;
+                        }
                         else
                             return false;
                     }

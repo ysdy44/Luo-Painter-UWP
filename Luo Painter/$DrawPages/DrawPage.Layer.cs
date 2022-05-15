@@ -73,6 +73,8 @@ namespace Luo_Painter
 
         private void ConstructLayers()
         {
+            this.LayerListView.SelectedItemChanged += (s, item) => this.LayerButton.SetSelectedItem(item);
+
             this.LayerListView.DragItemsStarting += (s, e) =>
             {
                 if (this.HasChangedLayers) return;
@@ -335,11 +337,8 @@ namespace Luo_Painter
                 }
             };
 
-            this.LayerButton.OpacitySlider.ValueChangedUnfocused += (s, e) =>
+            this.LayerButton.OpacityHistory += (undo, redo) =>
             {
-                float undo = (float)(e.OldValue / 100);
-                float redo = (float)(e.NewValue / 100);
-
                 this.OpacityUndoParameters.Clear();
 
                 foreach (object item in this.LayerListView.SelectedItems)
