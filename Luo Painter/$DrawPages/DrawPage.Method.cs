@@ -192,39 +192,5 @@ namespace Luo_Painter
             this.LayerListView.SelectedIndex = System.Math.Max(0, index);
         }
 
-
-        public async Task<CanvasBitmap> AddAsync(IRandomAccessStreamReference reference)
-        {
-            if (reference is null) return null;
-
-            try
-            {
-                using (IRandomAccessStreamWithContentType stream = await reference.OpenReadAsync())
-                {
-                    return await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public void Add(ILayer layer)
-        {
-            int index = this.LayerListView.SelectedIndex;
-
-            if (index >= 0)
-            {
-                this.ObservableCollection.Insert(index, layer);
-                this.LayerListView.SelectedIndex = index;
-            }
-            else
-            {
-                this.ObservableCollection.Add(layer);
-                this.LayerListView.SelectedIndex = 0;
-            }
-        }
-
     }
 }

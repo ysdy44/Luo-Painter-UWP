@@ -19,38 +19,6 @@ namespace Luo_Painter.Options
             return type.GetTemplate(resource);
         }
 
-        public static bool HasPreview(this OptionType type)
-        {
-            switch (type)
-            {
-                case OptionType.None:
-                case OptionType.Gray:
-                case OptionType.Invert:
-                    return false;
-
-                case OptionType.Fog:
-                case OptionType.Sepia:
-                case OptionType.Posterize:
-                    return false;
-
-                default:
-                    return true;
-            }
-        }
-
-        public static bool HasDifference(this OptionType type)
-        {
-            switch (type)
-            {
-                case OptionType.Transform:
-                case OptionType.RippleEffect:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
         public static bool HasIcon(this OptionType type)
         {
             switch (type)
