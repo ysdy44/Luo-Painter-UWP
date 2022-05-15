@@ -46,15 +46,6 @@ namespace Luo_Painter
             this.BoundsFreeDistance = Vector2.Zero;
         }
 
-        private void ConstructTransform()
-        {
-            this.TransformComboBox.SelectionChanged += (s, e) =>
-            {
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-        }
-
         private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds)
         {
             switch (this.TransformComboBox.SelectedIndex)
