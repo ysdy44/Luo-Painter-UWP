@@ -120,6 +120,7 @@ namespace Luo_Painter
         BitmapLayer Marquee { get; set; }
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
+        FootType FootType { get; set; } = FootType.None;
         OptionType OptionType { get; set; } = OptionType.None;
         EditType EditType { get; set; } = EditType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
@@ -158,11 +159,12 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
+            this.ConstructFoots();
+            this.ConstructFoot();
+
             this.ConstructEdits();
 
             this.ConstructOptions();
-            this.ConstructOption();
-            this.ConstructTransform();
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();
 
