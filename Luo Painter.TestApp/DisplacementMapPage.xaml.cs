@@ -14,14 +14,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    public static class DisplacementColorExtension
+    public static class DisplacementExtension
     {
         public static readonly Color ClearColor = Color.FromArgb(255, 127, 127, 255);
         public static readonly Color Left = Color.FromArgb(255, 255, 127, 255);
         public static readonly Color Right = Color.FromArgb(255, 0, 127, 255);
         public static readonly Color Up = Color.FromArgb(255, 127, 255, 255);
         public static readonly Color Down = Color.FromArgb(255, 127, 0, 255);
-        public static Color ToColor(this Vector2 vectorUnit)
+        public static Color ToColor(this Vector2 vectorUnit) // (-1, -1) ~ (1, 1)
         {
             return new Color
             {
@@ -31,12 +31,159 @@ namespace Luo_Painter.TestApp
                 B = 255,
             };
         }
+
+        public static CanvasRenderTarget GetZoomInBrush(this ICanvasResourceCreator sender)
+        {
+            CanvasRenderTarget brush = new CanvasRenderTarget(sender, 256, 256, 96);
+
+            for (int x = 0; x < 256; x++)
+            {
+                for (int y = 0; y < 256; y++)
+                {
+                    Vector2 vector = new Vector2(x - 127, y - 127);
+                    float length = vector.Length();
+                    if (length < 127)
+                    {
+                        float opacity = 1 - length / 127;
+                        Vector2 unit = opacity * vector / 127;
+                        Color color = unit.ToColor();
+
+                        brush.SetPixelColors(new Color[]
+                        {
+                            color
+                        }, x, y, 1, 1);
+                    }
+                }
+            }
+
+            return brush;
+        }
+
+        public static CanvasRenderTarget GetZoomOutBrush(this ICanvasResourceCreator sender)
+        {
+            CanvasRenderTarget brush = new CanvasRenderTarget(sender, 256, 256, 96);
+
+            for (int x = 0; x < 256; x++)
+            {
+                for (int y = 0; y < 256; y++)
+                {
+                    Vector2 vector = new Vector2(127 - x, 127 - y);
+                    float length = vector.Length();
+                    if (length < 127)
+                    {
+                        float opacity = 1 - length / 127;
+                        Vector2 unit = opacity * vector / 127;
+                        Color color = unit.ToColor();
+
+                        brush.SetPixelColors(new Color[]
+                        {
+                            color
+                        }, x, y, 1, 1);
+                    }
+                }
+            }
+
+            return brush;
+        }
+
+        public static CanvasRenderTarget GetClockwiseBrush(this ICanvasResourceCreator sender)
+        {
+            CanvasRenderTarget brush = new CanvasRenderTarget(sender, 256, 256, 96);
+
+            // Clockwise 
+            float radianOffset = (float)(Math.PI / 4);
+
+            // CounterClockwise
+            float radianOffset2 = -(float)(Math.PI / 4);
+
+            float amount = 100; // 100 is DisplacementMapEffect's Amount
+
+            for (int x = 0; x < 256; x++)
+            {
+                for (int y = 0; y < 256; y++)
+                {
+                    Vector2 vector = new Vector2(x - 127, y - 127);
+                    float length = vector.Length();
+                    if (length < 127)
+                    {
+                        float opacity = 1 - length / 127;
+                        float radian = GetRadian(vector);
+                        Vector2 vector2 = length * GetVector(radian + radianOffset * opacity);
+
+                        Vector2 unit = (vector2 - vector) / amount;
+                        Color color = unit.ToColor();
+
+                        brush.SetPixelColors(new Color[]
+                        {
+                            color
+                        }, x, y, 1, 1);
+                    }
+                }
+            }
+
+            return brush;
+        }
+
+        public static CanvasRenderTarget GetGlassyBrush(this ICanvasResourceCreator sender)
+        {
+            CanvasRenderTarget brush = new CanvasRenderTarget(sender, 256, 256, 96);
+
+            float radianOffset = (float)(10f / 180f * Math.PI);
+            for (int x = 0; x < 256; x++)
+            {
+                for (int y = 0; y < 256; y++)
+                {
+                    Vector2 vector = new Vector2(x - 127, y - 127);
+                    float length = vector.Length();
+                    if (length < 127)
+                    {
+                        float opacity = 1 - length / 127;
+                        float radian = GetRadian(vector);
+                        Vector2 vector2 = GetVector(radian + radianOffset);
+
+                        Vector2 unit = (vector2 - vector) * 100;
+                        Color color = unit.ToColor();
+
+                        brush.SetPixelColors(new Color[]
+                        {
+                            color
+                        }, x, y, 1, 1);
+                    }
+                }
+            }
+
+            return brush;
+        }
+
+
+        public static float GetRadian(Vector2 vector) // 0 ~ 360
+        {
+            float tan = (float)Math.Atan(Math.Abs(vector.Y / vector.X));
+
+            if (vector.X > 0 && vector.Y > 0) // 1
+                return tan;
+            else if (vector.X > 0 && vector.Y < 0) // 2
+                return -tan;
+            else if (vector.X < 0 && vector.Y > 0) // 3
+                return (float)Math.PI - tan;
+            else
+                return tan - (float)Math.PI;
+        }
+        public static Vector2 GetVector(float radian) // (-1, -1) ~ (1, 1)
+        {
+            return new Vector2
+            {
+                X = (float)Math.Cos(radian),
+                Y = (float)Math.Sin(radian),
+            };
+        }
     }
 
     public sealed partial class DisplacementMapPage : Page
     {
         readonly CanvasDevice Device = new CanvasDevice();
         CanvasBitmap CanvasBitmap;
+        CanvasRenderTarget Brush;
         BitmapLayer BitmapLayer;
 
         Vector2 Position;
@@ -94,8 +241,9 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (sender, args) =>
             {
+                this.Brush = sender.GetClockwiseBrush();
                 this.BitmapLayer = new BitmapLayer(this.Device, 512, 512);
-                this.BitmapLayer.Clear(DisplacementColorExtension.ClearColor, BitmapType.Temp);
+                this.BitmapLayer.Clear(DisplacementExtension.ClearColor, BitmapType.Temp);
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
@@ -116,8 +264,6 @@ namespace Luo_Painter.TestApp
                         Amount = 100,
                     }
                 });
-
-                args.DrawingSession.DrawCircle(this.Position, 122, Colors.Gray, sender.Dpi.ConvertDipsToPixels(1));
             };
 
 
@@ -193,13 +339,7 @@ namespace Luo_Painter.TestApp
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
                 {
-                    ds.FillCircle(position, 80, new CanvasRadialGradientBrush(this.CanvasControl, color, Colors.Transparent)
-                    {
-                        Center = position,
-                        RadiusX = 80,
-                        RadiusY = 80,
-                        Opacity = this.InkOpacity,
-                    });
+                    ds.DrawImage(this.Brush, position.X - 127, position.Y - 127);
                 }
 
                 this.Position = position;
@@ -220,10 +360,13 @@ namespace Luo_Painter.TestApp
                     Amount = 100,
                 });
                 this.BitmapLayer.Flush();
-                this.BitmapLayer.Clear(DisplacementColorExtension.ClearColor, BitmapType.Temp);
+                this.BitmapLayer.Clear(DisplacementExtension.ClearColor, BitmapType.Temp);
 
                 this.BitmapLayer.RenderThumbnail();
                 this.CanvasControl.Invalidate(); // Invalidate
+                this.OriginCanvasControl.Invalidate(); // Invalidate
+                this.SourceCanvasControl.Invalidate(); // Invalidate
+                this.TempCanvasControl.Invalidate(); // Invalidate
             };
         }
 
