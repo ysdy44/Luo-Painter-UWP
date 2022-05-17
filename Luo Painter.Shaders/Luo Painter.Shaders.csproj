@@ -135,6 +135,8 @@
   <ItemGroup>
     <Content Include="BlackOrWhite.txt" />
     <Content Include="ColorMatch.txt" />
+    <Content Include="DisplacementExpand.hlsl" />
+    <Content Include="DisplacementPinch.hlsl" />
     <Content Include="DisplacementPush.hlsl" />
     <Content Include="DottedLine.txt" />
     <Content Include="DottedLineTransform.hlsl" />
@@ -165,6 +167,8 @@
     <Content Include="DottedLineTransform.bin" />
     <Content Include="FilmicEffect.bin" />
     <Content Include="DisplacementPush.bin" />
+    <Content Include="DisplacementExpand.bin" />
+    <Content Include="DisplacementPinch.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
     <None Include="DottedLine.shader" />
