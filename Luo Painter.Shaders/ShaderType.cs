@@ -21,5 +21,7 @@
         LalphaMask,
         RalphaMask,
         DisplacementPush,
+        DisplacementPinch,
+        DisplacementExpand,
     }
 }

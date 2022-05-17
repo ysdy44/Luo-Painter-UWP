@@ -40,6 +40,8 @@ namespace Luo_Painter.Shaders
                 case ShaderType.LalphaMask: return "ms-appx:///Luo Painter.Shaders/LalphaMask.txt";
                 case ShaderType.RalphaMask: return "ms-appx:///Luo Painter.Shaders/RalphaMask.bin";
                 case ShaderType.DisplacementPush: return "ms-appx:///Luo Painter.Shaders/DisplacementPush.bin";
+                case ShaderType.DisplacementPinch: return "ms-appx:///Luo Painter.Shaders/DisplacementPinch.bin";
+                case ShaderType.DisplacementExpand: return "ms-appx:///Luo Painter.Shaders/DisplacementExpand.bin";
                 default: return null;
             }
         }
