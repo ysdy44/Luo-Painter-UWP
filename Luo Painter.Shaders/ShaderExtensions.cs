@@ -39,6 +39,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.SdrOverlayEffect: return "ms-appx:///Luo Painter.Shaders/SdrOverlayEffect.bin";
                 case ShaderType.LalphaMask: return "ms-appx:///Luo Painter.Shaders/LalphaMask.txt";
                 case ShaderType.RalphaMask: return "ms-appx:///Luo Painter.Shaders/RalphaMask.bin";
+                case ShaderType.DisplacementPush: return "ms-appx:///Luo Painter.Shaders/DisplacementPush.bin";
                 default: return null;
             }
         }
