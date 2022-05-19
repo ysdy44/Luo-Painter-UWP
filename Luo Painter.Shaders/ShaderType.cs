@@ -23,5 +23,7 @@
         DisplacementPush,
         DisplacementPinch,
         DisplacementExpand,
+        DisplacementTwirlLeft,
+        DisplacementTwirlRight,
     }
 }

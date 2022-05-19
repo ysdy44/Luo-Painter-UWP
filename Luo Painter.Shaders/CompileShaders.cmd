@@ -29,6 +29,8 @@ call :COMPILE RalphaMask.hlsl   || goto END
 call :COMPILE DisplacementPush.hlsl   || goto END
 call :COMPILE DisplacementPinch.hlsl   || goto END
 call :COMPILE DisplacementExpand.hlsl   || goto END
+call :COMPILE DisplacementTwirlLeft.hlsl   || goto END
+call :COMPILE DisplacementTwirlRight.hlsl   || goto END
 
 goto END
 
