@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    public sealed partial class DisplacementPinchExpandPage : Page
+    public sealed partial class DisplacementTwirlPage : Page
     {
         readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
@@ -25,21 +25,21 @@ namespace Luo_Painter.TestApp
         float Amount = 512;
         float RangeSize = 50;
         bool IsExpand;
-        byte[] ShaderCodeBytesPinch;
-        byte[] ShaderCodeBytesExpand;
+        byte[] ShaderCodeBytesTwirlLeft;
+        byte[] ShaderCodeBytesTwirlRight;
 
         Historian<IHistory> History { get; } = new Historian<IHistory>(20);
 
-        public DisplacementPinchExpandPage()
+        public DisplacementTwirlPage()
         {
             this.InitializeComponent();
-            this.ConstructDisplacementPinchExpand();
+            this.ConstructDisplacementTwirl();
             this.ConstructCanvas();
             this.ConstructOperator();
         }
 
 
-        private void ConstructDisplacementPinchExpand()
+        private void ConstructDisplacementTwirl()
         {
             this.AddButton.Click += async (s, e) =>
             {
@@ -85,8 +85,8 @@ namespace Luo_Painter.TestApp
         private void Toggle(bool value)
         {
             this.IsExpand = value;
-            this.SymbolIcon.Symbol = value ? Symbol.Add : Symbol.Remove;
-            this.ToggleButton.Label = value ? "Expand" : "Pinch";
+            this.ScaleTransform.ScaleX = value ? 1 : -1;
+            this.ToggleButton.Label = value ? "TwirlLeft" : "TwirlRight";
         }
 
         private void ConstructCanvas()
@@ -178,8 +178,8 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytesPinch = await ShaderType.DisplacementPinch.LoadAsync();
-            this.ShaderCodeBytesExpand = await ShaderType.DisplacementExpand.LoadAsync();
+            this.ShaderCodeBytesTwirlLeft = await ShaderType.DisplacementTwirlLeft.LoadAsync();
+            this.ShaderCodeBytesTwirlRight = await ShaderType.DisplacementTwirlRight.LoadAsync();
         }
 
         private void ConstructOperator()
@@ -222,14 +222,14 @@ namespace Luo_Painter.TestApp
         {
             if (this.BitmapLayer is null) return;
             if (this.CanvasBitmap is null) return;
-            if (this.ShaderCodeBytesPinch is null) return;
-            if (this.ShaderCodeBytesExpand is null) return;
+            if (this.ShaderCodeBytesTwirlLeft is null) return;
+            if (this.ShaderCodeBytesTwirlRight is null) return;
 
             // 1. Region
             Rect rect = targetPosition.GetRect(this.RangeSize);
 
             // 2. Shader
-            PixelShaderEffect shader = new PixelShaderEffect(isExpand ? this.ShaderCodeBytesExpand : this.ShaderCodeBytesPinch)
+            PixelShaderEffect shader = new PixelShaderEffect(isExpand ? this.ShaderCodeBytesTwirlRight : this.ShaderCodeBytesTwirlLeft)
             {
                 Source1BorderMode = EffectBorderMode.Hard,
                 Source1 = this.BitmapLayer.Source,
