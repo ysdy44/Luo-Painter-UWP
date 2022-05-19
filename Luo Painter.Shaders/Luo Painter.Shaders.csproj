@@ -139,6 +139,7 @@
     <Content Include="DisplacementPinch.hlsl" />
     <Content Include="DisplacementPush.hlsl" />
     <Content Include="DisplacementTwirlLeft.hlsl" />
+    <Content Include="DisplacementReset.hlsl" />
     <Content Include="DisplacementTwirlRight.hlsl" />
     <Content Include="DottedLine.txt" />
     <Content Include="DottedLineTransform.hlsl" />
@@ -173,6 +174,7 @@
     <Content Include="DisplacementPinch.bin" />
     <Content Include="DisplacementTwirlLeft.bin" />
     <Content Include="DisplacementTwirlRight.bin" />
+    <Content Include="DisplacementReset.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
     <None Include="DottedLine.shader" />
