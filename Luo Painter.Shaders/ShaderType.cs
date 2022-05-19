@@ -25,5 +25,6 @@
         DisplacementExpand,
         DisplacementTwirlLeft,
         DisplacementTwirlRight,
+        DisplacementReset,
     }
 }

@@ -44,6 +44,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.DisplacementExpand: return "ms-appx:///Luo Painter.Shaders/DisplacementExpand.bin";
                 case ShaderType.DisplacementTwirlLeft: return "ms-appx:///Luo Painter.Shaders/DisplacementTwirlLeft.bin";
                 case ShaderType.DisplacementTwirlRight: return "ms-appx:///Luo Painter.Shaders/DisplacementTwirlRight.bin";
+                case ShaderType.DisplacementReset: return "ms-appx:///Luo Painter.Shaders/DisplacementReset.bin";
                 default: return null;
             }
         }
