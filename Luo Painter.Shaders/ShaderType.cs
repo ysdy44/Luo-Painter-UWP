@@ -26,5 +26,6 @@
         DisplacementTwirlLeft,
         DisplacementTwirlRight,
         DisplacementReset,
+        DisplacementLiquefaction,
     }
 }

@@ -32,6 +32,7 @@ call :COMPILE DisplacementExpand.hlsl   || goto END
 call :COMPILE DisplacementTwirlLeft.hlsl   || goto END
 call :COMPILE DisplacementTwirlRight.hlsl   || goto END
 call :COMPILE DisplacementReset.hlsl   || goto END
+call :COMPILE DisplacementLiquefaction.hlsl   || goto END
 
 goto END
 
