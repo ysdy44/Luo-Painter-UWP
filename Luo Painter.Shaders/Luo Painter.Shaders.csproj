@@ -137,6 +137,7 @@
     <Content Include="BlackOrWhite.txt" />
     <Content Include="ColorMatch.txt" />
     <Content Include="DisplacementExpand.hlsl" />
+    <Content Include="DisplacementLiquefaction.hlsl" />
     <Content Include="DisplacementPinch.hlsl" />
     <Content Include="DisplacementPush.hlsl" />
     <Content Include="DisplacementTwirlLeft.hlsl" />
@@ -176,6 +177,7 @@
     <Content Include="DisplacementTwirlLeft.bin" />
     <Content Include="DisplacementTwirlRight.bin" />
     <Content Include="DisplacementReset.bin" />
+    <Content Include="DisplacementLiquefaction.bin" />
     <None Include="GeneralBrush.shader" />
     <Content Include="GradientMapping.hlsl" />
     <None Include="DottedLine.shader" />
