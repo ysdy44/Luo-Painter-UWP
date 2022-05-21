@@ -21,17 +21,28 @@ namespace Luo_Painter
 
         private FootType SetFootType(EditType ediType, OptionType optionType, ToolType toolType)
         {
+            if (optionType.HasIcon())
+            {
+                this.FootThumb.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.FootThumb.Visibility = Visibility.Collapsed;
+            }
+
             FootType type = FootExtensions.GetType(ediType, optionType, toolType);
 
             if (type == FootType.MarqueeTransform)
             {
                 this.FootSwitchPresenter.Value = FootType.Transform;
                 this.FootSwitchPresenter2.Value = FootType.Transform;
+                this.FootSwitchPresenter3.Value = FootType.Transform;
             }
             else
             {
                 this.FootSwitchPresenter.Value = type;
                 this.FootSwitchPresenter2.Value = type;
+                this.FootSwitchPresenter3.Value = type;
             }
 
             if (type.HasHead())
@@ -66,24 +77,29 @@ namespace Luo_Painter
                 this.FootTransform2.Y = this.FootTransform.Y = 0;
             };
 
-            this.FootTitle.ManipulationStarted += (s, e) =>
+            this.FootThumb.DragStarted += (s, e) =>
             {
                 this.StartingFootX = this.FootTransform.X;
                 this.StartingFootY = this.FootTransform.Y;
             };
-            this.FootTitle.ManipulationDelta += (s, e) =>
+            this.FootThumb.DragDelta += (s, e) =>
             {
                 if (this.FootPanel.Margin.Bottom == 0)
                 {
-                    this.FootTransform.Y = this.FootTransform.Y = System.Math.Clamp(this.StartingFootY + e.Cumulative.Translation.Y, 0, this.FootBorder.Height - 50);
+                    this.StartingFootY += e.VerticalChange;
+
+                    this.FootTransform2.Y = this.FootTransform.Y = System.Math.Clamp(this.StartingFootY, 0, this.FootBorder.Height - 50);
                 }
                 else
                 {
-                    this.FootTransform2.X = this.FootTransform.X = this.StartingFootX + e.Cumulative.Translation.X;
-                    this.FootTransform2.Y = this.FootTransform.Y = this.StartingFootY + e.Cumulative.Translation.Y;
+                    this.StartingFootX += e.HorizontalChange;
+                    this.StartingFootY += e.VerticalChange;
+
+                    this.FootTransform2.X = this.FootTransform.X = this.StartingFootX;
+                    this.FootTransform2.Y = this.FootTransform.Y = this.StartingFootY;
                 }
             };
-            this.FootTitle.ManipulationCompleted += (s, e) =>
+            this.FootThumb.DragCompleted += (s, e) =>
             {
             };
         }

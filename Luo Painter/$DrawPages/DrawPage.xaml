@@ -372,11 +372,94 @@
             </UIElement.RenderTransform>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid x:Name="FootHead" Height="50" Margin="0,0,0,2" Visibility="Collapsed" >
+            <!--Head-->
+            <Thumb x:Name="FootThumb" >
+                <Thumb.Template>
+                    <ControlTemplate TargetType="Thumb">
+                        <Grid Background="Transparent">
+
+                            <!--VisualState-->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPointerOver" />
+                                            <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPressed" />
+                                            <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border x:Name="Background"                              
+                                                IsHitTestVisible="False"                           
+                                                Width="36" 
+                                                Height="6" 
+                                                Margin="3" 
+                                                VerticalAlignment="Top" 
+                                                CornerRadius="{TemplateBinding CornerRadius}" 
+                                                BorderThickness="{TemplateBinding BorderThickness}"            
+                                                BorderBrush="{TemplateBinding BorderBrush}"            
+                                                Background="{TemplateBinding Background}"           
+                                                />
+                            <Border x:Name="BackgroundPointerOver"                            
+                                                Opacity="0" 
+                                                IsHitTestVisible="False"
+                                                Width="36"
+                                                Height="6" 
+                                                Margin="3" 
+                                                VerticalAlignment="Top" 
+                                                CornerRadius="{TemplateBinding CornerRadius}"          
+                                                BorderThickness="{TemplateBinding BorderThickness}"              
+                                                BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}"             
+                                                Background="{ThemeResource ThumbBackgroundPointerOver}"              
+                                                />
+                            <Border x:Name="BackgroundPressed"                              
+                                                Opacity="0" 
+                                                IsHitTestVisible="False"
+                                                Width="36" 
+                                                Height="6"
+                                                Margin="3" 
+                                                VerticalAlignment="Top" 
+                                                CornerRadius="{TemplateBinding CornerRadius}"          
+                                                Background="{ThemeResource ThumbBackgroundPressed}"             
+                                                BorderBrush="{ThemeResource ThumbBorderBrushPressed}"              
+                                                BorderThickness="{TemplateBinding BorderThickness}"                
+                                                />
+                        </Grid>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+
+            <local:FootSwitchPresenter x:Name="FootSwitchPresenter" >
+                <local:FootCase Value="Marquee">
+                    <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" >
+                        <tools:ElementItem Type="New"/>
+                        <tools:ElementItem Type="Union"/>
+                        <tools:ElementItem Type="Exclude"/>
+                        <tools:ElementItem Type="Simultaneously"/>
+                    </ListBox>
+                </local:FootCase>
+                <local:FootCase Value="Selection">
+                    <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" >
+                        <tools:ElementItem Type="Add"/>
+                        <tools:ElementItem Type="Subtract"/>
+                    </ListBox>
+                </local:FootCase>
+            </local:FootSwitchPresenter>
+
+            <Grid x:Name="FootHead" Visibility="Collapsed" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -393,12 +476,61 @@
                 </Button>
 
                 <local:FootSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
-                    <local:FootCase Value="Transform">
-                        <ListBox x:Name="TransformComboBox" SelectedIndex="1" >
-                            <x:String>Move</x:String>
-                            <x:String>Transform</x:String>
-                            <x:String>Free Transform</x:String>
-                        </ListBox>
+                    <local:FootCase Value="Exposure">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="Exposure" Width="50" />
+                            <TextBlock x:Name="ExposureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Exposure
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="Brightness">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="Brightness" Width="50" />
+                            <TextBlock x:Name="BrightnessTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Brightness
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="Saturation">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="Saturation" Width="50" />
+                            <TextBlock x:Name="SaturationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Saturation
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="HueRotation">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="HueRotation" Width="50" />
+                            <TextBlock x:Name="HueRotationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                HueRotation
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="Contrast">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="Contrast" Width="50" />
+                            <TextBlock x:Name="ContrastTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Contrast
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="Temperature">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="Temperature" Width="50" />
+                            <TextBlock x:Name="TemperatureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Temperature
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="HighlightsAndShadows">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="HighlightsAndShadows" Width="50" />
+                            <TextBlock x:Name="HighlightsAndShadowsTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                HighlightsAndShadows
+                            </TextBlock>
+                        </StackPanel>
                     </local:FootCase>
                     <local:FootCase Value="LuminanceToAlpha">
                         <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" >
@@ -407,60 +539,34 @@
                             <x:String>Black Paper</x:String>
                         </ListBox>
                     </local:FootCase>
+                    <local:FootCase Value="Transform">
+                        <ListBox x:Name="TransformComboBox" SelectedIndex="1" >
+                            <x:String>Move</x:String>
+                            <x:String>Transform</x:String>
+                            <x:String>Free Transform</x:String>
+                        </ListBox>
+                    </local:FootCase>
+                    <local:FootCase Value="GradientMapping">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="GradientMapping" Width="50" />
+                            <TextBlock x:Name="GradientMappingTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                GradientMapping
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="RippleEffect">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="RippleEffect" Width="50" />
+                            <TextBlock x:Name="RippleEffectTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                RippleEffect
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
                 </local:FootSwitchPresenter>
-
-                <StackPanel x:Name="FootTitle" Visibility="Collapsed" Grid.Column="1" Margin="6,0" Orientation="Horizontal" Background="{ThemeResource AppBackground}">
-                    <UIElement.ManipulationMode>
-                        TranslateX, TranslateY
-                    </UIElement.ManipulationMode>
-                    <controls:OptionIcon x:Name="OptionIcon" Width="50" />
-                    <TextBlock x:Name="OptionTextBlock" Visibility="Visible" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
-                </StackPanel>
 
             </Grid>
 
-            <local:FootSwitchPresenter x:Name="FootSwitchPresenter" Grid.Row="1" >
-                <local:FootCase Value="Marquee">
-                    <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" >
-                        <tools:ElementItem Type="New"/>
-                        <tools:ElementItem Type="Union"/>
-                        <tools:ElementItem Type="Exclude"/>
-                        <tools:ElementItem Type="Simultaneously"/>
-                    </ListBox>
-                </local:FootCase>
-                <local:FootCase Value="Selection">
-                    <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" >
-                        <tools:ElementItem Type="Add"/>
-                        <tools:ElementItem Type="Subtract"/>
-                    </ListBox>
-                </local:FootCase>
-                <local:FootCase Value="GradientMapping">
-                    <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
-                        <elements:GradientStopSelector.ItemStyle>
-                            <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                                <Setter Property="Width" Value="50"/>
-                                <Setter Property="Height" Value="50"/>
-                                <Setter Property="Padding" Value="3"/>
-                            </Style>
-                        </elements:GradientStopSelector.ItemStyle>
-                        <elements:GradientStopSelector.ItemTemplate>
-                            <DataTemplate x:DataType="GradientStop">
-                                <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                        <Rectangle.Fill>
-                                            <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                </Border>
-                            </DataTemplate>
-                        </elements:GradientStopSelector.ItemTemplate>
-                    </elements:GradientStopSelectorWithUI>
-                </local:FootCase>
+            <local:FootSwitchPresenter x:Name="FootSwitchPresenter3" Grid.Row="1" >
                 <local:FootCase Value="Exposure">
                     <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
@@ -730,6 +836,33 @@
                             </Slider>
                         </StackPanel>
                     </StackPanel>
+                </local:FootCase>
+                <local:FootCase Value="GradientMapping">
+                    <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
+                        <elements:GradientStopSelector.ItemStyle>
+                            <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                                <Setter Property="Width" Value="50"/>
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="Padding" Value="3"/>
+                            </Style>
+                        </elements:GradientStopSelector.ItemStyle>
+                        <elements:GradientStopSelector.ItemTemplate>
+                            <DataTemplate x:DataType="GradientStop">
+                                <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                    <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+                            </DataTemplate>
+                        </elements:GradientStopSelector.ItemTemplate>
+                    </elements:GradientStopSelectorWithUI>
                 </local:FootCase>
                 <local:FootCase Value="RippleEffect">
                     <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
