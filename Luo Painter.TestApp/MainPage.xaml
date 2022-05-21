@@ -9,6 +9,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    <Page.Resources>
+        <CollectionViewSource x:Key="collection" IsSourceGrouped="True" x:Name="collection"></CollectionViewSource>
+    </Page.Resources>
+    
     <SplitView x:Name="SplitView" DisplayMode="CompactInline" 
                IsPaneOpen="{x:Bind BooleanNullableConverter(SplitButton.IsChecked), Mode=OneWay}" >
 
@@ -56,45 +60,68 @@
 
 
         <SplitView.Pane>
-            <ListView x:Name="ListView" IsItemClickEnabled="True" >
-                <ListView.Header>
-                    <StackPanel Height="50" Orientation="Horizontal">
-                        <ToggleButton x:Name="SplitButton" IsChecked="True" Width="50" Style="{StaticResource TextBlockButtonStyle}">
-                            <SymbolIcon Symbol="GlobalNavigationButton" />
-                        </ToggleButton>
-                        <TextBlock Margin="12,0" Style="{StaticResource SubheaderTextBlockStyle}" >
+            <SemanticZoom x:Name="semanticZoom">
+                <SemanticZoom.ZoomedInView>
+                    <ListView ItemsSource="{Binding Source={StaticResource collection}}" x:Name="ListView" IsItemClickEnabled="True" >
+                        <ListView.Header>
+                            <StackPanel Height="50" Orientation="Horizontal">
+                                <ToggleButton x:Name="SplitButton" IsChecked="True" Width="50" Style="{StaticResource TextBlockButtonStyle}">
+                                    <SymbolIcon Symbol="GlobalNavigationButton" />
+                                </ToggleButton>
+                                <TextBlock Margin="12,0" Style="{StaticResource SubheaderTextBlockStyle}" >
                             Pages
-                        </TextBlock>
-                    </StackPanel>
-                </ListView.Header>
-                <ListView.Footer>
-                    <Image Width="50" Height="50" HorizontalAlignment="Left">
-                        <Image.Source>
-                            ms-appx:///Assets/SplashScreen.scale-200.png
-                        </Image.Source>
-                    </Image>
-                </ListView.Footer>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem" >
-                        <Setter Property="Height" Value="50" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="system:Type" >
-                        <StackPanel Height="50" Orientation="Horizontal" >
-                            <Border CornerRadius="18" Width="26" Height="26" Background="{ThemeResource SystemColorControlAccentBrush}" >
-                                <TextBlock Margin="8,2,0,0" Text="{x:Bind Name}" CharacterSpacing="1024" FontWeight="Bold" Foreground="White" />
-                            </Border>
-                            <ContentControl Width="12" />
-                            <TextBlock LineHeight="12" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" >
+                                </TextBlock>
+                            </StackPanel>
+                        </ListView.Header>
+                        <ListView.Footer>
+                            <Image Width="50" Height="50" HorizontalAlignment="Left">
+                                <Image.Source>
+                                    ms-appx:///Assets/SplashScreen.scale-200.png
+                                </Image.Source>
+                            </Image>
+                        </ListView.Footer>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem" >
+                                <Setter Property="Height" Value="50" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="system:Type" >
+                                <StackPanel Height="50" Orientation="Horizontal" >
+                                    <Border CornerRadius="18" Width="26" Height="26" Background="{ThemeResource SystemColorControlAccentBrush}" >
+                                        <TextBlock Margin="8,2,0,0" Text="{x:Bind Name}" CharacterSpacing="1024" FontWeight="Bold" Foreground="White" />
+                                    </Border>
+                                    <ContentControl Width="12" />
+                                    <TextBlock LineHeight="12" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" >
                                 <Run Text="{x:Bind Name}" />
                                 <LineBreak/>
                                 <Run FontSize="10" Text="{x:Bind FullName}" Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.GroupStyle>
+                            <GroupStyle >
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="20" Text="{Binding Path=Key}"></TextBlock>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                    </ListView>
+
+                </SemanticZoom.ZoomedInView>
+                <SemanticZoom.ZoomedOutView>
+                    <GridView Margin="20 100 20 100" ItemsSource="{Binding Source={StaticResource collection},Path=CollectionGroups}">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="32" Text="{Binding Group.Key}"></TextBlock>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </SemanticZoom.ZoomedOutView>
+            </SemanticZoom>
         </SplitView.Pane>
 
 

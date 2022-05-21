@@ -20,7 +20,7 @@ namespace Luo_Painter.TestApp
         public MainPage()
         {
             this.InitializeComponent();
-            this.ListView.ItemsSource = this.CreatePages(typeof(MainPage)).OrderBy(c => c.Name);
+            collection.Source = this.CreatePages(typeof(MainPage)).GroupBy(c => c.Name.Substring(0, 1)).OrderBy(x => x.Key);
             this.ListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is Type item)
