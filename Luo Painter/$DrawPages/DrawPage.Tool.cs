@@ -31,7 +31,6 @@ namespace Luo_Painter
                 this.FootType = this.SetFootType(default, default, type);
                 this.EditType = default;
                 this.OptionType = default;
-                this.SetOptionType(default);
                 this.SetCanvasState(default);
             };
             this.ToolListView.Construct(this.ToolType);

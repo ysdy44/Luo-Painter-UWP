@@ -15,20 +15,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        private void SetOptionType(OptionType type)
-        {
-            if (type.HasIcon())
-            {
-                this.OptionIcon.Type = type;
-                this.OptionTextBlock.Text = type.ToString();
-                this.FootTitle.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.FootTitle.Visibility = Visibility.Collapsed;
-            }
-        }
-
         private void ConstructOptions()
         {
             this.OptionButton.ItemClick += (s, type) =>
@@ -127,7 +113,6 @@ namespace Luo_Painter
                                         this.SelectionType = state;
                                         this.FootType = this.SetFootType(this.EditType, type, this.ToolType);
                                         this.OptionType = type;
-                                        this.SetOptionType(type);
                                         this.SetCanvasState(true);
                                         return true;
                                 }
