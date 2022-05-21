@@ -143,6 +143,9 @@
     <Compile Include="MarqueeToolTransformPage.xaml.cs">
       <DependentUpon>MarqueeToolTransformPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NightSkyTimeLapsePage.xaml.cs">
+      <DependentUpon>NightSkyTimeLapsePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RippleEffectPage.xaml.cs">
       <DependentUpon>RippleEffectPage.xaml</DependentUpon>
     </Compile>
@@ -290,6 +293,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MarqueeToolTransformPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NightSkyTimeLapsePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
