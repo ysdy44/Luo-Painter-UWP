@@ -278,34 +278,6 @@ namespace Luo_Painter.Elements
         public Expander()
         {
             this.DefaultStyleKey = typeof(Expander);
-            base.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                if (e.NewSize.Width < 100) return;
-                if (e.NewSize.Height < 100) return;
-
-                this.W = e.NewSize.Width;
-                this.H = e.NewSize.Height;
-
-                switch (this.FullScreen)
-                {
-                    case false:
-                        if (this.U == 0) break;
-                        if (this.V == 0) break;
-                        if (this.IsLoaded)
-                        {
-                            this.SetLeft(Canvas.GetLeft(this));
-                            this.SetTop(Canvas.GetTop(this));
-                        }
-                        break;
-                    case true:
-                        break;
-                    default:
-                        break;
-                }
-            };
         }
 
 
@@ -314,8 +286,9 @@ namespace Luo_Painter.Elements
         {
             base.OnApplyTemplate();
 
-            if ((this.RootGrid is null) == false)
+            if (this.RootGrid is null is false)
             {
+                this.RootGrid.SizeChanged -= this.RootGrid_SizeChanged;
                 this.HideStoryboard = null;
                 this.ShowStoryboard = null;
                 this.HideLeftStoryboard = null;
@@ -328,8 +301,9 @@ namespace Luo_Painter.Elements
                 this.ShowBottomStoryboard = null;
             }
             this.RootGrid = base.GetTemplateChild(nameof(RootGrid)) as Grid;
-            if ((this.RootGrid is null) == false)
+            if (this.RootGrid is null is false)
             {
+                this.RootGrid.SizeChanged += this.RootGrid_SizeChanged;
                 this.HideStoryboard = this.RootGrid.Resources[nameof(HideStoryboard)] as Storyboard;
                 this.ShowStoryboard = this.RootGrid.Resources[nameof(ShowStoryboard)] as Storyboard;
                 this.HideLeftStoryboard = this.RootGrid.Resources[nameof(HideLeftStoryboard)] as Storyboard;
@@ -342,24 +316,24 @@ namespace Luo_Painter.Elements
                 this.ShowBottomStoryboard = this.RootGrid.Resources[nameof(ShowBottomStoryboard)] as Storyboard;
             }
 
-            if ((this.Thumb is null) == false)
+            if (this.Thumb is null is false)
             {
                 this.Thumb.DragStarted -= this.Thumb_DragStarted;
                 this.Thumb.DragDelta -= this.Thumb_DragDelta;
             }
             this.Thumb = base.GetTemplateChild(nameof(Thumb)) as Thumb;
-            if ((this.Thumb is null) == false)
+            if (this.Thumb is null is false)
             {
                 this.Thumb.DragStarted += this.Thumb_DragStarted;
                 this.Thumb.DragDelta += this.Thumb_DragDelta;
             }
 
-            if ((this.Button is null) == false)
+            if (this.Button is null is false)
             {
                 this.Button.Click -= this.Button_Click;
             }
             this.Button = base.GetTemplateChild(nameof(Button)) as Button;
-            if ((this.Button is null) == false)
+            if (this.Button is null is false)
             {
                 this.Button.Click += this.Button_Click;
             }
@@ -462,6 +436,35 @@ namespace Luo_Painter.Elements
             }
         }
 
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize == Size.Empty) return;
+            if (e.NewSize == e.PreviousSize) return;
+
+            if (e.NewSize.Width < 100) return;
+            if (e.NewSize.Height < 100) return;
+
+            this.W = e.NewSize.Width;
+            this.H = e.NewSize.Height;
+
+            switch (this.FullScreen)
+            {
+                case false:
+                    if (this.U == 0) break;
+                    if (this.V == 0) break;
+                    if (this.IsLoaded)
+                    {
+                        this.SetLeft(Canvas.GetLeft(this));
+                        this.SetTop(Canvas.GetTop(this));
+                    }
+                    break;
+                case true:
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
         {
             this.X = Canvas.GetLeft(this);
@@ -484,7 +487,7 @@ namespace Luo_Painter.Elements
                 default:
                     break;
             }
-                        this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+            this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
         }
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
