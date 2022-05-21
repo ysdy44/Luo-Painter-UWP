@@ -4,6 +4,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -14,7 +15,15 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    public static class DisplacementExtension
+    internal enum DisplacementMapMode
+    {
+        Glassy,
+        Clockwise,
+        ZoomOut,
+        ZoomIn,
+    }
+
+    internal static class DisplacementExtension
     {
         public static readonly Color ClearColor = Color.FromArgb(255, 127, 127, 255);
         public static readonly Color Left = Color.FromArgb(255, 255, 127, 255);
@@ -183,8 +192,9 @@ namespace Luo_Painter.TestApp
     {
         readonly CanvasDevice Device = new CanvasDevice();
         CanvasBitmap CanvasBitmap;
-        CanvasRenderTarget Brush;
         BitmapLayer BitmapLayer;
+
+        IDictionary<DisplacementMapMode, CanvasRenderTarget> Brushs;
 
         Vector2 Position;
 
@@ -200,6 +210,9 @@ namespace Luo_Painter.TestApp
 
         private void ConstructDisplacementMap()
         {
+            this.ModeListView.ItemsSource = System.Enum.GetValues(typeof(DisplacementMapMode));
+            this.ModeListView.SelectedIndex = 0;
+
             this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -241,7 +254,13 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.Brush = sender.GetClockwiseBrush();
+                this.Brushs = new Dictionary<DisplacementMapMode, CanvasRenderTarget>
+                {
+                    [DisplacementMapMode.Glassy] = DisplacementExtension.GetGlassyBrush(sender),
+                    [DisplacementMapMode.Clockwise] = DisplacementExtension.GetClockwiseBrush(sender),
+                    [DisplacementMapMode.ZoomOut] = DisplacementExtension.GetZoomOutBrush(sender),
+                    [DisplacementMapMode.ZoomIn] = DisplacementExtension.GetZoomInBrush(sender),
+                };
                 this.BitmapLayer = new BitmapLayer(this.Device, 512, 512);
                 this.BitmapLayer.Clear(DisplacementExtension.ClearColor, BitmapType.Temp);
             };
@@ -337,9 +356,10 @@ namespace Luo_Painter.TestApp
                 Vector2 unit = vector / length;
                 Color color = unit.ToColor();
 
+                CanvasRenderTarget brush = this.Brushs[(DisplacementMapMode)this.ModeListView.SelectedIndex];
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
                 {
-                    ds.DrawImage(this.Brush, position.X - 127, position.Y - 127);
+                    ds.DrawImage(brush, position.X - 127, position.Y - 127);
                 }
 
                 this.Position = position;
