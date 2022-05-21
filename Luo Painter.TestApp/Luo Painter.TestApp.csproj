@@ -134,15 +134,6 @@
     <Compile Include="DisplacementMapPage.xaml.cs">
       <DependentUpon>DisplacementMapPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DisplacementTwirlPage.xaml.cs">
-      <DependentUpon>DisplacementTwirlPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DisplacementPinchExpandPage.xaml.cs">
-      <DependentUpon>DisplacementPinchExpandPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DisplacementPushPage.xaml.cs">
-      <DependentUpon>DisplacementPushPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ExpanderPage.xaml.cs">
       <DependentUpon>ExpanderPage.xaml</DependentUpon>
     </Compile>
@@ -287,18 +278,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DisplacementMapPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DisplacementTwirlPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DisplacementPinchExpandPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DisplacementPushPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
