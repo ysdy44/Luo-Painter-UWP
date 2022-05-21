@@ -121,9 +121,19 @@ namespace Luo_Painter.Elements
         /// </summary>
         public void Hide()
         {
-            foreach (Expander item in this.Items)
+            if (this.FullScreen)
             {
-                if (item.IsFlyout) item.Hide();
+                foreach (Expander item in this.Items)
+                {
+                    item.Hide();
+                }
+            }
+            else
+            {
+                foreach (Expander item in this.Items)
+                {
+                    if (item.IsFlyout) item.Hide();
+                }
             }
             base.Background = null;
         }
@@ -426,7 +436,7 @@ namespace Luo_Painter.Elements
                     else if (this.IsShow)
                     {
                         this.SetLeft(Canvas.GetLeft(this));
-                        this.SetTop(Canvas.GetTop(this));
+                        this.SetTopWithHeader(Canvas.GetTop(this));
                     }
                     break;
                 case true:
@@ -455,7 +465,7 @@ namespace Luo_Painter.Elements
                     if (this.IsLoaded)
                     {
                         this.SetLeft(Canvas.GetLeft(this));
-                        this.SetTop(Canvas.GetTop(this));
+                        this.SetTopWithHeader(Canvas.GetTop(this));
                     }
                     break;
                 case true:
@@ -509,7 +519,7 @@ namespace Luo_Painter.Elements
             }
 
             this.Y += e.VerticalChange;
-            this.SetTop(this.Y);
+            this.SetTopWithHeader(this.Y);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -722,72 +732,32 @@ namespace Luo_Painter.Elements
         }
 
 
-        private void ShowBegin()
+        private void ShowBegin(double space = 12)
         {
-            switch (this.Placement)
+            switch (this.GetPlacement(this.Placement))
             {
                 case ExpanderPlacementMode.Center:
                     this.SetLeft(this.U / 2 - this.W / 2);
                     this.SetTop(this.V / 2 - this.H / 2);
                     break;
                 case ExpanderPlacementMode.Left:
-                    switch (base.FlowDirection)
-                    {
-                        case FlowDirection.LeftToRight:
-                            this.SetLeft(this.PlacementTargetPosition.X - this.W);
-                            break;
-                        case FlowDirection.RightToLeft:
-                            this.SetLeft(this.U - this.W - this.PlacementTargetW);
-                            break;
-                        default:
-                            break;
-                    }
+                    this.SetLeft(this.PlacementTargetPosition.X - this.W - space);
                     this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH / 2 - this.H / 2);
                     this.ShowRightStoryboard.Begin(); // Storyboard
                     break;
                 case ExpanderPlacementMode.Top:
-                    switch (base.FlowDirection)
-                    {
-                        case FlowDirection.LeftToRight:
-                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
-                            break;
-                        case FlowDirection.RightToLeft:
-                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
-                            break;
-                        default:
-                            break;
-                    }
-                    this.SetTop(this.PlacementTargetPosition.Y - this.H);
+                    this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
+                    this.SetTop(this.PlacementTargetPosition.Y - this.H - space);
                     this.ShowBottomStoryboard.Begin(); // Storyboard
                     break;
                 case ExpanderPlacementMode.Right:
-                    switch (base.FlowDirection)
-                    {
-                        case FlowDirection.LeftToRight:
-                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW);
-                            break;
-                        case FlowDirection.RightToLeft:
-                            this.SetLeft(this.PlacementTargetW);
-                            break;
-                        default:
-                            break;
-                    }
+                    this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW + space);
                     this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH / 2 - this.H / 2);
                     this.ShowLeftStoryboard.Begin(); // Storyboard
                     break;
                 case ExpanderPlacementMode.Bottom:
-                    switch (base.FlowDirection)
-                    {
-                        case FlowDirection.LeftToRight:
-                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
-                            break;
-                        case FlowDirection.RightToLeft:
-                            this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
-                            break;
-                        default:
-                            break;
-                    }
-                    this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH);
+                    this.SetLeft(this.PlacementTargetPosition.X + this.PlacementTargetW / 2 - this.W / 2);
+                    this.SetTop(this.PlacementTargetPosition.Y + this.PlacementTargetH + space);
                     this.ShowTopStoryboard.Begin(); // Storyboard
                     break;
                 default:
@@ -819,7 +789,77 @@ namespace Luo_Painter.Elements
 
 
         private void SetLeft(double value) => Canvas.SetLeft(this, this.W >= this.U ? 0 : System.Math.Clamp(value, 0, this.U - this.W));
-        private void SetTop(double value) => Canvas.SetTop(this, System.Math.Clamp(value, 0, this.V - 50));
+        private void SetTop(double value) => Canvas.SetTop(this, this.H >= this.V ? 0 : System.Math.Clamp(value, 0, this.V - this.H));
+        private void SetTopWithHeader(double value) => Canvas.SetTop(this, System.Math.Clamp(value, 0, this.V - 50));
+
+        private bool InsideLeft() => this.PlacementTargetPosition.X > this.W;
+        private bool InsideTop() => this.PlacementTargetPosition.Y > this.H;
+        private bool InsideRight() => this.U - this.PlacementTargetPosition.X - this.PlacementTargetW > this.W;
+        private bool InsideBottom() => this.V - this.PlacementTargetPosition.Y - this.PlacementTargetH > this.H;
+        private ExpanderPlacementMode GetPlacement(ExpanderPlacementMode placement)
+        {
+            switch (placement)
+            {
+                case ExpanderPlacementMode.Center: return ExpanderPlacementMode.Center;
+
+                case ExpanderPlacementMode.Left:
+                case ExpanderPlacementMode.Right:
+                    {
+                        switch (placement)
+                        {
+                            case ExpanderPlacementMode.Left:
+                                if (this.InsideLeft()) return ExpanderPlacementMode.Left;
+                                else if (this.InsideRight()) return ExpanderPlacementMode.Right;
+                                else break;
+                            case ExpanderPlacementMode.Right:
+                                if (this.InsideRight()) return ExpanderPlacementMode.Right;
+                                else if (this.InsideLeft()) return ExpanderPlacementMode.Left;
+                                else break;
+                            default:
+                                return ExpanderPlacementMode.Center;
+                        }
+
+                        if (this.InsideBottom()) return ExpanderPlacementMode.Bottom;
+                        else if (this.InsideTop()) return ExpanderPlacementMode.Top;
+                        else return ExpanderPlacementMode.Center;
+                    }
+
+                case ExpanderPlacementMode.Top:
+                case ExpanderPlacementMode.Bottom:
+                    {
+                        switch (placement)
+                        {
+                            case ExpanderPlacementMode.Top:
+                                if (this.InsideTop()) return ExpanderPlacementMode.Top;
+                                else if (this.InsideBottom()) return ExpanderPlacementMode.Bottom;
+                                else break;
+                            case ExpanderPlacementMode.Bottom:
+                                if (this.InsideBottom()) return ExpanderPlacementMode.Bottom;
+                                else if (this.InsideTop()) return ExpanderPlacementMode.Top;
+                                else break;
+                            default:
+                                return ExpanderPlacementMode.Center;
+                        }
+
+                        switch (base.FlowDirection)
+                        {
+                            case FlowDirection.LeftToRight:
+                                if (this.InsideRight()) return ExpanderPlacementMode.Right;
+                                else if (this.InsideLeft()) return ExpanderPlacementMode.Left;
+                                else return ExpanderPlacementMode.Center;
+                            case FlowDirection.RightToLeft:
+                                if (this.InsideLeft()) return ExpanderPlacementMode.Left;
+                                else if (this.InsideRight()) return ExpanderPlacementMode.Right;
+                                else return ExpanderPlacementMode.Center;
+                            default:
+                                return ExpanderPlacementMode.Center;
+                        }
+                    }
+
+                default:
+                    return ExpanderPlacementMode.Center;
+            }
+        }
 
     }
 }
