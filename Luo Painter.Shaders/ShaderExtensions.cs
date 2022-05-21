@@ -39,12 +39,6 @@ namespace Luo_Painter.Shaders
                 case ShaderType.SdrOverlayEffect: return "ms-appx:///Luo Painter.Shaders/SdrOverlayEffect.bin";
                 case ShaderType.LalphaMask: return "ms-appx:///Luo Painter.Shaders/LalphaMask.txt";
                 case ShaderType.RalphaMask: return "ms-appx:///Luo Painter.Shaders/RalphaMask.bin";
-                case ShaderType.DisplacementPush: return "ms-appx:///Luo Painter.Shaders/DisplacementPush.bin";
-                case ShaderType.DisplacementPinch: return "ms-appx:///Luo Painter.Shaders/DisplacementPinch.bin";
-                case ShaderType.DisplacementExpand: return "ms-appx:///Luo Painter.Shaders/DisplacementExpand.bin";
-                case ShaderType.DisplacementTwirlLeft: return "ms-appx:///Luo Painter.Shaders/DisplacementTwirlLeft.bin";
-                case ShaderType.DisplacementTwirlRight: return "ms-appx:///Luo Painter.Shaders/DisplacementTwirlRight.bin";
-                case ShaderType.DisplacementReset: return "ms-appx:///Luo Painter.Shaders/DisplacementReset.bin";
                 case ShaderType.DisplacementLiquefaction: return "ms-appx:///Luo Painter.Shaders/DisplacementLiquefaction.bin";
                 default: return null; 
             }

@@ -20,12 +20,6 @@
         SdrOverlayEffect,
         LalphaMask,
         RalphaMask,
-        DisplacementPush,
-        DisplacementPinch,
-        DisplacementExpand,
-        DisplacementTwirlLeft,
-        DisplacementTwirlRight,
-        DisplacementReset,
         DisplacementLiquefaction,
     }
 }

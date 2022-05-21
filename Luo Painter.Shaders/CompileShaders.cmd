@@ -26,12 +26,6 @@ call :COMPILE RippleEffect.hlsl   || goto END
 call :COMPILE Difference.hlsl   || goto END
 call :COMPILE DottedLineTransform.hlsl   || goto END
 call :COMPILE RalphaMask.hlsl   || goto END
-call :COMPILE DisplacementPush.hlsl   || goto END
-call :COMPILE DisplacementPinch.hlsl   || goto END
-call :COMPILE DisplacementExpand.hlsl   || goto END
-call :COMPILE DisplacementTwirlLeft.hlsl   || goto END
-call :COMPILE DisplacementTwirlRight.hlsl   || goto END
-call :COMPILE DisplacementReset.hlsl   || goto END
 call :COMPILE DisplacementLiquefaction.hlsl   || goto END
 
 goto END
