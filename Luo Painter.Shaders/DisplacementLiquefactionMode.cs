@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.TestApp
+﻿namespace Luo_Painter.Shaders
 {
     public enum DisplacementLiquefactionMode : int
     {
@@ -11,5 +11,10 @@
 
         TwirlLeft = 4,
         TwirlRight = 5,
+
+        // Reset = 6,
+        // Reset = 7,
+        // Reset = 8,
+        // Reset = ...
     }
 }
