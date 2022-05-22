@@ -19,26 +19,19 @@ namespace Luo_Painter.Options
             return type.GetTemplate(resource);
         }
 
-        public static bool HasIcon(this OptionType type)
+        public static bool AllowDrag(this OptionType type)
         {
             switch (type)
             {
+                case OptionType.Transform:
                 case OptionType.DisplacementLiquefaction:
-                case OptionType.GradientMapping:
-                case OptionType.RippleEffect:
-                    return true;
+                    return false;
 
-                case OptionType.Exposure:
-                case OptionType.Brightness:
-                case OptionType.Saturation:
-                case OptionType.HueRotation:
-                case OptionType.Contrast:
-                case OptionType.Temperature:
-                case OptionType.HighlightsAndShadows:
-                    return true;
+                case OptionType.LuminanceToAlpha:
+                    return false;
 
                 default:
-                    return false;
+                    return true;
             }
         }
 

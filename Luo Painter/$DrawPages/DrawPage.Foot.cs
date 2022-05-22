@@ -21,7 +21,7 @@ namespace Luo_Painter
 
         private FootType SetFootType(EditType ediType, OptionType optionType, ToolType toolType)
         {
-            if (optionType.HasIcon())
+            if (optionType.AllowDrag())
             {
                 this.FootThumb.Visibility = Visibility.Visible;
             }
