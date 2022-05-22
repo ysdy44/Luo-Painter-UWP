@@ -23,6 +23,7 @@ namespace Luo_Painter.Options
         {
             switch (type)
             {
+                case OptionType.DisplacementLiquefaction:
                 case OptionType.GradientMapping:
                 case OptionType.RippleEffect:
                     return true;
