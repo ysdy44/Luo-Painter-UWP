@@ -96,6 +96,10 @@
 
                         <Setter Target="HighlightsAndShadowsPanel1.Orientation" Value="Vertical"/>
                         <Setter Target="HighlightsAndShadowsPanel2.Orientation" Value="Vertical"/>
+                        <Setter Target="DisplacementLiquefactionPanel.Orientation" Value="Vertical"/>
+                        <Setter Target="DisplacementLiquefactionPanel.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="DisplacementLiquefactionSizeSlider.Width" Value="Auto"/>
+                        <Setter Target="DisplacementLiquefactionPressureSlider.Width" Value="Auto"/>
                         <Setter Target="ShadowsSlider.Width" Value="Auto"/>
                         <Setter Target="HighlightsSlider.Width" Value="Auto"/>
                         <Setter Target="ClaritySlider.Width" Value="Auto"/>
@@ -547,12 +551,14 @@
                         </ListBox>
                     </local:FootCase>
                     <local:FootCase Value="DisplacementLiquefaction">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="DisplacementLiquefaction" Width="50" />
-                            <TextBlock x:Name="DisplacementLiquefactionTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Liquefaction
-                            </TextBlock>
-                        </StackPanel>
+                        <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" >
+                            <x:String>Push</x:String>
+                            <x:String>Pinch</x:String>
+                            <x:String>Expand</x:String>
+                            <x:String>Twirl Left</x:String>
+                            <x:String>Twirl Right</x:String>
+                            <x:String>Reset</x:String>
+                        </ListBox>
                     </local:FootCase>
                     <local:FootCase Value="GradientMapping">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
@@ -846,16 +852,8 @@
                     </StackPanel>
                 </local:FootCase>
                 <local:FootCase Value="DisplacementLiquefaction">
-                    <StackPanel>
-                        <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" >
-                            <x:String>Push</x:String>
-                            <x:String>Pinch</x:String>
-                            <x:String>Expand</x:String>
-                            <x:String>Twirl Left</x:String>
-                            <x:String>Twirl Right</x:String>
-                            <x:String>Reset</x:String>
-                        </ListBox>
-                        <Slider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
+                    <StackPanel x:Name="DisplacementLiquefactionPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Slider x:Name="DisplacementLiquefactionSizeSlider" Width="260" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
                             <Slider.Tag>
                                 Size
                             </Slider.Tag>
@@ -871,7 +869,7 @@
                                 </Button>
                             </Slider.Header>
                         </Slider>
-                        <Slider x:Name="DisplacementLiquefactionPressureSlider" Value="32" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="32" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
                             <Slider.Tag>
                                 Pressure
                             </Slider.Tag>
