@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using System.Numerics;
+using Windows.Graphics.Effects;
 using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
@@ -25,6 +26,8 @@ namespace Luo_Painter.Layers.Models
     {
 
         //@Static
+        public static readonly Vector4 DisplacementColor = new Vector4(0.5f, 0.5f, 1, 1);
+        public static readonly Vector4 DodgerBlue = new Vector4(0.11764705882352941176470588235294f, 0.56470588235294117647058823529412f, 1, 1);
         private static readonly CanvasStrokeStyle CanvasStrokeStyle = new CanvasStrokeStyle
         {
             StartCap = CanvasCapStyle.Round,
@@ -35,7 +38,24 @@ namespace Luo_Painter.Layers.Models
         public InkMode InkMode { get; set; }
 
 
-        public void Shade(PixelShaderEffect shader, Windows.Foundation.Rect rect)
+        public void ClearDisplacement()
+        {
+            using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
+            {
+                ds.Clear(BitmapLayer.DisplacementColor);
+            }
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                ds.Clear(BitmapLayer.DisplacementColor);
+            }
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            {
+                ds.Clear(BitmapLayer.DisplacementColor);
+            }
+        }
+
+
+        public void Shade(IGraphicsEffectSource source, Windows.Foundation.Rect rect)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
@@ -45,7 +65,7 @@ namespace Luo_Painter.Layers.Models
                 ds.DrawImage(new CropEffect
                 {
                     SourceRectangle = rect,
-                    Source = shader
+                    Source = source
                 });
             }
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
