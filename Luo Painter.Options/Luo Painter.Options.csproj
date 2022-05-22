@@ -164,6 +164,10 @@
     <Content Include="Thumbnails\Vignette.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Icons\DisplacementLiquefactionIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Icons\RippleEffectIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
