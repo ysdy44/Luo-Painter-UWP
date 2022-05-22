@@ -19,6 +19,7 @@ namespace Luo_Painter
                     switch (optionType)
                     {
                         case OptionType.Transform: return FootType.Transform;
+                        case OptionType.DisplacementLiquefaction: return FootType.DisplacementLiquefaction;
                         case OptionType.GradientMapping: return FootType.GradientMapping;
                         case OptionType.RippleEffect: return FootType.RippleEffect;
 
@@ -67,6 +68,7 @@ namespace Luo_Painter
                     return true;
 
                 case FootType.Transform:
+                case FootType.DisplacementLiquefaction:
                 case FootType.RippleEffect:
                     return true;
 
@@ -93,7 +95,9 @@ namespace Luo_Painter
                 case FootType.Temperature:
                 case FootType.HighlightsAndShadows:
                 case FootType.LuminanceToAlpha:
+
                 case FootType.Transform:
+                case FootType.DisplacementLiquefaction:
                 case FootType.GradientMapping:
                 case FootType.RippleEffect:
                     return true;

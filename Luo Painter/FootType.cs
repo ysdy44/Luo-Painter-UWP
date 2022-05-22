@@ -22,6 +22,7 @@
 
         // More Option
         Transform,
+        DisplacementLiquefaction,
         GradientMapping,
         RippleEffect,
 
