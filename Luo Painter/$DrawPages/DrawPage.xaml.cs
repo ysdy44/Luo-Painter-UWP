@@ -118,6 +118,7 @@ namespace Luo_Painter
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
+        BitmapLayer Displacement { get; set; }
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         FootType FootType { get; set; } = FootType.None;
@@ -133,6 +134,7 @@ namespace Luo_Painter
         byte[] DottedLineTransformShaderCodeBytes;
         byte[] LalphaMaskShaderCodeBytes;
         byte[] RalphaMaskShaderCodeBytes;
+        byte[] DisplacementLiquefactionShaderCodeBytes;
 
         private async Task CreateResourcesAsync()
         {
@@ -143,6 +145,7 @@ namespace Luo_Painter
             this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
             this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
             this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();
+            this.DisplacementLiquefactionShaderCodeBytes = await ShaderType.DisplacementLiquefaction.LoadAsync();
         }
         private async Task CreateDottedLineResourcesAsync()
         {
