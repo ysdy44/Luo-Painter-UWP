@@ -16,8 +16,9 @@
         <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
     </FrameworkElement.Resources>
 
-    <local:OptionItem Type = "Transform" Command= "{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
-    <local:OptionItem Type = "GradientMapping" Command= "{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
-    <local:OptionItem Type = "RippleEffect" Command= "{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+    <local:OptionItem Type="Transform" Command="{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+    <local:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+    <local:OptionItem Type="GradientMapping" Command="{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+    <local:OptionItem Type="RippleEffect" Command="{x:Bind OptionTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
 
 </StackPanel>

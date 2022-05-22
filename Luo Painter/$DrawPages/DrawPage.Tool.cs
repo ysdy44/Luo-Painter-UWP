@@ -56,6 +56,9 @@ namespace Luo_Painter
                         case OptionType.Transform:
                             this.Transform_Start(point);
                             break;
+                        case OptionType.DisplacementLiquefaction:
+                            this.DisplacementLiquefaction_Start(point);
+                            break;
                         case OptionType.GradientMapping:
                             break;
                         case OptionType.RippleEffect:
@@ -111,6 +114,9 @@ namespace Luo_Painter
                     {
                         case OptionType.Transform:
                             this.Transform_Delta(point);
+                            break;
+                        case OptionType.DisplacementLiquefaction:
+                            this.DisplacementLiquefaction_Delta(point);
                             break;
                         case OptionType.GradientMapping:
                             break;
@@ -171,6 +177,9 @@ namespace Luo_Painter
                     {
                         case OptionType.Transform:
                             this.Transform_Complete(point);
+                            break;
+                        case OptionType.DisplacementLiquefaction:
+                            this.DisplacementLiquefaction_Complete(point);
                             break;
                         case OptionType.GradientMapping:
                             break;

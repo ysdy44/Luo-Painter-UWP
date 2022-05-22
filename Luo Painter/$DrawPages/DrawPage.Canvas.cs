@@ -112,6 +112,9 @@ namespace Luo_Painter
                     case FootType.Transform:
                         this.DrawTransform(sender, args.DrawingSession);
                         break;
+                    case FootType.DisplacementLiquefaction:
+                        this.DrawDisplacementLiquefaction(sender, args.DrawingSession);
+                        break;
                     case FootType.GradientMapping:
                         break;
                     case FootType.RippleEffect:
@@ -132,6 +135,8 @@ namespace Luo_Painter
             {
                 this.Marquee = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
                 this.Marquee.RenderThumbnail();
+                this.Displacement = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+                this.Displacement.RenderThumbnail();
                 this.LayerListView.MarqueeSource = this.Marquee.Thumbnail;
                 args.TrackAsyncAction(this.CreateDottedLineResourcesAsync().AsAsyncAction());
             };

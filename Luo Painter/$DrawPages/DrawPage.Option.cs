@@ -101,6 +101,9 @@ namespace Luo_Painter
                                                         break;
                                                 }
                                                 break;
+                                            case OptionType.DisplacementLiquefaction:
+                                                this.SetDisplacementLiquefaction();
+                                                break;
                                             case OptionType.GradientMapping:
                                                 this.SetGradientMapping();
                                                 break;

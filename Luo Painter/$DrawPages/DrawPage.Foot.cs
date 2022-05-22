@@ -308,6 +308,8 @@ namespace Luo_Painter
                     return image;
                 case FootType.Transform:
                     return this.GetTransformPreview(image);
+                case FootType.DisplacementLiquefaction:
+                    return this.GetDisplacementLiquefactionPreview(image);
                 case FootType.GradientMapping:
                     return this.GetGradientMappingPreview(image);
                 case FootType.RippleEffect:
