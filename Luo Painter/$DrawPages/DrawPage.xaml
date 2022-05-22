@@ -504,7 +504,7 @@
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <controls:OptionIcon Type="HueRotation" Width="50" />
                             <TextBlock x:Name="HueRotationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                HueRotation
+                                Hue Rotation
                             </TextBlock>
                         </StackPanel>
                     </local:FootCase>
@@ -528,7 +528,7 @@
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <controls:OptionIcon Type="HighlightsAndShadows" Width="50" />
                             <TextBlock x:Name="HighlightsAndShadowsTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                HighlightsAndShadows
+                                Highlights and Shadows
                             </TextBlock>
                         </StackPanel>
                     </local:FootCase>
@@ -546,11 +546,19 @@
                             <x:String>Free Transform</x:String>
                         </ListBox>
                     </local:FootCase>
+                    <local:FootCase Value="DisplacementLiquefaction">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <controls:OptionIcon Type="DisplacementLiquefaction" Width="50" />
+                            <TextBlock x:Name="DisplacementLiquefactionTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Liquefaction
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
                     <local:FootCase Value="GradientMapping">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <controls:OptionIcon Type="GradientMapping" Width="50" />
                             <TextBlock x:Name="GradientMappingTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                GradientMapping
+                                Gradient Mapping
                             </TextBlock>
                         </StackPanel>
                     </local:FootCase>
@@ -558,7 +566,7 @@
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <controls:OptionIcon Type="RippleEffect" Width="50" />
                             <TextBlock x:Name="RippleEffectTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                RippleEffect
+                                Ripple Effect
                             </TextBlock>
                         </StackPanel>
                     </local:FootCase>
@@ -835,6 +843,53 @@
                                 </Slider.Header>
                             </Slider>
                         </StackPanel>
+                    </StackPanel>
+                </local:FootCase>
+                <local:FootCase Value="DisplacementLiquefaction">
+                    <StackPanel>
+                        <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" >
+                            <x:String>Push</x:String>
+                            <x:String>Pinch</x:String>
+                            <x:String>Expand</x:String>
+                            <x:String>Twirl Left</x:String>
+                            <x:String>Twirl Right</x:String>
+                            <x:String>Reset</x:String>
+                        </ListBox>
+                        <Slider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Tag>
+                                Size
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="DisplacementLiquefactionSizeButton" Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="DisplacementLiquefactionPressureSlider" Value="32" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Tag>
+                                Pressure
+                            </Slider.Tag>
+                            <Slider.Header>
+                                <Button x:Name="DisplacementLiquefactionPressureButton" 
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind DisplacementLiquefactionPressureSlider.Value, Mode=OneWay}"/><Run>%</Run>
+                                    </TextBlock>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
                     </StackPanel>
                 </local:FootCase>
                 <local:FootCase Value="GradientMapping">
