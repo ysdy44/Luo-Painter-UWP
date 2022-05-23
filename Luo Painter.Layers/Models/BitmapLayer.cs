@@ -67,28 +67,14 @@ namespace Luo_Painter.Layers.Models
             this.RenderThumbnail();
         }
 
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height)
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(resourceCreator, width, height)
         {
             //@DPI
             this.OriginRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.TempRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
 
-            this.ThumbnailWriteableBitmap = new WriteableBitmap(50, 50);
-            this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, 50, 50, 96);
 
-            int wh = Math.Max(width, height);
-            if (wh <= 50) this.ThumbnailType = ThumbnailType.Origin;
-            else if (wh >= 5000) this.ThumbnailType = ThumbnailType.Oversize;
-            else
-            {
-                this.ThumbnailScale = new Vector2(50f / wh);
-                this.ThumbnailType = ThumbnailType.None;
-            }
-
-            this.Center = new Vector2((float)width / 2, (float)height / 2);
-            this.Width = width;
-            this.Height = height;
             this.XDivisor = width / BitmapLayer.Unit;
             this.YDivisor = height / BitmapLayer.Unit;
             this.XRemainder = width % BitmapLayer.Unit;
@@ -134,6 +120,7 @@ namespace Luo_Painter.Layers.Models
             this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
 
+        public void RenderThumbnail() => base.RenderThumbnail(this.Source);
 
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
 

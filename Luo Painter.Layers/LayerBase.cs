@@ -4,7 +4,13 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.ComponentModel;
+using System.IO;
+using System.Numerics;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers
 {
@@ -19,6 +25,12 @@ namespace Luo_Painter.Layers
         Transparent,
     }
 
+    public enum ThumbnailType
+    {
+        None,
+        Origin,
+        Oversize,
+    }
 
     public abstract class LayerBase
     {
@@ -184,6 +196,95 @@ namespace Luo_Painter.Layers
                 default:
                     return false;
             }
+        }
+
+
+        public readonly Vector2 Center; // (125, 125)
+        public readonly int Width; // 250
+        public readonly int Height; // 250
+
+        public LayerBase(ICanvasResourceCreator resourceCreator, int width, int height)
+        {
+            this.Center = new Vector2((float)width / 2, (float)height / 2);
+            this.Width = width;
+            this.Height = height;
+
+
+            this.ThumbnailWriteableBitmap = new WriteableBitmap(50, 50);
+            this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, 50, 50, 96);
+
+            int wh = System.Math.Max(width, height);
+            if (wh <= 50) this.ThumbnailType = ThumbnailType.Origin;
+            else if (wh >= 5000) this.ThumbnailType = ThumbnailType.Oversize;
+            else
+            {
+                this.ThumbnailScale = new Vector2(50f / wh);
+                this.ThumbnailType = ThumbnailType.None;
+            }
+        }
+
+
+        public ImageSource Thumbnail => this.ThumbnailWriteableBitmap;
+
+        readonly CanvasRenderTarget ThumbnailRenderTarget;
+        readonly WriteableBitmap ThumbnailWriteableBitmap;
+        readonly ThumbnailType ThumbnailType;
+        readonly Vector2 ThumbnailScale;
+
+        public void RenderThumbnail(ICanvasImage image)
+        {
+            using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
+            {
+                ds.Blend = CanvasBlend.Copy;
+                switch (this.ThumbnailType)
+                {
+                    case ThumbnailType.Origin:
+                        ds.DrawImage(image);
+                        break;
+                    case ThumbnailType.Oversize:
+                        ds.DrawImage(new ScaleEffect
+                        {
+                            Scale = new Vector2(0.01f),
+                            BorderMode = EffectBorderMode.Hard,
+                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                            Source = image,
+                        });
+                        break;
+                    default:
+                        ds.DrawImage(new ScaleEffect
+                        {
+                            Scale = this.ThumbnailScale,
+                            BorderMode = EffectBorderMode.Hard,
+                            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                            Source = image,
+                        });
+                        break;
+                }
+            }
+
+            byte[] bytes = this.ThumbnailRenderTarget.GetPixelBytes();
+            using (Stream stream = this.ThumbnailWriteableBitmap.PixelBuffer.AsStream())
+            {
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            this.ThumbnailWriteableBitmap.Invalidate();
+        }
+
+        public void ClearThumbnail(Color color)
+        {
+            using (CanvasDrawingSession ds = this.ThumbnailRenderTarget.CreateDrawingSession())
+            {
+                ds.Clear(color);
+            }
+
+            byte[] bytes = this.ThumbnailRenderTarget.GetPixelBytes();
+            using (Stream stream = this.ThumbnailWriteableBitmap.PixelBuffer.AsStream())
+            {
+                stream.Write(bytes, 0, bytes.Length);
+            }
+
+            this.ThumbnailWriteableBitmap.Invalidate();
         }
 
 

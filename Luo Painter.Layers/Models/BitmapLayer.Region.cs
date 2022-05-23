@@ -32,9 +32,6 @@ namespace Luo_Painter.Layers.Models
         public const int Unit = 100;
 
         public readonly RegionType RegionType; // XYRemainder
-        public readonly Vector2 Center; // (125, 125)
-        public readonly int Width; // 250
-        public readonly int Height; // 250
 
         readonly int XDivisor; // 2
         readonly int YDivisor; // 2
