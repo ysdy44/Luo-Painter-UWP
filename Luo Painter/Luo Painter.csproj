@@ -178,6 +178,27 @@
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
     <Compile Include="FootExtensions.cs" />
     <Compile Include="FootType.cs" />
+    <Compile Include="Luo Painter.Menus\ColorMenu.xaml.cs">
+      <DependentUpon>ColorMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Menus\EditMenu.xaml.cs">
+      <DependentUpon>EditMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Menus\ExportMenu.xaml.cs">
+      <DependentUpon>ExportMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Menus\LayerMenu.xaml.cs">
+      <DependentUpon>LayerMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Menus\MoreOptionMenu.xaml.cs">
+      <DependentUpon>MoreOptionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Menus\OptionMenu.xaml.cs">
+      <DependentUpon>OptionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Luo Painter.Menus\SetupMenu.xaml.cs">
+      <DependentUpon>SetupMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Luo Painter.Tools\PaintTool.xaml.cs">
       <DependentUpon>PaintTool.xaml</DependentUpon>
     </Compile>
@@ -305,6 +326,34 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ToolListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\ColorMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\EditMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\ExportMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\LayerMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\MoreOptionMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\OptionMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\SetupMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
