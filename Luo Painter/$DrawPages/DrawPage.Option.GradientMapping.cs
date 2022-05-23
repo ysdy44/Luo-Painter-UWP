@@ -79,7 +79,7 @@ namespace Luo_Painter
                 this.GradientMappingSelector.SetCurrent(s);
                 if (this.GradientMappingSelector.CurrentStop == null) return;
 
-                this.ColorButton.Show(this.GradientMappingSelector.CurrentStop.Color);
+                this.ColorMenu.Show(this.GradientMappingSelector.CurrentStop.Color);
                 this.ColorMenu.ShowAt(this.GradientMappingSelector.CurrentButton, Elements.ExpanderPlacementMode.Top);
             };
 

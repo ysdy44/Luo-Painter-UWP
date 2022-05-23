@@ -73,7 +73,7 @@ namespace Luo_Painter
 
         private void ConstructLayers()
         {
-            this.LayerListView.SelectedItemChanged += (s, item) => this.LayerButton.SetSelectedItem(item);
+            this.LayerListView.SelectedItemChanged += (s, item) => this.LayerMenu.SetSelectedItem(item);
 
             this.LayerListView.DragItemsStarting += (s, e) =>
             {
@@ -181,7 +181,7 @@ namespace Luo_Painter
             this.LayerListView.ImageClick += async (s, e) => this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop));
             this.LayerListView.RemoveClick += (s, e) => this.Remove();
 
-            this.LayerButton.NameHistory += (undo, redo) =>
+            this.LayerMenu.NameHistory += (undo, redo) =>
             {
                 this.NameUndoParameters.Clear();
 
@@ -226,7 +226,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.LayerButton.BlendModeHistory += (undo, redo) =>
+            this.LayerMenu.BlendModeHistory += (undo, redo) =>
             {
                 this.BlendModeUndoParameters.Clear();
 
@@ -273,9 +273,9 @@ namespace Luo_Painter
                 }
             };
 
-            this.LayerButton.OpacitySlider.ValueChangedStarted += (s, e) =>
+            this.LayerMenu.OpacitySlider.ValueChangedStarted += (s, e) =>
             {
-                this.StartingOpacity = (float)(this.LayerButton.OpacitySlider.Value / 100);
+                this.StartingOpacity = (float)(this.LayerMenu.OpacitySlider.Value / 100);
 
                 this.OpacityUndoParameters.Clear();
 
@@ -290,7 +290,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.LayerButton.OpacitySlider.ValueChangedDelta += (s, e) =>
+            this.LayerMenu.OpacitySlider.ValueChangedDelta += (s, e) =>
             {
                 float opacity = (float)(e.NewValue / 100);
                 foreach (object item in this.LayerListView.SelectedItems)
@@ -303,10 +303,10 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.LayerButton.OpacitySlider.ValueChangedCompleted += (s, e) =>
+            this.LayerMenu.OpacitySlider.ValueChangedCompleted += (s, e) =>
             {
                 float undo = (float)(this.StartingOpacity / 100);
-                float redo = (float)(this.LayerButton.OpacitySlider.Value / 100);
+                float redo = (float)(this.LayerMenu.OpacitySlider.Value / 100);
 
                 switch (this.OpacityUndoParameters.Count)
                 {
@@ -337,7 +337,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.LayerButton.OpacityHistory += (undo, redo) =>
+            this.LayerMenu.OpacityHistory += (undo, redo) =>
             {
                 this.OpacityUndoParameters.Clear();
 

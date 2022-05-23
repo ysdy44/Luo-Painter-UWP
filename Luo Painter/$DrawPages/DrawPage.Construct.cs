@@ -24,7 +24,7 @@ namespace Luo_Painter
                 await this.SettingDislog.ShowInstance();
             };
 
-            this.ExportButton.ExportClick += async (s, e) =>
+            this.ExportMenu.ExportClick += async (s, e) =>
             {
                 this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
@@ -46,7 +46,7 @@ namespace Luo_Painter
 
         private void ConstructColor()
         {
-            this.ColorButton.ColorChanged += (s, e) =>
+            this.ColorMenu.ColorChanged += (s, e) =>
             {
                 switch (this.OptionType)
                 {

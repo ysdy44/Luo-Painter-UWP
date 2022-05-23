@@ -11,6 +11,7 @@
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
     xmlns:controls="using:Luo_Painter.Controls"
+    xmlns:menus="using:Luo_Painter.Menus"
     xmlns:tools="using:Luo_Painter.Tools"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -57,19 +58,19 @@
                         <Setter Target="FullScreenButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
 
                         <!--Head-->
-                        <Setter Target="ExportPlacementTarget.Width" Value="60"/>
+                        <Setter Target="ExportButton.Width" Value="60"/>
 
-                        <Setter Target="ToolPlacementTarget.Width" Value="60"/>
-                        <Setter Target="EditPlacementTarget.Width" Value="60"/>
-                        <Setter Target="OptionPlacementTarget.Width" Value="60"/>
-                        <Setter Target="MoreOptionPlacementTarget.Width" Value="60"/>
-                        <Setter Target="SetupPlacementTarget.Width" Value="60"/>
-                        <Setter Target="LayerPlacementTarget.Width" Value="60"/>
-                        <Setter Target="ColorPlacementTarget.Width" Value="60"/>
+                        <Setter Target="ToolButton.Width" Value="60"/>
+                        <Setter Target="EditButton.Width" Value="60"/>
+                        <Setter Target="OptionButton.Width" Value="60"/>
+                        <Setter Target="MoreOptionButton.Width" Value="60"/>
+                        <Setter Target="SetupButton.Width" Value="60"/>
+                        <Setter Target="LayerButton.Width" Value="60"/>
+                        <Setter Target="ColorButton.Width" Value="60"/>
 
                         <!--Expander-->
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
-                        <Setter Target="ExportButton.Height" Value="Auto"/>
+                        <Setter Target="ExportMenu.Height" Value="Auto"/>
 
                         <!--Foot-->
                         <Setter Target="FootBorder.CornerRadius" Value="0"/>
@@ -133,7 +134,7 @@
                         <!--Expander-->
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
                         <Setter Target="ExpanderLightDismissOverlay.Half" Value="True"/>
-                        <Setter Target="ExportButton.Height" Value="Auto"/>
+                        <Setter Target="ExportMenu.Height" Value="Auto"/>
 
                         <!--Foot-->
                         <Setter Target="FootBorder.CornerRadius" Value="8,8,0,0"/>
@@ -254,7 +255,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ExportPlacementTarget" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
+            <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Q"/>
                 </UIElement.KeyboardAccelerators>
@@ -295,7 +296,7 @@
 
             <ScrollViewer Grid.Column="2" HorizontalContentAlignment="Right" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="ToolPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                    <Button x:Name="ToolButton" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="A"/>
                         </UIElement.KeyboardAccelerators>
@@ -306,37 +307,37 @@
                             </FrameworkElement.Resources>
                         </ContentControl>
                     </Button>
-                    <Button x:Name="EditPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                    <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
                             <KeyboardAccelerator Modifiers="None" Key="G" />
                         </UIElement.KeyboardAccelerators >
                         <tools:ElementIcon Type="Edit"/>
                     </Button>
-                    <Button x:Name="OptionPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                    <Button x:Name="OptionButton" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="W"/>
                         </UIElement.KeyboardAccelerators>
                         <tools:ElementIcon Type="Option"/>
                     </Button>
-                    <Button x:Name="MoreOptionPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                    <Button x:Name="MoreOptionButton" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="T"/>
                         </UIElement.KeyboardAccelerators>
                         <tools:ElementIcon Type="MoreOption"/>
                     </Button>
-                    <Button x:Name="SetupPlacementTarget" Style="{StaticResource AppButtonStyle}" >
+                    <Button x:Name="SetupButton" Style="{StaticResource AppButtonStyle}" >
                         <SymbolIcon Symbol="Crop"/>
                     </Button>
-                    <Button x:Name="LayerPlacementTarget" Style="{StaticResource AppButtonStyle}">
+                    <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="D"/>
                         </UIElement.KeyboardAccelerators>
                         <tools:ElementIcon Type="Layer"/>
                     </Button>
-                    <Button x:Name="ColorPlacementTarget" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
-                            ManipulationStarted="{x:Bind ColorButton.ManipulationStarted2}"
-                            ManipulationDelta="{x:Bind ColorButton.ManipulationDelta2}"
-                            ManipulationCompleted="{x:Bind ColorButton.ManipulationCompleted2}"
+                    <Button x:Name="ColorButton" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
+                            ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
+                            ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
+                            ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
                             >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="E"/>
@@ -347,7 +348,7 @@
                         <Grid>
                             <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
                             <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
-                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorButton.BorderBrush}" />
+                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
                         </Grid>
                     </Button>
                 </StackPanel>
@@ -482,7 +483,7 @@
                 <local:FootSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
                     <local:FootCase Value="Exposure">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="Exposure" Width="50" />
+                            <menus:OptionIcon Type="Exposure" Width="50" />
                             <TextBlock x:Name="ExposureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Exposure
                             </TextBlock>
@@ -490,7 +491,7 @@
                     </local:FootCase>
                     <local:FootCase Value="Brightness">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="Brightness" Width="50" />
+                            <menus:OptionIcon Type="Brightness" Width="50" />
                             <TextBlock x:Name="BrightnessTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Brightness
                             </TextBlock>
@@ -498,7 +499,7 @@
                     </local:FootCase>
                     <local:FootCase Value="Saturation">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="Saturation" Width="50" />
+                            <menus:OptionIcon Type="Saturation" Width="50" />
                             <TextBlock x:Name="SaturationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Saturation
                             </TextBlock>
@@ -506,7 +507,7 @@
                     </local:FootCase>
                     <local:FootCase Value="HueRotation">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="HueRotation" Width="50" />
+                            <menus:OptionIcon Type="HueRotation" Width="50" />
                             <TextBlock x:Name="HueRotationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Hue Rotation
                             </TextBlock>
@@ -514,7 +515,7 @@
                     </local:FootCase>
                     <local:FootCase Value="Contrast">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="Contrast" Width="50" />
+                            <menus:OptionIcon Type="Contrast" Width="50" />
                             <TextBlock x:Name="ContrastTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Contrast
                             </TextBlock>
@@ -522,7 +523,7 @@
                     </local:FootCase>
                     <local:FootCase Value="Temperature">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="Temperature" Width="50" />
+                            <menus:OptionIcon Type="Temperature" Width="50" />
                             <TextBlock x:Name="TemperatureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Temperature
                             </TextBlock>
@@ -530,7 +531,7 @@
                     </local:FootCase>
                     <local:FootCase Value="HighlightsAndShadows">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="HighlightsAndShadows" Width="50" />
+                            <menus:OptionIcon Type="HighlightsAndShadows" Width="50" />
                             <TextBlock x:Name="HighlightsAndShadowsTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Highlights and Shadows
                             </TextBlock>
@@ -562,7 +563,7 @@
                     </local:FootCase>
                     <local:FootCase Value="GradientMapping">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="GradientMapping" Width="50" />
+                            <menus:OptionIcon Type="GradientMapping" Width="50" />
                             <TextBlock x:Name="GradientMappingTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Gradient Mapping
                             </TextBlock>
@@ -570,7 +571,7 @@
                     </local:FootCase>
                     <local:FootCase Value="RippleEffect">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <controls:OptionIcon Type="RippleEffect" Width="50" />
+                            <menus:OptionIcon Type="RippleEffect" Width="50" />
                             <TextBlock x:Name="RippleEffectTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Ripple Effect
                             </TextBlock>
@@ -989,33 +990,19 @@
 
         <!--Expander-->
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-            <elements:Expander x:Name="ExportMenu" Title="Export" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:ExportButton x:Name="ExportButton"/>
-            </elements:Expander>
+            <menus:ExportMenu x:Name="ExportMenu"/>
             <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" >
                     <tools:PaintTool x:Name="PaintTool" />
                     <tools:ViewTool x:Name="ViewTool" />
                 </local:ToolGroupSwitchPresenter>
             </elements:Expander>
-            <elements:Expander x:Name="EditMenu" Title="Edit" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:EditButton x:Name="EditButton" />
-            </elements:Expander>
-            <elements:Expander x:Name="OptionMenu" Title="Option" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:OptionButton x:Name="OptionButton" />
-            </elements:Expander>
-            <elements:Expander x:Name="MoreOptionMenu" Title="More Options" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:MoreOptionButton x:Name="MoreOptionButton" />
-            </elements:Expander>
-            <elements:Expander x:Name="SetupMenu" Title="Setup" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:SetupButton x:Name="SetupButton" />
-            </elements:Expander>
-            <elements:Expander x:Name="LayerMenu" Title="Layer" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:LayerButton x:Name="LayerButton"/>
-            </elements:Expander>
-            <elements:Expander x:Name="ColorMenu" Title="Color" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
-            </elements:Expander>
+            <menus:EditMenu x:Name="EditMenu" />
+            <menus:OptionMenu x:Name="OptionMenu" />
+            <menus:MoreOptionMenu x:Name="MoreOptionMenu" />
+            <menus:SetupMenu x:Name="SetupMenu" />
+            <menus:LayerMenu x:Name="LayerMenu"/>
+            <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
         </elements:ExpanderLightDismissOverlay>
 
 

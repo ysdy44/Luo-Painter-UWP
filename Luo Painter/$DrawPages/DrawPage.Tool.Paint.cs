@@ -49,12 +49,12 @@ namespace Luo_Painter
             switch (this.BitmapLayer.InkMode)
             {
                 case InkMode.Dry:
-                    this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorButton.Color);
+                    this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorMenu.Color);
                     break;
                 case InkMode.WetWithOpacity:
                 case InkMode.WetWithBlendMode:
                 case InkMode.WetWithOpacityAndBlendMode:
-                    this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorButton.Color);
+                    this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorMenu.Color);
                     break;
 
                 case InkMode.EraseDry:

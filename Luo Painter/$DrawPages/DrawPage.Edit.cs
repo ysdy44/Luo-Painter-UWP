@@ -17,7 +17,7 @@ namespace Luo_Painter
 
         private void ConstructEdits()
         {
-            this.EditButton.ItemClick += (s, type) =>
+            this.EditMenu.ItemClick += (s, type) =>
             {
                 switch (type)
                 {
@@ -362,7 +362,7 @@ namespace Luo_Painter
                         break;
                 }
             };
-            this.SetupButton.ItemClick += (s, type) =>
+            this.SetupMenu.ItemClick += (s, type) =>
             {
                 switch (type)
                 {

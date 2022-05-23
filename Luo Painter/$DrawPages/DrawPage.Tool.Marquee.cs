@@ -95,7 +95,7 @@ namespace Luo_Painter
                     this.Tip("No Pixel", "The Marquee is Transparent.");
                     return false;
                 case PixelBoundsMode.Solid:
-                    this.EditButton.Execute(isSubtract ? EditType.Deselect : EditType.All);
+                    this.EditMenu.Execute(isSubtract ? EditType.Deselect : EditType.All);
                     return true;
                 default:
                     // History

@@ -183,14 +183,14 @@ namespace Luo_Painter
 
 
             this.ApplicationView.Title = "*Untitled";
-            this.ExportPlacementTarget.Click += (s, e) => this.ExportMenu.Toggle(this.ExportPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.ToolPlacementTarget.Click += (s, e) => this.ToolMenu.Toggle(this.ToolPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.EditPlacementTarget.Click += (s, e) => this.EditMenu.Toggle(this.EditPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.OptionPlacementTarget.Click += (s, e) => this.OptionMenu.Toggle(this.OptionPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.MoreOptionPlacementTarget.Click += (s, e) => this.MoreOptionMenu.Toggle(this.MoreOptionPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.SetupPlacementTarget.Click += (s, e) => this.SetupMenu.Toggle(this.SetupPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.LayerPlacementTarget.Click += (s, e) => this.LayerMenu.Toggle(this.LayerPlacementTarget, ExpanderPlacementMode.Bottom);
-            this.ColorPlacementTarget.Click += (s, e) => this.ColorMenu.Toggle(this.ColorPlacementTarget, ExpanderPlacementMode.Bottom);
+            this.ExportButton.Click += (s, e) => this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
+            this.ToolButton.Click += (s, e) => this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
+            this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
+            this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
+            this.MoreOptionButton.Click += (s, e) => this.MoreOptionMenu.Toggle(this.MoreOptionButton, ExpanderPlacementMode.Bottom);
+            this.SetupButton.Click += (s, e) => this.SetupMenu.Toggle(this.SetupButton, ExpanderPlacementMode.Bottom);
+            this.LayerButton.Click += (s, e) => this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
+            this.ColorButton.Click += (s, e) => this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
 
 
             // Drag and Drop 
