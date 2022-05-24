@@ -107,6 +107,10 @@ namespace Luo_Painter
 
         private void ConstructFoot()
         {
+            this.FeatherSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.GrowSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.ShrinkSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+
             this.ExposureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.SaturationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -141,6 +145,7 @@ namespace Luo_Painter
             {
                 switch (this.FootType)
                 {
+                    case FootType.Feather:
                     case FootType.MarqueeTransform:
                     case FootType.Grow:
                     case FootType.Shrink:
@@ -159,6 +164,7 @@ namespace Luo_Painter
                     case FootType.Temperature:
                     case FootType.HighlightsAndShadows:
                     case FootType.LuminanceToAlpha:
+
                     case FootType.Transform:
                     case FootType.GradientMapping:
                     case FootType.RippleEffect:
@@ -174,7 +180,7 @@ namespace Luo_Painter
                 }
 
                 this.BitmapLayer = null;
-                this.FootType = this.SetFootType(this.EditType, default, this.ToolType);
+                this.FootType = this.SetFootType(default, default, this.ToolType);
                 this.EditType = default;
                 this.OptionType = default;
                 this.SetCanvasState(false);
@@ -190,12 +196,6 @@ namespace Luo_Painter
             // History
             switch (mode)
             {
-                case PixelBoundsMode.Solid:
-                    bitmapLayer.DrawCopy(source);
-                    int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
-                    break;
                 case PixelBoundsMode.None:
                     bitmapLayer.Hit(InterpolationColors);
 
@@ -214,6 +214,12 @@ namespace Luo_Painter
                             break;
                     }
                     int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
+                    bitmapLayer.Flush();
+                    bitmapLayer.RenderThumbnail();
+                    break;
+                default:
+                    bitmapLayer.DrawCopy(source);
+                    int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
                     bitmapLayer.Flush();
                     bitmapLayer.RenderThumbnail();
                     break;
@@ -306,6 +312,8 @@ namespace Luo_Painter
             {
                 case FootType.None:
                     return image;
+
+
                 case FootType.Transform:
                     return this.GetTransformPreview(image);
                 case FootType.DisplacementLiquefaction:
@@ -314,6 +322,36 @@ namespace Luo_Painter
                     return this.GetGradientMappingPreview(image);
                 case FootType.RippleEffect:
                     return this.GetRippleEffectPreview(image);
+
+
+                case FootType.Feather:
+                    return new GaussianBlurEffect
+                    {
+                        BlurAmount = (float)this.FeatherSlider.Value,
+                        Source = image
+                    };
+                case FootType.MarqueeTransform:
+                    return this.GetTransformPreview(image);
+                case FootType.Grow:
+                    int grow = (int)this.GrowSlider.Value;
+                    return new MorphologyEffect
+                    {
+                        Mode = MorphologyEffectMode.Dilate,
+                        Height = grow,
+                        Width = grow,
+                        Source = image
+                    };
+                case FootType.Shrink:
+                    int shrink = (int)this.ShrinkSlider.Value;
+                    return new MorphologyEffect
+                    {
+                        Mode = MorphologyEffectMode.Erode,
+                        Height = shrink,
+                        Width = shrink,
+                        Source = image
+                    };
+
+
                 case FootType.Exposure:
                     return new ExposureEffect
                     {

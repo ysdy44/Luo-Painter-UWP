@@ -97,7 +97,7 @@ namespace Luo_Painter
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.5f,
-                        Source = this.GetTransformPreview(this.Marquee.Source)
+                        Source = this.GetPreview(this.FootType, this.Marquee.Source)
                     });
 
                     args.DrawingSession.Transform = Matrix3x2.Identity;
