@@ -11,6 +11,16 @@ namespace Luo_Painter.Menus
 {
     internal class EditTypeCommand : RelayCommand<EditType> { }
 
+    internal sealed class EditIcon : TButton<EditType>
+    {
+        protected override void OnTypeChanged(EditType value)
+        {
+            base.Content = value.ToString();
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
+            base.Resources = resource;
+        }
+    }
+
     internal sealed class EditItem : TButton<EditType>
     {
 

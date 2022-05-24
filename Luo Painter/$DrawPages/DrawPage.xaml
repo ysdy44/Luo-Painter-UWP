@@ -481,6 +481,30 @@
                 </Button>
 
                 <local:FootSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
+                    <local:FootCase Value="Feather">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <menus:EditIcon Type="Feather" Width="50" />
+                            <TextBlock x:Name="FeatherTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Feather
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="Grow">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <menus:EditIcon Type="Grow" Width="50" />
+                            <TextBlock x:Name="GrowTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Grow
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
+                    <local:FootCase Value="Shrink">
+                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
+                            <menus:EditIcon Type="Shrink" Width="50" />
+                            <TextBlock x:Name="ShrinkTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
+                                Shrink
+                            </TextBlock>
+                        </StackPanel>
+                    </local:FootCase>
                     <local:FootCase Value="Exposure">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="Exposure" Width="50" />
@@ -582,6 +606,60 @@
             </Grid>
 
             <local:FootSwitchPresenter x:Name="FootSwitchPresenter3" Grid.Row="1" >
+                <local:FootCase Value="Feather">
+                    <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Tag>
+                            Feather
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button x:Name="FeatherButton" Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </local:FootCase>
+                <local:FootCase Value="Grow">
+                    <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Tag>
+                            Grow
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button x:Name="GrowButton" Content="{x:Bind GrowSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </local:FootCase>
+                <local:FootCase Value="Shrink">
+                    <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Tag>
+                            Shrink
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button x:Name="ShrinkButton" Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="70" Height="28"
+                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </local:FootCase>
                 <local:FootCase Value="Exposure">
                     <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
