@@ -2,14 +2,20 @@
 using Luo_Painter.Elements;
 using System;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Graphics.Imaging;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace Luo_Painter.Menus
 {
     internal class EditTypeCommand : RelayCommand<EditType> { }
+
+    internal class EditKeyboardAccelerator : KeyboardAccelerator
+    {
+        public EditType CommandParameter { get; set; }
+        public EditTypeCommand Command { get; set; }
+        public EditKeyboardAccelerator() => base.Invoked += (s, e) => this.Command.Execute(this.CommandParameter);
+    }
 
     internal sealed class EditIcon : TButton<EditType>
     {
