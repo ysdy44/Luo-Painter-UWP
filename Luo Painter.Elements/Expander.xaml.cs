@@ -4,6 +4,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -83,11 +84,13 @@ namespace Luo_Painter.Elements
         /// </summary>
         public ExpanderLightDismissOverlay()
         {
-            base.PointerPressed += (s, e) => this.Hide();
+            base.Tapped += (s, e) => this.Hide();
             base.Unloaded += (s, e) =>
             {
                 foreach (Expander item in this.Items)
                 {
+                    item.Tapped -= this.OnItemTapped;
+
                     item.IsFlyoutChanged -= this.IsFlyoutChanged;
                     item.IsShowChanged -= this.IsShowChanged;
                     item.OnZIndexChanging -= this.OnZIndexChanging;
@@ -103,6 +106,8 @@ namespace Luo_Painter.Elements
                     if (item is Expander expander)
                     {
                         this.Items.Push(expander);
+                        item.Tapped += this.OnItemTapped;
+
                         expander.IsFlyoutChanged += this.IsFlyoutChanged;
                         expander.IsShowChanged += this.IsShowChanged;
                         expander.OnZIndexChanging += this.OnZIndexChanging;
@@ -114,6 +119,11 @@ namespace Luo_Painter.Elements
                     }
                 }
             };
+        }
+
+        private void OnItemTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
         }
 
         /// <summary>
@@ -246,6 +256,7 @@ namespace Luo_Painter.Elements
         Button Button;
         SymbolIcon SymbolIcon;
 
+        bool HasSizeChanged;
 
         double X;
         double Y;
@@ -457,21 +468,24 @@ namespace Luo_Painter.Elements
             this.W = e.NewSize.Width;
             this.H = e.NewSize.Height;
 
-            switch (this.FullScreen)
+            if (this.HasSizeChanged)
             {
-                case false:
-                    if (this.U == 0) break;
-                    if (this.V == 0) break;
-                    if (this.IsLoaded)
-                    {
+                switch (this.FullScreen)
+                {
+                    case false:
                         this.SetLeft(Canvas.GetLeft(this));
                         this.SetTopWithHeader(Canvas.GetTop(this));
-                    }
-                    break;
-                case true:
-                    break;
-                default:
-                    break;
+                        break;
+                    case true:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                this.HasSizeChanged = true;
+                this.ShowBegin();
             }
         }
 
@@ -680,7 +694,18 @@ namespace Luo_Painter.Elements
 
                         this.Placement = placement;
 
-                        this.ShowBegin();
+                        if (this.HasSizeChanged)
+                        {
+                            this.ShowBegin();
+                        }
+                        else if (this.RootGrid is Grid grid)
+                        {
+                            /// Occurs
+                            /// <see cref="Expander.ShowBegin(double)"/> 
+                            /// When
+                            /// <see cref="Expander.RootGrid_SizeChanged(object, SizeChangedEventArgs)\"/>
+                            grid.Visibility = Visibility.Visible;
+                        }
 
                         this.IsFlyout = true;
                         this.IsShow = true;

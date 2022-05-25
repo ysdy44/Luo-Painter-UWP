@@ -26,6 +26,7 @@
                 <ControlTemplate TargetType="local:Expander">
                     <Grid x:Name="RootGrid" 
                           IsHitTestVisible="False"
+                          Visibility="Collapsed"
                           Opacity="0"
                           CornerRadius="4"
                           Padding="0,4" 
