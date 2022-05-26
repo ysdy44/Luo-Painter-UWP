@@ -28,8 +28,7 @@
                           IsHitTestVisible="False"
                           Visibility="Collapsed"
                           Opacity="0"
-                          CornerRadius="4"
-                          Padding="0,4" 
+                          CornerRadius="8"
                           BorderThickness="{TemplateBinding BorderThickness}" 
                           BorderBrush="{TemplateBinding BorderBrush}" 
                           Background="{TemplateBinding Background}" 
@@ -201,8 +200,10 @@
 
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="42" />
+                            <RowDefinition Height="46" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
 
@@ -210,7 +211,7 @@
                         <Thumb x:Name="Thumb" >
                             <Thumb.Template>
                                 <ControlTemplate TargetType="Thumb">
-                                    <Grid Background="Transparent">
+                                    <Grid Background="Transparent" >
 
                                         <!--VisualState-->
                                         <VisualStateManager.VisualStateGroups>
@@ -236,7 +237,7 @@
                                                 IsHitTestVisible="False"                           
                                                 Width="36" 
                                                 Height="6" 
-                                                Margin="3" 
+                                                Margin="7" 
                                                 VerticalAlignment="Top" 
                                                 CornerRadius="{TemplateBinding CornerRadius}" 
                                                 BorderThickness="{TemplateBinding BorderThickness}"            
@@ -248,7 +249,7 @@
                                                 IsHitTestVisible="False"
                                                 Width="36"
                                                 Height="6" 
-                                                Margin="3" 
+                                                Margin="7" 
                                                 VerticalAlignment="Top" 
                                                 CornerRadius="{TemplateBinding CornerRadius}"          
                                                 BorderThickness="{TemplateBinding BorderThickness}"              
@@ -260,7 +261,7 @@
                                                 IsHitTestVisible="False"
                                                 Width="36" 
                                                 Height="6"
-                                                Margin="3" 
+                                                Margin="7" 
                                                 VerticalAlignment="Top" 
                                                 CornerRadius="{TemplateBinding CornerRadius}"          
                                                 Background="{ThemeResource ThumbBackgroundPressed}"             
@@ -292,10 +293,19 @@
 
 
                         <!--Body-->
-                        <ScrollViewer Grid.Row="1" Margin="{TemplateBinding Padding}" >
+                        <ScrollViewer Grid.Row="2" Margin="{TemplateBinding Padding}" >
                             <ContentPresenter x:Name="ContentPresenter" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </ScrollViewer>
 
+                        <!--Body-->
+                        <Border Grid.Row="1" Child="{TemplateBinding TopAppBar}">
+                            <!--Child-->
+                        </Border>
+                        
+                        <!--Body-->
+                        <Border Grid.Row="3" Child="{TemplateBinding BottomAppBar}">
+                            <!--Child-->
+                        </Border>
 
                     </Grid>
                 </ControlTemplate>

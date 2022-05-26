@@ -289,6 +289,26 @@ namespace Luo_Painter.Elements
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Expander), new PropertyMetadata(string.Empty));
 
 
+        /// <summary> Gets or sets <see cref = "Expander" />'s top AppBar. </summary>
+        public UIElement TopAppBar
+        {
+            get => (UIElement)base.GetValue(TopAppBarProperty);
+            set => base.SetValue(TopAppBarProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Expander.TopAppBar" /> dependency property. </summary>
+        public static readonly DependencyProperty TopAppBarProperty = DependencyProperty.Register(nameof(TopAppBar), typeof(UIElement), typeof(Expander), new PropertyMetadata(null));
+
+
+        /// <summary> Gets or sets <see cref = "Expander" />'s bottom AppBar. </summary>
+        public UIElement BottomAppBar
+        {
+            get => (UIElement)base.GetValue(BottomAppBarProperty);
+            set => base.SetValue(BottomAppBarProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Expander.BottomAppBar" /> dependency property. </summary>
+        public static readonly DependencyProperty BottomAppBarProperty = DependencyProperty.Register(nameof(BottomAppBar), typeof(UIElement), typeof(Expander), new PropertyMetadata(null));
+      
+        
         #endregion
 
 
