@@ -1067,6 +1067,7 @@
 
 
         <!--Expander-->
+        <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
             <menus:ExportMenu x:Name="ExportMenu"/>
             <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >

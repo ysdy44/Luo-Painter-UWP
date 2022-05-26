@@ -28,8 +28,11 @@ namespace Luo_Painter.Elements
     /// </summary>
     public sealed class ExpanderLightDismissOverlay : Canvas
     {
+
+        //@Delegate
+        public event TypedEventHandler<ExpanderLightDismissOverlay, bool> IsFlyoutChanged;
+
         readonly Stack<Expander> Items = new Stack<Expander>();
-        readonly SolidColorBrush Transparent = new SolidColorBrush(Colors.Transparent);
 
         #region DependencyProperty
 
@@ -84,14 +87,11 @@ namespace Luo_Painter.Elements
         /// </summary>
         public ExpanderLightDismissOverlay()
         {
-            base.Tapped += (s, e) => this.Hide();
             base.Unloaded += (s, e) =>
             {
                 foreach (Expander item in this.Items)
                 {
-                    item.Tapped -= this.OnItemTapped;
-
-                    item.IsFlyoutChanged -= this.IsFlyoutChanged;
+                    item.IsFlyoutChanged -= this.OnIsFlyoutChanged;
                     item.IsShowChanged -= this.IsShowChanged;
                     item.OnZIndexChanging -= this.OnZIndexChanging;
 
@@ -106,9 +106,7 @@ namespace Luo_Painter.Elements
                     if (item is Expander expander)
                     {
                         this.Items.Push(expander);
-                        item.Tapped += this.OnItemTapped;
-
-                        expander.IsFlyoutChanged += this.IsFlyoutChanged;
+                        expander.IsFlyoutChanged += this.OnIsFlyoutChanged;
                         expander.IsShowChanged += this.IsShowChanged;
                         expander.OnZIndexChanging += this.OnZIndexChanging;
 
@@ -119,11 +117,6 @@ namespace Luo_Painter.Elements
                     }
                 }
             };
-        }
-
-        private void OnItemTapped(object sender, TappedRoutedEventArgs e)
-        {
-            e.Handled = true;
         }
 
         /// <summary>
@@ -148,11 +141,11 @@ namespace Luo_Painter.Elements
             base.Background = null;
         }
 
-        private void IsFlyoutChanged(Expander sender, bool isFlyout)
+        private void OnIsFlyoutChanged(Expander sender, bool isFlyout)
         {
             if (isFlyout)
             {
-                base.Background = this.Transparent;
+                this.IsFlyoutChanged?.Invoke(this, true); // Delegate
                 foreach (Expander item in this.Items)
                 {
                     item.IsHitTestVisible = false;
@@ -161,7 +154,7 @@ namespace Luo_Painter.Elements
             }
             else
             {
-                base.Background = null;
+                this.IsFlyoutChanged?.Invoke(this, false); // Delegate
                 foreach (Expander item in this.Items)
                 {
                     item.IsHitTestVisible = true;
@@ -265,7 +258,7 @@ namespace Luo_Painter.Elements
         double U;
         double V;
 
-        ExpanderPlacementMode Placement = ExpanderPlacementMode.Top;
+        ExpanderPlacementMode Placement = ExpanderPlacementMode.Center;
         double PlacementTargetW;
         double PlacementTargetH;
         Point PlacementTargetPosition;
@@ -307,8 +300,8 @@ namespace Luo_Painter.Elements
         }
         /// <summary> Identifies the <see cref = "Expander.BottomAppBar" /> dependency property. </summary>
         public static readonly DependencyProperty BottomAppBarProperty = DependencyProperty.Register(nameof(BottomAppBar), typeof(UIElement), typeof(Expander), new PropertyMetadata(null));
-      
-        
+
+
         #endregion
 
 
@@ -656,39 +649,42 @@ namespace Luo_Painter.Elements
                     else if (this.IsShow) break;
                     else
                     {
-                        base.Width = double.NaN;
-                        base.Height = double.NaN;
+                        if (this.HasSizeChanged)
+                        {
+                            this.SetLeft(this.U / 2 - this.W / 2);
+                            this.SetTop(this.V / 2 - this.H / 2);
+                            this.ShowStoryboard.Begin(); // Storyboard
+                        }
+                        else if (this.RootGrid is Grid grid)
+                        {
+                            /// Occurs
+                            /// <see cref="Expander.ShowBegin(double)"/> 
+                            /// When
+                            /// <see cref="Expander.RootGrid_SizeChanged(object, SizeChangedEventArgs)\"/>
+                            grid.Visibility = Visibility.Visible;
+                        }
 
-                        this.ShowStoryboard.Begin(); // Storyboard
-
-                        this.IsShow = true;
                         this.IsFlyout = true;
+                        this.IsShow = true;
                         this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
                         this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
                         this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
                     }
                     break;
                 case true:
-                    switch (this.Half)
-                    {
-                        case false:
-                            base.Width = this.U;
-                            break;
-                        case true:
-                            base.Width = base.MinWidth + base.Padding.Left + base.Padding.Right;
-                            break;
-                        default:
-                            break;
-                    }
+                    Canvas.SetLeft(this, 0);
+                    Canvas.SetTop(this, 0);
+                    base.Width = this.U;
                     base.Height = this.V;
 
                     this.ShowBottomStoryboard.Begin(); // Storyboard
                     this.ShowStoryboard.Begin(); // Storyboard
 
                     this.SymbolIcon.Symbol = Symbol.Cancel;
-                    this.IsShow = true;
                     this.IsFlyout = false;
-                    this.OnZIndexChanging?.Invoke(this, Canvas.GetZIndex(this)); // Delegate
+                    this.IsShow = true;
+                    this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
+                    this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
                     break;
                 default:
                     break;
@@ -744,8 +740,8 @@ namespace Luo_Painter.Elements
                     this.ShowStoryboard.Begin(); // Storyboard
 
                     this.SymbolIcon.Symbol = Symbol.Cancel;
-                    this.IsShow = true;
                     this.IsFlyout = false;
+                    this.IsShow = true;
                     this.IsFlyoutChanged?.Invoke(this, this.IsFlyout); // Delegate
                     this.IsShowChanged?.Invoke(this, this.IsShow); // Delegate
                     break;
