@@ -1,0 +1,97 @@
+﻿<ContentDialog
+    x:Class="Luo_Painter.Controls.StretchDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers" xmlns:elements="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    FullSizeDesired="False" 
+    Style="{StaticResource AppContentDialogStyle}"
+    >
+
+    <ContentDialog.Title>
+        Stretch
+    </ContentDialog.Title>
+
+    <ContentDialog.PrimaryButtonText>
+        OK
+    </ContentDialog.PrimaryButtonText>
+    <ContentDialog.SecondaryButtonText>
+        Cancel
+    </ContentDialog.SecondaryButtonText>
+
+    <StackPanel>
+
+        <ListBox x:Name="StretchComboBox" SelectedIndex="0">
+            <ListBoxItem x:Name="StretchItem">
+                Stretch
+            </ListBoxItem>
+            <ListBoxItem x:Name="AnchorItem">
+                Anchored to canvas
+            </ListBoxItem>
+        </ListBox>
+
+        <elements:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
+            <elements:SizePicker.WidthText>
+                Width
+            </elements:SizePicker.WidthText>
+            <elements:SizePicker.HeightText>
+                Height
+            </elements:SizePicker.HeightText>
+        </elements:SizePicker>
+
+        <TextBlock x:Name="InterpolationTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   Visibility="{x:Bind BooleanToVisibilityConverter(StretchItem.IsSelected), Mode=OneWay}"
+                   >               
+            Interpolation
+        </TextBlock>
+
+        <TextBlock Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   Visibility="{x:Bind BooleanToVisibilityConverter(AnchorItem.IsSelected), Mode=OneWay}"
+                   >
+            <Run x:Name="IndicatorRun" >Indicator</Run>
+            <Span Foreground="{ThemeResource SystemColorControlAccentBrush}">
+                <Run>(</Run><Run x:Name="ModeRun">
+                    <!--Mode-->                 
+                </Run><Run>)</Run>              
+            </Span>
+        </TextBlock>
+
+        <ContentControl Height="8"/>
+
+        <ListView x:Name="InterpolationListView" Style="{StaticResource AppListViewStyle}"
+                  Visibility="{x:Bind BooleanToVisibilityConverter(StretchItem.IsSelected), Mode=OneWay}"
+                  >
+            <x:String>NearestNeighbor</x:String>
+            <x:String>Linear</x:String>
+            <x:String>Cubic</x:String>
+            <x:String>MultiSampleLinear</x:String>
+            <x:String>Anisotropic</x:String>
+            <x:String>HighQualityCubic</x:String>
+        </ListView>
+
+        <Border x:Name="Border"
+                CornerRadius="4"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource AppStroke}"
+                Background="{ThemeResource SystemAltLowColor}"
+                Visibility="{x:Bind BooleanToVisibilityConverter(AnchorItem.IsSelected), Mode=OneWay}"
+                >
+            <Border
+                Width="160" 
+                Height="160"
+                CornerRadius="4"
+                Background="{ThemeResource SystemAltLowColor}" 
+                >
+                <transformers:IndicatorControl 
+                    x:Name="IndicatorControl"
+                    Background="{ThemeResource SystemColorControlAccentBrush}" 
+                    BorderBrush="{ThemeResource AppStroke}"
+                    FlowDirection="LeftToRight"
+                    />
+            </Border>
+        </Border>
+
+    </StackPanel>
+</ContentDialog>
