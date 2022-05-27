@@ -140,6 +140,9 @@
     <Compile Include="GradientStopSelectorWithUI.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
+    <Compile Include="SizePicker.xaml.cs">
+      <DependentUpon>SizePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TIcon.cs" />
     <Compile Include="InverseProportion.cs" />
     <Compile Include="Marble.cs" />
@@ -285,6 +288,10 @@
     <Page Include="SelectedButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SizePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

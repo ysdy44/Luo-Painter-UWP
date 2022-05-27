@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Elements.SizePicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="46"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="WidthTextBlock" Margin="22,0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+            <!--Width-->
+        </TextBlock>
+        <TextBlock x:Name="HeightTextBlock" Grid.Row="2" Margin="22,0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+            <!--Height-->
+        </TextBlock>
+
+        <TextBox x:Name="WidthTextBox" Grid.Column="1" Grid.Row="0" />
+        <TextBox x:Name="HeightTextBox" Grid.Column="1" Grid.Row="2" />
+
+        <!--Ratio-->
+        <ToggleButton x:Name="ToggleButton" Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" IsChecked="True">
+            <FontIcon Glyph="&#x1F512;" FontSize="18" FontWeight="Bold" FontFamily="Segoe UI Symbol"/>
+        </ToggleButton>
+
+    </Grid>
+</UserControl>
