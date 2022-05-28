@@ -28,6 +28,7 @@ call :COMPILE DottedLineTransform.hlsl   || goto END
 call :COMPILE RalphaMask.hlsl   || goto END
 call :COMPILE DisplacementLiquefaction.hlsl   || goto END
 call :COMPILE BrushEdgeHardness.hlsl   || goto END
+call :COMPILE BrushEdgeHardnessWithTexture.hlsl   || goto END
 
 goto END
 
