@@ -112,6 +112,106 @@ namespace Luo_Painter.Layers.Models
         };
 
 
+        /// <summary>
+        /// <see cref="ShaderType.BrushEdgeHardness"/>
+        /// </summary>
+        public void IsometricShape(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, byte[] shaderCode, int hardness, Vector4 colorHdr, BitmapType type)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawImage(new PixelShaderEffect(shaderCode)
+                {
+                    Source1BorderMode = EffectBorderMode.Hard,
+                    Properties =
+                    {
+                        ["hardness"] = hardness,
+                        ["pressure"] = 1f,
+                        ["radius"] = size * pressure,
+                        ["targetPosition"] = position,
+                        ["color"] = colorHdr
+                    }
+                });
+
+                float length = Vector2.Distance(position, targetPosition);
+                if (length > size * targetPressure / 2)
+                {
+                    float spane = size / 2 / length * pressure;
+                    for (float i = spane; i < 1f; i += spane)
+                    {
+                        Vector2 p = position * i + (1 - i) * targetPosition;
+                        float e = pressure * i + (1 - i) * targetPressure;
+                        ds.DrawImage(new PixelShaderEffect(shaderCode)
+                        {
+                            Source1BorderMode = EffectBorderMode.Hard,
+                            Properties =
+                            {
+                                ["hardness"] = hardness,
+                                ["pressure"] = 1f,
+                                ["radius"] = size * e,
+                                ["targetPosition"] = p,
+                                ["color"] = colorHdr
+                           }
+                        });
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
+        /// </summary>
+        public void IsometricShape(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, byte[] shaderCode, CanvasBitmap texture, int hardness, Vector4 colorHdr, BitmapType type)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawImage(new PixelShaderEffect(shaderCode)
+                {
+                    Source1BorderMode = EffectBorderMode.Hard,
+                    Source1 = texture,
+                    Properties =
+                    {
+                        ["hardness"] = hardness,
+                        ["pressure"] = 1f,
+                        ["radius"] = size * pressure,
+                        ["targetPosition"] = position,
+                        ["color"] = colorHdr
+                    }
+                });
+
+                float length = Vector2.Distance(position, targetPosition);
+                if (length > size * targetPressure / 2)
+                {
+                    float spane = size / 2 / length * pressure;
+                    for (float i = spane; i < 1f; i += spane)
+                    {
+                        Vector2 p = position * i + (1 - i) * targetPosition;
+                        float e = pressure * i + (1 - i) * targetPressure;
+                        ds.DrawImage(new PixelShaderEffect(shaderCode)
+                        {
+                            Source1BorderMode = EffectBorderMode.Hard,
+                            Source1 = texture,
+                            Properties =
+                            {
+                                ["hardness"] = hardness,
+                                ["pressure"] = 1f,
+                                ["radius"] = size * e,
+                                ["targetPosition"] = p,
+                                ["color"] = colorHdr
+                           }
+                        });
+                    }
+                }
+            }
+        }
+
+
         public void FillCircleDry(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color)
         {
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
