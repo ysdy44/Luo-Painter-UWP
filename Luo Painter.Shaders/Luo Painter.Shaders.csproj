@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BlackOrWhite.txt" />
+    <Content Include="BrushEdgeHardnessWithTexture.hlsl" />
     <Content Include="ColorMatch.txt" />
     <Content Include="BrushEdgeHardness.hlsl" />
     <Content Include="DisplacementLiquefaction.hlsl" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <None Include="BlackOrWhite.shader" />
     <Content Include="BrushEdgeHardness.bin" />
+    <Content Include="BrushEdgeHardnessWithTexture.bin" />
     <None Include="ColorMatch.shader" />
     <None Include="CompileShaders.cmd" />
     <Content Include="GeneralBrush.bin" />
