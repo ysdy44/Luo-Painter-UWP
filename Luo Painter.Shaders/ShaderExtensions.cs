@@ -40,7 +40,8 @@ namespace Luo_Painter.Shaders
                 case ShaderType.LalphaMask: return "ms-appx:///Luo Painter.Shaders/LalphaMask.txt";
                 case ShaderType.RalphaMask: return "ms-appx:///Luo Painter.Shaders/RalphaMask.bin";
                 case ShaderType.DisplacementLiquefaction: return "ms-appx:///Luo Painter.Shaders/DisplacementLiquefaction.bin";
-                default: return null; 
+                case ShaderType.BrushEdgeHardness: return "ms-appx:///Luo Painter.Shaders/BrushEdgeHardness.bin";
+                default: return null;
             }
         }
 

@@ -21,5 +21,6 @@
         LalphaMask,
         RalphaMask,
         DisplacementLiquefaction,
+        BrushEdgeHardness,
     }
 }
