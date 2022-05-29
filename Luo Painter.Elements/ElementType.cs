@@ -38,8 +38,8 @@
         Asymmetric,
 
         // ArrowTailTypes
-        None,
-        Arrow,
+        ArrowTailTypesNone,
+        ArrowTailTypesArrow,
 
         // PatternGridTypes
         Grid,
