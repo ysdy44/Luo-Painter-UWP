@@ -36,17 +36,17 @@ D2D_PS_ENTRY(main)
     float x = dist / radius;
     
     // Cosine
-    if(hardness == 1) return float4(color.r, color.g, color.b, alpha * pressure * Cosine(x));
+    if(hardness == 1) return float4(color.r*(alpha * pressure * Cosine(x)), color.g*(alpha * pressure * Cosine(x)), color.b*(alpha * pressure * Cosine(x)), alpha * pressure * Cosine(x));
     
     // Quadratic
-    if(hardness == 2) return float4(color.r, color.g, color.b, alpha * pressure * Cosine(x*x));
+    if(hardness == 2) return float4(color.r*(alpha * pressure *  Cosine(x*x)), color.g*(alpha * pressure *  Cosine(x*x)), color.b*(alpha * pressure *  Cosine(x*x)), alpha * pressure * Cosine(x*x));
     
     // Cube
-    if(hardness == 3) return float4(color.r, color.g, color.b, alpha * pressure * Cosine(x*x*x));
+    if(hardness == 3) return float4(color.r*(alpha * pressure *  Cosine(x*x*x)), color.g*(alpha * pressure *  Cosine(x*x*x)), color.b*(alpha * pressure *  Cosine(x*x*x)), alpha * pressure * Cosine(x*x*x));
     
     // Quartic
-    if(hardness == 4) return float4(color.r, color.g, color.b, alpha * pressure * Cosine(x*x*x*x));
+    if(hardness == 4) return float4(color.r*(alpha * pressure *  Cosine(x*x*x*x)), color.g*(alpha * pressure *  Cosine(x*x*x*x)), color.b*(alpha * pressure *  Cosine(x*x*x*x)), alpha * pressure * Cosine(x*x*x*x));
 
     // None
-    return float4(color.r, color.g, color.b, alpha * pressure);
+    return float4(color.r*(alpha * pressure ), color.g*(alpha * pressure ), color.b*(alpha * pressure ), alpha * pressure);
 }
