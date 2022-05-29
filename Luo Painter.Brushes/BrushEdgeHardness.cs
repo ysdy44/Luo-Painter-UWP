@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Shaders
+﻿namespace Luo_Painter.Brushes
 {
     /// <summary>
     /// Hardness of the brush edge.

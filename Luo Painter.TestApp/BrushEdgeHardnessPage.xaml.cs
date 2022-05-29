@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Shaders;
+﻿using Luo_Painter.Brushes;
 using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Shapes;
