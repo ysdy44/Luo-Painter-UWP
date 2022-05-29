@@ -47,5 +47,12 @@
         Grid,
         Horizontal,
         Vertical,
+
+        // BrushEdgeHardness
+        BrushEdgeHardnessNone,
+        BrushEdgeHardnessCosine,
+        BrushEdgeHardnessQuadratic,
+        BrushEdgeHardnessCube,
+        BrushEdgeHardnessQuartic,
     }
 }

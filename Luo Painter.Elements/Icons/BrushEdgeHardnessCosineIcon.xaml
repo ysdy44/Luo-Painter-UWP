@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="BrushEdgeHardnessCosineIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center">
+            <PathIcon.Data>
+                M20,0C23.333,-0 26.667,7.5 30,15C33.049,22.471 36.098,29.941 39.955,30L40,30L0,30C3.879,30 6.939,22.5 10,15C13.333,7.5 16.667,0 20,0Z
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>
