@@ -8,6 +8,7 @@
         Option,
         MoreOption,
 
+        Snap,
         SnapToTick,
 
         ResetRadian,
