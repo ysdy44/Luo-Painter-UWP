@@ -128,7 +128,6 @@
     <Compile Include="BrushEdgeHardnessPage.xaml.cs">
       <DependentUpon>BrushEdgeHardnessPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BrushEdgeHardnessWithTexturePage.Texture.cs" />
     <Compile Include="BrushEdgeHardnessWithTexturePage.xaml.cs">
       <DependentUpon>BrushEdgeHardnessWithTexturePage.xaml</DependentUpon>
     </Compile>
