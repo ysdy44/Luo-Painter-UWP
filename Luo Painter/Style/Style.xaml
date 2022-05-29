@@ -7,11 +7,13 @@
 
     <!--ListBox-->
     <Style TargetType="ListBox">
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Height" Value="42"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{ThemeResource AppBorderBrush}"/>
-        <Setter Property="Background" Value="{ThemeResource AppBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
@@ -26,11 +28,115 @@
         <Setter Property="ItemContainerStyle" >
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="FontWeight" Value="Medium"/>
-                    <Setter Property="Height" Value="40"/>
-                    <Setter Property="MinWidth" Value="72"/>
-                    <Setter Property="Padding" Value="14,2" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="TabNavigation" Value="Local" />
+                    <Setter Property="Padding" Value="{StaticResource ListBoxItemPadding}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+
+                                            <VisualState x:Name="Disabled">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                            <VisualState x:Name="PointerOver">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Pressed">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Selected">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                            <VisualState x:Name="SelectedUnfocused">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                            <VisualState x:Name="SelectedPointerOver">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                            <VisualState x:Name="SelectedPressed">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+
+                                        </VisualStateGroup>
+
+                                    </VisualStateManager.VisualStateGroups>
+
+                                    <Rectangle x:Name="PressedBackground" Fill="Transparent" Control.IsTemplateFocusTarget="True" />
+                                    <Rectangle x:Name="Indicator" Visibility="Collapsed" Height="2" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource SystemControlHighlightListAccentLowBrush}" />
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      TextWrapping="NoWrap"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Margin="{TemplateBinding Padding}" />
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </Setter.Value>
         </Setter>
@@ -143,8 +249,24 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
         <Setter Property="Background" Value="{ThemeResource AppAcrylicOverlayBrush}" />
-        <Setter Property="PrimaryButtonStyle" Value="{ThemeResource TextBlockButtonStyle}" />
-        <Setter Property="SecondaryButtonStyle" Value="{ThemeResource TextBlockButtonStyle}" />
+        <Setter Property="PrimaryButtonStyle" >
+            <Setter.Value>
+                <Style TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
+                    <Setter Property="CornerRadius" Value="4" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SecondaryButtonStyle" >
+            <Setter.Value>
+                <Style TargetType="Button" >
+                    <Setter Property="CornerRadius" Value="4" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Style>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 
@@ -260,7 +382,29 @@
         <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-    </Style >
+    </Style>
+    <Style x:Key="AppAccentBorderButtonStyle" TargetType="Button" >
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{ThemeResource SystemColorControlAccentBrush}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+    </Style>
+
+
+    <!--ToggleButton-->
+    <Style TargetType="ToggleButton" >
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+    </Style>
 
 
     <!--Line-->
