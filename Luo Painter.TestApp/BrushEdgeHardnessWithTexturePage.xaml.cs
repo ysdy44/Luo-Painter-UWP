@@ -5,7 +5,6 @@ using Microsoft.Graphics.Canvas;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.Graphics.DirectX;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -37,8 +36,7 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 this.BitmapLayer = new BitmapLayer(this.Device, 512, 512);
-                this.Texture = CanvasBitmap.CreateFromBytes(sender, this.TexturBytes, 512, 512, DirectXPixelFormat.B8G8R8A8UIntNormalized);
-                args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
+                args.TrackAsyncAction(this.CreateResourcesAsync(sender).AsAsyncAction());
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
@@ -53,9 +51,10 @@ namespace Luo_Painter.TestApp
             };
         }
 
-        private async Task CreateResourcesAsync()
+        private async Task CreateResourcesAsync(ICanvasResourceCreator resourceCreator)
         {
             this.ShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
+            this.Texture = await CanvasBitmap.LoadAsync(resourceCreator, this.Brush.Source, 96);
         }
 
         private void ConstructOperator()
@@ -73,8 +72,8 @@ namespace Luo_Painter.TestApp
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 float pressure = properties.Pressure;
 
-                this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, 32,
-                    this.ShaderCodeBytes, this.Texture, 0, BitmapLayer.DodgerBlue,
+                this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, (float)this.Brush.Size,
+                    this.ShaderCodeBytes, this.Texture, (int)this.Brush.Hardness, BitmapLayer.DodgerBlue,
                     BitmapType.Source);
 
                 this.Position = position;

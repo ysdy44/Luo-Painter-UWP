@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
+    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -13,6 +14,17 @@
     <FrameworkElement.Resources>
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <!--Brush-->
+        <brushes:PaintBrush 
+            x:Name="Brush"             
+            Size="120" 
+            Opacity="0.7" 
+            Space="0.33" 
+            Hardness="Cosine"
+            Source="Luo Painter.Brushes/Splodge/00/Source.png"
+            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Thumbnail.png"
+            Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png"
+            />
     </FrameworkElement.Resources>
 
     <Grid>
