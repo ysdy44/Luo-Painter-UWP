@@ -3,6 +3,7 @@
     public enum ElementType
     {
         // None
+        Brush,
         Edit,
         Layer,
         Option,
