@@ -13,7 +13,6 @@
 
     <FrameworkElement.Resources>
         <!--Radian-->
-        <local:RadianRange x:Name="RadianRange"/>
         <Storyboard x:Name="RadianStoryboard">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="RadianSlider" EnableDependentAnimation="True">
                 <SplineDoubleKeyFrame Value="0" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
@@ -23,7 +22,7 @@
         <local:ScaleRange x:Name="ScaleRange"/>
         <Storyboard x:Name="ScaleStoryboard">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="ScaleSlider" EnableDependentAnimation="True">
-                <SplineDoubleKeyFrame Value="-9" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
+                <SplineDoubleKeyFrame Value="330" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </FrameworkElement.Resources>
@@ -32,7 +31,7 @@
     <TextBlock x:Name="RadianTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
         Radian
     </TextBlock>
-    <Slider x:Name="RadianSlider" Minimum="{x:Bind RadianRange.Range.Minimum}" Maximum="{x:Bind RadianRange.Range.Maximum}" Style="{StaticResource AppDefaultSliderStyle}" >
+    <Slider x:Name="RadianSlider" Value="0" Minimum="-180" Maximum="180" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
             <Button x:Name="RadianButton"
                 Padding="4,0" MinWidth="44" Height="28"
@@ -69,11 +68,11 @@
     <TextBlock x:Name="ScaleTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
         Scale
     </TextBlock>
-    <Slider x:Name="ScaleSlider" Minimum="{x:Bind ScaleRange.XRange.Minimum}" Maximum="{x:Bind ScaleRange.XRange.Maximum}" Style="{StaticResource AppDefaultSliderStyle}" >
+    <Slider x:Name="ScaleSlider" Style="{StaticResource AppDefaultSliderStyle}" >
         <Slider.Header>
             <Button x:Name="ScaleButton"
-            Padding="4,0" MinWidth="44" Height="28"
-            BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    Padding="4,0" MinWidth="44" Height="28"
+                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                 <Button.Flyout>
                     <Flyout>
 

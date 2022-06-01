@@ -9,13 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    
+
     <FrameworkElement.Resources>
         <!--Range-->
         <local:ScaleRange x:Name="ScaleRange"/>
     </FrameworkElement.Resources>
 
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="122" />
@@ -33,28 +33,59 @@
                 0.5,0.5
             </UIElement.RenderTransformOrigin>
             <UIElement.RenderTransform>
-                <ScaleTransform ScaleY="-1" CenterY="0.5"/>
+                <ScaleTransform ScaleX="-1" CenterX="0.5" ScaleY="-1" CenterY="0.5"/>
             </UIElement.RenderTransform>
             <Line x:Name="XAxix" StrokeThickness="2" Stroke="Red" />
             <Line x:Name="YAxix" StrokeThickness="2" Stroke="GreenYellow" />
             <Polyline x:Name="Polyline" StrokeThickness="2" Stroke="DodgerBlue" />
             <Ellipse x:Name="Ellipse" Canvas.Left="-10" Canvas.Top="-10" Width="20" Height="20" Fill="Fuchsia"/>
+
+            <Line x:Name="LineLeft" StrokeThickness="2" Stroke="Orange" />
+            <Line x:Name="LineTop" StrokeThickness="2" Stroke="Orange" />
+            <Line x:Name="LineRight" StrokeThickness="2" Stroke="Orange" />
+            <Line x:Name="LineBottom" StrokeThickness="2" Stroke="Orange" />
         </Canvas>
 
-        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}">
-            <LineBreak/>
-            <Run Foreground="Red" >X</Run>
-            <Run x:Name="XRun" >0</Run>         
-            <LineBreak/>    
-            <Run FontSize="22" Text="{x:Bind ScaleRange.XRange}"/>   
-            <LineBreak/>
-            <LineBreak/>
-            <Run Foreground="GreenYellow" >Y</Run>
-            <Run x:Name="YRun">0</Run>     
-            <LineBreak/>
-            <Run FontSize="22" Text="{x:Bind ScaleRange.YRange}"/>
-            <LineBreak/>
-        </TextBlock>
+        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}">
+                YIP = 1 / XIP
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}">
+                <Run Foreground="Red" >X</Run>
+                <Run Text="{x:Bind ScaleRange.XRange.Minimum}"/>       
+                <Run>&lt;</Run>
+                <Run x:Name="XRun" >0</Run>         
+                <Run>&lt;</Run>
+                <Run Text="{x:Bind ScaleRange.XRange.Maximum}"/>       
+                <LineBreak/>    
+                <Run Foreground="GreenYellow" >Y</Run>
+                <Run Text="{x:Bind ScaleRange.YRange.Minimum}"/>       
+                <Run>&lt;</Run>
+                <Run x:Name="YRun" >0</Run>          
+                <Run>&lt;</Run>
+                <Run Text="{x:Bind ScaleRange.YRange.Maximum}"/>
+            </TextBlock>
+            <ContentControl Height="12"/>
+            <TextBlock HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+                XIP=Convert(X)
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+                YIP=Convert(Y)
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+                <Run Foreground="Red" >X</Run>
+                <Run Text="{x:Bind ScaleRange.XIP.Minimum}"/>       
+                <Run>&lt;</Run>
+                <Run Text="{x:Bind ScaleRange.XIP.Maximum}"/>       
+                <LineBreak/>    
+                <Run Foreground="GreenYellow" >Y</Run>
+                <Run Text="{x:Bind ScaleRange.YIP.Minimum}"/>       
+                <Run>&lt;</Run>
+                <Run Text="{x:Bind ScaleRange.YIP.Maximum}"/>
+                <LineBreak/>
+            </TextBlock>
+            <ContentControl Height="12"/>
+        </StackPanel>
 
         <Slider x:Name="XSlider"
                 Grid.Column="1" 
