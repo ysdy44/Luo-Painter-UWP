@@ -6,14 +6,14 @@ namespace Luo_Painter.Controls
 {
     internal sealed class PaintTextureList : List<PaintTexture>
     {
-        public int IndexOf(string source)
+        public int IndexOf(string texture)
         {
-            if (string.IsNullOrEmpty(source)) return -1;
+            if (string.IsNullOrEmpty(texture)) return -1;
 
             for (int i = 0; i < base.Count; i++)
             {
                 PaintTexture item = base[i];
-                if (item.Source == source)
+                if (item.Texture == texture)
                 {
                     return i;
                 }
@@ -34,9 +34,9 @@ namespace Luo_Painter.Controls
             this.InitializeComponent();
         }
 
-        public void Construct(string source)
+        public void Construct(string texture)
         {
-            this.GridView.SelectedIndex = this.Collection.IndexOf(source);
+            this.GridView.SelectedIndex = this.Collection.IndexOf(texture);
         }
 
     }

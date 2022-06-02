@@ -4,7 +4,7 @@
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public string Thumbnail { get; set; }
         public string Source { get; set; }
+        public string Texture { get; set; }
     }
 }
