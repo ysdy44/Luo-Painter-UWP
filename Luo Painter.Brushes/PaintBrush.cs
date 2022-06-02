@@ -9,7 +9,8 @@
 
         public string Render { get; set; }
         public string Thumbnail { get; set; }
-        public string Source { get; set; }
+        public PaintTexture Mask { get; set; }
+        public PaintTexture Pattern { get; set; }
 
         public string Title { get; set; }
         public string Subtitle => ((int)this.Size).ToString();
