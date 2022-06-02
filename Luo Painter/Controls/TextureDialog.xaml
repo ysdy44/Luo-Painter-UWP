@@ -1,0 +1,230 @@
+﻿<ContentDialog
+    x:Class="Luo_Painter.Controls.TextureDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:brushes="using:Luo_Painter.Brushes"
+    xmlns:local="using:Luo_Painter.Controls"
+    mc:Ignorable="d"
+    FullSizeDesired="False" 
+    Style="{StaticResource AppContentDialogStyle}"
+    >
+
+    <ContentDialog.Title>
+        Texture
+    </ContentDialog.Title>
+
+    <ContentDialog.PrimaryButtonText>
+        OK
+    </ContentDialog.PrimaryButtonText>
+    <ContentDialog.SecondaryButtonText>
+        Cancel
+    </ContentDialog.SecondaryButtonText>
+
+    <GridView
+        x:Name="GridView"
+        SelectedIndex="0"
+        SelectionMode="Single"
+        MaxHeight="500"
+        >
+
+        <ItemsControl.ItemContainerStyle>
+            <Style TargetType="GridViewItem">
+                <Setter Property="Width" Value="128"/>
+                <Setter Property="Height" Value="128"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="1"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Background" Value="Black"/>
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="brushes:PaintTexture">
+                <Image Source="{x:Bind Thumbnail}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip>
+                            <TextBlock>
+                                <Run Text="{x:Bind Width}"/>
+                                <Run>×</Run>
+                                <Run Text="{x:Bind Height}"/>
+                            </TextBlock>
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Image>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+        <ItemsControl.ItemsSource>
+            <!--Collection-->
+            <local:PaintTextureList x:Name="Collection">
+                <brushes:PaintTexture
+                    Width="400"
+                    Height="400"
+                    Source="Luo Painter.Brushes/Flash/00/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/00/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1400"
+                    Height="1400"
+                    Source="Luo Painter.Brushes/Flash/01/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/01/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1100"
+                    Height="1100"
+                    Source="Luo Painter.Brushes/Flash/02/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/02/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1600"
+                    Height="1600"
+                    Source="Luo Painter.Brushes/Flash/03/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/03/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="900"
+                    Height="900"
+                    Source="Luo Painter.Brushes/Flash/04/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/04/Texture.png"
+                    />
+
+
+
+
+                <brushes:PaintTexture 
+                    Width="512"
+                    Height="512"
+                    Source="Luo Painter.Brushes/Splodge/00/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="512"
+                    Height="512"
+                    Source="Luo Painter.Brushes/Splodge/01/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/01/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="512"
+                    Height="512"
+                    Source="Luo Painter.Brushes/Splodge/02/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/02/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="512"
+                    Height="512"
+                    Source="Luo Painter.Brushes/Splodge/03/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/03/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="512"
+                    Height="512"
+                    Source="Luo Painter.Brushes/Splodge/04/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/04/Texture.png"
+                    />
+
+
+                <brushes:PaintTexture
+                    Width="600"
+                    Height="600"
+                    Source="Luo Painter.Brushes/Splodge/05/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/05/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1400"
+                    Height="1400"
+                    Source="Luo Painter.Brushes/Splodge/06/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/06/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1600"
+                    Height="1600"
+                    Source="Luo Painter.Brushes/Splodge/07/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/07/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1600"
+                    Height="1600"
+                    Source="Luo Painter.Brushes/Splodge/08/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/08/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1024"
+                    Height="1024"
+                    Source="Luo Painter.Brushes/Splodge/09/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/09/Texture.png"
+                    />
+
+
+
+
+                <brushes:PaintTexture
+                    Width="1300"
+                    Height="1300"
+                    Source="Luo Painter.Brushes/Scratch/00/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/00/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1400"
+                    Height="1400"
+                    Source="Luo Painter.Brushes/Scratch/01/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/01/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1400"
+                    Height="1400"
+                    Source="Luo Painter.Brushes/Scratch/02/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/02/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1200"
+                    Height="1200"
+                    Source="Luo Painter.Brushes/Scratch/03/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/03/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1300"
+                    Height="1300"
+                    Source="Luo Painter.Brushes/Scratch/04/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/04/Texture.png"
+                    />
+
+
+                <brushes:PaintTexture
+                    Width="1400"
+                    Height="1400"
+                    Source="Luo Painter.Brushes/Scratch/05/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/05/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1400"
+                    Height="1400"
+                    Source="Luo Painter.Brushes/Scratch/06/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/06/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1600"
+                    Height="1600"
+                    Source="Luo Painter.Brushes/Scratch/07/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/07/Texture.png"
+                    />
+                <brushes:PaintTexture
+                    Width="1600"
+                    Height="1600"
+                    Source="Luo Painter.Brushes/Scratch/08/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/08/Texture.png"
+                    />
+                <brushes:PaintTexture 
+                    Width="1600"
+                    Height="1600"
+                    Source="Luo Painter.Brushes/Scratch/09/Source.png"
+                    Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/09/Texture.png"
+                    />
+            </local:PaintTextureList>
+        </ItemsControl.ItemsSource>
+
+    </GridView>
+
+</ContentDialog>

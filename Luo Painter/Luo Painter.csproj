@@ -150,6 +150,9 @@
     <Compile Include="Controls\StretchDialog.xaml.cs">
       <DependentUpon>StretchDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TextureDialog.xaml.cs">
+      <DependentUpon>TextureDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToastTip.xaml.cs">
       <DependentUpon>ToastTip.xaml</DependentUpon>
     </Compile>
@@ -279,6 +282,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\StretchDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TextureDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
