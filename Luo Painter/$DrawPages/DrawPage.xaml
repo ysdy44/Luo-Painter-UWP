@@ -1072,7 +1072,7 @@
             <menus:ExportMenu x:Name="ExportMenu"/>
             <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" >
-                    <tools:PaintTool x:Name="PaintTool" />
+                    <tools:PaintTool x:Name="PaintTool" InkPresenter="{x:Bind InkPresenter}" CanvasDevice="{x:Bind CanvasDevice}"/>
                     <tools:ViewTool x:Name="ViewTool" />
                 </local:ToolGroupSwitchPresenter>
             </elements:Expander>
@@ -1110,6 +1110,7 @@
 
 
         </ContentDialog>
+        <controls:TextureDialog x:Name="TextureDialog" />
 
 
         <!--Tip-->

@@ -1,5 +1,5 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.Edits;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Tools;
@@ -15,19 +15,49 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Tools
 {
+    internal sealed class SizeRange
+    {
+        public readonly Range XRange;
+        public readonly Range YRange = new Range
+        {
+            Default = 12,
+            IP = new InverseProportion
+            {
+                Minimum = 1,
+                Maximum = 400,
+            }
+        };
+
+        private readonly InverseProportion XIP;
+        private readonly InverseProportion YIP = new InverseProportion
+        {
+            Minimum = 0.3333333333333333333333333333333333333333333333333333333333333,
+            Maximum = 1,
+        };
+
+        public SizeRange()
+        {
+            this.XIP = this.YIP.Convert();
+            this.XRange = this.YRange.Convert(this.YIP, this.YRange.IP, 100000);
+        }
+
+        public double ConvertXToY(double x) => InverseProportion.Convert(x, this.XIP, this.XRange.IP, this.YIP, this.YRange.IP, RangeRounding.Maximum, RangeRounding.Minimum);
+        public double ConvertYToX(double y) => InverseProportion.Convert(y, this.YIP, this.YRange.IP, this.XIP, this.XRange.IP, RangeRounding.Minimum, RangeRounding.Maximum);
+    }
+
     internal sealed class InkRender
     {
         readonly BitmapLayer PaintLayer;
         public ICanvasImage Souce => this.PaintLayer.Source;
         public InkRender(CanvasControl sender) => this.PaintLayer = new BitmapLayer(sender, (int)sender.ActualWidth, (int)sender.ActualHeight);
-        public void Render(float size, Color color)
+        public void Render(InkPresenter presenter, Color color)
         {
             this.PaintLayer.Clear(Colors.Transparent, BitmapType.Origin);
             this.PaintLayer.Clear(Colors.Transparent, BitmapType.Source);
 
             float width = this.PaintLayer.Width;
             float height = this.PaintLayer.Height;
-            float space = System.Math.Max(2, size / height * 2);
+            float space = System.Math.Max(2, presenter.Size / height * 2);
 
             Vector2 position = new Vector2(10, height / 2 + 3.90181f);
             float pressure = 0.001f;
@@ -54,30 +84,71 @@ namespace Luo_Painter.Tools
     {
         protected override void OnTypeChanged(BlendEffectMode value)
         {
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
-            {
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource, out string title),
-                Resources = resource,
-            }, title);
+            base.Content = value.GetTitle();
         }
     }
 
     internal sealed class BlendList : List<BlendEffectMode> { }
 
-    public sealed partial class PaintTool : StackPanel, IGroupCase<ToolGroupType, ToolType>
+    public sealed partial class PaintTool : Grid, IGroupCase<ToolGroupType, ToolType>
     {
+        //@Delegate
+        public event RoutedEventHandler SelectMask { remove => this.SelectMaskButton.Click -= value; add => this.SelectMaskButton.Click += value; }
+        public event RoutedEventHandler SelectPattern { remove => this.SelectPatternButton.Click -= value; add => this.SelectPatternButton.Click += value; }
 
-        public float InkSize { get; private set; } = 22f;
-        public float InkOpacity { get; private set; } = 1;
-        public BlendEffectMode? InkBlendMode { get; private set; } = null;
+        public event RoutedEventHandler MaskClosed;
+        public event RoutedEventHandler PatternClosed;
+
+        public event RoutedEventHandler MaskOpened;
+        public event RoutedEventHandler PatternOpened;
+
+        //@Converter
+        private string RoundConverter(double value) => $"{value:0}";
+        private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
 
         InkRender InkRender;
+        bool IsEnable = true;
 
         //@Interface
         public object Content => this;
         public ToolGroupType GroupValue => ToolGroupType.Paint;
         public ToolType Value => default;
+
+        public InkPresenter InkPresenter { get; set; }
+        public CanvasDevice CanvasDevice { get; set; }
+
+
+        #region DependencyProperty
+
+        public string MaskTexture { get; private set; }
+        public void SetMaskTexture(string texture)
+        {
+            this.MaskTexture = texture;
+            this.MaskImage.UriSource = new System.Uri(texture);
+        }
+        public void CloseMask()
+        {
+            this.IsEnable = false;
+            this.MaskButton.IsOn = false;
+            this.IsEnable = true;
+        }
+
+        public string PatternTexture { get; private set; }
+        public void SetPatternTexture(string texture)
+        {
+            this.PatternTexture = texture;
+            this.PatternImage.UriSource = new System.Uri(texture);
+        }
+        public void ClosePattern()
+        {
+            this.IsEnable = false;
+            this.MaskButton.IsOn = false;
+            this.IsEnable = true;
+        }
+
+
+        #endregion
+
 
         //@Construct
         public PaintTool()
@@ -90,68 +161,100 @@ namespace Luo_Painter.Tools
                 switch (base.ActualTheme)
                 {
                     case ElementTheme.Light:
-                        this.InkRender.Render(this.InkSize, Colors.Black);
+                        this.InkRender.Render(this.InkPresenter, Colors.Black);
                         break;
                     case ElementTheme.Dark:
-                        this.InkRender.Render(this.InkSize, Colors.White);
+                        this.InkRender.Render(this.InkPresenter, Colors.White);
                         break;
                 }
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                if (this.InkRender == null) return;
+                if (this.InkRender is null) return;
                 args.DrawingSession.DrawImage(this.InkRender.Souce);
             };
 
             this.SizeSlider.ValueChanged += (s, e) =>
             {
-                this.InkSize = (float)e.NewValue;
+                if (this.IsEnable is false) return;
+                double size = this.SizeRange.ConvertXToY(e.NewValue);
+                this.InkPresenter.Size = (float)size;
 
-                if (this.InkRender == null) return;
-
+                if (this.InkRender is null) return;
                 switch (base.ActualTheme)
                 {
-                    case ElementTheme.Light:
-                        this.InkRender.Render(this.InkSize, Colors.Black);
-                        break;
-                    case ElementTheme.Dark:
-                        this.InkRender.Render(this.InkSize, Colors.White);
-                        break;
+                    case ElementTheme.Light: this.InkRender.Render(this.InkPresenter, Colors.Black); break;
+                    case ElementTheme.Dark: this.InkRender.Render(this.InkPresenter, Colors.White); break;
                 }
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.OpacitySlider.ValueChanged += (s, e) =>
             {
-                this.InkOpacity = (float)(e.NewValue / 100);
-                this.CanvasControl.Opacity = this.InkOpacity;
+                if (this.IsEnable is false) return;
+                double opacity = System.Math.Clamp(e.NewValue / 100, 0, 1);
+                this.InkPresenter.Opacity = (float)opacity;
+
+                this.CanvasControl.Opacity = opacity;
             };
+            this.SpacingSlider.ValueChanged += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                double spacing = System.Math.Clamp(e.NewValue / 100, 0.1, 4);
+                this.InkPresenter.Spacing = (float)spacing;
+
+                if (this.InkRender is null) return;
+                switch (base.ActualTheme)
+                {
+                    case ElementTheme.Light: this.InkRender.Render(this.InkPresenter, Colors.Black); break;
+                    case ElementTheme.Dark: this.InkRender.Render(this.InkPresenter, Colors.White); break;
+                }
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.HardnessListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is ElementIcon item)
+                {
+                    switch (item.Type)
+                    {
+                        case ElementType.BrushEdgeHardnessNone: this.InkPresenter.Hardness = BrushEdgeHardness.None; break;
+                        case ElementType.BrushEdgeHardnessCosine: this.InkPresenter.Hardness = BrushEdgeHardness.Cosine; break;
+                        case ElementType.BrushEdgeHardnessQuadratic: this.InkPresenter.Hardness = BrushEdgeHardness.Quadratic; break;
+                        case ElementType.BrushEdgeHardnessCube: this.InkPresenter.Hardness = BrushEdgeHardness.Cube; break;
+                        case ElementType.BrushEdgeHardnessQuartic: this.InkPresenter.Hardness = BrushEdgeHardness.Quartic; break;
+                        default: this.InkPresenter.Hardness = BrushEdgeHardness.None; break;
+                    }
+
+                    if (this.InkRender is null) return;
+                    switch (base.ActualTheme)
+                    {
+                        case ElementTheme.Light: this.InkRender.Render(this.InkPresenter, Colors.Black); break;
+                        case ElementTheme.Dark: this.InkRender.Render(this.InkPresenter, Colors.White); break;
+                    }
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
+
             this.BlendModeListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {
-                    bool isNone = item.IsNone();
-
-                    if (isNone) this.InkBlendMode = null;
-                    else this.InkBlendMode = item;
+                    this.InkPresenter.SetBlendMode(item.IsNone(), item);
                 }
             };
 
-            this.BlendModeListView.SelectedIndex = this.InkBlendMode.HasValue ? this.BlendCollection.IndexOf(this.InkBlendMode.Value) : 0;
-            this.BlendModeListView.ItemClick += (s, e) =>
+            this.MaskButton.Toggled += (s, e) =>
             {
-                if (e.ClickedItem is BlendEffectMode item)
-                {
-                    if (item.IsNone())
-                    {
-                        if (this.InkBlendMode == null) return;
-                        this.InkBlendMode = null;
-                    }
-                    else
-                    {
-                        if (this.InkBlendMode == item) return;
-                        this.InkBlendMode = item;
-                    }
-                }
+                if (this.IsEnable is false) return;
+                bool isOn = this.MaskButton.IsOn;
+                if (isOn) this.MaskOpened?.Invoke(s, e); // Delegate
+                else this.MaskClosed?.Invoke(s, e); // Delegate
+            };
+            this.PatternButton.Toggled += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                bool isOn = this.PatternButton.IsOn;
+                if (isOn) this.PatternOpened?.Invoke(s, e); // Delegate
+                else this.PatternClosed?.Invoke(s, e); // Delegate
             };
         }
 
@@ -160,26 +263,19 @@ namespace Luo_Painter.Tools
         {
         }
 
-
-        public InkMode GetInkMode(bool isErase, bool isLiquefaction)
+        public void Construct(PaintBrush brush)
         {
-            if (isLiquefaction) return InkMode.Liquefy;
-
-            if (isErase)
+            this.IsEnable = false;
             {
-                if (this.InkOpacity == 1f) return InkMode.EraseDry;
-                else return InkMode.EraseWetWithOpacity;
+                this.SizeSlider.Value = this.SizeRange.ConvertYToX(brush.Size);
+                this.OpacitySlider.Value = brush.Opacity * 100;
+                this.SpacingSlider.Value = brush.Spacing * 100;
+                this.HardnessListView.SelectedIndex = (int)brush.Hardness;
+                this.CanvasControl.Invalidate(); // Invalidate
             }
-
-            if (this.InkBlendMode.HasValue == false)
-            {
-                if (this.InkOpacity == 1f) return InkMode.Dry;
-                else return InkMode.WetWithOpacity;
-            }
-
-            if (this.InkOpacity == 1f) return InkMode.WetWithBlendMode;
-            else return InkMode.WetWithOpacityAndBlendMode;
+            this.IsEnable = true;
         }
+
 
         public void OnNavigatedTo()
         {

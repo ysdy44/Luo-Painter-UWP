@@ -1,4 +1,4 @@
-﻿<StackPanel
+﻿<Grid
     x:Class="Luo_Painter.Tools.PaintTool"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,74 +10,217 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    Spacing="8"
     >
 
-    <Button x:Name="Button" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Style="{StaticResource TextBlockButtonStyle}">
-        <canvas:CanvasControl x:Name="CanvasControl" Width="320" Height="68" />
-    </Button>
 
-    <!--Size-->
-    <TextBlock x:Name="SizeTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-        Size
-    </TextBlock>
-    <Slider x:Name="SizeSlider" Margin="0,-12" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppDefaultSliderStyle}" >
-        <Slider.Header>
-            <Button Content="{x:Bind SizeSlider.Value, Mode=OneWay}" 
-                        Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                <Button.Flyout>
-                    <Flyout>
+    <FrameworkElement.Resources>
+        <!--Scale-->
+        <local:SizeRange x:Name="SizeRange"/>
+    </FrameworkElement.Resources>
 
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
-        </Slider.Header>
-    </Slider>
 
-    <!--Opacity-->
-    <TextBlock x:Name="OpacityTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-        Opacity
-    </TextBlock>
-    <Slider x:Name="OpacitySlider" Margin="0,-12" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
-        <Slider.Header>
-            <Button Content="{x:Bind OpacitySlider.Value, Mode=OneWay}" 
-                        Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                <Button.Flyout>
-                    <Flyout>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="128"/>
+        <RowDefinition Height="4"/>
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
 
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
-        </Slider.Header>
-    </Slider>
+    <canvas:CanvasControl x:Name="CanvasControl" 
+                          Margin="0,8" VerticalAlignment="Top" Width="320" Height="68" 
+                          UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
 
-    <!--BlendMode-->
-    <TextBlock x:Name="BlendModeTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-        Blend Mode
-    </TextBlock>
-    <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
+    <ListBox VerticalAlignment="Bottom" SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" >
+        <ListBoxItem x:Name="PropertiesItem">
+            Properties
+        </ListBoxItem>
+        <ListBoxItem x:Name="BlendModeItem">
+            Blend Mode
+        </ListBoxItem>
+        <ListBoxItem x:Name="TextureItem">
+            Texture
+        </ListBoxItem>
+    </ListBox>
 
-        <ItemsControl.ItemsSource>
-            <local:BlendList x:Name="BlendCollection">
-                <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-            </local:BlendList>
-        </ItemsControl.ItemsSource>
+    <FlipView x:Name="FlipView" Grid.Row="2" Height="362" Background="Transparent" >
+        <FlipViewItem>
+            <StackPanel>
 
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="effects:BlendEffectMode">
-                <local:BlendIcon Type="{x:Bind}"/>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
+                <!--Size-->
+                <Border CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" >
+                    <Slider x:Name="SizeSlider" Padding="0,4,0,0" Value="{x:Bind SizeRange.XRange.Default}" Minimum="{x:Bind SizeRange.XRange.Minimum}" Maximum="{x:Bind SizeRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
+                        <Slider.Tag>
+                            Size
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button Content="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"            
+                                    Padding="4,0" MinWidth="44" Height="28"
+                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                <Button.Flyout>
+                                    <Flyout>
 
-    </ListView>
-</StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </Border>
+
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                <!--Opacity-->
+                <Border CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" >
+                    <Slider x:Name="OpacitySlider" Padding="0,4,0,0" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
+                        <Slider.Tag>
+                            Opacity
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button 
+                                Padding="4,0" MinWidth="44" Height="28"
+                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock>
+                                    <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
+                                    <Run>%</Run>
+                                </TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </Border>
+
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+
+                <!--Spacing-->
+                <Border CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" >
+                    <Slider x:Name="SpacingSlider" Padding="0,4,0,0" Value="100" Minimum="10" Maximum="400" Style="{StaticResource AppSliderStyle}" >
+                        <Slider.Tag>
+                            Spacing
+                        </Slider.Tag>
+                        <Slider.Header>
+                            <Button 
+                                Padding="4,0" MinWidth="44" Height="28"
+                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock>
+                                    <Run Text="{x:Bind RoundConverter(SpacingSlider.Value), Mode=OneWay}" />
+                                    <Run>%</Run>
+                                </TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </Border>
+
+                <!--Hardness-->
+                <TextBlock x:Name="HardnessTextBlock" Margin="2,8" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Hardness
+                </TextBlock>
+                <ListView x:Name="HardnessListView" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}">
+                    <local:ElementIcon Type="BrushEdgeHardnessNone"/>
+                    <local:ElementIcon Type="BrushEdgeHardnessCosine"/>
+                    <local:ElementIcon Type="BrushEdgeHardnessQuadratic"/>
+                    <local:ElementIcon Type="BrushEdgeHardnessCube"/>
+                    <local:ElementIcon Type="BrushEdgeHardnessQuartic"/>
+                </ListView>
+
+            </StackPanel>
+        </FlipViewItem>
+        <FlipViewItem>
+            <ListView x:Name="BlendModeListView" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
+
+                <ItemsControl.ItemsSource>
+                    <local:BlendList x:Name="BlendCollection">
+                        <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                    </local:BlendList>
+                </ItemsControl.ItemsSource>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="effects:BlendEffectMode">
+                        <local:BlendIcon Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ListView>
+        </FlipViewItem>
+        <FlipViewItem>
+            <StackPanel>
+
+                <TextBlock x:Name="MaskTextBlock" Margin="8" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Mask
+                </TextBlock>
+
+                <!--Mask-->
+                <Border Height="146" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="9"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="122" Height="122" CornerRadius="4" Background="Black">
+                            <Image>
+                                <Image.Source>
+                                    <BitmapImage x:Name="MaskImage">
+                                        <!--UriSource-->
+                                    </BitmapImage>
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                        <StackPanel Grid.Column="2" Spacing="4" >
+                            <Button x:Name="SelectMaskButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
+                                Select
+                            </Button>
+                            <ToggleSwitch x:Name="MaskButton" Margin="4"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <TextBlock x:Name="PatternTextBlock" Margin="8" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Pattern
+                </TextBlock>
+
+                <!--Pattern-->
+                <Border Height="146" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="9"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="128" Height="128" CornerRadius="4" Background="Black">
+                            <Image>
+                                <Image.Source>
+                                    <BitmapImage x:Name="PatternImage">
+                                        <!--UriSource-->
+                                    </BitmapImage>
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                        <StackPanel Grid.Column="2" Spacing="4" >
+                            <Button x:Name="SelectPatternButton" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
+                                Select
+                            </Button>
+                            <ToggleSwitch x:Name="PatternButton" Margin="4"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </FlipViewItem>
+    </FlipView>
+
+</Grid>
