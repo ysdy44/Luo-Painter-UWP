@@ -4,7 +4,7 @@
     {
         public double Size { get; set; } = 12;
         public double Opacity { get; set; } = 1;
-        public double Space { get; set; } = 0.25;
+        public double Spacing { get; set; } = 0.25;
         public BrushEdgeHardness Hardness { get; set; } = BrushEdgeHardness.None;
 
         public string Render { get; set; }

@@ -54,7 +54,7 @@
                 <brushes:PaintBrush
                     Size="12" 
                     Opacity="1" 
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/00/Render.png"
@@ -62,7 +62,7 @@
                 <brushes:PaintBrush
                     Size="4" 
                     Opacity="1" 
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/01/Render.png"
@@ -70,7 +70,7 @@
                 <brushes:PaintBrush 
                     Size="21.16" 
                     Opacity="0.59"
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/02/Render.png"
@@ -78,7 +78,7 @@
                 <brushes:PaintBrush 
                     Size="108.16" 
                     Opacity="0.18" 
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/03/Render.png"
@@ -86,7 +86,7 @@
                 <brushes:PaintBrush 
                     Size="20.25" 
                     Opacity="0.23"
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/04/Render.png"
@@ -96,7 +96,7 @@
                 <brushes:PaintBrush 
                     Size="210.25" 
                     Opacity="0.15" 
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/05/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/05/Render.png"
@@ -104,7 +104,7 @@
                 <brushes:PaintBrush 
                     Size="3.24" 
                     Opacity="1" 
-                    Space="0.25"
+                    Spacing="0.25"
                     Hardness="None"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/06/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/06/Render.png"
@@ -112,7 +112,7 @@
                 <brushes:PaintBrush 
                     Size="11.56" 
                     Opacity="1" 
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/07/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/07/Render.png"
@@ -120,7 +120,7 @@
                 <brushes:PaintBrush 
                     Size="27.04" 
                     Opacity="1" 
-                    Space="0.25"
+                    Spacing="0.25"
                     Hardness="Quadratic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/08/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/08/Render.png"
@@ -128,7 +128,7 @@
                 <brushes:PaintBrush 
                     Size="75.69" 
                     Opacity="0.46"
-                    Space="0.25" 
+                    Spacing="0.25" 
                     Hardness="Quadratic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/09/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/09/Render.png"
@@ -138,7 +138,7 @@
                 <brushes:PaintBrush
                     Size="300" 
                     Opacity="0.9" 
-                    Space="0.8" 
+                    Spacing="0.8" 
                     Hardness="Quartic"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/00/Render.png" >
@@ -153,7 +153,7 @@
                 <brushes:PaintBrush 
                     Size="500" 
                     Opacity="0.85" 
-                    Space="0.55" 
+                    Spacing="0.55" 
                     Hardness="None"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/01/Render.png" >
@@ -168,7 +168,7 @@
                 <brushes:PaintBrush 
                     Size="428.49" 
                     Opacity="0.66" 
-                    Space="0.6" 
+                    Spacing="0.6" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/02/Render.png" >
@@ -183,7 +183,7 @@
                 <brushes:PaintBrush
                     Size="306.25" 
                     Opacity="0.73" 
-                    Space="0.8" 
+                    Spacing="0.8" 
                     Hardness="Quartic"  
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/03/Render.png" >
@@ -198,7 +198,7 @@
                 <brushes:PaintBrush
                     Size="1024" 
                     Opacity="0.9" 
-                    Space="0.3" 
+                    Spacing="0.3" 
                     Hardness="None"  
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/04/Render.png" >
@@ -215,7 +215,7 @@
                 <brushes:PaintBrush 
                     Size="120" 
                     Opacity="0.7" 
-                    Space="0.33" 
+                    Spacing="0.33" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png" >
@@ -230,7 +230,7 @@
                 <brushes:PaintBrush 
                     Size="158.76"
                     Opacity="1"
-                    Space="0.22" 
+                    Spacing="0.22" 
                     Hardness="Cosine"  
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/01/Render.png" >
@@ -245,7 +245,7 @@
                 <brushes:PaintBrush 
                     Size="150" 
                     Opacity="1" 
-                    Space="0.33" 
+                    Spacing="0.33" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/02/Render.png" >
@@ -260,7 +260,7 @@
                 <brushes:PaintBrush
                     Size="136.89" 
                     Opacity="0.89" 
-                    Space="0.33" 
+                    Spacing="0.33" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/03/Render.png" >
@@ -275,7 +275,7 @@
                 <brushes:PaintBrush 
                     Size="86.49"
                     Opacity="0.69" 
-                    Space="0.3" 
+                    Spacing="0.3" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/04/Render.png" >
@@ -292,7 +292,7 @@
                 <brushes:PaintBrush
                     Size="108.16" 
                     Opacity="0.79" 
-                    Space="0.4" 
+                    Spacing="0.4" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/05/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/05/Render.png" >
@@ -307,7 +307,7 @@
                 <brushes:PaintBrush 
                     Size="180" 
                     Opacity="0.89" 
-                    Space="0.33" 
+                    Spacing="0.33" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/06/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/06/Render.png" >
@@ -322,7 +322,7 @@
                 <brushes:PaintBrush 
                     Size="249.64" 
                     Opacity="1" 
-                    Space="0.66" 
+                    Spacing="0.66" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/07/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/07/Render.png" >
@@ -337,7 +337,7 @@
                 <brushes:PaintBrush
                     Size="272.25" 
                     Opacity="0.56" 
-                    Space="0.4" 
+                    Spacing="0.4" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/08/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/08/Render.png" >
@@ -352,7 +352,7 @@
                 <brushes:PaintBrush
                     Size="160" 
                     Opacity="0.84" 
-                    Space="0.45" 
+                    Spacing="0.45" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/09/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/09/Render.png" >
@@ -369,7 +369,7 @@
                 <brushes:PaintBrush
                     Size="222" 
                     Opacity="0.49" 
-                    Space="0.45" 
+                    Spacing="0.45" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/00/Render.png" >
@@ -384,7 +384,7 @@
                 <brushes:PaintBrush 
                     Size="233" 
                     Opacity="1" 
-                    Space="0.33" 
+                    Spacing="0.33" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/01/Render.png" >
@@ -399,7 +399,7 @@
                 <brushes:PaintBrush
                     Size="158.76" 
                     Opacity="1" 
-                    Space="0.5" 
+                    Spacing="0.5" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/02/Render.png" >
@@ -414,7 +414,7 @@
                 <brushes:PaintBrush
                     Size="132.25" 
                     Opacity="0.21" 
-                    Space="0.22" 
+                    Spacing="0.22" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/03/Render.png" >
@@ -429,7 +429,7 @@
                 <brushes:PaintBrush 
                     Size="193.21" 
                     Opacity="0.21" 
-                    Space="0.22" 
+                    Spacing="0.22" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/04/Render.png" >
@@ -446,7 +446,7 @@
                 <brushes:PaintBrush
                     Size="225"
                     Opacity="0.8"
-                    Space="0.45" 
+                    Spacing="0.45" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/05/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/05/Render.png" >
@@ -461,7 +461,7 @@
                 <brushes:PaintBrush
                     Size="112.36"
                     Opacity="0.8" 
-                    Space="0.66" 
+                    Spacing="0.66" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/06/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/06/Render.png" >
@@ -476,7 +476,7 @@
                 <brushes:PaintBrush
                     Size="102"
                     Opacity="1"
-                    Space="0.66" 
+                    Spacing="0.66" 
                     Hardness="Cube"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/07/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/07/Render.png" >
@@ -491,7 +491,7 @@
                 <brushes:PaintBrush
                     Size="121" 
                     Opacity="0.58" 
-                    Space="0.8" 
+                    Spacing="0.8" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/08/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/08/Render.png" >
@@ -506,7 +506,7 @@
                 <brushes:PaintBrush 
                     Size="166.41" 
                     Opacity="0.41" 
-                    Space="0.33" 
+                    Spacing="0.33" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/09/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/09/Render.png" >
