@@ -143,6 +143,7 @@
     <Compile Include="SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SizePickerExtension.cs" />
     <Compile Include="TIcon.cs" />
     <Compile Include="InverseProportion.cs" />
     <Compile Include="Marble.cs" />

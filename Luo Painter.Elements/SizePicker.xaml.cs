@@ -15,9 +15,6 @@ namespace Luo_Painter.Elements
         //@Key
         private bool IsRatio => this.ToggleButton.IsChecked is true;
 
-        //@Converter
-        private string Round2Converter(double value) => $"{Math.Round(value, 2)}";
-
         //@Content
         /// <summary> WidthTextBlock's Text. </summary>
         public string WidthText { get => this.WidthTextBlock.Text; set => this.WidthTextBlock.Text = value; }
@@ -51,27 +48,20 @@ namespace Luo_Painter.Elements
             this.WidthTextBox.Text = 1024.ToString();
             this.WidthTextBox.KeyDown += (s, e) =>
             {
-                switch (e.Key)
-                {
-                    case VirtualKey.Enter:
-                        this.HeightTextBox.Focus(FocusState.Programmatic);
-                        break;
-                    default:
-                        break;
-                }
+                if (SizePickerExtension.IsEnter(e.Key)) this.HeightTextBox.Focus(FocusState.Programmatic);
             };
             this.WidthTextBox.LostFocus += (s, e) =>
             {
                 if (string.IsNullOrEmpty(this.WidthTextBox.Text))
                 {
-                    this.WidthTextBox.Text = this.Round2Converter(this.CacheWidth);
+                    this.WidthTextBox.Text = SizePickerExtension.Round2Converter(this.CacheWidth);
                     return;
                 }
 
                 bool result = double.TryParse(this.WidthTextBox.Text, out double value);
                 if (result is false)
                 {
-                    this.WidthTextBox.Text = this.Round2Converter(this.CacheWidth);
+                    this.WidthTextBox.Text = SizePickerExtension.Round2Converter(this.CacheWidth);
                     return;
                 }
 
@@ -97,7 +87,7 @@ namespace Luo_Painter.Elements
 
                     this.SizeCore.Width = (uint)value;
                     this.CacheWidth = value;
-                    this.WidthTextBox.Text = this.Round2Converter(value);
+                    this.WidthTextBox.Text = SizePickerExtension.Round2Converter(value);
                 }
             };
 
@@ -117,14 +107,14 @@ namespace Luo_Painter.Elements
             {
                 if (string.IsNullOrEmpty(this.HeightTextBox.Text))
                 {
-                    this.HeightTextBox.Text = this.Round2Converter(this.CacheHeight);
+                    this.HeightTextBox.Text = SizePickerExtension.Round2Converter(this.CacheHeight);
                     return;
                 }
 
                 bool result = double.TryParse(this.HeightTextBox.Text, out double value);
                 if (result is false)
                 {
-                    this.HeightTextBox.Text = this.Round2Converter(this.CacheHeight);
+                    this.HeightTextBox.Text = SizePickerExtension.Round2Converter(this.CacheHeight);
                     return;
                 }
 
@@ -150,7 +140,7 @@ namespace Luo_Painter.Elements
 
                     this.SizeCore.Height = (uint)value;
                     this.CacheHeight = value;
-                    this.HeightTextBox.Text = this.Round2Converter(value);
+                    this.HeightTextBox.Text = SizePickerExtension.Round2Converter(value);
                 }
             };
         }
@@ -173,7 +163,7 @@ namespace Luo_Painter.Elements
             {
                 this.SizeCore.Width = (uint)value;
                 this.CacheWidth = value;
-                this.WidthTextBox.Text = this.Round2Converter(value);
+                this.WidthTextBox.Text = SizePickerExtension.Round2Converter(value);
             }
         }
 
@@ -195,7 +185,7 @@ namespace Luo_Painter.Elements
             {
                 this.SizeCore.Height = (uint)value;
                 this.CacheHeight = value;
-                this.HeightTextBox.Text = this.Round2Converter(value);
+                this.HeightTextBox.Text = SizePickerExtension.Round2Converter(value);
             }
         }
 

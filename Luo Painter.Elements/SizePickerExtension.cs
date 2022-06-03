@@ -1,0 +1,69 @@
+﻿using Windows.System;
+using Windows.UI.Xaml.Controls;
+
+namespace Luo_Painter.Elements
+{
+    /// <summary>
+    /// Extension for <see cref="SizePicker"/>.
+    /// </summary>
+    public sealed class SizePickerExtension
+    {
+        //@Converter
+        public static string Round2Converter(double value) => $"{value:0.00}";
+        public static bool IsEnter(VirtualKey key) => key == VirtualKey.Enter;
+
+        /// <summary> Minimum. Defult 16. </summary>
+        public int Minimum { get; set; } = 16;
+        /// <summary> Maximum. Defult 16384. </summary>
+        public int Maximum { get; set; } = 16384;
+
+        /// <summary> Size. </summary>
+        public int Size { get; set; } = 1024;
+
+        private double Cache = 1024;
+
+        /// <summary>
+        ///  Indicates whether the text box finds a number in the input string.
+        /// </summary>
+        /// <param name="textBox"> The text box. </param>
+        /// <returns> **True** if the text box finds a number; otherwise, **False**. </returns>
+        public bool IsMatch(TextBox textBox)
+        {
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = SizePickerExtension.Round2Converter(this.Cache);
+                return false;
+            }
+
+            bool result = double.TryParse(textBox.Text, out double value);
+            if (result is false)
+            {
+                textBox.Text = SizePickerExtension.Round2Converter(this.Cache);
+                return false;
+            }
+
+            if (value < this.Minimum)
+            {
+                this.Size = this.Minimum;
+                this.Cache = this.Minimum;
+                textBox.Text = this.Minimum.ToString();
+                return true;
+            }
+            else if (value > this.Maximum)
+            {
+                this.Size = this.Maximum;
+                this.Cache = this.Maximum;
+                return true;
+            }
+            else
+            {
+                this.Size = (int)value;
+                this.Cache = value;
+                textBox.Text = SizePickerExtension.Round2Converter(value);
+                return true;
+            }
+        }
+
+        public override string ToString() => this.Size.ToString();
+    }
+}
