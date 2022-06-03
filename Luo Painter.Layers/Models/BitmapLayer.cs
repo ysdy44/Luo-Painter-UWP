@@ -128,6 +128,16 @@ namespace Luo_Painter.Layers.Models
 
         public CanvasDrawingSession CreateDrawingSession(BitmapType type = BitmapType.Source) => this[type].CreateDrawingSession();
 
+        public void Draw(ICanvasImage image, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.DrawImage(image);
+            }
+        }
+
         public void DrawCopy(ICanvasImage image, BitmapType type = BitmapType.Source)
         {
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
