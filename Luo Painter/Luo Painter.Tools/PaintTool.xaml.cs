@@ -117,6 +117,7 @@ namespace Luo_Painter.Tools
         public InkPresenter InkPresenter { get; set; }
         public CanvasDevice CanvasDevice { get; set; }
 
+        readonly SizePickerExtension Step = new SizePickerExtension();
 
         #region DependencyProperty
 
@@ -138,6 +139,11 @@ namespace Luo_Painter.Tools
         {
             this.PatternTexture = texture;
             this.PatternImage.UriSource = new System.Uri(texture);
+        }
+        public void SetStep(int step)
+        {
+            this.Step.Size = step;
+            this.StepTextBox.Text = this.Step.ToString();
         }
         public void ClosePattern()
         {
@@ -256,6 +262,32 @@ namespace Luo_Painter.Tools
                 if (isOn) this.PatternOpened?.Invoke(s, e); // Delegate
                 else this.PatternClosed?.Invoke(s, e); // Delegate
             };
+
+            this.RotateButton.Unchecked += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                this.InkPresenter.Rotate = false;
+            };
+            this.RotateButton.Checked += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                this.InkPresenter.Rotate = true;
+            };
+
+            this.StepTextBox.Text = this.Step.ToString();
+            this.StepTextBox.KeyDown += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                if (SizePickerExtension.IsEnter(e.Key)) this.PatternButton.Focus(FocusState.Programmatic);
+            };
+            this.StepTextBox.LostFocus += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                if (this.Step.IsMatch(this.StepTextBox))
+                {
+                    this.InkPresenter.Step = this.Step.Size;
+                }
+            };
         }
 
         //@Strings
@@ -271,6 +303,9 @@ namespace Luo_Painter.Tools
                 this.OpacitySlider.Value = brush.Opacity * 100;
                 this.SpacingSlider.Value = brush.Spacing * 100;
                 this.HardnessListView.SelectedIndex = (int)brush.Hardness;
+                this.RotateButton.IsChecked = brush.Rotate;
+                this.Step.Size = brush.Step;
+                this.StepTextBox.Text = this.Step.ToString();
                 this.CanvasControl.Invalidate(); // Invalidate
             }
             this.IsEnable = true;

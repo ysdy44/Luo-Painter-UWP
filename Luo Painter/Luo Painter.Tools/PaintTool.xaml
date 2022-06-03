@@ -134,19 +134,15 @@
         <FlipViewItem>
             <ListView x:Name="BlendModeListView" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
 
-                <ItemsControl.ItemsSource>
-                    <local:BlendList x:Name="BlendCollection">
-                        <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                    </local:BlendList>
-                </ItemsControl.ItemsSource>
+                <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="effects:BlendEffectMode">
@@ -180,11 +176,14 @@
                                 </Image.Source>
                             </Image>
                         </Border>
-                        <StackPanel Grid.Column="2" Spacing="4" >
+                        <StackPanel Grid.Column="2" Spacing="6" Padding="0,4" >
                             <Button x:Name="SelectMaskButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                                 Select
                             </Button>
-                            <ToggleSwitch x:Name="MaskButton" Margin="4"/>
+                            <ToggleButton x:Name="RotateButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" >
+                                Rotate
+                            </ToggleButton>
+                            <ToggleSwitch x:Name="MaskButton" Margin="2,0"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -210,11 +209,14 @@
                                 </Image.Source>
                             </Image>
                         </Border>
-                        <StackPanel Grid.Column="2" Spacing="4" >
+                        <StackPanel Grid.Column="2" Spacing="6" Padding="0,4" >
                             <Button x:Name="SelectPatternButton" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                                 Select
                             </Button>
-                            <ToggleSwitch x:Name="PatternButton" Margin="4"/>
+                            <TextBox x:Name="StepTextBox" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" >
+                                <!--Text-->
+                            </TextBox>
+                            <ToggleSwitch x:Name="PatternButton" Margin="2,0"/>
                         </StackPanel>
                     </Grid>
                 </Border>
