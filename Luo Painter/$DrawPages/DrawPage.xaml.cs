@@ -182,6 +182,7 @@ namespace Luo_Painter
 
             this.ConstructTools();
             this.ConstructMarquee();
+            this.ConstructPaint();
             this.ConstructVector();
 
             this.ConstructHistory();
