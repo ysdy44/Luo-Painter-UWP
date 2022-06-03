@@ -7,21 +7,6 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public enum InkMode
-    {
-        None,
-
-        Dry,
-        WetWithOpacity,
-        WetWithBlendMode,
-        WetWithOpacityAndBlendMode,
-
-        EraseDry,
-        EraseWetWithOpacity,
-
-        Liquefy,
-    }
-
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
@@ -33,9 +18,6 @@ namespace Luo_Painter.Layers.Models
             StartCap = CanvasCapStyle.Round,
             EndCap = CanvasCapStyle.Round,
         };
-
-
-        public InkMode InkMode { get; set; }
 
 
         public void ClearDisplacement()
@@ -134,8 +116,13 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void IsometricShape(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, byte[] shaderCode, CanvasBitmap texture, int hardness, Vector4 colorHdr, BitmapType type)
+        public void IsometricShape(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, byte[] shaderCode, CanvasBitmap texture, int hardness, bool rotate, Vector4 colorHdr, BitmapType type)
         {
+            Vector2 vector = targetPosition - position;
+            if (double.IsNaN(vector.X)) return;
+            if (double.IsNaN(vector.Y)) return;
+            Vector2 normalization = Vector2.Normalize(vector);
+
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
             {
                 //@DPI 
@@ -148,6 +135,8 @@ namespace Luo_Painter.Layers.Models
                     Properties =
                     {
                         ["hardness"] = hardness,
+                        ["rotate"] = rotate,
+                        ["normalization"] = normalization,
                         ["pressure"] = 1f,
                         ["radius"] = size * pressure,
                         ["targetPosition"] = position,
@@ -170,6 +159,8 @@ namespace Luo_Painter.Layers.Models
                             Properties =
                             {
                                 ["hardness"] = hardness,
+                                ["rotate"] = rotate,
+                                ["normalization"] = normalization,
                                 ["pressure"] = 1f,
                                 ["radius"] = size * e,
                                 ["targetPosition"] = p,

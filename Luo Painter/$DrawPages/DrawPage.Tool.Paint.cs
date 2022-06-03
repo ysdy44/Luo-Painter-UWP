@@ -109,6 +109,7 @@ namespace Luo_Painter
                     {
                         this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                         this.PaintTool.SetPatternTexture(item.Texture);
+                        this.PaintTool.SetStep(item.Step);
                         return true;
                     }
                     else return false;
@@ -153,7 +154,7 @@ namespace Luo_Painter
             else if (this.InkType.HasFlag(InkType.MaskBrushDry))
             {
                 this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size,
-                    this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkPresenter.Mask, (int)this.InkPresenter.Hardness, this.ColorMenu.ColorHdr,
+                    this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkPresenter.Mask, (int)this.InkPresenter.Hardness, this.InkPresenter.Rotate, this.ColorMenu.ColorHdr,
                     this.GetBitmapType(this.InkType));
             }
             else if (this.InkType.HasFlag(InkType.CircleDry))
