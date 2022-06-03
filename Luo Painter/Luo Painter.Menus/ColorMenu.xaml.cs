@@ -35,6 +35,9 @@ namespace Luo_Painter.Menus
         public ClickEyedropper ClickEyedropper { get; set; }
         public Color Color => this.ColorPicker.Color;
 
+        public Vector4 ColorHdr => this.ColorHdrCore;
+        private Vector4 ColorHdrCore;
+
         Point StartingPosition;
 
         //@Construct
@@ -43,6 +46,13 @@ namespace Luo_Painter.Menus
             this.InitializeComponent();
             this.ConstructStraw();
             this.ColorPicker.ColorChanged += this.ColorChanged;
+            this.ColorPicker.ColorChanged += (s, e) =>
+            {
+                this.ColorHdrCore.W = e.NewColor.A / 255f;
+                this.ColorHdrCore.X = e.NewColor.R / 255f;
+                this.ColorHdrCore.Y = e.NewColor.G / 255f;
+                this.ColorHdrCore.Z = e.NewColor.B / 255f;
+            };
             this.ColorPicker.Loaded += (s, e) =>
             {
                 if (s is DependencyObject reference)
