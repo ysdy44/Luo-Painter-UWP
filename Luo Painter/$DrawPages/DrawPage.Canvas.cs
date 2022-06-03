@@ -205,7 +205,7 @@ namespace Luo_Painter
         private ICanvasImage GetMezzanine()
         {
             if (this.OptionType == default)
-                return this.PaintTool.GetInk(this.BitmapLayer);
+                return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Source);
 
             switch (this.SelectionType)
             {

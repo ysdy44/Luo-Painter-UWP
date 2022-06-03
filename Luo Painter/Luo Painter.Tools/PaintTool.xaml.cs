@@ -43,7 +43,7 @@ namespace Luo_Painter.Tools
                 float offsetY = 20 * (float)System.Math.Sin(radian + radian);
                 Vector2 targetPosition = new Vector2(x, height / 2 + offsetY);
 
-                this.PaintLayer.FillCircleDry(position, targetPosition, pressure, targetPressure, space, color);
+                this.PaintLayer.IsometricFillCircle(position, targetPosition, pressure, targetPressure, space, color, BitmapType.Source);
                 position = targetPosition;
                 pressure = targetPressure;
             }
@@ -160,24 +160,6 @@ namespace Luo_Painter.Tools
         {
         }
 
-        public ICanvasImage GetInk(BitmapLayer bitmapLayer)
-        {
-            switch (bitmapLayer.InkMode)
-            {
-                case InkMode.WetWithOpacity:
-                    return bitmapLayer.GetWeting(this.InkOpacity);
-                case InkMode.WetWithBlendMode:
-                    return bitmapLayer.GetWeting(this.InkBlendMode.Value);
-                case InkMode.WetWithOpacityAndBlendMode:
-                    return bitmapLayer.GetWeting(this.InkOpacity, this.InkBlendMode.Value);
-
-                case InkMode.EraseWetWithOpacity:
-                    return bitmapLayer.GetEraseWeting(this.InkOpacity);
-
-                default:
-                    return bitmapLayer.Source;
-            }
-        }
 
         public InkMode GetInkMode(bool isErase, bool isLiquefaction)
         {

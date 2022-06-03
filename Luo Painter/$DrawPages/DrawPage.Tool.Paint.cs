@@ -49,12 +49,12 @@ namespace Luo_Painter
             switch (this.BitmapLayer.InkMode)
             {
                 case InkMode.Dry:
-                    this.BitmapLayer.FillCircleDry(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorMenu.Color);
+                    this.BitmapLayer.IsometricFillCircle(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorMenu.Color, BitmapType.Source);
                     break;
                 case InkMode.WetWithOpacity:
                 case InkMode.WetWithBlendMode:
                 case InkMode.WetWithOpacityAndBlendMode:
-                    this.BitmapLayer.FillCircleWet(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorMenu.Color);
+                    this.BitmapLayer.IsometricFillCircle(this.Position, position, this.Pressure, pressure, this.PaintTool.InkSize, this.ColorMenu.Color, BitmapType.Temp);
                     break;
 
                 case InkMode.EraseDry:
@@ -121,7 +121,7 @@ namespace Luo_Painter
                     break;
 
                 default:
-                    this.BitmapLayer.DrawCopy(this.PaintTool.GetInk(this.BitmapLayer));
+                    this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp));
                     this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
                     // History

@@ -82,36 +82,6 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public CompositeEffect GetWeting(float opacity) => new CompositeEffect
-        {
-            Sources =
-            {
-                this.OriginRenderTarget,
-                new OpacityEffect
-                {
-                    Source = this.TempRenderTarget,
-                    Opacity = opacity
-                }
-            }
-        };
-        public BlendEffect GetWeting(BlendEffectMode blendMode) => new BlendEffect
-        {
-            Background = this.OriginRenderTarget,
-            Foreground = this.TempRenderTarget,
-            Mode = blendMode
-        };
-        public BlendEffect GetWeting(float opacity, BlendEffectMode blendMode) => new BlendEffect
-        {
-            Background = this.OriginRenderTarget,
-            Foreground = new OpacityEffect
-            {
-                Source = this.TempRenderTarget,
-                Opacity = opacity
-            },
-            Mode = blendMode
-        };
-
-
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
@@ -212,61 +182,35 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public void FillCircleDry(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color)
+        public void IsometricFillCircle(CanvasDrawingSession ds, Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color)
         {
-            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            ds.FillCircle(position, size * targetPressure, color);
+
+            float length = Vector2.Distance(position, targetPosition);
+            if (length > size * targetPressure / 2)
             {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.FillCircle(position, size * targetPressure, color);
-
-                float length = Vector2.Distance(position, targetPosition);
-                if (length > size * targetPressure / 2)
+                float spane = size / 2 / length * pressure;
+                for (float i = spane; i < 1f; i += spane)
                 {
-                    float spane = size / 2 / length * pressure;
-                    for (float i = spane; i < 1f; i += spane)
-                    {
-                        Vector2 p = position * i + (1 - i) * targetPosition;
-                        float e = pressure * i + (1 - i) * targetPressure;
-                        ds.FillCircle(p, size * e, color);
-                    }
-                }
-            }
-        }
-        public void FillCircleWet(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color)
-        {
-            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.FillCircle(position, size * targetPressure, color);
-
-                float length = Vector2.Distance(position, targetPosition);
-                if (length > size * targetPressure / 2)
-                {
-                    float spane = size / 2 / length * pressure;
-                    for (float i = spane; i < 1f; i += spane)
-                    {
-                        Vector2 p = position * i + (1 - i) * targetPosition;
-                        float e = pressure * i + (1 - i) * targetPressure;
-                        ds.FillCircle(p, size * e, color);
-                    }
+                    Vector2 p = position * i + (1 - i) * targetPosition;
+                    float e = pressure * i + (1 - i) * targetPressure;
+                    ds.FillCircle(p, size * e, color);
                 }
             }
         }
 
 
-        public ArithmeticCompositeEffect GetEraseWeting(float opacity) => new ArithmeticCompositeEffect
+        public void IsometricFillCircle(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size, Color color, BitmapType type)
         {
-            MultiplyAmount = 0,
-            Source1Amount = 1,
-            Source2Amount = -opacity,
-            Offset = 0,
-            Source1 = this.OriginRenderTarget,
-            Source2 = this.TempRenderTarget,
-        };
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                this.IsometricFillCircle(ds, position, targetPosition, pressure, targetPressure, size, color);
+            }
+        }
+
 
         public void ErasingDry(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size)
         {
@@ -277,19 +221,7 @@ namespace Luo_Painter.Layers.Models
 
                 ds.Blend = CanvasBlend.Copy;
 
-                ds.FillCircle(position, size * targetPressure, Colors.Transparent);
-
-                float length = Vector2.Distance(position, targetPosition);
-                if (length > size * targetPressure / 2)
-                {
-                    float spane = size / 2 / length * pressure;
-                    for (float i = spane; i < 1f; i += spane)
-                    {
-                        Vector2 p = position * i + (1 - i) * targetPosition;
-                        float e = pressure * i + (1 - i) * targetPressure;
-                        ds.FillCircle(p, size * e, Colors.Transparent);
-                    }
-                }
+                this.IsometricFillCircle(ds, position, targetPosition, pressure, targetPressure, size, Colors.Transparent);
             }
         }
         public void ErasingWet(Vector2 position, Vector2 targetPosition, float pressure, float targetPressure, float size)
@@ -299,29 +231,20 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                ds.FillCircle(position, size * targetPressure, Colors.White);
-
-                float length = Vector2.Distance(position, targetPosition);
-                if (length > size * targetPressure / 2)
-                {
-                    float spane = size / 2 / length * pressure;
-                    for (float i = spane; i < 1f; i += spane)
-                    {
-                        Vector2 p = position * i + (1 - i) * targetPosition;
-                        float e = pressure * i + (1 - i) * targetPressure;
-                        ds.FillCircle(p, size * e, Colors.White);
-                    }
-                }
+                this.IsometricFillCircle(ds, position, targetPosition, pressure, targetPressure, size, Colors.White);
             }
         }
 
 
-        public void DrawLine(CanvasDrawingSession ds, Vector2 position, Vector2 targetPosition, Color color, float strokeWidth)
+        public void DrawLine(Vector2 position, Vector2 targetPosition, Color color, float strokeWidth, BitmapType type)
         {
-            //@DPI 
-            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-            ds.DrawLine(position, targetPosition, color, strokeWidth, BitmapLayer.CanvasStrokeStyle);
+                ds.DrawLine(position, targetPosition, color, strokeWidth, BitmapLayer.CanvasStrokeStyle);
+            }
         }
 
 
