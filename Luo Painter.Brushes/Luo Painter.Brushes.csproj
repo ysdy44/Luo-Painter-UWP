@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BrushEdgeHardness.cs" />
+    <Compile Include="InkPresenter.cs" />
     <Compile Include="InkType.cs" />
     <Compile Include="PaintBrush.cs" />
     <Compile Include="PaintBrushGroupType.cs" />
@@ -129,6 +130,9 @@
     <EmbeddedResource Include="Properties\Luo_Painter.Brushes.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FanKit.Transformers">
+      <Version>1.6.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
     </PackageReference>
