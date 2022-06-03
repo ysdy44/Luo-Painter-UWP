@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System.Numerics;
 
 namespace Luo_Painter.Brushes
 {
@@ -7,9 +8,10 @@ namespace Luo_Painter.Brushes
     {
         public float Size { get; set; } = 22f;
         public float Opacity { get; set; } = 1f;
-
-        public BrushEdgeHardness Hardness { get; set; }
         public float Spacing { get; set; } = 0.25f;
+        public BrushEdgeHardness Hardness { get; set; }
+        public bool Rotate { get; set; }
+        public int Step { get; set; } = 1024;
 
         public bool IsNone { get; private set; } = true;
         public BlendEffectMode BlendMode { get; private set; }
@@ -107,7 +109,16 @@ namespace Luo_Painter.Brushes
                 {
                     ExtendX = CanvasEdgeBehavior.Wrap,
                     ExtendY = CanvasEdgeBehavior.Wrap,
-                    Source = this.Pattern
+                    Source = new ScaleEffect
+                    {
+                        BorderMode = EffectBorderMode.Hard,
+                        Source = this.Pattern,
+                        Scale = new Vector2
+                        {
+                            X = this.Step / (float)this.Pattern.SizeInPixels.Width,
+                            Y = this.Step / (float)this.Pattern.SizeInPixels.Height
+                        }
+                    }
                 },
                 Source = image
             };

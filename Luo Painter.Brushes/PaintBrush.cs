@@ -6,6 +6,8 @@
         public double Opacity { get; set; } = 1;
         public double Spacing { get; set; } = 0.25;
         public BrushEdgeHardness Hardness { get; set; } = BrushEdgeHardness.None;
+        public bool Rotate { get; set; }
+        public int Step => (this.Pattern is null) ? 0 : this.Pattern.Step;
 
         public string Render { get; set; }
         public string Thumbnail { get; set; }
