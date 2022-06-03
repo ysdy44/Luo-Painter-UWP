@@ -7,7 +7,6 @@
 
     <!--ListBox-->
     <Style TargetType="ListBox">
-        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Height" Value="42"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -21,7 +20,7 @@
         <Setter Property="ItemsPanel" >
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <elements:FlexPanel />
+                    <StackPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -40,6 +39,20 @@
                             <ControlTemplate TargetType="ListBoxItem">
                                 <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
 
+                                    <Grid.Resources>
+                                        <Style x:Key="BaseContentPresenterStyle" TargetType="ContentPresenter">
+                                            <Setter Property="FontFamily" Value="XamlAutoFontFamily" />
+                                            <Setter Property="FontWeight" Value="SemiBold" />
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="LineStackingStrategy" Value="MaxHeight" />
+                                            <Setter Property="TextLineBounds" Value="Full" />
+                                            <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
+                                        </Style>
+                                        <Style x:Key="BodyContentPresenterStyle" TargetType="ContentPresenter" BasedOn="{StaticResource BaseContentPresenterStyle}">
+                                            <Setter Property="FontWeight" Value="Normal" />
+                                        </Style>
+                                    </Grid.Resources>
+
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="CommonStates">
                                             <VisualState x:Name="Normal" />
@@ -57,6 +70,9 @@
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualState>
 
@@ -65,13 +81,16 @@
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                                    </ObjectAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualState>
 
                                             <VisualState x:Name="Selected">
                                                 <Storyboard>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
@@ -82,7 +101,7 @@
                                             <VisualState x:Name="SelectedUnfocused">
                                                 <Storyboard>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
@@ -96,7 +115,7 @@
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
@@ -110,7 +129,7 @@
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListViewGroupHeaderForegroundThemeBrush}" />
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indicator" Storyboard.TargetProperty="Visibility">
                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
@@ -128,6 +147,7 @@
                                                       Content="{TemplateBinding Content}"
                                                       ContentTransitions="{TemplateBinding ContentTransitions}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      Style="{StaticResource BodyContentPresenterStyle}"
                                                       TextWrapping="NoWrap"
                                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -140,24 +160,59 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        <Setter Property="ItemsPanel" >
+    </Style>
+
+
+    <!--ListView-->
+    <Style x:Key="AppSegmentListBoxStyle" TargetType="ListBox">
+        <Setter Property="SelectedIndex" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
+                    <elements:FlexPanel/>
                 </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="MinWidth" Value="70"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="Padding" Value="20,4"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerTransitions">
+            <Setter.Value>
+                <TransitionCollection>
+
+                </TransitionCollection>
             </Setter.Value>
         </Setter>
     </Style>
 
 
     <!--ListView-->
-    <Style x:Key="AppListBoxListViewStyle"  TargetType="ListView">
+    <Style x:Key="AppListBoxListViewStyle" TargetType="ListView">
         <Setter Property="SelectedIndex" Value="1"/>
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
         <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
-        <Setter Property="SelectionMode" Value="None"/>
+        <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
@@ -191,7 +246,7 @@
 
 
     <!--ListView-->
-    <Style x:Key="AppListViewStyle"  TargetType="ListView">
+    <Style x:Key="AppListViewStyle" TargetType="ListView">
         <Setter Property="SelectedIndex" Value="1"/>
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BorderThickness" Value="1"/>
