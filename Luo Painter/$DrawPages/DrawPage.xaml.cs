@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Edits;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
@@ -115,16 +116,20 @@ namespace Luo_Painter
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
+        InkPresenter InkPresenter { get; } = new InkPresenter();
+
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
         BitmapLayer Displacement { get; set; }
         bool IsFullScreen { get; set; }
+
         SelectionType SelectionType { get; set; } = SelectionType.None;
         FootType FootType { get; set; } = FootType.None;
         OptionType OptionType { get; set; } = OptionType.None;
         EditType EditType { get; set; } = EditType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
+        InkType InkType { get; set; } = InkType.None;
 
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTransformShaderCodeBytes;
@@ -135,6 +140,8 @@ namespace Luo_Painter
         byte[] LalphaMaskShaderCodeBytes;
         byte[] RalphaMaskShaderCodeBytes;
         byte[] DisplacementLiquefactionShaderCodeBytes;
+        byte[] BrushEdgeHardnessShaderCodeBytes;
+        byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
         private async Task CreateResourcesAsync()
         {
@@ -146,6 +153,8 @@ namespace Luo_Painter
             this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
             this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();
             this.DisplacementLiquefactionShaderCodeBytes = await ShaderType.DisplacementLiquefaction.LoadAsync();
+            this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
+            this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
         }
         private async Task CreateDottedLineResourcesAsync()
         {
