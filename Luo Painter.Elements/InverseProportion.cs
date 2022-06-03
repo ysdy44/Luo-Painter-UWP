@@ -114,11 +114,11 @@ namespace Luo_Painter.Elements
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static double Convert(double value, InverseProportion sourceInner, InverseProportion sourceOuter, double destinationScale)
         {
-            double oneInner = sourceOuter.ConvertValueToOne(value);
+            double oneInner = sourceInner.ConvertValueToOne(value);
             double ipInner = sourceInner.ConvertOneToValue(oneInner);
 
             double ipOuter = InverseProportion.Convert(ipInner);
-            double oneOuter = sourceInner.ConvertValueToOne(ipOuter);
+            double oneOuter = sourceOuter.ConvertValueToOne(ipOuter);
 
             return destinationScale * oneOuter;
         }
