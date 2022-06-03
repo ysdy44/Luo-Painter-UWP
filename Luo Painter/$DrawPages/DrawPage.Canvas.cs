@@ -1,6 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
-using Luo_Painter.Options;
+using Luo_Painter.Brushes;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -205,7 +205,21 @@ namespace Luo_Painter
         private ICanvasImage GetMezzanine()
         {
             if (this.OptionType == default)
-                return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Source);
+            {
+                if (this.InkType.HasFlag(InkType.BlendMode))
+                    return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source);
+                else if (this.InkType.HasFlag(InkType.Opacity) || this.InkType.HasFlag(InkType.Pattern))
+                    return new CompositeEffect
+                    {
+                        Sources =
+                        {
+                            this.BitmapLayer.Source,
+                            this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp)
+                        }
+                    };
+                else
+                    return this.BitmapLayer.Source;
+            }
 
             switch (this.SelectionType)
             {
@@ -249,6 +263,7 @@ namespace Luo_Painter
                     this.StartingToolShow = this.ToolListView.IsShow;//&& this.ToolListView.Width > 70;
                     this.StartingLayerShow = this.LayerListView.IsShow;//&& this.LayerListView.Width > 70;
                 }
+                this.SetCanvasState(true);
                 this.Tool_Start(point, properties.Pressure);
             };
             this.Operator.Single_Delta += (point, properties) =>
@@ -269,6 +284,7 @@ namespace Luo_Painter
                     this.ToolListView.IsShow = this.StartingToolShow;
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
+                this.SetCanvasState(this.EditType != default || this.OptionType != default);
                 this.Tool_Complete(point, properties.Pressure);
             };
 
@@ -283,6 +299,7 @@ namespace Luo_Painter
             this.Operator.Double_Start += (center, space) =>
             {
                 this.Transformer.CachePinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
+
                 this.SetCanvasState(true);
             };
             this.Operator.Double_Delta += (center, space) =>
@@ -294,7 +311,7 @@ namespace Luo_Painter
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.SetCanvasState(this.OptionType != default);
+                this.SetCanvasState(this.EditType != default || this.OptionType != default);
 
                 this.ViewTool.Construct(this.Transformer);
             };
