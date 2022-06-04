@@ -163,9 +163,6 @@
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
     <Compile Include="FootExtensions.cs" />
     <Compile Include="FootType.cs" />
-    <Compile Include="Luo Painter.Menus\BrushMenu.xaml.cs">
-      <DependentUpon>BrushMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Luo Painter.Menus\ColorMenu.xaml.cs">
       <DependentUpon>ColorMenu.xaml</DependentUpon>
     </Compile>
@@ -300,10 +297,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ToolListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Luo Painter.Menus\BrushMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
