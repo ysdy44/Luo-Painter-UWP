@@ -184,6 +184,9 @@
     <Compile Include="Luo Painter.Menus\OptionMenu.xaml.cs">
       <DependentUpon>OptionMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Luo Painter.Menus\PaintMenu.xaml.cs">
+      <DependentUpon>PaintMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Luo Painter.Menus\SetupMenu.xaml.cs">
       <DependentUpon>SetupMenu.xaml</DependentUpon>
     </Compile>
@@ -325,6 +328,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Luo Painter.Menus\OptionMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Luo Painter.Menus\PaintMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
