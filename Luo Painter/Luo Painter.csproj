@@ -190,9 +190,6 @@
     <Compile Include="Luo Painter.Tools\PaintBrushTool.xaml.cs">
       <DependentUpon>PaintBrushTool.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Luo Painter.Tools\PaintTool.xaml.cs">
-      <DependentUpon>PaintTool.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Luo Painter.Tools\ViewTool.xaml.cs">
       <DependentUpon>ViewTool.xaml</DependentUpon>
     </Compile>
@@ -333,10 +330,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Luo Painter.Tools\PaintBrushTool.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Luo Painter.Tools\PaintTool.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

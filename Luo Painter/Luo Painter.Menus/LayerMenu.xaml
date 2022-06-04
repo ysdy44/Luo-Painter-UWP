@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:tools="using:Luo_Painter.Tools"
+    xmlns:menus="using:Luo_Painter.Menus"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     d:DesignHeight="400"
@@ -68,7 +68,7 @@
         <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
 
             <ItemsControl.ItemsSource>
-                <tools:BlendList x:Name="BlendCollection">
+                <menus:BlendList x:Name="BlendCollection">
                     <effects:BlendEffectMode>-1</effects:BlendEffectMode>
                     <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
                     <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
@@ -78,12 +78,12 @@
                     <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
                     <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
                     <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                </tools:BlendList>
+                </menus:BlendList>
             </ItemsControl.ItemsSource>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="effects:BlendEffectMode">
-                    <tools:BlendIcon Type="{x:Bind}"/>
+                    <menus:BlendIcon Type="{x:Bind}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
