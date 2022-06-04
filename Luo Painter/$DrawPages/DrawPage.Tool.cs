@@ -28,6 +28,8 @@ namespace Luo_Painter
 
                 this.ToolGroupSwitchPresenter.EvaluateCases(groupType, type);
 
+                this.PaintMenu.Type = type;
+
                 this.FootType = this.SetFootType(default, default, type);
                 this.EditType = default;
                 this.OptionType = default;

@@ -199,6 +199,7 @@ namespace Luo_Painter
 
             this.ExportButton.Click += (s, e) => this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
             this.ToolButton.Click += (s, e) => this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
+            this.PaintButton.Click += (s, e) => this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
             this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
             this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
             this.MoreOptionButton.Click += (s, e) => this.MoreOptionMenu.Toggle(this.MoreOptionButton, ExpanderPlacementMode.Bottom);

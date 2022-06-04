@@ -307,6 +307,12 @@
                             </FrameworkElement.Resources>
                         </ContentControl>
                     </Button>
+                    <Button x:Name="PaintButton" Style="{StaticResource AppButtonStyle}" >
+                        <UIElement.KeyboardAccelerators >
+                            <KeyboardAccelerator Modifiers="None" Key="P" />
+                        </UIElement.KeyboardAccelerators >
+                        <tools:ElementIcon Type="Brush"/>
+                    </Button>
                     <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators >
                             <KeyboardAccelerator Modifiers="None" Key="G" />
@@ -1072,10 +1078,11 @@
             <menus:ExportMenu x:Name="ExportMenu"/>
             <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" >
-                    <tools:PaintTool x:Name="PaintTool" InkPresenter="{x:Bind InkPresenter}" CanvasDevice="{x:Bind CanvasDevice}"/>
+                    <tools:PaintBrushTool x:Name="PaintBrushTool" />
                     <tools:ViewTool x:Name="ViewTool" />
                 </local:ToolGroupSwitchPresenter>
             </elements:Expander>
+            <menus:PaintMenu x:Name="PaintMenu" InkPresenter="{x:Bind InkPresenter}" CanvasDevice="{x:Bind CanvasDevice}"/>
             <menus:EditMenu x:Name="EditMenu" />
             <menus:OptionMenu x:Name="OptionMenu" />
             <menus:MoreOptionMenu x:Name="MoreOptionMenu" />

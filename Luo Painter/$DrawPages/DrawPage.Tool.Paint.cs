@@ -52,27 +52,49 @@ namespace Luo_Painter
 
         private void ConstructPaint()
         {
-            this.PaintTool.SelectMask += async (s, e) => await this.SelectMask();
-            this.PaintTool.SelectPattern += async (s, e) => await this.SelectPattern();
+            this.PaintBrushTool.ItemClick += async (s, brush) =>
+            {
+                if (brush.Mask is PaintTexture mask)
+                {
+                    this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
+                    this.PaintMenu.SetMaskTexture(mask.Texture);
+                }
+                else this.InkPresenter.SetMask(false);
 
-            this.PaintTool.MaskClosed += (s, e) => this.InkPresenter.SetMask(false);
-            this.PaintTool.PatternClosed += (s, e) => this.InkPresenter.SetPattern(false);
+                if (brush.Pattern is PaintTexture pattern)
+                {
+                    this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, pattern.Source));
+                    this.PaintMenu.SetPatternTexture(pattern.Texture);
+                    this.PaintMenu.SetStep(pattern.Step);
+                }
+                else this.InkPresenter.SetPattern(false);
 
-            this.PaintTool.MaskOpened += async (s, e) =>
+                this.InkPresenter.SetBrush(brush);
+                this.PaintMenu.Construct(brush);
+            };
+
+
+            this.PaintMenu.SelectMask += async (s, e) => await this.SelectMask();
+            this.PaintMenu.SelectPattern += async (s, e) => await this.SelectPattern();
+
+            this.PaintMenu.MaskClosed += (s, e) => this.InkPresenter.SetMask(false);
+            this.PaintMenu.PatternClosed += (s, e) => this.InkPresenter.SetPattern(false);
+
+            this.PaintMenu.MaskOpened += async (s, e) =>
             {
                 if (this.InkPresenter.Mask is null)
                 {
                     bool result = await this.SelectMask();
-                    if (result is false) this.PaintTool.CloseMask();
+                    if (result is false) this.PaintMenu.CloseMask();
                 }
                 else this.InkPresenter.SetMask(true);
             };
-            this.PaintTool.PatternOpened += async (s, e) =>
+            this.PaintMenu.PatternOpened += async (s, e) =>
             {
                 if (this.InkPresenter.Pattern is null)
                 {
                     bool result = await this.SelectPattern();
-                    if (result is false) this.PaintTool.ClosePattern();
+                    if (result is false) this.PaintMenu.ClosePattern();
                 }
                 else this.InkPresenter.SetPattern(true);
             };
@@ -80,7 +102,7 @@ namespace Luo_Painter
 
         private async Task<bool> SelectMask()
         {
-            this.TextureDialog.Construct(this.PaintTool.MaskTexture);
+            this.TextureDialog.Construct(this.PaintMenu.MaskTexture);
             ContentDialogResult result = await this.TextureDialog.ShowAsync(ContentDialogPlacement.Popup);
 
             switch (result)
@@ -89,7 +111,7 @@ namespace Luo_Painter
                     if (this.TextureDialog.SelectedItem is PaintTexture item)
                     {
                         this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
-                        this.PaintTool.SetMaskTexture(item.Texture);
+                        this.PaintMenu.SetMaskTexture(item.Texture);
                         return true;
                     }
                     else return false;
@@ -99,7 +121,7 @@ namespace Luo_Painter
 
         private async Task<bool> SelectPattern()
         {
-            this.TextureDialog.Construct(this.PaintTool.PatternTexture);
+            this.TextureDialog.Construct(this.PaintMenu.PatternTexture);
             ContentDialogResult result = await this.TextureDialog.ShowAsync(ContentDialogPlacement.Popup);
 
             switch (result)
@@ -108,8 +130,8 @@ namespace Luo_Painter
                     if (this.TextureDialog.SelectedItem is PaintTexture item)
                     {
                         this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
-                        this.PaintTool.SetPatternTexture(item.Texture);
-                        this.PaintTool.SetStep(item.Step);
+                        this.PaintMenu.SetPatternTexture(item.Texture);
+                        this.PaintMenu.SetStep(item.Step);
                         return true;
                     }
                     else return false;
