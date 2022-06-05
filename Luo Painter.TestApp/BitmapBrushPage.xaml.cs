@@ -157,14 +157,30 @@ namespace Luo_Painter.TestApp
                     case InkType.None:
                         break;
                     case InkType.CircleDry:
-                        this.BitmapLayer.IsometricFillCircle(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size,
-                            this.ColorPicker.Color, BitmapType.Source);
+                        {
+                            bool result = this.BitmapLayer.IsometricFillCircle(
+                                this.ColorPicker.Color,
+                                this.Position, position,
+                                this.Pressure, pressure,
+                                this.InkPresenter.Size,
+                                this.InkPresenter.Spacing,
+                                BitmapType.Source);
+                            if (result is false) return;
+                        }
                         break;
                     case InkType.CircleWetOpacity:
                     case InkType.CircleWetBlendMode:
                     case InkType.CircleWetOpacityBlendMode:
-                        this.BitmapLayer.IsometricFillCircle(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size,
-                            this.ColorPicker.Color, BitmapType.Temp);
+                        {
+                            bool result = this.BitmapLayer.IsometricFillCircle(
+                                this.ColorPicker.Color,
+                                this.Position, position,
+                                this.Pressure, pressure,
+                                this.InkPresenter.Size,
+                                this.InkPresenter.Spacing,
+                                BitmapType.Temp);
+                            if (result is false) return;
+                        }
                         break;
                     default:
                         break;

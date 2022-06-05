@@ -72,9 +72,18 @@ namespace Luo_Painter.TestApp
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 float pressure = properties.Pressure;
 
-                this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, (float)this.Brush.Size,
-                    this.ShaderCodeBytes, this.Texture, (int)this.Brush.Hardness, false, BitmapLayer.DodgerBlue,
+                bool result = this.BitmapLayer.IsometricShapeBrushEdgeHardnessWithTexture(
+                    this.ShaderCodeBytes,
+                    BitmapLayer.DodgerBlue,
+                    this.Texture,
+                    true,
+                    this.Position, position,
+                    this.Pressure, pressure,
+                    (float)this.Brush.Size,
+                    (float)this.Brush.Spacing,
+                    (int)this.Brush.Hardness,
                     BitmapType.Source);
+                if (result is false) return;
 
                 this.Position = position;
                 this.Pressure = pressure;

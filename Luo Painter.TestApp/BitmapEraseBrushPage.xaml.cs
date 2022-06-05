@@ -148,14 +148,21 @@ namespace Luo_Painter.TestApp
                     case InkType.None:
                         break;
                     case InkType.EraseDry:
-                        this.BitmapLayer.ErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size);
+                        {
+                            bool result = this.BitmapLayer.IsometricErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, 0.25f);
+                            if (result is false) return;
+                        }
                         break;
                     case InkType.EraseWetOpacity:
-                        this.BitmapLayer.ErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size);
+                        {
+                            bool result = this.BitmapLayer.IsometricErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, 0.25f);
+                            if (result is false) return;
+                        }
                         break;
                     default:
                         break;
                 }
+
                 this.Position = position;
                 this.Pressure = pressure;
 
