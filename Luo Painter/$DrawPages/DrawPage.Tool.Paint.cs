@@ -167,50 +167,7 @@ namespace Luo_Painter
             Rect rect = this.Position.GetRect(this.InkPresenter.Size);
             this.BitmapLayer.Hit(rect);
 
-            if (this.InkType.HasFlag(InkType.BrushDry))
-            {
-                this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size,
-                    this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorMenu.ColorHdr,
-                    this.GetBitmapType(this.InkType));
-            }
-            else if (this.InkType.HasFlag(InkType.MaskBrushDry))
-            {
-                this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size,
-                    this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkPresenter.Mask, (int)this.InkPresenter.Hardness, this.InkPresenter.Rotate, this.ColorMenu.ColorHdr,
-                    this.GetBitmapType(this.InkType));
-            }
-            else if (this.InkType.HasFlag(InkType.CircleDry))
-            {
-                this.BitmapLayer.IsometricFillCircle(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size,
-                    this.ColorMenu.Color, this.GetBitmapType(this.InkType));
-            }
-            else if (this.InkType.HasFlag(InkType.LineDry))
-            {
-                this.BitmapLayer.DrawLine(this.Position, position, this.ColorMenu.Color, this.InkPresenter.Size,
-                    this.GetBitmapType(this.InkType));
-            }
-            else if (this.InkType.HasFlag(InkType.EraseDry))
-            {
-                if (this.InkType.HasFlag(InkType.Pattern) || this.InkType.HasFlag(InkType.Opacity))
-                    this.BitmapLayer.ErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size);
-                else
-                    this.BitmapLayer.ErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size);
-            }
-            else if (this.InkType.HasFlag(InkType.Liquefy))
-            {
-                this.BitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
-                {
-                    Source1BorderMode = EffectBorderMode.Hard,
-                    Source1 = this.BitmapLayer.Source,
-                    Properties =
-                    {
-                        ["radius"] = this.BitmapLayer.ConvertValueToOne(this.InkPresenter.Size),
-                        ["position"] = this.BitmapLayer .ConvertValueToOne(this.Position),
-                        ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(position),
-                        ["pressure"] = pressure,
-                    }
-                }, RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size));
-            }
+            if (this.Paint(position, pressure) is false) return;
 
             Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
@@ -247,6 +204,75 @@ namespace Luo_Painter
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;
+        }
+
+        private bool Paint(Vector2 position, float pressure)
+        {
+            if (this.InkType.HasFlag(InkType.BrushDry))
+            {
+                return this.BitmapLayer.IsometricShapeBrushEdgeHardness(
+                    this.BrushEdgeHardnessShaderCodeBytes,
+                    this.ColorMenu.ColorHdr,
+                    this.Position, position,
+                    this.Pressure, pressure,
+                    this.InkPresenter.Size,
+                    this.InkPresenter.Spacing,
+                    (int)this.InkPresenter.Hardness,
+                    this.GetBitmapType(this.InkType));
+            }
+            else if (this.InkType.HasFlag(InkType.MaskBrushDry))
+            {
+                return this.BitmapLayer.IsometricShapeBrushEdgeHardnessWithTexture(
+                    this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                    this.ColorMenu.ColorHdr,
+                    this.InkPresenter.Mask,
+                    this.InkPresenter.Rotate,
+                    this.Position, position,
+                    this.Pressure, pressure,
+                    this.InkPresenter.Size,
+                    this.InkPresenter.Spacing,
+                    (int)this.InkPresenter.Hardness,
+                    this.GetBitmapType(this.InkType));
+            }
+            else if (this.InkType.HasFlag(InkType.CircleDry))
+            {
+                return this.BitmapLayer.IsometricFillCircle(
+                    this.ColorMenu.Color,
+                    this.Position, position,
+                    this.Pressure, pressure,
+                    this.InkPresenter.Size,
+                    this.InkPresenter.Spacing,
+                    this.GetBitmapType(this.InkType));
+            }
+            else if (this.InkType.HasFlag(InkType.LineDry))
+            {
+                this.BitmapLayer.DrawLine(this.Position, position, this.ColorMenu.Color, this.InkPresenter.Size, this.GetBitmapType(this.InkType));
+                return true;
+            }
+            else if (this.InkType.HasFlag(InkType.EraseDry))
+            {
+                if (this.InkType.HasFlag(InkType.Pattern) || this.InkType.HasFlag(InkType.Opacity))
+                    return this.BitmapLayer.IsometricErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+                else
+                    return this.BitmapLayer.IsometricErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            }
+            else if (this.InkType.HasFlag(InkType.Liquefy))
+            {
+                this.BitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
+                {
+                    Source1BorderMode = EffectBorderMode.Hard,
+                    Source1 = this.BitmapLayer.Source,
+                    Properties =
+                    {
+                        ["radius"] = this.BitmapLayer.ConvertValueToOne(this.InkPresenter.Size),
+                        ["position"] = this.BitmapLayer .ConvertValueToOne(this.Position),
+                        ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(position),
+                        ["pressure"] = pressure,
+                    }
+                }, RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size));
+                return true;
+            }
+            else return false;
         }
 
     }
