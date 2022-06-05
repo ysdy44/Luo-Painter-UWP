@@ -54,11 +54,11 @@
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <CommandBar.Content>
-                <ComboBox x:Name="InkModeComboBox" SelectedIndex="0" VerticalAlignment="Center">
-                    <x:String>Dry</x:String>
-                    <x:String>WetWithOpacity</x:String>
-                    <x:String>WetWithBlendMode</x:String>
-                    <x:String>WetWithOpacityAndBlendMode</x:String>
+                <ComboBox x:Name="InkTypeComboBox" SelectedIndex="0" VerticalAlignment="Center">
+                    <x:String>CircleDry</x:String>
+                    <x:String>CircleWetOpacity</x:String>
+                    <x:String>BrushWetBlendMode</x:String>
+                    <x:String>CircleWetOpacityBlendMode</x:String>
                 </ComboBox>
             </CommandBar.Content>
 

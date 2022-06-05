@@ -34,9 +34,9 @@
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <CommandBar.Content>
-                <ComboBox x:Name="InkModeComboBox" SelectedIndex="0" VerticalAlignment="Center">
+                <ComboBox x:Name="InkTypeComboBox" SelectedIndex="0" VerticalAlignment="Center">
                     <x:String>EraseDry</x:String>
-                    <x:String>EraseWetWithOpacity</x:String>
+                    <x:String>EraseWetOpacity</x:String>
                 </ComboBox>
             </CommandBar.Content>
 

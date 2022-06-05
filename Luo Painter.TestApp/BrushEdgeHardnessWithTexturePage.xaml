@@ -19,12 +19,18 @@
             x:Name="Brush"             
             Size="120" 
             Opacity="0.7" 
-            Space="0.33" 
+            Spacing="0.33" 
             Hardness="Cosine"
-            Source="Luo Painter.Brushes/Splodge/00/Source.png"
             Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png"
-            />
+            Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png" >
+            <brushes:PaintBrush.Mask>
+                <brushes:PaintTexture                     
+                    Width="512"                       
+                    Height="512"                      
+                    Source="Luo Painter.Brushes/Splodge/00/Source.png"                      
+                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/00/Texture.png" />
+            </brushes:PaintBrush.Mask>
+        </brushes:PaintBrush>
     </FrameworkElement.Resources>
 
     <Grid>

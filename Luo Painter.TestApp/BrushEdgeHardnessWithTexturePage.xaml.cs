@@ -54,7 +54,7 @@ namespace Luo_Painter.TestApp
         private async Task CreateResourcesAsync(ICanvasResourceCreator resourceCreator)
         {
             this.ShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
-            this.Texture = await CanvasBitmap.LoadAsync(resourceCreator, this.Brush.Source, 96);
+            this.Texture = await CanvasBitmap.LoadAsync(resourceCreator, this.Brush.Mask.Source, 96);
         }
 
         private void ConstructOperator()
@@ -73,7 +73,7 @@ namespace Luo_Painter.TestApp
                 float pressure = properties.Pressure;
 
                 this.BitmapLayer.IsometricShape(this.Position, position, this.Pressure, pressure, (float)this.Brush.Size,
-                    this.ShaderCodeBytes, this.Texture, (int)this.Brush.Hardness, BitmapLayer.DodgerBlue,
+                    this.ShaderCodeBytes, this.Texture, (int)this.Brush.Hardness, false, BitmapLayer.DodgerBlue,
                     BitmapType.Source);
 
                 this.Position = position;

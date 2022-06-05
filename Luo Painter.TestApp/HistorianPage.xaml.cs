@@ -125,7 +125,7 @@ namespace Luo_Painter.TestApp
 
                 Rect rect = position.GetRect(12 * properties.Pressure);
                 this.BitmapLayer.Hit(rect);
-                this.BitmapLayer.FillCircleDry(this.Position, position, 1, 1, 12, Colors.White);
+                this.BitmapLayer.IsometricFillCircle(this.Position, position, 1, 1, 12, Colors.White, BitmapType.Source);
                 this.Position = position;
 
                 this.CanvasControl.Invalidate(); // Invalidate
