@@ -7,11 +7,19 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
+    internal sealed class TypeGrouping : List<Type>, IList<Type>, IGrouping<string, Type>
+    {
+        public string Key { get; }
+        public TypeGrouping(string key, IEnumerable<Type> collection) : base(collection) => this.Key = key;
+        public override string ToString() => this.Key;
+    }
+
     public sealed partial class MainPage : Page
     {
 
         //@Converter
         private bool BooleanNullableConverter(bool? value) => value == true;
+        private string InitialConverter(Type value) => value.Name.First().ToString();
 
         //@Instance
         private readonly Lazy<ApplicationView> ViewLazy = new Lazy<ApplicationView>(() => ApplicationView.GetForCurrentView());
@@ -20,7 +28,7 @@ namespace Luo_Painter.TestApp
         public MainPage()
         {
             this.InitializeComponent();
-            collection.Source = this.CreatePages(typeof(MainPage)).GroupBy(c => c.Name.Substring(0, 1)).OrderBy(x => x.Key);
+            this.Collection.Source = this.CreatePages(typeof(MainPage)).OrderBy(x => x.Name).GroupBy(this.InitialConverter).Select(c => new TypeGrouping(c.Key, c));
             this.ListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is Type item)
@@ -38,15 +46,12 @@ namespace Luo_Painter.TestApp
 
             foreach (TypeInfo typeInfo in typeInfos)
             {
-                string name = typeInfo.Name; // $"{Main}Page"
-                string fullName = typeInfo.FullName; // $"Luo_Painter.TestApp.{Main}Page"
+                Type type = typeInfo.AsType();
+                if (type == assemblyType) continue;
 
-                if (name == "MainPage") continue;
-                if (name.EndsWith("Page"))
+                if (type.BaseType == typeof(Page))
                 {
-                    Type type = typeInfo.AsType();
                     yield return type;
-                    // yield return Activator.CreateInstance(type);
                 }
             }
         }
