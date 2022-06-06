@@ -8,7 +8,7 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
-        private bool IsometricFillCircle(
+        public bool IsometricFillCircle(
             Color color,
             Vector2 position,
             Vector2 targetPosition,
@@ -56,16 +56,6 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-
-        public bool IsometricFillCircle(
-            Color color,
-            Vector2 position, Vector2 targetPosition,
-            float pressure = 1f,
-            float targetPressure = 1f,
-            float size = 22f,
-            float spacing = 0.25f,
-            BitmapType type = BitmapType.Source
-            ) => this.IsometricFillCircle(color, position, targetPosition, pressure, targetPressure, size, spacing, type);
 
         public bool IsometricErasingDry(
             Vector2 position, Vector2 targetPosition,
