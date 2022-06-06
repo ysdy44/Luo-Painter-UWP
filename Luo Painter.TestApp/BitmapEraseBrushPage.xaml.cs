@@ -132,7 +132,7 @@ namespace Luo_Painter.TestApp
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 this.Pressure = properties.Pressure;
 
-                this.InkType = this.InkPresenter.GetType(InkType.EraseDry);
+                //this.InkType = this.InkPresenter.GetType(InkType.EraseDry);
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
                 this.SourceCanvasControl.Invalidate(); // Invalidate
@@ -215,7 +215,7 @@ namespace Luo_Painter.TestApp
                         break;
                 }
 
-                this.InkType = default;
+                //this.InkType = default;
                 this.BitmapLayer.RenderThumbnail();
                 this.CanvasControl.Invalidate(); // Invalidate
             };

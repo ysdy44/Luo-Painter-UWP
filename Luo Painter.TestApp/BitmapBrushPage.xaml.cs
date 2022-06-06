@@ -39,7 +39,7 @@ namespace Luo_Painter.TestApp
                 {
                     case 0: this.InkType = InkType.CircleDry; break;
                     case 1: this.InkType = InkType.CircleWetOpacity; break;
-                    case 2: this.InkType = InkType.BrushWetBlendMode; break;
+                    case 2: this.InkType = InkType.CircleWetBlendMode; break;
                     case 3: this.InkType = InkType.CircleWetOpacityBlendMode; break;
                     default: break;
                 }
@@ -141,7 +141,7 @@ namespace Luo_Painter.TestApp
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 this.Pressure = properties.Pressure;
 
-                this.InkType = this.InkPresenter.GetType(InkType.BrushDry);
+                //this.InkType = this.InkPresenter.GetType(InkType.BrushDry);
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
                 this.SourceCanvasControl.Invalidate(); // Invalidate
@@ -213,7 +213,7 @@ namespace Luo_Painter.TestApp
 
                         // 1.  Origin + Temp => Source
                         await Task.Delay(400);
-                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source));
+                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Origin));
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
@@ -239,7 +239,7 @@ namespace Luo_Painter.TestApp
                         break;
                 }
 
-                this.InkType = default;
+                //this.InkType = default;
                 this.BitmapLayer.RenderThumbnail();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
