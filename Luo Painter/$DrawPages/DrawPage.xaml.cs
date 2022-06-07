@@ -154,7 +154,7 @@ namespace Luo_Painter
 
         SelectionType SelectionType { get; set; } = SelectionType.None;
         FootType FootType { get; set; } = FootType.None;
-        OptionType OptionType { get; set; } = OptionType.None;
+        OptionType OptionType { get; set; } = OptionType.PaintBrush;
         EditType EditType { get; set; } = EditType.None;
         ToolType ToolType { get; set; } = ToolType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;

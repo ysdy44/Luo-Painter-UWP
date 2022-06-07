@@ -28,12 +28,9 @@ namespace Luo_Painter.Controls
         }
         protected override void OnTypeChanged(OptionType value)
         {
-            if (System.Enum.TryParse(typeof(ToolType), value.ToString(), out object obj) && obj is ToolType toolType)
-            {
-                base.Content = toolType;
-                base.Template = toolType.GetTemplate(out ResourceDictionary resource);
-                base.Resources = resource;
-            }
+            base.Content = value;
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
+            base.Resources = resource;
         }
     }
 

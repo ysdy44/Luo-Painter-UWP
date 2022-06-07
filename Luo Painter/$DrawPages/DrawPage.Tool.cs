@@ -23,11 +23,8 @@ namespace Luo_Painter
             {
                 this.OptionType = type;
 
-                if (System.Enum.TryParse(typeof(ToolType), type.ToString(), out object obj) && obj is ToolType toolType)
-                {
-                    this.ToolResource.Source = new Uri(toolType.GetResource());
-                    this.ToolIcon.Template = toolType.GetTemplate(this.ToolResource);
-                }
+                this.ToolResource.Source = new Uri(type.GetResource());
+                this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
 
                 this.ToolSwitchPresenter.Value = type;
 
@@ -38,10 +35,7 @@ namespace Luo_Painter
                 this.OptionType = default;
                 this.SetCanvasState(default);
             };
-            if (System.Enum.TryParse(typeof(OptionType), this.ToolType.ToString(), out object obj1) && obj1 is OptionType optionType)
-            {
-                this.ToolListView.Construct(optionType);
-            }
+            this.ToolListView.Construct(this.OptionType);
         }
 
 
