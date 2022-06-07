@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -60,7 +61,7 @@ namespace Luo_Painter.Tools
         public double ConvertYToX(double y) => InverseProportion.Convert(y, this.YIP, this.YRange.IP, this.XIP, this.XRange.IP, RangeRounding.Minimum, RangeRounding.Maximum);
     }
 
-    public sealed partial class ViewTool : StackPanel, IGroupCase<ToolGroupType, ToolType>
+    public sealed partial class ViewTool : StackPanel, ICase< OptionType>
     {
         //@Delegate
         public event EventHandler<float> RadianValueChanged;
@@ -76,8 +77,7 @@ namespace Luo_Painter.Tools
 
         //@Interface
         public object Content => this;
-        public ToolGroupType GroupValue => ToolGroupType.Vector;
-        public ToolType Value => ToolType.View;
+        public OptionType Value => OptionType.View;
 
         bool IsEnable;
 

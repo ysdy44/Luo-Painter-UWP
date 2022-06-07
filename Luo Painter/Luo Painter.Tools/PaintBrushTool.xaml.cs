@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace Luo_Painter.Tools
         }
     }
 
-    public sealed partial class PaintBrushTool : Grid, IGroupCase<ToolGroupType, ToolType>
+    public sealed partial class PaintBrushTool : Grid, ICase<OptionType>
     {
         //@Delegate
         public event EventHandler<PaintBrush> ItemClick
@@ -68,8 +69,7 @@ namespace Luo_Painter.Tools
 
         //@Interface
         public object Content => this;
-        public ToolGroupType GroupValue => ToolGroupType.Paint;
-        public ToolType Value =>  ToolType.PaintBrush;
+        public OptionType Value => OptionType.PaintBrush;
 
         //@Construct
         public PaintBrushTool()

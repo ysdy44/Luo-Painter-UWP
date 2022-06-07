@@ -1,7 +1,9 @@
-﻿using Luo_Painter.Edits;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Elements;
+using Luo_Painter.Options;
 using Luo_Painter.Tools;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -9,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    internal sealed class ToolIcon : TIcon<ToolType>
+    internal sealed class ToolIcon : TIcon<OptionType>
     {
         public ToolIcon()
         {
@@ -24,21 +26,27 @@ namespace Luo_Painter.Controls
                 });
             };
         }
-        protected override void OnTypeChanged(ToolType value)
+        protected override void OnTypeChanged(OptionType value)
         {
-            base.Content = value;
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
+            if (System.Enum.TryParse(typeof(ToolType), value.ToString(), out object obj) && obj is ToolType toolType)
+            {
+                base.Content = toolType;
+                base.Template = toolType.GetTemplate(out ResourceDictionary resource);
+                base.Resources = resource;
+            }
         }
     }
 
-    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
-    internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
+    internal sealed class ToolGroupingList : List<ToolGrouping> { }
+    internal class ToolGrouping : List<OptionType>, IList<OptionType>, IGrouping<OptionType, OptionType>
+    {
+        public OptionType Key { set; get; }
+    }
 
     public sealed partial class ToolListView : Canvas
     {
         //@Delegate
-        public event TypedEventHandler<ToolGroupType, ToolType> ItemClick;
+        public event EventHandler<OptionType> ItemClick;
 
         //@Converter
         private Visibility DoubleToVisibilityConverter(double value) => value == 0 ? Visibility.Collapsed : Visibility.Visible;
@@ -50,6 +58,8 @@ namespace Luo_Painter.Controls
         private double ThumbeTopConverter(double value) => value / 2 - 60;
 
         double StartingX;
+
+        public OptionType SelectedItem { get; private set; }
 
         #region DependencyProperty
 
@@ -96,9 +106,10 @@ namespace Luo_Painter.Controls
             {
                 if (this.ItemClick is null) return;
 
-                if (e.ClickedItem is ToolType item)
+                if (e.ClickedItem is OptionType item)
                 {
-                    this.ItemClick(this.ToolCollection[item], item); // Delegate
+                    this.SelectedItem = item;
+                    this.ItemClick(this, item); // Delegate
                 }
             };
         }
@@ -108,11 +119,25 @@ namespace Luo_Painter.Controls
         {
         }
 
-        public void Construct(ToolType type)
+        public void Construct(OptionType type)
         {
-            this.ListView.SelectedIndex = this.ToolCollection.IndexOf(type);
+            this.SelectedItem = type;
+            this.ItemClick?.Invoke(this, type); // Delegate
 
-            this.ItemClick?.Invoke(this.ToolCollection[type], type); // Delegate
+            int index = 0;
+            foreach (ToolGrouping grouping in this.Collection)
+            {
+                foreach (OptionType item in grouping)
+                {
+                    if (item.Equals(type))
+                    {
+                        this.ListView.SelectedIndex = index;
+                        return;
+                    }
+
+                    index++;
+                }
+            }
         }
 
     }

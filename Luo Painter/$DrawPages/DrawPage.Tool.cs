@@ -19,23 +19,29 @@ namespace Luo_Painter
 
         private void ConstructTools()
         {
-            this.ToolListView.ItemClick += (groupType, type) =>
+            this.ToolListView.ItemClick += (s, type) =>
             {
-                this.ToolType = type;
+                this.OptionType = type;
 
-                this.ToolResource.Source = new Uri(type.GetResource());
-                this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
+                if (System.Enum.TryParse(typeof(ToolType), type.ToString(), out object obj) && obj is ToolType toolType)
+                {
+                    this.ToolResource.Source = new Uri(toolType.GetResource());
+                    this.ToolIcon.Template = toolType.GetTemplate(this.ToolResource);
+                }
 
-                //this.ToolSwitchPresenter.Value = type;
+                this.ToolSwitchPresenter.Value = type;
 
                 this.PaintMenu.Type = type;
 
-                this.FootType = this.SetFootType(default, default, type);
+                this.FootType = this.SetFootType(default, type, this.ToolType);
                 this.EditType = default;
                 this.OptionType = default;
                 this.SetCanvasState(default);
             };
-            this.ToolListView.Construct(this.ToolType);
+            if (System.Enum.TryParse(typeof(OptionType), this.ToolType.ToString(), out object obj1) && obj1 is OptionType optionType)
+            {
+                this.ToolListView.Construct(optionType);
+            }
         }
 
 

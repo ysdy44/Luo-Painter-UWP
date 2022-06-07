@@ -2,6 +2,7 @@
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -104,28 +105,28 @@ namespace Luo_Painter.Menus
         //@Converter
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
-        private Visibility Int0ToVisibility(ToolType value) => value == ToolType.PaintBrush ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int012ToVisibility(ToolType value)
+        private Visibility Int0ToVisibility(OptionType value) => value == OptionType.PaintBrush ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Int012ToVisibility(OptionType value)
         {
             switch (value)
             {
-                case ToolType.PaintBrush: case ToolType.PaintWatercolorPen: case ToolType.PaintPencil: return Visibility.Visible;
+                case OptionType.PaintBrush: case OptionType.PaintWatercolorPen: case OptionType.PaintPencil: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
-        private Visibility Int013ToVisibility(ToolType value)
+        private Visibility Int013ToVisibility(OptionType value)
         {
             switch (value)
             {
-                case ToolType.PaintBrush: case ToolType.PaintWatercolorPen: case ToolType.PaintEraseBrush: return Visibility.Visible;
+                case OptionType.PaintBrush: case OptionType.PaintWatercolorPen: case OptionType.PaintEraseBrush: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
-        private Visibility Int0123ToVisibility(ToolType value)
+        private Visibility Int0123ToVisibility(OptionType value)
         {
             switch (value)
             {
-                case ToolType.PaintBrush: case ToolType.PaintWatercolorPen: case ToolType.PaintPencil: case ToolType.PaintEraseBrush: return Visibility.Visible;
+                case OptionType.PaintBrush: case OptionType.PaintWatercolorPen: case OptionType.PaintPencil: case OptionType.PaintEraseBrush: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -142,13 +143,13 @@ namespace Luo_Painter.Menus
 
 
         /// <summary> Gets or set the type for <see cref="PaintMenu"/>. </summary>
-        public ToolType Type
+        public OptionType Type
         {
-            get => (ToolType)base.GetValue(TypeProperty);
+            get => (OptionType)base.GetValue(TypeProperty);
             set => base.SetValue(TypeProperty, value);
         }
         /// <summary> Identifies the <see cref = "ApplicationTitleBarExtension.IsAccent" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(ToolType), typeof(ApplicationTitleBarExtension), new PropertyMetadata(default(ToolType)));
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(ApplicationTitleBarExtension), new PropertyMetadata(default(OptionType)));
 
 
         public string MaskTexture { get; private set; }

@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
-    xmlns:tools="using:Luo_Painter.Tools"
+    xmlns:options="using:Luo_Painter.Options"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"  
@@ -27,67 +27,67 @@
             <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
         </Storyboard>
         <!--CollectionViewSource-->
-        <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
+        <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <local:ToolGroupingList x:Name="ToolCollection">
+                <local:ToolGroupingList x:Name="Collection">
                     <local:ToolGrouping Key="Marquee">
-                        <tools:ToolType>MarqueeRectangular</tools:ToolType>
-                        <tools:ToolType>MarqueeElliptical</tools:ToolType>
-                        <tools:ToolType>MarqueePolygon</tools:ToolType>
-                        <tools:ToolType>MarqueeFreeHand</tools:ToolType>
+                        <options:OptionType>MarqueeRectangular</options:OptionType>
+                        <options:OptionType>MarqueeElliptical</options:OptionType>
+                        <options:OptionType>MarqueePolygon</options:OptionType>
+                        <options:OptionType>MarqueeFreeHand</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Selection">
-                        <tools:ToolType>SelectionFlood</tools:ToolType>
-                        <tools:ToolType>SelectionBrush</tools:ToolType>
+                        <options:OptionType>SelectionFlood</options:OptionType>
+                        <options:OptionType>SelectionBrush</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Paint">
-                        <tools:ToolType>PaintBrush</tools:ToolType>
-                        <tools:ToolType>PaintWatercolorPen</tools:ToolType>
-                        <tools:ToolType>PaintPencil</tools:ToolType>
-                        <tools:ToolType>PaintEraseBrush</tools:ToolType>
-                        <tools:ToolType>PaintLiquefaction</tools:ToolType>
+                        <options:OptionType>PaintBrush</options:OptionType>
+                        <options:OptionType>PaintWatercolorPen</options:OptionType>
+                        <options:OptionType>PaintPencil</options:OptionType>
+                        <options:OptionType>PaintEraseBrush</options:OptionType>
+                        <options:OptionType>PaintLiquefaction</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Vector">
-                        <tools:ToolType>Cursor</tools:ToolType>
-                        <tools:ToolType>View</tools:ToolType>
-                        <tools:ToolType>Brush</tools:ToolType>
-                        <tools:ToolType>Transparency</tools:ToolType>
-                        <tools:ToolType>Image</tools:ToolType>
-                        <tools:ToolType>Crop</tools:ToolType>
+                        <options:OptionType>Cursor</options:OptionType>
+                        <options:OptionType>View</options:OptionType>
+                        <options:OptionType>Brush</options:OptionType>
+                        <options:OptionType>Transparency</options:OptionType>
+                        <options:OptionType>Image</options:OptionType>
+                        <options:OptionType>Crop</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Text">
-                        <tools:ToolType>TextArtistic</tools:ToolType>
-                        <tools:ToolType>TextFrame</tools:ToolType>
+                        <options:OptionType>TextArtistic</options:OptionType>
+                        <options:OptionType>TextFrame</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Curve">
-                        <tools:ToolType>Pen</tools:ToolType>
-                        <tools:ToolType>Node</tools:ToolType>
+                        <options:OptionType>Pen</options:OptionType>
+                        <options:OptionType>Node</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Geometry">
                         <!--Geometry0-->
-                        <tools:ToolType>GeometryRectangle</tools:ToolType>
-                        <tools:ToolType>GeometryEllipse</tools:ToolType>
+                        <options:OptionType>GeometryRectangle</options:OptionType>
+                        <options:OptionType>GeometryEllipse</options:OptionType>
                         <!--Geometry1-->
-                        <tools:ToolType>GeometryRoundRect</tools:ToolType>
-                        <tools:ToolType>GeometryTriangle</tools:ToolType>
-                        <tools:ToolType>GeometryDiamond</tools:ToolType>
+                        <options:OptionType>GeometryRoundRect</options:OptionType>
+                        <options:OptionType>GeometryTriangle</options:OptionType>
+                        <options:OptionType>GeometryDiamond</options:OptionType>
                         <!--Geometry2-->
-                        <tools:ToolType>GeometryPentagon</tools:ToolType>
-                        <tools:ToolType>GeometryStar</tools:ToolType>
-                        <tools:ToolType>GeometryCog</tools:ToolType>
+                        <options:OptionType>GeometryPentagon</options:OptionType>
+                        <options:OptionType>GeometryStar</options:OptionType>
+                        <options:OptionType>GeometryCog</options:OptionType>
                         <!--Geometry3-->
-                        <tools:ToolType>GeometryDount</tools:ToolType>
-                        <tools:ToolType>GeometryPie</tools:ToolType>
-                        <tools:ToolType>GeometryCookie</tools:ToolType>
+                        <options:OptionType>GeometryDount</options:OptionType>
+                        <options:OptionType>GeometryPie</options:OptionType>
+                        <options:OptionType>GeometryCookie</options:OptionType>
                         <!--Geometry4-->
-                        <tools:ToolType>GeometryArrow</tools:ToolType>
-                        <tools:ToolType>GeometryCapsule</tools:ToolType>
-                        <tools:ToolType>GeometryHeart</tools:ToolType>
+                        <options:OptionType>GeometryArrow</options:OptionType>
+                        <options:OptionType>GeometryCapsule</options:OptionType>
+                        <options:OptionType>GeometryHeart</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Pattern">
-                        <tools:ToolType>PatternGrid</tools:ToolType>
-                        <tools:ToolType>PatternDiagonal</tools:ToolType>
-                        <tools:ToolType>PatternSpotted</tools:ToolType>
+                        <options:OptionType>PatternGrid</options:OptionType>
+                        <options:OptionType>PatternDiagonal</options:OptionType>
+                        <options:OptionType>PatternSpotted</options:OptionType>
                     </local:ToolGrouping>
                 </local:ToolGroupingList>
             </CollectionViewSource.Source>
@@ -106,7 +106,7 @@
               SelectionMode="Single" 
               
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
-              ItemsSource="{x:Bind ToolCollectionViewSource.View}" 
+              ItemsSource="{x:Bind CollectionViewSource.View}" 
               
               Canvas.Left="{x:Bind ListViewLeftConverter(Width), Mode=OneWay}" 
               Canvas.Top="0"
@@ -156,7 +156,7 @@
         </ItemsControl.ItemContainerStyle>
 
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="tools:ToolType">
+            <DataTemplate x:DataType="options:OptionType">
                 <local:ToolIcon Type="{x:Bind}"/>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
