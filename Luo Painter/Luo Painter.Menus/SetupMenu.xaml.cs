@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Edits;
+﻿using Luo_Painter.Options;
 using Luo_Painter.Elements;
 using System;
 using Windows.ApplicationModel.Resources;
@@ -9,10 +9,10 @@ namespace Luo_Painter.Menus
     public sealed partial class SetupMenu : Expander
     {
         //@Delegate
-        public event EventHandler<EditType> ItemClick
+        public event EventHandler<OptionType> ItemClick
         {
-            remove => this.EditTypeCommand.Click -= value;
-            add => this.EditTypeCommand.Click += value;
+            remove => this.Command.Click -= value;
+            add => this.Command.Click += value;
         }
 
         //@Construct

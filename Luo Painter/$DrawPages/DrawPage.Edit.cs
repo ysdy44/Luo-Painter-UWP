@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Edits;
-using Luo_Painter.Historys.Models;
+﻿using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
@@ -21,9 +20,9 @@ namespace Luo_Painter
             {
                 switch (type)
                 {
-                    case EditType.None:
+                    case OptionType.None:
                         break;
-                    case EditType.Cut: // Copy + Clear
+                    case OptionType.Cut: // Copy + Clear
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                             {
@@ -64,7 +63,7 @@ namespace Luo_Painter
                             }
                         }
                         break;
-                    case EditType.Duplicate:
+                    case OptionType.Duplicate:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                             {
@@ -83,6 +82,8 @@ namespace Luo_Painter
                                 string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
                                 int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
                                 this.UndoButton.IsEnabled = this.History.CanUndo;
                                 this.RedoButton.IsEnabled = this.History.CanRedo;
                             }
@@ -92,7 +93,7 @@ namespace Luo_Painter
                             }
                         }
                         break;
-                    case EditType.Copy:
+                    case OptionType.Copy:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                             {
@@ -113,7 +114,7 @@ namespace Luo_Painter
                             }
                         }
                         break;
-                    case EditType.Paste:
+                    case OptionType.Paste:
                         {
                             Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
@@ -145,7 +146,7 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case EditType.Clear:
+                    case OptionType.Clear:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                             {
@@ -176,10 +177,10 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case EditType.Remove:
+                    case OptionType.Remove:
                         this.Remove();
                         break;
-                    case EditType.Extract:
+                    case OptionType.Extract:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                             {
@@ -221,7 +222,7 @@ namespace Luo_Painter
                             }
                         }
                         break;
-                    case EditType.Merge:
+                    case OptionType.Merge:
                         {
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
@@ -254,7 +255,7 @@ namespace Luo_Painter
                             }
                         }
                         break;
-                    case EditType.Flatten:
+                    case OptionType.Flatten:
                         {
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
@@ -281,13 +282,13 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case EditType.Group:
+                    case OptionType.Group:
                         break;
-                    case EditType.Ungroup:
+                    case OptionType.Ungroup:
                         break;
-                    case EditType.Release:
+                    case OptionType.Release:
                         break;
-                    case EditType.All:
+                    case OptionType.All:
                         {
                             // History
                             int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue));
@@ -299,7 +300,7 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case EditType.Deselect:
+                    case OptionType.Deselect:
                         {
                             // History
                             int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.Transparent));
@@ -311,7 +312,7 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case EditType.Invert:
+                    case OptionType.MarqueeInvert:
                         {
                             // History
                             int removes = this.History.Push(this.Marquee.Invert(Colors.DodgerBlue));
@@ -322,7 +323,7 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case EditType.Pixel:
+                    case OptionType.Pixel:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
                             {
@@ -336,27 +337,27 @@ namespace Luo_Painter
                             }
                         }
                         break;
-                    case EditType.Feather:
-                        this.EditClick(EditType.Feather);
+                    case OptionType.Feather:
+                        this.EditClick(OptionType.Feather);
                         break;
-                    case EditType.Transform:
-                        this.EditClick(EditType.Transform);
+                    case OptionType.MarqueeTransform:
+                        this.EditClick(OptionType.MarqueeTransform);
                         break;
-                    case EditType.Grow:
-                        this.EditClick(EditType.Grow);
+                    case OptionType.Grow:
+                        this.EditClick(OptionType.Grow);
                         break;
-                    case EditType.Shrink:
-                        this.EditClick(EditType.Shrink);
+                    case OptionType.Shrink:
+                        this.EditClick(OptionType.Shrink);
                         break;
-                    case EditType.Union:
+                    case OptionType.Union:
                         break;
-                    case EditType.Exclude:
+                    case OptionType.Exclude:
                         break;
-                    case EditType.Xor:
+                    case OptionType.Xor:
                         break;
-                    case EditType.Intersect:
+                    case OptionType.Intersect:
                         break;
-                    case EditType.ExpandStroke:
+                    case OptionType.ExpandStroke:
                         break;
                     default:
                         break;
@@ -366,19 +367,19 @@ namespace Luo_Painter
             {
                 switch (type)
                 {
-                    case EditType.Crop:
+                    case OptionType.CropCanvas:
                         break;
-                    case EditType.Stretch:
+                    case OptionType.Stretch:
                         break;
-                    case EditType.FlipHorizontal:
+                    case OptionType.FlipHorizontal:
                         break;
-                    case EditType.FlipVertical:
+                    case OptionType.FlipVertical:
                         break;
-                    case EditType.LeftTurn:
+                    case OptionType.LeftTurn:
                         break;
-                    case EditType.RightTurn:
+                    case OptionType.RightTurn:
                         break;
-                    case EditType.OverTurn:
+                    case OptionType.OverTurn:
                         break;
                     default:
                         break;
@@ -386,7 +387,7 @@ namespace Luo_Painter
             };
         }
 
-        private bool EditClick(EditType type)
+        private bool EditClick(OptionType type)
         {
             this.ExpanderLightDismissOverlay.Hide();
 
@@ -401,9 +402,9 @@ namespace Luo_Painter
 
             switch (type)
             {
-                case EditType.Feather:
+                case OptionType.Feather:
                     break;
-                case EditType.Transform:
+                case OptionType.MarqueeTransform:
                     switch (mode)
                     {
                         case PixelBoundsMode.None:
@@ -416,17 +417,16 @@ namespace Luo_Painter
                             break;
                     }
                     break;
-                case EditType.Grow:
+                case OptionType.Grow:
                     break;
-                case EditType.Shrink:
+                case OptionType.Shrink:
                     break;
                 default:
                     break;
             }
 
-            this.FootType = this.SetFootType(type, default, this.ToolType);
-            this.EditType = type;
-            this.OptionType = default;
+            this.FootType = this.SetFootType(this.EditType, default, this.ToolType);
+            this.OptionType = type;
             this.SetCanvasState(true);
             return true;
         }

@@ -20,25 +20,25 @@
 
     <FrameworkElement.Resources>
         <!--Command-->
-        <local:EditTypeCommand x:Name="EditTypeCommand"/>
+        <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources >
 
     <StackPanel Spacing="2">
 
-        <local:EditItem Type="Crop" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="CropCanvas" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
-        <local:EditItem Type="Stretch" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
-        <local:EditItem Type="FlipHorizontal" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="FlipVertical" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <local:EditItem Type="LeftTurn" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="RightTurn" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="OverTurn" Command="{x:Bind EditTypeCommand}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
     </StackPanel>
 </elements:Expander>

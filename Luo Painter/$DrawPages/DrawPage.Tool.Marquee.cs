@@ -1,5 +1,5 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Edits;
+using Luo_Painter.Options;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
@@ -37,7 +37,7 @@ namespace Luo_Painter
 
         private void Marquee_Start(Vector2 point)
         {
-            this.MarqueeToolType = this.GetMarqueeToolType(this.ToolType);
+            this.MarqueeToolType = this.GetMarqueeToolType(this.OptionType);
             this.StartingPosition = this.Position = this.ToPosition(point);
             this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
@@ -95,7 +95,7 @@ namespace Luo_Painter
                     this.Tip("No Pixel", "The Marquee is Transparent.");
                     return false;
                 case PixelBoundsMode.Solid:
-                    this.EditMenu.Execute(isSubtract ? EditType.Deselect : EditType.All);
+                    this.EditMenu.Execute(isSubtract ? OptionType.Deselect : OptionType.All);
                     return true;
                 default:
                     // History
@@ -115,14 +115,14 @@ namespace Luo_Painter
             }
         }
 
-        private MarqueeToolType GetMarqueeToolType(ToolType type)
+        private MarqueeToolType GetMarqueeToolType(OptionType type)
         {
             switch (type)
             {
-                case ToolType.MarqueeRectangular: return MarqueeToolType.Rectangular;
-                case ToolType.MarqueeElliptical: return MarqueeToolType.Elliptical;
-                case ToolType.MarqueePolygon: return MarqueeToolType.Polygonal;
-                case ToolType.MarqueeFreeHand: return MarqueeToolType.FreeHand;
+                case OptionType.MarqueeRectangular: return MarqueeToolType.Rectangular;
+                case OptionType.MarqueeElliptical: return MarqueeToolType.Elliptical;
+                case OptionType.MarqueePolygon: return MarqueeToolType.Polygonal;
+                case OptionType.MarqueeFreeHand: return MarqueeToolType.FreeHand;
                 default: return MarqueeToolType.None;
             }
         }
