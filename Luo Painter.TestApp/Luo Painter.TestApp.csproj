@@ -480,10 +480,6 @@
       <Project>{31CCDE60-A61F-438D-A3EF-C26216F5F517}</Project>
       <Name>Luo Painter.Shaders</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Luo Painter.Tools\Luo Painter.Tools.csproj">
-      <Project>{CFDC0144-0649-431A-9D8D-95246D2F3837}</Project>
-      <Name>Luo Painter.Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
