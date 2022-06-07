@@ -58,13 +58,22 @@ namespace Luo_Painter.Menus
 
             this.BlendModeListView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is BlendEffectMode item2)
+                if (e.ClickedItem is BlendEffectMode item)
                 {
-                    BlendEffectMode? blendMode = item2.IsNone() ? (BlendEffectMode?)null : item2;
-                    if (this.StartingBlendMode == blendMode) return;
-                    this.BlendModeHistory?.Invoke(this.StartingBlendMode, blendMode); // Delegate
+                    if (item.IsDefined())
+                    {
+                        if (this.StartingBlendMode == item) return;
+                        this.BlendModeHistory?.Invoke(this.StartingBlendMode, item); // Delegate
 
-                    this.StartingBlendMode = blendMode;
+                        this.StartingBlendMode = item;
+                    }
+                    else
+                    {
+                        if (this.StartingBlendMode is null) return;
+                        this.BlendModeHistory?.Invoke(this.StartingBlendMode, null); // Delegate
+
+                        this.StartingBlendMode = null;
+                    }
                 }
             };
         }

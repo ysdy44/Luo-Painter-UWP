@@ -275,7 +275,7 @@ namespace Luo_Painter.Menus
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {
-                    this.InkPresenter.SetBlendMode(item.IsNone(), item);
+                    this.InkPresenter.SetBlendMode(item.IsDefined(), item);
                 }
             };
 
