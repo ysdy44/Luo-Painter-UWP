@@ -377,10 +377,6 @@
       <Project>{749c10db-0a66-4eac-87dc-b320f781f9a3}</Project>
       <Name>Luo Painter.Brushes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Luo Painter.Edits\Luo Painter.Edits.csproj">
-      <Project>{19337d6a-a971-482b-8976-f1647f1dca67}</Project>
-      <Name>Luo Painter.Edits</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Elements\Luo Painter.Elements.csproj">
       <Project>{df0fe13f-3d6d-432d-aca9-1d2b6009c843}</Project>
       <Name>Luo Painter.Elements</Name>
