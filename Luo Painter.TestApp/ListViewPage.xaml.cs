@@ -1,15 +1,15 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Elements;
-using Luo_Painter.Tools;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    internal sealed class ToolIcon : TIcon<ToolType>
+    internal sealed class ToolIcon : TIcon<OptionType>
     {
-        protected override void OnTypeChanged(ToolType value)
+        protected override void OnTypeChanged(OptionType value)
         {
             base.Content = new ContentControl
             {
@@ -38,8 +38,8 @@ namespace Luo_Painter.TestApp
     }
 
 
-    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, ToolGroupType, ToolType> { }
-    internal sealed class ToolGrouping : Grouping<ToolGroupType, ToolType> { }
+    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, OptionType, OptionType> { }
+    internal sealed class ToolGrouping : Grouping<OptionType, OptionType> { }
 
     internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendGroupType, BlendEffectMode> { }
     internal sealed class BlendGrouping : Grouping<BlendGroupType, BlendEffectMode> { }
