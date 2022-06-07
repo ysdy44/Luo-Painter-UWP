@@ -161,8 +161,6 @@
     </Compile>
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
-    <Compile Include="FootExtensions.cs" />
-    <Compile Include="FootType.cs" />
     <Compile Include="Luo Painter.Menus\ColorMenu.xaml.cs">
       <DependentUpon>ColorMenu.xaml</DependentUpon>
     </Compile>
