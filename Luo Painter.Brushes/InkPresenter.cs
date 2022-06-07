@@ -13,7 +13,7 @@ namespace Luo_Painter.Brushes
         public bool Rotate { get; set; }
         public int Step { get; set; } = 1024;
 
-        public bool IsNone { get; private set; } = true;
+        public bool IsDefined { get; private set; }
         public BlendEffectMode BlendMode { get; private set; }
 
         public bool AllowMask { get; private set; }
@@ -48,14 +48,14 @@ namespace Luo_Painter.Brushes
             }
         }
 
-        public void SetBlendMode(bool isNone, BlendEffectMode blendMode)
+        public void SetBlendMode(bool isDefined, BlendEffectMode blendMode)
         {
-            if (isNone)
-                this.IsNone = true;
+            if (isDefined)
+                this.IsDefined = true;
             else
             {
                 this.BlendMode = blendMode;
-                this.IsNone = false;
+                this.IsDefined = false;
             }
         }
 
@@ -75,23 +75,23 @@ namespace Luo_Painter.Brushes
         }
 
 
-        public InkType GetType(InkType toolType)
+        public InkType GetType(InkType type)
         {
-            switch (toolType)
+            switch (type)
             {
                 case InkType.None: return InkType.None;
                 case InkType.Liquefy: return InkType.Liquefy;
                 case InkType.EraseDry:
                     if (this.Opacity == 0f) return InkType.None;
-                    else if (this.Opacity != 1f) toolType |= InkType.Opacity;
-                    if (this.AllowPattern) toolType |= InkType.Pattern;
-                    return toolType;
+                    else if (this.Opacity != 1f) type |= InkType.Opacity;
+                    if (this.AllowPattern) type |= InkType.Pattern;
+                    return type;
                 default:
                     if (this.Opacity == 0f) return InkType.None;
-                    else if (this.Opacity != 1f) toolType |= InkType.Opacity;
-                    if (this.AllowPattern) toolType |= InkType.Pattern;
-                    if (this.IsNone is false) toolType |= InkType.BlendMode;
-                    return toolType;
+                    else if (this.Opacity != 1f) type |= InkType.Opacity;
+                    if (this.AllowPattern) type |= InkType.Pattern;
+                    if (this.IsDefined) type |= InkType.BlendMode;
+                    return type;
             }
         }
 
