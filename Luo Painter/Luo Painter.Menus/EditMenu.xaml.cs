@@ -19,17 +19,8 @@ namespace Luo_Painter.Menus
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            Edits.EditType editType = default;
-            switch (value)
-            {
-                case OptionType.MarqueeInvert: editType = Edits.EditType.Invert; break;
-                case OptionType.MarqueeTransform: editType = Edits.EditType.Transform; break;
-                case OptionType.CropCanvas: editType = Edits.EditType.Crop; break;
-                default: if (System.Enum.TryParse(typeof(Edits.EditType), value.ToString(), out object obj)) editType = (Edits.EditType)obj; break;
-            }
-
-            base.Content = editType.ToString();
-            base.Template = Edits.EditExtensions.GetTemplate(editType, out ResourceDictionary resource);
+            base.Content = value.ToString();
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
             base.Resources = resource;
         }
     }
@@ -52,24 +43,15 @@ namespace Luo_Painter.Menus
 
         protected override void OnTypeChanged(OptionType value)
         {
-            Edits.EditType editType = default;
-            switch (value)
-            {
-                case OptionType.MarqueeInvert: editType = Edits.EditType.Invert; break;
-                case OptionType.MarqueeTransform: editType = Edits.EditType.Transform; break;
-                case OptionType.CropCanvas: editType = Edits.EditType.Crop; break;
-                default: if (System.Enum.TryParse(typeof(Edits.EditType), value.ToString(), out object obj)) editType = (Edits.EditType)obj; break;
-            }
-
-            base.CommandParameter = editType;
+            base.CommandParameter = value;
             this.Icon = new ContentControl
             {
-                Content = editType,
-                Template = Edits.EditExtensions.GetTemplate(editType, out ResourceDictionary resource),
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
                 Resources = resource,
             };
             this.Icon.GoToState(base.IsEnabled);
-            base.Content = TIconExtensions.GetGrid(this.Icon, editType.ToString());
+            base.Content = TIconExtensions.GetGrid(this.Icon, value.ToString());
         }
     }
 
