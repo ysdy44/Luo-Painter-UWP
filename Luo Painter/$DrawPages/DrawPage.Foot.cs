@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Edits;
+﻿using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Luo_Painter.Tools;
@@ -19,7 +19,7 @@ namespace Luo_Painter
         double StartingFootY;
 
 
-        private FootType SetFootType(EditType ediType, OptionType optionType, ToolType toolType)
+        private void SetFootType(OptionType optionType)
         {
             if (optionType.AllowDrag())
             {
@@ -48,8 +48,6 @@ namespace Luo_Painter
 
             this.FootTransform2.X = this.FootTransform.X = 0;
             this.FootTransform2.Y = this.FootTransform.Y = 0;
-
-            return FootExtensions.GetType(ediType, optionType, toolType);
         }
         private OptionType GetFootType(OptionType type)
         {
@@ -132,43 +130,42 @@ namespace Luo_Painter
             this.FootSecondaryButton.Click += (s, e) =>
             {
                 this.BitmapLayer = null;
-                this.FootType = this.SetFootType(default, default, this.ToolType);
-                this.EditType = default;
-                this.OptionType = default;
+                this.OptionType = this.ToolListView.SelectedItem;
+                this.SetFootType(this.ToolListView.SelectedItem);
                 this.SetCanvasState(false);
             };
 
             this.FootPrimaryButton.Click += (s, e) =>
             {
-                switch (this.FootType)
+                switch (this.OptionType)
                 {
-                    case FootType.Feather:
-                    case FootType.MarqueeTransform:
-                    case FootType.Grow:
-                    case FootType.Shrink:
+                    case OptionType.Feather:
+                    case OptionType.MarqueeTransform:
+                    case OptionType.Grow:
+                    case OptionType.Shrink:
                         {
                             Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
                             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
-                            this.Primary(this.FootType, mode, InterpolationColors, this.Marquee);
+                            this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
                         }
                         break;
 
-                    case FootType.Exposure:
-                    case FootType.Brightness:
-                    case FootType.Saturation:
-                    case FootType.HueRotation:
-                    case FootType.Contrast:
-                    case FootType.Temperature:
-                    case FootType.HighlightsAndShadows:
-                    case FootType.LuminanceToAlpha:
+                    case OptionType.Exposure:
+                    case OptionType.Brightness:
+                    case OptionType.Saturation:
+                    case OptionType.HueRotation:
+                    case OptionType.Contrast:
+                    case OptionType.Temperature:
+                    case OptionType.HighlightsAndShadows:
+                    case OptionType.LuminanceToAlpha:
 
-                    case FootType.Transform:
-                    case FootType.GradientMapping:
-                    case FootType.RippleEffect:
+                    case OptionType.Transform:
+                    case OptionType.GradientMapping:
+                    case OptionType.RippleEffect:
                         {
                             Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
                             PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
-                            this.Primary(this.FootType, mode, InterpolationColors, this.BitmapLayer);
+                            this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
                         }
                         break;
 
@@ -177,8 +174,6 @@ namespace Luo_Painter
                 }
 
                 this.BitmapLayer = null;
-                this.FootType = this.SetFootType(default, default, this.ToolType);
-                this.EditType = default;
                 this.OptionType = default;
                 this.SetCanvasState(false);
             };
@@ -229,7 +224,7 @@ namespace Luo_Painter
         }
 
 
-        private void Primary(FootType type, PixelBoundsMode mode, Color[] InterpolationColors, BitmapLayer bitmapLayer)
+        private void Primary(OptionType type, PixelBoundsMode mode, Color[] InterpolationColors, BitmapLayer bitmapLayer)
         {
             if (type.HasDifference())
             {
@@ -303,33 +298,33 @@ namespace Luo_Painter
         }
 
 
-        private ICanvasImage GetPreview(FootType type, ICanvasImage image)
+        private ICanvasImage GetPreview(OptionType type, ICanvasImage image)
         {
             switch (type)
             {
-                case FootType.None:
+                case OptionType.None:
                     return image;
 
 
-                case FootType.Transform:
+                case OptionType.Transform:
                     return this.GetTransformPreview(image);
-                case FootType.DisplacementLiquefaction:
+                case OptionType.DisplacementLiquefaction:
                     return this.GetDisplacementLiquefactionPreview(image);
-                case FootType.GradientMapping:
+                case OptionType.GradientMapping:
                     return this.GetGradientMappingPreview(image);
-                case FootType.RippleEffect:
+                case OptionType.RippleEffect:
                     return this.GetRippleEffectPreview(image);
 
 
-                case FootType.Feather:
+                case OptionType.Feather:
                     return new GaussianBlurEffect
                     {
                         BlurAmount = (float)this.FeatherSlider.Value,
                         Source = image
                     };
-                case FootType.MarqueeTransform:
+                case OptionType.MarqueeTransform:
                     return this.GetTransformPreview(image);
-                case FootType.Grow:
+                case OptionType.Grow:
                     int grow = (int)this.GrowSlider.Value;
                     return new MorphologyEffect
                     {
@@ -338,7 +333,7 @@ namespace Luo_Painter
                         Width = grow,
                         Source = image
                     };
-                case FootType.Shrink:
+                case OptionType.Shrink:
                     int shrink = (int)this.ShrinkSlider.Value;
                     return new MorphologyEffect
                     {
@@ -349,13 +344,13 @@ namespace Luo_Painter
                     };
 
 
-                case FootType.Exposure:
+                case OptionType.Exposure:
                     return new ExposureEffect
                     {
                         Exposure = (float)this.ExposureSlider.Value / 100,
                         Source = image
                     };
-                case FootType.Brightness:
+                case OptionType.Brightness:
                     float brightness = (float)this.BrightnessSlider.Value / 100;
                     return new BrightnessEffect
                     {
@@ -363,32 +358,32 @@ namespace Luo_Painter
                         BlackPoint = new Vector2(System.Math.Clamp(1 - brightness, 0, 1), 0),
                         Source = image
                     };
-                case FootType.Saturation:
+                case OptionType.Saturation:
                     return new SaturationEffect
                     {
                         Saturation = (float)this.SaturationSlider.Value / 100,
                         Source = image
                     };
-                case FootType.HueRotation:
+                case OptionType.HueRotation:
                     return new HueRotationEffect
                     {
                         Angle = (float)this.HueRotationSlider.Value / 180 * FanKit.Math.Pi,
                         Source = image
                     };
-                case FootType.Contrast:
+                case OptionType.Contrast:
                     return new ContrastEffect
                     {
                         Contrast = (float)this.ContrastSlider.Value / 100,
                         Source = image
                     };
-                case FootType.Temperature:
+                case OptionType.Temperature:
                     return new TemperatureAndTintEffect
                     {
                         Temperature = (float)this.TemperatureSlider.Value / 100,
                         Tint = (float)this.TintSlider.Value / 100,
                         Source = image
                     };
-                case FootType.HighlightsAndShadows:
+                case OptionType.HighlightsAndShadows:
                     return new HighlightsAndShadowsEffect
                     {
                         Shadows = (float)this.ShadowsSlider.Value / 100,
@@ -398,7 +393,7 @@ namespace Luo_Painter
                         Source = image
                     };
 
-                case FootType.LuminanceToAlpha:
+                case OptionType.LuminanceToAlpha:
                     switch (this.LuminanceToAlphaComboBox.SelectedIndex)
                     {
                         case 0:

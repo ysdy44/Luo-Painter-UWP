@@ -29,7 +29,7 @@ namespace Luo_Painter
                 this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
                 bool? result = await this.Export();
-                if (result == null) return;
+                if (result is null) return;
 
                 if (result.Value)
                     this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
@@ -110,8 +110,6 @@ namespace Luo_Painter
             };
             this.FullScreenButton.Click += async (s, e) =>
             {
-                if (this.FootType.HasHead()) return;
-
                 if (this.IsFullScreen)
                 {
                     this.IsFullScreen = false;
@@ -128,7 +126,6 @@ namespace Luo_Painter
                 this.FullScreenKey.IsEnabled = true;
             };
         }
-
 
 
     }

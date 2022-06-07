@@ -425,8 +425,8 @@ namespace Luo_Painter
                     break;
             }
 
-            this.FootType = this.SetFootType(this.EditType, default, this.ToolType);
             this.OptionType = type;
+            this.SetFootType(type);
             this.SetCanvasState(true);
             return true;
         }

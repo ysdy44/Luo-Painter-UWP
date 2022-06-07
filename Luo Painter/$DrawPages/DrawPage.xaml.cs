@@ -1,6 +1,5 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
-using Luo_Painter.Edits;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
@@ -153,10 +152,7 @@ namespace Luo_Painter
         bool IsFullScreen { get; set; }
 
         SelectionType SelectionType { get; set; } = SelectionType.None;
-        FootType FootType { get; set; } = FootType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
-        EditType EditType { get; set; } = EditType.None;
-        ToolType ToolType { get; set; } = ToolType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;
 
         byte[] LiquefactionShaderCodeBytes;
@@ -224,7 +220,7 @@ namespace Luo_Painter
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
-
+         
             this.ExportButton.Click += (s, e) => this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
             this.ToolButton.Click += (s, e) => this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
             this.PaintButton.Click += (s, e) => this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);

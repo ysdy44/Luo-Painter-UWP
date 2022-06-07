@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -24,15 +25,15 @@ namespace Luo_Painter
         float Pressure;
 
 
-        private InkType GetInkToolType(ToolType type)
+        private InkType GetInkToolType(OptionType type)
         {
             switch (type)
             {
-                case ToolType.PaintBrush: return (this.InkPresenter.AllowMask) ? InkType.MaskBrushDry : InkType.BrushDry;
-                case ToolType.PaintWatercolorPen: return InkType.CircleDry;
-                case ToolType.PaintPencil: return InkType.LineDry;
-                case ToolType.PaintEraseBrush: return InkType.EraseDry;
-                case ToolType.PaintLiquefaction: return InkType.Liquefy;
+                case OptionType.PaintBrush: return (this.InkPresenter.AllowMask) ? InkType.MaskBrushDry : InkType.BrushDry;
+                case OptionType.PaintWatercolorPen: return InkType.CircleDry;
+                case OptionType.PaintPencil: return InkType.LineDry;
+                case OptionType.PaintEraseBrush: return InkType.EraseDry;
+                case OptionType.PaintLiquefaction: return InkType.Liquefy;
                 default: return InkType.None;
             }
         }
@@ -153,7 +154,7 @@ namespace Luo_Painter
             this.Position = this.ToPosition(point);
             this.Pressure = pressure;
 
-            this.InkType = this.InkPresenter.GetType(this.GetInkToolType(this.ToolType));
+            this.InkType = this.InkPresenter.GetType(this.GetInkToolType(this.OptionType));
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 

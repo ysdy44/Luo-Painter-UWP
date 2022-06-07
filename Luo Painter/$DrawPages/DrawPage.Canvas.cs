@@ -2,7 +2,7 @@
 using Luo_Painter.Elements;
 using Luo_Painter.Brushes;
 using Luo_Painter.Layers.Models;
-using Luo_Painter.Shaders;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -88,7 +88,7 @@ namespace Luo_Painter
             {
                 args.DrawingSession.Blend = CanvasBlend.Copy;
 
-                if (this.EditType != default)
+                if (this.OptionType.IsEdit())
                 {
                     //@DPI 
                     args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
@@ -97,36 +97,34 @@ namespace Luo_Painter
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.5f,
-                        Source = this.GetPreview(this.FootType, this.Marquee.Source)
+                        Source = this.GetPreview(this.OptionType, this.Marquee.Source)
                     });
 
                     args.DrawingSession.Transform = Matrix3x2.Identity;
                     args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
                 }
 
-                switch (this.FootType)
+                switch (this.OptionType)
                 {
-                    case FootType.MarqueeTransform:
+                    case OptionType.MarqueeTransform:
                         this.DrawTransform(sender, args.DrawingSession);
                         break;
-                    case FootType.Transform:
+                    case OptionType.Transform:
                         this.DrawTransform(sender, args.DrawingSession);
                         break;
-                    case FootType.DisplacementLiquefaction:
+                    case OptionType.DisplacementLiquefaction:
                         this.DrawDisplacementLiquefaction(sender, args.DrawingSession);
                         break;
-                    case FootType.GradientMapping:
+                    case OptionType.GradientMapping:
                         break;
-                    case FootType.RippleEffect:
+                    case OptionType.RippleEffect:
                         this.DrawRippleEffect(sender, args.DrawingSession);
-                        break;
-                    case FootType.Marquee:
-                        //@DPI 
-                        if (this.MarqueeToolType == default) break;
-
-                        args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                        break;
+                        break; 
                     default:
+                        if (this.OptionType.HasFlag(OptionType.Marquee))
+                        {
+                            args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                        }
                         break;
                 }
             };
@@ -192,7 +190,7 @@ namespace Luo_Painter
                         using (ds.CreateLayer(1, this.Mesh.Geometry, this.Transformer.GetMatrix()))
                         {
                             // Layer
-                            if (this.EditType != default || this.BitmapLayer is null)
+                            if (this.OptionType.IsEdit() || this.BitmapLayer is null)
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                             else
                                 ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
@@ -204,7 +202,7 @@ namespace Luo_Painter
 
         private ICanvasImage GetMezzanine()
         {
-            if (this.OptionType == default)
+            if (this.OptionType.IsOption() is false)
             {
                 if (this.InkType.HasFlag(InkType.BlendMode))
                     return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source);
@@ -224,7 +222,7 @@ namespace Luo_Painter
             switch (this.SelectionType)
             {
                 case SelectionType.MarqueePixelBounds:
-                    if (this.FootType.HasDifference())
+                    if (this.OptionType.HasDifference())
                         return new CompositeEffect
                         {
                             Sources =
@@ -234,7 +232,7 @@ namespace Luo_Painter
                                     Source1 = this.Marquee.Source,
                                     Source2 = this.BitmapLayer.Source,
                                 },
-                                this.GetPreview(this.FootType, new AlphaMaskEffect
+                                this.GetPreview(this.OptionType, new AlphaMaskEffect
                                 {
                                     AlphaMask = this.Marquee.Source,
                                     Source = this.BitmapLayer.Source
@@ -246,10 +244,10 @@ namespace Luo_Painter
                         {
                             Source1 = this.Marquee.Source,
                             Source2 = this.BitmapLayer.Origin,
-                            Source3 = this.GetPreview(this.FootType, this.BitmapLayer.Origin)
+                            Source3 = this.GetPreview(this.OptionType, this.BitmapLayer.Origin)
                         };
                 default:
-                    return this.GetPreview(this.FootType, this.BitmapLayer.Source);
+                    return this.GetPreview(this.OptionType, this.BitmapLayer.Source);
             }
         }
 
@@ -284,7 +282,7 @@ namespace Luo_Painter
                     this.ToolListView.IsShow = this.StartingToolShow;
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
-                this.SetCanvasState(this.EditType != default || this.OptionType != default);
+                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsOption());
                 this.Tool_Complete(point, properties.Pressure);
             };
 
@@ -311,7 +309,7 @@ namespace Luo_Painter
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.SetCanvasState(this.EditType != default || this.OptionType != default);
+                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsOption());
 
                 this.ViewTool.Construct(this.Transformer);
             };

@@ -114,8 +114,8 @@ namespace Luo_Painter
 
                                         this.BitmapLayer = bitmapLayer;
                                         this.SelectionType = state;
-                                        this.FootType = this.SetFootType(this.EditType, type, this.ToolType);
                                         this.OptionType = type;
+                                        this.SetFootType(type);
                                         this.SetCanvasState(true);
                                         return true;
                                 }
