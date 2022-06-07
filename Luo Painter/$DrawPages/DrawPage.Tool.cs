@@ -26,7 +26,7 @@ namespace Luo_Painter
                 this.ToolResource.Source = new Uri(type.GetResource());
                 this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
 
-                this.ToolGroupSwitchPresenter.EvaluateCases(groupType, type);
+                //this.ToolSwitchPresenter.Value = type;
 
                 this.PaintMenu.Type = type;
 

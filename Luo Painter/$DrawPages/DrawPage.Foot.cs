@@ -30,22 +30,12 @@ namespace Luo_Painter
                 this.FootThumb.Visibility = Visibility.Collapsed;
             }
 
-            FootType type = FootExtensions.GetType(ediType, optionType, toolType);
+            OptionType type = this.GetFootType(optionType);
+            this.FootSwitchPresenter.Value = type;
+            this.FootSwitchPresenter2.Value = type;
+            this.FootSwitchPresenter3.Value = type;
 
-            if (type == FootType.MarqueeTransform)
-            {
-                this.FootSwitchPresenter.Value = FootType.Transform;
-                this.FootSwitchPresenter2.Value = FootType.Transform;
-                this.FootSwitchPresenter3.Value = FootType.Transform;
-            }
-            else
-            {
-                this.FootSwitchPresenter.Value = type;
-                this.FootSwitchPresenter2.Value = type;
-                this.FootSwitchPresenter3.Value = type;
-            }
-
-            if (type.HasHead())
+            if (optionType.HasPreview())
             {
                 this.FootHead.Visibility = Visibility.Visible;
                 this.HeadLeftScrollViewer.Visibility = Visibility.Collapsed;
@@ -59,7 +49,14 @@ namespace Luo_Painter
             this.FootTransform2.X = this.FootTransform.X = 0;
             this.FootTransform2.Y = this.FootTransform.Y = 0;
 
-            return type;
+            return FootExtensions.GetType(ediType, optionType, toolType);
+        }
+        private OptionType GetFootType(OptionType type)
+        {
+            if (type == OptionType.MarqueeTransform) return OptionType.Transform;
+            else if (type.HasFlag(OptionType.Marquee)) return OptionType.Marquee;
+            else if (type.HasFlag(OptionType.Selection)) return OptionType.Selection;
+            else return type;
         }
 
 

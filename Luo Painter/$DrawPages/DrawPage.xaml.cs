@@ -30,6 +30,34 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace Luo_Painter
 {
     [ContentProperty(Name = nameof(Content))]
+    internal class OptionCase : DependencyObject, ICase<OptionType>
+    {
+        public object Content
+        {
+            get => (object)base.GetValue(ContentProperty);
+            set => base.SetValue(ContentProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Content"/> property. </summary>
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(OptionCase), new PropertyMetadata(null));
+
+        public OptionType Value
+        {
+            get => (OptionType)base.GetValue(ValueProperty);
+            set => base.SetValue(ValueProperty, value);
+        }
+        /// <summary> Identifies the <see cref="Value"/> property. </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(OptionType), typeof(OptionCase), new PropertyMetadata(default(OptionType)));
+
+        public void OnNavigatedTo() { }
+
+        public void OnNavigatedFrom() { }
+    }
+
+    [ContentProperty(Name = nameof(SwitchCases))]
+    internal sealed class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
+
+
+    [ContentProperty(Name = nameof(Content))]
     internal class FootCase : DependencyObject, ICase<FootType>
     {
         public object Content

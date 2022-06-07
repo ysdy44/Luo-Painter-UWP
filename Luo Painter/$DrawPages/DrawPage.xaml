@@ -453,22 +453,22 @@
                 </Thumb.Template>
             </Thumb>
 
-            <local:FootSwitchPresenter x:Name="FootSwitchPresenter" >
-                <local:FootCase Value="Marquee">
+            <local:OptionSwitchPresenter x:Name="FootSwitchPresenter" >
+                <local:OptionCase Value="Marquee">
                     <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" >
                         <tools:ElementItem Type="New"/>
                         <tools:ElementItem Type="Union"/>
                         <tools:ElementItem Type="Exclude"/>
                         <tools:ElementItem Type="Simultaneously"/>
                     </ListBox>
-                </local:FootCase>
-                <local:FootCase Value="Selection">
+                </local:OptionCase>
+                <local:OptionCase Value="Selection">
                     <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" >
                         <tools:ElementItem Type="Add"/>
                         <tools:ElementItem Type="Subtract"/>
                     </ListBox>
-                </local:FootCase>
-            </local:FootSwitchPresenter>
+                </local:OptionCase>
+            </local:OptionSwitchPresenter>
 
             <Grid x:Name="FootHead" Visibility="Collapsed" >
                 <Grid.ColumnDefinitions>
@@ -486,102 +486,102 @@
                     <SymbolIcon Symbol="Back"/>
                 </Button>
 
-                <local:FootSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
-                    <local:FootCase Value="Feather">
+                <local:OptionSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
+                    <local:OptionCase Value="Feather">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:EditIcon Type="Feather" Width="50" />
                             <TextBlock x:Name="FeatherTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Feather
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Grow">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Grow">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:EditIcon Type="Grow" Width="50" />
                             <TextBlock x:Name="GrowTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Grow
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Shrink">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Shrink">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:EditIcon Type="Shrink" Width="50" />
                             <TextBlock x:Name="ShrinkTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Shrink
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Exposure">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Exposure">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="Exposure" Width="50" />
                             <TextBlock x:Name="ExposureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Exposure
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Brightness">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Brightness">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="Brightness" Width="50" />
                             <TextBlock x:Name="BrightnessTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Brightness
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Saturation">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Saturation">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="Saturation" Width="50" />
                             <TextBlock x:Name="SaturationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Saturation
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="HueRotation">
+                    </local:OptionCase>
+                    <local:OptionCase Value="HueRotation">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="HueRotation" Width="50" />
                             <TextBlock x:Name="HueRotationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Hue Rotation
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Contrast">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Contrast">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="Contrast" Width="50" />
                             <TextBlock x:Name="ContrastTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Contrast
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="Temperature">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Temperature">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="Temperature" Width="50" />
                             <TextBlock x:Name="TemperatureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Temperature
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="HighlightsAndShadows">
+                    </local:OptionCase>
+                    <local:OptionCase Value="HighlightsAndShadows">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="HighlightsAndShadows" Width="50" />
                             <TextBlock x:Name="HighlightsAndShadowsTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Highlights and Shadows
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="LuminanceToAlpha">
+                    </local:OptionCase>
+                    <local:OptionCase Value="LuminanceToAlpha">
                         <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" >
                             <x:String>Normal</x:String>
                             <x:String>White Paper</x:String>
                             <x:String>Black Paper</x:String>
                         </ListBox>
-                    </local:FootCase>
-                    <local:FootCase Value="Transform">
+                    </local:OptionCase>
+                    <local:OptionCase Value="Transform">
                         <ListBox x:Name="TransformComboBox" SelectedIndex="1" >
                             <x:String>Move</x:String>
                             <x:String>Transform</x:String>
                             <x:String>Free Transform</x:String>
                         </ListBox>
-                    </local:FootCase>
-                    <local:FootCase Value="DisplacementLiquefaction">
+                    </local:OptionCase>
+                    <local:OptionCase Value="DisplacementLiquefaction">
                         <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" >
                             <x:String>Push</x:String>
                             <x:String>Pinch</x:String>
@@ -590,29 +590,29 @@
                             <x:String>Twirl Right</x:String>
                             <x:String>Reset</x:String>
                         </ListBox>
-                    </local:FootCase>
-                    <local:FootCase Value="GradientMapping">
+                    </local:OptionCase>
+                    <local:OptionCase Value="GradientMapping">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="GradientMapping" Width="50" />
                             <TextBlock x:Name="GradientMappingTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Gradient Mapping
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                    <local:FootCase Value="RippleEffect">
+                    </local:OptionCase>
+                    <local:OptionCase Value="RippleEffect">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <menus:OptionIcon Type="RippleEffect" Width="50" />
                             <TextBlock x:Name="RippleEffectTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Ripple Effect
                             </TextBlock>
                         </StackPanel>
-                    </local:FootCase>
-                </local:FootSwitchPresenter>
+                    </local:OptionCase>
+                </local:OptionSwitchPresenter>
 
             </Grid>
 
-            <local:FootSwitchPresenter x:Name="FootSwitchPresenter3" Grid.Row="1" >
-                <local:FootCase Value="Feather">
+            <local:OptionSwitchPresenter x:Name="FootSwitchPresenter3" Grid.Row="1" >
+                <local:OptionCase Value="Feather">
                     <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Tag>
                             Feather
@@ -629,8 +629,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Grow">
+                </local:OptionCase>
+                <local:OptionCase Value="Grow">
                     <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
                         <Slider.Tag>
                             Grow
@@ -647,8 +647,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Shrink">
+                </local:OptionCase>
+                <local:OptionCase Value="Shrink">
                     <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
                         <Slider.Tag>
                             Shrink
@@ -665,8 +665,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Exposure">
+                </local:OptionCase>
+                <local:OptionCase Value="Exposure">
                     <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -689,8 +689,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Brightness">
+                </local:OptionCase>
+                <local:OptionCase Value="Brightness">
                     <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -713,8 +713,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Saturation">
+                </local:OptionCase>
+                <local:OptionCase Value="Saturation">
                     <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -737,8 +737,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="HueRotation">
+                </local:OptionCase>
+                <local:OptionCase Value="HueRotation">
                     <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -768,8 +768,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Contrast">
+                </local:OptionCase>
+                <local:OptionCase Value="Contrast">
                     <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
                         <Slider.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -801,8 +801,8 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                </local:FootCase>
-                <local:FootCase Value="Temperature">
+                </local:OptionCase>
+                <local:OptionCase Value="Temperature">
                     <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
                         <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
                             <Slider.Background>
@@ -851,8 +851,8 @@
                             </Slider.Header>
                         </Slider>
                     </StackPanel>
-                </local:FootCase>
-                <local:FootCase Value="HighlightsAndShadows">
+                </local:OptionCase>
+                <local:OptionCase Value="HighlightsAndShadows">
                     <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
                         <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
                             <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
@@ -935,8 +935,8 @@
                             </Slider>
                         </StackPanel>
                     </StackPanel>
-                </local:FootCase>
-                <local:FootCase Value="DisplacementLiquefaction">
+                </local:OptionCase>
+                <local:OptionCase Value="DisplacementLiquefaction">
                     <StackPanel x:Name="DisplacementLiquefactionPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
                         <Slider x:Name="DisplacementLiquefactionSizeSlider" Width="260" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
                             <Slider.Tag>
@@ -974,8 +974,8 @@
                             </Slider.Header>
                         </Slider>
                     </StackPanel>
-                </local:FootCase>
-                <local:FootCase Value="GradientMapping">
+                </local:OptionCase>
+                <local:OptionCase Value="GradientMapping">
                     <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
                         <elements:GradientStopSelector.ItemStyle>
                             <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
@@ -1001,8 +1001,8 @@
                             </DataTemplate>
                         </elements:GradientStopSelector.ItemTemplate>
                     </elements:GradientStopSelectorWithUI>
-                </local:FootCase>
-                <local:FootCase Value="RippleEffect">
+                </local:OptionCase>
+                <local:OptionCase Value="RippleEffect">
                     <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
                         <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
                             <Slider.Tag>
@@ -1054,8 +1054,8 @@
                         </Slider>
                     </StackPanel>
 
-                </local:FootCase>
-            </local:FootSwitchPresenter>
+                </local:OptionCase>
+            </local:OptionSwitchPresenter>
 
         </Grid>
 
@@ -1077,10 +1077,10 @@
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
             <menus:ExportMenu x:Name="ExportMenu"/>
             <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <local:ToolGroupSwitchPresenter x:Name="ToolGroupSwitchPresenter" >
+                <local:OptionSwitchPresenter x:Name="ToolSwitchPresenter" >
                     <tools:PaintBrushTool x:Name="PaintBrushTool" />
                     <tools:ViewTool x:Name="ViewTool" />
-                </local:ToolGroupSwitchPresenter>
+                </local:OptionSwitchPresenter>
             </elements:Expander>
             <menus:PaintMenu x:Name="PaintMenu" InkPresenter="{x:Bind InkPresenter}" CanvasDevice="{x:Bind CanvasDevice}"/>
             <menus:EditMenu x:Name="EditMenu" />
