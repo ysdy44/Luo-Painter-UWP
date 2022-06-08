@@ -45,41 +45,6 @@ namespace Luo_Painter.Menus
         public double ConvertYToX(double y) => InverseProportion.Convert(y, this.YIP, this.YRange.IP, this.XIP, this.XRange.IP, RangeRounding.Minimum, RangeRounding.Maximum);
     }
 
-    internal sealed class InkRender
-    {
-        readonly BitmapLayer PaintLayer;
-        public ICanvasImage Souce => this.PaintLayer.Source;
-        public InkRender(CanvasControl sender) => this.PaintLayer = new BitmapLayer(sender, (int)sender.ActualWidth, (int)sender.ActualHeight);
-        public void Render(InkPresenter presenter, Color color)
-        {
-            this.PaintLayer.Clear(Colors.Transparent, BitmapType.Origin);
-            this.PaintLayer.Clear(Colors.Transparent, BitmapType.Source);
-
-            float width = this.PaintLayer.Width;
-            float height = this.PaintLayer.Height;
-            float space = System.Math.Max(2, presenter.Size / height * 2);
-
-            Vector2 position = new Vector2(10, height / 2 + 3.90181f);
-            float pressure = 0.001f;
-
-            for (float x = 10; x < width - 10; x += space)
-            {
-                // 0 ~ Π
-                float radian = x / width * FanKit.Math.Pi;
-
-                // Sin 0 ~ Π ︵
-                float targetPressure = (float)System.Math.Sin(radian);
-                // Sin 0 ~ 2Π ~
-                float offsetY = 20 * (float)System.Math.Sin(radian + radian);
-                Vector2 targetPosition = new Vector2(x, height / 2 + offsetY);
-
-                this.PaintLayer.IsometricFillCircle(position, targetPosition, pressure, targetPressure, space, color, BitmapType.Source);
-                position = targetPosition;
-                pressure = targetPressure;
-            }
-        }
-    }
-
     public sealed partial class PaintMenu : Expander
     {
         //@Delegate
@@ -122,6 +87,11 @@ namespace Luo_Painter.Menus
         }
 
         InkRender InkRender;
+        readonly InverseProportion InkRenderIP = new InverseProportion
+        {
+            Minimum = 1,
+            Maximum = 20
+        };
         bool IsEnable = true;
 
         public InkPresenter InkPresenter { get; set; }
@@ -185,21 +155,13 @@ namespace Luo_Painter.Menus
 
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.InkRender = new InkRender(sender);
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light:
-                        this.InkRender.Render(this.InkPresenter, Colors.Black);
-                        break;
-                    case ElementTheme.Dark:
-                        this.InkRender.Render(this.InkPresenter, Colors.White);
-                        break;
-                }
+                this.InkRender = new InkRender(sender, 320, 68);
+                this.Update();
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
                 if (this.InkRender is null) return;
-                args.DrawingSession.DrawImage(this.InkRender.Souce);
+                args.DrawingSession.DrawImage(this.InkRender.Source);
             };
 
             this.SizeSlider.ValueChanged += (s, e) =>
@@ -209,11 +171,7 @@ namespace Luo_Painter.Menus
                 this.InkPresenter.Size = (float)size;
 
                 if (this.InkRender is null) return;
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light: this.InkRender.Render(this.InkPresenter, Colors.Black); break;
-                    case ElementTheme.Dark: this.InkRender.Render(this.InkPresenter, Colors.White); break;
-                }
+                this.Update();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.OpacitySlider.ValueChanged += (s, e) =>
@@ -231,11 +189,7 @@ namespace Luo_Painter.Menus
                 this.InkPresenter.Spacing = (float)spacing;
 
                 if (this.InkRender is null) return;
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light: this.InkRender.Render(this.InkPresenter, Colors.Black); break;
-                    case ElementTheme.Dark: this.InkRender.Render(this.InkPresenter, Colors.White); break;
-                }
+                this.Update();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.HardnessListView.ItemClick += (s, e) =>
@@ -253,11 +207,7 @@ namespace Luo_Painter.Menus
                     }
 
                     if (this.InkRender is null) return;
-                    switch (base.ActualTheme)
-                    {
-                        case ElementTheme.Light: this.InkRender.Render(this.InkPresenter, Colors.Black); break;
-                        case ElementTheme.Dark: this.InkRender.Render(this.InkPresenter, Colors.White); break;
-                    }
+                    this.Update();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -310,6 +260,29 @@ namespace Luo_Painter.Menus
                     this.InkPresenter.Step = this.Step.Size;
                 }
             };
+        }
+
+        public void Update()
+        {
+            double size = this.InkRenderIP.ConvertOneToValue(this.SizeRange.YRange.IP.ConvertValueToOne(this.InkPresenter.Size));
+
+            switch (this.Type)
+            {
+                case OptionType.PaintPencil:
+                    switch (base.ActualTheme)
+                    {
+                        case ElementTheme.Light: this.InkRender.DrawLine((float)size, Colors.Black); break;
+                        case ElementTheme.Dark: this.InkRender.DrawLine((float)size, Colors.White); break;
+                    }
+                    break;
+                default:
+                    switch (base.ActualTheme)
+                    {
+                        case ElementTheme.Light: this.InkRender.IsometricFillCircle((float)size, this.InkPresenter.Spacing, Colors.Black); break;
+                        case ElementTheme.Dark: this.InkRender.IsometricFillCircle((float)size, this.InkPresenter.Spacing, Colors.White); break;
+                    }
+                    break;
+            }
         }
 
         //@Strings
