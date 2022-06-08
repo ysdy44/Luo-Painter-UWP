@@ -119,7 +119,7 @@ namespace Luo_Painter
                         break;
                     case OptionType.RippleEffect:
                         this.DrawRippleEffect(sender, args.DrawingSession);
-                        break; 
+                        break;
                     default:
                         if (this.OptionType.HasFlag(OptionType.Marquee))
                         {
@@ -207,6 +207,7 @@ namespace Luo_Painter
                 if (this.InkType.HasFlag(InkType.BlendMode))
                     return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source);
                 else if (this.InkType.HasFlag(InkType.Opacity) || this.InkType.HasFlag(InkType.Pattern))
+                {
                     return new CompositeEffect
                     {
                         Sources =
@@ -215,39 +216,45 @@ namespace Luo_Painter
                             this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp)
                         }
                     };
+                }
                 else
                     return this.BitmapLayer.Source;
             }
 
-            switch (this.SelectionType)
+
+            if (this.SelectionType is SelectionType.MarqueePixelBounds is false)
             {
-                case SelectionType.MarqueePixelBounds:
-                    if (this.OptionType.HasDifference())
-                        return new CompositeEffect
-                        {
-                            Sources =
-                            {
-                                new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
-                                {
-                                    Source1 = this.Marquee.Source,
-                                    Source2 = this.BitmapLayer.Source,
-                                },
-                                this.GetPreview(this.OptionType, new AlphaMaskEffect
-                                {
-                                    AlphaMask = this.Marquee.Source,
-                                    Source = this.BitmapLayer.Source
-                                })
-                            }
-                        };
-                    else
-                        return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                return this.GetPreview(this.OptionType, this.BitmapLayer.Source);
+            }
+
+
+            if (this.OptionType.HasDifference())
+            {
+                return new CompositeEffect
+                {
+                    Sources =
+                    {
+                        new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
                         {
                             Source1 = this.Marquee.Source,
-                            Source2 = this.BitmapLayer.Origin,
-                            Source3 = this.GetPreview(this.OptionType, this.BitmapLayer.Origin)
-                        };
-                default:
-                    return this.GetPreview(this.OptionType, this.BitmapLayer.Source);
+                            Source2 = this.BitmapLayer.Source,
+                        },
+                        this.GetPreview(this.OptionType, new AlphaMaskEffect
+                        {
+                            AlphaMask = this.Marquee.Source,
+                            Source = this.BitmapLayer.Source
+                        })
+                    }
+                };
+            }
+            else
+            {
+                return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                {
+                    Source1 = this.Marquee.Source,
+                    Source2 = this.BitmapLayer.Origin,
+                    Source3 = this.GetPreview(this.OptionType, this.BitmapLayer.Origin)
+                };
             }
         }
 

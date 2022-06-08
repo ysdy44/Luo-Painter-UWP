@@ -34,92 +34,62 @@ namespace Luo_Painter
 
             if (this.LayerListView.SelectedItem is ILayer layer)
             {
-                if (layer.Type == LayerType.Bitmap)
+                if (layer.Type is LayerType.Bitmap)
                 {
                     if (layer is BitmapLayer bitmapLayer)
                     {
                         SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
 
-                        switch (state)
+                        if (state is SelectionType.None)
                         {
-                            case SelectionType.None:
-                                this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
-                                return false;
-                            default:
-                                switch (type)
-                                {
-                                    case OptionType.Gray:
-                                        this.Primary(bitmapLayer, new GrayscaleEffect
-                                        {
-                                            Source = bitmapLayer.Origin
-                                        });
-                                        return true;
-                                    case OptionType.Invert:
-                                        this.Primary(bitmapLayer, new InvertEffect
-                                        {
-                                            Source = bitmapLayer.Origin
-                                        });
-                                        return true;
-
-                                    case OptionType.Fog:
-                                        return true;
-                                    case OptionType.Sepia:
-                                        this.Primary(bitmapLayer, new SepiaEffect
-                                        {
-                                            Source = bitmapLayer.Origin
-                                        });
-                                        return true;
-                                    case OptionType.Posterize:
-                                        this.Primary(bitmapLayer, new PosterizeEffect
-                                        {
-                                            Source = bitmapLayer.Origin
-                                        });
-                                        return true;
-
-                                    default:
-                                        switch (type)
-                                        {
-                                            case OptionType.Transform:
-                                                switch (state)
-                                                {
-                                                    case SelectionType.PixelBounds:
-                                                        {
-                                                            PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
-                                                            PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds);
-                                                            this.SetTransform(bounds);
-                                                        }
-                                                        break;
-                                                    case SelectionType.MarqueePixelBounds:
-                                                        {
-                                                            PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
-                                                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
-                                                            this.SetTransform(bounds);
-                                                        }
-                                                        break;
-                                                    default:
-                                                        this.SetTransform(bitmapLayer.Bounds);
-                                                        break;
-                                                }
-                                                break;
-                                            case OptionType.DisplacementLiquefaction:
-                                                this.SetDisplacementLiquefaction();
-                                                break;
-                                            case OptionType.GradientMapping:
-                                                this.SetGradientMapping();
-                                                break;
-                                            case OptionType.RippleEffect:
-                                                this.SetRippleEffect(bitmapLayer);
-                                                break;
-                                        }
-
-                                        this.BitmapLayer = bitmapLayer;
-                                        this.SelectionType = state;
-                                        this.OptionType = type;
-                                        this.SetFootType(type);
-                                        this.SetCanvasState(true);
-                                        return true;
-                                }
+                            this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                            return false;
                         }
+
+                        if (type.HasPreview() is false)
+                        {
+                            this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer.Origin));
+                            return true;
+                        }
+
+                        switch (type)
+                        {
+                            case OptionType.Transform:
+                                switch (state)
+                                {
+                                    case SelectionType.PixelBounds:
+                                        {
+                                            PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
+                                            PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds);
+                                            this.SetTransform(bounds);
+                                        }
+                                        break;
+                                    case SelectionType.MarqueePixelBounds:
+                                        {
+                                            PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
+                                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
+                                            this.SetTransform(bounds);
+                                        }
+                                        break;
+                                    default:
+                                        this.SetTransform(bitmapLayer.Bounds);
+                                        break;
+                                }
+                                break;
+                            case OptionType.DisplacementLiquefaction:
+                                this.SetDisplacementLiquefaction();
+                                break;
+                            case OptionType.GradientMapping:
+                                this.SetGradientMapping();
+                                break;
+                        }
+
+                        this.BitmapLayer = bitmapLayer;
+                        this.SelectionType = state;
+                        this.OptionType = type;
+                        this.SetFootType(type);
+                        this.SetCanvasState(true);
+                        return true;
                     }
                 }
 

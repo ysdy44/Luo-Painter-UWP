@@ -137,44 +137,25 @@ namespace Luo_Painter
 
             this.FootPrimaryButton.Click += (s, e) =>
             {
-                switch (this.OptionType)
+                if (this.OptionType.HasPreview())
                 {
-                    case OptionType.Feather:
-                    case OptionType.MarqueeTransform:
-                    case OptionType.Grow:
-                    case OptionType.Shrink:
-                        {
-                            Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
-                            this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
-                        }
-                        break;
-
-                    case OptionType.Exposure:
-                    case OptionType.Brightness:
-                    case OptionType.Saturation:
-                    case OptionType.HueRotation:
-                    case OptionType.Contrast:
-                    case OptionType.Temperature:
-                    case OptionType.HighlightsAndShadows:
-                    case OptionType.LuminanceToAlpha:
-
-                    case OptionType.Transform:
-                    case OptionType.GradientMapping:
-                    case OptionType.RippleEffect:
-                        {
-                            Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
-                            PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
-                            this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
-                        }
-                        break;
-
-                    default:
-                        break;
+                    if (this.OptionType.IsEdit())
+                    {
+                        Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
+                        this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
+                    }
+                    else
+                    {
+                        Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
+                        this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+                    }
                 }
 
                 this.BitmapLayer = null;
-                this.OptionType = default;
+                this.OptionType = this.ToolListView.SelectedItem;
+                this.SetFootType(this.ToolListView.SelectedItem);
                 this.SetCanvasState(false);
             };
         }
@@ -262,6 +243,7 @@ namespace Luo_Painter
                 switch (mode)
                 {
                     case PixelBoundsMode.Solid:
+                    case PixelBoundsMode.Transarent:
                         bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
                         int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
                         bitmapLayer.Flush();
@@ -344,6 +326,16 @@ namespace Luo_Painter
                     };
 
 
+                case OptionType.Gray:
+                    return new GrayscaleEffect
+                    {
+                        Source = image
+                    };
+                case OptionType.Invert:
+                    return new InvertEffect
+                    {
+                        Source = image
+                    };
                 case OptionType.Exposure:
                     return new ExposureEffect
                     {
@@ -422,6 +414,17 @@ namespace Luo_Painter
                             };
                         default: return image;
                     }
+                //case OptionType.Fog:
+                case OptionType.Sepia:
+                    return new SepiaEffect
+                    {
+                        Source = image
+                    };
+                case OptionType.Posterize:
+                    return new PosterizeEffect
+                    {
+                        Source = image
+                    };
 
                 default: return image;
             }
