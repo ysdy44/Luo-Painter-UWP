@@ -80,16 +80,6 @@ namespace Luo_Painter.Menus
         }
     }
 
-    internal sealed class BlendList : List<BlendEffectMode> { }
-
-    internal sealed class BlendIcon : TIcon<BlendEffectMode>
-    {
-        protected override void OnTypeChanged(BlendEffectMode value)
-        {
-            base.Content = value.GetTitle();
-        }
-    }
-
     public sealed partial class PaintMenu : Expander
     {
         //@Delegate

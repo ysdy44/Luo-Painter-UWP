@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:local="using:Luo_Painter.Menus"
-    xmlns:tools="using:Luo_Painter.Tools"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
@@ -109,11 +109,11 @@
 
         <ListView x:Name="HardnessListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}"
               Visibility="{x:Bind Int0ToVisibility(Type), Mode=OneWay}" >
-            <tools:ElementIcon Type="BrushEdgeHardnessNone"/>
-            <tools:ElementIcon Type="BrushEdgeHardnessCosine"/>
-            <tools:ElementIcon Type="BrushEdgeHardnessQuadratic"/>
-            <tools:ElementIcon Type="BrushEdgeHardnessCube"/>
-            <tools:ElementIcon Type="BrushEdgeHardnessQuartic"/>
+            <luo_painter:ElementIcon Type="BrushEdgeHardnessNone"/>
+            <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine"/>
+            <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic"/>
+            <luo_painter:ElementIcon Type="BrushEdgeHardnessCube"/>
+            <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic"/>
         </ListView>
 
         <!--Mask-->
@@ -206,7 +206,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="effects:BlendEffectMode">
-                    <local:BlendIcon Type="{x:Bind}"/>
+                    <luo_painter:BlendIcon Type="{x:Bind}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 

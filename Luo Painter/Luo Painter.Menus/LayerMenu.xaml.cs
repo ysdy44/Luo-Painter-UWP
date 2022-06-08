@@ -4,10 +4,12 @@ using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.UI.Xaml.Controls;
+using System.Collections.Generic;
 
 namespace Luo_Painter.Menus
 {
+    internal sealed class BlendList : List<BlendEffectMode> { }
+
     public sealed partial class LayerMenu : Expander
     {
         //@Delegate
