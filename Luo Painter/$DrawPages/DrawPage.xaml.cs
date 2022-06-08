@@ -28,6 +28,50 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter
 {
+    internal sealed class ElementIcon : TIcon<ElementType>
+    {
+        protected override void OnTypeChanged(ElementType value)
+        {
+            base.Content = value;
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
+            base.Resources = resource;
+        }
+    }
+
+    internal sealed class ElementItem : TIcon<ElementType>
+    {
+        protected override void OnTypeChanged(ElementType value)
+        {
+            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            {
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            }, value.ToString());
+        }
+    }
+
+
+    internal sealed class BlendIcon : TIcon<BlendEffectMode>
+    {
+        protected override void OnTypeChanged(BlendEffectMode value)
+        {
+            base.Content = value.GetTitle();
+        }
+    }
+
+
+    internal sealed class OptionIcon : TButton<OptionType>
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.Content = value.ToString();
+            base.Template = value.GetTemplate(out ResourceDictionary resource);
+            base.Resources = resource;
+        }
+    }
+
+
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : DependencyObject, ICase<OptionType>
     {
@@ -164,7 +208,6 @@ namespace Luo_Painter
             this.PaintButton.Click += (s, e) => this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
             this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
             this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
-            this.MoreOptionButton.Click += (s, e) => this.MoreOptionMenu.Toggle(this.MoreOptionButton, ExpanderPlacementMode.Bottom);
             this.SetupButton.Click += (s, e) => this.SetupMenu.Toggle(this.SetupButton, ExpanderPlacementMode.Bottom);
             this.LayerButton.Click += (s, e) => this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
             this.ColorButton.Click += (s, e) => this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
