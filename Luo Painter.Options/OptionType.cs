@@ -14,7 +14,8 @@ namespace Luo_Painter.Options
         AllowDrag = 8,
         HasPreview = 16,
         HasDifference = 32,
-        HasState = 64,
+        TempOverlay = 64,
+        HasState = 128,
 
         // Type
         Edit = 1 << 20,
@@ -105,6 +106,7 @@ namespace Luo_Painter.Options
         DisplacementLiquefaction = 2 << 8 | More | IsItemClickEnabled | ExistIcon | HasPreview | HasDifference,
         GradientMapping = 3 << 8 | More | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview,
         RippleEffect = 4 << 8 | More | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview | HasDifference,
+        Fill = 5 << 8 | More | IsItemClickEnabled | ExistIcon | HasPreview | TempOverlay,
 
 
         // Adjustment
@@ -160,7 +162,7 @@ namespace Luo_Painter.Options
         Curve = 16 << 12 | Tool,
         Text = 32 << 12 | Tool,
         Geometry = 64 << 12 | Tool,
-        Pattern = 64 << 12 | Tool,
+        Pattern = 128 << 12 | Tool,
 
         #region Tool
 
