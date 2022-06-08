@@ -318,17 +318,17 @@
                         </UIElement.KeyboardAccelerators >
                         <local:ElementIcon Type="Edit"/>
                     </Button>
+                    <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="W"/>
+                        </UIElement.KeyboardAccelerators>
+                        <local:ElementIcon Type="Adjustment"/>
+                    </Button>
                     <Button x:Name="OptionButton" Style="{StaticResource AppButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="W"/>
                         </UIElement.KeyboardAccelerators>
                         <local:ElementIcon Type="Option"/>
-                    </Button>
-                    <Button x:Name="MoreOptionButton" Style="{StaticResource AppButtonStyle}" >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="T"/>
-                        </UIElement.KeyboardAccelerators>
-                        <local:ElementIcon Type="MoreOption"/>
                     </Button>
                     <Button x:Name="SetupButton" Style="{StaticResource AppButtonStyle}" >
                         <SymbolIcon Symbol="Crop"/>
@@ -1083,8 +1083,8 @@
             </elements:Expander>
             <menus:PaintMenu x:Name="PaintMenu" InkPresenter="{x:Bind InkPresenter}" CanvasDevice="{x:Bind CanvasDevice}"/>
             <menus:EditMenu x:Name="EditMenu" />
+            <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
             <menus:OptionMenu x:Name="OptionMenu" />
-            <menus:MoreOptionMenu x:Name="MoreOptionMenu" />
             <menus:SetupMenu x:Name="SetupMenu" />
             <menus:LayerMenu x:Name="LayerMenu"/>
             <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />

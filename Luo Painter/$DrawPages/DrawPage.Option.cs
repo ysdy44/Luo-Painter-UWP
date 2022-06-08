@@ -17,12 +17,12 @@ namespace Luo_Painter
 
         private void ConstructOptions()
         {
-            this.OptionMenu.ItemClick += (s, type) =>
+            this.AdjustmentMenu.ItemClick += (s, type) =>
             {
                 this.OptionClick(type);
             };
 
-            this.MoreOptionMenu.ItemClick += (s, type) =>
+            this.OptionMenu.ItemClick += (s, type) =>
             {
                 this.OptionClick(type);
             };
