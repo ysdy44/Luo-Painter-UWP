@@ -19,9 +19,27 @@
         Option
     </elements:Expander.Title>
 
+    <elements:Expander.TopAppBar>
+        <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind Collection}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:OptionGrouping">
+                    <TextBlock Text="{x:Bind Key}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
+    </elements:Expander.TopAppBar>
+
+    <FrameworkElement.Tag>
+        <Button x:Name="Button" CommandParameter="{x:Null}" Style="{x:Null}" >
+            <ButtonBase.Command>
+                <local:OptionTypeCommand x:Name="Command"/>
+            </ButtonBase.Command>
+        </Button>
+    </FrameworkElement.Tag>
+
     <FrameworkElement.Resources>
         <!--Collection-->
-        <local:OptionGroupingList x:Name="OptionCollection">
+        <local:OptionGroupingList x:Name="Collection">
             <local:OptionGrouping Key="Adjustment">
                 <options:OptionType>Gray</options:OptionType>
                 <options:OptionType>Invert</options:OptionType>
@@ -63,54 +81,32 @@
         </local:OptionGroupingList>
     </FrameworkElement.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <FlipView x:Name="FlipView" Height="480" Background="Transparent" ItemsSource="{x:Bind Collection}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="local:OptionGrouping">
+                <ItemsControl ItemsSource="{x:Bind}" >
 
-        <Button x:Name="OptionTypeButton" Visibility="Collapsed"
-            CommandParameter="{x:Null}">
-            <ButtonBase.Command>
-                <local:OptionTypeCommand x:Name="OptionTypeCommand"/>
-            </ButtonBase.Command>
-            <SymbolIcon Symbol="Repair"/>
-        </Button>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-        <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind OptionCollection}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:OptionGrouping">
-                    <TextBlock Text="{x:Bind Key}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListBox>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="4,2"/>
+                            <Setter Property="Width" Value="150"/>
+                            <Setter Property="Height" Value="92"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                            <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
 
-        <FlipView x:Name="FlipView" Grid.Row="1" Height="480" Background="Transparent" ItemsSource="{x:Bind OptionCollection}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:OptionGrouping">
-                    <ItemsControl ItemsSource="{x:Bind}" >
-
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="Margin" Value="4,2"/>
-                                <Setter Property="Width" Value="150"/>
-                                <Setter Property="Height" Value="92"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:OptionImage
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:OptionImage
                                     Padding="0"      
                                     HorizontalAlignment="Stretch"                                       
                                     VerticalAlignment="Stretch" 
@@ -120,23 +116,22 @@
                                     Style="{StaticResource TextBlockButtonStyle}"                                      
                                     Type="{Binding}"                                         
                                     CommandParameter="{Binding}"                                         
-                                    Command="{Binding ElementName = OptionTypeButton, Path = Command, Mode=OneWay}"
+                                    Command="{Binding ElementName=Button, Path=Command, Mode=OneWay}"
                                     >
-                                    <ContentControl.ContentTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
-                                                <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ContentControl.ContentTemplate>
-                                </local:OptionImage>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                                <ContentControl.ContentTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
+                                            <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ContentControl.ContentTemplate>
+                            </local:OptionImage>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
-                    </ItemsControl>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </FlipView>
+                </ItemsControl>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </FlipView>
 
-    </Grid>
 </elements:Expander>

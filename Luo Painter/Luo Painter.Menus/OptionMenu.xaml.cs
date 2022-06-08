@@ -50,8 +50,8 @@ namespace Luo_Painter.Menus
         }
     }
 
-    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionGroupType, OptionType> { }
-    internal sealed class OptionGrouping : Grouping<OptionGroupType, OptionType> { }
+    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionType, OptionType> { }
+    internal sealed class OptionGrouping : Grouping<OptionType, OptionType> { }
 
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
 
@@ -60,8 +60,8 @@ namespace Luo_Painter.Menus
         //@Delegate
         public event EventHandler<OptionType> ItemClick
         {
-            remove => this.OptionTypeCommand.Click -= value;
-            add => this.OptionTypeCommand.Click += value;
+            remove => this.Command.Click -= value;
+            add => this.Command.Click += value;
         }
 
         //@Construct
