@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Tools"
     mc:Ignorable="d"
     d:DesignHeight="400"
@@ -48,14 +49,9 @@
         </Slider.Header>
     </Slider>
 
-    <Button x:Name="RadianClearButton" 
-            BorderThickness="1"         
-            BorderBrush="{ThemeResource AppStroke}"          
-            Background="{ThemeResource SystemAltLowColor}"        
-            Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-            >
+    <Button x:Name="RadianClearButton" HorizontalAlignment="Left" Style="{StaticResource AppAccentBorderButtonStyle}" >
         <StackPanel Spacing="12" Orientation="Horizontal">
-            <local:ElementIcon Type="ResetRadian"/>
+            <luo_painter:ElementIcon Type="ResetRadian"/>
             <TextBlock x:Name="ScaleClearTextBlock" VerticalAlignment="Center" >         
                 Reset the radian of rotation
             </TextBlock>
@@ -85,14 +81,9 @@
         </Slider.Header>
     </Slider>
 
-    <Button x:Name="ScaleClearButton" 
-        BorderThickness="1"         
-        BorderBrush="{ThemeResource AppStroke}"          
-        Background="{ThemeResource SystemAltLowColor}"        
-        Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-        >
+    <Button x:Name="ScaleClearButton" HorizontalAlignment="Left" Style="{StaticResource AppAccentBorderButtonStyle}" >
         <StackPanel Spacing="12" Orientation="Horizontal">
-            <local:ElementIcon Type="ResetScale"/>
+            <luo_painter:ElementIcon Type="ResetScale"/>
             <TextBlock x:Name="RadianClearTextBlock" VerticalAlignment="Center" >
                 Reset scale
             </TextBlock>

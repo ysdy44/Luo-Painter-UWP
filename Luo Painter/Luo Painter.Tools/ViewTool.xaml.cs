@@ -8,29 +8,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Tools
 {
-    internal sealed class ElementIcon : TIcon<ElementType>
-    {
-        protected override void OnTypeChanged(ElementType value)
-        {
-            base.Content = value;
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
-        }
-    }
-
-    internal sealed class ElementItem : TIcon<ElementType>
-    {
-        protected override void OnTypeChanged(ElementType value)
-        {
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
-            {
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
-            }, value.ToString());
-        }
-    }
-
     internal sealed class ScaleRange
     {
         public readonly Range XRange;
