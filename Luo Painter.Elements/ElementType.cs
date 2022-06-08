@@ -6,6 +6,7 @@
         Brush,
         Edit,
         Layer,
+        Adjustment,
         Option,
         MoreOption,
 
