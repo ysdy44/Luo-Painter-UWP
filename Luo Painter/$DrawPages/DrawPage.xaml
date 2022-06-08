@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
-    xmlns:edits="using:Luo_Painter.Edits"
     xmlns:options="using:Luo_Painter.Options"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
@@ -455,7 +454,7 @@
 
             <local:OptionSwitchPresenter x:Name="FootSwitchPresenter" >
                 <local:OptionCase Value="Marquee">
-                    <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" >
+                    <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
                         <tools:ElementItem Type="New"/>
                         <tools:ElementItem Type="Union"/>
                         <tools:ElementItem Type="Exclude"/>
@@ -463,7 +462,7 @@
                     </ListBox>
                 </local:OptionCase>
                 <local:OptionCase Value="Selection">
-                    <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" >
+                    <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
                         <tools:ElementItem Type="Add"/>
                         <tools:ElementItem Type="Subtract"/>
                     </ListBox>
@@ -483,7 +482,7 @@
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                     </UIElement.KeyboardAccelerators>
-                    <SymbolIcon Symbol="Back"/>
+                    <SymbolIcon Symbol="{x:Bind FlowDirectionToSymbolConverter(FlowDirection), Mode=OneWay}"/>
                 </Button>
 
                 <local:OptionSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
@@ -568,14 +567,14 @@
                         </StackPanel>
                     </local:OptionCase>
                     <local:OptionCase Value="LuminanceToAlpha">
-                        <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" >
+                        <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
                             <x:String>Normal</x:String>
                             <x:String>White Paper</x:String>
                             <x:String>Black Paper</x:String>
                         </ListBox>
                     </local:OptionCase>
                     <local:OptionCase Value="Transform">
-                        <ListBox x:Name="TransformComboBox" SelectedIndex="1" >
+                        <ListBox x:Name="TransformComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
                             <x:String>Move</x:String>
                             <x:String>Transform</x:String>
                             <x:String>Free Transform</x:String>
@@ -1094,7 +1093,7 @@
 
         <!--Tip-->
         <Border IsHitTestVisible="False" CornerRadius="6" Padding="12,3" MinHeight="40" Background="Red" RequestedTheme="Dark" HorizontalAlignment="Center" VerticalAlignment="Center"
-                Visibility="{x:Bind BooleanToVisibilityConverter(GradientMappingSelector.IsHitTestVisible), Mode=OneWay}">
+                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(GradientMappingSelector.IsHitTestVisible), Mode=OneWay}">
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon Symbol="Delete"/>
                 <ContentControl Width="12"/>

@@ -69,7 +69,9 @@ namespace Luo_Painter
         //@Converter
         private bool ReverseBooleanConverter(bool value) => !value;
         private bool ReverseBooleanConverter(bool? value) => value == false;
-        private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
+        private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
+        private Symbol FlowDirectionToSymbolConverter(FlowDirection value) => value is FlowDirection.LeftToRight ? Symbol.Back : Symbol.Forward;
 
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
@@ -85,8 +87,8 @@ namespace Luo_Painter
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
         BitmapLayer Displacement { get; set; }
-        bool IsFullScreen { get; set; }
 
+        bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;
@@ -156,7 +158,7 @@ namespace Luo_Painter
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
-         
+
             this.ExportButton.Click += (s, e) => this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
             this.ToolButton.Click += (s, e) => this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
             this.PaintButton.Click += (s, e) => this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
