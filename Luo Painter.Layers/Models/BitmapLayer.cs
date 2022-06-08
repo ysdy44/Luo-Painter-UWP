@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
 using System;
 using System.Numerics;
 using Windows.UI;
@@ -158,6 +159,17 @@ namespace Luo_Painter.Layers.Models
                 ds.DrawImage(image1);
                 ds.Blend = CanvasBlend.SourceOver;
                 ds.DrawImage(image2);
+            }
+        }
+
+        public void Clear(ICanvasBrush brush, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.FillRectangle(0, 0, this.Width, this.Height, brush);
             }
         }
 
