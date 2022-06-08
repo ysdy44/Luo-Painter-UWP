@@ -33,11 +33,10 @@ namespace Luo_Painter.Menus
         //@Content
         public Eyedropper Eyedropper { get; set; }
         public ClickEyedropper ClickEyedropper { get; set; }
-        public Color Color => this.ColorPicker.Color;
 
+        public Color Color { get; private set; }
         public Vector4 ColorHdr => this.ColorHdrCore;
         private Vector4 ColorHdrCore;
-
         Point StartingPosition;
 
         //@Construct
@@ -45,14 +44,9 @@ namespace Luo_Painter.Menus
         {
             this.InitializeComponent();
             this.ConstructStraw();
+            this.SetColorHdr(this.ColorPicker.Color);
             this.ColorPicker.ColorChanged += this.ColorChanged;
-            this.ColorPicker.ColorChanged += (s, e) =>
-            {
-                this.ColorHdrCore.W = e.NewColor.A / 255f;
-                this.ColorHdrCore.X = e.NewColor.R / 255f;
-                this.ColorHdrCore.Y = e.NewColor.G / 255f;
-                this.ColorHdrCore.Z = e.NewColor.B / 255f;
-            };
+            this.ColorPicker.ColorChanged += (s, e) => this.SetColorHdr(e.NewColor);
             this.ColorPicker.Loaded += (s, e) =>
             {
                 if (s is DependencyObject reference)
@@ -84,6 +78,15 @@ namespace Luo_Painter.Menus
                     }
                 }
             };
+        }
+
+        private void SetColorHdr(Color color)
+        {
+            this.Color = color;
+            this.ColorHdrCore.W = color.A / 255f;
+            this.ColorHdrCore.X = color.R / 255f;
+            this.ColorHdrCore.Y = color.G / 255f;
+            this.ColorHdrCore.Z = color.B / 255f;
         }
 
         public async void ManipulationStarted2(object sender, ManipulationStartedRoutedEventArgs e)
