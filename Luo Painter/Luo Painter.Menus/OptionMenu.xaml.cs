@@ -23,36 +23,6 @@ namespace Luo_Painter.Menus
         }
     }
 
-    internal sealed class OptionImage : TButton<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Content = value.ToString();
-            // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
-            {
-                BitmapImage bitmap = new BitmapImage();
-                base.Background = new ImageBrush
-                {
-                    ImageSource = bitmap
-                };
-                bitmap.UriSource = new Uri(value.GetThumbnail());
-            }
-        }
-    }
-
-    internal sealed class OptionIcon : TButton<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Content = value.ToString();
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
-        }
-    }
-
-    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionType, OptionType> { }
-    internal sealed class OptionGrouping : Grouping<OptionType, OptionType> { }
-
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
 
     public sealed partial class OptionMenu : Expander
@@ -69,7 +39,7 @@ namespace Luo_Painter.Menus
         {
             this.InitializeComponent();
         }
-
+        
         //@Strings
         public void ConstructStrings(ResourceLoader resource)
         {

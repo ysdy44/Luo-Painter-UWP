@@ -12,126 +12,22 @@
     d:DesignWidth="400"
     MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
-    Background="{ThemeResource SystemControlAcrylicElementBrush}"
+    Background="{ThemeResource SystemControlAcrylicElementBrush}" 
     >
 
     <elements:Expander.Title>
-        Option
+        Options
     </elements:Expander.Title>
 
-    <elements:Expander.TopAppBar>
-        <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind Collection}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:OptionGrouping">
-                    <TextBlock Text="{x:Bind Key}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListBox>
-    </elements:Expander.TopAppBar>
-
-    <FrameworkElement.Tag>
-        <Button x:Name="Button" CommandParameter="{x:Null}" Style="{x:Null}" >
-            <ButtonBase.Command>
-                <local:OptionTypeCommand x:Name="Command"/>
-            </ButtonBase.Command>
-        </Button>
-    </FrameworkElement.Tag>
-
     <FrameworkElement.Resources>
-        <!--Collection-->
-        <local:OptionGroupingList x:Name="Collection">
-            <local:OptionGrouping Key="Adjustment">
-                <options:OptionType>Gray</options:OptionType>
-                <options:OptionType>Invert</options:OptionType>
-                <options:OptionType>Exposure</options:OptionType>
-                <options:OptionType>Brightness</options:OptionType>
-                <options:OptionType>Saturation</options:OptionType>
-                <options:OptionType>HueRotation</options:OptionType>
-                <options:OptionType>Contrast</options:OptionType>
-                <options:OptionType>Temperature</options:OptionType>
-                <options:OptionType>HighlightsAndShadows</options:OptionType>
-            </local:OptionGrouping>
-            <local:OptionGrouping Key="Effect1">
-                <options:OptionType>GaussianBlur</options:OptionType>
-                <options:OptionType>DirectionalBlur</options:OptionType>
-                <options:OptionType>Sharpen</options:OptionType>
-                <options:OptionType>Shadow</options:OptionType>
-                <options:OptionType>ChromaKey</options:OptionType>
-                <options:OptionType>EdgeDetection</options:OptionType>
-                <options:OptionType>Border</options:OptionType>
-                <options:OptionType>Emboss</options:OptionType>
-                <options:OptionType>Lighting</options:OptionType>
-            </local:OptionGrouping>
-            <local:OptionGrouping Key="Effect2">
-                <options:OptionType>LuminanceToAlpha</options:OptionType>
-                <options:OptionType>Fog</options:OptionType>
-                <options:OptionType>Sepia</options:OptionType>
-                <options:OptionType>Posterize</options:OptionType>
-                <options:OptionType>Colouring</options:OptionType>
-                <options:OptionType>Tint</options:OptionType>
-                <options:OptionType>DiscreteTransfer</options:OptionType>
-                <options:OptionType>Vignette</options:OptionType>
-                <options:OptionType>GammaTransfer</options:OptionType>
-            </local:OptionGrouping>
-            <local:OptionGrouping Key="Effect3">
-                <options:OptionType>Glass</options:OptionType>
-                <options:OptionType>PinchPunch</options:OptionType>
-                <options:OptionType>Morphology</options:OptionType>
-            </local:OptionGrouping>
-        </local:OptionGroupingList>
+        <!--Command-->
+        <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <FlipView x:Name="FlipView" Height="480" Background="Transparent" ItemsSource="{x:Bind Collection}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="local:OptionGrouping">
-                <ItemsControl ItemsSource="{x:Bind}" >
-
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="Margin" Value="4,2"/>
-                            <Setter Property="Width" Value="150"/>
-                            <Setter Property="Height" Value="92"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                            <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:OptionImage
-                                    Padding="0"      
-                                    HorizontalAlignment="Stretch"                                       
-                                    VerticalAlignment="Stretch" 
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"          
-                                    Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-                                    Style="{StaticResource TextBlockButtonStyle}"                                      
-                                    Type="{Binding}"                                         
-                                    CommandParameter="{Binding}"                                         
-                                    Command="{Binding ElementName=Button, Path=Command, Mode=OneWay}"
-                                    >
-                                <ContentControl.ContentTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
-                                            <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </ContentControl.ContentTemplate>
-                            </local:OptionImage>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                </ItemsControl>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </FlipView>
-
+    <StackPanel Spacing="2">
+        <local:OptionItem Type="Transform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:OptionItem Type="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:OptionItem Type="RippleEffect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+    </StackPanel>
 </elements:Expander>
