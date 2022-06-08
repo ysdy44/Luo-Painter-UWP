@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="BrushEdgeHardness.cs" />
     <Compile Include="InkPresenter.cs" />
+    <Compile Include="InkRender.cs" />
     <Compile Include="InkType.cs" />
     <Compile Include="PaintBrush.cs" />
     <Compile Include="PaintBrushGroupType.cs" />
