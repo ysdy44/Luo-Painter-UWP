@@ -8,31 +8,24 @@
     xmlns:local="using:Luo_Painter.Menus"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
-    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
     MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}" 
+    Title="{x:Bind Type,Mode=OneWay}"
     >
 
     <FrameworkElement.Resources>
         <!--Scale-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:SpacingRange x:Name="SpacingRange"/>
+        <elements:SizePickerExtension x:Name="Step"/>
     </FrameworkElement.Resources>
 
-    <elements:Expander.Title>
-        Paint
-    </elements:Expander.Title>
-
     <StackPanel>
-
-        <canvas:CanvasControl x:Name="CanvasControl" 
-                          Margin="0,12,0,22" Width="320" Height="68" 
-                          UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-
+        
         <!--Size-->
         <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" >
             <Slider x:Name="SizeSlider" Padding="0,4,0,0" Value="{x:Bind SizeRange.XRange.Default}" Minimum="{x:Bind SizeRange.XRange.Minimum}" Maximum="{x:Bind SizeRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >

@@ -1,16 +1,8 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
+﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
-using Luo_Painter.Layers.Models;
-using Luo_Painter.Options;
-using Luo_Painter.Tools;
-using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.UI.Xaml;
-using System.Collections.Generic;
-using System.Numerics;
+using System;
 using Windows.ApplicationModel.Resources;
-using Windows.UI;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Menus
@@ -27,7 +19,13 @@ namespace Luo_Painter.Menus
 
     public sealed partial class PaintMenu : Expander
     {
-        //@Delegate
+        //@Delegate  
+        public event EventHandler<float> InkSizeChanged;
+        public event EventHandler<float> InkOpacityChanged;
+        public event EventHandler<float> InkSpacingChanged;
+        public event EventHandler<BrushEdgeHardness> InkHardnessChanged;
+        public event EventHandler<BlendEffectMode> InkBlendModeChanged;
+
         public event RoutedEventHandler SelectMask { remove => this.SelectMaskButton.Click -= value; add => this.SelectMaskButton.Click += value; }
         public event RoutedEventHandler SelectPattern { remove => this.SelectPatternButton.Click -= value; add => this.SelectPatternButton.Click += value; }
 
@@ -36,6 +34,9 @@ namespace Luo_Painter.Menus
 
         public event RoutedEventHandler MaskOpened;
         public event RoutedEventHandler PatternOpened;
+
+        public event EventHandler<bool> InkRotateChanged;
+        public event EventHandler<int> InkStepChanged;
 
         //@Converter
         private string RoundConverter(double value) => $"{value:0}";
@@ -74,18 +75,7 @@ namespace Luo_Painter.Menus
             }
         }
 
-        InkRender InkRender;
-        readonly InverseProportion InkRenderIP = new InverseProportion
-        {
-            Minimum = 1,
-            Maximum = 20
-        };
-        bool IsEnable = true;
-
-        public InkPresenter InkPresenter { get; set; }
-        public CanvasDevice CanvasDevice { get; set; }
-
-        readonly SizePickerExtension Step = new SizePickerExtension();
+        bool IsEnable;
 
         #region DependencyProperty
 
@@ -128,7 +118,7 @@ namespace Luo_Painter.Menus
         public void ClosePattern()
         {
             this.IsEnable = false;
-            this.MaskButton.IsOn = false;
+            this.PatternButton.IsOn = false;
             this.IsEnable = true;
         }
 
@@ -140,46 +130,26 @@ namespace Luo_Painter.Menus
         public PaintMenu()
         {
             this.InitializeComponent();
-
-            this.CanvasControl.CreateResources += (sender, args) =>
-            {
-                this.InkRender = new InkRender(sender, 320, 68);
-                this.Update();
-            };
-            this.CanvasControl.Draw += (sender, args) =>
-            {
-                if (this.InkRender is null) return;
-                args.DrawingSession.DrawImage(this.InkRender.Source);
-            };
-
+            base.Unloaded += (s, e) => this.IsEnable = false;
+            base.Loaded += (s, e) => this.IsEnable = true;
             this.SizeSlider.ValueChanged += (s, e) =>
             {
                 if (this.IsEnable is false) return;
                 double size = this.SizeRange.ConvertXToY(e.NewValue);
-                this.InkPresenter.Size = (float)size;
-
-                if (this.InkRender is null) return;
-                this.Update();
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.InkSizeChanged?.Invoke(this, (float)size); // Delegate
             };
             this.OpacitySlider.ValueChanged += (s, e) =>
             {
                 if (this.IsEnable is false) return;
                 double opacity = System.Math.Clamp(e.NewValue / 100, 0, 1);
-                this.InkPresenter.Opacity = (float)opacity;
-
-                this.CanvasControl.Opacity = opacity;
+                this.InkOpacityChanged?.Invoke(this, (float)opacity); // Delegate
             };
             this.SpacingSlider.ValueChanged += (s, e) =>
             {
                 if (this.IsEnable is false) return;
                 double spacing = this.SpacingRange.ConvertXToY(e.NewValue);
                 double spacing2 = System.Math.Clamp(spacing / 100, 0.1, 4);
-                this.InkPresenter.Spacing = (float)spacing2;
-
-                if (this.InkRender is null) return;
-                this.Update();
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.InkSpacingChanged?.Invoke(this, (float)spacing2); // Delegate
             };
             this.HardnessListView.ItemClick += (s, e) =>
             {
@@ -187,17 +157,24 @@ namespace Luo_Painter.Menus
                 {
                     switch (item.Type)
                     {
-                        case ElementType.BrushEdgeHardnessNone: this.InkPresenter.Hardness = BrushEdgeHardness.None; break;
-                        case ElementType.BrushEdgeHardnessCosine: this.InkPresenter.Hardness = BrushEdgeHardness.Cosine; break;
-                        case ElementType.BrushEdgeHardnessQuadratic: this.InkPresenter.Hardness = BrushEdgeHardness.Quadratic; break;
-                        case ElementType.BrushEdgeHardnessCube: this.InkPresenter.Hardness = BrushEdgeHardness.Cube; break;
-                        case ElementType.BrushEdgeHardnessQuartic: this.InkPresenter.Hardness = BrushEdgeHardness.Quartic; break;
-                        default: this.InkPresenter.Hardness = BrushEdgeHardness.None; break;
+                        case ElementType.BrushEdgeHardnessNone:
+                            this.InkHardnessChanged?.Invoke(this, BrushEdgeHardness.None); // Delegate
+                            break;
+                        case ElementType.BrushEdgeHardnessCosine:
+                            this.InkHardnessChanged?.Invoke(this, BrushEdgeHardness.Cosine); // Delegate
+                            break;
+                        case ElementType.BrushEdgeHardnessQuadratic:
+                            this.InkHardnessChanged?.Invoke(this, BrushEdgeHardness.Quadratic); // Delegate
+                            break;
+                        case ElementType.BrushEdgeHardnessCube:
+                            this.InkHardnessChanged?.Invoke(this, BrushEdgeHardness.Cube); // Delegate
+                            break;
+                        case ElementType.BrushEdgeHardnessQuartic:
+                            this.InkHardnessChanged?.Invoke(this, BrushEdgeHardness.Quartic); // Delegate
+                            break;
+                        default:
+                            break;
                     }
-
-                    if (this.InkRender is null) return;
-                    this.Update();
-                    this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
 
@@ -205,7 +182,7 @@ namespace Luo_Painter.Menus
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {
-                    this.InkPresenter.SetBlendMode(item.IsDefined(), item);
+                    this.InkBlendModeChanged?.Invoke(this, item); // Delegate
                 }
             };
 
@@ -227,12 +204,12 @@ namespace Luo_Painter.Menus
             this.RotateButton.Unchecked += (s, e) =>
             {
                 if (this.IsEnable is false) return;
-                this.InkPresenter.Rotate = false;
+                this.InkRotateChanged?.Invoke(s, false); // Delegate
             };
             this.RotateButton.Checked += (s, e) =>
             {
                 if (this.IsEnable is false) return;
-                this.InkPresenter.Rotate = true;
+                this.InkRotateChanged?.Invoke(s, true); // Delegate
             };
 
             this.StepTextBox.Text = this.Step.ToString();
@@ -246,32 +223,9 @@ namespace Luo_Painter.Menus
                 if (this.IsEnable is false) return;
                 if (this.Step.IsMatch(this.StepTextBox))
                 {
-                    this.InkPresenter.Step = this.Step.Size;
+                    this.InkStepChanged?.Invoke(s, this.Step.Size); // Delegate
                 }
             };
-        }
-
-        public void Update()
-        {
-            double size = this.InkRenderIP.ConvertOneToValue(this.SizeRange.YRange.IP.ConvertValueToOne(this.InkPresenter.Size));
-
-            switch (this.Type)
-            {
-                case InkType.LineDry:
-                    switch (base.ActualTheme)
-                    {
-                        case ElementTheme.Light: this.InkRender.DrawLine((float)size, Colors.Black); break;
-                        case ElementTheme.Dark: this.InkRender.DrawLine((float)size, Colors.White); break;
-                    }
-                    break;
-                default:
-                    switch (base.ActualTheme)
-                    {
-                        case ElementTheme.Light: this.InkRender.IsometricFillCircle((float)size, this.InkPresenter.Spacing, Colors.Black); break;
-                        case ElementTheme.Dark: this.InkRender.IsometricFillCircle((float)size, this.InkPresenter.Spacing, Colors.White); break;
-                    }
-                    break;
-            }
         }
 
         //@Strings
@@ -290,7 +244,6 @@ namespace Luo_Painter.Menus
                 this.RotateButton.IsChecked = brush.Rotate;
                 this.Step.Size = brush.Step;
                 this.StepTextBox.Text = this.Step.ToString();
-                this.CanvasControl.Invalidate(); // Invalidate
             }
             this.IsEnable = true;
         }

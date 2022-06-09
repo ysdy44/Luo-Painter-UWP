@@ -1081,7 +1081,13 @@
                     <tools:ViewTool x:Name="ViewTool" />
                 </local:OptionSwitchPresenter>
             </elements:Expander>
-            <menus:PaintMenu x:Name="PaintMenu" InkPresenter="{x:Bind InkPresenter}" CanvasDevice="{x:Bind CanvasDevice}"/>
+            <menus:PaintMenu x:Name="PaintMenu">
+                <menus:PaintMenu.TopAppBar>
+                    <canvas:CanvasControl x:Name="InkCanvasControl" 
+                          Margin="0,12,0,22" Width="320" Height="68" 
+                          UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                </menus:PaintMenu.TopAppBar>
+            </menus:PaintMenu>
             <menus:EditMenu x:Name="EditMenu" />
             <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
             <menus:OptionMenu x:Name="OptionMenu" />
