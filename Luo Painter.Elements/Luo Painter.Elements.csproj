@@ -140,6 +140,7 @@
     <Compile Include="GradientStopSelectorWithUI.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
+    <Compile Include="InverseProportionRange.cs" />
     <Compile Include="SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
     </Compile>
