@@ -121,6 +121,7 @@
     <Compile Include="%24DrawPages\DrawPage.Edit.cs" />
     <Compile Include="%24DrawPages\DrawPage.Foot.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.cs" />
     <Compile Include="%24DrawPages\DrawPage.Method.cs" />

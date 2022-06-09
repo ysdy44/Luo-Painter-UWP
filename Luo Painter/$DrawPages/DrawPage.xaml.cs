@@ -168,6 +168,7 @@ namespace Luo_Painter
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
             // Ink
             this.InkRender = new InkRender(resourceCreator, 320, 68);
+            this.Ink();
         }
         private async Task CreateDottedLineResourcesAsync()
         {
@@ -187,6 +188,9 @@ namespace Luo_Painter
             this.ConstructFoots();
             this.ConstructFoot();
 
+            this.ConstructBrush();
+            this.ConstructInk();
+
             this.ConstructEdits();
 
             this.ConstructOptions();
@@ -195,7 +199,6 @@ namespace Luo_Painter
 
             this.ConstructTools();
             this.ConstructMarquee();
-            this.ConstructPaint();
             this.ConstructVector();
 
             this.ConstructHistory();
