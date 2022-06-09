@@ -63,7 +63,6 @@ namespace Luo_Painter
             [0.6666] = Colors.LightGoldenrodYellow,
             [1] = Colors.PaleVioletRed,
         };
-        GradientMesh GradientMesh;
 
         private void SetGradientMapping()
         {

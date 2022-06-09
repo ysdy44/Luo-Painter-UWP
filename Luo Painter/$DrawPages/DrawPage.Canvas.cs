@@ -57,7 +57,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        Mesh Mesh;
         bool StartingToolShow;
         bool StartingLayerShow;
         private bool AntiMistouch => true;
@@ -175,7 +174,7 @@ namespace Luo_Painter
                 this.ObservableCollection.Add(bitmapLayer);
                 this.LayerListView.SelectedIndex = 0;
 
-                args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
+                args.TrackAsyncAction(this.CreateResourcesAsync(sender).AsAsyncAction());
             };
             this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>
             {

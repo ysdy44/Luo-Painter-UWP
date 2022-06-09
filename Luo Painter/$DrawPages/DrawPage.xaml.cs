@@ -126,7 +126,10 @@ namespace Luo_Painter
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
         InkPresenter InkPresenter { get; } = new InkPresenter();
+        InkRender InkRender { get; set; }
 
+        Mesh Mesh { get; set; }
+        GradientMesh GradientMesh { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
@@ -149,7 +152,7 @@ namespace Luo_Painter
         byte[] BrushEdgeHardnessShaderCodeBytes;
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
-        private async Task CreateResourcesAsync()
+        private async Task CreateResourcesAsync(ICanvasResourceCreatorWithDpi resourceCreator)
         {
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
             this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
@@ -159,8 +162,12 @@ namespace Luo_Painter
             this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
             this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();
             this.DisplacementLiquefactionShaderCodeBytes = await ShaderType.DisplacementLiquefaction.LoadAsync();
+
+            // Brush
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
+            // Ink
+            this.InkRender = new InkRender(resourceCreator, 320, 68);
         }
         private async Task CreateDottedLineResourcesAsync()
         {
