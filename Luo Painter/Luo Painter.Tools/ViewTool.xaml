@@ -23,7 +23,7 @@
         <local:ScaleRange x:Name="ScaleRange"/>
         <Storyboard x:Name="ScaleStoryboard">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="ScaleSlider" EnableDependentAnimation="True">
-                <SplineDoubleKeyFrame Value="330" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
+                <SplineDoubleKeyFrame Value="23" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </FrameworkElement.Resources>

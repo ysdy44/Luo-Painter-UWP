@@ -20,6 +20,7 @@
     <FrameworkElement.Resources>
         <!--Scale-->
         <local:SizeRange x:Name="SizeRange"/>
+        <local:SpacingRange x:Name="SpacingRange"/>
     </FrameworkElement.Resources>
 
     <elements:Expander.Title>
@@ -27,7 +28,7 @@
     </elements:Expander.Title>
 
     <StackPanel>
-        
+
         <canvas:CanvasControl x:Name="CanvasControl" 
                           Margin="0,12,0,22" Width="320" Height="68" 
                           UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
@@ -79,12 +80,12 @@
         <!--Spacing-->
         <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" 
                         Visibility="{x:Bind Int013ToVisibility(Type), Mode=OneWay}" >
-            <Slider x:Name="SpacingSlider" Padding="0,4,0,0" Value="100" Minimum="10" Maximum="400" Style="{StaticResource AppSliderStyle}" >
+            <Slider x:Name="SpacingSlider" Padding="0,4,0,0" Value="{x:Bind SpacingRange.XRange.Default}" Minimum="{x:Bind SpacingRange.XRange.Minimum}" Maximum="{x:Bind SpacingRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
                 <Slider.Tag>
                     Spacing
                 </Slider.Tag>
                 <Slider.Header>
-                    <Button 
+                    <Button      
                                 Padding="4,0" MinWidth="44" Height="28"
                                 BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
@@ -93,8 +94,8 @@
                             </Flyout>
                         </Button.Flyout>
                         <TextBlock>
-                        <Run Text="{x:Bind RoundConverter(SpacingSlider.Value), Mode=OneWay}" />
-                        <Run>%</Run>
+                            <Run Text="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}" />
+                            <Run>%</Run>
                         </TextBlock>
                     </Button>
                 </Slider.Header>

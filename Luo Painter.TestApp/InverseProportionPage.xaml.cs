@@ -4,37 +4,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    internal sealed class ScaleRange
+    internal sealed class ScaleRange : InverseProportionRange
     {
-        public readonly Range XRange;
-        public readonly Range YRange = new Range
-        {
-            Default = 1,
-            IP = new InverseProportion
-            {
-                Minimum = 0.1,
-                Maximum = 10,
-            }
-        };
-
-        public readonly InverseProportion XIP;
-        public readonly InverseProportion YIP = new InverseProportion
-        {
-            Minimum = 0.3333333333333333333333333333333333333333333333333333333333333,
-            Maximum = 1,
-        };
-
-        public ScaleRange()
-        {
-            if (this.YRange.Minimum >= this.YRange.Maximum || this.YIP.Minimum >= this.YIP.Maximum)
-                throw new System.IndexOutOfRangeException("The minimum must be less than the maximum.");
-
-            this.XIP = this.YIP.Convert();
-            this.XRange = this.YRange.Convert(this.YIP, this.YRange.IP, 100);
-        }
-
-        public double ConvertXToY(double x) => InverseProportion.Convert(x, this.XIP, this.XRange.IP, this.YIP, this.YRange.IP, RangeRounding.Maximum, RangeRounding.Minimum);
-        public double ConvertYToX(double y) => InverseProportion.Convert(y, this.YIP, this.YRange.IP, this.XIP, this.XRange.IP, RangeRounding.Minimum, RangeRounding.Maximum);
+        public ScaleRange() : base(1, 0.1, 10, 100) { }
     }
 
     public sealed partial class InverseProportionPage : Page

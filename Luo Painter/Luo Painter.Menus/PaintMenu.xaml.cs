@@ -15,34 +15,14 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Menus
 {
-    internal sealed class SizeRange
+    internal sealed class SizeRange : InverseProportionRange
     {
-        public readonly Range XRange;
-        public readonly Range YRange = new Range
-        {
-            Default = 12,
-            IP = new InverseProportion
-            {
-                Minimum = 1,
-                Maximum = 400,
-            }
-        };
+        public SizeRange() : base(12, 1, 400, 100000) { }
+    }
 
-        private readonly InverseProportion XIP;
-        private readonly InverseProportion YIP = new InverseProportion
-        {
-            Minimum = 0.3333333333333333333333333333333333333333333333333333333333333,
-            Maximum = 1,
-        };
-
-        public SizeRange()
-        {
-            this.XIP = this.YIP.Convert();
-            this.XRange = this.YRange.Convert(this.YIP, this.YRange.IP, 100000);
-        }
-
-        public double ConvertXToY(double x) => InverseProportion.Convert(x, this.XIP, this.XRange.IP, this.YIP, this.YRange.IP, RangeRounding.Maximum, RangeRounding.Minimum);
-        public double ConvertYToX(double y) => InverseProportion.Convert(y, this.YIP, this.YRange.IP, this.XIP, this.XRange.IP, RangeRounding.Minimum, RangeRounding.Maximum);
+    internal sealed class SpacingRange : InverseProportionRange
+    {
+        public SpacingRange() : base(25, 10, 400, 1000000) { }
     }
 
     public sealed partial class PaintMenu : Expander
@@ -60,6 +40,7 @@ namespace Luo_Painter.Menus
         //@Converter
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
+        private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
         private Visibility Int0ToVisibility(OptionType value) => value == OptionType.PaintBrush ? Visibility.Visible : Visibility.Collapsed;
         private Visibility Int012ToVisibility(OptionType value)
         {
@@ -185,8 +166,9 @@ namespace Luo_Painter.Menus
             this.SpacingSlider.ValueChanged += (s, e) =>
             {
                 if (this.IsEnable is false) return;
-                double spacing = System.Math.Clamp(e.NewValue / 100, 0.1, 4);
-                this.InkPresenter.Spacing = (float)spacing;
+                double spacing = this.SpacingRange.ConvertXToY(e.NewValue);
+                double spacing2 = System.Math.Clamp(spacing / 100, 0.1, 4);
+                this.InkPresenter.Spacing = (float)spacing2;
 
                 if (this.InkRender is null) return;
                 this.Update();
