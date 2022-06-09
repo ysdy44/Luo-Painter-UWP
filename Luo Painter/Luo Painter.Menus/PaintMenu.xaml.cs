@@ -41,28 +41,35 @@ namespace Luo_Painter.Menus
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
         private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
-        private Visibility Int0ToVisibility(OptionType value) => value == OptionType.PaintBrush ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int012ToVisibility(OptionType value)
+        private Visibility Int0ToVisibility(InkType value)
         {
             switch (value)
             {
-                case OptionType.PaintBrush: case OptionType.PaintWatercolorPen: case OptionType.PaintPencil: return Visibility.Visible;
+                case InkType.BrushDry: case InkType.MaskBrushDry: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
-        private Visibility Int013ToVisibility(OptionType value)
+        private Visibility Int012ToVisibility(InkType value)
         {
             switch (value)
             {
-                case OptionType.PaintBrush: case OptionType.PaintWatercolorPen: case OptionType.PaintEraseBrush: return Visibility.Visible;
+                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
-        private Visibility Int0123ToVisibility(OptionType value)
+        private Visibility Int013ToVisibility(InkType value)
         {
             switch (value)
             {
-                case OptionType.PaintBrush: case OptionType.PaintWatercolorPen: case OptionType.PaintPencil: case OptionType.PaintEraseBrush: return Visibility.Visible;
+                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.EraseDry: return Visibility.Visible;
+                default: return Visibility.Collapsed;
+            }
+        }
+        private Visibility Int0123ToVisibility(InkType value)
+        {
+            switch (value)
+            {
+                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: case InkType.EraseDry: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -84,13 +91,13 @@ namespace Luo_Painter.Menus
 
 
         /// <summary> Gets or set the type for <see cref="PaintMenu"/>. </summary>
-        public OptionType Type
+        public InkType Type
         {
-            get => (OptionType)base.GetValue(TypeProperty);
+            get => (InkType)base.GetValue(TypeProperty);
             set => base.SetValue(TypeProperty, value);
         }
-        /// <summary> Identifies the <see cref = "ApplicationTitleBarExtension.IsAccent" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(OptionType), typeof(ApplicationTitleBarExtension), new PropertyMetadata(default(OptionType)));
+        /// <summary> Identifies the <see cref = "PaintMenu.IsAccent" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(PaintMenu), new PropertyMetadata(default(InkType)));
 
 
         public string MaskTexture { get; private set; }
@@ -250,7 +257,7 @@ namespace Luo_Painter.Menus
 
             switch (this.Type)
             {
-                case OptionType.PaintPencil:
+                case InkType.LineDry:
                     switch (base.ActualTheme)
                     {
                         case ElementTheme.Light: this.InkRender.DrawLine((float)size, Colors.Black); break;

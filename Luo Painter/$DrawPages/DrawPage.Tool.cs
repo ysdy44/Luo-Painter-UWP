@@ -26,7 +26,7 @@ namespace Luo_Painter
 
                 this.ToolSwitchPresenter.Value = type;
 
-                this.PaintMenu.Type = type;
+                this.PaintMenu.Type = this.GetInkToolType(type);
 
                 this.OptionType = type;
                 this.SetFootType(type);
