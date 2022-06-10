@@ -16,6 +16,9 @@ namespace Luo_Painter.Menus
             base.CommandParameter = value;
             base.Content = TIconExtensions.GetStackPanel(new ContentControl
             {
+                Width = 32,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = value,
                 Template = value.GetTemplate(out ResourceDictionary resource),
                 Resources = resource,

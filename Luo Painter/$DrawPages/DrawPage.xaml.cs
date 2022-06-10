@@ -32,6 +32,9 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(ElementType value)
         {
+            base.Width = double.NaN;
+            base.VerticalContentAlignment = VerticalAlignment.Center;
+            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
             base.Template = value.GetTemplate(out ResourceDictionary resource);
             base.Resources = resource;
@@ -44,6 +47,9 @@ namespace Luo_Painter
         {
             base.Content = TIconExtensions.GetStackPanel(new ContentControl
             {
+                Width = 32,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = value,
                 Template = value.GetTemplate(out ResourceDictionary resource),
                 Resources = resource,

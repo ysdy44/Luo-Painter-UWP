@@ -28,6 +28,9 @@ namespace Luo_Painter.Controls
         }
         protected override void OnTypeChanged(OptionType value)
         {
+            base.Width = 32;
+            base.VerticalContentAlignment = VerticalAlignment.Center;
+            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
             base.Template = value.GetTemplate(out ResourceDictionary resource);
             base.Resources = resource;

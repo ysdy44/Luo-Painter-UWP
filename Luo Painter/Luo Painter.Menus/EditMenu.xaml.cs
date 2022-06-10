@@ -19,6 +19,9 @@ namespace Luo_Painter.Menus
     {
         protected override void OnTypeChanged(OptionType value)
         {
+            base.Width = 32;
+            base.VerticalContentAlignment = VerticalAlignment.Center;
+            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value.ToString();
             base.Template = value.GetTemplate(out ResourceDictionary resource);
             base.Resources = resource;
@@ -46,6 +49,9 @@ namespace Luo_Painter.Menus
             base.CommandParameter = value;
             this.Icon = new ContentControl
             {
+                Width = 32,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = value,
                 Template = value.GetTemplate(out ResourceDictionary resource),
                 Resources = resource,

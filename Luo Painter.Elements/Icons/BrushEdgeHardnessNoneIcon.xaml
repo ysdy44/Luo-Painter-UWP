@@ -5,7 +5,7 @@
     <ControlTemplate x:Key="BrushEdgeHardnessNoneIcon" TargetType="ContentControl">
         <PathIcon HorizontalAlignment="Center">
             <PathIcon.Data>
-                M0,0L40,0L40,60L0,60L0,0Z
+                M0,0L40,0L40,30L0,30L0,0Z
             </PathIcon.Data>
         </PathIcon>
     </ControlTemplate>
