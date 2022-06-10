@@ -34,23 +34,6 @@ namespace Luo_Painter.Elements
         public InverseProportion IP;
 
         /// <summary>
-        /// Converts x to y or y to x.
-        /// </summary>
-        /// <param name="sourceInner"> The inner source. </param>
-        /// <param name="sourceOuter"> The outer source. </param>
-        /// <param name="destinationScale"> The scale of destination. </param>
-        /// <returns> The product value. </returns>
-        public Range Convert(InverseProportion sourceInner, InverseProportion sourceOuter, double destinationScale) => new Range
-        {
-            Default = InverseProportion.Convert(this.Default, sourceInner, sourceOuter, destinationScale),
-            IP = new InverseProportion
-            {
-                Minimum = InverseProportion.Convert(this.Maximum, sourceInner, sourceOuter, destinationScale),
-                Maximum = InverseProportion.Convert(this.Minimum, sourceInner, sourceOuter, destinationScale)
-            }
-        };
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns> A string that represents the current object. </returns>
@@ -106,35 +89,13 @@ namespace Luo_Painter.Elements
             Maximum = InverseProportion.Convert(this.Minimum),
         };
 
-
         //@Static
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        /// Converts x to y or y to x.
+        /// </summary>
+        /// <returns> The product value. </returns>
         public static double Convert(double value) => 1.0 / value;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double Convert(double value, InverseProportion sourceInner, InverseProportion sourceOuter, double destinationScale)
-        {
-            double oneInner = sourceInner.ConvertValueToOne(value);
-            double ipInner = sourceInner.ConvertOneToValue(oneInner);
-
-            double ipOuter = InverseProportion.Convert(ipInner);
-            double oneOuter = sourceOuter.ConvertValueToOne(ipOuter);
-
-            return destinationScale * oneOuter;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Convert(double value, InverseProportion sourceInner, InverseProportion sourceOuter, InverseProportion destinationInner, InverseProportion destinationOuter, RangeRounding sourceRounding = RangeRounding.Minimum, RangeRounding destinationRounding = RangeRounding.Minimum)
-        {
-            double oneInner = sourceOuter.ConvertValueToOne(value, sourceRounding);
-            double ipInner = sourceInner.ConvertOneToValue(oneInner);
-
-            double ipOuter = InverseProportion.Convert(ipInner);
-            double oneOuter = destinationInner.ConvertValueToOne(ipOuter, destinationRounding);
-
-            return destinationOuter.ConvertOneToValue(oneOuter);
-        }
-
 
         /// <summary>
         /// Returns a string that represents the current object.
