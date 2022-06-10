@@ -77,7 +77,7 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public bool IsometricShapeBrushEdgeHardness(
+        public bool IsometricDrawShaderBrushEdgeHardness(
             byte[] shaderCode,
             Vector4 colorHdr,
             Vector2 position,
@@ -149,7 +149,7 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public bool IsometricShapeBrushEdgeHardnessWithTexture(
+        public bool IsometricDrawShaderBrushEdgeHardnessWithTexture(
             byte[] shaderCode,
             Vector4 colorHdr,
             CanvasBitmap texture,

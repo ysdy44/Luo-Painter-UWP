@@ -72,7 +72,7 @@ namespace Luo_Painter.TestApp
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 float pressure = properties.Pressure;
 
-                bool result = this.BitmapLayer.IsometricShapeBrushEdgeHardnessWithTexture(
+                bool result = this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
                     this.ShaderCodeBytes,
                     BitmapLayer.DodgerBlue,
                     this.Texture,

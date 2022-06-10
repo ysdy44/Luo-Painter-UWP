@@ -100,7 +100,7 @@ namespace Luo_Painter
         {
             if (this.InkType.HasFlag(InkType.BrushDry))
             {
-                return bitmapLayer.IsometricShapeBrushEdgeHardness(
+                return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
                     this.BrushEdgeHardnessShaderCodeBytes,
                     this.ColorMenu.ColorHdr,
                     this.Position, position,
@@ -112,7 +112,7 @@ namespace Luo_Painter
             }
             else if (this.InkType.HasFlag(InkType.MaskBrushDry))
             {
-                return bitmapLayer.IsometricShapeBrushEdgeHardnessWithTexture(
+                return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
                     this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                     this.ColorMenu.ColorHdr,
                     this.InkPresenter.Mask,
