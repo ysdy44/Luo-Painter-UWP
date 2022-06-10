@@ -47,24 +47,16 @@ namespace Luo_Painter
 
             this.PaintBrushTool.ItemClick += async (s, brush) =>
             {
-                if (brush.Mask is PaintTexture mask)
-                {
-                    this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
-                    this.PaintMenu.SetMaskTexture(mask.Texture);
-                }
+                if (brush.Mask is PaintTexture mask) this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
                 else this.InkPresenter.SetMask(false);
 
-                if (brush.Pattern is PaintTexture pattern)
-                {
-                    this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, pattern.Source));
-                    this.PaintMenu.SetPatternTexture(pattern.Texture);
-                    this.PaintMenu.SetStep(pattern.Step);
-                }
+                if (brush.Pattern is PaintTexture pattern) this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, pattern.Source));
                 else this.InkPresenter.SetPattern(false);
 
                 this.InkPresenter.SetBrush(brush);
                 this.PaintMenu.Construct(brush);
 
+                this.PaintMenu.Type = this.GetInkToolType(this.OptionType, this.InkPresenter.AllowMask);
                 this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
@@ -119,7 +111,9 @@ namespace Luo_Painter
             {
                 this.InkPresenter.SetMask(false);
 
-                this.SetInkToolType(this.GetInkToolType(this.OptionType, false));
+                this.PaintMenu.Type = this.GetInkToolType(this.OptionType, false);
+                this.Ink();
+                this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.PatternClosed += (s, e) => this.InkPresenter.SetPattern(false);
 
@@ -130,7 +124,9 @@ namespace Luo_Painter
                     bool result = await this.SelectMask();
                     if (result)
                     {
-                        this.SetInkToolType(this.GetInkToolType(this.OptionType, true));
+                        this.PaintMenu.Type = this.GetInkToolType(this.OptionType, true);
+                        this.Ink();
+                        this.InkCanvasControl.Invalidate();
                     }
                     else
                     {
@@ -141,7 +137,9 @@ namespace Luo_Painter
                 {
                     this.InkPresenter.SetMask(true);
 
-                    this.SetInkToolType(this.GetInkToolType(this.OptionType, true));
+                    this.PaintMenu.Type = this.GetInkToolType(this.OptionType, true);
+                    this.Ink();
+                    this.InkCanvasControl.Invalidate();
                 }
             };
             this.PaintMenu.PatternOpened += async (s, e) =>

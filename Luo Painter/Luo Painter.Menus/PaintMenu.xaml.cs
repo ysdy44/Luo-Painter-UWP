@@ -90,26 +90,20 @@ namespace Luo_Painter.Menus
         public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(PaintMenu), new PropertyMetadata(default(InkType)));
 
 
-        public string MaskTexture { get; private set; }
-        public void SetMaskTexture(string texture)
-        {
-            this.MaskTexture = texture;
-            this.MaskImage.UriSource = new System.Uri(texture);
-        }
+        public string MaskTexture => this.MaskImage.UriSource?.ToString();
+        public void SetMaskTexture(string texture) => this.MaskImage.UriSource = new System.Uri(texture);
         public void CloseMask()
         {
+            if (this.MaskButton.IsOn is false) return;
+
             this.IsEnable = false;
             this.MaskButton.IsOn = false;
             this.IsEnable = true;
         }
 
 
-        public string PatternTexture { get; private set; }
-        public void SetPatternTexture(string texture)
-        {
-            this.PatternTexture = texture;
-            this.PatternImage.UriSource = new System.Uri(texture);
-        }
+        public string PatternTexture => this.PatternImage.UriSource?.ToString();
+        public void SetPatternTexture(string texture) => this.PatternImage.UriSource = new System.Uri(texture);
         public void SetStep(int step)
         {
             this.Step.Size = step;
@@ -117,6 +111,8 @@ namespace Luo_Painter.Menus
         }
         public void ClosePattern()
         {
+            if (this.PatternButton.IsOn is false) return;
+
             this.IsEnable = false;
             this.PatternButton.IsOn = false;
             this.IsEnable = true;
@@ -239,11 +235,34 @@ namespace Luo_Painter.Menus
             {
                 this.SizeSlider.Value = this.SizeRange.ConvertYToX(brush.Size);
                 this.OpacitySlider.Value = brush.Opacity * 100;
-                this.SpacingSlider.Value = brush.Spacing * 100;
+                this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(brush.Spacing * 100);
                 this.HardnessListView.SelectedIndex = (int)brush.Hardness;
-                this.RotateButton.IsChecked = brush.Rotate;
-                this.Step.Size = brush.Step;
-                this.StepTextBox.Text = this.Step.ToString();
+
+                if (brush.Mask is PaintTexture mask)
+                {
+                    this.MaskButton.IsOn = true;
+                    this.RotateButton.IsChecked = brush.Rotate;
+                    this.MaskImage.UriSource = new System.Uri(mask.Texture);
+                }
+                else
+                {
+                    this.MaskButton.IsOn = false;
+                    this.RotateButton.IsChecked = false;
+                }
+
+                if (brush.Pattern is PaintTexture pattern)
+                {
+                    this.PatternButton.IsOn = true;
+                    this.PatternImage.UriSource = new System.Uri(pattern.Texture);
+                    this.Step.Size = pattern.Step;
+                    this.StepTextBox.Text = this.Step.ToString();
+                }
+                else
+                {
+                    this.PatternButton.IsOn = false;
+                    this.Step.Size = 1024;
+                    this.StepTextBox.Text = 1024.ToString();
+                }
             }
             this.IsEnable = true;
         }
