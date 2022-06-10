@@ -53,7 +53,7 @@ namespace Luo_Painter
                 if (brush.Pattern is PaintTexture pattern) this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, pattern.Source));
                 else this.InkPresenter.SetPattern(false);
 
-                this.InkPresenter.SetBrush(brush);
+                this.InkPresenter.Construct(brush);
                 this.PaintMenu.Construct(brush);
 
                 this.PaintMenu.Type = this.GetInkToolType(this.OptionType, this.InkPresenter.AllowMask);

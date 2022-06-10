@@ -25,18 +25,18 @@ namespace Luo_Painter.Brushes
         public CanvasBitmap Pattern { get; private set; }
 
 
-        public void SetBrush(PaintBrush brush)
+        public void Construct(PaintBrush brush)
         {
             this.Size = (float)brush.Size;
             this.Opacity = (float)brush.Opacity;
             this.Spacing = (float)brush.Spacing;
             this.Hardness = brush.Hardness;
+            this.Rotate = brush.Rotate;
+            this.Step = brush.Step;
         }
 
         public void SetMask(bool allowMask, CanvasBitmap mask = null)
         {
-            this.AllowMask = allowMask;
-
             if (mask is null) return;
 
             if (this.Mask is null)
