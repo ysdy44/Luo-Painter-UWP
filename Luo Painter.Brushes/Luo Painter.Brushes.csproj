@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BrushEdgeHardness.cs" />
+    <Compile Include="InkMixer.cs" />
     <Compile Include="InkPresenter.cs" />
     <Compile Include="InkRender.cs" />
     <Compile Include="InkType.cs" />
