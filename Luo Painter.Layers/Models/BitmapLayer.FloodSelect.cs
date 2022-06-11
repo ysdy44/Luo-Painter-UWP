@@ -20,31 +20,40 @@ namespace Luo_Painter.Layers.Models
         readonly HashSet<int> Add2Retrieves = new HashSet<int>();
 
 
-        public bool FillContainsPoint(Vector2 point)
+        public Color GetPixelColor(int px, int py, BitmapType type) => this[type].GetPixelColors(px, py, 1, 1).Single();
+        public bool Contains(int px, int py)
+        {
+            if (px < 0) return false;
+            if (py < 0) return false;
+
+            if (px >= this.Width) return false;
+            if (py >= this.Height) return false;
+
+            return true;
+        }
+
+
+        public bool FillContainsPoint(Vector2 position)
         {
             // 1. Get Position and Target
-            int px = (int)point.X;
-            int py = (int)point.Y;
+            int px = (int)position.X;
+            int py = (int)position.Y;
+            if (this.Contains(px, py) is false) return false;
 
-            bool hasTarget = px >= 0 && px < this.Width && py >= 0 && py < this.Height;
-            if (hasTarget is false) return false;
-
-            Color target = this.SourceRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+            Color target = this.GetPixelColor(px, py, BitmapType.Source);
             if (target.A is byte.MinValue) return false;
 
             return true;
         }
 
-        public bool FloodSelect(Vector2 point, Color color, bool isContiguous = true, float tolerance = 0.1f, bool feather = false)
+        public bool FloodSelect(Vector2 position, Color color, bool isContiguous = true, float tolerance = 0.1f, bool feather = false)
         {
             // 1. Get Position and Target
-            int px = (int)point.X;
-            int py = (int)point.Y;
+            int px = (int)position.X;
+            int py = (int)position.Y;
+            if (this.Contains(px, py) is false) return false;
 
-            bool hasTarget = px >= 0 && px < this.Width && py >= 0 && py < this.Height;
-            if (hasTarget is false) return false;
-
-            Color target = this.SourceRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+            Color target = this.GetPixelColor(px, py, BitmapType.Source);
             if (target.A is byte.MinValue) return false;
 
 
