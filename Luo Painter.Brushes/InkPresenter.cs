@@ -39,6 +39,8 @@ namespace Luo_Painter.Brushes
 
         public void SetMask(bool allowMask, CanvasBitmap mask = null)
         {
+            this.AllowMask = allowMask;
+
             if (mask is null) return;
 
             if (this.Mask is null)
