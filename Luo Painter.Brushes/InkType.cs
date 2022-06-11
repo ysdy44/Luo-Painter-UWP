@@ -52,5 +52,9 @@ namespace Luo_Painter.Brushes
         EraseWetPatternOpacity = EraseDry | Pattern | Opacity,
 
         Liquefy = 512,
+
+        Mix = 1024,
+
+        MaskMix = 2048,
     }
 }

@@ -13,6 +13,8 @@ namespace Luo_Painter.Brushes
         public bool Rotate { get; set; }
         public int Step { get; set; } = 1024;
 
+        public bool IsMix { get; set; }
+
         public bool IsDefined { get; private set; }
         public BlendEffectMode BlendMode { get; private set; }
 
@@ -80,6 +82,8 @@ namespace Luo_Painter.Brushes
             switch (type)
             {
                 case InkType.None: return InkType.None;
+                case InkType.MaskMix: return InkType.MaskMix;
+                case InkType.Mix: return InkType.Mix;
                 case InkType.Liquefy: return InkType.Liquefy;
                 case InkType.EraseDry:
                     if (this.Opacity == 0f) return InkType.None;
