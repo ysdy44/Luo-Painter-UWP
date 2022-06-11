@@ -91,6 +91,17 @@ namespace Luo_Painter
                 this.InkCanvasControl.Invalidate();
             };
 
+
+            this.PaintMenu.InkMixChanged += (s, isMix) =>
+            {
+                this.InkPresenter.IsMix = isMix;
+
+                this.InkToolType = this.GetInkToolType(this.OptionType, isMix, this.InkPresenter.AllowMask);
+                this.Ink();
+                this.InkCanvasControl.Invalidate();
+            };
+
+
             this.PaintMenu.InkBlendModeChanged += (s, e) =>
             {
                 this.InkPresenter.SetBlendMode(e.IsDefined(), e);
@@ -236,6 +247,24 @@ namespace Luo_Painter
                     break;
                 case InkType.LineDry:
                     this.InkRender.DrawLine((float)size, base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White);
+                    break;
+                case InkType.Mix:
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(
+                        this.BrushEdgeHardnessShaderCodeBytes,
+                        base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness);
+                    break;
+                case InkType.MaskMix:
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                        base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
+                        this.InkPresenter.Mask,
+                        this.InkPresenter.Rotate,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness);
                     break;
                 default:
                     this.InkRender.IsometricFillCircle(base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White, (float)size, this.InkPresenter.Spacing);

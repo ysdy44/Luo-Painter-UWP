@@ -16,6 +16,9 @@ namespace Luo_Painter
         Vector2 Position;
         float Pressure;
 
+        bool AllowMix;
+        int MixX = -1;
+        int MixY = -1;
 
         private BitmapType GetBitmapType(InkType type)
         {
@@ -42,6 +45,7 @@ namespace Luo_Painter
             this.Point = point;
             this.Position = this.ToPosition(point);
             this.Pressure = pressure;
+            this.AllowMix = this.CacheMix(this.Position);
 
             this.InkType = this.InkPresenter.GetType(this.InkToolType);
             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -152,9 +156,79 @@ namespace Luo_Painter
                         }
                     }, RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size));
                     return true;
+                case InkType.Mix:
+                    if (this.AllowMix is false || bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        this.BrushEdgeHardnessShaderCodeBytes,
+                        this.InkMixer.ColorHdr,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness))
+                    {
+                        this.AllowMix = this.Mix(position, this.InkPresenter.Opacity);
+                        return true;
+                    }
+                    else return false;
+                case InkType.MaskMix:
+                    if (this.AllowMix is false || bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                        this.InkMixer.ColorHdr,
+                        this.InkPresenter.Mask,
+                        this.InkPresenter.Rotate,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness))
+                    {
+                        this.AllowMix = this.Mix(position, this.InkPresenter.Opacity);
+                        return true;
+                    }
+                    else return false;
                 default:
                     return false;
             }
+        }
+
+        private bool CacheMix(Vector2 position)
+        {
+            this.MixX = -1;
+            this.MixY = -1;
+
+            // 1. Get Position and Target
+            int px = (int)position.X;
+            int py = (int)position.Y;
+            if (this.BitmapLayer.Contains(px, py) is false) return false;
+
+            this.MixX = px;
+            this.MixY = py;
+
+            Color target = this.BitmapLayer.GetPixelColor(px, py, BitmapType.Origin);
+            if (target.A is byte.MinValue) return false;
+
+            // 2. Cache TargetColor with Color
+            this.InkMixer.Cache(target);
+            return true;
+        }
+
+        private bool Mix(Vector2 position, float opacity)
+        {
+            // 1. Get Position and Target
+            int px = (int)position.X;
+            int py = (int)position.Y;
+            if (this.BitmapLayer.Contains(px, py) is false) return false;
+
+            if (this.MixX == px && this.MixY == py) return false;
+            this.MixX = px;
+            this.MixY = py;
+
+            Color target = this.BitmapLayer.GetPixelColor(px, py, BitmapType.Origin);
+            if (target.A is byte.MinValue) return false;
+
+            // 2. Blend TargetColor with Color
+            this.InkMixer.Mix(target, opacity);
+            return true;
         }
 
     }
