@@ -131,6 +131,8 @@ namespace Luo_Painter
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
+      
+        InkMixer InkMixer { get; set; } = new InkMixer();
         InkPresenter InkPresenter { get; } = new InkPresenter();
         InkRender InkRender { get; set; }
 
@@ -145,6 +147,7 @@ namespace Luo_Painter
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;
+        InkType InkToolType { get => this.PaintMenu.Type; set => this.PaintMenu.Type = value; }
 
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTransformShaderCodeBytes;

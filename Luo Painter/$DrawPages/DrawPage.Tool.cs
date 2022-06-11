@@ -26,7 +26,7 @@ namespace Luo_Painter
 
                 this.ToolSwitchPresenter.Value = type;
 
-                this.SetInkToolType(this.GetInkToolType(type, this.InkPresenter.AllowMask));
+                this.SetInkToolType(this.GetInkToolType(type, this.InkPresenter.IsMix, this.InkPresenter.AllowMask));
 
                 this.OptionType = type;
                 this.SetFootType(type);

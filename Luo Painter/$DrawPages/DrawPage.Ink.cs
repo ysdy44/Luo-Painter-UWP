@@ -16,18 +16,21 @@ namespace Luo_Painter
 
         private void SetInkToolType(InkType type)
         {
-            if (this.PaintMenu.Type == type) return;
-            this.PaintMenu.Type = type;
+            if (this.InkToolType == type) return;
+            this.InkToolType = type;
 
             if (this.InkRender is null) return;
             this.Ink();
             this.InkCanvasControl.Invalidate();
         }
-        private InkType GetInkToolType(OptionType type, bool allowMask)
+        private InkType GetInkToolType(OptionType type, bool isMix, bool allowMask)
         {
             switch (type)
             {
-                case OptionType.PaintBrush: return allowMask ? InkType.MaskBrushDry : InkType.BrushDry;
+                case OptionType.PaintBrush:
+                    return isMix ?
+                        (allowMask ? InkType.MaskMix : InkType.Mix) :
+                        (allowMask ? InkType.MaskBrushDry : InkType.BrushDry);
                 case OptionType.PaintWatercolorPen: return InkType.CircleDry;
                 case OptionType.PaintPencil: return InkType.LineDry;
                 case OptionType.PaintEraseBrush: return InkType.EraseDry;
@@ -56,7 +59,7 @@ namespace Luo_Painter
                 this.InkPresenter.Construct(brush);
                 this.PaintMenu.Construct(brush);
 
-                this.PaintMenu.Type = this.GetInkToolType(this.OptionType, this.InkPresenter.AllowMask);
+                this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, this.InkPresenter.AllowMask);
                 this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
@@ -111,7 +114,7 @@ namespace Luo_Painter
             {
                 this.InkPresenter.SetMask(false);
 
-                this.PaintMenu.Type = this.GetInkToolType(this.OptionType, false);
+                this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, false);
                 this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
@@ -124,7 +127,7 @@ namespace Luo_Painter
                     bool result = await this.SelectMask();
                     if (result)
                     {
-                        this.PaintMenu.Type = this.GetInkToolType(this.OptionType, true);
+                        this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, true);
                         this.Ink();
                         this.InkCanvasControl.Invalidate();
                     }
@@ -137,7 +140,7 @@ namespace Luo_Painter
                 {
                     this.InkPresenter.SetMask(true);
 
-                    this.PaintMenu.Type = this.GetInkToolType(this.OptionType, true);
+                    this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, true);
                     this.Ink();
                     this.InkCanvasControl.Invalidate();
                 }
@@ -210,37 +213,33 @@ namespace Luo_Painter
 
         private void Ink()
         {
-            InkType toolType = this.PaintMenu.Type;
-
             double size = this.InkPresenter.Size / 24 + 1;
-
-            if (toolType.HasFlag(InkType.BrushDry))
+            switch (this.InkToolType)
             {
-                this.InkRender.IsometricDrawShaderBrushEdgeHardness(
-                    this.BrushEdgeHardnessShaderCodeBytes,
-                    base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
-                    this.InkPresenter.Size,
-                    this.InkPresenter.Spacing,
-                    (int)this.InkPresenter.Hardness);
-            }
-            else if (toolType.HasFlag(InkType.MaskBrushDry))
-            {
-                this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                    this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                    base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
-                    this.InkPresenter.Mask,
-                    this.InkPresenter.Rotate,
-                    this.InkPresenter.Size,
-                    this.InkPresenter.Spacing,
-                    (int)this.InkPresenter.Hardness);
-            }
-            else if (toolType.HasFlag(InkType.LineDry))
-            {
-                this.InkRender.DrawLine((float)size, base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White);
-            }
-            else
-            {
-                this.InkRender.IsometricFillCircle(base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White, (float)size, this.InkPresenter.Spacing);
+                case InkType.BrushDry:
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(
+                        this.BrushEdgeHardnessShaderCodeBytes,
+                        base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness);
+                    break;
+                case InkType.MaskBrushDry:
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                        base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
+                        this.InkPresenter.Mask,
+                        this.InkPresenter.Rotate,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness);
+                    break;
+                case InkType.LineDry:
+                    this.InkRender.DrawLine((float)size, base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White);
+                    break;
+                default:
+                    this.InkRender.IsometricFillCircle(base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White, (float)size, this.InkPresenter.Spacing);
+                    break;
             }
         }
 
