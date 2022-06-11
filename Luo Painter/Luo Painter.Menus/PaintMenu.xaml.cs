@@ -24,6 +24,11 @@ namespace Luo_Painter.Menus
         public event EventHandler<float> InkOpacityChanged;
         public event EventHandler<float> InkSpacingChanged;
         public event EventHandler<BrushEdgeHardness> InkHardnessChanged;
+        public event EventHandler<bool> InkRotateChanged;
+        public event EventHandler<int> InkStepChanged;
+
+        public event EventHandler<bool> InkMixChanged;
+
         public event EventHandler<BlendEffectMode> InkBlendModeChanged;
 
         public event RoutedEventHandler SelectMask { remove => this.SelectMaskButton.Click -= value; add => this.SelectMaskButton.Click += value; }
@@ -35,18 +40,16 @@ namespace Luo_Painter.Menus
         public event RoutedEventHandler MaskOpened;
         public event RoutedEventHandler PatternOpened;
 
-        public event EventHandler<bool> InkRotateChanged;
-        public event EventHandler<int> InkStepChanged;
 
         //@Converter
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
         private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
-        private Visibility Int0ToVisibility(InkType value)
+        private Visibility Int05ToVisibility(InkType value)
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: return Visibility.Visible;
+                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.Mix: case InkType.MaskMix: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -55,6 +58,14 @@ namespace Luo_Painter.Menus
             switch (value)
             {
                 case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: return Visibility.Visible;
+                default: return Visibility.Collapsed;
+            }
+        }
+        private Visibility Int0125ToVisibility(InkType value)
+        {
+            switch (value)
+            {
+                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: case InkType.Mix: case InkType.MaskMix: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -172,6 +183,13 @@ namespace Luo_Painter.Menus
                             break;
                     }
                 }
+            };
+
+            this.MixButton.Toggled += (s, e) =>
+            {
+                if (this.IsEnable is false) return;
+                bool isOn = this.MixButton.IsOn;
+                this.InkMixChanged?.Invoke(s, isOn); // Delegate
             };
 
             this.BlendModeListView.ItemClick += (s, e) =>

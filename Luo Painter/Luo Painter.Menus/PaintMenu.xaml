@@ -25,7 +25,18 @@
     </FrameworkElement.Resources>
 
     <StackPanel>
-        
+
+        <!--Mix-->
+        <Border Height="42" Margin="0,4" Padding="9,0" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
+                Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
+            <StackPanel Orientation="Horizontal" Spacing="9">
+                <TextBlock x:Name="MixTextBlock" Width="128" Margin="2,0" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
+                    Mix
+                </TextBlock>
+                <ToggleSwitch x:Name="MixButton" Grid.Column="1" Margin="2,0"/>
+            </StackPanel>
+        </Border>
+
         <!--Size-->
         <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" >
             <Slider x:Name="SizeSlider" Padding="0,4,0,0" Value="{x:Bind SizeRange.XRange.Default}" Minimum="{x:Bind SizeRange.XRange.Minimum}" Maximum="{x:Bind SizeRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
@@ -54,16 +65,16 @@
                 </Slider.Tag>
                 <Slider.Header>
                     <Button 
-                                Padding="4,0" MinWidth="44" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                        Padding="4,0" MinWidth="44" Height="28"
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
                             </Flyout>
                         </Button.Flyout>
                         <TextBlock>
-                        <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
-                        <Run>%</Run>
+                            <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
+                            <Run>%</Run>
                         </TextBlock>
                     </Button>
                 </Slider.Header>
@@ -72,15 +83,15 @@
 
         <!--Spacing-->
         <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" 
-                        Visibility="{x:Bind Int013ToVisibility(Type), Mode=OneWay}" >
+                Visibility="{x:Bind Int0125ToVisibility(Type), Mode=OneWay}" >
             <Slider x:Name="SpacingSlider" Padding="0,4,0,0" Value="{x:Bind SpacingRange.XRange.Default}" Minimum="{x:Bind SpacingRange.XRange.Minimum}" Maximum="{x:Bind SpacingRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
                 <Slider.Tag>
                     Spacing
                 </Slider.Tag>
                 <Slider.Header>
                     <Button      
-                                Padding="4,0" MinWidth="44" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                        Padding="4,0" MinWidth="44" Height="28"
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -97,12 +108,12 @@
 
         <!--Hardness-->
         <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int0ToVisibility(Type), Mode=OneWay}" >
+               Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
             Hardness
         </TextBlock>
 
         <ListView x:Name="HardnessListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}"
-              Visibility="{x:Bind Int0ToVisibility(Type), Mode=OneWay}" >
+              Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
             <luo_painter:ElementIcon Type="BrushEdgeHardnessNone"/>
             <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine"/>
             <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic"/>
@@ -112,19 +123,14 @@
 
         <!--Mask-->
         <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int0ToVisibility(Type), Mode=OneWay}" >
+               Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
             Mask
         </TextBlock>
 
         <Border Height="146" Margin="2,4" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
-                Visibility="{x:Bind Int0ToVisibility(Type), Mode=OneWay}" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="9"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Width="122" Height="122" CornerRadius="4" Background="Black">
+                Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
+            <StackPanel Orientation="Horizontal" Spacing="9">
+                <Border Width="128" Height="128" CornerRadius="4" Background="Black">
                     <Image>
                         <Image.Source>
                             <BitmapImage x:Name="MaskImage">
@@ -133,7 +139,7 @@
                         </Image.Source>
                     </Image>
                 </Border>
-                <StackPanel Grid.Column="2" Spacing="6" Padding="0,4" >
+                <StackPanel Grid.Column="1" Spacing="6" Padding="0,4" >
                     <Button x:Name="SelectMaskButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                         Select
                     </Button>
@@ -142,7 +148,7 @@
                     </ToggleButton>
                     <ToggleSwitch x:Name="MaskButton" Margin="2,0"/>
                 </StackPanel>
-            </Grid>
+            </StackPanel>
         </Border>
 
         <!--Pattern-->
@@ -153,12 +159,7 @@
 
         <Border Height="146" Margin="2,4" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
                 Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="9"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Spacing="9">
                 <Border Width="128" Height="128" CornerRadius="4" Background="Black">
                     <Image>
                         <Image.Source>
@@ -168,7 +169,7 @@
                         </Image.Source>
                     </Image>
                 </Border>
-                <StackPanel Grid.Column="2" Spacing="6" Padding="0,4" >
+                <StackPanel Grid.Column="1" Spacing="6" Padding="0,4" >
                     <Button x:Name="SelectPatternButton" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                         Select
                     </Button>
@@ -177,7 +178,7 @@
                     </TextBox>
                     <ToggleSwitch x:Name="PatternButton" Margin="2,0"/>
                 </StackPanel>
-            </Grid>
+            </StackPanel>
         </Border>
 
         <!--BlendMode-->
