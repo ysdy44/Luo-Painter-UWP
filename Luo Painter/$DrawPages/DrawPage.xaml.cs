@@ -209,7 +209,7 @@ namespace Luo_Painter
             this.ConstructTools();
             this.ConstructMarquee();
             this.ConstructVector();
-
+            
             this.ConstructHistory();
 
             this.ConstructDialog();
@@ -228,6 +228,7 @@ namespace Luo_Painter
             this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
             this.AdjustmentButton.Click += (s, e) => this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
             this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
+            this.HistoryButton.Click += (s, e) => this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
             this.SetupButton.Click += (s, e) => this.SetupMenu.Toggle(this.SetupButton, ExpanderPlacementMode.Bottom);
             this.LayerButton.Click += (s, e) => this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
             this.ColorButton.Click += (s, e) => this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
