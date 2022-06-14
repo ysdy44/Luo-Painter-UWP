@@ -8,7 +8,8 @@
         Layer,
         Adjustment,
         Option,
-        MoreOption,
+        History,
+        Setup,
 
         Snap,
         SnapToTick,
