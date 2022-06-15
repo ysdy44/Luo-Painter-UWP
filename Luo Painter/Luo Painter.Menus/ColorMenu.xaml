@@ -16,24 +16,19 @@
     <elements:Expander.Title>
         Color
     </elements:Expander.Title>
-    
+
     <ContentControl.Foreground>
         <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
     </ContentControl.Foreground>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="12"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid>
+
+    <elements:Expander.TopAppBar>
+        <Grid Height="42">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="StrawButton" Width="Auto" Height="Auto" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="StrawButton" Padding="16,0" Width="Auto" Height="Auto" Style="{StaticResource TextBlockButtonStyle}">
                 <UIElement.ManipulationMode>
                     TranslateX, TranslateY
                 </UIElement.ManipulationMode>
@@ -44,12 +39,61 @@
                 <x:String>Value</x:String>
                 <x:String>Saturation</x:String>
             </ListBox>
-            <ToggleButton x:Name="ColorShapeButton" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
+            <ToggleButton x:Name="ColorShapeButton" Grid.Column="2" Padding="16,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
                 <SymbolIcon Symbol="{x:Bind ColorSpectrumShapeSymbolConverter(ColorShapeButton.IsChecked), Mode=OneWay}"/>
             </ToggleButton>
         </Grid>
-        <ColorPicker x:Name="ColorPicker" 
-                 Grid.Row="2"
+    </elements:Expander.TopAppBar>
+
+    <elements:Expander.BottomAppBar>
+        <ListView x:Name="ListView" IsItemClickEnabled="True" SelectionMode="None" ItemsSource="{x:Bind ObservableCollection}" >
+            
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform Y="-12"/>
+            </UIElement.RenderTransform>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Margin="8,0" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="Width" Value="42"/>
+                    <Setter Property="MinWidth" Value="42"/>
+                    <Setter Property="Height" Value="42"/>
+                    <Setter Property="MinHeight" Value="42"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle RadiusX="4" RadiusY="4" Width="36" Height="36" StrokeThickness="1" Stroke="White" >
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="{Binding}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            
+        </ListView>
+    </elements:Expander.BottomAppBar>
+
+    <ColorPicker x:Name="ColorPicker" 
                  Color="Black" 
                  IsMoreButtonVisible="False" 
                  IsHexInputVisible="False" 
@@ -64,5 +108,4 @@
                  ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ColorListBox.SelectedIndex),Mode=OneWay}"
                  />
 
-    </Grid>
 </elements:Expander>

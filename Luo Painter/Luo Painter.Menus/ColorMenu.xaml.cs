@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using System.Collections.ObjectModel;
 using System.Numerics;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
@@ -12,6 +13,8 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Menus
 {
+    internal class ColorCommand : RelayCommand<Color> { }
+
     public sealed partial class ColorMenu : Expander
     {
         //@Converter
@@ -39,6 +42,12 @@ namespace Luo_Painter.Menus
         private Vector4 ColorHdrCore;
         Point StartingPosition;
 
+        ObservableCollection<Color> ObservableCollection { get; } = new ObservableCollection<Color>();
+        readonly DispatcherTimer Timer = new DispatcherTimer
+        {
+            Interval = System.TimeSpan.FromSeconds(1)
+        };
+
         //@Construct
         public ColorMenu()
         {
@@ -47,6 +56,7 @@ namespace Luo_Painter.Menus
             this.SetColorHdr(this.ColorPicker.Color);
             this.ColorPicker.ColorChanged += this.ColorChanged;
             this.ColorPicker.ColorChanged += (s, e) => this.SetColorHdr(e.NewColor);
+            this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
             this.ColorPicker.Loaded += (s, e) =>
             {
                 if (s is DependencyObject reference)
@@ -78,6 +88,40 @@ namespace Luo_Painter.Menus
                     }
                 }
             };
+
+
+
+            this.Timer.Tick += (s, e) =>
+            {
+                this.Timer.Stop();
+
+                foreach (Color item in this.ObservableCollection)
+                {
+                    if (item == this.Color) return;
+                }
+
+                while (this.ObservableCollection.Count > 6)
+                {
+                    this.ObservableCollection.RemoveAt(0);
+                }
+                this.ObservableCollection.Add(this.Color);
+            };
+            this.ListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is Color item)
+                {
+                    this.ColorPicker.ColorChanged -= this.ColorPicker_ColorChanged;
+                    this.ColorPicker.Color = item;
+                    this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
+                }
+            };
+        }
+
+
+        private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
+        {
+            this.Timer.Stop();
+            this.Timer.Start();
         }
 
         private void SetColorHdr(Color color)
