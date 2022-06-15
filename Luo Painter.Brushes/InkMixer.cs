@@ -5,28 +5,32 @@ namespace Luo_Painter.Brushes
 {
     public sealed class InkMixer
     {
-        Vector4 Color;
-        public Vector4 ColorHdr => this.Color;
+        Vector4 SourceHdr;
+        Color Source;
+        public Vector4 ColorHdr => this.SourceHdr;
+        public Color Color => this.Source;
         public bool Cache(Color target)
         {
             if (target.A is byte.MinValue)
             {
-                this.Color = Vector4.Zero;
+                this.SourceHdr = Vector4.Zero;
+                this.Source = Colors.Transparent;
                 return false;
             }
             else if (target.A is byte.MaxValue)
             {
-                this.Color.X = target.R / 255f;
-                this.Color.Y = target.G / 255f;
-                this.Color.Z = target.B / 255f;
+                this.SourceHdr.X = target.R / 255f;
+                this.SourceHdr.Y = target.G / 255f;
+                this.SourceHdr.Z = target.B / 255f;
+                this.Source = target;
             }
 
-            this.Color.W = target.A / 255f;
+            this.SourceHdr.W = target.A / 255f;
             return true;
         }
         public bool Mix(Color target, float opacity)
         {
-            if (this.Color.W is 0f) return this.Cache(target);
+            if (this.SourceHdr.W is 0f) return this.Cache(target);
 
             // Opacity
             // 0.0 ~ 1.0
@@ -42,17 +46,21 @@ namespace Luo_Painter.Brushes
 
             if (target.A is byte.MinValue)
             {
-                this.Color.W *= flow;
+                this.SourceHdr.W *= flow;
                 return false;
             }
             else if (target.A is byte.MaxValue)
             {
-                this.Color.X = this.Color.X * flow + target.R / 255f * targetFlow;
-                this.Color.Y = this.Color.Y * flow + target.G / 255f * targetFlow;
-                this.Color.Z = this.Color.Z * flow + target.B / 255f * targetFlow;
+                this.SourceHdr.X = this.SourceHdr.X * flow + target.R / 255f * targetFlow;
+                this.SourceHdr.Y = this.SourceHdr.Y * flow + target.G / 255f * targetFlow;
+                this.SourceHdr.Z = this.SourceHdr.Z * flow + target.B / 255f * targetFlow;
+                this.Source.R = (byte)(this.SourceHdr.X * 255);
+                this.Source.G = (byte)(this.SourceHdr.Y * 255);
+                this.Source.B = (byte)(this.SourceHdr.Z * 255);
             }
 
-            this.Color.W = this.Color.W * flow + target.A / 255f * targetFlow;
+            this.SourceHdr.W = this.SourceHdr.W * flow + target.A / 255f * targetFlow;
+            this.Source.A = (byte)(this.SourceHdr.W * 255);
             return true;
         }
     }

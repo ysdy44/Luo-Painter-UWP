@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
@@ -159,7 +160,6 @@ namespace Luo_Painter
                     return false;
             }
         }
-
         private bool CacheMix(Vector2 position)
         {
             this.MixX = -1;
@@ -178,6 +178,34 @@ namespace Luo_Painter
             // 2. Cache TargetColor with Color
             return this.InkMixer.Cache(target);
         }
+        private bool CacheMixAll(Vector2 position)
+        {
+            this.MixX = -1;
+            this.MixY = -1;
+
+            foreach (ILayer item in this.ObservableCollection)
+            {
+                if (item.Type is LayerType.Bitmap is false) continue;
+
+                if (item is BitmapLayer bitmapLayer)
+                {
+                    // 1. Get Position and Target
+                    int px = (int)position.X;
+                    int py = (int)position.Y;
+                    if (bitmapLayer.Contains(px, py) is false) continue;
+
+                    this.MixX = px;
+                    this.MixY = py;
+
+                    Color target = bitmapLayer.GetPixelColor(px, py, BitmapType.Origin);
+
+                    // 2. Cache TargetColor with Color
+                    if (target.A is byte.MaxValue) return this.InkMixer.Cache(target);
+                }
+            }
+
+            return false;
+        }
 
         private bool Mix(Vector2 position, float opacity)
         {
@@ -194,6 +222,33 @@ namespace Luo_Painter
 
             // 2. Blend TargetColor with Color
             return this.InkMixer.Mix(target, opacity);
+        }
+
+        private bool MixAll(Vector2 position, float opacity)
+        {
+            foreach (ILayer item in this.ObservableCollection)
+            {
+                if (item.Type is LayerType.Bitmap is false) continue;
+
+                if (item is BitmapLayer bitmapLayer)
+                {
+                    // 1. Get Position and Target
+                    int px = (int)position.X;
+                    int py = (int)position.Y;
+                    if (bitmapLayer.Contains(px, py) is false) return false;
+
+                    if (this.MixX == px && this.MixY == py) return false;
+                    this.MixX = px;
+                    this.MixY = py;
+
+                    Color target = bitmapLayer.GetPixelColor(px, py, BitmapType.Origin);
+
+                    // 2. Blend TargetColor with Color
+                    if (target.A is byte.MaxValue) return this.InkMixer.Mix(target, opacity);
+                }
+            }
+
+            return false;
         }
 
     }
