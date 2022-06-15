@@ -20,17 +20,6 @@ namespace Luo_Painter
         int MixX = -1;
         int MixY = -1;
 
-        private BitmapType GetBitmapType(InkType type)
-        {
-            if (type.HasFlag(InkType.Pattern))
-                return BitmapType.Temp;
-            else if (type.HasFlag(InkType.Opacity))
-                return BitmapType.Temp;
-            else if (type.HasFlag(InkType.Blend))
-                return BitmapType.Temp;
-            else
-                return BitmapType.Source;
-        }
 
 
         private void Paint_Start(Vector2 point, float pressure)
@@ -45,9 +34,8 @@ namespace Luo_Painter
             this.Point = point;
             this.Position = this.ToPosition(point);
             this.Pressure = pressure;
-            this.CacheMix(this.Position);
+            if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.Position);
 
-            this.InkType = this.InkPresenter.GetType(this.InkToolType);
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
@@ -62,6 +50,7 @@ namespace Luo_Painter
             this.BitmapLayer.Hit(rect);
 
             if (this.Paint(this.BitmapLayer, position, pressure) is false) return;
+            if (this.InkType.HasFlag(InkType.Mix)) this.Mix(position, this.InkPresenter.Opacity);
 
             Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
@@ -80,19 +69,35 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            if (this.InkType.HasFlag(InkType.Blend))
-                this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Origin));
-            else if (this.InkType.HasFlag(InkType.Opacity) || this.InkType.HasFlag(InkType.Pattern))
-                this.BitmapLayer.Draw(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp));
-
-            this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            if (this.InkType.HasFlag(InkType.Dry))
+            {
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            }
+            else if (this.InkType.HasFlag(InkType.Wet))
+            {
+                this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp));
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            }
+            else if (this.InkType.HasFlag(InkType.WetBlur))
+            {
+                this.BitmapLayer.Draw(this.InkPresenter.GetBlur(this.BitmapLayer.Origin, this.BitmapLayer.Temp));
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            }
+            else if (this.InkType.HasFlag(InkType.WetComposite))
+            {
+                this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            }
+            else
+            {
+                return;
+            }
 
             // History
             int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
             this.BitmapLayer.Flush();
             this.BitmapLayer.RenderThumbnail();
 
-            this.InkType = default;
             this.BitmapLayer = null;
             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -102,7 +107,7 @@ namespace Luo_Painter
 
         private bool Paint(BitmapLayer bitmapLayer, Vector2 position, float pressure)
         {
-            switch (this.InkToolType)
+            switch (this.InkType)
             {
                 case InkType.BrushDry:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
@@ -113,7 +118,49 @@ namespace Luo_Painter
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
-                        this.GetBitmapType(this.InkType));
+                        BitmapType.Source);
+
+                case InkType.BrushWetPattern:
+                case InkType.BrushWetOpacity:
+                case InkType.BrushWetPatternOpacity:
+                case InkType.BrushWetBlend:
+                case InkType.BrushWetPatternBlend:
+                case InkType.BrushWetOpacityBlend:
+                case InkType.BrushWetPatternOpacityBlend:
+                case InkType.BrushWetBlur:
+                case InkType.BrushWetPatternBlur:
+                    return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        this.BrushEdgeHardnessShaderCodeBytes,
+                        this.ColorMenu.ColorHdr,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness,
+                        BitmapType.Temp);
+
+                case InkType.BrushWetPatternMix:
+                    return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        this.BrushEdgeHardnessShaderCodeBytes,
+                        this.InkMixer.ColorHdr,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness,
+                        BitmapType.Temp);
+
+                case InkType.BrushDryMix:
+                    return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        this.BrushEdgeHardnessShaderCodeBytes,
+                        this.InkMixer.ColorHdr,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness,
+                        BitmapType.Source);
+
                 case InkType.MaskBrushDry:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
@@ -125,7 +172,55 @@ namespace Luo_Painter
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
-                        this.GetBitmapType(this.InkType));
+                        BitmapType.Source);
+
+                case InkType.MaskBrushWetPattern:
+                case InkType.MaskBrushWetOpacity:
+                case InkType.MaskBrushWetPatternOpacity:
+                case InkType.MaskBrushWetBlend:
+                case InkType.MaskBrushWetPatternBlend:
+                case InkType.MaskBrushWetOpacityBlend:
+                case InkType.MaskBrushWetPatternOpacityBlend:
+                case InkType.MaskBrushWetBlur:
+                case InkType.MaskBrushWetPatternBlur:
+                    return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                        this.ColorMenu.ColorHdr,
+                        this.InkPresenter.Mask,
+                        this.InkPresenter.Rotate,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness,
+                        BitmapType.Temp);
+
+                case InkType.MaskBrushDryMix:
+                    return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                        this.InkMixer.ColorHdr,
+                        this.InkPresenter.Mask,
+                        this.InkPresenter.Rotate,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness,
+                        BitmapType.Source);
+
+                case InkType.MaskBrushWetPatternMix:
+                    return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
+                        this.InkMixer.ColorHdr,
+                        this.InkPresenter.Mask,
+                        this.InkPresenter.Rotate,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        (int)this.InkPresenter.Hardness,
+                        BitmapType.Temp);
+
                 case InkType.CircleDry:
                     return bitmapLayer.IsometricFillCircle(
                         this.ColorMenu.Color,
@@ -133,15 +228,74 @@ namespace Luo_Painter
                         this.Pressure, pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
-                        this.GetBitmapType(this.InkType));
+                        BitmapType.Source);
+
+                case InkType.CircleWetPattern:
+                case InkType.CircleWetOpacity:
+                case InkType.CircleWetPatternOpacity:
+                case InkType.CircleWetBlend:
+                case InkType.CircleWetPatternBlend:
+                case InkType.CircleWetOpacityBlend:
+                case InkType.CircleWetPatternOpacityBlend:
+                case InkType.CircleWetBlur:
+                case InkType.CircleWetPatternBlur:
+                    return bitmapLayer.IsometricFillCircle(
+                        this.ColorMenu.Color,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        BitmapType.Temp);
+
+                case InkType.CircleDryMix:
+                    return bitmapLayer.IsometricFillCircle(
+                        this.InkMixer.Color,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        BitmapType.Source);
+
+                case InkType.CircleWetPatternMix:
+                    return bitmapLayer.IsometricFillCircle(
+                        this.InkMixer.Color,
+                        this.Position, position,
+                        this.Pressure, pressure,
+                        this.InkPresenter.Size,
+                        this.InkPresenter.Spacing,
+                        BitmapType.Temp);
+
                 case InkType.LineDry:
-                    bitmapLayer.DrawLine(this.Position, position, this.ColorMenu.Color, this.InkPresenter.Size, this.GetBitmapType(this.InkType));
+                    bitmapLayer.DrawLine(this.Position, position, this.ColorMenu.Color, this.InkPresenter.Size, BitmapType.Source);
                     return true;
+
+                case InkType.LineWetPattern:
+                case InkType.LineWetOpacity:
+                case InkType.LineWetPatternOpacity:
+                case InkType.LineWetBlend:
+                case InkType.LineWetPatternBlend:
+                case InkType.LineWetOpacityBlend:
+                case InkType.LineWetPatternOpacityBlend:
+                case InkType.LineWetBlur:
+                case InkType.LineWetPatternBlur:
+                    bitmapLayer.DrawLine(this.Position, position, this.ColorMenu.Color, this.InkPresenter.Size, BitmapType.Temp);
+                    return true;
+
+                case InkType.LineDryMix:
+                    bitmapLayer.DrawLine(this.Position, position, this.InkMixer.Color, this.InkPresenter.Size, BitmapType.Source);
+                    return true;
+
+                case InkType.LineWetPatternMix:
+                    bitmapLayer.DrawLine(this.Position, position, this.InkMixer.Color, this.InkPresenter.Size, BitmapType.Temp);
+                    return true;
+
                 case InkType.EraseDry:
-                    if (this.InkType.HasFlag(InkType.Pattern) || this.InkType.HasFlag(InkType.Opacity))
-                        return bitmapLayer.IsometricErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
-                    else
-                        return bitmapLayer.IsometricErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+                    return bitmapLayer.IsometricErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+
+                case InkType.EraseWetOpacity:
+                case InkType.EraseWetPatternOpacity:
+                    return bitmapLayer.IsometricErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+
                 case InkType.Liquefy:
                     bitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
                     {
@@ -156,10 +310,12 @@ namespace Luo_Painter
                         }
                     }, RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size));
                     return true;
+
                 default:
                     return false;
             }
         }
+
         private bool CacheMix(Vector2 position)
         {
             this.MixX = -1;

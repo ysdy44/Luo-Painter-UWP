@@ -19,14 +19,14 @@ namespace Luo_Painter
         {
             this.ToolListView.ItemClick += (s, type) =>
             {
-                this.OptionType = type;
+                this.ToolMenu.Title = type.ToString();
 
                 this.ToolResource.Source = new Uri(type.GetResource());
                 this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
 
                 this.ToolSwitchPresenter.Value = type;
 
-                this.SetInkToolType(this.GetInkToolType(type, this.InkPresenter.IsMix, this.InkPresenter.AllowMask));
+                this.SetInkToolType(type);
 
                 this.OptionType = type;
                 this.SetFootType(type);

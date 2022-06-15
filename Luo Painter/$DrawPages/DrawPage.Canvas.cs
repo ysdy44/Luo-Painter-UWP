@@ -203,21 +203,7 @@ namespace Luo_Painter
         {
             if (this.OptionType.IsOption() is false)
             {
-                if (this.InkType.HasFlag(InkType.Blend))
-                    return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source);
-                else if (this.InkType.HasFlag(InkType.Opacity) || this.InkType.HasFlag(InkType.Pattern))
-                {
-                    return new CompositeEffect
-                    {
-                        Sources =
-                        {
-                            this.BitmapLayer.Source,
-                            this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp)
-                        }
-                    };
-                }
-                else
-                    return this.BitmapLayer.Source;
+                return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Source, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp));
             }
 
 

@@ -14,28 +14,28 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page
     {
 
-        private void SetInkToolType(InkType type)
+        private void SetInkToolType(OptionType type)
         {
-            if (this.InkToolType == type) return;
-            this.InkToolType = type;
+            InkType toolType;
+            switch (type)
+            {
+                case OptionType.PaintBrush: toolType = InkType.Brush; break;
+                case OptionType.PaintWatercolorPen: toolType = InkType.Circle; break;
+                case OptionType.PaintPencil: toolType = InkType.Line; break;
+                case OptionType.PaintEraseBrush: toolType = InkType.Erase; break;
+                case OptionType.PaintLiquefaction: toolType = InkType.Liquefy; break;
+                default: toolType = default; break;
+            }
+
+            if (this.InkPresenter.ToolType == toolType) return;
+            this.InkPresenter.ToolType = toolType;
+            this.PaintMenu.Type = toolType;
+
+            this.InkType = this.InkPresenter.GetType();
 
             if (this.InkRender is null) return;
             this.Ink();
             this.InkCanvasControl.Invalidate();
-        }
-        private InkType GetInkToolType(OptionType type, bool isMix, bool allowMask)
-        {
-            switch (type)
-            {
-                case OptionType.PaintBrush:
-                    return
-                        (allowMask ? InkType.MaskBrushDry : InkType.BrushDry);
-                case OptionType.PaintWatercolorPen: return InkType.CircleDry;
-                case OptionType.PaintPencil: return InkType.LineDry;
-                case OptionType.PaintEraseBrush: return InkType.EraseDry;
-                case OptionType.PaintLiquefaction: return InkType.Liquefy;
-                default: return InkType.None;
-            }
         }
 
 
@@ -58,7 +58,7 @@ namespace Luo_Painter
                 this.InkPresenter.Construct(brush);
                 this.PaintMenu.Construct(brush);
 
-                this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, this.InkPresenter.AllowMask);
+                this.InkType = this.InkPresenter.GetType();
                 this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
@@ -76,6 +76,7 @@ namespace Luo_Painter
             {
                 this.InkPresenter.Opacity = e;
                 this.InkCanvasControl.Opacity = e;
+                this.InkType = this.InkPresenter.GetType();
             };
             this.PaintMenu.InkSpacingChanged += (s, e) =>
             {
@@ -91,19 +92,19 @@ namespace Luo_Painter
             };
 
 
-            this.PaintMenu.InkMixChanged += (s, isMix) =>
+            this.PaintMenu.InkBlendModeChanged += (s, blendMode) =>
             {
-                this.InkPresenter.IsMix = isMix;
+                if (blendMode.IsDefined())
+                {
+                    this.InkPresenter.Mode = InkType.Blend;
+                    this.InkPresenter.BlendMode = blendMode;
+                }
+                else
+                {
+                    this.InkPresenter.Mode = InkType.None;
+                }
 
-                this.InkToolType = this.GetInkToolType(this.OptionType, isMix, this.InkPresenter.AllowMask);
-                this.Ink();
-                this.InkCanvasControl.Invalidate();
-            };
-
-
-            this.PaintMenu.InkBlendModeChanged += (s, e) =>
-            {
-                this.InkPresenter.SetBlendMode(e.IsDefined(), e);
+                this.InkType = this.InkPresenter.GetType();
                 this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
@@ -114,6 +115,7 @@ namespace Luo_Painter
                 bool result = await this.SelectMask();
                 if (result)
                 {
+                    this.InkType = this.InkPresenter.GetType();
                     this.Ink();
                     this.InkCanvasControl.Invalidate();
                 }
@@ -124,45 +126,49 @@ namespace Luo_Painter
             {
                 this.InkPresenter.SetMask(false);
 
-                this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, false);
+                this.InkType = this.InkPresenter.GetType();
                 this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
-            this.PaintMenu.PatternClosed += (s, e) => this.InkPresenter.SetPattern(false);
+            this.PaintMenu.PatternClosed += (s, e) =>
+            {
+                this.InkPresenter.SetPattern(false);
+                this.InkType = this.InkPresenter.GetType();
+            };
 
             this.PaintMenu.MaskOpened += async (s, e) =>
             {
                 if (this.InkPresenter.Mask is null)
                 {
                     bool result = await this.SelectMask();
-                    if (result)
-                    {
-                        this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, true);
-                        this.Ink();
-                        this.InkCanvasControl.Invalidate();
-                    }
-                    else
+                    if (result is false)
                     {
                         this.PaintMenu.CloseMask();
+                        return;
                     }
                 }
-                else
-                {
-                    this.InkPresenter.SetMask(true);
+                else this.InkPresenter.SetMask(true);
 
-                    this.InkToolType = this.GetInkToolType(this.OptionType, this.InkPresenter.IsMix, true);
-                    this.Ink();
-                    this.InkCanvasControl.Invalidate();
-                }
+                this.InkType = this.InkPresenter.GetType();
+                this.Ink();
+                this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.PatternOpened += async (s, e) =>
             {
                 if (this.InkPresenter.Pattern is null)
                 {
                     bool result = await this.SelectPattern();
-                    if (result is false) this.PaintMenu.ClosePattern();
+                    if (result is false)
+                    {
+                        this.PaintMenu.ClosePattern();
+                        return;
+                    }
                 }
                 else this.InkPresenter.SetPattern(true);
+
+                this.InkType = this.InkPresenter.GetType();
+                this.Ink();
+                this.InkCanvasControl.Invalidate();
             };
 
 
@@ -224,27 +230,48 @@ namespace Luo_Painter
         private void Ink()
         {
             double size = this.InkPresenter.Size / 24 + 1;
-            switch (this.InkToolType)
+            switch (this.InkType)
             {
                 case InkType.BrushDry:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(
-                        this.BrushEdgeHardnessShaderCodeBytes,
-                        base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness);
+                case InkType.BrushWetPattern:
+                case InkType.BrushWetOpacity:
+                case InkType.BrushWetPatternOpacity:
+                case InkType.BrushWetBlend:
+                case InkType.BrushWetPatternBlend:
+                case InkType.BrushWetOpacityBlend:
+                case InkType.BrushWetPatternOpacityBlend:
+                case InkType.BrushDryMix:
+                case InkType.BrushWetPatternMix:
+                case InkType.BrushWetBlur:
+                case InkType.BrushWetPatternBlur:
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(this.BrushEdgeHardnessShaderCodeBytes, base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
                 case InkType.MaskBrushDry:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One,
-                        this.InkPresenter.Mask,
-                        this.InkPresenter.Rotate,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness);
+                case InkType.MaskBrushWetPattern:
+                case InkType.MaskBrushWetOpacity:
+                case InkType.MaskBrushWetPatternOpacity:
+                case InkType.MaskBrushWetBlend:
+                case InkType.MaskBrushWetPatternBlend:
+                case InkType.MaskBrushWetOpacityBlend:
+                case InkType.MaskBrushWetPatternOpacityBlend:
+                case InkType.MaskBrushDryMix:
+                case InkType.MaskBrushWetPatternMix:
+                case InkType.MaskBrushWetBlur:
+                case InkType.MaskBrushWetPatternBlur:
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(this.BrushEdgeHardnessWithTextureShaderCodeBytes, base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
                 case InkType.LineDry:
+                case InkType.LineWetPattern:
+                case InkType.LineWetOpacity:
+                case InkType.LineWetPatternOpacity:
+                case InkType.LineWetBlend:
+                case InkType.LineWetPatternBlend:
+                case InkType.LineWetOpacityBlend:
+                case InkType.LineWetPatternOpacityBlend:
+                case InkType.LineDryMix:
+                case InkType.LineWetPatternMix:
+                case InkType.LineWetBlur:
+                case InkType.LineWetPatternBlur:
                     this.InkRender.DrawLine((float)size, base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White);
                     break;
                 default:

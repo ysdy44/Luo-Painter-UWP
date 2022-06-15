@@ -74,7 +74,7 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.FillRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.White);
 
-                args.DrawingSession.DrawImage(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source));
+                args.DrawingSession.DrawImage(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Source, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
             };
 
 
@@ -171,45 +171,37 @@ namespace Luo_Painter.TestApp
                 this.SourceCanvasControl.Invalidate(); // Invalidate
                 this.TempCanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Complete += async (point, properties) =>
+            this.Operator.Single_Complete += (point, properties) =>
             {
                 switch (this.InkType)
                 {
                     case InkType.None:
                         break;
-                    case InkType.EraseDry:
+                    case InkType.EraseDry: /// <see cref="InkType.Dry"/>
                         // History
                         this.BitmapLayer.Flush();
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
                         break;
-                    case InkType.EraseWetOpacity:
-                        this.IsEnabled = false;
-
+                    case InkType.EraseWetOpacity: /// <see cref="InkType.WetComposite"/>
                         // 1.  Origin + Temp => Source
-                        await Task.Delay(400);
-                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source));
+                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
 
                         // 2. Temp => 0
-                        await Task.Delay(400);
                         this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
 
                         // 3. Source => Origin
-                        await Task.Delay(400);
-                        // History
                         this.BitmapLayer.Flush();
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
-
-                        this.IsEnabled = true;
                         break;
                     default:
                         break;

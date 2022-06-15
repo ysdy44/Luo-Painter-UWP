@@ -53,7 +53,15 @@ namespace Luo_Painter.TestApp
             {
                 if (e.ClickedItem is BlendEffectMode item)
                 {
-                    this.InkPresenter.SetBlendMode(item.IsDefined(), item);
+                    if (item.IsDefined())
+                    {
+                        this.InkPresenter.Mode = InkType.Blend;
+                        this.InkPresenter.BlendMode = item;
+                    }
+                    else
+                    {
+                        this.InkPresenter.Mode = InkType.None;
+                    }
                 }
             };
             this.ClearButton.Click += (s, e) =>
@@ -83,7 +91,7 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.FillRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.White);
 
-                args.DrawingSession.DrawImage(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source));
+                args.DrawingSession.DrawImage(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Source, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
             };
 
 
@@ -193,47 +201,44 @@ namespace Luo_Painter.TestApp
                 this.SourceCanvasControl.Invalidate(); // Invalidate
                 this.TempCanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Complete += async (point, properties) =>
+            this.Operator.Single_Complete += (point, properties) =>
             {
                 switch (this.InkType)
                 {
                     case InkType.None:
                         break;
-                    case InkType.CircleDry:
-                        // History
+                    case InkType.CircleDry: /// <see cref="InkType.Dry"/>
                         this.BitmapLayer.Flush();
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
                         break;
-                    case InkType.CircleWetOpacity:
-                    case InkType.CircleWetBlend:
-                    case InkType.CircleWetOpacityBlend:
-                        this.IsEnabled = false;
+                    case InkType.CircleWetOpacity: /// <see cref="InkType.Wet"/>
+                        // 1.  Temp => Source
+                        this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp));
 
-                        // 1.  Origin + Temp => Source
-                        await Task.Delay(400);
-                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Origin));
-                        this.OriginCanvasControl.Invalidate(); // Invalidate
-                        this.SourceCanvasControl.Invalidate(); // Invalidate
-                        this.TempCanvasControl.Invalidate(); // Invalidate
-
-                        // 2. Temp => 0
-                        await Task.Delay(400);
+                        // 2. Temp => 0   
                         this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-                        this.OriginCanvasControl.Invalidate(); // Invalidate
-                        this.SourceCanvasControl.Invalidate(); // Invalidate
-                        this.TempCanvasControl.Invalidate(); // Invalidate
 
                         // 3. Source => Origin
-                        await Task.Delay(400);
-                        // History
                         this.BitmapLayer.Flush();
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate
+                        break;
+                    case InkType.CircleWetBlend: /// <see cref="InkType.WetComposite"/>
+                    case InkType.CircleWetOpacityBlend: /// <see cref="InkType.WetComposite"/>
+                        // 1.  Origin + Temp => Source
+                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
 
-                        this.IsEnabled = true;
+                        // 2. Temp => 0
+                        this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+
+                        // 3. Source => Origin
+                        this.BitmapLayer.Flush();
+                        this.OriginCanvasControl.Invalidate(); // Invalidate
+                        this.SourceCanvasControl.Invalidate(); // Invalidate
+                        this.TempCanvasControl.Invalidate(); // Invalidate
                         break;
                     default:
                         break;
