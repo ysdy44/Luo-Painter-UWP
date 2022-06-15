@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed class InkPresenter
+    public sealed partial class InkPresenter
     {
         public float Size { get; set; } = 22f;
         public float Opacity { get; set; } = 1f;
@@ -16,7 +16,7 @@ namespace Luo_Painter.Brushes
         public bool IsMix { get; set; }
 
         public bool IsDefined { get; private set; }
-        public BlendEffectMode BlendMode { get; private set; }
+        public BlendEffectMode BlendMode { get; set; }
 
         public bool AllowMask { get; private set; }
         public string MaskTexture { get; private set; }

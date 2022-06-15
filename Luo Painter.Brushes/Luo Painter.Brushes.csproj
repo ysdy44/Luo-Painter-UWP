@@ -123,6 +123,8 @@
     <Compile Include="BrushEdgeHardness.cs" />
     <Compile Include="InkMixer.cs" />
     <Compile Include="InkPresenter.cs" />
+    <Compile Include="InkPresenter.Preview.cs" />
+    <Compile Include="InkPresenter.Type.cs" />
     <Compile Include="InkRender.cs" />
     <Compile Include="InkType.cs" />
     <Compile Include="PaintBrush.cs" />
