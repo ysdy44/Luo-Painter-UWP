@@ -155,36 +155,6 @@ namespace Luo_Painter
                         }
                     }, RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size));
                     return true;
-                case InkType.Mix:
-                    if (bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        this.BrushEdgeHardnessShaderCodeBytes,
-                        this.InkMixer.ColorHdr,
-                        this.Position, position,
-                        this.Pressure, pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness))
-                    {
-                        this.Mix(position, this.InkPresenter.Opacity);
-                        return true;
-                    }
-                    else return false;
-                case InkType.MaskMix:
-                    if (bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        this.InkMixer.ColorHdr,
-                        this.InkPresenter.Mask,
-                        this.InkPresenter.Rotate,
-                        this.Position, position,
-                        this.Pressure, pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness))
-                    {
-                        this.Mix(position, this.InkPresenter.Opacity);
-                        return true;
-                    }
-                    else return false;
                 default:
                     return false;
             }

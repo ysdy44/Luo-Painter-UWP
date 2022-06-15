@@ -49,7 +49,7 @@ namespace Luo_Painter.Menus
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.Mix: case InkType.MaskMix: return Visibility.Visible;
+                case InkType.BrushDry: case InkType.MaskBrushDry: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -65,7 +65,7 @@ namespace Luo_Painter.Menus
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: case InkType.Mix: case InkType.MaskMix: return Visibility.Visible;
+                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
