@@ -92,6 +92,15 @@ namespace Luo_Painter
             };
 
 
+            this.PaintMenu.InkModeChanged += (s, mode) =>
+            {
+                this.InkPresenter.Mode = mode;
+                this.InkType = this.InkPresenter.GetType();
+                this.Ink();
+                this.InkCanvasControl.Invalidate();
+            };
+
+
             this.PaintMenu.InkBlendModeChanged += (s, blendMode) =>
             {
                 if (blendMode.IsDefined())

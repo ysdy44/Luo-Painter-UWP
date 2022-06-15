@@ -20,14 +20,15 @@ namespace Luo_Painter.Menus
     public sealed partial class PaintMenu : Expander
     {
         //@Delegate  
+        public event EventHandler<InkType> InkModeChanged;
+
         public event EventHandler<float> InkSizeChanged;
         public event EventHandler<float> InkOpacityChanged;
         public event EventHandler<float> InkSpacingChanged;
         public event EventHandler<BrushEdgeHardness> InkHardnessChanged;
+
         public event EventHandler<bool> InkRotateChanged;
         public event EventHandler<int> InkStepChanged;
-
-        public event EventHandler<bool> InkMixChanged;
 
         public event EventHandler<BlendEffectMode> InkBlendModeChanged;
 
@@ -45,11 +46,12 @@ namespace Luo_Painter.Menus
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
         private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
-        private Visibility Int05ToVisibility(InkType value)
+        private bool Int0ToBooleanConverter(int value) => value is 0;
+        private Visibility Int056ToVisibility(InkType value)
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: return Visibility.Visible;
+                case InkType.Brush: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -57,7 +59,7 @@ namespace Luo_Painter.Menus
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: return Visibility.Visible;
+                case InkType.Brush: case InkType.Circle: case InkType.Line: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -65,7 +67,7 @@ namespace Luo_Painter.Menus
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: return Visibility.Visible;
+                case InkType.Brush: case InkType.Circle: case InkType.Line: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -73,7 +75,7 @@ namespace Luo_Painter.Menus
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.EraseDry: return Visibility.Visible;
+                case InkType.Brush: case InkType.Circle: case InkType.Erase: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -81,7 +83,7 @@ namespace Luo_Painter.Menus
         {
             switch (value)
             {
-                case InkType.BrushDry: case InkType.MaskBrushDry: case InkType.CircleDry: case InkType.LineDry: case InkType.EraseDry: return Visibility.Visible;
+                case InkType.Brush: case InkType.Circle: case InkType.Line: case InkType.Erase: return Visibility.Visible;
                 default: return Visibility.Collapsed;
             }
         }
@@ -185,20 +187,6 @@ namespace Luo_Painter.Menus
                 }
             };
 
-            this.MixButton.Toggled += (s, e) =>
-            {
-                if (this.IsEnable is false) return;
-                bool isOn = this.MixButton.IsOn;
-                this.InkMixChanged?.Invoke(s, isOn); // Delegate
-            };
-
-            this.BlendModeListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is BlendEffectMode item)
-                {
-                    this.InkBlendModeChanged?.Invoke(this, item); // Delegate
-                }
-            };
 
             this.MaskButton.Toggled += (s, e) =>
             {
@@ -238,6 +226,41 @@ namespace Luo_Painter.Menus
                 if (this.Step.IsMatch(this.StepTextBox))
                 {
                     this.InkStepChanged?.Invoke(s, this.Step.Size); // Delegate
+                }
+            };
+
+
+            this.ModeComboBox.SelectionChanged += (s, e) =>
+            {
+                int item = this.ModeComboBox.SelectedIndex;
+                switch (item)
+                {
+                    case 1:
+                        this.InkModeChanged?.Invoke(this, InkType.Mix); // Delegate
+                        break;
+                    case 2:
+                        this.InkModeChanged?.Invoke(this, InkType.Blur); // Delegate
+                        break;
+                    default:
+                        switch (this.BlendModeListView.SelectedIndex)
+                        {
+                            case 0:
+                                this.InkModeChanged?.Invoke(this, InkType.None); // Delegate
+                                break;
+                            default:
+                                this.InkModeChanged?.Invoke(this, InkType.Blend); // Delegate
+                                break;
+                        }
+                        break;
+                }
+            };
+
+
+            this.BlendModeListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is int item)
+                {
+                    this.InkBlendModeChanged?.Invoke(this, (BlendEffectMode)item); // Delegate
                 }
             };
         }

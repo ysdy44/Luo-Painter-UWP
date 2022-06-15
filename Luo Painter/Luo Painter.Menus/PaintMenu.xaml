@@ -18,24 +18,14 @@
     >
 
     <FrameworkElement.Resources>
-        <!--Scale-->
+        <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:SpacingRange x:Name="SpacingRange"/>
+        <!--Size-->
         <elements:SizePickerExtension x:Name="Step"/>
     </FrameworkElement.Resources>
 
     <StackPanel>
-
-        <!--Mix-->
-        <Border Height="42" Margin="0,4" Padding="9,0" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
-                Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
-            <StackPanel Orientation="Horizontal" Spacing="9">
-                <TextBlock x:Name="MixTextBlock" Width="128" Margin="2,0" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
-                    Mix
-                </TextBlock>
-                <ToggleSwitch x:Name="MixButton" Grid.Column="1" Margin="2,0"/>
-            </StackPanel>
-        </Border>
 
         <!--Size-->
         <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" >
@@ -108,12 +98,12 @@
 
         <!--Hardness-->
         <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
+               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             Hardness
         </TextBlock>
 
         <ListView x:Name="HardnessListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}"
-              Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
+              Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             <luo_painter:ElementIcon Type="BrushEdgeHardnessNone"/>
             <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine"/>
             <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic"/>
@@ -123,12 +113,12 @@
 
         <!--Mask-->
         <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
+               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             Mask
         </TextBlock>
 
         <Border Height="146" Margin="2,4" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
-                Visibility="{x:Bind Int05ToVisibility(Type), Mode=OneWay}" >
+                Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             <StackPanel Orientation="Horizontal" Spacing="9">
                 <Border Width="128" Height="128" CornerRadius="4" Background="Black">
                     <Image>
@@ -182,13 +172,27 @@
         </Border>
 
         <!--BlendMode-->
+        <TextBlock x:Name="ModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+            Mode
+        </TextBlock>
+
+        <ListBox x:Name="ModeComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}"
+                 Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+            <TextBlock>None</TextBlock>
+            <TextBlock>Mix</TextBlock>
+            <TextBlock>Blur</TextBlock>
+        </ListBox>
+
+        <!--BlendMode-->
         <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
             Blend Mode
         </TextBlock>
 
         <ListView x:Name="BlendModeListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
-               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                  IsEnabled="{x:Bind Int0ToBooleanConverter(ModeComboBox.SelectedIndex), Mode=OneWay}"
+                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
             <effects:BlendEffectMode>-1</effects:BlendEffectMode>
             <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
             <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
