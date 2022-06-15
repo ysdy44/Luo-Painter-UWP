@@ -25,7 +25,7 @@ namespace Luo_Painter
                 return BitmapType.Temp;
             else if (type.HasFlag(InkType.Opacity))
                 return BitmapType.Temp;
-            else if (type.HasFlag(InkType.BlendMode))
+            else if (type.HasFlag(InkType.Blend))
                 return BitmapType.Temp;
             else
                 return BitmapType.Source;
@@ -79,7 +79,7 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            if (this.InkType.HasFlag(InkType.BlendMode))
+            if (this.InkType.HasFlag(InkType.Blend))
                 this.BitmapLayer.DrawCopy(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Origin));
             else if (this.InkType.HasFlag(InkType.Opacity) || this.InkType.HasFlag(InkType.Pattern))
                 this.BitmapLayer.Draw(this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp));

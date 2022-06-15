@@ -203,7 +203,7 @@ namespace Luo_Painter
         {
             if (this.OptionType.IsOption() is false)
             {
-                if (this.InkType.HasFlag(InkType.BlendMode))
+                if (this.InkType.HasFlag(InkType.Blend))
                     return this.InkPresenter.GetWetPreview(this.InkType, this.BitmapLayer.Temp, this.BitmapLayer.Source);
                 else if (this.InkType.HasFlag(InkType.Opacity) || this.InkType.HasFlag(InkType.Pattern))
                 {

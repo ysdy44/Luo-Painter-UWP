@@ -39,8 +39,8 @@ namespace Luo_Painter.TestApp
                 {
                     case 0: this.InkType = InkType.CircleDry; break;
                     case 1: this.InkType = InkType.CircleWetOpacity; break;
-                    case 2: this.InkType = InkType.CircleWetBlendMode; break;
-                    case 3: this.InkType = InkType.CircleWetOpacityBlendMode; break;
+                    case 2: this.InkType = InkType.CircleWetBlend; break;
+                    case 3: this.InkType = InkType.CircleWetOpacityBlend; break;
                     default: break;
                 }
             };
@@ -169,8 +169,8 @@ namespace Luo_Painter.TestApp
                         }
                         break;
                     case InkType.CircleWetOpacity:
-                    case InkType.CircleWetBlendMode:
-                    case InkType.CircleWetOpacityBlendMode:
+                    case InkType.CircleWetBlend:
+                    case InkType.CircleWetOpacityBlend:
                         {
                             bool result = this.BitmapLayer.IsometricFillCircle(
                                 this.ColorPicker.Color,
@@ -207,8 +207,8 @@ namespace Luo_Painter.TestApp
                         this.TempCanvasControl.Invalidate(); // Invalidate
                         break;
                     case InkType.CircleWetOpacity:
-                    case InkType.CircleWetBlendMode:
-                    case InkType.CircleWetOpacityBlendMode:
+                    case InkType.CircleWetBlend:
+                    case InkType.CircleWetOpacityBlend:
                         this.IsEnabled = false;
 
                         // 1.  Origin + Temp => Source

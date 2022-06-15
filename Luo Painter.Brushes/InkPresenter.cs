@@ -94,7 +94,7 @@ namespace Luo_Painter.Brushes
                     if (this.Opacity == 0f) return InkType.None;
                     else if (this.Opacity != 1f) type |= InkType.Opacity;
                     if (this.AllowPattern) type |= InkType.Pattern;
-                    if (this.IsDefined) type |= InkType.BlendMode;
+                    if (this.IsDefined) type |= InkType.Blend;
                     return type;
             }
         }
