@@ -7,13 +7,6 @@ using Windows.Graphics.Effects;
 
 namespace Luo_Painter.Layers.Models
 {
-    public enum BitmapType
-    {
-        Origin,
-        Source,
-        Temp,
-    }
-
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
@@ -26,10 +19,6 @@ namespace Luo_Painter.Layers.Models
 
         public LayerType Type => LayerType.Bitmap;
 
-
-        public ICanvasImage Origin => this.OriginRenderTarget;
-        public ICanvasImage Source => this.SourceRenderTarget;
-        public ICanvasImage Temp => this.TempRenderTarget;
 
         public ICanvasImage this[BitmapType type]
         {

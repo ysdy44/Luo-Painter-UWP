@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BitmapType.cs" />
     <Compile Include="ILayer.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />

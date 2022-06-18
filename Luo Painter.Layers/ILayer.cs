@@ -31,10 +31,7 @@ namespace Luo_Painter.Layers
         RenderMode RenderMode { get; }
         ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage);
 
-        ICanvasImage Origin { get; }
-        ICanvasImage Source { get; }
-        ICanvasImage Temp { get; }
-        ICanvasImage this[Models.BitmapType type] { get; }
+        ICanvasImage this[BitmapType type] { get; }
         ImageSource Thumbnail { get; }
 
         bool History(HistoryType type, object parameter);
