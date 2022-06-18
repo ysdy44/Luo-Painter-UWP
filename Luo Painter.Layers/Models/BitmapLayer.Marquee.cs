@@ -64,7 +64,7 @@ namespace Luo_Painter.Layers.Models
         {
             return new AlphaMaskEffect
             {
-                Source = this.Source,
+                Source = this.SourceRenderTarget,
                 AlphaMask = marquee.SourceRenderTarget
             };
         }

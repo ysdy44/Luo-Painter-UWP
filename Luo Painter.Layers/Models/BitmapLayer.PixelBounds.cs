@@ -98,14 +98,14 @@ namespace Luo_Painter.Layers.Models
         private bool IsTransparent(Color color) => color.A == byte.MinValue;
         private bool IsSolid(Color color) => color.A == byte.MaxValue;
 
-        public Color[] GetInterpolationColorsBySource() => this.GetInterpolationColors(this.Source);
+        public Color[] GetInterpolationColorsBySource() => this.GetInterpolationColors(this.SourceRenderTarget);
         public Color[] GetInterpolationColorsByDifference() => this.GetInterpolationColors(new LuminanceToAlphaEffect
         {
             Source = new BlendEffect
             {
                 Mode = BlendEffectMode.Difference,
-                Foreground = this.Source,
-                Background = this.Origin
+                Foreground = this.SourceRenderTarget,
+                Background = this.OriginRenderTarget
             }
         });
         public Color[] GetInterpolationColors(IGraphicsEffectSource source)

@@ -20,7 +20,16 @@ namespace Luo_Painter.Layers.Models
         readonly HashSet<int> Add2Retrieves = new HashSet<int>();
 
 
-        public Color GetPixelColor(int px, int py, BitmapType type) => this[type].GetPixelColors(px, py, 1, 1).Single();
+        public Color GetPixelColor(int px, int py, BitmapType type)
+        {
+            switch (type)
+            {
+                case BitmapType.Origin: return this.OriginRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+                case BitmapType.Source: return this.SourceRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+                case BitmapType.Temp: return this.TempRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+                default: return this.SourceRenderTarget.GetPixelColors(px, py, 1, 1).Single();
+            }
+        }
         public bool Contains(int px, int py)
         {
             if (px < 0) return false;

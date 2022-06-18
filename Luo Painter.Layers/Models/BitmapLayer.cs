@@ -3,7 +3,7 @@ using Microsoft.Graphics.Canvas.Brushes;
 using System;
 using System.Numerics;
 using Windows.UI;
-using Windows.UI.Xaml.Media.Imaging;
+using Windows.Graphics.Effects;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -31,7 +31,7 @@ namespace Luo_Painter.Layers.Models
         public ICanvasImage Source => this.SourceRenderTarget;
         public ICanvasImage Temp => this.TempRenderTarget;
 
-        private CanvasRenderTarget this[BitmapType type]
+        public ICanvasImage this[BitmapType type]
         {
             get
             {
@@ -121,13 +121,22 @@ namespace Luo_Painter.Layers.Models
             this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
 
-        public void RenderThumbnail() => base.RenderThumbnail(this.Source);
+        public void RenderThumbnail() => base.RenderThumbnail(this.SourceRenderTarget);
 
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
 
-        public void CopyPixels(BitmapLayer source, BitmapType sourceType = BitmapType.Source, BitmapType destinationType = BitmapType.Source) => this[destinationType].CopyPixelsFromBitmap(source[sourceType]);
+        public void CopyPixels(BitmapLayer source) => this.SourceRenderTarget.CopyPixelsFromBitmap(source.SourceRenderTarget);
 
-        public CanvasDrawingSession CreateDrawingSession(BitmapType type = BitmapType.Source) => this[type].CreateDrawingSession();
+        public CanvasDrawingSession CreateDrawingSession(BitmapType type = BitmapType.Source)
+        {
+            switch (type)
+            {
+                case BitmapType.Origin: return this.OriginRenderTarget.CreateDrawingSession();
+                case BitmapType.Source: return this.SourceRenderTarget.CreateDrawingSession();
+                case BitmapType.Temp: return this.TempRenderTarget.CreateDrawingSession();
+                default: return this.SourceRenderTarget.CreateDrawingSession();
+            }
+        }
 
         public void Draw(ICanvasImage image, BitmapType type = BitmapType.Source)
         {
