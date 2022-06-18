@@ -37,7 +37,7 @@ namespace Luo_Painter.Brushes
                         Foreground = wet
                     };
                 else if (type.HasFlag(InkType.WetCompositeEraseOpacity))
-                    return this.GetErase(this.Opacity, image, wet);
+                    return this.GetErase(image, wet);
                 else
                     return null;
             }
@@ -122,7 +122,31 @@ namespace Luo_Painter.Brushes
             }
         }
 
-        public ICanvasImage GetErase(float opacity, IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => new ArithmeticCompositeEffect
+
+        public ICanvasImage GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
+        public ICanvasImage GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, this.Size * this.Opacity);
+        public ICanvasImage GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
+        public ICanvasImage GetPattern(IGraphicsEffectSource image) => InkPresenter.GetPattern(image, this.Pattern, new Vector2
+        {
+            X = this.Step / (float)this.Pattern.SizeInPixels.Width,
+            Y = this.Step / (float)this.Pattern.SizeInPixels.Height
+        });
+
+
+        //@Static  
+        public static ICanvasImage GetDraw(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => new CompositeEffect
+        {
+            Sources =
+            {
+                alphaMask,
+                new AlphaMaskEffect
+                {
+                    AlphaMask = alphaMask,
+                    Source = image
+                }
+            }
+        };
+        public static ICanvasImage GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float opacity) => new ArithmeticCompositeEffect
         {
             MultiplyAmount = 0,
             Source1Amount = 1,
@@ -131,56 +155,46 @@ namespace Luo_Painter.Brushes
             Source1 = image,
             Source2 = alphaMask,
         };
-
-        public ICanvasImage GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => new AlphaMaskEffect
+        public static ICanvasImage GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float blurAmount) => new AlphaMaskEffect
         {
             AlphaMask = alphaMask,
             Source = new GaussianBlurEffect
             {
                 BorderMode = EffectBorderMode.Hard,
-                BlurAmount = System.Math.Clamp(this.Size * this.Opacity, 1, 100),
+                BlurAmount = blurAmount,
                 Source = image
             }
         };
-
-        public ICanvasImage GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => new AlphaMaskEffect
+        public static ICanvasImage GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float size) => new AlphaMaskEffect
         {
             AlphaMask = alphaMask,
             Source = new ScaleEffect
             {
                 InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                Scale = new Vector2(this.Size / 4),
+                Scale = new Vector2(size / 4),
                 Source = new ScaleEffect
                 {
                     InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    Scale = new Vector2(4 / this.Size),
+                    Scale = new Vector2(4 / size),
                     Source = image
                 }
             }
         };
-
-        private ICanvasImage GetPattern(IGraphicsEffectSource image)
+        public static ICanvasImage GetPattern(IGraphicsEffectSource image, IGraphicsEffectSource pattern, Vector2 scale) => new AlphaMaskEffect
         {
-            return new AlphaMaskEffect
+            AlphaMask = new BorderEffect
             {
-                AlphaMask = new BorderEffect
+                ExtendX = CanvasEdgeBehavior.Wrap,
+                ExtendY = CanvasEdgeBehavior.Wrap,
+                Source = new ScaleEffect
                 {
-                    ExtendX = CanvasEdgeBehavior.Wrap,
-                    ExtendY = CanvasEdgeBehavior.Wrap,
-                    Source = new ScaleEffect
-                    {
-                        BorderMode = EffectBorderMode.Hard,
-                        Source = this.Pattern,
-                        Scale = new Vector2
-                        {
-                            X = this.Step / (float)this.Pattern.SizeInPixels.Width,
-                            Y = this.Step / (float)this.Pattern.SizeInPixels.Height
-                        }
-                    }
-                },
-                Source = image
-            };
-        }
+                    BorderMode = EffectBorderMode.Hard,
+                    Source = pattern,
+                    Scale = scale
+                }
+            },
+            Source = image
+        };
 
     }
 }
