@@ -177,11 +177,12 @@
             Mode
         </TextBlock>
 
-        <ListBox x:Name="ModeComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}"
+        <ListBox x:Name="ModeComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}"
                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
             <TextBlock>None</TextBlock>
-            <TextBlock>Mix</TextBlock>
             <TextBlock>Blur</TextBlock>
+            <TextBlock>Mosaic</TextBlock>
+            <TextBlock>Mix</TextBlock>
         </ListBox>
 
         <!--BlendMode-->

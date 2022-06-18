@@ -236,10 +236,13 @@ namespace Luo_Painter.Menus
                 switch (item)
                 {
                     case 1:
-                        this.InkModeChanged?.Invoke(this, InkType.Mix); // Delegate
+                        this.InkModeChanged?.Invoke(this, InkType.Blur); // Delegate
                         break;
                     case 2:
-                        this.InkModeChanged?.Invoke(this, InkType.Blur); // Delegate
+                        this.InkModeChanged?.Invoke(this, InkType.Mosaic); // Delegate
+                        break;
+                    case 3:
+                        this.InkModeChanged?.Invoke(this, InkType.Mix); // Delegate
                         break;
                     default:
                         switch (this.BlendModeListView.SelectedIndex)

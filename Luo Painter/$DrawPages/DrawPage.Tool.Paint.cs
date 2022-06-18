@@ -69,29 +69,8 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            if (this.InkType.HasFlag(InkType.Dry))
-            {
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-            }
-            else if (this.InkType.HasFlag(InkType.Wet))
-            {
-                this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp));
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-            }
-            else if (this.InkType.HasFlag(InkType.WetBlur))
-            {
-                this.BitmapLayer.Draw(this.InkPresenter.GetBlur(this.BitmapLayer.Origin, this.BitmapLayer.Temp));
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-            }
-            else if (this.InkType.HasFlag(InkType.WetComposite))
-            {
-                this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-            }
-            else
-            {
-                return;
-            }
+            if (this.Paint() is false) return;
+            this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
             // History
             int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
@@ -103,6 +82,16 @@ namespace Luo_Painter
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;
+        }
+
+        private bool Paint()
+        {
+            if (this.InkType.HasFlag(InkType.Dry)) return true;
+            else if (this.InkType.HasFlag(InkType.Wet)) { this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)); return true; }
+            else if (this.InkType.HasFlag(InkType.WetBlur)) { this.BitmapLayer.Draw(this.InkPresenter.GetBlur(this.BitmapLayer.Origin, this.BitmapLayer.Temp)); return true; }
+            else if (this.InkType.HasFlag(InkType.WetMosaic)) { this.BitmapLayer.Draw(this.InkPresenter.GetMosaic(this.BitmapLayer.Origin, this.BitmapLayer.Temp)); return true; }
+            else if (this.InkType.HasFlag(InkType.WetComposite)) { this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp))); return true; }
+            else return false;
         }
 
         private bool Paint(BitmapLayer bitmapLayer, Vector2 position, float pressure)
@@ -129,6 +118,8 @@ namespace Luo_Painter
                 case InkType.BrushWetPatternOpacityBlend:
                 case InkType.BrushWetBlur:
                 case InkType.BrushWetPatternBlur:
+                case InkType.BrushWetMosaic:
+                case InkType.BrushWetPatternMosaic:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.ColorMenu.ColorHdr,
@@ -183,6 +174,8 @@ namespace Luo_Painter
                 case InkType.MaskBrushWetPatternOpacityBlend:
                 case InkType.MaskBrushWetBlur:
                 case InkType.MaskBrushWetPatternBlur:
+                case InkType.MaskBrushWetMosaic:
+                case InkType.MaskBrushWetPatternMosaic:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.ColorMenu.ColorHdr,
@@ -239,6 +232,8 @@ namespace Luo_Painter
                 case InkType.CircleWetPatternOpacityBlend:
                 case InkType.CircleWetBlur:
                 case InkType.CircleWetPatternBlur:
+                case InkType.CircleWetMosaic:
+                case InkType.CircleWetPatternMosaic:
                     return bitmapLayer.IsometricFillCircle(
                         this.ColorMenu.Color,
                         this.Position, position,
@@ -278,6 +273,8 @@ namespace Luo_Painter
                 case InkType.LineWetPatternOpacityBlend:
                 case InkType.LineWetBlur:
                 case InkType.LineWetPatternBlur:
+                case InkType.LineWetMosaic:
+                case InkType.LineWetPatternMosaic:
                     bitmapLayer.DrawLine(this.Position, position, this.ColorMenu.Color, this.InkPresenter.Size, BitmapType.Temp);
                     return true;
 
