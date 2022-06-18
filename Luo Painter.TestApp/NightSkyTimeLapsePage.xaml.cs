@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -58,49 +59,49 @@ namespace Luo_Painter.TestApp
                 }
                 else
                 {
-                    args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                    args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.6f,
-                        Source = this.BitmapLayer1.Source
+                        Source = this.BitmapLayer1[BitmapType.Source]
                     });
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.55f,
-                        Source = this.BitmapLayer2.Source
+                        Source = this.BitmapLayer2[BitmapType.Source]
                     });
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.5f,
-                        Source = this.BitmapLayer3.Source
+                        Source = this.BitmapLayer3[BitmapType.Source]
                     });
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.45f,
-                        Source = this.BitmapLayer4.Source
+                        Source = this.BitmapLayer4[BitmapType.Source]
                     });
                 }
 
-                args.DrawingSession.DrawImage(this.BitmapLayer.Temp);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Temp]);
                 args.DrawingSession.DrawImage(new OpacityEffect
                 {
                     Opacity = 0.6f,
-                    Source = this.BitmapLayer1.Temp
+                    Source = this.BitmapLayer1[BitmapType.Temp]
                 });
                 args.DrawingSession.DrawImage(new OpacityEffect
                 {
                     Opacity = 0.55f,
-                    Source = this.BitmapLayer2.Temp
+                    Source = this.BitmapLayer2[BitmapType.Temp]
                 });
                 args.DrawingSession.DrawImage(new OpacityEffect
                 {
                     Opacity = 0.5f,
-                    Source = this.BitmapLayer1.Temp
+                    Source = this.BitmapLayer1[BitmapType.Temp]
                 });
                 args.DrawingSession.DrawImage(new OpacityEffect
                 {
                     Opacity = 0.45f,
-                    Source = this.BitmapLayer2.Temp
+                    Source = this.BitmapLayer2[BitmapType.Temp]
                 });
             };
 
@@ -115,7 +116,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.Black);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 2048)
                 });
             };
@@ -130,7 +131,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.Black);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 2048)
                 });
             };
@@ -145,7 +146,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.Black);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 2048)
                 });
             };
@@ -247,7 +248,7 @@ namespace Luo_Painter.TestApp
                     ds.DrawImage(new Transform2DEffect
                     {
                         TransformMatrix = Matrix3x2.CreateRotation(radians, this.Position),
-                        Source = bitmapLayer.Origin
+                        Source = bitmapLayer[BitmapType.Origin]
                     });
                 }
                 bitmapLayer.Flush();

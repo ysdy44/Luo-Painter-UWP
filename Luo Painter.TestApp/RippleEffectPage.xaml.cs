@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -116,7 +117,7 @@ namespace Luo_Painter.TestApp
                 if (this.BitmapLayer is null) return;
 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-                args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
             };
 
 
@@ -129,8 +130,8 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
                 {
-                    Source1 = this.BitmapLayer.Origin,
-                    Source2 = this.BitmapLayer.Source,
+                    Source1 = this.BitmapLayer[BitmapType.Origin],
+                    Source2 = this.BitmapLayer[BitmapType.Source],
                 });
 
                 this.BitmapLayer.DrawHits(args.DrawingSession, Colors.Red, this.TextFormat, (i) => i.ToString());
@@ -173,7 +174,7 @@ namespace Luo_Painter.TestApp
 
             this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.RippleEffectShaderCodeBytes)
             {
-                Source1 = this.BitmapLayer.Origin,
+                Source1 = this.BitmapLayer[BitmapType.Origin],
                 Properties =
                 {
                     ["frequency"] = this.Rippler.Frequency,
@@ -187,8 +188,8 @@ namespace Luo_Painter.TestApp
 
             this.BitmapLayer.Hit(this.BitmapLayer.GetInterpolationColors(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
             {
-                Source1 = this.BitmapLayer.Source,
-                Source2 = this.BitmapLayer.Origin
+                Source1 = this.BitmapLayer[BitmapType.Source],
+                Source2 = this.BitmapLayer[BitmapType.Origin]
             }));
 
             this.CanvasControl.Invalidate(); // Invalidate

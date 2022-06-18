@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -73,7 +74,7 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
-                    Source1 = this.BitmapLayer.Source,
+                    Source1 = this.BitmapLayer[BitmapType.Source],
                     Properties =
                     {
                         ["time"] = (float)args.Timing.UpdateCount,

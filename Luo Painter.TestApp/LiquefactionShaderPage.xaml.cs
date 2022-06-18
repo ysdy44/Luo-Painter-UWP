@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Historys;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -76,7 +77,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.DrawImage(new CropEffect
                 {
                     SourceRectangle = new Rect(0, 0, 512, 512),
-                    Source = this.BitmapLayer.Source
+                    Source = this.BitmapLayer[BitmapType.Source]
                 });
             };
 
@@ -91,7 +92,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -106,7 +107,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -121,7 +122,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -183,7 +184,7 @@ namespace Luo_Painter.TestApp
             PixelShaderEffect shader = new PixelShaderEffect(this.ShaderCodeBytes)
             {
                 Source1BorderMode = EffectBorderMode.Hard,
-                Source1 = this.BitmapLayer.Source,
+                Source1 = this.BitmapLayer[BitmapType.Source],
                 Properties =
                 {
                     ["radius"] = this.BitmapLayer.ConvertValueToOne(this.RangeSize),

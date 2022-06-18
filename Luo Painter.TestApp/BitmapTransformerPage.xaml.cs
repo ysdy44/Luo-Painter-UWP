@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -90,7 +91,7 @@ namespace Luo_Painter.TestApp
                     BorderMode = EffectBorderMode.Hard,
                     InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                     TransformMatrix = matrix,
-                    Source = this.BitmapLayer.Source
+                    Source = this.BitmapLayer[BitmapType.Source]
                 });
 
                 args.DrawingSession.DrawNode(this.Position);
@@ -121,7 +122,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -136,7 +137,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -151,7 +152,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };

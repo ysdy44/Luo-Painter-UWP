@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
@@ -84,7 +85,7 @@ namespace Luo_Painter.TestApp
                         Source = new EdgeDetectionEffect//Edge
                         {
                             Amount = 1,
-                            Source = this.BitmapLayer.Source
+                            Source = this.BitmapLayer[BitmapType.Source]
                         }
                     }
                 });

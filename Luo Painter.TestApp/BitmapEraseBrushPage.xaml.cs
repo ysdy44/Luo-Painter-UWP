@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -74,7 +75,7 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.FillRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.White);
 
-                args.DrawingSession.DrawImage(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Source, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
+                args.DrawingSession.DrawImage(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp])));
             };
 
 
@@ -88,7 +89,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -103,7 +104,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -118,7 +119,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.Orange);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -186,7 +187,7 @@ namespace Luo_Painter.TestApp
                         break;
                     case InkType.EraseWetOpacity: /// <see cref="InkType.WetComposite"/>
                         // 1.  Origin + Temp => Source
-                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)));
+                        this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Origin], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp])));
                         this.OriginCanvasControl.Invalidate(); // Invalidate
                         this.SourceCanvasControl.Invalidate(); // Invalidate
                         this.TempCanvasControl.Invalidate(); // Invalidate

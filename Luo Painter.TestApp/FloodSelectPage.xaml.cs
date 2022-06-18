@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Layers.Models;
+﻿using Luo_Painter.Layers;
+using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace Luo_Painter.TestApp
             {
                 if (this.BitmapLayer is null) return;
 
-                args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
             };
 
 
@@ -62,7 +63,7 @@ namespace Luo_Painter.TestApp
             {
                 if (this.BitmapLayer is null) return;
 
-                args.DrawingSession.DrawImage(this.BitmapLayer.Temp);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Temp]);
             };
         }
 

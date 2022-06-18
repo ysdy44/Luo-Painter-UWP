@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -87,7 +88,7 @@ namespace Luo_Painter.TestApp
                 Matrix3x2 matrix = FanKit.Transformers.Transformer.FindHomography(this.Transformer, this.TransformerRect, out Vector2 distance);
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
-                    Source1 = this.BitmapLayer.Source,
+                    Source1 = this.BitmapLayer[BitmapType.Source],
                     Properties =
                     {
                         ["matrix3x2"] = matrix,
@@ -129,7 +130,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -144,7 +145,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -159,7 +160,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };

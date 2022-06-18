@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
@@ -276,8 +277,8 @@ namespace Luo_Painter.TestApp
                     SourceRectangle = this.BitmapLayer.Bounds.ToRect(),
                     Source = new DisplacementMapEffect
                     {
-                        Source = this.BitmapLayer.Source,
-                        Displacement = this.BitmapLayer.Temp,
+                        Source = this.BitmapLayer[BitmapType.Source],
+                        Displacement = this.BitmapLayer[BitmapType.Temp],
                         XChannelSelect = EffectChannelSelect.Red,
                         YChannelSelect = EffectChannelSelect.Green,
                         Amount = 100,
@@ -296,7 +297,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -311,7 +312,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -326,7 +327,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -373,8 +374,8 @@ namespace Luo_Painter.TestApp
             {
                 this.BitmapLayer.DrawCopy(new DisplacementMapEffect
                 {
-                    Source = this.BitmapLayer.Origin,
-                    Displacement = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Origin],
+                    Displacement = this.BitmapLayer[BitmapType.Temp],
                     XChannelSelect = EffectChannelSelect.Red,
                     YChannelSelect = EffectChannelSelect.Green,
                     Amount = 100,

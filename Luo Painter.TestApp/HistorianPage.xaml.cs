@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System.Linq;
@@ -106,7 +107,7 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.DrawRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, Colors.Red);
 
-                args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
             };
         }
 

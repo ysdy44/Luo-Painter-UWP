@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -46,7 +47,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.FillRectangle(0, 0, 512, 512, Colors.White);
                 args.DrawingSession.FillRectangle(512, 0, 512, 512, Colors.Black);
 
-                args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
                 args.DrawingSession.DrawImage(this.Texture, 512, 0);
             };
         }

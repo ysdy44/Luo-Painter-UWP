@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Historys;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -144,7 +145,7 @@ namespace Luo_Painter.TestApp
                 switch ((DisplacementLiquefactionState)this.StateListView.SelectedIndex)
                 {
                     case DisplacementLiquefactionState.Displacement:
-                        args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                        args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
                         break;
                     case DisplacementLiquefactionState.Liquefaction:
                         args.DrawingSession.FillRectangle(this.BitmapLayer.Bounds.ToRect(), Colors.White);
@@ -168,7 +169,7 @@ namespace Luo_Painter.TestApp
                                 {
                                     BorderMode = EffectBorderMode.Hard,
                                     BlurAmount = 16,
-                                    Source = this.BitmapLayer.Source
+                                    Source = this.BitmapLayer[BitmapType.Source]
                                 },
                             }
                         });
@@ -193,7 +194,7 @@ namespace Luo_Painter.TestApp
                                             {
                                                 BorderMode = EffectBorderMode.Hard,
                                                 BlurAmount = 16,
-                                                Source = this.BitmapLayer.Source
+                                                Source = this.BitmapLayer[BitmapType.Source]
                                             }
                                         }
                                     }
@@ -221,7 +222,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Origin,
+                    Source = this.BitmapLayer[BitmapType.Origin],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -236,7 +237,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Source,
+                    Source = this.BitmapLayer[BitmapType.Source],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -251,7 +252,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Clear(Colors.White);
                 args.DrawingSession.DrawImage(new ScaleEffect
                 {
-                    Source = this.BitmapLayer.Temp,
+                    Source = this.BitmapLayer[BitmapType.Temp],
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
@@ -315,7 +316,7 @@ namespace Luo_Painter.TestApp
             PixelShaderEffect shader = new PixelShaderEffect(this.ShaderCodeBytes)
             {
                 Source1BorderMode = EffectBorderMode.Hard,
-                Source1 = this.BitmapLayer.Source,
+                Source1 = this.BitmapLayer[BitmapType.Source],
                 Properties =
                 {
                     ["mode"] = this.ModeListView.SelectedIndex,

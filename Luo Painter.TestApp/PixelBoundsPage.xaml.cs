@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -77,7 +78,7 @@ namespace Luo_Painter.TestApp
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                args.DrawingSession.DrawImage(this.BitmapLayer.Source);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);
                 args.DrawingSession.DrawRectangle(this.BitmapLayer.Bounds.ToRect(), Colors.YellowGreen, stroke);
@@ -101,7 +102,7 @@ namespace Luo_Painter.TestApp
                 {
                     Scale = new Vector2(BitmapLayer.Unit),
                     InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    Source = this.BitmapLayer.Temp
+                    Source = this.BitmapLayer[BitmapType.Temp]
                 });
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);

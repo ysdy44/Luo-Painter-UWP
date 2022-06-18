@@ -129,7 +129,7 @@ namespace Luo_Painter.TestApp
                     switch (item.Visibility)
                     {
                         case Visibility.Visible:
-                            args.DrawingSession.DrawImage(item.Source);
+                            args.DrawingSession.DrawImage(item[BitmapType.Source]);
                             break;
                         case Visibility.Collapsed:
                             break;
