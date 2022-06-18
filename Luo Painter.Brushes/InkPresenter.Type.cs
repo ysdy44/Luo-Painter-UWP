@@ -18,6 +18,7 @@
         /// <see cref=" InkType.Blend"/>
         /// <see cref=" InkType.Mix"/>
         /// <see cref=" InkType.Blur"/>
+        /// <see cref=" InkType.Mosaic"/>
         /// </summary>
         public InkType Mode { get; set; }
 
@@ -45,6 +46,9 @@
                             case InkType.Blur:
                                 if (this.AllowPattern) return InkType.MaskBrushWetPatternBlur;
                                 else return InkType.MaskBrushWetBlur;
+                            case InkType.Mosaic:
+                                if (this.AllowPattern) return InkType.MaskBrushWetPatternMosaic;
+                                else return InkType.MaskBrushWetMosaic;
                             case InkType.Mix:
                                 if (this.AllowPattern) return InkType.MaskBrushWetPatternMix;
                                 else return InkType.MaskBrushDryMix;
@@ -81,6 +85,9 @@
                             case InkType.Blur:
                                 if (this.AllowPattern) return InkType.BrushWetPatternBlur;
                                 else return InkType.BrushWetBlur;
+                            case InkType.Mosaic:
+                                if (this.AllowPattern) return InkType.BrushWetPatternMosaic;
+                                else return InkType.BrushWetMosaic;
                             case InkType.Mix:
                                 if (this.AllowPattern) return InkType.BrushWetPatternMix;
                                 else return InkType.BrushDryMix;
@@ -116,6 +123,9 @@
                         case InkType.Blur:
                             if (this.AllowPattern) return InkType.CircleWetPatternBlur;
                             else return InkType.CircleWetBlur;
+                        case InkType.Mosaic:
+                            if (this.AllowPattern) return InkType.CircleWetPatternMosaic;
+                            else return InkType.CircleWetMosaic;
                         case InkType.Mix:
                             if (this.AllowPattern) return InkType.CircleWetPatternMix;
                             else return InkType.CircleDryMix;
@@ -150,6 +160,9 @@
                         case InkType.Blur:
                             if (this.AllowPattern) return InkType.LineWetPatternBlur;
                             else return InkType.LineWetBlur;
+                        case InkType.Mosaic:
+                            if (this.AllowPattern) return InkType.LineWetPatternMosaic;
+                            else return InkType.LineWetMosaic;
                         case InkType.Mix:
                             if (this.AllowPattern) return InkType.LineWetPatternMix;
                             else return InkType.LineDryMix;

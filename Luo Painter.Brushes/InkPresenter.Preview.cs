@@ -22,6 +22,11 @@ namespace Luo_Painter.Brushes
                 {
                     Sources = { image, this.GetBlur(image, wet) }
                 };
+            else if (type.HasFlag(InkType.WetMosaic))
+                return new CompositeEffect
+                {
+                    Sources = { image, this.GetMosaic(image, wet) }
+                };
             else if (type.HasFlag(InkType.WetComposite))
             {
                 if (type.HasFlag(InkType.WetCompositeBlend))
@@ -95,6 +100,10 @@ namespace Luo_Painter.Brushes
                 case InkType.MaskBrushWetBlur:
                 case InkType.CircleWetBlur:
                 case InkType.LineWetBlur:
+                case InkType.BrushWetMosaic:
+                case InkType.MaskBrushWetMosaic:
+                case InkType.CircleWetMosaic:
+                case InkType.LineWetMosaic:
                 case InkType.EraseWetOpacity:
                     return image;
 
@@ -131,6 +140,22 @@ namespace Luo_Painter.Brushes
                 BorderMode = EffectBorderMode.Hard,
                 BlurAmount = System.Math.Clamp(this.Size * this.Opacity, 1, 100),
                 Source = image
+            }
+        };
+
+        public ICanvasImage GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => new AlphaMaskEffect
+        {
+            AlphaMask = alphaMask,
+            Source = new ScaleEffect
+            {
+                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                Scale = new Vector2(this.Size / 4),
+                Source = new ScaleEffect
+                {
+                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                    Scale = new Vector2(4 / this.Size),
+                    Source = image
+                }
             }
         };
 
