@@ -85,7 +85,7 @@ namespace Luo_Painter
             {
                 ILayer item = this.ObservableCollection[i];
 
-                background = item.Render(background, item.Source);
+                background = item.Render(background, item[BitmapType.Source]);
             }
             return background;
         }
@@ -100,7 +100,7 @@ namespace Luo_Painter
                 {
                     InterpolationMode = interpolationMode,
                     TransformMatrix = matrix,
-                    Source = item.Source,
+                    Source = item[BitmapType.Source],
                 });
             }
             return background;
@@ -116,7 +116,7 @@ namespace Luo_Painter
                 {
                     InterpolationMode = interpolationMode,
                     TransformMatrix = matrix,
-                    Source = (item.Id == id) ? mezzanine : item.Source,
+                    Source = (item.Id == id) ? mezzanine : item[BitmapType.Source],
                 });
             }
             return background;

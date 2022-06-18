@@ -7,6 +7,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using Luo_Painter.Layers;
 
 namespace Luo_Painter
 {
@@ -85,7 +86,7 @@ namespace Luo_Painter
                 return false;
             }
 
-            ICanvasImage floodSelect = bitmapLayer.Temp;
+            ICanvasImage floodSelect = bitmapLayer[BitmapType.Temp];
             Color[] interpolationColors = this.Marquee.GetInterpolationColors(floodSelect);
             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 

@@ -48,7 +48,7 @@ namespace Luo_Painter
 
                         if (type.HasPreview() is false)
                         {
-                            this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer.Origin));
+                            this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                             return true;
                         }
 

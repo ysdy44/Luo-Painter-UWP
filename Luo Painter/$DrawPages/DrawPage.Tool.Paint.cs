@@ -87,10 +87,10 @@ namespace Luo_Painter
         private bool Paint()
         {
             if (this.InkType.HasFlag(InkType.Dry)) return true;
-            else if (this.InkType.HasFlag(InkType.Wet)) { this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp)); return true; }
-            else if (this.InkType.HasFlag(InkType.WetBlur)) { this.BitmapLayer.Draw(this.InkPresenter.GetBlur(this.BitmapLayer.Origin, this.BitmapLayer.Temp)); return true; }
-            else if (this.InkType.HasFlag(InkType.WetMosaic)) { this.BitmapLayer.Draw(this.InkPresenter.GetMosaic(this.BitmapLayer.Origin, this.BitmapLayer.Temp)); return true; }
-            else if (this.InkType.HasFlag(InkType.WetComposite)) { this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Origin, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp))); return true; }
+            else if (this.InkType.HasFlag(InkType.Wet)) { this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp])); return true; }
+            else if (this.InkType.HasFlag(InkType.WetBlur)) { this.BitmapLayer.Draw(this.InkPresenter.GetBlur(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp])); return true; }
+            else if (this.InkType.HasFlag(InkType.WetMosaic)) { this.BitmapLayer.Draw(this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp])); return true; }
+            else if (this.InkType.HasFlag(InkType.WetComposite)) { this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Origin], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]))); return true; }
             else return false;
         }
 
@@ -297,7 +297,7 @@ namespace Luo_Painter
                     bitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
                     {
                         Source1BorderMode = EffectBorderMode.Hard,
-                        Source1 = bitmapLayer.Source,
+                        Source1 = bitmapLayer[BitmapType.Source],
                         Properties =
                         {
                             ["radius"] = bitmapLayer.ConvertValueToOne(this.InkPresenter.Size),

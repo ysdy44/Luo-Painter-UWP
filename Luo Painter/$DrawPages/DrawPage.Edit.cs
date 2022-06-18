@@ -130,7 +130,7 @@ namespace Luo_Painter
 
                             string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
-                            BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, this.Clipboard.Source, this.Transformer.Width, this.Transformer.Height);
+                            BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, this.Clipboard[BitmapType.Source], this.Transformer.Width, this.Transformer.Height);
 
                             this.Layers.Add(bitmapLayer2.Id, bitmapLayer2);
                             this.ObservableCollection.Insert(index, bitmapLayer2);
@@ -234,7 +234,7 @@ namespace Luo_Painter
                                 {
                                     string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
-                                    ICanvasImage image = current.Render(previous.Source, current.Source);
+                                    ICanvasImage image = current.Render(previous[BitmapType.Source], current[BitmapType.Source]);
                                     BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
                                     this.Layers.Add(bitmapLayer.Id, bitmapLayer);
 

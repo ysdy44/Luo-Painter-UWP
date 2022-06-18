@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -41,7 +42,7 @@ namespace Luo_Painter
                     {
                         ExtendX = CanvasEdgeBehavior.Clamp,
                         ExtendY = CanvasEdgeBehavior.Clamp,
-                        Source = this.Displacement.Source,
+                        Source = this.Displacement[BitmapType.Source],
                     }
                 }
             };
@@ -64,7 +65,7 @@ namespace Luo_Painter
             this.Displacement.Shade(new PixelShaderEffect(this.DisplacementLiquefactionShaderCodeBytes)
             {
                 Source1BorderMode = EffectBorderMode.Hard,
-                Source1 = this.Displacement.Source,
+                Source1 = this.Displacement[BitmapType.Source],
                 Properties =
                 {
                     /// <see cref="DisplacementLiquefactionMode"/> to <see cref="System.Int32"/>

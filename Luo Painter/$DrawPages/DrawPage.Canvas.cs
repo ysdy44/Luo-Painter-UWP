@@ -15,6 +15,7 @@ using Windows.Graphics.Effects;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Luo_Painter.Layers;
 
 namespace Luo_Painter
 {
@@ -96,7 +97,7 @@ namespace Luo_Painter
                     args.DrawingSession.DrawImage(new OpacityEffect
                     {
                         Opacity = 0.5f,
-                        Source = this.GetPreview(this.OptionType, this.Marquee.Source)
+                        Source = this.GetPreview(this.OptionType, this.Marquee[BitmapType.Source])
                     });
 
                     args.DrawingSession.Transform = Matrix3x2.Identity;
@@ -145,7 +146,7 @@ namespace Luo_Painter
 
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.DottedLineTransformShaderCodeBytes)
                 {
-                    Source1 = this.Marquee.Source,
+                    Source1 = this.Marquee[BitmapType.Source],
                     Properties =
                     {
                         ["time"] = (float)args.Timing.UpdateCount,
@@ -203,13 +204,13 @@ namespace Luo_Painter
         {
             if (this.OptionType.IsOption() is false)
             {
-                return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer.Source, this.InkPresenter.GetWet(this.InkType, this.BitmapLayer.Temp));
+                return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]));
             }
 
 
             if (this.SelectionType is SelectionType.MarqueePixelBounds is false)
             {
-                return this.GetPreview(this.OptionType, this.BitmapLayer.Source);
+                return this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Source]);
             }
 
 
@@ -221,13 +222,13 @@ namespace Luo_Painter
                     {
                         new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
                         {
-                            Source1 = this.Marquee.Source,
-                            Source2 = this.BitmapLayer.Source,
+                            Source1 = this.Marquee[BitmapType.Source],
+                            Source2 = this.BitmapLayer[BitmapType.Source],
                         },
                         this.GetPreview(this.OptionType, new AlphaMaskEffect
                         {
-                            AlphaMask = this.Marquee.Source,
-                            Source = this.BitmapLayer.Source
+                            AlphaMask = this.Marquee[BitmapType.Source],
+                            Source = this.BitmapLayer[BitmapType.Source]
                         })
                     }
                 };
@@ -236,9 +237,9 @@ namespace Luo_Painter
             {
                 return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
                 {
-                    Source1 = this.Marquee.Source,
-                    Source2 = this.BitmapLayer.Origin,
-                    Source3 = this.GetPreview(this.OptionType, this.BitmapLayer.Origin)
+                    Source1 = this.Marquee[BitmapType.Source],
+                    Source2 = this.BitmapLayer[BitmapType.Origin],
+                    Source3 = this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Origin])
                 };
             }
         }

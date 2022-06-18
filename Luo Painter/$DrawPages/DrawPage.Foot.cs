@@ -177,8 +177,8 @@ namespace Luo_Painter
                         case SelectionType.MarqueePixelBounds:
                             bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
                             {
-                                Source1 = this.Marquee.Source,
-                                Source2 = bitmapLayer.Origin,
+                                Source1 = this.Marquee[BitmapType.Source],
+                                Source2 = bitmapLayer[BitmapType.Origin],
                                 Source3 = source
                             });
                             break;
@@ -214,22 +214,22 @@ namespace Luo_Painter
                     case SelectionType.MarqueePixelBounds:
                         bitmapLayer.DrawCopy(new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
                         {
-                            Source1 = this.Marquee.Source,
-                            Source2 = bitmapLayer.Origin,
+                            Source1 = this.Marquee[BitmapType.Source],
+                            Source2 = bitmapLayer[BitmapType.Origin],
                         }, this.GetPreview(type, new AlphaMaskEffect
                         {
-                            AlphaMask = this.Marquee.Source,
-                            Source = bitmapLayer.Origin,
+                            AlphaMask = this.Marquee[BitmapType.Source],
+                            Source = bitmapLayer[BitmapType.Origin],
                         }));
                         break;
                     default:
-                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                         break;
                 }
                 bitmapLayer.Hit(bitmapLayer.GetInterpolationColors(new PixelShaderEffect(this.DifferenceShaderCodeBytes)
                 {
-                    Source1 = bitmapLayer.Source,
-                    Source2 = bitmapLayer.Origin
+                    Source1 = bitmapLayer[BitmapType.Source],
+                    Source2 = bitmapLayer[BitmapType.Origin]
                 }));
 
                 // History
@@ -244,7 +244,7 @@ namespace Luo_Painter
                 {
                     case PixelBoundsMode.Solid:
                     case PixelBoundsMode.Transarent:
-                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                         int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
                         bitmapLayer.Flush();
                         bitmapLayer.RenderThumbnail();
@@ -257,13 +257,13 @@ namespace Luo_Painter
                             case SelectionType.MarqueePixelBounds:
                                 bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
                                 {
-                                    Source1 = this.Marquee.Source,
-                                    Source2 = bitmapLayer.Origin,
-                                    Source3 = this.GetPreview(type, bitmapLayer.Origin)
+                                    Source1 = this.Marquee[BitmapType.Source],
+                                    Source2 = bitmapLayer[BitmapType.Origin],
+                                    Source3 = this.GetPreview(type, bitmapLayer[BitmapType.Origin])
                                 });
                                 break;
                             default:
-                                bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer.Origin));
+                                bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                                 break;
                         }
                         int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
