@@ -136,5 +136,14 @@ namespace Luo_Painter.Layers
             }
         }
 
+        public void CopyWith(LayerBase layerBase)
+        {
+            this.name = layerBase.name;
+            this.opacity = layerBase.opacity;
+            this.blendMode = layerBase.blendMode;
+            this.visibility = layerBase.visibility;
+            this.RenderMode = this.GetRenderMode();
+        }
+
     }
 }

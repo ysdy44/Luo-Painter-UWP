@@ -57,6 +57,24 @@ namespace Luo_Painter.Layers.Models
             this.RenderThumbnail();
         }
 
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, Vector2 offset) : this(resourceCreator, bitmapLayer.SourceRenderTarget, bitmapLayer.Width, bitmapLayer.Height, offset) { }
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, int width, int height, Vector2 offset) : this(resourceCreator, bitmapLayer.SourceRenderTarget, width, height, offset) { }
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap, Vector2 offset) : this(resourceCreator, bitmap, (int)bitmap.SizeInPixels.Width, (int)bitmap.SizeInPixels.Height, offset) { }
+
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, ICanvasImage image, int width, int height, Vector2 offset) : this(resourceCreator, width, height)
+        {
+            using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
+            {
+                ds.DrawImage(image, offset);
+            }
+            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
+            {
+                ds.DrawImage(image, offset);
+            }
+
+            this.RenderThumbnail();
+        }
+
         public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(resourceCreator, width, height)
         {
             //@DPI
@@ -157,6 +175,16 @@ namespace Luo_Painter.Layers.Models
                 ds.DrawImage(image1);
                 ds.Blend = CanvasBlend.SourceOver;
                 ds.DrawImage(image2);
+            }
+        }
+
+        public void Fill(ICanvasBrush brush, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.FillRectangle(0, 0, this.Width, this.Height, brush);
             }
         }
 
