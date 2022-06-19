@@ -201,7 +201,8 @@ namespace Luo_Painter
             this.ConstructInk();
 
             this.ConstructEdits();
-
+            this.ConstructSetup();
+            
             this.ConstructOptions();
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();

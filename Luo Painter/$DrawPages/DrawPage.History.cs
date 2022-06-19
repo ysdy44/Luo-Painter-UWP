@@ -47,17 +47,8 @@ namespace Luo_Painter
                 case HistoryMode.Arrange:
                     if (history is ArrangeHistory arrangeHistory)
                     {
-                        this.ObservableCollection.Clear();
-                        foreach (string id in arrangeHistory.UndoParameter)
-                        {
-                            if (this.Layers.ContainsKey(id))
-                            {
-                                ILayer layer = this.Layers[id];
-                                this.ObservableCollection.Add(layer);
-                            }
-                        }
-
-                        return true;
+                        if (arrangeHistory.Sizes is SetupSizes size) this.Setup(size.UndoParameter);
+                        return this.Arrange(arrangeHistory.UndoParameter);
                     }
                     return false;
                 case HistoryMode.Property:
@@ -107,17 +98,8 @@ namespace Luo_Painter
                 case HistoryMode.Arrange:
                     if (history is ArrangeHistory arrangeHistory)
                     {
-                        this.ObservableCollection.Clear();
-                        foreach (string id in arrangeHistory.RedoParameter)
-                        {
-                            if (this.Layers.ContainsKey(id))
-                            {
-                                ILayer layer = this.Layers[id];
-                                this.ObservableCollection.Add(layer);
-                            }
-                        }
-
-                        return true;
+                        if (arrangeHistory.Sizes is SetupSizes size) this.Setup(size.RedoParameter);
+                        return this.Arrange(arrangeHistory.RedoParameter);
                     }
                     return false;
                 case HistoryMode.Property:
@@ -159,6 +141,23 @@ namespace Luo_Painter
                 default:
                     return false;
             }
+        }
+
+        private bool Arrange(string[] ids)
+        {
+            if (ids is null) return false;
+            if (ids.Length is 0) return false;
+
+            this.ObservableCollection.Clear();
+            foreach (string id in ids)
+            {
+                if (this.Layers.ContainsKey(id))
+                {
+                    ILayer layer = this.Layers[id];
+                    this.ObservableCollection.Add(layer);
+                }
+            }
+            return true;
         }
 
     }

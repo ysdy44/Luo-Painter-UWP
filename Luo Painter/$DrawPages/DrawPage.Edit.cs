@@ -363,28 +363,6 @@ namespace Luo_Painter
                         break;
                 }
             };
-            this.SetupMenu.ItemClick += (s, type) =>
-            {
-                switch (type)
-                {
-                    case OptionType.CropCanvas:
-                        break;
-                    case OptionType.Stretch:
-                        break;
-                    case OptionType.FlipHorizontal:
-                        break;
-                    case OptionType.FlipVertical:
-                        break;
-                    case OptionType.LeftTurn:
-                        break;
-                    case OptionType.RightTurn:
-                        break;
-                    case OptionType.OverTurn:
-                        break;
-                    default:
-                        break;
-                }
-            };
         }
 
         private bool EditClick(OptionType type)
