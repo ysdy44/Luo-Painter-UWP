@@ -17,8 +17,9 @@ namespace Luo_Painter.Controls
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
         //@Content
+        public int SelectedIndex => this.ComboBox.SelectedIndex;
         public BitmapSize Size => this.SizePicker.Size;
-        public IndicatorMode IndicatorMode => this.IndicatorControl.Mode;
+        public IndicatorMode Indicator => this.IndicatorControl.Mode;
         public CanvasImageInterpolation Interpolation
         {
             get

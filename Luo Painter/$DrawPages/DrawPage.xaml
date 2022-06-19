@@ -1128,6 +1128,7 @@
 
         </ContentDialog>
         <controls:TextureDialog x:Name="TextureDialog" />
+        <controls:StretchDialog x:Name="StretchDialog" />
 
 
         <!--Tip-->

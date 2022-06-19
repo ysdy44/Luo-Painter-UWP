@@ -23,7 +23,7 @@
 
     <StackPanel>
 
-        <ListBox x:Name="StretchComboBox" SelectedIndex="0">
+        <ListBox x:Name="ComboBox" SelectedIndex="0">
             <ListBoxItem x:Name="StretchItem">
                 Stretch
             </ListBoxItem>
