@@ -50,6 +50,10 @@ namespace Luo_Painter
                 case OptionType.Shrink:
                     break;
 
+                case OptionType.CropCanvas:
+                    this.CropCanvas_Start(point);
+                    break;
+                    
                 case OptionType.Transform:
                     this.Transform_Start(point);
                     break;
@@ -99,6 +103,10 @@ namespace Luo_Painter
                 case OptionType.Grow:
                     break;
                 case OptionType.Shrink:
+                    break;
+
+                case OptionType.CropCanvas:
+                    this.CropCanvas_Delta(point);
                     break;
 
                 case OptionType.Transform:
@@ -154,6 +162,10 @@ namespace Luo_Painter
                 case OptionType.Grow:
                     break;
                 case OptionType.Shrink:
+                    break;
+
+                case OptionType.CropCanvas:
+                    this.CropCanvas_Complete(point);
                     break;
 
                 case OptionType.Transform:

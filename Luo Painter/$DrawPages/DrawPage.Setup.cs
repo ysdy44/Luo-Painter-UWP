@@ -16,10 +16,23 @@ namespace Luo_Painter
 
         private void ConstructSetup()
         {
+            this.CropCanvasSlider.ValueChanged += (s, e) =>
+            {
+                double radian = e.NewValue / 180 * System.Math.PI;
+                this.Transformer.Radian = (float)radian;
+                this.Transformer.ReloadMatrix();
+
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
             this.StretchDialog.PrimaryButtonClick += (s, e) =>
             {
-                uint width = (uint)this.Transformer.Width;
-                uint height = (uint)this.Transformer.Height;
+                int width2 = this.Transformer.Width;
+                int height2 = this.Transformer.Height;
+
+                uint width = (uint)width2;
+                uint height = (uint)height2;
 
                 uint w = this.StretchDialog.Size.Width;
                 uint h = this.StretchDialog.Size.Height;
@@ -36,7 +49,7 @@ namespace Luo_Painter
 
                         this.Setup(this.ObservableCollection.Select(c => c.Skretch(this.CanvasDevice, w2, h2, interpolation)).ToArray(), new SetupSizes
                         {
-                            UndoParameter = new BitmapSize { Width = width, Height = width },
+                            UndoParameter = new BitmapSize { Width = width, Height = height },
                             RedoParameter = new BitmapSize { Width = w, Height = h }
                         });
                         break;
@@ -50,7 +63,7 @@ namespace Luo_Painter
                         Vector2 offset = vect2 - vect;
                         this.Setup(this.ObservableCollection.Select(c => c.Crop(this.CanvasDevice, w2, h2, offset)).ToArray(), new SetupSizes
                         {
-                            UndoParameter = new BitmapSize { Width = width, Height = width },
+                            UndoParameter = new BitmapSize { Width = width, Height = height },
                             RedoParameter = new BitmapSize { Width = w, Height = h }
                         });
                         break;
@@ -67,17 +80,26 @@ namespace Luo_Painter
                     return;
                 }
 
-                uint w = this.StretchDialog.Size.Width;
-                uint h = this.StretchDialog.Size.Height;
+                int width2 = this.Transformer.Width;
+                int height2 = this.Transformer.Height;
 
-                int w2 = (int)w;
-                int h2 = (int)h;
+                uint width = (uint)width2;
+                uint height = (uint)height2;
 
                 switch (type)
                 {
-                    case OptionType.CropCanvas: break;
+                    case OptionType.CropCanvas:
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        this.SetCropCanvas(width2, height2);
+
+                        this.OptionType = OptionType.CropCanvas;
+                        this.SetFootType(OptionType.CropCanvas);
+                        this.SetCanvasState(true);
+                        break;
                     case OptionType.Stretch:
-                        this.SetupMenu.Hide();
+                        this.ExpanderLightDismissOverlay.Hide();
+
                         await this.StretchDialog.ShowInstance();
                         break;
                     case OptionType.FlipHorizontal:
@@ -87,23 +109,23 @@ namespace Luo_Painter
                         this.Setup(this.ObservableCollection.Select(c => c.FlipVertical(this.CanvasDevice)).ToArray(), null);
                         break;
                     case OptionType.LeftTurn:
-                        this.Setup(h2, w2);
-                   
-                        this.Setup(this.ObservableCollection.Select(c => c.LeftTurn(this.CanvasDevice)).ToArray(), w2 == h2 ? null : new SetupSizes
+                        this.Setup(height2, width2);
+
+                        this.Setup(this.ObservableCollection.Select(c => c.LeftTurn(this.CanvasDevice)).ToArray(), width2 == height2 ? null : new SetupSizes
                         {
-                            UndoParameter = new BitmapSize { Width = w, Height = h },
-                            RedoParameter = new BitmapSize { Width = h, Height = w }
+                            UndoParameter = new BitmapSize { Width = width, Height = height },
+                            RedoParameter = new BitmapSize { Width = height, Height = width }
                         }); break;
                     case OptionType.RightTurn:
-                        this.Setup(h2, w2);
-                  
-                        this.Setup(this.ObservableCollection.Select(c => c.RightTurn(this.CanvasDevice)).ToArray(), w2 == h2 ? null : new SetupSizes
+                        this.Setup(height2, width2);
+
+                        this.Setup(this.ObservableCollection.Select(c => c.RightTurn(this.CanvasDevice)).ToArray(), width2 == height2 ? null : new SetupSizes
                         {
-                            UndoParameter = new BitmapSize { Width = w, Height = h },
-                            RedoParameter = new BitmapSize { Width = h, Height = w }
+                            UndoParameter = new BitmapSize { Width = width, Height = height },
+                            RedoParameter = new BitmapSize { Width = height, Height = width }
                         }); break;
-                    case OptionType.OverTurn: 
-                        this.Setup(this.ObservableCollection.Select(c => c.OverTurn(this.CanvasDevice)).ToArray(), null); 
+                    case OptionType.OverTurn:
+                        this.Setup(this.ObservableCollection.Select(c => c.OverTurn(this.CanvasDevice)).ToArray(), null);
                         break;
                     default:
                         break;

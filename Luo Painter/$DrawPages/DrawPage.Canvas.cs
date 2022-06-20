@@ -88,27 +88,37 @@ namespace Luo_Painter
             {
                 args.DrawingSession.Blend = CanvasBlend.Copy;
 
-                if (this.OptionType.IsEdit())
-                {
-                    //@DPI 
-                    args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-                    args.DrawingSession.Transform = this.Transformer.GetMatrix();
-
-                    args.DrawingSession.DrawImage(new OpacityEffect
-                    {
-                        Opacity = 0.5f,
-                        Source = this.GetPreview(this.OptionType, this.Marquee[BitmapType.Source])
-                    });
-
-                    args.DrawingSession.Transform = Matrix3x2.Identity;
-                    args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
-                }
-
                 switch (this.OptionType)
                 {
+                    case OptionType.Feather:
                     case OptionType.MarqueeTransform:
-                        this.DrawTransform(sender, args.DrawingSession);
+                    case OptionType.Grow:
+                    case OptionType.Shrink:
+                        //@DPI 
+                        args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        args.DrawingSession.Transform = this.Transformer.GetMatrix();
+
+                        args.DrawingSession.DrawImage(new OpacityEffect
+                        {
+                            Opacity = 0.5f,
+                            Source = this.GetPreview(this.OptionType, this.Marquee[BitmapType.Source])
+                        });
+
+                        switch (this.OptionType)
+                        {
+                            case OptionType.MarqueeTransform:
+                                args.DrawingSession.Transform = Matrix3x2.Identity;
+                                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+
+                                this.DrawTransform(sender, args.DrawingSession);
+                                break;
+                        }
                         break;
+
+                    case OptionType.CropCanvas:
+                        this.DrawCropCanvas(sender, args.DrawingSession);
+                        break;
+
                     case OptionType.Transform:
                         this.DrawTransform(sender, args.DrawingSession);
                         break;
@@ -120,6 +130,7 @@ namespace Luo_Painter
                     case OptionType.RippleEffect:
                         this.DrawRippleEffect(sender, args.DrawingSession);
                         break;
+
                     default:
                         if (this.OptionType.HasFlag(OptionType.Marquee))
                         {

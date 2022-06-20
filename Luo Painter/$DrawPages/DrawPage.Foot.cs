@@ -129,6 +129,11 @@ namespace Luo_Painter
 
             this.FootSecondaryButton.Click += (s, e) =>
             {
+                if (this.OptionType is OptionType.CropCanvas)
+                {
+                    this.CancelCropCanvas();
+                }
+
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedItem;
                 this.SetFootType(this.ToolListView.SelectedItem);
@@ -139,7 +144,11 @@ namespace Luo_Painter
             {
                 if (this.OptionType.HasPreview())
                 {
-                    if (this.OptionType.IsEdit())
+                    if (this.OptionType is OptionType.CropCanvas)
+                    {
+                        this.PrimaryCropCanvas();
+                    }
+                    else if (this.OptionType.IsEdit())
                     {
                         Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
