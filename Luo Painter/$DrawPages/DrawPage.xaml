@@ -514,6 +514,27 @@
                             </TextBlock>
                         </StackPanel>
                     </local:OptionCase>
+
+                    <local:OptionCase Value="CropCanvas">
+                        <Border Style="{StaticResource AppRoundedBorderStyle}" >
+                            <Slider x:Name="CropCanvasSlider" 
+                                    Minimum="-180" Maximum="180" Value="0" TickFrequency="12" TickPlacement="Outside"                                  
+                                    Background="{StaticResource SystemControlDisabledBaseLowBrush}" Foreground="Transparent" VerticalAlignment="Center">
+                                <FrameworkElement.Resources>
+                                    <StaticResource x:Key="SliderThumbBackground" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
+
+                                    <StaticResource x:Key="SliderTrackFillPressed" ResourceKey="SystemControlDisabledBaseLowBrush"/>
+                                    <StaticResource x:Key="SliderThumbBackgroundPressed" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
+                                    <StaticResource x:Key="SliderTrackValueFillPressed" ResourceKey="SystemControlDisabledTransparentBrush"/>
+
+                                    <StaticResource x:Key="SliderTrackFillPointerOver" ResourceKey="SystemControlDisabledBaseLowBrush"/>
+                                    <StaticResource x:Key="SliderThumbBackgroundPointerOver" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
+                                    <StaticResource x:Key="SliderTrackValueFillPointerOver" ResourceKey="SystemControlDisabledTransparentBrush"/>
+                                </FrameworkElement.Resources>
+                            </Slider>
+                        </Border>
+                    </local:OptionCase>
+                    
                     <local:OptionCase Value="Exposure">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <local:OptionIcon Type="Exposure" Width="50" />
