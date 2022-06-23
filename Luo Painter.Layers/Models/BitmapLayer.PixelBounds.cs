@@ -235,6 +235,86 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                 ds.Blend = CanvasBlend.Copy;
+
+                for (int x = 0; x < this.XDivisor; x++)
+                {
+                    for (int y = 0; y < this.YDivisor; y++)
+                    {
+                        using (ds.CreateLayer(1, new Rect(x, y, 1, 1)))
+                        {
+                            ds.DrawImage(new ScaleEffect
+                            {
+                                Scale = new Vector2(1f / BitmapLayer.Unit),
+                                InterpolationMode = CanvasImageInterpolation.Anisotropic,
+                                Source = new CropEffect
+                                {
+                                    SourceRectangle = new Rect(x * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit),
+                                    Source = source
+                                }
+                            });
+                        }
+                    }
+                }
+
+                if (this.RegionType.HasFlag(RegionType.YRemainder))
+                {
+                    for (int x = 0; x < this.XDivisor; x++)
+                    {
+                        using (ds.CreateLayer(1, new Rect(x, this.YDivisor, 1, 1)))
+                        {
+                            ds.DrawImage(new ScaleEffect
+                            {
+                                Scale = new Vector2(1f / BitmapLayer.Unit, 1f / this.YRemainder),
+                                InterpolationMode = CanvasImageInterpolation.Anisotropic,
+                                Source = new CropEffect
+                                {
+                                    SourceRectangle = new Rect(x * BitmapLayer.Unit, this.YDivisor * BitmapLayer.Unit, BitmapLayer.Unit, this.YRemainder),
+                                    Source = source
+                                }
+                            });
+                        }
+                    }
+                }
+
+                if (this.RegionType.HasFlag(RegionType.XRemainder))
+                {
+                    for (int y = 0; y < this.YDivisor; y++)
+                    {
+                        using (ds.CreateLayer(1, new Rect(this.XDivisor, y, 1, 1)))
+                        {
+                            ds.DrawImage(new ScaleEffect
+                            {
+                                Scale = new Vector2(1f / this.XRemainder, 1f / BitmapLayer.Unit),
+                                InterpolationMode = CanvasImageInterpolation.Anisotropic,
+                                Source = new CropEffect
+                                {
+                                    SourceRectangle = new Rect(this.XDivisor * BitmapLayer.Unit, y * BitmapLayer.Unit, this.XRemainder, BitmapLayer.Unit),
+                                    Source = source
+                                }
+                            });
+                        }
+                    }
+                }
+
+                if (this.RegionType.HasFlag(RegionType.XYRemainder))
+                {
+                    using (ds.CreateLayer(1, new Rect(this.XDivisor, this.YDivisor, 1, 1)))
+                    {
+                        ds.DrawImage(new ScaleEffect
+                        {
+                            Scale = new Vector2(1f / this.XRemainder, 1f / this.YRemainder),
+                            InterpolationMode = CanvasImageInterpolation.Anisotropic,
+                            Source = new CropEffect
+                            {
+                                SourceRectangle = new Rect(this.XDivisor * BitmapLayer.Unit, this.YDivisor * BitmapLayer.Unit, this.XRemainder, this.YRemainder),
+                                Source = source
+                            }
+                        });
+                    }
+                }
+
+                ds.Blend = CanvasBlend.SourceOver;
+
                 ds.DrawImage(new ScaleEffect
                 {
                     Scale = new Vector2(1f / BitmapLayer.Unit),
@@ -320,6 +400,79 @@ namespace Luo_Painter.Layers.Models
                 Top = top + b2.Top,
                 Right = b2.Right - BitmapLayer.Unit + right,
                 Bottom = b2.Bottom - BitmapLayer.Unit + bottom
+            };
+        }
+
+        public PixelBounds CreatePixelBounds(PixelBounds interpolationBounds, Color[] interpolationColors)
+        {
+            // Left
+            int indexLeft = interpolationBounds.Left;
+            int maxLeft = BitmapLayer.Unit;
+            for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
+            {
+                byte a = interpolationColors[indexLeft + y * this.XLength].A;
+                if (a is byte.MinValue) continue;
+
+                //this.Hits[indexLeft + y * this.XLength] = true;
+                int left = PixelBounds.CreateLeftFromBitmap(this.SourceRenderTarget, indexLeft * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                if (left is int.MaxValue) continue;
+
+                if (maxLeft > left) maxLeft = left;
+            }
+
+            // Top
+            int indexTop = interpolationBounds.Top;
+            int maxTop = BitmapLayer.Unit;
+            for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
+            {
+                byte a = interpolationColors[x + indexTop * this.XLength].A;
+                if (a is byte.MinValue) continue;
+
+                //this.Hits[x + indexTop * this.XLength] = true;
+                int top = PixelBounds.CreateTopFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexTop * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                if (top is int.MaxValue) continue;
+
+                if (maxTop > top) maxTop = top;
+            }
+
+            // Right
+            int indexRight = interpolationBounds.Right - 1;
+            int minRight = BitmapLayer.Unit;
+            for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
+            {
+                byte a = interpolationColors[indexRight + y * this.XLength].A;
+                if (a is byte.MinValue) continue;
+
+                //this.Hits[indexRight + y * this.XLength] = true;
+                int right = PixelBounds.CreateRightFromBitmap(this.SourceRenderTarget, indexRight * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                if (right is int.MinValue) continue;
+
+                if (minRight < right) minRight = right;
+            }
+
+            // Bottom
+            int indexBottom = interpolationBounds.Bottom - 1;
+            int minBottom = BitmapLayer.Unit;
+            for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
+            {
+                byte a = interpolationColors[x + indexBottom * this.XLength].A;
+                if (a is byte.MinValue) continue;
+
+                //this.Hits[x + indexBottom * this.XLength] = true;
+                int bottom = PixelBounds.CreateBottomFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexBottom * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                if (bottom is int.MinValue) continue;
+
+                if (minBottom < bottom) minBottom = bottom;
+            }
+
+
+            PixelBounds b2 = interpolationBounds.Scale(BitmapLayer.Unit, this.Width, this.Height);
+            return new PixelBounds
+            {
+                Left = maxLeft + b2.Left,
+                Top = maxTop + b2.Top,
+                Right = b2.Right - BitmapLayer.Unit + minRight,
+                Bottom = b2.Bottom - BitmapLayer.Unit + minBottom
             };
         }
 
