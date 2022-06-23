@@ -100,6 +100,7 @@ namespace Luo_Painter
             {
                 case InkType.BrushDry:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.ColorMenu.ColorHdr,
                         this.Position, position,
@@ -121,6 +122,7 @@ namespace Luo_Painter
                 case InkType.BrushWetMosaic:
                 case InkType.BrushWetPatternMosaic:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.ColorMenu.ColorHdr,
                         this.Position, position,
@@ -132,6 +134,7 @@ namespace Luo_Painter
 
                 case InkType.BrushWetPatternMix:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.InkMixer.ColorHdr,
                         this.Position, position,
@@ -143,6 +146,7 @@ namespace Luo_Painter
 
                 case InkType.BrushDryMix:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardness(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.InkMixer.ColorHdr,
                         this.Position, position,
@@ -154,6 +158,7 @@ namespace Luo_Painter
 
                 case InkType.MaskBrushDry:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.ColorMenu.ColorHdr,
                         this.InkPresenter.Mask,
@@ -177,6 +182,7 @@ namespace Luo_Painter
                 case InkType.MaskBrushWetMosaic:
                 case InkType.MaskBrushWetPatternMosaic:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.ColorMenu.ColorHdr,
                         this.InkPresenter.Mask,
@@ -190,6 +196,7 @@ namespace Luo_Painter
 
                 case InkType.MaskBrushDryMix:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.InkMixer.ColorHdr,
                         this.InkPresenter.Mask,
@@ -203,6 +210,7 @@ namespace Luo_Painter
 
                 case InkType.MaskBrushWetPatternMix:
                     return bitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.InkMixer.ColorHdr,
                         this.InkPresenter.Mask,

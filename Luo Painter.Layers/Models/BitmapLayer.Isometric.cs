@@ -78,6 +78,7 @@ namespace Luo_Painter.Layers.Models
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
         public bool IsometricDrawShaderBrushEdgeHardness(
+            Windows.Foundation.Rect clipRectangle,
             byte[] shaderCode,
             Vector4 colorHdr,
             Vector2 position,
@@ -100,6 +101,7 @@ namespace Luo_Painter.Layers.Models
             // 
 
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            using (ds.CreateLayer(1f, clipRectangle))
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
@@ -150,6 +152,7 @@ namespace Luo_Painter.Layers.Models
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
         public bool IsometricDrawShaderBrushEdgeHardnessWithTexture(
+            Windows.Foundation.Rect clipRectangle,
             byte[] shaderCode,
             Vector4 colorHdr,
             CanvasBitmap texture,
@@ -183,6 +186,7 @@ namespace Luo_Painter.Layers.Models
             // 
 
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            using (ds.CreateLayer(1f, clipRectangle))
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">

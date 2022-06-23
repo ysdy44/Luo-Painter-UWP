@@ -74,6 +74,7 @@ namespace Luo_Painter.TestApp
                 float pressure = properties.Pressure;
 
                 bool result = this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
+                    RectExtensions.GetRect(this.Position, position, (float)this.Brush.Size),
                     this.ShaderCodeBytes,
                     BitmapLayer.DodgerBlue,
                     this.Texture,
