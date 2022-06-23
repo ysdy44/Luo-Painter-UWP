@@ -94,7 +94,8 @@ namespace Luo_Painter.Layers.Models
         {
             for (int i = 0; i < this.Length; i++)
             {
-                this[i] = this.IsTransparent(InterpolationColors[i]) == false;
+                byte a = InterpolationColors[i].A;
+                this[i] = a is byte.MinValue is false;
             }
         }
 

@@ -79,6 +79,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
+                args.DrawingSession.DrawImage(this.BitmapLayer.GetInterpolationScaled());
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);
                 args.DrawingSession.DrawRectangle(this.BitmapLayer.Bounds.ToRect(), Colors.YellowGreen, stroke);
