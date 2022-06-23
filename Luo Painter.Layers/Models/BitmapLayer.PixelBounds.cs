@@ -89,31 +89,31 @@ namespace Luo_Painter.Layers.Models
 
         #region Colors
 
-        public static PixelBounds CreateFromBytes(Color[] source, int w, int h)
+        public static PixelBounds CreateFromBitmap(CanvasBitmap source, int left, int top, int width, int height) => PixelBounds.CreateFromBytes(source.GetPixelColors(left, top, width, height), width, height);
+        public static PixelBounds CreateFromBitmap(CanvasBitmap source, int left, int top, int width, int height, int maxRight, int maxBottom) => PixelBounds.CreateFromBitmap(source, left, top, (left + width > maxRight) ? (maxRight - left) : width, (top + height > maxBottom) ? (maxBottom - top) : height);
+        public static PixelBounds CreateFromBytes(Color[] source, int width, int height)
         {
             PixelBounds rect = PixelBounds.Zero;
 
-            for (int x = 0; x < w; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < h; y++)
+                for (int y = 0; y < height; y++)
                 {
-                    int index = y * w + x;
-                    Color color = source[index];
+                    byte a = source[y * width + x].A;
+                    if (a is byte.MinValue) continue;
 
-                    if (color.A != byte.MinValue) // 0
-                    {
-                        if (rect.Left > x) rect.Left = x;
-                        if (rect.Top > y) rect.Top = y;
-                        if (rect.Right < x + 1) rect.Right = x + 1;
-                        if (rect.Bottom < y + 1) rect.Bottom = y + 1;
-                    }
+                    if (rect.Left > x) rect.Left = x;
+                    if (rect.Top > y) rect.Top = y;
+                    if (rect.Right < x + 1) rect.Right = x + 1;
+                    if (rect.Bottom < y + 1) rect.Bottom = y + 1;
                 }
             }
 
             return rect;
         }
 
-        public static int CreateLeftFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => left + PixelBounds.CreateLeftFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateLeftFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => PixelBounds.CreateLeftFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateLeftFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height, int maxRight, int maxBottom) => PixelBounds.CreateLeftFromBitmap(bitmap, left, top, (left + width > maxRight) ? (maxRight - left) : width, (top + height > maxBottom) ? (maxBottom - top) : height);
         public static int CreateLeftFromBytes(Color[] source, int width, int height)
         {
             for (int x = 0; x < width; x++)
@@ -129,23 +129,8 @@ namespace Luo_Painter.Layers.Models
             return int.MaxValue;
         }
 
-        public static int CreateTopFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => top + PixelBounds.CreateTopFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
-        public static int CreateRightFromBytes(Color[] source, int width, int height)
-        {
-            for (int x = width - 1; x >= 0; x--)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    byte a = source[x + y * width].A;
-                    if (a is byte.MinValue) continue;
-                    else return x;
-                }
-            }
-
-            return int.MinValue;
-        }
-
-        public static int CreateRightFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => left + PixelBounds.CreateTopFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateTopFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => PixelBounds.CreateTopFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateTopFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height, int maxRight, int maxBottom) => PixelBounds.CreateTopFromBitmap(bitmap, left, top, (left + width > maxRight) ? (maxRight - left) : width, (top + height > maxBottom) ? (maxBottom - top) : height);
         public static int CreateTopFromBytes(Color[] source, int width, int height)
         {
             for (int y = 0; y < height; y++)
@@ -161,7 +146,25 @@ namespace Luo_Painter.Layers.Models
             return int.MaxValue;
         }
 
-        public static int CreateBottomFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => top + PixelBounds.CreateBottomFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateRightFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => PixelBounds.CreateRightFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateRightFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height, int maxRight, int maxBottom) => PixelBounds.CreateRightFromBitmap(bitmap, left, top, (left + width > maxRight) ? (maxRight - left) : width, (top + height > maxBottom) ? (maxBottom - top) : height);
+        public static int CreateRightFromBytes(Color[] source, int width, int height)
+        {
+            for (int x = width - 1; x >= 0; x--)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    byte a = source[x + y * width].A;
+                    if (a is byte.MinValue) continue;
+                    else return x;
+                }
+            }
+
+            return int.MinValue;
+        }
+
+        public static int CreateBottomFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height) => PixelBounds.CreateBottomFromBytes(bitmap.GetPixelColors(left, top, width, height), width, height);
+        public static int CreateBottomFromBitmap(CanvasBitmap bitmap, int left, int top, int width, int height, int maxRight, int maxBottom) => PixelBounds.CreateBottomFromBitmap(bitmap, left, top, (left + width > maxRight) ? (maxRight - left) : width, (top + height > maxBottom) ? (maxBottom - top) : height);
         public static int CreateBottomFromBytes(Color[] source, int width, int height)
         {
             for (int y = height - 1; y >= 0; y--)
@@ -254,12 +257,12 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public PixelBoundsMode GetInterpolationBoundsMode(Color[] InterpolationColors)
+        public PixelBoundsMode GetInterpolationBoundsMode(Color[] interpolationColors)
         {
             bool isSolid = true;
             bool isTransarent = true;
 
-            foreach (Color item in InterpolationColors)
+            foreach (Color item in interpolationColors)
             {
                 byte a = item.A;
 
@@ -274,10 +277,17 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public PixelBounds CreateInterpolationBounds(Color[] InterpolationColors)
+        public PixelBounds CreateInterpolationBounds(Color[] interpolationColors)
         {
-            return PixelBounds.CreateFromBytes(InterpolationColors, this.XLength, this.YLength);
+            return PixelBounds.CreateFromBytes(interpolationColors, this.XLength, this.YLength);
         }
+        public PixelBounds CreateInterpolationBounds() => new PixelBounds
+        {
+            Left = 0,
+            Top = 0,
+            Right = this.XLength,
+            Bottom = this.YLength
+        };
 
 
         public PixelBounds CreatePixelBounds(PixelBounds interpolationBounds)
