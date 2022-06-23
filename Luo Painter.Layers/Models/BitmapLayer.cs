@@ -88,33 +88,20 @@ namespace Luo_Painter.Layers.Models
             this.XRemainder = width % BitmapLayer.Unit;
             this.YRemainder = height % BitmapLayer.Unit;
 
-            bool noXR = this.XRemainder == 0;
-            bool noYR = this.YRemainder == 0;
 
-            if (noXR && noYR)
+            this.XLength = this.XDivisor;
+            this.YLength = this.YDivisor;
+            if (this.XRemainder is 0 is false)
             {
-                this.RegionType = RegionType.None;
-                this.XLength = this.XDivisor;
-                this.YLength = this.YDivisor;
+                this.RegionType |= RegionType.XRemainder;
+                this.XLength += 1;
             }
-            else if (noXR && noYR == false)
+            if (this.YRemainder is 0 is false)
             {
-                this.RegionType = RegionType.XYRemainder;
-                this.XLength = this.XDivisor;
-                this.YLength = this.YDivisor + 1;
+                this.RegionType |= RegionType.YRemainder;
+                this.YLength += 1;
             }
-            else if (noXR == false && noYR)
-            {
-                this.RegionType = RegionType.YRemainder;
-                this.XLength = this.XDivisor + 1;
-                this.YLength = this.YDivisor;
-            }
-            else
-            {
-                this.RegionType = RegionType.XYRemainder;
-                this.XLength = this.XDivisor + 1;
-                this.YLength = this.YDivisor + 1;
-            }
+
 
             this.Hits = new bool[this.XLength * this.YLength];
 
