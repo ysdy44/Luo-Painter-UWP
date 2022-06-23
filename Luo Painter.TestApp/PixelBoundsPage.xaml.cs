@@ -54,12 +54,18 @@ namespace Luo_Painter.TestApp
                 this.PixelBoundsMode = this.BitmapLayer.GetInterpolationBoundsMode(this.InterpolationColors);
                 this.TextBlock.Text = this.PixelBoundsMode.ToString();
 
-                if (this.PixelBoundsMode != PixelBoundsMode.Transarent)
+                switch (this.PixelBoundsMode)
                 {
-                    this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds(this.InterpolationColors);
-                    this.PixelBounds = this.BitmapLayer.CreatePixelBounds(this.InterpolationBounds);
+                    case PixelBoundsMode.None:
+                        this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds(this.InterpolationColors);
+                        this.PixelBounds = this.BitmapLayer.CreatePixelBounds(this.InterpolationBounds, this.InterpolationColors);
 
-                    this.BitmapLayer.Hit(this.InterpolationColors);
+                        this.BitmapLayer.Hit(this.InterpolationColors);
+                        break;
+                    default:
+                        this.InterpolationBounds = this.BitmapLayer.CreateInterpolationBounds();
+                        this.PixelBounds = this.BitmapLayer.Bounds;
+                        break;
                 }
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -79,7 +85,6 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
-                args.DrawingSession.DrawImage(this.BitmapLayer.GetInterpolationScaled());
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);
                 args.DrawingSession.DrawRectangle(this.BitmapLayer.Bounds.ToRect(), Colors.YellowGreen, stroke);
@@ -99,12 +104,8 @@ namespace Luo_Painter.TestApp
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                args.DrawingSession.DrawImage(new ScaleEffect
-                {
-                    Scale = new Vector2(BitmapLayer.Unit),
-                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    Source = this.BitmapLayer[BitmapType.Temp]
-                });
+                args.DrawingSession.DrawImage(this.BitmapLayer.GetInterpolationScaled());
+
 
                 float stroke = sender.Dpi.ConvertDipsToPixels(1);
                 args.DrawingSession.DrawRectangle(this.BitmapLayer.Bounds.ToRect(), Colors.YellowGreen, stroke);
