@@ -53,7 +53,7 @@ namespace Luo_Painter
                 case OptionType.CropCanvas:
                     this.CropCanvas_Start(point);
                     break;
-                    
+
                 case OptionType.Transform:
                     this.Transform_Start(point);
                     break;
@@ -87,6 +87,9 @@ namespace Luo_Painter
 
                 case OptionType.View:
                     this.View_Start(point);
+                    break;
+                case OptionType.Brush:
+                    this.Brush_Start(point);
                     break;
             }
         }
@@ -146,6 +149,9 @@ namespace Luo_Painter
 
                 case OptionType.View:
                     this.View_Delta(point);
+                    break;
+                case OptionType.Brush:
+                    this.Brush_Delta(point);
                     break;
             }
         }
@@ -220,6 +226,9 @@ namespace Luo_Painter
 
                 case OptionType.View:
                     this.View_Complete(point);
+                    break;
+                case OptionType.Brush:
+                    this.Brush_Complete(point);
                     break;
             }
         }

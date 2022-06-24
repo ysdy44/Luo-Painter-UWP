@@ -215,7 +215,13 @@ namespace Luo_Painter
         {
             if (this.OptionType.IsOption() is false)
             {
-                return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]));
+                switch (this.OptionType)
+                {
+                    case OptionType.Brush:
+                        return this.GetBrushPreview();
+                    default:
+                        return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]));
+                }
             }
 
 
