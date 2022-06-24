@@ -13,20 +13,11 @@ namespace Luo_Painter.Brushes
             if (type.HasFlag(InkType.Dry))
                 return image;
             else if (type.HasFlag(InkType.Wet))
-                return new CompositeEffect
-                {
-                    Sources = { image, wet }
-                };
+                return InkPresenter.GetComposite(image, wet);
             else if (type.HasFlag(InkType.WetBlur))
-                return new CompositeEffect
-                {
-                    Sources = { image, this.GetBlur(image, wet) }
-                };
+                return InkPresenter.GetComposite(image, this.GetBlur(image, wet));
             else if (type.HasFlag(InkType.WetMosaic))
-                return new CompositeEffect
-                {
-                    Sources = { image, this.GetMosaic(image, wet) }
-                };
+                return InkPresenter.GetComposite(image, this.GetMosaic(image, wet));
             else if (type.HasFlag(InkType.WetComposite))
             {
                 if (type.HasFlag(InkType.WetCompositeBlend))
@@ -134,18 +125,39 @@ namespace Luo_Painter.Brushes
 
 
         //@Static  
-        public static ICanvasImage GetDraw(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => new CompositeEffect
+        public static ICanvasImage GetDraw(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
         {
             Sources =
             {
-                alphaMask,
+                image1,
                 new AlphaMaskEffect
                 {
-                    AlphaMask = alphaMask,
-                    Source = image
+                    AlphaMask = image1,
+                    Source = image2
                 }
             }
         };
+        public static ICanvasImage GetComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
+        {
+            Sources =
+            {
+                image1,
+                image2
+            }
+        };
+        public static ICanvasImage GetDrawComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2, IGraphicsEffectSource alphaMask) => new CompositeEffect
+        {
+            Sources =
+            {
+                image1,
+                new AlphaMaskEffect
+                {
+                    AlphaMask = alphaMask,
+                    Source = image2
+                }
+            }
+        };
+
         public static ICanvasImage GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float opacity) => new ArithmeticCompositeEffect
         {
             MultiplyAmount = 0,
