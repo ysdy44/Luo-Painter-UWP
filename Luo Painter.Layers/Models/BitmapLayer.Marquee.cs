@@ -18,6 +18,34 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
+        public SelectionType GetDrawSelection(bool isOpaque, BitmapLayer marquee, out Color[] InterpolationColors, out PixelBoundsMode mode)
+        {
+            if (isOpaque)
+            {
+                InterpolationColors = this.GetInterpolationColorsBySource();
+                mode = this.GetInterpolationBoundsMode(InterpolationColors);
+
+                switch (mode)
+                {
+                    case PixelBoundsMode.Transarent: return SelectionType.None;
+                    case PixelBoundsMode.Solid: return SelectionType.All;
+                    default: return SelectionType.PixelBounds;
+                }
+            }
+            else
+            {
+                InterpolationColors = marquee.GetInterpolationColorsBySource();
+                mode = marquee.GetInterpolationBoundsMode(InterpolationColors);
+
+                switch (mode)
+                {
+                    case PixelBoundsMode.Transarent: return SelectionType.All;
+                    case PixelBoundsMode.Solid: return SelectionType.All;
+                    default: return SelectionType.MarqueePixelBounds;
+                }
+            }
+        }
+
         public SelectionType GetSelection(BitmapLayer marquee, out Color[] InterpolationColors, out PixelBoundsMode mode)
         {
             InterpolationColors = marquee.GetInterpolationColorsBySource();

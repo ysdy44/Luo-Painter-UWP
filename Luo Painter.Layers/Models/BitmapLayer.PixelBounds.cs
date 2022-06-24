@@ -361,6 +361,10 @@ namespace Luo_Painter.Layers.Models
         {
             return PixelBounds.CreateFromBytes(interpolationColors, this.XLength, this.YLength);
         }
+        public PixelBounds CreateInterpolationBoundsScaled(Color[] interpolationColors)
+        {
+            return PixelBounds.CreateFromBytes(interpolationColors, this.XLength, this.YLength).Scale(BitmapLayer.Unit, this.Width, this.Height);
+        }
         public PixelBounds CreateInterpolationBounds() => new PixelBounds
         {
             Left = 0,
