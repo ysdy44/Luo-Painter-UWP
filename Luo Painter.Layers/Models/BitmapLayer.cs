@@ -3,7 +3,7 @@ using Microsoft.Graphics.Canvas.Brushes;
 using System;
 using System.Numerics;
 using Windows.UI;
-using Windows.Graphics.Effects;
+using Windows.Foundation;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -174,6 +174,15 @@ namespace Luo_Painter.Layers.Models
                 ds.FillRectangle(0, 0, this.Width, this.Height, brush);
             }
         }
+        public void Fill(ICanvasBrush brush, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.FillRectangle(clipRectangle, brush);
+            }
+        }
 
         public void Clear(ICanvasBrush brush, BitmapType type = BitmapType.Source)
         {
@@ -185,10 +194,28 @@ namespace Luo_Painter.Layers.Models
                 ds.FillRectangle(0, 0, this.Width, this.Height, brush);
             }
         }
+        public void Clear(ICanvasBrush brush, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.FillRectangle(clipRectangle, brush);
+            }
+        }
 
         public void Clear(Color color, BitmapType type = BitmapType.Source)
         {
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                ds.Clear(color);
+            }
+        }
+        public void Clear(Color color, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            using (ds.CreateLayer(1, clipRectangle))
             {
                 ds.Clear(color);
             }
