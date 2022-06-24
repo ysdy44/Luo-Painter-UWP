@@ -471,6 +471,14 @@
                         <local:ElementItem Type="Subtract"/>
                     </ListBox>
                 </local:OptionCase>
+                <local:OptionCase Value="Brush">
+                    <ListBox x:Name="BrushComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                        <TextBlock>Color</TextBlock>
+                        <TextBlock>LinearGradient</TextBlock>
+                        <TextBlock>RadialGradient</TextBlock>
+                        <TextBlock>EllipticalGradient</TextBlock>
+                    </ListBox>
+                </local:OptionCase>
             </local:OptionSwitchPresenter>
 
             <Grid x:Name="FootHead" Visibility="Collapsed" >
@@ -534,7 +542,7 @@
                             </Slider>
                         </Border>
                     </local:OptionCase>
-                    
+
                     <local:OptionCase Value="Exposure">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
                             <local:OptionIcon Type="Exposure" Width="50" />
@@ -1104,6 +1112,16 @@
                 <local:OptionSwitchPresenter x:Name="ToolSwitchPresenter" >
                     <tools:PaintBrushTool x:Name="PaintBrushTool" />
                     <tools:ViewTool x:Name="ViewTool" />
+                    <local:OptionCase Value="Brush">
+                        <StackPanel Spacing="6">
+                            <CheckBox x:Name="BrushOpaqueCheckBox" Margin="2,0">
+                                Opaque
+                            </CheckBox>
+                            <CheckBox x:Name="BrushReverseCheckBox" Margin="2,0">
+                                Reverse
+                            </CheckBox>
+                        </StackPanel>
+                    </local:OptionCase>
                 </local:OptionSwitchPresenter>
             </elements:Expander>
             <menus:PaintMenu x:Name="PaintMenu">
