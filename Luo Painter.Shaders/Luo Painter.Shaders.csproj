@@ -145,6 +145,8 @@
     <Content Include="FreeTransform.hlsl" />
     <Content Include="Difference.hlsl" />
     <Content Include="GradientMapping.bin" />
+    <Content Include="LalphaMaskEffect.hlsl" />
+    <Content Include="RalphaMaskEffect.hlsl" />
     <Content Include="RalphaMask.hlsl" />
     <Content Include="LalphaMask.hlsl" />
     <Content Include="LalphaMask.txt" />
@@ -175,6 +177,8 @@
     <None Include="DottedLine.shader" />
     <Content Include="LuminanceHeatmapEffect.bin" />
     <Content Include="RalphaMask.bin" />
+    <Content Include="RalphaMaskEffect.bin" />
+    <Content Include="LalphaMaskEffect.bin" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
     <Content Include="RippleEffect.bin" />
