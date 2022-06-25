@@ -23,5 +23,7 @@
         DisplacementLiquefaction,
         BrushEdgeHardness,
         BrushEdgeHardnessWithTexture,
+        LalphaMaskEffect,
+        RalphaMaskEffect,
     }
 }
