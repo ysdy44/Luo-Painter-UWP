@@ -91,6 +91,9 @@ namespace Luo_Painter
                 case OptionType.Brush:
                     this.Brush_Start(point);
                     break;
+                case OptionType.Transparency:
+                    this.Transparency_Start(point);
+                    break;
             }
         }
 
@@ -152,6 +155,9 @@ namespace Luo_Painter
                     break;
                 case OptionType.Brush:
                     this.Brush_Delta(point);
+                    break;
+                case OptionType.Transparency:
+                    this.Transparency_Delta(point);
                     break;
             }
         }
@@ -229,6 +235,9 @@ namespace Luo_Painter
                     break;
                 case OptionType.Brush:
                     this.Brush_Complete(point);
+                    break;
+                case OptionType.Transparency:
+                    this.Transparency_Complete(point);
                     break;
             }
         }
