@@ -141,6 +141,16 @@ namespace Luo_Painter.Layers.Models
                 ds.DrawImage(image);
             }
         }
+        public void Draw(ICanvasImage image, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            using (ds.CreateLayer(1, clipRectangle))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.DrawImage(image);
+            }
+        }
 
         public void DrawCopy(ICanvasImage image, BitmapType type = BitmapType.Source)
         {
@@ -152,9 +162,33 @@ namespace Luo_Painter.Layers.Models
                 ds.DrawImage(image);
             }
         }
+        public void DrawCopy(ICanvasImage image, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            using (ds.CreateLayer(1, clipRectangle))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(image);
+            }
+        }
         public void DrawCopy(ICanvasImage image1, ICanvasImage image2, BitmapType type = BitmapType.Source)
         {
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(image1);
+                ds.Blend = CanvasBlend.SourceOver;
+                ds.DrawImage(image2);
+            }
+        }
+        public void DrawCopy(ICanvasImage image1, ICanvasImage image2, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            using (ds.CreateLayer(1, clipRectangle))
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
