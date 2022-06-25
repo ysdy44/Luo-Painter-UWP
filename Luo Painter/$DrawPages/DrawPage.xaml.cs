@@ -131,7 +131,7 @@ namespace Luo_Painter
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
-      
+
         InkMixer InkMixer { get; set; } = new InkMixer();
         InkPresenter InkPresenter { get; } = new InkPresenter();
         InkRender InkRender { get; set; }
@@ -147,7 +147,6 @@ namespace Luo_Painter
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;
-        InkType InkToolType { get => this.PaintMenu.Type; set => this.PaintMenu.Type = value; }
 
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTransformShaderCodeBytes;
@@ -158,6 +157,9 @@ namespace Luo_Painter
         byte[] LalphaMaskShaderCodeBytes;
         byte[] RalphaMaskShaderCodeBytes;
         byte[] DisplacementLiquefactionShaderCodeBytes;
+        byte[] LalphaMaskEffectShaderCodeBytes;
+        byte[] RalphaMaskEffectShaderCodeBytes;
+
         byte[] BrushEdgeHardnessShaderCodeBytes;
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
@@ -171,6 +173,8 @@ namespace Luo_Painter
             this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
             this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();
             this.DisplacementLiquefactionShaderCodeBytes = await ShaderType.DisplacementLiquefaction.LoadAsync();
+            this.LalphaMaskEffectShaderCodeBytes = await ShaderType.LalphaMaskEffect.LoadAsync();
+            this.RalphaMaskEffectShaderCodeBytes = await ShaderType.RalphaMaskEffect.LoadAsync();
 
             // Brush
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
@@ -202,7 +206,7 @@ namespace Luo_Painter
 
             this.ConstructEdits();
             this.ConstructSetup();
-            
+
             this.ConstructOptions();
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();
@@ -210,7 +214,7 @@ namespace Luo_Painter
             this.ConstructTools();
             this.ConstructMarquee();
             this.ConstructVector();
-            
+
             this.ConstructHistory();
 
             this.ConstructDialog();
