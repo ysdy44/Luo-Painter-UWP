@@ -479,6 +479,13 @@
                         <TextBlock>EllipticalGradient</TextBlock>
                     </ListBox>
                 </local:OptionCase>
+                <local:OptionCase Value="Transparency">
+                    <ListBox x:Name="TransparencyComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                        <TextBlock>LinearGradient</TextBlock>
+                        <TextBlock>RadialGradient</TextBlock>
+                        <TextBlock>EllipticalGradient</TextBlock>
+                    </ListBox>
+                </local:OptionCase>
             </local:OptionSwitchPresenter>
 
             <Grid x:Name="FootHead" Visibility="Collapsed" >
@@ -1121,6 +1128,11 @@
                                 Reverse
                             </CheckBox>
                         </StackPanel>
+                    </local:OptionCase>
+                    <local:OptionCase Value="Transparency">
+                        <CheckBox x:Name="TransparencyReverseCheckBox" Margin="2,0">
+                            Reverse
+                        </CheckBox>
                     </local:OptionCase>
                 </local:OptionSwitchPresenter>
             </elements:Expander>
