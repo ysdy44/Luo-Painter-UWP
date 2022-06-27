@@ -234,9 +234,6 @@
     <Compile Include="CanvasImageSourcePage.xaml.cs">
       <DependentUpon>CanvasImageSourcePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SelectedButton.xaml.cs">
-      <DependentUpon>SelectedButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SelectedButtonPage.xaml.cs">
       <DependentUpon>SelectedButtonPage.xaml</DependentUpon>
     </Compile>
@@ -422,10 +419,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CanvasImageSourcePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SelectedButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

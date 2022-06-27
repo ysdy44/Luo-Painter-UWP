@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter.TestApp"
+    xmlns:elements="using:Luo_Painter.Elements"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -25,7 +25,7 @@
                 <StackPanel Orientation="Horizontal">
                     
                     <!--Here is SelectedButton-->
-                    <local:SelectedButtonPresenter />
+                    <elements:SelectedButtonPresenter />
                     
                     <TextBlock Text="{x:Bind}" Margin="12,2" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}"/>
                 </StackPanel>
