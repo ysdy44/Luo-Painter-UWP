@@ -16,17 +16,8 @@ namespace Luo_Painter.Elements
     {
         public SelectedButtonPresenter()
         {
-            // base.Unloaded += (s, e) => this.Content = null;
-            base.Loaded += (s, e) => this.Children.Add(new SelectedButton(this));
-        }
-
-        //@Static
-        public static ListViewItem FindAncestor(DependencyObject reference)
-        {
-            DependencyObject parent = VisualTreeHelper.GetParent(reference);
-            if (parent == null) return null;
-            else if (parent is ListViewItem result) return result;
-            else return SelectedButtonPresenter.FindAncestor(parent);
+            // base.Unloaded += (s, e) => this.Children.Clear();
+            base.Loaded += (s, e) => this.Children.Add(new SelectedButton(this.FindAncestor<ListViewItem>()));
         }
     }
 
@@ -36,11 +27,11 @@ namespace Luo_Painter.Elements
         /// <summary> Please binding the <see cref="SelectorItem.IsSelected" /> of Ancestor in SelectedButton.xaml.</summary>
         readonly ListViewItem Ancestor;
 
-        internal SelectedButton(SelectedButtonPresenter presenter)
+        internal SelectedButton(ListViewItem ancestor)
         {
             this.InitializeComponent();
-            this.Ancestor = SelectedButtonPresenter.FindAncestor(presenter);
-            base.Click += (s, e) => this.Ancestor.IsSelected = !this.Ancestor.IsSelected;
+            this.Ancestor = ancestor;
+            base.Click += (s, e) => this.Ancestor.Toggle();
         }
     }
 }

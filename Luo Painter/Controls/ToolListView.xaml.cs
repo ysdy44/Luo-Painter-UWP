@@ -17,7 +17,7 @@ namespace Luo_Painter.Controls
         {
             base.Loaded += (s, e) =>
             {
-                ListViewItem parent = SelectedButtonPresenter.FindAncestor(this);
+                ListViewItem parent = this.FindAncestor<ListViewItem>();
                 if (parent is null) return;
                 ToolTipService.SetToolTip(parent, new ToolTip
                 {
