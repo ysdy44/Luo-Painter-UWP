@@ -14,7 +14,7 @@ float4 color0 = float4(0, 0, 0, 0); // Transparent
 float4 color1 = float4(0, 0, 0, 1); // Black
 float4 color2 = float4(1, 1, 1, 1); // White
 
-bool neighbor(float x, float y)
+bool Neighbor(float x, float y)
 {
     // transform
     float ux = matrix3x2[0][0] * x + matrix3x2[1][0] * y + matrix3x2[2][0];
@@ -27,10 +27,10 @@ bool neighbor(float x, float y)
     if (uy > bottom) return false;
     
     float4 color = D2DSampleInputAtPosition(0, float2(ux, uy)).rgba;
-    return color.a != 0;
+    return color.a > 0.5;
 }
 
-float4 mesh(float d)
+float4 Mesh(float d)
 {
     if ((d + time) % 24 < 12)
         return color1;
@@ -40,19 +40,19 @@ float4 mesh(float d)
 
 D2D_PS_ENTRY(main)
 {
-float2 p = D2DGetScenePosition().xy;
-float x = p.x;
-float y = p.y;
-float d = x + y;
+    float2 p = D2DGetScenePosition().xy;
+    float x = p.x;
+    float y = p.y;
+    float d = x + y;
 
-if (neighbor(x, y)) 
-return color0;
+    if (Neighbor(x, y)) 
+        return color0;
 
-if (neighbor(x-lineWidth, y)||
-neighbor(x, y-lineWidth)||
-neighbor(x+lineWidth, y)||
-neighbor(x, y+lineWidth))
-return mesh(d);
+    if (Neighbor(x-lineWidth, y)||
+        Neighbor(x, y-lineWidth)||
+        Neighbor(x+lineWidth, y)||
+        Neighbor(x, y+lineWidth))
+        return Mesh(d);
 
-return color0;
+    return color0;
 }
