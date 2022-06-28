@@ -7,6 +7,7 @@
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
+    xmlns:menus="using:Luo_Painter.Menus"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"  
@@ -29,7 +30,18 @@
         </Button>
     </FrameworkElement.Tag>
 
+    <UIElement.KeyboardAccelerators>
+        <KeyboardAccelerator>
+            <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
+        </KeyboardAccelerator>
+        <menus:EditKeyboardAccelerator Modifiers="None" Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" 
+                                       IsEnabled="{x:Bind IsSelected, Mode=OneWay}" />
+        <menus:EditKeyboardAccelerator Modifiers="None" Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
+    </UIElement.KeyboardAccelerators>
+
     <FrameworkElement.Resources>
+        <!--Command-->
+        <menus:OptionTypeCommand x:Name="Command"/>
         <!--Storyboard-->
         <Storyboard x:Name="HideStoryboard" >
             <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="{x:Bind Width, Mode=OneWay}" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
@@ -159,26 +171,54 @@
         </ListView.Header>
 
         <ListView.Footer>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="AddButton" Style="{StaticResource AppButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Insert"/>
-                    </UIElement.KeyboardAccelerators>
-                    <SymbolIcon Symbol="Add"/>
-                </Button>
-                <Button x:Name="ImageButton" Grid.Column="1" Style="{StaticResource AppButtonStyle}">
-                    <SymbolIcon Symbol="Pictures"/>
-                </Button>
-                <Button x:Name="RemoveButton" Grid.Column="3" Style="{StaticResource AppButtonStyle}">
-                    <SymbolIcon Symbol="Delete"/>
-                </Button>
-            </Grid>
+            <CommandBar x:Name="CommandBar" MinWidth="210" >
+                <menus:EditAppBarButton Type="AddLayer" Command="{x:Bind Command, Mode=OneTime}" >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Insert
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF164;"/>
+                    </AppBarButton.Icon>
+                </menus:EditAppBarButton>
+                <menus:EditAppBarButton Type="Remove" Command="{x:Bind Command, Mode=OneTime}" 
+                                                IsEnabled="{x:Bind IsSelected, Mode=OneWay}" >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Delete
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Delete"/>
+                    </AppBarButton.Icon>
+                </menus:EditAppBarButton>
+                <CommandBar.SecondaryCommands>
+                    <menus:EditAppBarButton Type="AddImageLayer" Command="{x:Bind Command, Mode=OneTime}" >
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Pictures"/>
+                        </AppBarButton.Icon>
+                    </menus:EditAppBarButton>
+                    <AppBarSeparator/>
+                    <menus:EditAppBarButton Type="CutLayer" Command="{x:Bind Command, Mode=OneTime}" 
+                                                IsEnabled="{x:Bind IsSelected, Mode=OneWay}" >
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Cut"/>
+                        </AppBarButton.Icon>
+                    </menus:EditAppBarButton>
+                    <menus:EditAppBarButton Type="CopyLayer" Command="{x:Bind Command, Mode=OneTime}" 
+                                                IsEnabled="{x:Bind IsSelected, Mode=OneWay}" >
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Copy"/>
+                        </AppBarButton.Icon>
+                    </menus:EditAppBarButton>
+                    <menus:EditAppBarButton Type="PasteLayer" Command="{x:Bind Command, Mode=OneTime}" >
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Paste"/>
+                        </AppBarButton.Icon>
+                    </menus:EditAppBarButton>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
         </ListView.Footer>
 
     </ListView>

@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Layers;
+using Luo_Painter.Options;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel.Resources;
@@ -17,10 +18,12 @@ namespace Luo_Painter.Controls
     public sealed partial class LayerListView : Canvas
     {
         //@Delegate
+        public event EventHandler<OptionType> ItemClick
+        {
+            remove => this.Command.Click -= value;
+            add => this.Command.Click += value;
+        }
         public event EventHandler<ILayer> SelectedItemChanged;
-        public event RoutedEventHandler AddClick { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
-        public event RoutedEventHandler ImageClick { remove => this.ImageButton.Click -= value; add => this.ImageButton.Click += value; }
-        public event RoutedEventHandler RemoveClick { remove => this.RemoveButton.Click -= value; add => this.RemoveButton.Click += value; }
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
         public event DragItemsStartingEventHandler DragItemsStarting { remove => this.ListView.DragItemsStarting -= value; add => this.ListView.DragItemsStarting += value; }
         public event TypedEventHandler<ListViewBase, DragItemsCompletedEventArgs> DragItemsCompleted { remove => this.ListView.DragItemsCompleted -= value; add => this.ListView.DragItemsCompleted += value; }
@@ -59,6 +62,15 @@ namespace Luo_Painter.Controls
                     control.HideStoryboard.Begin();
             }
         }));
+
+        /// <summary> Gets or set the state for <see cref="LayerListView"/>. </summary>
+        public bool IsSelected
+        {
+            get => (bool)base.GetValue(IsSelectedProperty);
+            set => base.SetValue(IsSelectedProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "LayerListView.IsSelected" /> dependency property. </summary>
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(LayerListView), new PropertyMetadata(false));
 
 
         #endregion
@@ -102,6 +114,29 @@ namespace Luo_Painter.Controls
                     this.OnSelectedItemChanged(control.GetValue(prop));
                 });
             };
+            this.CommandBar.Loaded += (s, e) =>
+            {
+                if (s is DependencyObject reference)
+                {
+                    DependencyObject layoutRoot = VisualTreeHelper.GetChild(reference, 0); // Grid LayoutRoot
+                    DependencyObject contentRoot = VisualTreeHelper.GetChild(layoutRoot, 0); // Grid ContentRoot
+
+                    DependencyObject moreButton = VisualTreeHelper.GetChild(contentRoot, 1); // Button MoreButton Width Auto
+                    if (moreButton is Button moreButton1)
+                    {
+                        moreButton1.Width = 70;
+                        moreButton1.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    }
+
+                    DependencyObject grid = VisualTreeHelper.GetChild(contentRoot, 0); // Grid
+                    DependencyObject primaryItemsControl = VisualTreeHelper.GetChild(grid, 1); // ItemsControl PrimaryItemsControl HorizontalAlignment Right Grid.Column 1
+                    if (primaryItemsControl is ItemsControl primaryItemsControl1)
+                    {
+                        primaryItemsControl1.HorizontalAlignment = HorizontalAlignment.Left;
+                        Grid.SetColumn(primaryItemsControl1, 0);
+                    }
+                }
+            };
         }
 
         public void OnSelectedItemChanged() => this.OnSelectedItemChanged(this.SelectedItem);
@@ -109,10 +144,12 @@ namespace Luo_Painter.Controls
         {
             if (obj is ILayer value)
             {
+                this.IsSelected = true;
                 this.SelectedItemChanged?.Invoke(this, value);//Delegate
             }
             else
             {
+                this.IsSelected = false;
                 this.SelectedItemChanged?.Invoke(this, null);//Delegate
             }
         }
