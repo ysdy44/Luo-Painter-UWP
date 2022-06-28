@@ -7,6 +7,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
@@ -30,7 +31,7 @@ namespace Luo_Painter.Controls
         private double ListViewWidthConverter(double value, int min) => System.Math.Clamp((int)(value / 70 + 0.5), min, 6) * 70;
         private double ThumbeTopConverter(double value) => value / 2 - 60;
         private double ThumbeBottomConverter(double value) => value / 2 + 60;
-        private Visibility SelectedVisibilityConverter(double value) => value > 35 + 70 ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility SelectedVisibilityConverter(double value) => value > 70 + 70 ? Visibility.Visible : Visibility.Collapsed;
 
         double StartingX;
 
@@ -62,7 +63,6 @@ namespace Luo_Painter.Controls
 
         #endregion
 
-        public FrameworkElement PlacementTarget => this.AddButton;
         public IList<object> SelectedItems => this.ListView.SelectedItems;
         public object SelectedItem => this.ListView.SelectedItem;
         public int SelectedIndex
