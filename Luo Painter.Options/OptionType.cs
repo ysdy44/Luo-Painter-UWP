@@ -2,12 +2,17 @@
 
 namespace Luo_Painter.Options
 {
+    /// <summary>
+    /// Root4___Category12_________Item4___Flag12                                <para/>
+    /// 0000____0000_0000_0000____0000____0000_0000_0000
+    /// </summary>
     [Flags]
-    public enum OptionType
+    public enum OptionType : uint
     {
         // None
         None = 0,
 
+        // Flag
         IsItemClickEnabled = 1,
         ExistIcon = 2,
         ExistThumbnail = 4,
@@ -17,223 +22,233 @@ namespace Luo_Painter.Options
         TempOverlay = 64,
         HasState = 128,
 
-        // Type
-        Edit = 1 << 20,
-        Option = 2 << 20,
-        Tool = 4 << 20,
+        // Foot
+        Edit = 1 << 28,
+        Option = 2 << 28,
+        Tool = 4 << 28,
 
 
         // Edit
-        Editing = 1 << 12 | Edit,
-        Grouping = 2 << 12 | Edit,
-        Select = 4 << 12 | Edit,
-        Combine = 8 << 12 | Edit,
-        Setup = 16 << 12 | Edit,
+        Layering = Edit | 1 << 16,
+        Editing = Edit | 2 << 16,
+        Grouping = Edit | 4 << 16,
+        Select = Edit | 8 << 16,
+        Combine = Edit | 16 << 16,
+        Setup = Edit | 32 << 16,
 
         #region Edit
 
 
+        // Layer
+        Remove = Layering | 1 << 8 | HasState | IsItemClickEnabled,
+        AddLayer = Layering | 2 << 8 | HasState | IsItemClickEnabled,
+        AddImageLayer = Layering | 3 << 8 | HasState | IsItemClickEnabled,
+
+        CutLayer = Layering | 4 << 8 | HasState | IsItemClickEnabled,
+        CopyLayer = Layering | 5 << 8 | HasState | IsItemClickEnabled,
+        PasteLayer = Layering | 6 << 8 | HasState | IsItemClickEnabled,
+
+
         // Editing
-        Cut = 1 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
-        Duplicate = 2 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
-        Copy = 3 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
-        Paste = 4 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
+        Cut = Editing | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Duplicate = Editing | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Copy = Editing | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Paste = Editing | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
-        Clear = 5 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
-        Remove = 6 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
+        Clear = Editing | 5 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
-        Extract = 7 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
-        Merge = 8 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
-        Flatten = 9 << 8 | Editing | IsItemClickEnabled | ExistIcon | HasState,
+        Extract = Editing | 6 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Merge = Editing | 7 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Flatten = Editing | 8 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
 
         // Grouping
-        Group = 1 << 8 | Grouping | IsItemClickEnabled | ExistIcon | HasState,
-        Ungroup = 2 << 8 | Grouping | IsItemClickEnabled | ExistIcon | HasState,
+        Group = Grouping | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Ungroup = Grouping | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
-        Release = 3 << 8 | Grouping | IsItemClickEnabled | ExistIcon | HasState,
+        Release = Grouping | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
 
         // Select
-        All = 1 << 8 | Select | IsItemClickEnabled | ExistIcon | HasState,
-        Deselect = 2 << 8 | Select | IsItemClickEnabled | ExistIcon | HasState,
-        MarqueeInvert = 3 << 8 | Select | IsItemClickEnabled | ExistIcon | HasState,
-        Pixel = 4 << 8 | Select | IsItemClickEnabled | ExistIcon | HasState,
+        All = Select | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Deselect = Select | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        MarqueeInvert = Select | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Pixel = Select | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
-        Feather = 5 << 8 | Select | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview | HasState,
-        MarqueeTransform = 6 << 8 | Select | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview | HasPreview | HasDifference | HasState,
-        Grow = 7 << 8 | Select | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview | HasState,
-        Shrink = 8 << 8 | Select | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview | HasState,
+        Feather = Select | 5 << 8 | HasState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        MarqueeTransform = 6 << 8 | Select | HasState | HasDifference | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        Grow = Select | 7 << 8 | HasState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        Shrink = Select | 8 << 8 | HasState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
 
 
         // Combine
-        Union = 1 << 8 | Combine | IsItemClickEnabled | ExistIcon | HasState,
-        Exclude = 2 << 8 | Combine | IsItemClickEnabled | ExistIcon | HasState,
-        Xor = 3 << 8 | Combine | IsItemClickEnabled | ExistIcon | HasState,
-        Intersect = 4 << 8 | Combine | IsItemClickEnabled | ExistIcon | HasState,
+        Union = Combine | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Exclude = Combine | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Xor = Combine | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Intersect = Combine | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
-        ExpandStroke = 5 << 8 | Combine | IsItemClickEnabled | ExistIcon | HasState,
+        ExpandStroke = Combine | 5 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
 
         // Setup
-        CropCanvas = 1 << 8 | Setup | IsItemClickEnabled | ExistIcon | HasPreview,
+        CropCanvas = Setup | 1 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        Stretch = 2 << 8 | Setup | IsItemClickEnabled | ExistIcon,
+        Stretch = Setup | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
-        FlipHorizontal = 3 << 8 | Setup | IsItemClickEnabled | ExistIcon,
-        FlipVertical = 4 << 8 | Setup | IsItemClickEnabled | ExistIcon,
+        FlipHorizontal = Setup | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        FlipVertical = Setup | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
-        LeftTurn = 5 << 8 | Setup | IsItemClickEnabled | ExistIcon,
-        RightTurn = 6 << 8 | Setup | IsItemClickEnabled | ExistIcon,
-        OverTurn = 7 << 8 | Setup | IsItemClickEnabled | ExistIcon,
+        LeftTurn = Setup | 5 << 8 | ExistIcon | IsItemClickEnabled,
+        RightTurn = Setup | 6 << 8 | ExistIcon | IsItemClickEnabled,
+        OverTurn = Setup | 7 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         #endregion
 
 
         // Option
-        More = 1 << 12 | Option,
-        Adjustment = 2 << 12 | Option,
-        Effect1 = 4 << 12 | Option,
-        Effect2 = 8 << 12 | Option,
-        Effect3 = 16 << 12 | Option,
+        More = Option | 1 << 16,
+        Adjustment = Option | 2 << 16,
+        Effect1 = Option | 4 << 16,
+        Effect2 = Option | 8 << 16,
+        Effect3 = Option | 16 << 16,
 
         #region Option
 
 
         // More
-        Transform = 1 << 8 | More | IsItemClickEnabled | ExistIcon | HasPreview | HasDifference,
-        DisplacementLiquefaction = 2 << 8 | More | IsItemClickEnabled | ExistIcon | HasPreview | HasDifference,
-        GradientMapping = 3 << 8 | More | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview,
-        RippleEffect = 4 << 8 | More | IsItemClickEnabled | ExistIcon | AllowDrag | HasPreview | HasDifference,
-        Fill = 5 << 8 | More | IsItemClickEnabled | ExistIcon | HasPreview | TempOverlay,
+        Transform = More | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        DisplacementLiquefaction = More | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        GradientMapping = More | 3 << 8 | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        RippleEffect = More | 4 << 8 | HasPreview | AllowDrag | ExistIcon | HasDifference | IsItemClickEnabled,
+        Fill = More | 5 << 8 | TempOverlay | HasPreview | ExistIcon | IsItemClickEnabled,
 
 
         // Adjustment
-        Gray = 1 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Invert = 2 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Exposure = 3 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
-        Brightness = 4 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
-        Saturation = 5 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
-        HueRotation = 6 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
-        Contrast = 7 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
-        Temperature = 8 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
-        HighlightsAndShadows = 9 << 8 | Adjustment | IsItemClickEnabled | ExistIcon | ExistThumbnail | AllowDrag | HasPreview,
+        Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Invert = Adjustment | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Exposure = Adjustment | 3 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Brightness = Adjustment | 4 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Saturation = Adjustment | 5 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        HueRotation = Adjustment | 6 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Contrast = Adjustment | 7 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Temperature = Adjustment | 8 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
 
         // Effect1
-        GaussianBlur = 1 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        DirectionalBlur = 2 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Sharpen = 3 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Shadow = 4 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        ChromaKey = 5 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        EdgeDetection = 6 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Border = 7 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Emboss = 8 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Lighting = 9 << 8 | Effect1 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
+        GaussianBlur = Effect1 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        DirectionalBlur = Effect1 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Sharpen = Effect1 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Shadow = Effect1 | 4 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        ChromaKey = Effect1 | 5 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        EdgeDetection = Effect1 | 6 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Border = Effect1 | 7 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Emboss = Effect1 | 8 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Lighting = Effect1 | 9 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
 
         // Effect2
-        LuminanceToAlpha = 1 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail | HasPreview,
-        Fog = 2 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Sepia = 3 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Posterize = 4 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Colouring = 5 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Tint = 6 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        DiscreteTransfer = 7 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Vignette = 8 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        GammaTransfer = 9 << 8 | Effect2 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
+        LuminanceToAlpha = Effect2 | 1 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Fog = Effect2 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Sepia = Effect2 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Posterize = Effect2 | 4 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Colouring = Effect2 | 5 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Tint = Effect2 | 6 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        DiscreteTransfer = Effect2 | 7 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Vignette = Effect2 | 8 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        GammaTransfer = Effect2 | 9 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
 
         // Effect3
-        Glass = 1 << 8 | Effect3 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        PinchPunch = 2 << 8 | Effect3 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
-        Morphology = 3 << 8 | Effect3 | IsItemClickEnabled | ExistIcon | ExistThumbnail,
+        Glass = Effect3 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        PinchPunch = Effect3 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Morphology = Effect3 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
 
         #endregion
 
 
         // Tool
-        Marquee = 1 << 12 | Tool,
-        Selection = 2 << 12 | Tool,
-        Paint = 4 << 12 | Tool,
-        Vector = 8 << 12 | Tool,
-        Curve = 16 << 12 | Tool,
-        Text = 32 << 12 | Tool,
-        Geometry = 64 << 12 | Tool,
-        Pattern = 128 << 12 | Tool,
+        Marquee = Tool | 1 << 16,
+        Selection = Tool | 2 << 16,
+        Paint = Tool | 4 << 16,
+        Vector = Tool | 8 << 16,
+        Curve = Tool | 16 << 16,
+        Text = Tool | 32 << 16,
+        Geometry = Tool | 64 << 16,
+        Pattern = Tool | 128 << 16,
 
         #region Tool
 
 
         // Marquee
-        MarqueeRectangular = 1 << 8 | Marquee | IsItemClickEnabled | ExistIcon,
-        MarqueeElliptical = 2 << 8 | Marquee | IsItemClickEnabled | ExistIcon,
-        MarqueePolygon = 3 << 8 | Marquee | IsItemClickEnabled | ExistIcon,
-        MarqueeFreeHand = 4 << 8 | Marquee | IsItemClickEnabled | ExistIcon,
+        MarqueeRectangular = Marquee | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        MarqueeElliptical = Marquee | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        MarqueePolygon = Marquee | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        MarqueeFreeHand = Marquee | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Selection
-        SelectionFlood = 1 << 8 | Selection | IsItemClickEnabled | ExistIcon,
-        SelectionBrush = 2 << 8 | Selection | IsItemClickEnabled | ExistIcon,
+        SelectionFlood = Selection | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        SelectionBrush = Selection | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Paint
-        PaintBrush = 1 << 8 | Paint | IsItemClickEnabled | ExistIcon,
-        PaintWatercolorPen = 2 << 8 | Paint | IsItemClickEnabled | ExistIcon,
-        PaintPencil = 3 << 8 | Paint | IsItemClickEnabled | ExistIcon,
-        PaintEraseBrush = 4 << 8 | Paint | IsItemClickEnabled | ExistIcon,
-        PaintLiquefaction = 5 << 8 | Paint | IsItemClickEnabled | ExistIcon,
+        PaintBrush = Paint | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintWatercolorPen = Paint | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintPencil = Paint | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintEraseBrush = Paint | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintLiquefaction = Paint | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Vector
-        Cursor = 1 << 8 | Vector | IsItemClickEnabled | ExistIcon,
-        View = 2 << 8 | Vector | IsItemClickEnabled | ExistIcon,
-        Crop = 3 << 8 | Vector | IsItemClickEnabled | ExistIcon,
+        Cursor = Vector | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        View = Vector | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        Crop = Vector | 3 << 8 | ExistIcon | IsItemClickEnabled,
 
-        Brush = 4 << 8 | Vector | IsItemClickEnabled | ExistIcon,
-        Transparency = 5 << 8 | Vector | IsItemClickEnabled | ExistIcon,
+        Brush = Vector | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        Transparency = Vector | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
-        Image = 6 << 8 | Vector | IsItemClickEnabled | ExistIcon,
+        Image = Vector | 6 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Curve
-        Node = 1 << 8 | Curve | IsItemClickEnabled | ExistIcon,
-        Pen = 2 << 8 | Curve | IsItemClickEnabled | ExistIcon,
+        Node = Curve | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        Pen = Curve | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Text
-        TextArtistic = 1 << 8 | Text | IsItemClickEnabled | ExistIcon,
-        TextFrame = 2 << 8 | Text | IsItemClickEnabled | ExistIcon,
+        TextArtistic = Text | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        TextFrame = Text | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Geometry
         // Geometry0
-        GeometryRectangle = 1 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryEllipse = 2 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
+        GeometryRectangle = Geometry | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryEllipse = Geometry | 2 << 8 | ExistIcon | IsItemClickEnabled,
         // Geometry1
-        GeometryRoundRect = 3 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryTriangle = 4 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryDiamond = 5 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
+        GeometryRoundRect = Geometry | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryTriangle = Geometry | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryDiamond = Geometry | 5 << 8 | ExistIcon | IsItemClickEnabled,
         // Geometry2
-        GeometryPentagon = 6 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryStar = 7 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryCog = 8 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
+        GeometryPentagon = Geometry | 6 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryStar = Geometry | 7 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryCog = Geometry | 8 << 8 | ExistIcon | IsItemClickEnabled,
         // Geometry3
-        GeometryDount = 9 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryPie = 10 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryCookie = 11 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
+        GeometryDount = Geometry | 9 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryPie = Geometry | 10 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryCookie = Geometry | 11 << 8 | ExistIcon | IsItemClickEnabled,
         // Geometry4
-        GeometryArrow = 12 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryCapsule = 13 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
-        GeometryHeart = 14 << 8 | Geometry | IsItemClickEnabled | ExistIcon,
+        GeometryArrow = Geometry | 12 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryCapsule = Geometry | 13 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryHeart = Geometry | 14 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         // Pattern
-        PatternGrid = 1 << 8 | Pattern | IsItemClickEnabled | ExistIcon,
-        PatternDiagonal = 2 << 8 | Pattern | IsItemClickEnabled | ExistIcon,
-        PatternSpotted = 3 << 8 | Pattern | IsItemClickEnabled | ExistIcon,
+        PatternGrid = Pattern | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        PatternDiagonal = Pattern | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        PatternSpotted = Pattern | 3 << 8 | ExistIcon | IsItemClickEnabled,
 
 
         #endregion

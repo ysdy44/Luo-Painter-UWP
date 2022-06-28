@@ -38,7 +38,6 @@
         <local:EditKeyboardAccelerator Modifiers="Control" Key="C" CommandParameter="Copy" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="V" CommandParameter="Paste" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Key="Back" CommandParameter="Clear" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="E" CommandParameter="Extract" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="M" CommandParameter="Merge" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="F" CommandParameter="Flatten" Command="{x:Bind Command}" />
@@ -56,7 +55,7 @@
         <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <FlipView x:Name="FlipView" Height="416" Background="Transparent" >
+    <FlipView x:Name="FlipView" Height="368" Background="Transparent" >
         <FlipViewItem>
             <Grid ColumnSpacing="6">
                 <Grid.ColumnDefinitions>
@@ -95,18 +94,10 @@
                             </ToolTip>
                         </ToolTipService.ToolTip>
                     </local:EditItem>
-                    <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
                     <local:EditItem Type="Clear" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
                         <ToolTipService.ToolTip>
                             <ToolTip Style="{StaticResource AppToolTipStyle}">
                                 Back
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                    </local:EditItem>
-                    <local:EditItem Type="Remove" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                        <ToolTipService.ToolTip>
-                            <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                Delete
                             </ToolTip>
                         </ToolTipService.ToolTip>
                     </local:EditItem>
