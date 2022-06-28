@@ -61,6 +61,15 @@ namespace Luo_Painter.Menus
         }
     }
 
+    internal sealed class EditAppBarButton : TAppBarButton<OptionType>
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.CommandParameter = value;
+            base.Label = value.ToString();
+        }
+    }
+
     public sealed partial class EditMenu : Expander
     {
         //@Delegate

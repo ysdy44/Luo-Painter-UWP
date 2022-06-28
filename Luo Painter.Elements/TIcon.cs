@@ -117,4 +117,34 @@ namespace Luo_Painter.Elements
 
         #endregion
     }
+
+    public abstract class TAppBarButton<T> : AppBarButton
+        where T : Enum
+    {
+        //@Abstract
+        protected abstract void OnTypeChanged(T value);
+
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="TAppBarButton{T}"/>. </summary>
+        public T Type
+        {
+            get => (T)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "TAppBarButton.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(T), typeof(TAppBarButton<T>), new PropertyMetadata(default(T), (sender, e) =>
+        {
+            TAppBarButton<T> control = (TAppBarButton<T>)sender;
+
+            if (e.NewValue is T value)
+            {
+                control.OnTypeChanged(value);
+            }
+        }));
+
+
+        #endregion
+    }
 }
