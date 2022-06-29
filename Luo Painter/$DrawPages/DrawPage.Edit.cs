@@ -4,7 +4,7 @@ using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System.Linq;
-using Windows.Graphics.Imaging;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,6 +16,93 @@ namespace Luo_Painter
 
         private void ConstructEdits()
         {
+            this.LayerListView.ItemClick += async (s, type) =>
+            {
+                switch (type)
+                {
+                    case OptionType.Remove:
+                        this.Remove();
+                        break;
+                    case OptionType.AddLayer:
+                        {
+                            int index = this.LayerListView.SelectedIndex;
+                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
+
+                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+                            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
+                            if (index >= 0)
+                                this.ObservableCollection.Insert(index, bitmapLayer);
+                            else
+                                this.ObservableCollection.Add(bitmapLayer);
+                            this.LayerListView.SelectedIndex = System.Math.Max(0, index);
+
+                            // History
+                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                    case OptionType.AddImageLayer:
+                        this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop));
+                        break;
+                    case OptionType.CutLayer: // CopyLayer + Remove
+                        this.ClipboardLayers.Clear();
+                        foreach (string item in this.Ids())
+                        {
+                            this.ClipboardLayers.Add(item);
+                        }
+
+                        this.Remove();
+                        break;
+                    case OptionType.CopyLayer:
+                        this.ClipboardLayers.Clear();
+                        foreach (string item in this.Ids())
+                        {
+                            this.ClipboardLayers.Add(item);
+                        }
+                        break;
+                    case OptionType.PasteLayer:
+                        {
+                            if (this.ClipboardLayers.Count is 0) break;
+
+                            int index = this.LayerListView.SelectedIndex;
+                            if (index < 0) index = 0;
+                            else if (index > this.ObservableCollection.Count - 1) index = this.ObservableCollection.Count - 1; ;
+
+                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
+
+                            int add = 0;
+                            foreach (string item in this.ClipboardLayers)
+                            {
+                                if (this.Layers.ContainsKey(item))
+                                {
+                                    if (this.Layers[item] is ILayer layer)
+                                    {
+                                        ILayer layer2 = layer.Clone(this.CanvasDevice);
+                                        this.Layers.Add(layer2.Id, layer2);
+                                        this.ObservableCollection.Insert(index + add, layer2);
+                                        add++;
+                                    }
+                                }
+                            }
+                            this.LayerListView.SelectedIndex = index;
+
+                            // History
+                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            };
             this.EditMenu.ItemClick += (s, type) =>
             {
                 switch (type)
@@ -65,17 +152,17 @@ namespace Luo_Painter
                         break;
                     case OptionType.Duplicate:
                         {
-                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
+                            if (this.LayerListView.SelectedItem is ILayer layer)
                             {
                                 int index = this.LayerListView.SelectedIndex;
                                 if (index < 0) break;
-                                if (index + 1 > this.ObservableCollection.Count) break;
+                                else if (index + 1 > this.ObservableCollection.Count) break;
 
                                 string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
-                                BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer);
-                                this.Layers.Add(bitmapLayer2.Id, bitmapLayer2);
-                                this.ObservableCollection.Insert(index, bitmapLayer2);
+                                ILayer layer2 = layer.Clone(this.CanvasDevice);
+                                this.Layers.Add(layer2.Id, layer2);
+                                this.ObservableCollection.Insert(index, layer2);
                                 this.LayerListView.SelectedIndex = index;
 
                                 // History
@@ -126,7 +213,7 @@ namespace Luo_Painter
                             }
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
-                            if (index + 1 > this.ObservableCollection.Count) break;
+                            else if (index + 1 > this.ObservableCollection.Count) break;
 
                             string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
@@ -177,9 +264,6 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
                         break;
-                    case OptionType.Remove:
-                        this.Remove();
-                        break;
                     case OptionType.Extract:
                         {
                             if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
@@ -226,7 +310,7 @@ namespace Luo_Painter
                         {
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
-                            if (index + 2 > this.ObservableCollection.Count) break;
+                            else if (index + 2 > this.ObservableCollection.Count) break;
 
                             if (this.ObservableCollection[index] is ILayer current)
                             {
@@ -259,8 +343,8 @@ namespace Luo_Painter
                         {
                             int index = this.LayerListView.SelectedIndex;
                             if (index < 0) break;
-                            if (index + 1 > this.ObservableCollection.Count) break;
-                            if (1 >= this.ObservableCollection.Count) break;
+                            else if (index + 1 > this.ObservableCollection.Count) break;
+                            else if (1 >= this.ObservableCollection.Count) break;
 
                             string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
 
@@ -387,7 +471,7 @@ namespace Luo_Painter
                     {
                         case PixelBoundsMode.None:
                             PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(interpolationColors);
-                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
+                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, interpolationColors);
                             this.SetTransform(bounds);
                             break;
                         default:

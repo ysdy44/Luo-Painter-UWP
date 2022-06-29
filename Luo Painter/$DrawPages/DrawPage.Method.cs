@@ -129,6 +129,8 @@ namespace Luo_Painter
             if (index < 0) return;
             if (index + 1 > this.ObservableCollection.Count) return;
 
+            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
+
             foreach (string id in this.Ids().ToArray())
             {
                 if (this.Layers.ContainsKey(id))
@@ -137,11 +139,16 @@ namespace Luo_Painter
                     this.ObservableCollection.Remove(layer);
                 }
             }
+            this.LayerListView.SelectedIndex = System.Math.Min(index, this.ObservableCollection.Count - 1);
 
-            int index2 = System.Math.Min(index, this.ObservableCollection.Count - 1);
-            this.LayerListView.SelectedIndex = index2;
+            // History
+            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+            int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
         }
 
         public async void AddAsync(IEnumerable<IStorageFile> items)

@@ -131,6 +131,7 @@ namespace Luo_Painter
         Historian<IHistory> History { get; } = new Historian<IHistory>();
         IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
         ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
+        IList<string> ClipboardLayers { get; } = new List<string>();
 
         InkMixer InkMixer { get; set; } = new InkMixer();
         InkPresenter InkPresenter { get; } = new InkPresenter();
