@@ -3,6 +3,7 @@ using Luo_Painter.Historys.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using Windows.UI.Xaml;
@@ -13,7 +14,15 @@ namespace Luo_Painter.Layers
     public abstract partial class LayerBase
     {
 
+        public float ConvertValueToOne(float value) => value / Math.Max(this.Width, this.Height);
+        public float ConvertOneToValue(float one) => one * Math.Max(this.Width, this.Height);
+
+        public Vector2 ConvertValueToOne(Vector2 value) => new Vector2(value.X / this.Width, value.Y / this.Height);
+        public Vector2 ConvertOneToValue(Vector2 one) => new Vector2(one.X * this.Width, one.Y * this.Height);
+
+
         public string Id { get; } = Guid.NewGuid().ToString();
+        public IList<ILayer> Children { get; } = new List<ILayer>();
 
         public readonly Vector2 Center; // (125, 125)
         public readonly int Width; // 250

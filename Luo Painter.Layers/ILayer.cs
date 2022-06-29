@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Historys;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using Windows.UI.Xaml;
@@ -11,6 +12,7 @@ namespace Luo_Painter.Layers
     public interface ILayer : INotifyPropertyChanged
     {
         string Id { get; }
+        IList<ILayer> Children { get; }
 
         LayerType Type { get; }
 
@@ -29,6 +31,7 @@ namespace Luo_Painter.Layers
         Visibility Visibility { get; set; }
 
         RenderMode RenderMode { get; }
+        ICanvasImage GetRender(ICanvasImage background);
         ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage);
 
         ICanvasImage this[BitmapType type] { get; }
@@ -38,6 +41,7 @@ namespace Luo_Painter.Layers
 
         bool FillContainsPoint(Vector2 point);
 
+        ILayer Clone(ICanvasResourceCreator resourceCreator);
         ILayer Crop(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset);
         ILayer Crop(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation);
         ILayer Skretch(ICanvasResourceCreator resourceCreator, int width, int height, CanvasImageInterpolation interpolation);

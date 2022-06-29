@@ -7,6 +7,12 @@ namespace Luo_Painter.Layers.Models
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
 
+        public ILayer Clone(ICanvasResourceCreator resourceCreator)
+        {
+            BitmapLayer layer = new BitmapLayer(resourceCreator, this);
+            layer.CopyWith(this);
+            return layer;
+        }
         public ILayer Crop(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset)
         {
             BitmapLayer layer = new BitmapLayer(resourceCreator, this.SourceRenderTarget, width, height, offset);
