@@ -236,7 +236,7 @@ namespace Luo_Painter
             this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
             this.HistoryButton.Click += (s, e) => this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
             this.SetupButton.Click += (s, e) => this.SetupMenu.Toggle(this.SetupButton, ExpanderPlacementMode.Bottom);
-            this.LayerButton.Click += (s, e) => this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
+            this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView, ExpanderPlacementMode.Left);
             this.ColorButton.Click += (s, e) => this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
 
 

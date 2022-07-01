@@ -16,7 +16,10 @@ namespace Luo_Painter
 
         private void ConstructEdits()
         {
-            this.LayerListView.ItemClick += async (s, type) =>
+            this.LayerListView.Add += (s, e) => this.Add();
+            this.LayerListView.Remove += (s, e) => this.Remove();
+        
+            this.LayerMenu.ItemClick += async (s, type) =>
             {
                 switch (type)
                 {
@@ -24,25 +27,7 @@ namespace Luo_Painter
                         this.Remove();
                         break;
                     case OptionType.AddLayer:
-                        {
-                            int index = this.LayerListView.SelectedIndex;
-                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-                            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-                            if (index >= 0)
-                                this.ObservableCollection.Insert(index, bitmapLayer);
-                            else
-                                this.ObservableCollection.Add(bitmapLayer);
-                            this.LayerListView.SelectedIndex = System.Math.Max(0, index);
-
-                            // History
-                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                        }
+                        this.Add();
                         break;
                     case OptionType.AddImageLayer:
                         this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop));

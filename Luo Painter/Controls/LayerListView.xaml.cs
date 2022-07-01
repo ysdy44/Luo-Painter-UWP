@@ -18,11 +18,9 @@ namespace Luo_Painter.Controls
     public sealed partial class LayerListView : Canvas
     {
         //@Delegate
-        public event EventHandler<OptionType> ItemClick
-        {
-            remove => this.Command.Click -= value;
-            add => this.Command.Click += value;
-        }
+        public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
+        public event RoutedEventHandler Remove { remove => this.RemoveButton.Click -= value; add => this.RemoveButton.Click += value; }
+        public event EventHandler<object> Opening { remove => this.CommandBar.Opening -= value; add => this.CommandBar.Opening += value; }
         public event EventHandler<ILayer> SelectedItemChanged;
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
         public event DragItemsStartingEventHandler DragItemsStarting { remove => this.ListView.DragItemsStarting -= value; add => this.ListView.DragItemsStarting += value; }
@@ -62,15 +60,6 @@ namespace Luo_Painter.Controls
                     control.HideStoryboard.Begin();
             }
         }));
-
-        /// <summary> Gets or set the state for <see cref="LayerListView"/>. </summary>
-        public bool IsSelected
-        {
-            get => (bool)base.GetValue(IsSelectedProperty);
-            set => base.SetValue(IsSelectedProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "LayerListView.IsSelected" /> dependency property. </summary>
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(LayerListView), new PropertyMetadata(false));
 
 
         #endregion
@@ -144,12 +133,12 @@ namespace Luo_Painter.Controls
         {
             if (obj is ILayer value)
             {
-                this.IsSelected = true;
+                this.RemoveButton.IsEnabled = true;
                 this.SelectedItemChanged?.Invoke(this, value);//Delegate
             }
             else
             {
-                this.IsSelected = false;
+                this.RemoveButton.IsEnabled = false;
                 this.SelectedItemChanged?.Invoke(this, null);//Delegate
             }
         }

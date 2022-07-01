@@ -30,18 +30,7 @@
         </Button>
     </FrameworkElement.Tag>
 
-    <UIElement.KeyboardAccelerators>
-        <KeyboardAccelerator>
-            <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
-        </KeyboardAccelerator>
-        <menus:EditKeyboardAccelerator Modifiers="None" Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" 
-                                       IsEnabled="{x:Bind IsSelected, Mode=OneWay}" />
-        <menus:EditKeyboardAccelerator Modifiers="None" Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
-    </UIElement.KeyboardAccelerators>
-
     <FrameworkElement.Resources>
-        <!--Command-->
-        <menus:OptionTypeCommand x:Name="Command"/>
         <!--Storyboard-->
         <Storyboard x:Name="HideStoryboard" >
             <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="{x:Bind Width, Mode=OneWay}" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
@@ -172,7 +161,10 @@
 
         <ListView.Footer>
             <CommandBar x:Name="CommandBar" MinWidth="210" >
-                <menus:EditAppBarButton Type="AddLayer" Command="{x:Bind Command, Mode=OneTime}" >
+                <menus:EditAppBarButton x:Name="AddButton" Type="AddLayer" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Insert" />
+                    </UIElement.KeyboardAccelerators>
                     <ToolTipService.ToolTip>
                         <ToolTip Style="{StaticResource AppToolTipStyle}">
                             Insert
@@ -182,8 +174,10 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF164;"/>
                     </AppBarButton.Icon>
                 </menus:EditAppBarButton>
-                <menus:EditAppBarButton Type="Remove" Command="{x:Bind Command, Mode=OneTime}" 
-                                                IsEnabled="{x:Bind IsSelected, Mode=OneWay}" >
+                <menus:EditAppBarButton x:Name="RemoveButton" Type="Remove" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Delete" />
+                    </UIElement.KeyboardAccelerators>
                     <ToolTipService.ToolTip>
                         <ToolTip Style="{StaticResource AppToolTipStyle}">
                             Delete
@@ -193,31 +187,6 @@
                         <SymbolIcon Symbol="Delete"/>
                     </AppBarButton.Icon>
                 </menus:EditAppBarButton>
-                <CommandBar.SecondaryCommands>
-                    <menus:EditAppBarButton Type="AddImageLayer" Command="{x:Bind Command, Mode=OneTime}" >
-                        <AppBarButton.Icon>
-                            <SymbolIcon Symbol="Pictures"/>
-                        </AppBarButton.Icon>
-                    </menus:EditAppBarButton>
-                    <AppBarSeparator/>
-                    <menus:EditAppBarButton Type="CutLayer" Command="{x:Bind Command, Mode=OneTime}" 
-                                                IsEnabled="{x:Bind IsSelected, Mode=OneWay}" >
-                        <AppBarButton.Icon>
-                            <SymbolIcon Symbol="Cut"/>
-                        </AppBarButton.Icon>
-                    </menus:EditAppBarButton>
-                    <menus:EditAppBarButton Type="CopyLayer" Command="{x:Bind Command, Mode=OneTime}" 
-                                                IsEnabled="{x:Bind IsSelected, Mode=OneWay}" >
-                        <AppBarButton.Icon>
-                            <SymbolIcon Symbol="Copy"/>
-                        </AppBarButton.Icon>
-                    </menus:EditAppBarButton>
-                    <menus:EditAppBarButton Type="PasteLayer" Command="{x:Bind Command, Mode=OneTime}" >
-                        <AppBarButton.Icon>
-                            <SymbolIcon Symbol="Paste"/>
-                        </AppBarButton.Icon>
-                    </menus:EditAppBarButton>
-                </CommandBar.SecondaryCommands>
             </CommandBar>
         </ListView.Footer>
 
