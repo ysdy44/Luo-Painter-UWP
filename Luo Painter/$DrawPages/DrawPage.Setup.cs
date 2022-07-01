@@ -72,8 +72,22 @@ namespace Luo_Painter
                 }
             };
 
-            this.SetupMenu.ItemClick += async (s, type) =>
+            this.EditMenu.ItemClick += async (s, type) =>
             {
+                switch (type)
+                {
+                    case OptionType.CropCanvas:
+                    case OptionType.Stretch:
+                    case OptionType.FlipHorizontal:
+                    case OptionType.FlipVertical:
+                    case OptionType.LeftTurn:
+                    case OptionType.RightTurn:
+                    case OptionType.OverTurn:
+                        break;
+                    default:
+                        return;
+                }
+
                 if (this.ObservableCollection.Count is 0)
                 {
                     this.Tip("No Layer", "Create a new Layer?");
@@ -115,7 +129,8 @@ namespace Luo_Painter
                         {
                             UndoParameter = new BitmapSize { Width = width, Height = height },
                             RedoParameter = new BitmapSize { Width = height, Height = width }
-                        }); break;
+                        });
+                        break;
                     case OptionType.RightTurn:
                         this.Setup(height2, width2);
 
@@ -123,7 +138,8 @@ namespace Luo_Painter
                         {
                             UndoParameter = new BitmapSize { Width = width, Height = height },
                             RedoParameter = new BitmapSize { Width = height, Height = width }
-                        }); break;
+                        });
+                        break;
                     case OptionType.OverTurn:
                         this.Setup(this.ObservableCollection.Select(c => c.OverTurn(this.CanvasDevice)).ToArray(), null);
                         break;
