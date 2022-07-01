@@ -40,13 +40,13 @@ namespace Luo_Painter.Options
 
 
         // Layer
-        Remove = Layering | 1 << 8 | HasState | IsItemClickEnabled,
-        AddLayer = Layering | 2 << 8 | HasState | IsItemClickEnabled,
-        AddImageLayer = Layering | 3 << 8 | HasState | IsItemClickEnabled,
+        Remove = Layering | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        AddLayer = Layering | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        AddImageLayer = Layering | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
-        CutLayer = Layering | 4 << 8 | HasState | IsItemClickEnabled,
-        CopyLayer = Layering | 5 << 8 | HasState | IsItemClickEnabled,
-        PasteLayer = Layering | 6 << 8 | HasState | IsItemClickEnabled,
+        CutLayer = Layering | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        CopyLayer = Layering | 5 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        PasteLayer = Layering | 6 << 8 | HasState | ExistIcon | IsItemClickEnabled,
 
 
         // Editing

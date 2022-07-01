@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ControlTemplate x:Key="ExpandStrokeIcon" TargetType="ContentControl">
-        <Viewbox Width="26" Height="26">
+    <ControlTemplate x:Key="AddImageLayerIcon" TargetType="ContentControl">
+        <FontIcon x:Name="FontIcon" FontSize="24" FontFamily="Segoe MDL2 Assets" Glyph="&#xF164;" >
 
             <!--VisualState-->
             <VisualStateManager.VisualStateGroups>
@@ -15,24 +15,14 @@
                     <!--Disabled-->
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Target="Border.Opacity" Value="0.5"/>
-                            <Setter Target="BluePolygon.Stroke" Value="Gray"/>
+                            <Setter Target="FontIcon.Opacity" Value="0.5"/>
                         </VisualState.Setters>
                     </VisualState>
 
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
-            <Border x:Name="Border" Width="40" Height="40" >
-
-                <Polygon x:Name="BluePolygon" StrokeThickness="3" Stroke="DodgerBlue">
-                    <Polygon.Points>
-                        4,4 24,4 24,16 36,16 36,36 16,36 16,24 4,24
-                    </Polygon.Points>
-                </Polygon>
-
-            </Border>
-        </Viewbox>
+        </FontIcon>
     </ControlTemplate>
 
 </ResourceDictionary>
