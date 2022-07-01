@@ -1,9 +1,11 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
+using System;
 using System.Collections.Generic;
 
 namespace Luo_Painter.Menus
@@ -13,14 +15,24 @@ namespace Luo_Painter.Menus
     public sealed partial class LayerMenu : Expander
     {
         //@Delegate
+        public event EventHandler<OptionType> ItemClick
+        {
+            remove => this.Command.Click -= value;
+            add => this.Command.Click += value;
+        }
         public event TypedEventHandler<string, string> NameHistory;
         public event TypedEventHandler<float, float> OpacityHistory;
         public event TypedEventHandler<BlendEffectMode?, BlendEffectMode?> BlendModeHistory;
+
+        //@Converter
+        private string RoundConverter(double value) => $"{value:0}";
 
         public ThumbSlider OpacitySlider => this.OpacitySliderCore;
 
         string StartingName;
         BlendEffectMode? StartingBlendMode;
+
+        bool IsEnable;
 
         //@Construct
         public LayerMenu()
@@ -45,22 +57,12 @@ namespace Luo_Painter.Menus
                 this.OpacityHistory?.Invoke(undo, redo); // Delegate
             };
 
-            this.ListViewListView.ItemClick += (s, e) =>
+
+            this.BlendModeComboBox.SelectionChanged += (s, e) =>
             {
-                if (e.ClickedItem is int item)
-                {
-                    float undo = (float)(this.OpacitySlider.Value / 100);
-                    float redo = (float)item / 100;
+                if (this.IsEnable is false) return;
 
-                    this.OpacityHistory?.Invoke(undo, redo); // Delegate
-
-                    this.OpacitySlider.Value = item;
-                }
-            };
-
-            this.BlendModeListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is BlendEffectMode item)
+                if (this.BlendModeComboBox.SelectedItem is BlendEffectMode item)
                 {
                     if (item.IsDefined())
                     {
@@ -87,28 +89,34 @@ namespace Luo_Painter.Menus
 
         public void SetSelectedItem(ILayer layer)
         {
+            this.IsEnable = false;
+
             if (layer is null)
             {
-                this.LayerImageButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                this.LayerImage.Source = null;
+                this.LayerTextBox.IsEnabled = false;
                 this.LayerTextBox.Text = string.Empty;
                 this.OpacitySliderCore.Value = 100;
                 this.OpacitySliderCore.IsEnabled = false;
-                this.BlendModeListView.IsEnabled = false;
-                this.BlendModeListView.SelectedIndex = -1;
+                this.BlendModeComboBox.IsEnabled = false;
+                this.BlendModeComboBox.SelectedIndex = -1;
+
+                this.RemoveItem.IsEnabled = false;
             }
             else
             {
                 this.StartingBlendMode = layer.BlendMode;
 
-                this.LayerImage.Source = layer.Thumbnail;
-                this.LayerImageButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                this.LayerTextBox.IsEnabled = true;
                 this.LayerTextBox.Text = layer.Name ?? string.Empty;
                 this.OpacitySliderCore.IsEnabled = true;
                 this.OpacitySliderCore.Value = layer.Opacity * 100;
-                this.BlendModeListView.IsEnabled = true;
-                this.BlendModeListView.SelectedIndex = layer.BlendMode.HasValue ? this.BlendCollection.IndexOf(layer.BlendMode.Value) : 0;
+                this.BlendModeComboBox.IsEnabled = true;
+                this.BlendModeComboBox.SelectedIndex = layer.BlendMode.HasValue ? this.Collection.IndexOf(layer.BlendMode.Value) : 0;
+
+                this.RemoveItem.IsEnabled = true;
             }
+
+            this.IsEnable = true;
         }
 
     }

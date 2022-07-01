@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:menus="using:Luo_Painter.Menus"
+    xmlns:local="using:Luo_Painter.Menus"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     d:DesignHeight="400"
@@ -20,67 +20,39 @@
         Layer
     </elements:Expander.Title>
 
-    <StackPanel Spacing="8">
-        <Grid Height="80">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="LayerImageButton" Padding="0" Width="Auto" Height="Auto" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <Image x:Name="LayerImage" />
-            </Button>
-            <TextBox x:Name="LayerTextBox" Grid.Column="2" >
-                <TextBox.PlaceholderText>
-                    Input Text...
-                </TextBox.PlaceholderText>
-            </TextBox>
-        </Grid>
+    <FrameworkElement.Resources>
+        <!--Command-->
+        <local:OptionTypeCommand x:Name="Command"/>
+    </FrameworkElement.Resources>
+
+    <StackPanel Spacing="6">
+
 
         <!--Opacity-->
-        <TextBlock x:Name="OpacityTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-            Opacity
-        </TextBlock>
-        <elements:ThumbSlider x:Name="OpacitySliderCore" Margin="0,-12" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppDefaultSliderStyle}" >
+        <elements:ThumbSlider x:Name="OpacitySliderCore" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
+            <FrameworkElement.Tag>
+                Opacity
+            </FrameworkElement.Tag>
             <Slider.Header>
-                <Button Content="{x:Bind OpacitySliderCore.Value, Mode=OneWay}" 
-                        Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                <Button 
+                    Padding="4,0" MinWidth="44" Height="28"
+                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                     <Button.Flyout>
                         <Flyout>
 
                         </Flyout>
                     </Button.Flyout>
+                    <TextBlock>
+                      
+                        <Run Text="{x:Bind RoundConverter(OpacitySliderCore.Value), Mode=OneWay}" />
+                        <Run>%</Run>
+                    </TextBlock>
                 </Button>
             </Slider.Header>
         </elements:ThumbSlider>
-        <ListView x:Name="ListViewListView" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}">
-            <x:Int32>0</x:Int32>
-            <x:Int32>25</x:Int32>
-            <x:Int32>50</x:Int32>
-            <x:Int32>75</x:Int32>
-            <x:Int32>100</x:Int32>
-        </ListView>
 
-        <!--BlendMode-->
-        <TextBlock x:Name="BlendModeTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-            Blend Mode
-        </TextBlock>
-        <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
 
-            <ItemsControl.ItemsSource>
-                <menus:BlendList x:Name="BlendCollection">
-                    <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                </menus:BlendList>
-            </ItemsControl.ItemsSource>
+        <ComboBox x:Name="BlendModeComboBox" >
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="effects:BlendEffectMode">
@@ -88,6 +60,77 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
-        </ListView>
+            <ItemsControl.ItemsSource>
+                <local:BlendList x:Name="Collection">
+                    <!--None-->
+                    <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
+                    <!--Darken-->
+                    <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
+                    <!--Lighten-->
+                    <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
+                    <!--Contrast-->
+                    <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
+                    <!--Difference-->
+                    <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Division</effects:BlendEffectMode>
+                    <!--Color-->
+                    <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Color</effects:BlendEffectMode>
+                    <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
+                </local:BlendList>
+            </ItemsControl.ItemsSource>
+
+        </ComboBox>
+
+
+        <!--Layering-->
+        <TextBlock x:Name="LayeringTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Layering
+        </TextBlock>
+        <TextBox x:Name="LayerTextBox" >
+            <TextBox.PlaceholderText>
+                Input Text...
+            </TextBox.PlaceholderText>
+        </TextBox>
+        <Grid ColumnSpacing="4" RowSpacing="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <local:EditItem Type="AddLayer" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem x:Name="RemoveItem"  Type="Remove" Grid.Column="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+            <local:EditItem Type="AddImageLayer" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="CutLayer" Grid.Column="1" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+            <local:EditItem Type="CopyLayer" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="PasteLayer" Grid.Column="1" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+        </Grid>
+
     </StackPanel>
 </elements:Expander>
