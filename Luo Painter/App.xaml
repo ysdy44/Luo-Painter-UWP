@@ -41,7 +41,7 @@
                         <GradientStop Offset="0" Color="#00D1FE"/>
                         <GradientStop Offset="1" Color="#0048FE"/>
                     </LinearGradientBrush>
-                    
+
                 </ResourceDictionary>
 
                 <ResourceDictionary x:Key="Dark">
@@ -82,16 +82,30 @@
 
 
             <!--StaticResource-->
+            <StaticResource x:Key="CommandBarOverflowMinWidth" ResourceKey="CommandBarOverflowTouchMinWidth" />
+            <StaticResource x:Key="AppBarButtonOverflowTextLabelPadding" ResourceKey="AppBarButtonOverflowTextTouchMargin" />
+
+
+            <StaticResource x:Key="ComboBoxPopupThemeMinWidth" ResourceKey="ComboBoxPopupThemeTouchMinWidth" />
+            <StaticResource x:Key="ComboBoxItemThemePadding" ResourceKey="ComboBoxItemThemeTouchPadding" />
+            <StaticResource x:Key="ComboBoxItemRevealThemePadding" ResourceKey="ComboBoxItemRevealThemeTouchPadding" />
+
+            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelectedUnfocused" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+
+            
             <SolidColorBrush x:Key="SliderTrackValueFill" Color="{ThemeResource SystemAccentColor}"/>
             <SolidColorBrush x:Key="SliderThumbBackground" Color="{ThemeResource SystemAccentColor}"/>
             <SolidColorBrush x:Key="SliderTrackValueFillPointerOver" Color="{ThemeResource SystemAccentColor}"/>
             <SolidColorBrush x:Key="SliderTrackValueFillPressed" Color="{ThemeResource SystemAccentColor}"/>
-            
+
             <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
             <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
             <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
             <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{ThemeResource SystemAccentColor}"/>
-            
+
             <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
             <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
             <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
