@@ -1,11 +1,12 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-    
-    
+
+
     <ResourceDictionary.MergedDictionaries>
-       <!--Expanders-->
+        <!--Expanders-->
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Expander.xaml" />
-    </ResourceDictionary.MergedDictionaries>    
-    
-    
+        <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Sheet.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
 </ResourceDictionary>

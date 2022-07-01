@@ -143,6 +143,9 @@
     <Compile Include="Historian.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="SelectedSwiper.cs" />
+    <Compile Include="Sheet.xaml.cs">
+      <DependentUpon>Sheet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
     </Compile>
@@ -325,6 +328,10 @@
     <Page Include="SelectedButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SizePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
