@@ -245,7 +245,7 @@ namespace Luo_Painter.Menus
                         this.InkModeChanged?.Invoke(this, InkType.Mix); // Delegate
                         break;
                     default:
-                        switch (this.BlendModeListView.SelectedIndex)
+                        switch (this.BlendModeComboBox.SelectedIndex)
                         {
                             case 0:
                                 this.InkModeChanged?.Invoke(this, InkType.None); // Delegate
@@ -259,9 +259,11 @@ namespace Luo_Painter.Menus
             };
 
 
-            this.BlendModeListView.ItemClick += (s, e) =>
+            this.BlendModeComboBox.SelectionChanged += (s, e) =>
             {
-                if (e.ClickedItem is int item)
+                if (this.IsEnable is false) return;
+
+                if (this.BlendModeComboBox.SelectedItem is int item)
                 {
                     this.InkBlendModeChanged?.Invoke(this, (BlendEffectMode)item); // Delegate
                 }

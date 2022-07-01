@@ -28,80 +28,123 @@
     <StackPanel>
 
         <!--Size-->
-        <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" >
-            <Slider x:Name="SizeSlider" Padding="0,4,0,0" Value="{x:Bind SizeRange.XRange.Default}" Minimum="{x:Bind SizeRange.XRange.Minimum}" Maximum="{x:Bind SizeRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
-                <Slider.Tag>
-                    Size
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button Content="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"            
+        <Slider x:Name="SizeSlider" Value="{x:Bind SizeRange.XRange.Default}" Minimum="{x:Bind SizeRange.XRange.Minimum}" Maximum="{x:Bind SizeRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
+            <Slider.Tag>
+                Size
+            </Slider.Tag>
+            <Slider.Header>
+                <Button Content="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"            
                         Padding="4,0" MinWidth="44" Height="28"
                         BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
+                    <Button.Flyout>
+                        <Flyout>
 
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-        </Border>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Slider.Header>
+        </Slider>
 
         <!--Opacity-->
-        <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" >
-            <Slider x:Name="OpacitySlider" Padding="0,4,0,0" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
-                <Slider.Tag>
-                    Opacity
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button 
-                        Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
+        <Slider x:Name="OpacitySlider" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
+            <Slider.Tag>
+                Opacity
+            </Slider.Tag>
+            <Slider.Header>
+                <Button 
+                    Padding="4,0" MinWidth="44" Height="28"
+                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    <Button.Flyout>
+                        <Flyout>
 
-                            </Flyout>
-                        </Button.Flyout>
-                        <TextBlock>
+                        </Flyout>
+                    </Button.Flyout>
+                    <TextBlock>
                             <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
                             <Run>%</Run>
-                        </TextBlock>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-        </Border>
+                    </TextBlock>
+                </Button>
+            </Slider.Header>
+        </Slider>
 
         <!--Spacing-->
-        <Border CornerRadius="4" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" 
+        <Slider x:Name="SpacingSlider" Value="{x:Bind SpacingRange.XRange.Default}" Minimum="{x:Bind SpacingRange.XRange.Minimum}" Maximum="{x:Bind SpacingRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" 
                 Visibility="{x:Bind Int0125ToVisibility(Type), Mode=OneWay}" >
-            <Slider x:Name="SpacingSlider" Padding="0,4,0,0" Value="{x:Bind SpacingRange.XRange.Default}" Minimum="{x:Bind SpacingRange.XRange.Minimum}" Maximum="{x:Bind SpacingRange.XRange.Maximum}" Style="{StaticResource AppSliderStyle}" >
-                <Slider.Tag>
-                    Spacing
-                </Slider.Tag>
-                <Slider.Header>
-                    <Button      
-                        Padding="4,0" MinWidth="44" Height="28"
-                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
+            <Slider.Tag>
+                Spacing
+            </Slider.Tag>
+            <Slider.Header>
+                <Button      
+                    Padding="4,0" MinWidth="44" Height="28"
+                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    <Button.Flyout>
+                        <Flyout>
 
-                            </Flyout>
-                        </Button.Flyout>
-                        <TextBlock>
+                        </Flyout>
+                    </Button.Flyout>
+                    <TextBlock>
                             <Run Text="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}" />
                             <Run>%</Run>
-                        </TextBlock>
-                    </Button>
-                </Slider.Header>
-            </Slider>
-        </Border>
+                    </TextBlock>
+                </Button>
+            </Slider.Header>
+        </Slider>
+
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+
+        <!--Mode-->
+        <TextBlock x:Name="ModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+            Mode
+        </TextBlock>
+     
+        <ListBox x:Name="ModeComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}"
+                 Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+            <TextBlock>None</TextBlock>
+            <TextBlock>Blur</TextBlock>
+            <TextBlock>Mosaic</TextBlock>
+            <TextBlock>Mix</TextBlock>
+        </ListBox>
+
+        <!--BlendMode-->
+        <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+            Blend Mode
+        </TextBlock>
+     
+        <ComboBox x:Name="BlendModeComboBox" Margin="2,4" SelectedIndex="0"
+                  IsEnabled="{x:Bind Int0ToBooleanConverter(ModeComboBox.SelectedIndex), Mode=OneWay}"
+                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="effects:BlendEffectMode">
+                    <luo_painter:BlendIcon Type="{x:Bind}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <!--None-->
+            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+            <!--Darken-->
+            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+            <!--Lighten-->
+            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+            <!--Contrast-->
+            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+            <!--Difference-->
+            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+
+        </ComboBox>
 
         <!--Hardness-->
         <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             Hardness
         </TextBlock>
-
+     
         <ListView x:Name="HardnessListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}"
               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             <luo_painter:ElementIcon Type="BrushEdgeHardnessNone"/>
@@ -110,13 +153,15 @@
             <luo_painter:ElementIcon Type="BrushEdgeHardnessCube"/>
             <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic"/>
         </ListView>
+     
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
         <!--Mask-->
         <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             Mask
         </TextBlock>
-
+    
         <Border Height="146" Margin="2,4" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
                 Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
             <StackPanel Orientation="Horizontal" Spacing="9">
@@ -170,47 +215,6 @@
                 </StackPanel>
             </StackPanel>
         </Border>
-
-        <!--BlendMode-->
-        <TextBlock x:Name="ModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
-            Mode
-        </TextBlock>
-
-        <ListBox x:Name="ModeComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}"
-                 Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
-            <TextBlock>None</TextBlock>
-            <TextBlock>Blur</TextBlock>
-            <TextBlock>Mosaic</TextBlock>
-            <TextBlock>Mix</TextBlock>
-        </ListBox>
-
-        <!--BlendMode-->
-        <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
-            Blend Mode
-        </TextBlock>
-
-        <ListView x:Name="BlendModeListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
-                  IsEnabled="{x:Bind Int0ToBooleanConverter(ModeComboBox.SelectedIndex), Mode=OneWay}"
-                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
-            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="effects:BlendEffectMode">
-                    <luo_painter:BlendIcon Type="{x:Bind}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-
-        </ListView>
 
     </StackPanel>
 </elements:Expander>
