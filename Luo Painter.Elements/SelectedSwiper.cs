@@ -13,11 +13,25 @@ namespace Luo_Painter.Elements
 
         //@Content
         public Visibility Visible { set => base.Opacity = value is Visibility.Visible ? 1 : 0.4; }
+        public bool IsExist
+        {
+            set
+            {
+                base.IsHitTestVisible = value;
+                if (this.Ancestor is null) return;
+                this.Ancestor.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
 
         public SelectedSwiper()
         {
             // base.Unloaded += (s, e) => this.Ancestor = null;
-            base.Loaded += (s, e) => this.Ancestor = this.FindAncestor<ListViewItem>();
+            base.Loaded += (s, e) =>
+            {
+                this.Ancestor = this.FindAncestor<ListViewItem>();
+                if (this.Ancestor is null) return;
+                this.Ancestor.Visibility = base.IsHitTestVisible ? Visibility.Visible : Visibility.Collapsed;
+            };
             base.RightItems = new SwipeItems { this.Item };
             base.RightItems.Mode = SwipeMode.Execute;
             this.Item.Invoked += (s, e) => this.Ancestor.Toggle();
