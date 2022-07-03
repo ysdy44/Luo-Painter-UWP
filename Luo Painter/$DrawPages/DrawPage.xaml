@@ -334,9 +334,6 @@
                     <Button x:Name="HistoryButton" Style="{StaticResource AppButtonStyle}" >
                         <local:ElementIcon Type="History"/>
                     </Button>
-                    <Button x:Name="SetupButton" Style="{StaticResource AppButtonStyle}" >
-                        <local:ElementIcon Type="Setup"/>
-                    </Button>
                     <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="D"/>
@@ -1147,7 +1144,6 @@
             <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
             <menus:OptionMenu x:Name="OptionMenu" />
             <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" />
-            <menus:SetupMenu x:Name="SetupMenu" />
             <menus:LayerMenu x:Name="LayerMenu"/>
             <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
         </elements:ExpanderLightDismissOverlay>
