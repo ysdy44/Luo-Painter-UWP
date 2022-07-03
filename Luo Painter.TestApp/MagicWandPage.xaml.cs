@@ -76,7 +76,7 @@ namespace Luo_Painter.TestApp
 
             selectPicture.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
                 if (file != null)
                 {
                     originalImage = await CanvasBitmap.LoadAsync(CanvasDevice.GetSharedDevice(), await file.OpenReadAsync());
@@ -301,7 +301,7 @@ namespace Luo_Painter.TestApp
             }
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

@@ -22,13 +22,13 @@ namespace Luo_Painter.TestApp
     public sealed partial class LayerPage : Page
     {
 
-        Vector2 Position;
-        BitmapLayer BitmapLayer;
+        readonly CanvasDevice CanvasDevice = new CanvasDevice();
+
         ObservableCollection<ILayer> Layers { get; } = new ObservableCollection<ILayer>();
 
         private IEnumerable<string> Ids()
         {
-            foreach (object item in this.LayerListView.SelectedItems)
+            foreach (object item in this.ListView.SelectedItems)
             {
                 if (item is ILayer layer)
                 {
@@ -43,13 +43,11 @@ namespace Luo_Painter.TestApp
             this.InitializeComponent();
             this.ConstructLayers();
             this.ConstructLayer();
-            this.ConstructCanvas();
-            this.ConstructOperator();
         }
 
         private void ConstructLayers()
         {
-            this.LayerListView.SelectionChanged += (s, e) =>
+            this.ListView.SelectionChanged += (s, e) =>
             {
                 this.AddRun.Text = e.AddedItems == null ? "0" : e.AddedItems.Count.ToString();
                 this.RemovedRun.Text = e.RemovedItems == null ? "0" : e.RemovedItems.Count.ToString();
@@ -68,8 +66,6 @@ namespace Luo_Painter.TestApp
                     default:
                         break;
                 }
-
-                this.CanvasControl.Invalidate(); // Invalidate
             };
         }
 
@@ -77,7 +73,7 @@ namespace Luo_Painter.TestApp
         {
             this.RemoveButton.Click += (s, e) =>
             {
-                int startingIndex = this.LayerListView.SelectedIndex;
+                int startingIndex = this.ListView.SelectedIndex;
 
                 foreach (string id in this.Ids().ToArray())
                 {
@@ -88,92 +84,21 @@ namespace Luo_Painter.TestApp
                 }
 
                 int index = Math.Min(startingIndex, this.Layers.Count - 1);
-                this.LayerListView.SelectedIndex = index;
-
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.ListView.SelectedIndex = index;
             };
 
             this.AddButton.Click += (s, e) =>
             {
-                ICanvasResourceCreator sender = this.CanvasControl;
+                ICanvasResourceCreator sender = this.CanvasDevice;
                 BitmapLayer bitmapLayer = new BitmapLayer(sender, 512, 512);
                 this.Layers.Add(bitmapLayer);
 
-                this.LayerListView.SelectedIndex = this.Layers.Count - 1;
+                this.ListView.SelectedIndex = this.Layers.Count - 1;
             };
 
             this.SelectAllButton.Click += (s, e) =>
             {
-                this.LayerListView.SelectAll();
-            };
-        }
-
-        private void ConstructCanvas()
-        {
-            this.CanvasControl.CreateResources += (sender, args) =>
-            {
-                BitmapLayer bitmapLayer = new BitmapLayer(sender, 512, 512);
-                this.Layers.Add(bitmapLayer);
-
-                this.LayerListView.SelectedIndex = 0;
-            };
-            this.CanvasControl.Draw += (sender, args) =>
-            {
-                //@DPI 
-                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                args.DrawingSession.FillRectangle(0, 0, 512, 512, Colors.White);
-
-                foreach (ILayer item in this.Layers)
-                {
-                    switch (item.Visibility)
-                    {
-                        case Visibility.Visible:
-                            args.DrawingSession.DrawImage(item[BitmapType.Source]);
-                            break;
-                        case Visibility.Collapsed:
-                            break;
-                    }
-                }
-            };
-        }
-
-        private void ConstructOperator()
-        {
-            // Single
-            this.Operator.Single_Start += (point, properties) =>
-            {
-                this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-            this.Operator.Single_Delta += (point, properties) =>
-            {
-                if (this.BitmapLayer == null) return;
-                if (this.BitmapLayer.Visibility == Visibility.Collapsed) return;
-
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-
-                Rect rect = position.GetRect(12 * properties.Pressure);
-                this.BitmapLayer.Hit(rect);
-
-                bool result = this.BitmapLayer.IsometricFillCircle(Colors.Black, this.Position, position, 1, 1, 12, 0.25f, BitmapType.Source);
-                if (result is false) return;
-
-                this.Position = position;
-
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-            this.Operator.Single_Complete += (point, properties) =>
-            {
-                if (this.BitmapLayer == null) return;
-                if (this.BitmapLayer.Visibility == Visibility.Collapsed) return;
-
-                // History
-                this.BitmapLayer.Flush();
-
-                this.BitmapLayer.RenderThumbnail();
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.ListView.SelectAll();
             };
         }
 

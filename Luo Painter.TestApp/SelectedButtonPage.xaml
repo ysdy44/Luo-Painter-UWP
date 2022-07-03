@@ -12,15 +12,15 @@
     <!--SelectionMode is **Extended**-->
     <ListView SelectionMode="Extended">
 
-        <ListView.ItemContainerStyle>
+        <ItemsControl.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                 <Setter Property="Padding" Value="0"/>
             </Style>
-        </ListView.ItemContainerStyle>
+        </ItemsControl.ItemContainerStyle>
 
-        <ListView.ItemTemplate>
+        <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="x:String">
                 <StackPanel Orientation="Horizontal">
                     
@@ -30,7 +30,7 @@
                     <TextBlock Text="{x:Bind}" Margin="12,2" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}"/>
                 </StackPanel>
             </DataTemplate>
-        </ListView.ItemTemplate>
+        </ItemsControl.ItemTemplate>
 
         <x:String>A</x:String>
         <x:String>B</x:String>

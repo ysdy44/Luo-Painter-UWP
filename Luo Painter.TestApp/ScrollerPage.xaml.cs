@@ -85,7 +85,7 @@ namespace Luo_Painter.TestApp
             // Show the file picker.
             StorageFile file = await savePicker.PickSaveFileAsync();
             // When chosen, picker returns a reference to the selected file.
-            if (file == null) return null;
+            if (file is null) return null;
 
             // Prevent updates to the file until updates are 
             // finalized with call to CompleteUpdatesAsync.

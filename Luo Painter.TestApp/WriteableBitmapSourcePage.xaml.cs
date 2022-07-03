@@ -32,17 +32,18 @@ namespace Luo_Painter.TestApp
             this.ThumbnailWriteableBitmap = new WriteableBitmap(50, 50);
             this.AddButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result != true) return;
+                if (result is null) return;
+                if (result is false) return;
 
                 this.RenderThumbnail();
             };
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

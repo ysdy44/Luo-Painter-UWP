@@ -37,7 +37,8 @@
                           ScrollViewer.HorizontalScrollMode="Disabled"
                           ScrollViewer.VerticalScrollMode="Disabled"
                           >
-                        <ListView.ItemContainerStyle>
+                        
+                        <ItemsControl.ItemContainerStyle>
                             <Style TargetType="ListViewItem" >
                                 <Setter Property="MinHeight" Value="32" />
                                 <Setter Property="Height" Value="32" />
@@ -45,22 +46,26 @@
                                 <Setter Property="Padding" Value="32,0,12,0" />
                                 <Setter Property="Background" Value="Transparent" />
                             </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
+                        </ItemsControl.ItemContainerStyle>
+                        
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="historys:IHistory">
                                 <TextBlock Text="{x:Bind Type, Mode=OneWay}" />
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemContainerTransitions>
+                        </ItemsControl.ItemTemplate>
+                        
+                        <ItemsControl.ItemContainerTransitions>
                             <TransitionCollection>
 
                             </TransitionCollection>
-                        </ListView.ItemContainerTransitions>
+                        </ItemsControl.ItemContainerTransitions>
+                        
                         <ListView.Header>
                             <Button x:Name="ClearButton" Height="32" HorizontalAlignment="Stretch">
                                 <SymbolIcon Symbol="Delete"/>
                             </Button>
                         </ListView.Header>
+                        
                     </ListView>
                     
                     

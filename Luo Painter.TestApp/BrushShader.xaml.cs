@@ -117,7 +117,7 @@ namespace Luo_Painter.TestApp
             //创建资源
             canvasControl.CreateResources += (s, e) =>
             {
-                e.TrackAsyncAction(CreateResourcesAsync().AsAsyncAction());
+                e.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
 
             //指针按下

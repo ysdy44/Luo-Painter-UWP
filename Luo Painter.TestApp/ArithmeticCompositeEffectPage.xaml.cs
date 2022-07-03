@@ -88,21 +88,23 @@ namespace Luo_Painter.TestApp
 
             this.AddAButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file, true);
-                if (result != true) return;
+                if (result is null) return;
+                if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.AddBButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file, false);
-                if (result != true) return;
+                if (result is null) return;
+                if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -124,7 +126,7 @@ namespace Luo_Painter.TestApp
                     return;
                 }
 
-                if (noA && noB == false)
+                if (noA && noB is false)
                 {
                     args.DrawingSession.DrawImage(this.BCanvasBitmap, this.B);
                     args.DrawingSession.DrawRectangle(this.B.X, this.B.Y, this.BSize.X, this.BSize.Y, Colors.White);
@@ -176,7 +178,7 @@ namespace Luo_Painter.TestApp
             };
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

@@ -93,11 +93,12 @@ namespace Luo_Painter.TestApp
         {
             this.AddButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result != true) return;
+                if (result is null) return; 
+                if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -144,7 +145,7 @@ namespace Luo_Painter.TestApp
                 this.Stops.Start();
 
                 this.Selector.SetCurrent(s);
-                if (this.Selector.CurrentStop == null) return;
+                if (this.Selector.CurrentStop is null) return;
 
                 this.ColorPicker.Color = this.Selector.CurrentStop.Color;
                 this.ColorFlyout.ShowAt(this.Selector.CurrentButton);
@@ -179,7 +180,7 @@ namespace Luo_Painter.TestApp
             {
                 Point point = e.Position;
                 bool result = this.Selector.Interpolation(point);
-                if (result == false) return;
+                if (result is false) return;
 
                 this.Selector.SetCurrent(point);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -208,7 +209,7 @@ namespace Luo_Painter.TestApp
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                if (this.CanvasBitmap == null) return;
+                if (this.CanvasBitmap is null) return;
 
                 args.DrawingSession.DrawImage(this.CanvasBitmap);
             };
@@ -218,7 +219,7 @@ namespace Luo_Painter.TestApp
             this.OriginCanvasControl.CustomDevice = this.Device;
             this.OriginCanvasControl.Draw += (sender, args) =>
             {
-                if (this.CanvasBitmap == null) return;
+                if (this.CanvasBitmap is null) return;
 
                 this.GradientMesh.Render(sender, this.Selector.Source);
 
@@ -236,7 +237,7 @@ namespace Luo_Painter.TestApp
             this.ShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

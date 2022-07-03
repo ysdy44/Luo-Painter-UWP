@@ -31,11 +31,11 @@ namespace Luo_Painter.TestApp
         {
             this.UndoButton.Click += (s, e) =>
             {
-                if (this.History.CanUndo == false) return;
+                if (this.History.CanUndo is false) return;
 
                 // History
                 bool result = this.History.Undo(this.Undo);
-                if (result == false) return;
+                if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
 
@@ -45,11 +45,11 @@ namespace Luo_Painter.TestApp
             };
             this.RedoButton.Click += (s, e) =>
             {
-                if (this.History.CanRedo == false) return;
+                if (this.History.CanRedo is false) return;
 
                 // History
                 bool result = this.History.Redo(this.Redo);
-                if (result == false) return;
+                if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
 

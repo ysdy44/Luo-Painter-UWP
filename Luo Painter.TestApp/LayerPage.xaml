@@ -4,24 +4,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:transformers="using:FanKit.Transformers"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
     xmlns:local="using:Luo_Painter.TestApp"
-    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
-
-    <FrameworkElement.Resources>
-        <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
-    </FrameworkElement.Resources>
-
-    <SplitView x:Name="SplitView" OpenPaneLength="200" PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="True" >
-        <SplitView.Pane>
-            <ListView 
-                x:Name="LayerListView"
+    
+    <Grid>
+        <ListView 
+                x:Name="ListView"
                 SelectedIndex="0"
                 SelectionMode="Extended"
                 IsItemClickEnabled="True"
@@ -33,92 +25,89 @@
                 ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                 ItemsSource="{x:Bind Layers, Mode=OneTime}"
                 >
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem" >
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="Padding" Value="0" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="layers:ILayer">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="2" Margin="2,0" VerticalAlignment="Center" >
-                                <Run Text="{x:Bind Visibility, Mode=OneWay}" />
-                            </TextBlock>
-                            <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
-                                <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
-                            </Border>
-                            <elements:SelectedButtonPresenter/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemContainerTransitions>
-                    <TransitionCollection>
+            
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem" >
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="layers:ILayer">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="2" Margin="2,0" VerticalAlignment="Center" >
+                            <Run Text="{x:Bind Visibility, Mode=OneWay}" />
+                        </TextBlock>
+                        <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
+                            <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
+                        </Border>
+                        <elements:SelectedButtonPresenter/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
 
-                    </TransitionCollection>
-                </ListView.ItemContainerTransitions>
-            </ListView>
-        </SplitView.Pane>
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+            
+        </ListView>
 
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-        <Grid>
-            <xaml:CanvasControl x:Name="CanvasControl"/>
-            <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <CommandBar.Content>
+                <TextBlock Margin="12,10,2,0">
+                    <Run>Selection</Run>
+                    <Run>Add:</Run><Run x:Name="AddRun"/>
+                    <Run>Removed:</Run><Run x:Name="RemovedRun"/>
+                </TextBlock>
+            </CommandBar.Content>
 
-                <CommandBar.Content>
-                    <TextBlock Margin="12,10,2,0">
-                        <Run>Selection</Run>
-                        <Run>Add:</Run><Run x:Name="AddRun"/>
-                        <Run>Removed:</Run><Run x:Name="RemovedRun"/>
-                    </TextBlock>
-                </CommandBar.Content>
+            <AppBarButton x:Name="SelectAllButton" Icon="SelectAll">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Label>
+                    Select All
+                </AppBarButton.Label>
+            </AppBarButton>
 
-                <AppBarButton x:Name="SelectAllButton" Icon="SelectAll">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="A"/>
-                    </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Label>
-                        Select All
-                    </AppBarButton.Label>
-                </AppBarButton>
+            <AppBarButton x:Name="AddButton" Icon="Add">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="N"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Label>
+                    Add
+                </AppBarButton.Label>
+            </AppBarButton>
 
-                <AppBarButton x:Name="AddButton" Icon="Add">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="N"/>
-                    </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Label>
-                        Add
-                    </AppBarButton.Label>
-                </AppBarButton>
+            <AppBarButton x:Name="RemoveButton" Icon="Delete">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Label>
+                    Remove
+                </AppBarButton.Label>
+            </AppBarButton>
 
-                <AppBarButton x:Name="RemoveButton" Icon="Delete">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Delete"/>
-                    </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Label>
-                        Remove
-                    </AppBarButton.Label>
-                </AppBarButton>
-
-            </CommandBar>
-        </Grid>
-
-
-    </SplitView>
+        </CommandBar>
+    </Grid>
 
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton 
-                                    x:Name="VisualButton" 
-                                    CommandParameter="{x:Null}">
+                <AppBarButton                               
+                    x:Name="VisualButton"                                  
+                    CommandParameter="{x:Null}">
                     <AppBarButton.Command>
                         <local:LayerCommand x:Name="VisualCommand"/>
                     </AppBarButton.Command>

@@ -43,11 +43,12 @@ namespace Luo_Painter.TestApp
         {
             this.AddButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result != true) return;
+                if (result is null) return; 
+                if (result is false) return;
 
                 this.Transformer = new Transformer(512, 512, Vector2.Zero);
 
@@ -226,7 +227,7 @@ namespace Luo_Painter.TestApp
         }
 
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

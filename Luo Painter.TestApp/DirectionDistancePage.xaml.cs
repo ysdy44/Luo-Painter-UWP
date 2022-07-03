@@ -58,7 +58,7 @@ namespace Luo_Painter.TestApp
 
             action.Click += (s, e) =>
             {
-                if (originalTarget == null)
+                if (originalTarget is null)
                     return;
                 GenerateSDF();
                 //GenarateDirectionDistanceEffect();
@@ -66,7 +66,7 @@ namespace Luo_Painter.TestApp
 
             export.Click += async (s, e) =>
             {
-                if (effectImage == null)
+                if (effectImage is null)
                     return;
                 FileSavePicker savePicker = new FileSavePicker
                 {
@@ -124,7 +124,7 @@ namespace Luo_Painter.TestApp
             GetThresholdse();
             originalCanvas.Draw += (s, e) =>
             {
-                if (originalTarget == null)
+                if (originalTarget is null)
                     return;
                 var te = EvalImageCentered(originalCanvas.ActualWidth, originalCanvas.ActualHeight, imageWidth, imageHeight);
                 te.Source = originalTarget;
@@ -135,7 +135,7 @@ namespace Luo_Painter.TestApp
             float scale = 1f;
             effectCanvas.Draw += (s, e) =>
             {
-                if (effectImage == null)
+                if (effectImage is null)
                     return;
 
                 var mat= EvalCenterdTransform(originalCanvas.ActualWidth, originalCanvas.ActualHeight, imageWidth, imageHeight);
@@ -480,7 +480,7 @@ namespace Luo_Painter.TestApp
 
         async void SingleImage()
         {
-            var file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
+            var file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
             if (file != null)
                 originalImage = await CanvasBitmap.LoadAsync(CanvasDevice.GetSharedDevice(), await file.OpenReadAsync());
             originalTarget = new CanvasRenderTarget(originalCanvas, originalImage.Size);
@@ -490,7 +490,7 @@ namespace Luo_Painter.TestApp
             distanceDatas = new DistanceData[imageWidth, imageHeight];
 
         }
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker
@@ -513,9 +513,9 @@ namespace Luo_Painter.TestApp
 
         async void DrawBlackOrWhiteTarget()
         {
-            if (originalTarget == null)
+            if (originalTarget is null)
                 return;
-            if (blackOrWhiteCode == null)
+            if (blackOrWhiteCode is null)
             {
                 blackOrWhiteCode = await ShaderType.BlackOrWhite.LoadAsync();
 

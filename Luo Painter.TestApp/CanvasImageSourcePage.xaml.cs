@@ -40,11 +40,12 @@ namespace Luo_Painter.TestApp
             };
             this.AddButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result != true) return;
+                if (result is null) return;
+                if (result is false) return;
 
                 this.RenderThumbnail();
             };
@@ -55,7 +56,7 @@ namespace Luo_Painter.TestApp
             this.RenderThumbnail(true);
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker
@@ -97,10 +98,10 @@ namespace Luo_Painter.TestApp
 
         private void RenderThumbnail(bool surfaceContentsLost = false)
         {
-            if (this.CanvasBitmap == null) return;
+            if (this.CanvasBitmap is null) return;
 
             // If the window isn't visible then we cannot update the image source
-            if (Window.Current.Visible == false) return;
+            if (Window.Current.Visible is false) return;
 
             if (this.CanvasControl != this.ThumbnailImageSource.Device || surfaceContentsLost)
             {

@@ -43,11 +43,12 @@ namespace Luo_Painter.TestApp
         {
             this.AddButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result != true) return;
+                if (result is null) return; 
+                if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
@@ -174,8 +175,8 @@ namespace Luo_Painter.TestApp
 
         private void Render(Vector2 position, Vector2 targetPosition)
         {
-            if (this.BitmapLayer == null) return;
-            if (this.ShaderCodeBytes == null) return;
+            if (this.BitmapLayer is null) return;
+            if (this.ShaderCodeBytes is null) return;
 
             // 1. Region
             Rect rect = RectExtensions.GetRect(position, targetPosition, this.RangeSize);
@@ -199,7 +200,7 @@ namespace Luo_Painter.TestApp
             this.BitmapLayer.Shade(shader, rect);
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

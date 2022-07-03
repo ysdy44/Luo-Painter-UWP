@@ -65,11 +65,12 @@ namespace Luo_Painter.TestApp
             };
             this.AddButton.Click += async (s, e) =>
             {
-                StorageFile file = await PickSingleImageFileAsync(PickerLocationId.Desktop);
-                if (file == null) return;
+                StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result != true) return;
+                if (result is null) return; 
+                if (result is false) return;
 
                 this.Update();
             };
@@ -110,7 +111,7 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (s, e) =>
             {
-                e.TrackAsyncAction(CreateResourcesAsync().AsAsyncAction());
+                e.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
@@ -196,7 +197,7 @@ namespace Luo_Painter.TestApp
             this.OriginCanvasControl.Invalidate(); // Invalidate
         }
 
-        public async static Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
+        public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)
         {
             // Picker
             FileOpenPicker openPicker = new FileOpenPicker

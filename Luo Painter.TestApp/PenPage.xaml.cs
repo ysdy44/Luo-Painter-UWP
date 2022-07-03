@@ -48,7 +48,7 @@ namespace Luo_Painter.TestApp
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                if (this.Nodes == null) return;
+                if (this.Nodes is null) return;
 
                 Matrix3x2 matrix = this.CanvasControl.Dpi.ConvertPixelsToDips();
                 CanvasGeometry geometry = this.Nodes.CreateGeometry(sender).Transform(matrix);
@@ -65,7 +65,7 @@ namespace Luo_Painter.TestApp
             {
                 Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                if (this.Nodes == null)
+                if (this.Nodes is null)
                 {
                     this.Nodes = new NodeCollection(position, position);
                 }
