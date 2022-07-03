@@ -149,6 +149,9 @@
     <Compile Include="FloodSelectPage.xaml.cs">
       <DependentUpon>FloodSelectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LayerDragPage.xaml.cs">
+      <DependentUpon>LayerDragPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MarqueeToolTransformPage.xaml.cs">
       <DependentUpon>MarqueeToolTransformPage.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FloodSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LayerDragPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
