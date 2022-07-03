@@ -123,6 +123,7 @@
     <Compile Include="BitmapType.cs" />
     <Compile Include="ILayer.cs" />
     <Compile Include="Layers\LayerBase.cs" />
+    <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />
     <Compile Include="Layers\LayerBase.Render.cs" />
     <Compile Include="Layers\LayerBase.Thumbnail.cs" />

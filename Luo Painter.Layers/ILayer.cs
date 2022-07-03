@@ -29,6 +29,11 @@ namespace Luo_Painter.Layers
         void CacheBlendMode();
 
         Visibility Visibility { get; set; }
+        double Depth { get; set; }
+        bool IsExist { get; set; }
+        bool IsExpand { get; set; }
+        void Arrange(double depth);
+        void Exist(bool isExist);
 
         RenderMode RenderMode { get; }
         ICanvasImage GetRender(ICanvasImage background);
