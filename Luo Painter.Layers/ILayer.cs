@@ -29,10 +29,12 @@ namespace Luo_Painter.Layers
         void CacheBlendMode();
 
         Visibility Visibility { get; set; }
-        double Depth { get; set; }
+        int Depth { get; set; }
         bool IsExist { get; set; }
         bool IsExpand { get; set; }
-        void Arrange(double depth);
+        void CacheIsExpand();
+        void ApplyIsExpand();
+        void Arrange(int depth);
         void Exist(bool isExist);
 
         RenderMode RenderMode { get; }

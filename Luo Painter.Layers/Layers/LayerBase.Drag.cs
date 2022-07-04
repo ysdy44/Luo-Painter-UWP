@@ -3,7 +3,7 @@
     public abstract partial class LayerBase
     {
 
-        public double Depth
+        public int Depth
         {
             get => this.depth;
             set
@@ -12,7 +12,7 @@
                 this.OnPropertyChanged(nameof(Depth)); // Notify 
             }
         }
-        private double depth;
+        private int depth;
 
         public bool IsExist
         {
@@ -41,15 +41,25 @@
         }
         private bool isExpand = true;
 
+        private bool StartingIsExpand;
+        public void CacheIsExpand()
+        {
+            this.StartingIsExpand = this.IsExpand;
+            if (this.IsExpand) this.IsExpand = false;
+        }
+        public void ApplyIsExpand()
+        {
+            if (this.StartingIsExpand) this.IsExpand = true;
+        }
 
-        public void Arrange(double depth)
+        public void Arrange(int depth)
         {
             if (this.Depth == depth) return;
             this.Depth = depth;
 
-            this.ArrangeChildren(depth + 40);
+            this.ArrangeChildren(depth + 1);
         }
-        private void ArrangeChildren(double depth)
+        private void ArrangeChildren(int depth)
         {
             foreach (ILayer child in this.Children)
             {
