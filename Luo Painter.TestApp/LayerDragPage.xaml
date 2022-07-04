@@ -47,10 +47,10 @@
         </ItemsControl.ItemContainerStyle>
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="layers:ILayer">
-                <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}" >
+                <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="{x:Bind Depth, Mode=OneWay}"/>
+                            <ColumnDefinition Width="Auto" elements:FrameworkElementExtensions.Depth="{x:Bind Depth, Mode=OneWay}" />
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>

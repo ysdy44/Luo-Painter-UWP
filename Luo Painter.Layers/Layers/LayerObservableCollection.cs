@@ -60,11 +60,11 @@ namespace Luo_Painter.Layers
 
         public void AddDragItems(ILayer layer)
         {
-            int index = base.IndexOf(layer);
-            if (index >= base.Count - 1)
+            int index = this.IndexOfExist(layer);
+            if (index < 0 || index >= base.Count - 1)
             {
                 layer.Arrange(0);
-                this.InsertChildren(index, layer);
+                this.AddChildren(layer);
                 return;
             }
 
@@ -79,6 +79,15 @@ namespace Luo_Painter.Layers
             parent.Children.Insert(index, layer);
         }
 
-    }
+        private int IndexOfExist(ILayer layer)
+        {
+            for (int i = 0; i < base.Count; i++)
+            {
+                ILayer item = base[i];
+                if (item.IsExist && item.Id == layer.Id) return i;
+            }
+            return -1;
+        }
 
+    }
 }
