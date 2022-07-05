@@ -11,65 +11,120 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <ListView
-        x:Name="ListView"
-        SelectedIndex="0"
-        SelectionMode="Extended"   
-        IsItemClickEnabled="True"
+    <Grid>
+
+        <ListView      
+            x:Name="ListView"
+            SelectedIndex="0"
+            SelectionMode="Extended"   
+            IsItemClickEnabled="True"
                        
-        AllowDrop="True" 
-        CanDragItems="True"
-        CanReorderItems="True" 
-        ReorderMode="Enabled"   
+            AllowDrop="True" 
+            CanDragItems="True"
+            CanReorderItems="True" 
+            ReorderMode="Enabled"   
         
-        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-        ItemsSource="{x:Bind ObservableCollection}"
-        >
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <ItemsStackPanel VerticalAlignment="Top"/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Padding" Value="12,2"/>
-                <Setter Property="Transitions">
-                    <Setter.Value>
-                        <TransitionCollection>
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            ItemsSource="{x:Bind ObservableCollection}"
+            >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel VerticalAlignment="Top"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Padding" Value="12,2"/>
+                    <Setter Property="Transitions">
+                        <Setter.Value>
+                            <TransitionCollection>
 
-                        </TransitionCollection>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ItemsControl.ItemContainerStyle>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="layers:ILayer">
-                <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" elements:FrameworkElementExtensions.Depth="{x:Bind Depth, Mode=OneWay}" />
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="2" Margin="2,0" VerticalAlignment="Center" >
+                            </TransitionCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="layers:ILayer">
+                    <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" elements:FrameworkElementExtensions.Depth="{x:Bind Depth, Mode=OneWay}" />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="2" Margin="2,0" VerticalAlignment="Center" >
                             <Run Text="{x:Bind Id, Mode=OneWay}" />
-                        </TextBlock>
-                        <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
-                        </Border>
-                        <ToggleSwitch Grid.Column="3" IsOn="{x:Bind IsExpand, Mode=TwoWay}" />
-                    </Grid>
-                </elements:SelectedSwiper>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-        <ItemsControl.ItemContainerTransitions>
-            <TransitionCollection>
+                            </TextBlock>
+                            <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
+                            </Border>
+                            <ToggleSwitch Grid.Column="3" IsOn="{x:Bind IsExpand, Mode=TwoWay}" />
+                        </Grid>
+                    </elements:SelectedSwiper>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
 
-            </TransitionCollection>
-        </ItemsControl.ItemContainerTransitions>
-    </ListView>
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+        </ListView>
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <AppBarButton x:Name="AddButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Insert"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Add"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Add
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="RemoveButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Delete"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Remove
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="UndoButton" IsEnabled="False">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="Z"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Undo"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Undo
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="RedoButton" IsEnabled="False">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="Y"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Redo"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Redo
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+    </Grid>
 
 </Page>

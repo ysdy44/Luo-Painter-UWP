@@ -54,10 +54,19 @@
 
         public void Arrange(int depth)
         {
-            if (this.Depth == depth) return;
-            this.Depth = depth;
+            if (depth is 0)
+            {
+                this.Depth = 0;
 
-            this.ArrangeChildren(depth + 1);
+                this.ArrangeChildren(1);
+            }
+            else if (this.Depth == depth) return;
+            else
+            {
+                this.Depth = depth;
+
+                this.ArrangeChildren(depth + 1);
+            }
         }
         private void ArrangeChildren(int depth)
         {
