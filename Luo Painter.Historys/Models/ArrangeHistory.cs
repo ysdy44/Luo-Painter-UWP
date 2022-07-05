@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Historys.Models
@@ -13,10 +14,11 @@ namespace Luo_Painter.Historys.Models
     {
         public HistoryMode Mode => HistoryMode.Arrange;
         public HistoryType Type => HistoryType.None;
-        public string[] UndoParameter { get; }
-        public string[] RedoParameter { get; }
+        public Layerage[] UndoParameter { get; }
+        public Layerage[] RedoParameter { get; }
         public SetupSizes Sizes { get; private set; }
-        public ArrangeHistory(string[] undoParameter, string[] redoParameter, SetupSizes sizes = null)
+        public ArrangeHistory(IEnumerable<string> undoParameter, IEnumerable<string> redoParameter, SetupSizes sizes = null) : this(undoParameter.Select(c => new Layerage { Id = c }).ToArray(), redoParameter.Select(c => new Layerage { Id = c }).ToArray(), sizes) { }
+        public ArrangeHistory(Layerage[] undoParameter, Layerage[] redoParameter, SetupSizes sizes = null)
         {
             this.UndoParameter = undoParameter;
             this.RedoParameter = redoParameter;
@@ -24,8 +26,14 @@ namespace Luo_Painter.Historys.Models
         }
         public void Dispose()
         {
-            Array.Clear(this.UndoParameter, 0, this.UndoParameter.Length);
-            Array.Clear(this.RedoParameter, 0, this.RedoParameter.Length);
+            foreach (Layerage item in this.UndoParameter)
+            {
+                item.Dispose();
+            }
+            foreach (Layerage item in this.RedoParameter)
+            {
+                item.Dispose();
+            }
             this.Sizes = null;
         }
     }

@@ -143,14 +143,15 @@ namespace Luo_Painter
             }
         }
 
-        private bool Arrange(string[] ids)
+        private bool Arrange(Layerage[] layerages)
         {
-            if (ids is null) return false;
-            if (ids.Length is 0) return false;
+            if (layerages is null) return false;
+            if (layerages.Length is 0) return false;
 
             this.ObservableCollection.Clear();
-            foreach (string id in ids)
+            foreach (Layerage layerage in layerages)
             {
+                string id = layerage.Id;
                 if (this.Layers.ContainsKey(id))
                 {
                     ILayer layer = this.Layers[id];
