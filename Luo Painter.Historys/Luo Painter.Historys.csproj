@@ -124,6 +124,7 @@
     <Compile Include="HistoryType.cs" />
     <Compile Include="IHistory.cs" />
     <Compile Include="Models\ArrangeHistory.cs" />
+    <Compile Include="Layerage.cs" />
     <Compile Include="Models\PropertyHistory.cs" />
     <Compile Include="Models\PropertysHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
