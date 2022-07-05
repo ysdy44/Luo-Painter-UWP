@@ -48,7 +48,20 @@ namespace Luo_Painter.Elements
 
             if (e.NewValue is int value)
             {
-                control.Width = new GridLength(value * 40);
+                control.Width = new GridLength(value * 20);
+            }
+        }));
+
+        //@Attached
+        public static bool GetIsExpand(DependencyObject dp) => (bool)dp.GetValue(IsExpandProperty);
+        public static void SetIsExpand(DependencyObject dp, bool value) => dp.SetValue(IsExpandProperty, value);
+        public static readonly DependencyProperty IsExpandProperty = DependencyProperty.RegisterAttached("IsExpand", typeof(bool), typeof(ColumnDefinition), new PropertyMetadata(false, (sender, e) =>
+        {
+            RotateTransform control = (RotateTransform)sender;
+
+            if (e.NewValue is bool value)
+            {
+                control.Angle = value ? 90 : 0;
             }
         }));
 
