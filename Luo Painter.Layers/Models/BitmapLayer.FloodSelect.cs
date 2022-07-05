@@ -12,8 +12,7 @@ namespace Luo_Painter.Layers.Models
 {
     public partial class BitmapLayer : LayerBase, ILayer
     {
-        byte[] Pixels;
-        IBuffer Buffer;
+
         readonly HashSet<int> Retrieves = new HashSet<int>();
         readonly HashSet<int> TargetRetrieves = new HashSet<int>();
         readonly HashSet<int> Add1Retrieves = new HashSet<int>();
@@ -90,16 +89,8 @@ namespace Luo_Painter.Layers.Models
 
 
             // 3. Get Retrieves
-            if (this.Pixels is null || this.Buffer is null)
-            {
-                this.Pixels = this.TempRenderTarget.GetPixelBytes();
-                this.Buffer = this.Pixels.AsBuffer();
-            }
-            else
-            {
-                this.TempRenderTarget.GetPixelBytes(this.Buffer);
-                this.Buffer.CopyTo(this.Pixels);
-            }
+            this.TempRenderTarget.GetPixelBytes(this.Buffer);
+            this.Buffer.CopyTo(this.Pixels);
 
             this.Retrieves.Clear();
             int length = this.Pixels.Length / 4;

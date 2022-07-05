@@ -4,6 +4,8 @@ using System;
 using System.Numerics;
 using Windows.UI;
 using Windows.Foundation;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Storage.Streams;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -28,6 +30,9 @@ namespace Luo_Painter.Layers.Models
         readonly CanvasRenderTarget OriginRenderTarget;
         readonly CanvasRenderTarget SourceRenderTarget;
         readonly CanvasRenderTarget TempRenderTarget;
+
+        readonly byte[] Pixels;
+        readonly IBuffer Buffer;
 
 
         //@Construct
@@ -73,6 +78,9 @@ namespace Luo_Painter.Layers.Models
             this.OriginRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.TempRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
+
+            this.Pixels = new byte[width * height * 4];
+            this.Buffer = this.Pixels.AsBuffer();
 
 
             this.XDivisor = width / BitmapLayer.Unit;
