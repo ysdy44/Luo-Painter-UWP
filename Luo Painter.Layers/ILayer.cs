@@ -4,12 +4,13 @@ using Microsoft.Graphics.Canvas.Effects;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Layers
 {
-    public interface ILayer : INotifyPropertyChanged
+    public interface ILayer : INotifyPropertyChanged, ICommand
     {
         string Id { get; }
         IList<ILayer> Children { get; }

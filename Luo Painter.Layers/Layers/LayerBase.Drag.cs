@@ -1,4 +1,6 @@
-﻿namespace Luo_Painter.Layers
+﻿using System;
+
+namespace Luo_Painter.Layers
 {
     public abstract partial class LayerBase
     {
@@ -32,24 +34,33 @@
             {
                 this.isExpand = value;
                 this.OnPropertyChanged(nameof(IsExpand)); // Notify 
-
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(value);
-                }
             }
         }
-        private bool isExpand = true;
+        private bool isExpand;
 
         private bool StartingIsExpand;
         public void CacheIsExpand()
         {
             this.StartingIsExpand = this.IsExpand;
-            if (this.IsExpand) this.IsExpand = false;
+            if (this.IsExpand)
+            {
+                this.IsExpand = false;
+                foreach (ILayer child in this.Children)
+                {
+                    child.Exist(false);
+                }
+            }
         }
         public void ApplyIsExpand()
         {
-            if (this.StartingIsExpand) this.IsExpand = true;
+            if (this.StartingIsExpand)
+            {
+                this.IsExpand = true;
+                foreach (ILayer child in this.Children)
+                {
+                    child.Exist(true);
+                }
+            }
         }
 
         public void Arrange(int depth)
@@ -90,6 +101,29 @@
             }
             else
             {
+                foreach (ILayer child in this.Children)
+                {
+                    child.Exist(false);
+                }
+            }
+        }
+
+        //@Command
+        public event EventHandler CanExecuteChanged;
+        public bool CanExecute(object parameter) => this.Children.Count is 0 is false;
+        public void Execute(object parameter)
+        {
+            if (this.IsExpand)
+            {
+                this.IsExpand = false;
+                foreach (ILayer child in this.Children)
+                {
+                    child.Exist(true);
+                }
+            }
+            else
+            {
+                this.IsExpand = true;
                 foreach (ILayer child in this.Children)
                 {
                     child.Exist(false);
