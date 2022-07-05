@@ -127,6 +127,7 @@
     <Compile Include="Layers\LayerBase.History.cs" />
     <Compile Include="Layers\LayerBase.Render.cs" />
     <Compile Include="Layers\LayerBase.Thumbnail.cs" />
+    <Compile Include="Layers\LayerNodes.cs" />
     <Compile Include="Layers\LayerObservableCollection.cs" />
     <Compile Include="LayerType.cs" />
     <Compile Include="Models\BitmapLayer.cs" />
