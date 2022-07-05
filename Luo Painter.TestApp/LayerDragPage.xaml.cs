@@ -4,10 +4,25 @@ using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
+    internal class VisibilityButton : Button
+    {
+        public VisibilityButton()
+        {
+            base.Click += (s, e) =>
+            {
+                if (base.Content is UIElement content)
+                {
+                    content.Visibility = content.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+                }
+            };
+        }
+    }
+
     public sealed partial class LayerDragPage : Page
     {
 
