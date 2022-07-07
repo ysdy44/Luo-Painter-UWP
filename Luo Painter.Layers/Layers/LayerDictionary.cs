@@ -5,6 +5,20 @@ namespace Luo_Painter.Layers
 {
     public sealed class LayerDictionary : Dictionary<string, ILayer>
     {
+
+        public void Push(ILayer layer)
+        { 
+            base.Add(layer.Id, layer);
+        }
+        public void PushChild(ILayer layer)
+        {
+            this.Push(layer);
+            foreach (ILayer item in layer.Children)
+            {
+                this.PushChild(item);
+            }
+        }
+
         public IEnumerable<ILayer> Permutation(Layerage[] layerages)
         {
             if (layerages is null) yield break;
@@ -19,7 +33,7 @@ namespace Luo_Painter.Layers
             ILayer layer = base[layerage.Id];
             layer.Depth = depth;
             layer.Children.Clear();
-            
+
             if (layerage.Children is null) return layer;
 
             depth++;
@@ -29,5 +43,6 @@ namespace Luo_Painter.Layers
             }
             return layer;
         }
+
     }
 }
