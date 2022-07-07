@@ -2,7 +2,7 @@
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase
+    public abstract partial class LayerBase : IRender
     {
 
         public int Depth

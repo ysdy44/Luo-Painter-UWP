@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase
+    public abstract partial class LayerBase : IRender
     {
 
         public float ConvertValueToOne(float value) => value / Math.Max(this.Width, this.Height);

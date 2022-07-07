@@ -29,6 +29,8 @@ namespace Luo_Painter.Layers
         BlendEffectMode? StartingBlendMode { get; }
         void CacheBlendMode();
 
+        void CopyWith(IRender layerBase);
+
         Visibility Visibility { get; set; }
         int Depth { get; set; }
         bool IsExist { get; set; }

@@ -15,7 +15,7 @@ namespace Luo_Painter.Layers
         Transparent,
     }
 
-    public abstract partial class LayerBase
+    public abstract partial class LayerBase : IRender
     {
 
         public string Name
@@ -136,12 +136,12 @@ namespace Luo_Painter.Layers
             }
         }
 
-        public void CopyWith(LayerBase layerBase)
+        public void CopyWith(IRender render)
         {
-            this.name = layerBase.name;
-            this.opacity = layerBase.opacity;
-            this.blendMode = layerBase.blendMode;
-            this.visibility = layerBase.visibility;
+            this.name = render.Name;
+            this.opacity = render.Opacity;
+            this.blendMode = render.BlendMode;
+            this.visibility = render.Visibility;
             this.RenderMode = this.GetRenderMode();
         }
 

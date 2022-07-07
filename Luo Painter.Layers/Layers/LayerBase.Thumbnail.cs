@@ -16,7 +16,7 @@ namespace Luo_Painter.Layers
         Oversize,
     }
 
-    public abstract partial class LayerBase
+    public abstract partial class LayerBase : IRender
     {
 
         public ImageSource Thumbnail => this.ThumbnailWriteableBitmap;
