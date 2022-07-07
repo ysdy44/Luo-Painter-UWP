@@ -129,6 +129,7 @@
     <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />
     <Compile Include="Layers\LayerBase.Render.cs" />
+    <Compile Include="Layers\LayerBase.Setup.cs" />
     <Compile Include="Layers\LayerBase.Thumbnail.cs" />
     <Compile Include="Layers\LayerDictionary.cs" />
     <Compile Include="Layers\LayerNodes.cs" />
