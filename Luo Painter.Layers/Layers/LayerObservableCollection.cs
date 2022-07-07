@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Luo_Painter.Layers
@@ -35,6 +36,7 @@ namespace Luo_Painter.Layers
         {
             foreach (ILayer item in this)
             {
+                if (item.Depth >= layer.Depth) continue;
                 foreach (ILayer chil in item.Children)
                 {
                     if (chil.Id == layer.Id) return item;
@@ -46,11 +48,11 @@ namespace Luo_Painter.Layers
         public void AddChild(ILayer layer)
         {
             base.Add(layer);
-            this.AddChildren(layer);
+            this.AddChildren(layer.Children);
         }
-        private void AddChildren(ILayer layer)
+        private void AddChildren(IList<ILayer> layers)
         {
-            foreach (ILayer child in layer.Children)
+            foreach (ILayer child in layers)
             {
                 this.AddChild(child);
             }
@@ -59,24 +61,24 @@ namespace Luo_Painter.Layers
         public void RemoveChild(ILayer layer)
         {
             base.Remove(layer);
-            this.RemoveChildren(layer);
+            this.RemoveChildren(layer.Children);
         }
-        private void RemoveChildren(ILayer layer)
+        private void RemoveChildren(IList<ILayer> layers)
         {
-            foreach (ILayer child in layer.Children)
+            foreach (ILayer child in layers)
             {
                 this.RemoveChild(child);
             }
         }
 
-        private void InsertChild(int index, ILayer layer)
+        public void InsertChild(int index, ILayer layer)
         {
             base.Insert(index, layer);
-            this.InsertChildren(index, layer);
+            this.InsertChildren(index, layer.Children);
         }
-        private void InsertChildren(int index, ILayer layer)
+        private void InsertChildren(int index, IList<ILayer> layers)
         {
-            foreach (ILayer child in layer.Children)
+            foreach (ILayer child in layers)
             {
                 index++;
                 this.InsertChild(index, child);
@@ -87,7 +89,7 @@ namespace Luo_Painter.Layers
         public void RemoveDragItems(ILayer layer)
         {
             layer.Arrange(0);
-            this.RemoveChildren(layer);
+            this.RemoveChildren(layer.Children);
 
             ILayer parent = this.GetParent(layer);
             if (parent is null) return;
@@ -101,13 +103,13 @@ namespace Luo_Painter.Layers
             if (index < 0 || index >= base.Count - 1)
             {
                 layer.Arrange(0);
-                this.AddChildren(layer);
+                this.AddChildren(layer.Children);
                 return;
             }
 
             ILayer neighbor = base[index + 1];
             layer.Arrange(neighbor.Depth);
-            this.InsertChildren(index, layer);
+            this.InsertChildren(index, layer.Children);
 
             ILayer parent = this.GetParent(neighbor);
             if (parent is null) return;
