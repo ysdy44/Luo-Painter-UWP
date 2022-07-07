@@ -149,6 +149,7 @@
     <Compile Include="FloodSelectPage.xaml.cs">
       <DependentUpon>FloodSelectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LayerDragPage.Method.cs" />
     <Compile Include="LayerDragPage.xaml.cs">
       <DependentUpon>LayerDragPage.xaml</DependentUpon>
     </Compile>
