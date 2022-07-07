@@ -12,17 +12,18 @@ namespace Luo_Painter.TestApp
 
         public ArrangeHistory Add()
         {
-            Layerage[] undo = this.Nodes.Convert();
-
             ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
-            this.Layers.Add(add.Id, add);
+            this.Layers.Push(add);
+            return this.Add(add);
+        }
+
+        public ArrangeHistory Add(ILayer add)
+        {
+            Layerage[] undo = this.Nodes.Convert();
 
             int index = this.ListView.SelectedIndex;
             if (index > 0 && this.ListView.SelectedItem is ILayer neighbor)
             {
-                this.ObservableCollection.Insert(index, add);
-                this.ListView.SelectedIndex = index;
-
                 ILayer parent = this.ObservableCollection.GetParent(neighbor);
                 if (parent is null)
                 {
@@ -33,14 +34,23 @@ namespace Luo_Painter.TestApp
                 {
                     int indexChild = parent.Children.IndexOf(neighbor);
                     parent.Children.Insert(indexChild, add);
-                    add.Depth = neighbor.Depth;
-                    add.IsExist = neighbor.IsExist;
                 }
+
+                add.Arrange(neighbor.Depth);
+                add.IsExist = true;
+                add.Exist(true);
+
+                this.ObservableCollection.InsertChild(index, add);
+                this.ListView.SelectedIndex = index;
             }
             else
             {
+                add.Arrange(0);
+                add.IsExist = true;
+                add.Exist(true);
+
                 this.Nodes.Insert(0, add);
-                this.ObservableCollection.Insert(0, add);
+                this.ObservableCollection.InsertChild(0, add);
                 this.ListView.SelectedIndex = 0;
             }
 
@@ -145,7 +155,7 @@ namespace Luo_Painter.TestApp
             Layerage[] undo = this.Nodes.Convert();
 
             ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
-            this.Layers.Add(add.Id, add);
+            this.Layers.Push(add);
 
             int depth = int.MaxValue;
             foreach (ILayer layer in layers)
@@ -211,6 +221,104 @@ namespace Luo_Painter.TestApp
             }
 
             this.ListView.SelectedIndex = this.ObservableCollection.IndexOf(add);
+
+            /// History
+            Layerage[] redo = this.Nodes.Convert();
+            return new ArrangeHistory(undo, redo);
+        }
+
+
+
+        public ArrangeHistory Cut(ILayer layer)
+        {
+            this.Copy(layer);
+            return this.Remove(layer);
+        }
+
+        public ArrangeHistory Cut(IEnumerable<object> layers)
+        {
+            this.Copy(layers);
+            return this.Remove(layers);
+        }
+
+        public void Copy(ILayer layer)
+        {
+            this.ClipboardLayers.Clear();
+            this.ClipboardLayers.Add(layer.Id);
+        }
+
+        public void Copy(IEnumerable<object> layers)
+        {
+            this.ClipboardLayers.Clear();
+            foreach (ILayer layer in layers)
+            {
+                this.ClipboardLayers.Add(layer.Id);
+            }
+        }
+
+        public ArrangeHistory Paste(string id)
+        {
+            ILayer add = this.Layers[id].Crop(this.CanvasDevice, 128, 128);
+            this.Layers.PushChild(add);
+            return this.Add(add);
+        }
+
+        public ArrangeHistory Paste(IEnumerable<string> ids)
+        {
+            Layerage[] undo = this.Nodes.Convert();
+
+            int index = this.ListView.SelectedIndex;
+            if (index > 0 && this.ListView.SelectedItem is ILayer neighbor)
+            {
+                ILayer parent = this.ObservableCollection.GetParent(neighbor);
+                if (parent is null)
+                {
+                    // Homestay
+                    foreach (string id in ids)
+                    {
+                        ILayer layer = this.Layers[id];
+                        ILayer add = layer.Crop(this.CanvasDevice, 128, 128);
+                        add.Arrange(parent.Depth + 1);
+                        this.Layers.PushChild(add);
+
+                        this.Nodes.Insert(index, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                    }
+                }
+                else
+                {
+                    int indexChild = parent.Children.IndexOf(neighbor);
+
+                    // Homestay
+                    foreach (string id in ids)
+                    {
+                        ILayer layer = this.Layers[id];
+                        ILayer add = layer.Crop(this.CanvasDevice, 128, 128);
+                        add.Arrange(neighbor.Depth);
+                        this.Layers.PushChild(add);
+
+                        parent.Children.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                    }
+                }
+
+                this.ListView.SelectedIndex = index;
+            }
+            else
+            {
+                // Homestay
+                foreach (string id in ids)
+                {
+                    ILayer layer = this.Layers[id];
+                    ILayer add = layer.Crop(this.CanvasDevice, 128, 128);
+                    add.Arrange(0);
+                    this.Layers.PushChild(add);
+
+                    this.Nodes.Insert(0, add);
+                    this.ObservableCollection.InsertChild(0, add);
+                }
+                this.ListView.SelectedIndex = 0;
+            }
 
             /// History
             Layerage[] redo = this.Nodes.Convert();
