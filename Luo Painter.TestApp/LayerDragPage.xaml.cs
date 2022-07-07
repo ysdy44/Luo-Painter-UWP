@@ -124,16 +124,60 @@ namespace Luo_Painter.TestApp
             };
             this.RemoveButton.Click += (s, e) =>
             {
-                if (this.ListView.SelectedItem is ILayer layer)
+                var items = this.ListView.SelectedItems;
+                switch (items.Count)
                 {
-                    /// History
-                    int removes = this.History.Push(this.Remove(layer));
+                    case 0:
+                        break;
+                    case 1:
+                        if (this.ListView.SelectedItem is ILayer layer)
+                        {
+                            /// History
+                            int removes = this.History.Push(this.Remove(layer));
 
-                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                    default:
+                        {
+                            /// History
+                            int removes = this.History.Push(this.Remove(items));
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
                 }
             };
+            this.GroupButton.Click += (s, e) =>
+            {
+                var items = this.ListView.SelectedItems;
+                switch (items.Count)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        if (this.ListView.SelectedItem is ILayer layer)
+                        {
+                            /// History
+                            int removes = this.History.Push(this.Group(layer));
 
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                    default:
+                        {
+                            /// History
+                            int removes = this.History.Push(this.Group(items));
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                }
+            };
         }
 
         private void ConstructHistory()

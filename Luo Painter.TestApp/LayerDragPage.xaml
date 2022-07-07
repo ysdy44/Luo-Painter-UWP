@@ -11,6 +11,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+
+    <FrameworkElement.Resources>
+        <!--StaticResource-->
+        <!--Disabled is Hidden-->
+        <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Transparent"/>
+    </FrameworkElement.Resources>
+
+    
     <Grid>
 
         <ListView      
@@ -116,6 +126,18 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Remove
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="GroupButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="G"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Globe"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Group
                 </AppBarButton.Label>
             </AppBarButton>
 
