@@ -36,30 +36,28 @@ namespace Luo_Painter.Layers
                 this.OnPropertyChanged(nameof(IsExpand)); // Notify 
             }
         }
-        private bool isExpand;
+        private bool isExpand = true;
 
         private bool StartingIsExpand;
         public void CacheIsExpand()
         {
             this.StartingIsExpand = this.IsExpand;
-            if (this.IsExpand)
+
+            if (this.IsExpand is false) return;
+            this.IsExpand = false;
+            foreach (ILayer child in this.Children)
             {
-                this.IsExpand = false;
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(false);
-                }
+                child.Exist(false);
             }
         }
         public void ApplyIsExpand()
         {
-            if (this.StartingIsExpand)
+            if (this.StartingIsExpand is false) return;
+
+            this.IsExpand = true;
+            foreach (ILayer child in this.Children)
             {
-                this.IsExpand = true;
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(true);
-                }
+                child.Exist(true);
             }
         }
 
@@ -89,45 +87,26 @@ namespace Luo_Painter.Layers
 
         public void Exist(bool isExist)
         {
-            if (this.IsExist == isExist) return;
             this.IsExist = isExist;
 
-            if (this.IsExpand)
+            if (this.IsExpand is false) return;
+
+            foreach (ILayer child in this.Children)
             {
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(isExist);
-                }
-            }
-            else
-            {
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(false);
-                }
+                child.Exist(isExist);
             }
         }
 
         //@Command
         public event EventHandler CanExecuteChanged;
+        public void RaiseCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         public bool CanExecute(object parameter) => this.Children.Count is 0 is false;
         public void Execute(object parameter)
         {
-            if (this.IsExpand)
+            this.IsExpand = !this.IsExpand;
+            foreach (ILayer child in this.Children)
             {
-                this.IsExpand = false;
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(true);
-                }
-            }
-            else
-            {
-                this.IsExpand = true;
-                foreach (ILayer child in this.Children)
-                {
-                    child.Exist(false);
-                }
+                child.Exist(this.IsExpand);
             }
         }
 

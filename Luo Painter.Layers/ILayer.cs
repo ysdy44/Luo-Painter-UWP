@@ -37,6 +37,7 @@ namespace Luo_Painter.Layers
         void ApplyIsExpand();
         void Arrange(int depth);
         void Exist(bool isExist);
+        void RaiseCanExecuteChanged();
 
         RenderMode RenderMode { get; }
         ICanvasImage GetRender(ICanvasImage background);
