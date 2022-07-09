@@ -9,19 +9,12 @@ namespace Luo_Painter.Layers
     public static partial class LayerManagerExtensions
     {
 
-        public static ArrangeHistory Group(this ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, ILayer layer)
+        public static ArrangeHistory Group(this ILayerManager self, ILayer add, ILayer layer)
         {
             Layerage[] undo = self.Nodes.Convert();
 
-            int depth = layer.Depth;
-            layer.Arrange(depth + 1);
-
-            ILayer add = new BitmapLayer(resourceCreator, width, height)
-            {
-                Depth = depth,
-                Children = { layer }
-            };
-            self.Layers.Add(add.Id, add);
+            add.Children.Add(layer);
+            self.Layers.Push(add);
 
             // Run away from Home
             // Homestay
@@ -31,12 +24,16 @@ namespace Luo_Painter.Layers
                 int indexChild = self.Nodes.IndexOf(layer);
                 self.Nodes.Remove(layer);
                 self.Nodes.Insert(indexChild, add);
+
+                add.Arrange(0);
             }
             else
             {
                 int indexChild = parent.Children.IndexOf(layer);
                 parent.Children.Remove(layer);
                 parent.Children.Insert(indexChild, add);
+
+                add.Arrange(parent.Depth + 1);
             }
 
             int index = self.LayerSelectedIndex;
@@ -48,11 +45,10 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Group(this ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, IEnumerable<object> layers)
+        public static ArrangeHistory Group(this ILayerManager self, ILayer add, IEnumerable<object> layers)
         {
             Layerage[] undo = self.Nodes.Convert();
 
-            ILayer add = new BitmapLayer(resourceCreator, width, height);
             self.Layers.Push(add);
 
             int depth = int.MaxValue;
@@ -119,6 +115,145 @@ namespace Luo_Painter.Layers
             }
 
             self.LayerSelectedIndex = self.ObservableCollection.IndexOf(add);
+
+            /// History
+            Layerage[] redo = self.Nodes.Convert();
+            return new ArrangeHistory(undo, redo);
+        }
+
+        public static ArrangeHistory Ungroup(this ILayerManager self, ILayer layer)
+        {
+            Layerage[] undo = self.Nodes.Convert();
+
+            int index = self.LayerSelectedIndex;
+
+            ILayer parent = self.ObservableCollection.GetParent(layer);
+            if (parent is null)
+            {
+                int indexChild = self.Nodes.IndexOf(layer);
+                self.Nodes.Remove(layer);
+
+                // Homestay
+                foreach (ILayer item in layer.Children)
+                {
+                    self.Nodes.Insert(indexChild, item);
+                    item.Arrange(0);
+                }
+                // Run away from Home
+                layer.Children.Clear();
+            }
+            else
+            {
+                int indexChild = parent.Children.IndexOf(layer);
+                parent.Children.Remove(layer);
+
+                // Homestay
+                foreach (ILayer item in layer.Children)
+                {
+                    parent.Children.Insert(indexChild, item);
+                    item.Arrange(parent.Depth + 1);
+                }
+                // Run away from Home
+                layer.Children.Clear();
+            }
+
+            self.ObservableCollection.Remove(layer);
+
+            self.LayerSelectedIndex = index;
+
+            /// History
+            Layerage[] redo = self.Nodes.Convert();
+            return new ArrangeHistory(undo, redo);
+        }
+
+        public static ArrangeHistory Release(this ILayerManager self, ILayer layer)
+        {
+            Layerage[] undo;
+
+            ILayer parent = self.ObservableCollection.GetParent(layer);
+            if (parent is null)
+            {
+                return null;
+            }
+            else
+            {
+                undo = self.Nodes.Convert();
+
+                // Run away from Home
+                parent.Children.Remove(layer);
+
+                ILayer grand = self.ObservableCollection.GetParent(parent);
+                if (grand is null)
+                {
+                    int indexChild = self.Nodes.IndexOf(parent);
+
+                    // Homestay
+                    self.Nodes.Insert(indexChild, layer);
+                    layer.Arrange(1);
+                }
+                else
+                {
+                    int indexChild = grand.Children.IndexOf(parent);
+
+                    // Homestay
+                    grand.Children.Insert(indexChild, layer);
+                    layer.Arrange(parent.Depth);
+                }
+            }
+
+            self.ObservableCollection.Clear();
+            foreach (ILayer item in self.Nodes)
+            {
+                self.ObservableCollection.AddChild(item);
+            }
+
+            self.LayerSelectedIndex = self.ObservableCollection.IndexOf(layer);
+
+            /// History
+            Layerage[] redo = self.Nodes.Convert();
+            return new ArrangeHistory(undo, redo);
+        }
+
+        public static ArrangeHistory Release(this ILayerManager self, IEnumerable<object> layers)
+        {
+            Layerage[] undo = self.Nodes.Convert();
+
+            foreach (ILayer layer in layers)
+            {
+                ILayer parent = self.ObservableCollection.GetParent(layer);
+                if (parent is null)
+                {
+                }
+                else
+                {
+                    // Run away from Home
+                    parent.Children.Remove(layer);
+
+                    ILayer grand = self.ObservableCollection.GetParent(parent);
+                    if (grand is null)
+                    {
+                        int indexChild = self.Nodes.IndexOf(parent);
+
+                        // Homestay
+                        self.Nodes.Insert(indexChild, layer);
+                        layer.Arrange(1);
+                    }
+                    else
+                    {
+                        int indexChild = grand.Children.IndexOf(parent);
+
+                        // Homestay
+                        grand.Children.Insert(indexChild, layer);
+                        layer.Arrange(parent.Depth);
+                    }
+                }
+            }
+
+            self.ObservableCollection.Clear();
+            foreach (ILayer item in self.Nodes)
+            {
+                self.ObservableCollection.AddChild(item);
+            }
 
             /// History
             Layerage[] redo = self.Nodes.Convert();

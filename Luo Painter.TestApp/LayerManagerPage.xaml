@@ -129,6 +129,8 @@
                 </AppBarButton.Label>
             </AppBarButton>
 
+            <AppBarSeparator/>
+
             <AppBarButton x:Name="GroupButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="G"/>
@@ -138,6 +140,30 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Group
+                </AppBarButton.Label>
+            </AppBarButton>
+            
+            <AppBarButton x:Name="UngroupButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="U"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Globe"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Ungroup
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ReleaseButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="R"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Globe"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Release
                 </AppBarButton.Label>
             </AppBarButton>
 

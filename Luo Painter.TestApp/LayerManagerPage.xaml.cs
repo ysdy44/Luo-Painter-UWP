@@ -4,10 +4,8 @@ using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -150,8 +148,10 @@ namespace Luo_Painter.TestApp
                     case 1:
                         if (this.LayerSelectedItem is ILayer layer)
                         {
+                            ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
+
                             /// History
-                            int removes = this.History.Push(this.Group(this.CanvasDevice, 128, 128, layer));
+                            int removes = this.History.Push(this.Group(add, layer));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -159,8 +159,54 @@ namespace Luo_Painter.TestApp
                         break;
                     default:
                         {
+                            ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
+
                             /// History
-                            int removes = this.History.Push(this.Group(this.CanvasDevice, 128, 128, items));
+                            int removes = this.History.Push(this.Group(add, items));
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                        }
+                        break;
+                }
+            };
+            this.UngroupButton.Click += (s, e) =>
+            {
+                if (this.LayerSelectedItem is ILayer layer)
+                {
+                    if (layer.Children.Count is 0) return;
+
+                    /// History
+                    int removes = this.History.Push(this.Ungroup(layer));
+
+                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                }
+            };
+            this.ReleaseButton.Click += (s, e) =>
+            {
+                var items = this.LayerSelectedItems;
+                switch (items.Count)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (this.Release(layer) is IHistory history)
+                            {
+                                /// History
+                                int removes = this.History.Push(history);
+
+                                this.UndoButton.IsEnabled = this.History.CanUndo;
+                                this.RedoButton.IsEnabled = this.History.CanRedo;
+                            }
+                        }
+                        break;
+                    default:
+                        {
+                            /// History
+                            int removes = this.History.Push(this.Release(items));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
