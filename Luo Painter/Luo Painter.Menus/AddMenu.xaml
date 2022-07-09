@@ -1,0 +1,34 @@
+﻿<elements:Expander
+    x:Class="Luo_Painter.Menus.AddMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:local="using:Luo_Painter.Menus"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    MinWidth="320" 
+    BorderBrush="{ThemeResource AppStroke}" 
+    Background="{ThemeResource SystemControlAcrylicElementBrush}" 
+    >
+
+    <elements:Expander.Title>
+        Add
+    </elements:Expander.Title>
+
+    <FrameworkElement.Resources>
+        <!--Command-->
+        <local:OptionTypeCommand x:Name="Command"/>
+    </FrameworkElement.Resources>
+
+    <StackPanel Spacing="2">
+        <local:EditItem Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+        <local:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+        <local:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+    </StackPanel>
+</elements:Expander>
