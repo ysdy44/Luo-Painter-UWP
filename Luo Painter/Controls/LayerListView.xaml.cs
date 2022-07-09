@@ -20,7 +20,7 @@ namespace Luo_Painter.Controls
         //@Delegate
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
         public event RoutedEventHandler Remove { remove => this.RemoveButton.Click -= value; add => this.RemoveButton.Click += value; }
-        public event EventHandler<object> Opening { remove => this.CommandBar.Opening -= value; add => this.CommandBar.Opening += value; }
+        public event RoutedEventHandler Opening { remove => this.Button.Click -= value; add => this.Button.Click += value; }
         public event EventHandler<ILayer> SelectedItemChanged;
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
         public event DragItemsStartingEventHandler DragItemsStarting { remove => this.ListView.DragItemsStarting -= value; add => this.ListView.DragItemsStarting += value; }
@@ -64,6 +64,7 @@ namespace Luo_Painter.Controls
 
         #endregion
 
+        public FrameworkElement PlacementTarget => this.Grid;
         public IList<object> SelectedItems => this.ListView.SelectedItems;
         public object SelectedItem => this.ListView.SelectedItem;
         public int SelectedIndex
@@ -102,29 +103,6 @@ namespace Luo_Painter.Controls
                     ListView control = (ListView)sender;
                     this.OnSelectedItemChanged(control.GetValue(prop));
                 });
-            };
-            this.CommandBar.Loaded += (s, e) =>
-            {
-                if (s is DependencyObject reference)
-                {
-                    DependencyObject layoutRoot = VisualTreeHelper.GetChild(reference, 0); // Grid LayoutRoot
-                    DependencyObject contentRoot = VisualTreeHelper.GetChild(layoutRoot, 0); // Grid ContentRoot
-
-                    DependencyObject moreButton = VisualTreeHelper.GetChild(contentRoot, 1); // Button MoreButton Width Auto
-                    if (moreButton is Button moreButton1)
-                    {
-                        moreButton1.Width = 70;
-                        moreButton1.HorizontalContentAlignment = HorizontalAlignment.Center;
-                    }
-
-                    DependencyObject grid = VisualTreeHelper.GetChild(contentRoot, 0); // Grid
-                    DependencyObject primaryItemsControl = VisualTreeHelper.GetChild(grid, 1); // ItemsControl PrimaryItemsControl HorizontalAlignment Right Grid.Column 1
-                    if (primaryItemsControl is ItemsControl primaryItemsControl1)
-                    {
-                        primaryItemsControl1.HorizontalAlignment = HorizontalAlignment.Left;
-                        Grid.SetColumn(primaryItemsControl1, 0);
-                    }
-                }
             };
         }
 

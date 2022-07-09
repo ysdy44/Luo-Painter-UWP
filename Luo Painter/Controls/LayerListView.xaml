@@ -7,7 +7,7 @@
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
-    xmlns:menus="using:Luo_Painter.Menus"
+    xmlns:luo_painter="using:Luo_Painter"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"  
@@ -31,6 +31,24 @@
     </FrameworkElement.Tag>
 
     <FrameworkElement.Resources>
+        <!--StaticResource-->
+        <!--Disabled is Hidden-->
+        <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Transparent"/>
+        <!--Style-->
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource SystemControlBackgroundListLowBrush}"/>
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundListLowBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
         <!--Storyboard-->
         <Storyboard x:Name="HideStoryboard" >
             <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" To="{x:Bind Width, Mode=OneWay}" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
@@ -67,7 +85,7 @@
 
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <ItemsStackPanel VerticalAlignment="Bottom"/>
+                <ItemsStackPanel VerticalAlignment="Top"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 
@@ -98,41 +116,46 @@
 
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="layers:ILayer">
-                <elements:SelectedSwiper Visible="{x:Bind Visibility, Mode=OneWay}" >
+                <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" elements:FrameworkElementExtensions.Depth="{x:Bind Depth, Mode=OneWay}" />
                             <ColumnDefinition Width="66"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="36"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="4"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="1" IsHitTestVisible="False" VerticalAlignment="Center" 
+                        <TextBlock Grid.Column="2" IsHitTestVisible="False" VerticalAlignment="Center" 
+                                   elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}" 
                                    Visibility="{Binding ElementName=MarqueeTextBlock, Path=Visibility, Mode=OneWay}" >
                             <Run Text="{x:Bind Name, Mode=OneWay}"/>                                   
-                            <Run>
+                            <Run>                            
                                 (
-                            </Run><Run Text="{x:Bind Type, Mode=OneWay}"/><Run>                              
+                            </Run><Run Text="{x:Bind Type, Mode=OneWay}"/><Run>                         
                                 )       
                             </Run>
                         </TextBlock>
 
-                        <Button Grid.Column="2"
-                                Padding="2"
-                                CornerRadius="2"
-                                BorderThickness="1"
-                                BorderBrush="{ThemeResource SystemControlBackgroundListLowBrush}"
-                                Background="{ThemeResource SystemControlBackgroundListLowBrush}"
-                                Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                CommandParameter="{Binding}" 
-                                Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
-                                >
-                            <FontIcon x:Name="VisibleIcon" Glyph="&#xE7B3;" FontSize="22" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                      Visibility="{x:Bind Visibility, Mode=OneWay}" />
+                        <Button Grid.Column="3" Command="{x:Bind}" >
+                            <FontIcon Glyph="&#xE228;" FontSize="16" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}" >
+                                <UIElement.RenderTransformOrigin>
+                                    0.5,0.5
+                                </UIElement.RenderTransformOrigin>
+                                <UIElement.RenderTransform>
+                                    <RotateTransform elements:FrameworkElementExtensions.IsExpand="{x:Bind IsExpand, Mode=OneWay}" />
+                                </UIElement.RenderTransform>
+                            </FontIcon>
                         </Button>
 
-                        <Border CornerRadius="2" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Grid.Column="5" CommandParameter="{Binding}" Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}" >
+                            <FontIcon Glyph="&#xE7B3;" FontSize="22" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                      elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}" />
+                        </Button>
+
+                        <Border Grid.Column="1" CornerRadius="2" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}"  >
                             <Image Source="{x:Bind Thumbnail, Mode=OneWay}" />
                         </Border>
 
@@ -160,34 +183,23 @@
         </ListView.Header>
 
         <ListView.Footer>
-            <CommandBar x:Name="CommandBar" MinWidth="210" >
-                <menus:EditAppBarButton x:Name="AddButton" Type="AddLayer" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Insert" />
-                    </UIElement.KeyboardAccelerators>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Insert
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF164;"/>
-                    </AppBarButton.Icon>
-                </menus:EditAppBarButton>
-                <menus:EditAppBarButton x:Name="RemoveButton" Type="Remove" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Delete" />
-                    </UIElement.KeyboardAccelerators>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Delete
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <AppBarButton.Icon>
-                        <SymbolIcon Symbol="Delete"/>
-                    </AppBarButton.Icon>
-                </menus:EditAppBarButton>
-            </CommandBar>
+            <Grid x:Name="Grid" Height="50" Background="{ThemeResource AppBackgroundLight}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AddButton" Style="{StaticResource AppButtonStyle}" >
+                    <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="24" Glyph="&#xF164;"/>
+                </Button>
+                <Button x:Name="RemoveButton" Grid.Column="3" Style="{StaticResource AppButtonStyle}" >
+                    <luo_painter:ElementIcon Type="Remove"/>
+                </Button>
+                <Button x:Name="Button" Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
+                    <luo_painter:ElementIcon Type="Layer"/>
+                </Button>
+            </Grid>
         </ListView.Footer>
 
     </ListView>
