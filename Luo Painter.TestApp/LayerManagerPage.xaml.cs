@@ -27,18 +27,22 @@ namespace Luo_Painter.TestApp
         }
     }
 
-    public sealed partial class LayerDragPage : Page
+    public sealed partial class LayerManagerPage : Page, ILayerManager
     {
 
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
+        readonly Historian<IHistory> History = new Historian<IHistory>(20);
 
-        Historian<IHistory> History { get; } = new Historian<IHistory>(20);
-        LayerDictionary Layers { get; } = new LayerDictionary();
-        LayerNodes Nodes { get; }
-        LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
-        IList<string> ClipboardLayers { get; } = new List<string>();
+        public LayerDictionary Layers { get; } = new LayerDictionary();
+        public LayerNodes Nodes { get; }
+        public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
+        public IList<string> ClipboardLayers { get; } = new List<string>();
 
-        public LayerDragPage()
+        public int LayerSelectedIndex { get => this.ListView.SelectedIndex; set => this.ListView.SelectedIndex = value; }
+        public object LayerSelectedItem { get => this.ListView.SelectedItem; set => this.ListView.SelectedItem = value; }
+        public IList<object> LayerSelectedItems => this.ListView.SelectedItems;
+
+        public LayerManagerPage()
         {
             this.InitializeComponent();
             this.ConstructLayers();
@@ -84,46 +88,11 @@ namespace Luo_Painter.TestApp
 
         private void ConstructLayers()
         {
-            this.ListView.DragItemsStarting += (s, e) =>
-            {
-                //e.Cancel = true;
-
-                foreach (ILayer item in e.Items)
-                {
-                    item.CacheIsExpand();
-                }
-            };
+            this.ListView.DragItemsStarting += (s, e) => this.DragItemsStarting(e.Items);
             this.ListView.DragItemsCompleted += (s, e) =>
             {
-                Layerage[] undo = this.Nodes.Convert();
-
-                foreach (ILayer item in e.Items)
-                {
-                    this.ObservableCollection.RemoveDragItems(item);
-                }
-
-                foreach (ILayer item in e.Items)
-                {
-                    this.ObservableCollection.AddDragItems(item);
-                }
-
-                foreach (ILayer item in e.Items)
-                {
-                    item.ApplyIsExpand();
-                }
-
-                this.Nodes.Clear();
-                foreach (ILayer item in this.ObservableCollection)
-                {
-                    if (item.Depth is 0)
-                    {
-                        this.Nodes.Add(item);
-                    }
-                }
-
                 /// History
-                Layerage[] redo = this.Nodes.Convert();
-                int removes = this.History.Push(new ArrangeHistory(undo, redo));
+                int removes = this.History.Push(this.DragItemsCompleted(e.Items));
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -134,21 +103,24 @@ namespace Luo_Painter.TestApp
         {
             this.AddButton.Click += (s, e) =>
             {
+                ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
+                this.Layers.Push(add);
+
                 /// History
-                int removes = this.History.Push(this.Add());
+                int removes = this.History.Push(this.Add(add));
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
             };
             this.RemoveButton.Click += (s, e) =>
             {
-                var items = this.ListView.SelectedItems;
+                var items = this.LayerSelectedItems;
                 switch (items.Count)
                 {
                     case 0:
                         break;
                     case 1:
-                        if (this.ListView.SelectedItem is ILayer layer)
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
                             /// History
                             int removes = this.History.Push(this.Remove(layer));
@@ -170,16 +142,16 @@ namespace Luo_Painter.TestApp
             };
             this.GroupButton.Click += (s, e) =>
             {
-                var items = this.ListView.SelectedItems;
+                var items = this.LayerSelectedItems;
                 switch (items.Count)
                 {
                     case 0:
                         break;
                     case 1:
-                        if (this.ListView.SelectedItem is ILayer layer)
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
                             /// History
-                            int removes = this.History.Push(this.Group(layer));
+                            int removes = this.History.Push(this.Group(this.CanvasDevice, 128, 128, layer));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -188,7 +160,7 @@ namespace Luo_Painter.TestApp
                     default:
                         {
                             /// History
-                            int removes = this.History.Push(this.Group(items));
+                            int removes = this.History.Push(this.Group(this.CanvasDevice, 128, 128, items));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -200,13 +172,13 @@ namespace Luo_Painter.TestApp
 
             this.CutButton.Click += (s, e) =>
             {
-                var items = this.ListView.SelectedItems;
+                var items = this.LayerSelectedItems;
                 switch (items.Count)
                 {
                     case 0:
                         break;
                     case 1:
-                        if (this.ListView.SelectedItem is ILayer layer)
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
                             /// History
                             int removes = this.History.Push(this.Cut(layer));
@@ -231,13 +203,13 @@ namespace Luo_Painter.TestApp
             this.CopyButton.Click += (s, e) =>
             {
                 /// History
-                var items = this.ListView.SelectedItems;
+                var items = this.LayerSelectedItems;
                 switch (items.Count)
                 {
                     case 0:
                         break;
                     case 1:
-                        if (this.ListView.SelectedItem is ILayer layer)
+                        if (this.LayerSelectedItem is ILayer layer)
                             this.Copy(layer);
                         this.PasteButton.IsEnabled = this.ClipboardLayers.Count is 0 is false;
                         break;
@@ -258,7 +230,7 @@ namespace Luo_Painter.TestApp
                         if (this.Layers.ContainsKey(id))
                         {
                             /// History
-                            int removes = this.History.Push(this.Paste(id));
+                            int removes = this.History.Push(this.Paste(this.CanvasDevice, 128, 128, id));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -267,7 +239,7 @@ namespace Luo_Painter.TestApp
                     default:
                         {
                             /// History
-                            int removes = this.History.Push(this.Paste(this.ClipboardLayers));
+                            int removes = this.History.Push(this.Paste(this.CanvasDevice, 128, 128, this.ClipboardLayers));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
