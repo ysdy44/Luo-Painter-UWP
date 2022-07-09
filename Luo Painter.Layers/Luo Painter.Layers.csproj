@@ -126,6 +126,10 @@
     <Compile Include="IRender.cs" />
     <Compile Include="ISetup.cs" />
     <Compile Include="LayerManagers\ILayerManager.cs" />
+    <Compile Include="LayerManagers\LayerManagerExtensions.Clipboard.cs" />
+    <Compile Include="LayerManagers\LayerManagerExtensions.Drag.cs" />
+    <Compile Include="LayerManagers\LayerManagerExtensions.Grouping.cs" />
+    <Compile Include="LayerManagers\LayerManagerExtensions.Layering.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />
