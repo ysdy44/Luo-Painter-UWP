@@ -125,6 +125,7 @@
     <Compile Include="ILayer.cs" />
     <Compile Include="IRender.cs" />
     <Compile Include="ISetup.cs" />
+    <Compile Include="LayerManagers\ILayerManager.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />
