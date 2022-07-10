@@ -4,6 +4,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Windows.UI;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
@@ -68,5 +69,7 @@ namespace Luo_Painter.Layers
                 currentImage
             }
         };
+        public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage) => this.Render(new ColorSourceEffect { Color = Colors.Transparent });
+
     }
 }

@@ -130,6 +130,17 @@ namespace Luo_Painter.Layers.Models
             Source = (base.Id == id) ? mezzanine : this.SourceRenderTarget,
         });
 
+        public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage)
+        {
+            if (base.Opacity == 0.0) return null;
+            else if (base.Opacity == 1.0) return previousRender.Render(previousImage, this.SourceRenderTarget);
+            return previousRender.Render(previousImage, new OpacityEffect
+            {
+                Opacity = base.Opacity,
+                Source = this.SourceRenderTarget
+            });
+        }
+
         public void RenderThumbnail() => base.RenderThumbnail(this.SourceRenderTarget);
 
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);
