@@ -22,7 +22,7 @@ namespace Luo_Painter.Layers
 
 
         public string Id { get; } = Guid.NewGuid().ToString();
-        public IList<ILayer> Children { get; } = new List<ILayer>();
+        public LayerNodes Children { get; } = new LayerNodes();
 
         public readonly Vector2 Center; // (125, 125)
         public readonly int Width; // 250

@@ -10,12 +10,11 @@ namespace Luo_Painter.Layers
 {
     public sealed class LayerNodes : List<ILayer>, ILayerRender
     {
-        public Layerage[] Convert() => LayerNodes.Convert(this);
-        private static Layerage[] Convert(IList<ILayer> layers) => (layers.Count is 0) ? null : layers.Select(LayerNodes.Convert).ToArray();
-        private static Layerage Convert(ILayer layer) => new Layerage
+        public Layerage[] Convert() => (base.Count is 0) ? null : this.Select(this.Convert).ToArray();
+        private Layerage Convert(ILayer layer) => new Layerage
         {
             Id = layer.Id,
-            Children = LayerNodes.Convert(layer.Children)
+            Children = layer.Children.Convert()
         };
 
         public ICanvasImage Render(ICanvasImage background)
