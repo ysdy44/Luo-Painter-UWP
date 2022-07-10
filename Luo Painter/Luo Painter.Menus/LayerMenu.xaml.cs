@@ -28,7 +28,11 @@ namespace Luo_Painter.Menus
         private string RoundConverter(double value) => $"{value:0}";
 
         public ThumbSlider OpacitySlider => this.OpacitySliderCore;
-
+         public bool PasteIsEnabled
+        {
+            get => this.PasteItem.IsEnabled;
+            set => this.PasteItem.IsEnabled = value;
+        }
         string StartingName;
         BlendEffectMode? StartingBlendMode;
 
@@ -38,13 +42,13 @@ namespace Luo_Painter.Menus
         public LayerMenu()
         {
             this.InitializeComponent();
-            this.LayerTextBox.GotFocus += (s, e) =>
+            this.NameTextBox.GotFocus += (s, e) =>
             {
-                this.StartingName = this.LayerTextBox.Text;
+                this.StartingName = this.NameTextBox.Text;
             };
-            this.LayerTextBox.LostFocus += (s, e) =>
+            this.NameTextBox.LostFocus += (s, e) =>
             {
-                string name = this.LayerTextBox.Text;
+                string name = this.NameTextBox.Text;
                 if (this.StartingName == name) return;
                 this.NameHistory?.Invoke(this.StartingName, name); // Delegate
             };
@@ -93,8 +97,8 @@ namespace Luo_Painter.Menus
 
             if (layer is null)
             {
-                this.LayerTextBox.IsEnabled = false;
-                this.LayerTextBox.Text = string.Empty;
+                this.NameTextBox.IsEnabled = false;
+                this.NameTextBox.Text = string.Empty;
                 this.OpacitySliderCore.Value = 100;
                 this.OpacitySliderCore.IsEnabled = false;
                 this.BlendModeComboBox.IsEnabled = false;
@@ -106,8 +110,8 @@ namespace Luo_Painter.Menus
             {
                 this.StartingBlendMode = layer.BlendMode;
 
-                this.LayerTextBox.IsEnabled = true;
-                this.LayerTextBox.Text = layer.Name ?? string.Empty;
+                this.NameTextBox.IsEnabled = true;
+                this.NameTextBox.Text = layer.Name ?? string.Empty;
                 this.OpacitySliderCore.IsEnabled = true;
                 this.OpacitySliderCore.Value = layer.Opacity * 100;
                 this.BlendModeComboBox.IsEnabled = true;

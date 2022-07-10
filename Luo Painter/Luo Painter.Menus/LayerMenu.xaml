@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
+    xmlns:blends="using:Luo_Painter.Blends"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:local="using:Luo_Painter.Menus"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
@@ -25,8 +26,22 @@
         <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <StackPanel Spacing="6">
+    <elements:Expander.TopAppBar>
+        <Grid Padding="6,0" ColumnSpacing="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <local:EditButton Type="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton Type="CopyLayer" Grid.Column="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton x:Name="PasteItem" Type="PasteLayer" Grid.Column="2" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton x:Name="RemoveItem" Type="Remove" Grid.Column="3" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        </Grid>
+    </elements:Expander.TopAppBar>
 
+    <StackPanel Spacing="2">
 
         <!--Opacity-->
         <elements:ThumbSlider x:Name="OpacitySliderCore" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
@@ -51,7 +66,10 @@
             </Slider.Header>
         </elements:ThumbSlider>
 
-
+        <!--BlendMode-->
+        <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            BlendMode
+        </TextBlock>
         <ComboBox x:Name="BlendModeComboBox" >
 
             <ItemsControl.ItemTemplate>
@@ -100,37 +118,21 @@
 
         </ComboBox>
 
-
-        <!--Layering-->
-        <TextBlock x:Name="LayeringTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Layering
+        <!--Name-->
+        <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Name
         </TextBlock>
-        <TextBox x:Name="LayerTextBox" >
+        <TextBox x:Name="NameTextBox" >
             <TextBox.PlaceholderText>
                 Input Text...
             </TextBox.PlaceholderText>
         </TextBox>
-        <Grid ColumnSpacing="4" RowSpacing="4" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
 
-            <local:EditItem Type="AddLayer" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem x:Name="RemoveItem"  Type="Remove" Grid.Column="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-            <local:EditItem Type="AddImageLayer" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="CutLayer" Grid.Column="1" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-            <local:EditItem Type="CopyLayer" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="PasteLayer" Grid.Column="1" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-        </Grid>
-
+        <!--TagType-->
+        <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Tag Type
+        </TextBlock>
+        <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
+        
     </StackPanel>
 </elements:Expander>
