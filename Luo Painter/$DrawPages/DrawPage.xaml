@@ -24,6 +24,8 @@
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind Canvas}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
+        <!--Range-->
+        <menus:SizeRange x:Name="SizeRange"/>
     </FrameworkElement.Resources>
 
 
@@ -39,22 +41,6 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--Head-->
-                        <Setter Target="HeadLeftTransform.X" Value="-60"/>
-                        <Setter Target="HeadLeftTransform.Y" Value="49"/>
-
-                        <Setter Target="HeadLeftScrollViewer.(Grid.Column)" Value="2"/>
-                        <Setter Target="HeadLeftScrollViewer.Padding" Value="24,0"/>
-                        <Setter Target="HeadLeftScrollViewer.HorizontalAlignment" Value="Left"/>
-                        <Setter Target="HeadLeftScrollViewer.VerticalAlignment" Value="Top"/>
-                        <Setter Target="HeadLeftScrollViewer.BorderThickness" Value="1,0,1,1"/>
-                        <Setter Target="HeadLeftScrollViewer.BorderBrush" Value="{ThemeResource AppStroke}"/>
-                        <Setter Target="HeadLeftScrollViewer.Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
-
-                        <Setter Target="SettingButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-                        <Setter Target="UndoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-                        <Setter Target="RedoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-                        <Setter Target="FullScreenButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
 
                         <!--Head-->
                         <Setter Target="ExportButton.Width" Value="60"/>
@@ -67,7 +53,7 @@
                         <Setter Target="SetupButton.Width" Value="60"/>
                         <Setter Target="LayerButton.Width" Value="60"/>
                         <Setter Target="ColorButton.Width" Value="60"/>
-
+                        
                         <!--Expander-->
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
                         <Setter Target="ExportMenu.Height" Value="Auto"/>
@@ -114,23 +100,6 @@
                         <AdaptiveTrigger MinWindowWidth="600"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--Head-->
-                        <Setter Target="HeadLeftTransform.X" Value="-70"/>
-                        <Setter Target="HeadLeftTransform.Y" Value="49"/>
-
-                        <Setter Target="HeadLeftScrollViewer.(Grid.Column)" Value="2"/>
-                        <Setter Target="HeadLeftScrollViewer.Padding" Value="24,0"/>
-                        <Setter Target="HeadLeftScrollViewer.HorizontalAlignment" Value="Left"/>
-                        <Setter Target="HeadLeftScrollViewer.VerticalAlignment" Value="Top"/>
-                        <Setter Target="HeadLeftScrollViewer.BorderThickness" Value="1,0,1,1"/>
-                        <Setter Target="HeadLeftScrollViewer.BorderBrush" Value="{ThemeResource AppStroke}"/>
-                        <Setter Target="HeadLeftScrollViewer.Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
-
-                        <Setter Target="SettingButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-                        <Setter Target="UndoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-                        <Setter Target="RedoButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-                        <Setter Target="FullScreenButton.Style" Value="{StaticResource TextBlockButtonStyle}"/>
-
                         <!--Expander-->
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
                         <Setter Target="ExpanderLightDismissOverlay.Half" Value="True"/>
@@ -190,9 +159,8 @@
                 <VisualState x:Name="FullScreen">
                     <VisualState.Setters>
                         <Setter Target="ApplicationView.IsAccent" Value="True"/>
-
+                    
                         <Setter Target="HeadTransform.Y" Value="-50"/>
-                        <Setter Target="HeadLeftScrollViewer.Opacity" Value="0"/>
 
                         <Setter Target="UnFullScreenButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
@@ -249,116 +217,104 @@
                 <TranslateTransform x:Name="HeadTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Q"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="NewWindow"/>
+                </Button>
+                <Button x:Name="SettingButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <SymbolIcon Symbol="Setting"/>
+                </Button>
+                <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="Z"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="Undo"/>
+                </Button>
+                <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="Y"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="Redo"/>
+                </Button>
+                <Button x:Name="FullScreenButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape"/>
+                    </UIElement.KeyboardAccelerators>
+                    <SymbolIcon Symbol="FullScreen"/>
+                </Button>
+            </StackPanel>
 
-            <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Q"/>
-                </UIElement.KeyboardAccelerators>
-                <SymbolIcon Symbol="NewWindow"/>
-            </Button>
 
-            <ScrollViewer x:Name="HeadLeftScrollViewer" Grid.Column="1" MinHeight="40" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
-                <UIElement.RenderTransformOrigin>
-                    0.5,0.5
-                </UIElement.RenderTransformOrigin>
-                <UIElement.RenderTransform>
-                    <TranslateTransform x:Name="HeadLeftTransform" X="0" Y="0"/>
-                </UIElement.RenderTransform>
-                <StackPanel Orientation="Horizontal">
-                    <Button x:Name="SettingButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                        <SymbolIcon Symbol="Setting"/>
-                    </Button>
-                    <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="Control" Key="Z"/>
-                        </UIElement.KeyboardAccelerators>
-                        <SymbolIcon Symbol="Undo"/>
-                    </Button>
-                    <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="Control" Key="Y"/>
-                        </UIElement.KeyboardAccelerators>
-                        <SymbolIcon Symbol="Redo"/>
-                    </Button>
-                    <Button x:Name="FullScreenButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape"/>
-                        </UIElement.KeyboardAccelerators>
-                        <SymbolIcon Symbol="FullScreen"/>
-                    </Button>
-                </StackPanel>
-            </ScrollViewer>
-
-            <ScrollViewer Grid.Column="2" HorizontalContentAlignment="Right" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource AppHorizontalScrollViewerStyle}">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="ToolButton" Style="{StaticResource AppButtonStyle}" >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="A"/>
-                        </UIElement.KeyboardAccelerators>
-                        <!--Icon-->
-                        <ContentControl x:Name="ToolIcon">
-                            <FrameworkElement.Resources>
-                                <ResourceDictionary x:Name="ToolResource"/>
-                            </FrameworkElement.Resources>
-                        </ContentControl>
-                    </Button>
-                    <Button x:Name="PaintButton" Style="{StaticResource AppButtonStyle}" >
-                        <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers="None" Key="P" />
-                        </UIElement.KeyboardAccelerators >
-                        <local:ElementIcon Type="Brush"/>
-                    </Button>
-                    <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
-                        <UIElement.KeyboardAccelerators >
-                            <KeyboardAccelerator Modifiers="None" Key="G" />
-                        </UIElement.KeyboardAccelerators >
-                        <local:ElementIcon Type="Edit"/>
-                    </Button>
-                    <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="W"/>
-                        </UIElement.KeyboardAccelerators>
-                        <local:ElementIcon Type="Adjustment"/>
-                    </Button>
-                    <Button x:Name="OptionButton" Style="{StaticResource AppButtonStyle}" >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="W"/>
-                        </UIElement.KeyboardAccelerators>
-                        <local:ElementIcon Type="Option"/>
-                    </Button>
-                    <Button x:Name="HistoryButton" Style="{StaticResource AppButtonStyle}" >
-                        <local:ElementIcon Type="History"/>
-                    </Button>
-                    <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}">
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="D"/>
-                        </UIElement.KeyboardAccelerators>
-                        <local:ElementIcon Type="Layer"/>
-                    </Button>
-                    <Button x:Name="ColorButton" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ToolButton" Style="{StaticResource AppButtonStyle}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="A"/>
+                    </UIElement.KeyboardAccelerators>
+                    <!--Icon-->
+                    <ContentControl x:Name="ToolIcon">
+                        <FrameworkElement.Resources>
+                            <ResourceDictionary x:Name="ToolResource"/>
+                        </FrameworkElement.Resources>
+                    </ContentControl>
+                </Button>
+                <Button x:Name="PaintButton" Style="{StaticResource AppButtonStyle}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers="None" Key="P" />
+                    </UIElement.KeyboardAccelerators >
+                    <local:ElementIcon Type="Brush"/>
+                </Button>
+                <Button x:Name="BrushButton" Style="{StaticResource AppButtonStyle}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers="None" Key="B" />
+                    </UIElement.KeyboardAccelerators >
+                    <local:ElementIcon Type="Brush"/>
+                </Button>
+                <Button x:Name="HistoryButton" Style="{StaticResource AppButtonStyle}" >
+                    <local:ElementIcon Type="History"/>
+                </Button>
+                <Button x:Name="ColorButton" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
                             ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
                             ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
                             ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
                             >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="E"/>
-                        </UIElement.KeyboardAccelerators>
-                        <UIElement.ManipulationMode>
-                            TranslateX, TranslateY
-                        </UIElement.ManipulationMode>
-                        <Grid>
-                            <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
-                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
-                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
-                        </Grid>
-                    </Button>
-                </StackPanel>
-            </ScrollViewer>
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="E"/>
+                    </UIElement.KeyboardAccelerators>
+                    <UIElement.ManipulationMode>
+                        TranslateX, TranslateY
+                    </UIElement.ManipulationMode>
+                    <Grid>
+                        <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
+                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
+                    <UIElement.KeyboardAccelerators >
+                        <KeyboardAccelerator Modifiers="None" Key="G" />
+                    </UIElement.KeyboardAccelerators >
+                    <local:ElementIcon Type="Edit"/>
+                </Button>
+                <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="W"/>
+                    </UIElement.KeyboardAccelerators>
+                    <local:ElementIcon Type="Adjustment"/>
+                </Button>
+                <Button x:Name="OptionButton" Style="{StaticResource AppButtonStyle}" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="W"/>
+                    </UIElement.KeyboardAccelerators>
+                    <local:ElementIcon Type="Option"/>
+                </Button>
+            </StackPanel>
 
         </Grid>
 
@@ -650,9 +606,9 @@
             <local:OptionSwitchPresenter x:Name="FootSwitchPresenter3" Grid.Row="1" >
                 <local:OptionCase Value="Feather">
                     <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Feather
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="FeatherButton" Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -668,9 +624,9 @@
                 </local:OptionCase>
                 <local:OptionCase Value="Grow">
                     <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Grow
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="GrowButton" Content="{x:Bind GrowSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -686,9 +642,9 @@
                 </local:OptionCase>
                 <local:OptionCase Value="Shrink">
                     <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Shrink
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="ShrinkButton" Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -710,9 +666,9 @@
                                 <GradientStop Color="White" Offset="1"/>
                             </LinearGradientBrush>
                         </Slider.Background>
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Exposure
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="ExposureButton" Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -734,9 +690,9 @@
                                 <GradientStop Color="White" Offset="1"/>
                             </LinearGradientBrush>
                         </Slider.Background>
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Brightness
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="BrightnessButton" Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -758,9 +714,9 @@
                                 <GradientStop Color="#00A5FF" Offset="1"/>
                             </LinearGradientBrush>
                         </Slider.Background>
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Saturation
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="SaturationButton" Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -789,9 +745,9 @@
                                 <GradientStop Color="#FFCE3B" Offset="1"/>
                             </LinearGradientBrush>
                         </Slider.Background>
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             HueRotation
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="HueRotationButton" Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -822,9 +778,9 @@
 
                             </LinearGradientBrush>
                         </Slider.Background>
-                        <Slider.Tag>
+                        <FrameworkElement.Tag>
                             Contrast
-                        </Slider.Tag>
+                        </FrameworkElement.Tag>
                         <Slider.Header>
                             <Button x:Name="ContrastButton" Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -848,9 +804,9 @@
                                     <GradientStop Color="#F99652" Offset="1"/>
                                 </LinearGradientBrush>
                             </Slider.Background>
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Temperature
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="TemperatureButton" Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
                                         Padding="4,0" MinWidth="70" Height="28"
@@ -871,9 +827,9 @@
                                     <GradientStop Color="#80763E" Offset="1"/>
                                 </LinearGradientBrush>
                             </Slider.Background>
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Tint
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="TintButton" Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
                                         Padding="4,0" MinWidth="70" Height="28"
@@ -898,9 +854,9 @@
                                         <GradientStop Color="Gray" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Slider.Background>
-                                <Slider.Tag>
+                                <FrameworkElement.Tag>
                                     Shadows
-                                </Slider.Tag>
+                                </FrameworkElement.Tag>
                                 <Slider.Header>
                                     <Button x:Name="ShadowsButton" Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
                                             Padding="4,0" MinWidth="70" Height="28"
@@ -920,9 +876,9 @@
                                         <GradientStop Color="White" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Slider.Background>
-                                <Slider.Tag>
+                                <FrameworkElement.Tag>
                                     Highlights
-                                </Slider.Tag>
+                                </FrameworkElement.Tag>
                                 <Slider.Header>
                                     <Button x:Name="HighlightsButton" Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
                                             Padding="4,0" MinWidth="70" Height="28"
@@ -938,9 +894,9 @@
                         </StackPanel>
                         <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
                             <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                <Slider.Tag>
+                                <FrameworkElement.Tag>
                                     Clarity
-                                </Slider.Tag>
+                                </FrameworkElement.Tag>
                                 <Slider.Header>
                                     <Button x:Name="ClarityButton" Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
                                             Padding="4,0" MinWidth="70" Height="28"
@@ -954,9 +910,9 @@
                                 </Slider.Header>
                             </Slider>
                             <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
-                                <Slider.Tag>
+                                <FrameworkElement.Tag>
                                     Blur
-                                </Slider.Tag>
+                                </FrameworkElement.Tag>
                                 <Slider.Header>
                                     <Button x:Name="BlurButton" Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
                                             Padding="4,0" MinWidth="70" Height="28"
@@ -975,9 +931,9 @@
                 <local:OptionCase Value="DisplacementLiquefaction">
                     <StackPanel x:Name="DisplacementLiquefactionPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
                         <Slider x:Name="DisplacementLiquefactionSizeSlider" Width="260" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Size
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="DisplacementLiquefactionSizeButton" Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -991,9 +947,9 @@
                             </Slider.Header>
                         </Slider>
                         <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="32" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Pressure
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="DisplacementLiquefactionPressureButton" 
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -1041,9 +997,9 @@
                 <local:OptionCase Value="RippleEffect">
                     <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
                         <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Frequency
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="FrequencyButton" Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -1057,9 +1013,9 @@
                             </Slider.Header>
                         </Slider>
                         <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Phase
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="PhaseButton" Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -1073,9 +1029,9 @@
                             </Slider.Header>
                         </Slider>
                         <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Tag>
+                            <FrameworkElement.Tag>
                                 Amplitude
-                            </Slider.Tag>
+                            </FrameworkElement.Tag>
                             <Slider.Header>
                                 <Button x:Name="AmplitudeButton" Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"            
                                     Padding="4,0" MinWidth="70" Height="28"
@@ -1144,6 +1100,7 @@
             <menus:OptionMenu x:Name="OptionMenu" />
             <menus:BrushMenu x:Name="BrushMenu" />
             <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" />
+            <menus:AddMenu x:Name="AddMenu"/>
             <menus:LayerMenu x:Name="LayerMenu"/>
             <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
         </elements:ExpanderLightDismissOverlay>
