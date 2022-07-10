@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    MinWidth="320"
     BorderBrush="{ThemeResource AppStroke}"
     Background="{ThemeResource SystemControlAcrylicElementBrush}" 
     >
@@ -16,6 +15,19 @@
     <elements:Expander.Title>
         Export
     </elements:Expander.Title>
+    
+    <elements:Expander.TopAppBar>
+        <ListBox x:Name="ComboBox" SelectedIndex="0" >
+            <ListBoxItem x:Name="NoneItem">Export</ListBoxItem>
+            <ListBoxItem x:Name="AllLayerItem">Export All Layer</ListBoxItem>
+        </ListBox>
+    </elements:Expander.TopAppBar>
+    
+    <elements:Expander.BottomAppBar>
+        <Button x:Name="Button" Padding="0" Width="Auto" Height="36" FontWeight="Medium" Foreground="Black" Background="#FFC003" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
+            Export
+        </Button>
+    </elements:Expander.BottomAppBar>
 
     <Grid RowSpacing="8" Height="380" >
 
@@ -25,13 +37,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Spacing="8">
+        <StackPanel Spacing="8" Padding="6,4">
 
             <!--DPI-->
             <TextBlock x:Name="DPITextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                 DPI
             </TextBlock>
-            <ListBox x:Name="DPIComboBox" SelectedIndex="1" >
+            <ListBox x:Name="DPIComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
                 <x:Int32>72</x:Int32>
                 <x:Int32>96</x:Int32>
                 <x:Int32>144</x:Int32>
@@ -44,7 +56,7 @@
             <TextBlock x:Name="FormatTextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                 File Format
             </TextBlock>
-            <ListBox x:Name="FormatComboBox" SelectedIndex="0" >
+            <ListBox x:Name="FormatComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
                 <x:String>JPEG</x:String>
                 <x:String>PNG</x:String>
                 <x:String>BMP</x:String>
@@ -129,10 +141,6 @@
 
             </FlipView>
         </Canvas>
-
-        <Button x:Name="Button" Grid.Row="2" Padding="0" Width="Auto" Height="32" Foreground="Black" Background="#FFC003" HorizontalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}">
-            Export
-        </Button>
 
     </Grid>
 </elements:Expander>

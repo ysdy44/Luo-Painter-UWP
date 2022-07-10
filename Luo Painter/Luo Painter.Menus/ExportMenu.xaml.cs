@@ -18,6 +18,7 @@ namespace Luo_Painter.Menus
         }
 
         //@Content
+        public bool IsAllLayers => this.ComboBox.SelectedIndex is 0 is false;
         public int DPI
         {
             get
