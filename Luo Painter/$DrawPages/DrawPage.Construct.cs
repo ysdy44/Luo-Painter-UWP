@@ -4,6 +4,8 @@ using Luo_Painter.Options;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -20,22 +22,31 @@ namespace Luo_Painter
 
         private void ConstructDialog()
         {
-            this.SettingButton.Click += async (s, e) =>
-            {
-                await this.SettingDislog.ShowInstance();
-            };
-
             this.ExportMenu.ExportClick += async (s, e) =>
             {
-                this.Tip("Saving...", this.ApplicationView.Title); // Tip
+                if (this.ExportMenu.IsAllLayers)
+                {
+                    IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
+                    if (folder is null) return;
+                    this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
-                bool? result = await this.Export();
-                if (result is null) return;
-
-                if (result.Value)
-                    this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
+                    // Export
+                    int result = await this.Nodes.ExportAllthis(folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
+                    this.Tip("Saved successfully", $"A total of {result} files"); // Tip
+                }
                 else
-                    this.Tip("Failed to Save", "Try again?"); // Tip
+                {
+                    IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                    if (file is null) return;
+                    this.Tip("Saving...", this.ApplicationView.Title); // Tip
+
+                    // Export
+                    bool result = await this.Nodes.Export(file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
+                    if (result)
+                        this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
+                    else
+                        this.Tip("Failed to Save", "Try again?"); // Tip
+                }
             };
         }
 
