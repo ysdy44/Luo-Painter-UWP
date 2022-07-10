@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="AddLayerIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center">
+            <PathIcon.Data>
+                M22.276,4.455C22.276,1.996 20.28,0 17.821,0L4.455,0C1.996,0 0,1.996 0,4.455L0,17.821C0,20.28 1.996,22.276 4.455,22.276L17.821,22.276C20.28,22.276 22.276,20.28 22.276,17.821L22.276,4.455ZM12.271,10.006L12.271,5.099L10.006,5.099L10.006,10.006L5.099,10.006L5.099,12.271L10.006,12.271L10.006,17.178L12.271,17.178L12.271,12.271L17.178,12.271L17.178,10.006L12.271,10.006Z
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>
