@@ -150,6 +150,7 @@
     <Compile Include="Models\BitmapLayer.PixelBounds.cs" />
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
     <Compile Include="Models\BitmapLayer.Setup.cs" />
+    <Compile Include="Models\GroupLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Layers.rd.xml" />
   </ItemGroup>

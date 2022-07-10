@@ -3,5 +3,6 @@
     public enum LayerType
     {
         Bitmap,
+        Group,
     }
 }
