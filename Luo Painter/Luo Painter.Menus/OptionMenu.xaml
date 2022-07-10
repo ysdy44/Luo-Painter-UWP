@@ -25,9 +25,28 @@
     </FrameworkElement.Resources>
 
     <StackPanel Spacing="2">
+
+        <!--Setup-->
+        <TextBlock x:Name="SetupTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Setup
+        </TextBlock>
+        <local:EditItem Type="CropCanvas" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+        <local:EditItem Type="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+        <!--More-->
+        <TextBlock x:Name="MoreTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            More
+        </TextBlock>
         <local:OptionItem Type="Transform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
         <local:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
         <local:OptionItem Type="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
         <local:OptionItem Type="RippleEffect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+   
     </StackPanel>
 </elements:Expander>
