@@ -106,7 +106,7 @@ namespace Luo_Painter
     internal sealed class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
 
 
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         //@Key
@@ -129,9 +129,15 @@ namespace Luo_Painter
 
         CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         Historian<IHistory> History { get; } = new Historian<IHistory>();
-        IDictionary<string, ILayer> Layers { get; } = new Dictionary<string, ILayer>();
-        ObservableCollection<ILayer> ObservableCollection { get; } = new ObservableCollection<ILayer>();
-        IList<string> ClipboardLayers { get; } = new List<string>();
+
+        public LayerDictionary Layers { get; } = new LayerDictionary();
+        public LayerNodes Nodes { get; } = new LayerNodes();
+        public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
+        public IList<string> ClipboardLayers { get; } = new List<string>();
+
+        public int LayerSelectedIndex { get => this.LayerListView.SelectedIndex; set => this.LayerListView.SelectedIndex = value; }
+        public object LayerSelectedItem { get => this.LayerListView.SelectedItem; set => this.LayerListView.SelectedItem = value; }
+        public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
         InkMixer InkMixer { get; set; } = new InkMixer();
         InkPresenter InkPresenter { get; } = new InkPresenter();

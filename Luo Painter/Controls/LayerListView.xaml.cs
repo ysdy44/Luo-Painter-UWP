@@ -65,13 +65,9 @@ namespace Luo_Painter.Controls
         #endregion
 
         public FrameworkElement PlacementTarget => this.Grid;
+        public int SelectedIndex { get => this.ListView.SelectedIndex; set => this.ListView.SelectedIndex = value; }
+        public object SelectedItem { get => this.ListView.SelectedItem; set => this.ListView.SelectedItem = value; }
         public IList<object> SelectedItems => this.ListView.SelectedItems;
-        public object SelectedItem => this.ListView.SelectedItem;
-        public int SelectedIndex
-        {
-            get => this.ListView.SelectedIndex;
-            set => this.ListView.SelectedIndex = value;
-        }
         public object ItemsSource { set => this.ListView.ItemsSource = value; }
         public ImageSource MarqueeSource { set => this.Image.Source = value; }
 
