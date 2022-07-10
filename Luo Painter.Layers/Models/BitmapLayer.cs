@@ -5,6 +5,7 @@ using System.Numerics;
 using Windows.UI;
 using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Graphics.Canvas.Effects;
 using Windows.Storage.Streams;
 
 namespace Luo_Painter.Layers.Models
@@ -115,7 +116,20 @@ namespace Luo_Painter.Layers.Models
             this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
 
-        public ICanvasImage GetRender(ICanvasImage background) => this.SourceRenderTarget;
+        public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.SourceRenderTarget);
+        public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Render(background, new Transform2DEffect
+        {
+            InterpolationMode = interpolationMode,
+            TransformMatrix = matrix,
+            Source = this.SourceRenderTarget,
+        });
+        public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Render(background, new Transform2DEffect
+        {
+            InterpolationMode = interpolationMode,
+            TransformMatrix = matrix,
+            Source = (base.Id == id) ? mezzanine : this.SourceRenderTarget,
+        });
+
         public void RenderThumbnail() => base.RenderThumbnail(this.SourceRenderTarget);
 
         public void Flush() => this.OriginRenderTarget.CopyPixelsFromBitmap(this.SourceRenderTarget);

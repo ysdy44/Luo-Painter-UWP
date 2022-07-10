@@ -10,15 +10,12 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Layers
 {
-    public interface ILayer : IRender, IDrag, ISetup, INotifyPropertyChanged, ICommand
+    public interface ILayer : ILayerRender, IRender, IDrag, ISetup, INotifyPropertyChanged, ICommand
     {
         string Id { get; }
         IList<ILayer> Children { get; }
 
         LayerType Type { get; }
-
-        ICanvasImage GetRender(ICanvasImage background);
-        ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage);
 
         ICanvasImage this[BitmapType type] { get; }
         ImageSource Thumbnail { get; }
