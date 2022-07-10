@@ -7,6 +7,8 @@
 
         Paint,
         Brush,
+        Size,
+
         Edit,
         Layer,
         Adjustment,
