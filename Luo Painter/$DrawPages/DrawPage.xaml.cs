@@ -210,7 +210,7 @@ namespace Luo_Painter
 
             this.ConstructBrush();
             this.ConstructInk();
-
+            
             this.ConstructEdits();
             this.ConstructSetup();
 
@@ -237,15 +237,16 @@ namespace Luo_Painter
             this.ExportButton.Click += (s, e) => this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
 
             this.ToolButton.Click += (s, e) => this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
-            this.BrushButton.Click += (s, e) => this.BrushMenu.Toggle(this.BrushButton, ExpanderPlacementMode.Bottom);
             this.PaintButton.Click += (s, e) => this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
+            this.BrushButton.Click += (s, e) => this.BrushMenu.Toggle(this.BrushButton, ExpanderPlacementMode.Bottom);
+            this.SizeButton.Click += (s, e) => this.SizeMenu.Toggle(this.SizeButton, ExpanderPlacementMode.Bottom);
             this.HistoryButton.Click += (s, e) => this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
             this.ColorButton.Click += (s, e) => this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
 
             this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
             this.AdjustmentButton.Click += (s, e) => this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
             this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
-
+            
             this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
             this.LayerListView.Remove += (s, e) => this.Edit(OptionType.Remove);
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
