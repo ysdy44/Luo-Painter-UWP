@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         IEnumerable<string> ChangedLayers;
@@ -61,7 +61,7 @@ namespace Luo_Painter
 
         private IEnumerable<string> Ids()
         {
-            foreach (object item in this.LayerListView.SelectedItems)
+            foreach (object item in this.LayerSelectedItems)
             {
                 if (item is ILayer layer)
                 {
@@ -162,7 +162,7 @@ namespace Luo_Painter
             {
                 this.NameUndoParameters.Clear();
 
-                foreach (object item in this.LayerListView.SelectedItems)
+                foreach (object item in this.LayerSelectedItems)
                 {
                     if (item is ILayer layer)
                     {
@@ -207,7 +207,7 @@ namespace Luo_Painter
             {
                 this.BlendModeUndoParameters.Clear();
 
-                foreach (object item in this.LayerListView.SelectedItems)
+                foreach (object item in this.LayerSelectedItems)
                 {
                     if (item is ILayer layer)
                     {
@@ -256,7 +256,7 @@ namespace Luo_Painter
 
                 this.OpacityUndoParameters.Clear();
 
-                foreach (object item in this.LayerListView.SelectedItems)
+                foreach (object item in this.LayerSelectedItems)
                 {
                     if (item is ILayer layer)
                     {
@@ -270,7 +270,7 @@ namespace Luo_Painter
             this.LayerMenu.OpacitySlider.ValueChangedDelta += (s, e) =>
             {
                 float opacity = (float)(e.NewValue / 100);
-                foreach (object item in this.LayerListView.SelectedItems)
+                foreach (object item in this.LayerSelectedItems)
                 {
                     if (item is ILayer layer)
                     {
@@ -318,7 +318,7 @@ namespace Luo_Painter
             {
                 this.OpacityUndoParameters.Clear();
 
-                foreach (object item in this.LayerListView.SelectedItems)
+                foreach (object item in this.LayerSelectedItems)
                 {
                     if (item is ILayer layer)
                     {

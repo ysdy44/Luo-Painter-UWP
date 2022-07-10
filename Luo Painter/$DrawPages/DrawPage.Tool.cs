@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using System;
@@ -12,7 +13,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private void ConstructTools()
@@ -200,7 +201,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.SelectionFlood:
-                    if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
+                    if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                     {
                         bool isSubtract = this.SelectionComboBox.SelectedIndex != 0;
                         this.SelectionFlood(point, bitmapLayer, isSubtract);

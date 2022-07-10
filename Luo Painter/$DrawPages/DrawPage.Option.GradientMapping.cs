@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Options;
+﻿using Luo_Painter.Layers;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -53,7 +54,7 @@ namespace Luo_Painter
         }
     }
 
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>

@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
+using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System;
@@ -11,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private void SetInkToolType(OptionType type)

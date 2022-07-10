@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private void ConstructSetup()
@@ -161,7 +161,7 @@ namespace Luo_Painter
 
         public void Setup(ILayer[] setups, SetupSizes sizes)
         {
-            int index = this.LayerListView.SelectedIndex;
+            int index = this.LayerSelectedIndex;
 
             // History
             string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
@@ -173,7 +173,7 @@ namespace Luo_Painter
                 this.Layers.Add(item.Id, item);
                 this.ObservableCollection.Add(item);
             }
-            this.LayerListView.SelectedIndex = index;
+            this.LayerSelectedIndex = index;
 
             // History
             int removes = this.History.Push(new ArrangeHistory(undo, redo, sizes));

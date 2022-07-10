@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         Vector2 Point;
@@ -24,7 +24,7 @@ namespace Luo_Painter
 
         private void Paint_Start(Vector2 point, float pressure)
         {
-            this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;
+            this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
                 this.Tip("No Layer", "Create a new Layer?");

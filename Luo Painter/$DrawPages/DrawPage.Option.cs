@@ -12,7 +12,7 @@ using Windows.Foundation;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private void ConstructOptions()
@@ -32,7 +32,7 @@ namespace Luo_Painter
         {
             this.ExpanderLightDismissOverlay.Hide();
 
-            if (this.LayerListView.SelectedItem is ILayer layer)
+            if (this.LayerSelectedItem is ILayer layer)
             {
                 if (layer.Type is LayerType.Bitmap)
                 {

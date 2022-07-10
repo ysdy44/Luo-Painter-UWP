@@ -11,7 +11,7 @@ using Luo_Painter.Layers;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         MarqueeToolType MarqueeToolType;

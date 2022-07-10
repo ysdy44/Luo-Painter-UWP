@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private Color GetStartColor()
@@ -57,7 +57,7 @@ namespace Luo_Painter
 
         private void Transparency_Start(Vector2 point)
         {
-            this.BitmapLayer = this.LayerListView.SelectedItem as BitmapLayer;
+            this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
                 this.Tip("No Layer", "Create a new Layer?");

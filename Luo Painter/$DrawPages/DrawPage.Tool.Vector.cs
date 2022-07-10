@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using System.Numerics;
 using Windows.UI.Xaml;
@@ -6,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private void ConstructVector()

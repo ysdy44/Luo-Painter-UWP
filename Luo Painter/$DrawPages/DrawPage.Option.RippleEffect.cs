@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
@@ -10,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         Rippler Rippler = Rippler.Zero;
