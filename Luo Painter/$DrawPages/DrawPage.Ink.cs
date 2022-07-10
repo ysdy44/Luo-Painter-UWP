@@ -47,7 +47,7 @@ namespace Luo_Painter
             };
 
 
-            this.PaintBrushTool.ItemClick += async (s, brush) =>
+            this.BrushMenu.ItemClick += async (s, brush) =>
             {
                 if (brush.Mask is PaintTexture mask) this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
                 else this.InkPresenter.SetMask(false);

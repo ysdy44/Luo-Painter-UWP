@@ -1114,7 +1114,6 @@
             <menus:ExportMenu x:Name="ExportMenu"/>
             <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
                 <local:OptionSwitchPresenter x:Name="ToolSwitchPresenter" >
-                    <tools:PaintBrushTool x:Name="PaintBrushTool" />
                     <tools:ViewTool x:Name="ViewTool" />
                     <local:OptionCase Value="Brush">
                         <StackPanel Spacing="6">
@@ -1143,6 +1142,7 @@
             <menus:EditMenu x:Name="EditMenu" />
             <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
             <menus:OptionMenu x:Name="OptionMenu" />
+            <menus:BrushMenu x:Name="BrushMenu" />
             <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" />
             <menus:LayerMenu x:Name="LayerMenu"/>
             <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />

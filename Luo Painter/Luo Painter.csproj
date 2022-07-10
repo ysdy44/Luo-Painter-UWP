@@ -172,6 +172,9 @@
     <Compile Include="Luo Painter.Menus\AdjustmentMenu.xaml.cs">
       <DependentUpon>AdjustmentMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Luo Painter.Menus\BrushMenu.xaml.cs">
+      <DependentUpon>BrushMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Luo Painter.Menus\ColorMenu.xaml.cs">
       <DependentUpon>ColorMenu.xaml</DependentUpon>
     </Compile>
@@ -192,9 +195,6 @@
     </Compile>
     <Compile Include="Luo Painter.Menus\PaintMenu.xaml.cs">
       <DependentUpon>PaintMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Luo Painter.Tools\PaintBrushTool.xaml.cs">
-      <DependentUpon>PaintBrushTool.xaml</DependentUpon>
     </Compile>
     <Compile Include="Luo Painter.Tools\ViewTool.xaml.cs">
       <DependentUpon>ViewTool.xaml</DependentUpon>
@@ -311,6 +311,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Luo Painter.Menus\BrushMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Luo Painter.Menus\ColorMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -336,10 +340,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Luo Painter.Menus\PaintMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Luo Painter.Tools\PaintBrushTool.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
