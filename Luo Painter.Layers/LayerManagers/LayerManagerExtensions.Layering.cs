@@ -7,6 +7,21 @@ namespace Luo_Painter.Layers
     public static partial class LayerManagerExtensions
     {
 
+        public static ArrangeHistory Clear(this ILayerManager self, ILayer add)
+        {
+            Layerage[] undo = self.Nodes.Convert();
+
+            self.Nodes.Clear();
+            self.Nodes.Add(add);
+            self.ObservableCollection.Clear();
+            self.ObservableCollection.Add(add);
+            self.LayerSelectedIndex = 0;
+
+            /// History
+            Layerage[] redo = self.Nodes.Convert();
+            return new ArrangeHistory(undo, redo);
+        }
+
         public static ArrangeHistory Add(this ILayerManager self, ILayer add)
         {
             Layerage[] undo = self.Nodes.Convert();
