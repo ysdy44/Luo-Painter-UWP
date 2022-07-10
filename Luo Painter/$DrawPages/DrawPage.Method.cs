@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Historys.Models;
+﻿using Luo_Painter.Historys;
+using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -16,7 +18,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private ICanvasImage Transparent => new CanvasCommandList(this.CanvasDevice);
@@ -36,7 +38,7 @@ namespace Luo_Painter
             return await FileUtil.SaveCanvasImageFile
             (
                 resourceCreator: this.CanvasDevice,
-                image: this.Render(isClearWhite ? this.White : this.Transparent),
+                image: this.Nodes.Render(isClearWhite ? this.White : this.Transparent),
 
                 width: this.Transformer.Width,
                 height: this.Transformer.Height,
@@ -79,147 +81,100 @@ namespace Luo_Painter
         }
 
 
-        private ICanvasImage Render(ICanvasImage background)
-        {
-            for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
-            {
-                ILayer item = this.ObservableCollection[i];
-
-                background = item.Render(background, item[BitmapType.Source]);
-            }
-            return background;
-        }
-
-        private ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode)
-        {
-            for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
-            {
-                ILayer item = this.ObservableCollection[i];
-
-                background = item.Render(background, new Transform2DEffect
-                {
-                    InterpolationMode = interpolationMode,
-                    TransformMatrix = matrix,
-                    Source = item[BitmapType.Source],
-                });
-            }
-            return background;
-        }
-
-        private ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine)
-        {
-            for (int i = this.ObservableCollection.Count - 1; i >= 0; i--)
-            {
-                ILayer item = this.ObservableCollection[i];
-
-                background = item.Render(background, new Transform2DEffect
-                {
-                    InterpolationMode = interpolationMode,
-                    TransformMatrix = matrix,
-                    Source = (item.Id == id) ? mezzanine : item[BitmapType.Source],
-                });
-            }
-            return background;
-        }
-
-
-        public void Remove()
-        {
-            int index = this.LayerListView.SelectedIndex;
-            if (index < 0) return;
-            if (index + 1 > this.ObservableCollection.Count) return;
-
-            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-            foreach (string id in this.Ids().ToArray())
-            {
-                if (this.Layers.ContainsKey(id))
-                {
-                    ILayer layer = this.Layers[id];
-                    this.ObservableCollection.Remove(layer);
-                }
-            }
-            this.LayerListView.SelectedIndex = System.Math.Min(index, this.ObservableCollection.Count - 1);
-
-            // History
-            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-            int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
-        }
-
-        public void Add()
-        {
-            int index = this.LayerListView.SelectedIndex;
-            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-            if (index >= 0)
-                this.ObservableCollection.Insert(index, bitmapLayer);
-            else
-                this.ObservableCollection.Add(bitmapLayer);
-            this.LayerListView.SelectedIndex = System.Math.Max(0, index);
-
-            // History
-            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-            int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
-        }
-       
+        public async void AddAsync() => this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop));
+     
         public async void AddAsync(IEnumerable<IStorageFile> items)
         {
             if (items is null) return;
             if (items.Count() == 0) return;
 
+            Layerage[] undo = this.Nodes.Convert();
+
             int count = 0;
             int index = this.LayerListView.SelectedIndex;
-            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-            foreach (IRandomAccessStreamReference item in items)
+            if (index > 0 && this.LayerListView.SelectedItem is ILayer neighbor)
             {
-                CanvasBitmap bitmap = null;
-                try
+                ILayer parent = this.ObservableCollection.GetParent(neighbor);
+                if (parent is null)
                 {
-                    using (IRandomAccessStreamWithContentType stream = await item.OpenReadAsync())
+                    int indexChild = this.Nodes.IndexOf(neighbor);
+
+                    foreach (IRandomAccessStreamReference item in items)
                     {
-                        bitmap = await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
+                        CanvasBitmap bitmap = await this.CreateBitmap(item);
+                        if (bitmap is null) continue;
+
+                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+                        this.Layers.Push(add);
+
+                        this.Nodes.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                        count++;
                     }
                 }
-                catch (Exception)
-                {
-                }
-                if (bitmap is null) continue;
-
-                BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-                this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-                if (index >= 0)
-                    this.ObservableCollection.Insert(index + count, bitmapLayer);
                 else
-                    this.ObservableCollection.Add(bitmapLayer);
+                {
+                    int indexChild = parent.Children.IndexOf(neighbor);
 
-                count++;
+                    foreach (IRandomAccessStreamReference item in items)
+                    {
+                        CanvasBitmap bitmap = await this.CreateBitmap(item);
+                        if (bitmap is null) continue;
+
+                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+                        this.Layers.Push(add);
+
+                        parent.Children.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                        count++;
+                    }
+                }
+
+                this.LayerListView.SelectedIndex = index;
+            }
+            else
+            {
+                foreach (IRandomAccessStreamReference item in items)
+                {
+                    CanvasBitmap bitmap = await this.CreateBitmap(item);
+                    if (bitmap is null) continue;
+
+                    BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+                    this.Layers.Push(add);
+
+                    this.Nodes.Insert(0, add);
+                    this.ObservableCollection.InsertChild(0, add);
+                    count++;
+                }
+
+                this.LayerListView.SelectedIndex = 0;
             }
 
-            if (count == 0) return;
-            if (count > 1) this.Tip("Add Images", $"{count}"); // Tip
-
-            // History
-            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
+            /// History
+            Layerage[] redo = this.Nodes.Convert();
             int removes = this.History.Push(new ArrangeHistory(undo, redo));
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
             this.UndoButton.IsEnabled = this.History.CanUndo;
             this.RedoButton.IsEnabled = this.History.CanRedo;
-            this.LayerListView.SelectedIndex = System.Math.Max(0, index);
+        }
+
+        private async Task<CanvasBitmap> CreateBitmap(IRandomAccessStreamReference item)
+        {
+            if (item is null) return null;
+
+            try
+            {
+                using (IRandomAccessStreamWithContentType stream = await item.OpenReadAsync())
+                {
+                    return await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
     }

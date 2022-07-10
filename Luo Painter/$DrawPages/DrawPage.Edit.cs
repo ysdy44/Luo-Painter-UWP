@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Historys.Models;
+﻿using Luo_Painter.Historys;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
@@ -11,182 +11,283 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         private void ConstructEdits()
         {
-            this.LayerListView.Add += (s, e) => this.Add();
-            this.LayerListView.Remove += (s, e) => this.Remove();
-        
-            this.LayerMenu.ItemClick += async (s, type) =>
+            this.AddMenu.ItemClick += (s, type) => this.Edit(type);
+            this.LayerMenu.ItemClick += (s, type) => this.Edit(type);
+            this.EditMenu.ItemClick += (s, type) => this.Edit(type);
+        }
+
+        public void Edit(OptionType type)
+        {
+            switch (type)
             {
-                switch (type)
-                {
-                    case OptionType.Remove:
-                        this.Remove();
-                        break;
-                    case OptionType.AddLayer:
-                        this.Add();
-                        break;
-                    case OptionType.AddImageLayer:
-                        this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop));
-                        break;
-                    case OptionType.CutLayer: // CopyLayer + Remove
-                        this.ClipboardLayers.Clear();
-                        foreach (string item in this.Ids())
+                case OptionType.None:
+                    break;
+
+                case OptionType.Remove:
+                    {
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
                         {
-                            this.ClipboardLayers.Add(item);
-                        }
-
-                        this.Remove();
-                        break;
-                    case OptionType.CopyLayer:
-                        this.ClipboardLayers.Clear();
-                        foreach (string item in this.Ids())
-                        {
-                            this.ClipboardLayers.Add(item);
-                        }
-                        break;
-                    case OptionType.PasteLayer:
-                        {
-                            if (this.ClipboardLayers.Count is 0) break;
-
-                            int index = this.LayerListView.SelectedIndex;
-                            if (index < 0) index = 0;
-                            else if (index > this.ObservableCollection.Count - 1) index = this.ObservableCollection.Count - 1; ;
-
-                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-                            int add = 0;
-                            foreach (string item in this.ClipboardLayers)
-                            {
-                                if (this.Layers.ContainsKey(item))
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
                                 {
-                                    if (this.Layers[item] is ILayer layer)
-                                    {
-                                        ILayer layer2 = layer.Clone(this.CanvasDevice);
-                                        this.Layers.Add(layer2.Id, layer2);
-                                        this.ObservableCollection.Insert(index + add, layer2);
-                                        add++;
-                                    }
-                                }
-                            }
-                            this.LayerListView.SelectedIndex = index;
+                                    /// History
+                                    int removes = this.History.Push(this.Remove(layer));
 
-                            // History
-                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                            default:
+                                {
+                                    /// History
+                                    int removes = this.History.Push(this.Remove(items));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.AddLayer:
+                    {
+                        ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+                        this.Layers.Push(add);
+
+                        /// History
+                        int removes = this.History.Push(this.Add(add));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.AddImageLayer:
+                    this.AddAsync();
+                    break;
+                case OptionType.CutLayer:
+                    {
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
+                                {
+                                    /// History
+                                    int removes = this.History.Push(this.Cut(layer));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                }
+                                break;
+                            default:
+                                {
+                                    /// History
+                                    int removes = this.History.Push(this.Cut(items));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.CopyLayer:
+                    {
+                        /// History
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
+                                    this.Copy(layer);
+                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                break;
+                            default:
+                                this.Copy(items);
+                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.PasteLayer:
+                    {
+                        switch (this.ClipboardLayers.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                string id = this.ClipboardLayers.Single();
+                                if (this.Layers.ContainsKey(id))
+                                {
+                                    /// History
+                                    int removes = this.History.Push(this.Paste(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                            default:
+                                {
+                                    /// History
+                                    int removes = this.History.Push(this.Paste(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ClipboardLayers));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                        }
+                    }
+                    break;
+
+                case OptionType.Cut: // Copy + Clear
+                    {
+                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
+                        {
+                            Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+                            switch (mode)
+                            {
+                                case PixelBoundsMode.None:
+                                    this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
+
+                                    // History
+                                    int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
+                                    bitmapLayer.Flush();
+                                    bitmapLayer.RenderThumbnail();
+                                    break;
+                                default:
+                                    this.Clipboard.CopyPixels(bitmapLayer);
+
+                                    // History
+                                    int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
+                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
+                                    bitmapLayer.ClearThumbnail(Colors.Transparent);
+                                    break;
+                            }
+
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.LayerMenu.PasteIsEnabled = true;
+                        }
+                        else
+                        {
+                            this.Tip("No Layer", "Create a new Layer?");
+                        }
+                    }
+                    break;
+                case OptionType.Duplicate: // CopyLayer + PasteLayer
+                    this.Edit(OptionType.CopyLayer);
+                    this.Edit(OptionType.PasteLayer);
+                    break;
+                case OptionType.Copy:
+                    {
+                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
+                        {
+                            Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+                            switch (mode)
+                            {
+                                case PixelBoundsMode.None:
+                                    this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
+                                    break;
+                                default:
+                                    this.Clipboard.CopyPixels(bitmapLayer);
+                                    break;
+                            }
+
+                            this.LayerMenu.PasteIsEnabled = true;
+                        }
+                    }
+                    break;
+                case OptionType.Paste:
+                    {
+                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+                        if (mode is PixelBoundsMode.Transarent)
+                        {
+                            this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                            break;
+                        }
+
+                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, this.Clipboard[BitmapType.Source], this.Transformer.Width, this.Transformer.Height);
+
+                        // History
+                        int removes = this.History.Push(this.Add(add));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.Clear:
+                    {
+                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
+                        {
+                            Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+                            switch (mode)
+                            {
+                                case PixelBoundsMode.None:
+                                    // History
+                                    int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
+                                    bitmapLayer.Flush();
+                                    bitmapLayer.RenderThumbnail();
+                                    break;
+                                default:
+                                    // History
+                                    int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
+                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
+                                    bitmapLayer.ClearThumbnail(Colors.Transparent);
+                                    break;
+                            }
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
-                        break;
-                    default:
-                        break;
-                }
-            };
-            this.EditMenu.ItemClick += (s, type) =>
-            {
-                switch (type)
-                {
-                    case OptionType.None:
-                        break;
-                    case OptionType.Cut: // Copy + Clear
-                        {
-                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
-                            {
-                                Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                                PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                                switch (mode)
-                                {
-                                    case PixelBoundsMode.None:
-                                        this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
-
-                                        // History
-                                        int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
-                                        bitmapLayer.Flush();
-                                        bitmapLayer.RenderThumbnail();
-                                        break;
-                                    default:
-                                        this.Clipboard.CopyPixels(bitmapLayer);
-
-                                        // History
-                                        int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
-                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
-                                        bitmapLayer.ClearThumbnail(Colors.Transparent);
-                                        break;
-                                }
-
-                                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                this.UndoButton.IsEnabled = this.History.CanUndo;
-                                this.RedoButton.IsEnabled = this.History.CanRedo;
-
-                                this.PhaseButton.IsEnabled = true;
-                            }
-                            else
-                            {
-                                this.Tip("No Layer", "Create a new Layer?");
-                            }
-                        }
-                        break;
-                    case OptionType.Duplicate:
-                        {
-                            if (this.LayerListView.SelectedItem is ILayer layer)
-                            {
-                                int index = this.LayerListView.SelectedIndex;
-                                if (index < 0) break;
-                                else if (index + 1 > this.ObservableCollection.Count) break;
-
-                                string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-                                ILayer layer2 = layer.Clone(this.CanvasDevice);
-                                this.Layers.Add(layer2.Id, layer2);
-                                this.ObservableCollection.Insert(index, layer2);
-                                this.LayerListView.SelectedIndex = index;
-
-                                // History
-                                string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                                int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-                                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                this.UndoButton.IsEnabled = this.History.CanUndo;
-                                this.RedoButton.IsEnabled = this.History.CanRedo;
-                            }
-                            else
-                            {
-                                this.Tip("No Layer", "Create a new Layer?");
-                            }
-                        }
-                        break;
-                    case OptionType.Copy:
-                        {
-                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
-                            {
-                                Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                                PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                                switch (mode)
-                                {
-                                    case PixelBoundsMode.None:
-                                        this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
-                                        break;
-                                    default:
-                                        this.Clipboard.CopyPixels(bitmapLayer);
-                                        break;
-                                }
-
-                                this.PhaseButton.IsEnabled = true;
-                            }
-                        }
-                        break;
-                    case OptionType.Paste:
+                    }
+                    break;
+                case OptionType.Extract:
+                    {
+                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
                             Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
@@ -196,247 +297,246 @@ namespace Luo_Painter
                                 this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
                                 break;
                             }
-                            int index = this.LayerListView.SelectedIndex;
-                            if (index < 0) break;
-                            else if (index + 1 > this.ObservableCollection.Count) break;
 
-                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-                            BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, this.Clipboard[BitmapType.Source], this.Transformer.Width, this.Transformer.Height);
-
-                            this.Layers.Add(bitmapLayer2.Id, bitmapLayer2);
-                            this.ObservableCollection.Insert(index, bitmapLayer2);
-                            this.LayerListView.SelectedIndex = index;
+                            BitmapLayer add;
+                            switch (mode)
+                            {
+                                case PixelBoundsMode.None:
+                                    add = new BitmapLayer(this.CanvasDevice, bitmapLayer.GetMask(this.Marquee), this.Transformer.Width, this.Transformer.Height);
+                                    break;
+                                default:
+                                    add = new BitmapLayer(this.CanvasDevice, bitmapLayer);
+                                    break;
+                            }
 
                             // History
-                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+                            int removes = this.History.Push(this.Add(add));
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
-                        break;
-                    case OptionType.Clear:
+                    }
+                    break;
+                case OptionType.Merge:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
-                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
+                            switch (layer.Type)
                             {
-                                Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                                PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+                                case LayerType.Bitmap:
+                                    if (layer is BitmapLayer bitmapLayer)
+                                    {
+                                        if (this.ObservableCollection.GetNeighbor(layer) is ILayer neighbor)
+                                        {
+                                            if (neighbor.Merge(bitmapLayer, bitmapLayer[BitmapType.Origin]) is ICanvasImage source)
+                                            {
+                                                /// History
+                                                bitmapLayer.DrawCopy(source);
+                                                int removes1 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
+                                                bitmapLayer.Flush();
+                                                bitmapLayer.RenderThumbnail();
 
-                                switch (mode)
-                                {
-                                    case PixelBoundsMode.None:
-                                        // History
-                                        int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
-                                        bitmapLayer.Flush();
-                                        bitmapLayer.RenderThumbnail();
-                                        break;
-                                    default:
-                                        // History
-                                        int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
-                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
-                                        bitmapLayer.ClearThumbnail(Colors.Transparent);
-                                        break;
-                                }
-                            }
+                                                /// History
+                                                int removes2 = this.History.Push(this.Remove(neighbor));
 
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                        }
-                        break;
-                    case OptionType.Extract:
-                        {
-                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
-                            {
-                                Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                                PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                                if (mode is PixelBoundsMode.Transarent)
-                                {
-                                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                                this.UndoButton.IsEnabled = this.History.CanUndo;
+                                                this.RedoButton.IsEnabled = this.History.CanRedo;
+                                            }
+                                        }
+                                    }
                                     break;
-                                }
-
-                                int index = this.LayerListView.SelectedIndex;
-                                if (index < 0) break;
-                                if (index + 1 > this.ObservableCollection.Count) break;
-
-                                string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-                                BitmapLayer bitmapLayer2;
-                                switch (mode)
-                                {
-                                    case PixelBoundsMode.None:
-                                        bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer.GetMask(this.Marquee), this.Transformer.Width, this.Transformer.Height);
-                                        break;
-                                    default:
-                                        bitmapLayer2 = new BitmapLayer(this.CanvasDevice, bitmapLayer);
-                                        break;
-                                }
-                                this.Layers.Add(bitmapLayer2.Id, bitmapLayer2);
-                                this.ObservableCollection.Insert(index, bitmapLayer2);
-                                this.LayerListView.SelectedIndex = index;
-
-                                // History
-                                string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                                int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-                                this.UndoButton.IsEnabled = this.History.CanUndo;
-                                this.RedoButton.IsEnabled = this.History.CanRedo;
+                                default:
+                                    return;
                             }
                         }
-                        break;
-                    case OptionType.Merge:
+                    }
+                    break;
+                case OptionType.Flatten:
+                    {
+                        ICanvasImage image = this.Nodes.Merge(null, null);
+                        ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
+                        this.Layers.Push(add);
+
+                        /// History
+                        int removes = this.History.Push(this.Clear(add));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.Group:
+                    {
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
                         {
-                            int index = this.LayerListView.SelectedIndex;
-                            if (index < 0) break;
-                            else if (index + 2 > this.ObservableCollection.Count) break;
-
-                            if (this.ObservableCollection[index] is ILayer current)
-                            {
-                                if (this.ObservableCollection[index + 1] is ILayer previous)
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
                                 {
-                                    string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
+                                    ILayer add = new GroupLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
-                                    ICanvasImage image = current.Render(previous[BitmapType.Source], current[BitmapType.Source]);
-                                    BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
-                                    this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-
-                                    this.ObservableCollection.Remove(current);
-                                    this.ObservableCollection.Remove(previous);
-                                    this.ObservableCollection.Insert(index, bitmapLayer);
-                                    this.LayerListView.SelectedIndex = index;
-
-                                    // History
-                                    string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                                    int removes = this.History.Push(new ArrangeHistory(undo, redo));
+                                    /// History
+                                    int removes = this.History.Push(this.Group(add, layer));
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                                     this.UndoButton.IsEnabled = this.History.CanUndo;
                                     this.RedoButton.IsEnabled = this.History.CanRedo;
                                 }
-                            }
+                                break;
+                            default:
+                                {
+                                    ILayer add = new GroupLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+
+                                    /// History
+                                    int removes = this.History.Push(this.Group(add, items));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
                         }
-                        break;
-                    case OptionType.Flatten:
+                    }
+                    break;
+                case OptionType.Ungroup:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
-                            int index = this.LayerListView.SelectedIndex;
-                            if (index < 0) break;
-                            else if (index + 1 > this.ObservableCollection.Count) break;
-                            else if (1 >= this.ObservableCollection.Count) break;
+                            if (layer.Children.Count is 0) return;
 
-                            string[] undo = this.ObservableCollection.Select(c => c.Id).ToArray();
-
-                            ICanvasImage image = this.Render(this.Transparent);
-                            BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
-                            this.Layers.Add(bitmapLayer.Id, bitmapLayer);
-
-                            this.ObservableCollection.Clear();
-                            this.ObservableCollection.Add(bitmapLayer);
-                            this.LayerListView.SelectedIndex = 0;
-
-                            // History
-                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+                            /// History
+                            int removes = this.History.Push(this.Ungroup(layer));
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
-                        break;
-                    case OptionType.Group:
-                        break;
-                    case OptionType.Ungroup:
-                        break;
-                    case OptionType.Release:
-                        break;
-                    case OptionType.All:
+                    }
+                    break;
+                case OptionType.Release:
+                    {
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
                         {
-                            // History
-                            int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue));
-                            this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
-                            this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
-                            this.Marquee.ClearThumbnail(Colors.DodgerBlue);
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
+                                {
+                                    if (this.Release(layer) is IHistory history)
+                                    {
+                                        /// History
+                                        int removes = this.History.Push(history);
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                        }
-                        break;
-                    case OptionType.Deselect:
-                        {
-                            // History
-                            int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.Transparent));
-                            this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
-                            this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
-                            this.Marquee.ClearThumbnail(Colors.Transparent);
+                                        this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    }
+                                }
+                                break;
+                            default:
+                                {
+                                    /// History
+                                    int removes = this.History.Push(this.Release(items));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
                         }
-                        break;
-                    case OptionType.MarqueeInvert:
+                    }
+                    break;
+                case OptionType.All:
+                    {
+                        // History
+                        int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue));
+                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
+                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
+                        this.Marquee.ClearThumbnail(Colors.DodgerBlue);
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.Deselect:
+                    {
+                        // History
+                        int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.Transparent));
+                        this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
+                        this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
+                        this.Marquee.ClearThumbnail(Colors.Transparent);
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.MarqueeInvert:
+                    {
+                        // History
+                        int removes = this.History.Push(this.Marquee.Invert(Colors.DodgerBlue));
+                        this.Marquee.Flush();
+                        this.Marquee.RenderThumbnail();
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.Pixel:
+                    {
+                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
                             // History
-                            int removes = this.History.Push(this.Marquee.Invert(Colors.DodgerBlue));
+                            int removes = this.History.Push(this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue));
                             this.Marquee.Flush();
                             this.Marquee.RenderThumbnail();
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                         }
-                        break;
-                    case OptionType.Pixel:
-                        {
-                            if (this.LayerListView.SelectedItem is BitmapLayer bitmapLayer)
-                            {
-                                // History
-                                int removes = this.History.Push(this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue));
-                                this.Marquee.Flush();
-                                this.Marquee.RenderThumbnail();
-
-                                this.UndoButton.IsEnabled = this.History.CanUndo;
-                                this.RedoButton.IsEnabled = this.History.CanRedo;
-                            }
-                        }
-                        break;
-                    case OptionType.Feather:
-                        this.EditClick(OptionType.Feather);
-                        break;
-                    case OptionType.MarqueeTransform:
-                        this.EditClick(OptionType.MarqueeTransform);
-                        break;
-                    case OptionType.Grow:
-                        this.EditClick(OptionType.Grow);
-                        break;
-                    case OptionType.Shrink:
-                        this.EditClick(OptionType.Shrink);
-                        break;
-                    case OptionType.Union:
-                        break;
-                    case OptionType.Exclude:
-                        break;
-                    case OptionType.Xor:
-                        break;
-                    case OptionType.Intersect:
-                        break;
-                    case OptionType.ExpandStroke:
-                        break;
-                    default:
-                        break;
-                }
-            };
+                    }
+                    break;
+                case OptionType.Feather:
+                    this.EditClick(OptionType.Feather);
+                    break;
+                case OptionType.MarqueeTransform:
+                    this.EditClick(OptionType.MarqueeTransform);
+                    break;
+                case OptionType.Grow:
+                    this.EditClick(OptionType.Grow);
+                    break;
+                case OptionType.Shrink:
+                    this.EditClick(OptionType.Shrink);
+                    break;
+                case OptionType.Union:
+                    break;
+                case OptionType.Exclude:
+                    break;
+                case OptionType.Xor:
+                    break;
+                case OptionType.Intersect:
+                    break;
+                case OptionType.ExpandStroke:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private bool EditClick(OptionType type)
         {
-            this.ExpanderLightDismissOverlay.Hide();
 
             Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);

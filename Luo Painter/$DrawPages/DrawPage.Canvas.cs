@@ -55,7 +55,7 @@ namespace Luo_Painter
         }
     }
 
-    public sealed partial class DrawPage : Page
+    public sealed partial class DrawPage : Page, ILayerManager
     {
 
         bool StartingToolShow;
@@ -183,6 +183,7 @@ namespace Luo_Painter
                 // Layer
                 BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
                 this.Layers.Add(bitmapLayer.Id, bitmapLayer);
+                this.Nodes.Add(bitmapLayer);
                 this.ObservableCollection.Add(bitmapLayer);
                 this.LayerListView.SelectedIndex = 0;
 
@@ -202,9 +203,9 @@ namespace Luo_Painter
                         {
                             // Layer
                             if (this.OptionType.IsEdit() || this.BitmapLayer is null)
-                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
+                                ds.DrawImage(this.Nodes.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                             else
-                                ds.DrawImage(this.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
+                                ds.DrawImage(this.Nodes.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
                         }
                     }
                 }
