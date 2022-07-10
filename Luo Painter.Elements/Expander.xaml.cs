@@ -416,14 +416,17 @@ namespace Luo_Painter.Elements
             this.V = v;
 
             base.MaxWidth = u;
-            base.MaxHeight = v;
             switch (this.FullScreen)
             {
                 case false:
+                    base.MaxHeight = v - 70;
+
                     base.Width = base.MinWidth + base.Padding.Left + base.Padding.Right;
                     base.Height = double.NaN;
                     break;
                 case true:
+                    base.MaxHeight = v;
+
                     if (this.IsFlyout) break;
                     if (this.IsShow)
                     {
