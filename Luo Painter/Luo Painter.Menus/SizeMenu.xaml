@@ -1,0 +1,117 @@
+﻿<elements:Expander
+    x:Class="Luo_Painter.Menus.SizeMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:menus="using:Luo_Painter.Menus"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    BorderBrush="{ThemeResource AppStroke}" 
+    Background="{ThemeResource SystemControlAcrylicElementBrush}"
+    >
+
+    <elements:Expander.Title>
+        Size
+    </elements:Expander.Title>
+
+    <ListView
+        x:Name="ListView"
+        IsItemClickEnabled="True"
+        SelectionMode="None"
+        FooterTemplate="{StaticResource AppListViewBaseFooter}"                
+        >
+
+        <ItemsControl.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Width" Value="62"/>
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="MinWidth" Value="40"/>
+                <Setter Property="Padding" Value="1,2,1,0"/>
+                <Setter Property="Margin" Value="1,0,0,1"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+
+        <ItemsControl.ItemContainerTransitions>
+            <TransitionCollection>
+
+            </TransitionCollection>
+        </ItemsControl.ItemContainerTransitions>
+
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="menus:BrushSize">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <FontIcon FontSize="{x:Bind Preview}" Glyph="&#xEC14;" FontFamily="Segoe MDL2 Assets"/>
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{x:Bind Text}"/>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+        <menus:BrushSize Size="0.7" Text= "0.7" Number="7" Preview="1.07649393090564"/>
+        <menus:BrushSize Size="0.8" Text= "0.8" Number="8" Preview="1.88088235294118"/>
+        <menus:BrushSize Size="1" Text= "1" Number="10" Preview="3.0075163398693"/>
+        <menus:BrushSize Size="1.5" Text= "1.5" Number="15" Preview="4.51160130718952"/>
+        <menus:BrushSize Size="2" Text= "2" Number="20" Preview="5.26568627450986"/>
+        <menus:BrushSize Size="2.3" Text= "2.3" Number="23" Preview="5.56161551577154"/>
+        <menus:BrushSize Size="2.6" Text= "2.6" Number="26" Preview="5.78981900452487"/>
+        <menus:BrushSize Size="3" Text= "3" Number="30" Preview="6.02385620915036"/>
+        <menus:BrushSize Size="3.5" Text= "3.5" Number="35" Preview="6.24222689075635"/>
+        <menus:BrushSize Size="4" Text= "4" Number="40" Preview="6.40702614379083"/>
+        <menus:BrushSize Size="5" Text= "5" Number="50" Preview="6.64019607843134"/>
+        <menus:BrushSize Size="6" Text= "6" Number="60" Preview="6.79836601307191"/>
+        <menus:BrushSize Size="7" Text= "7" Number="70" Preview="6.91367880485525"/>
+        <menus:BrushSize Size="8" Text= "8" Number="80" Preview="7.00220588235289"/>
+        <menus:BrushSize Size="9" Text= "9" Number="90" Preview="7.07287581699344"/>
+        <menus:BrushSize Size="10" Text= "10" Number="100" Preview="7.13104575163402"/>
+        <menus:BrushSize Size="12" Text= "12" Number="120" Preview="7.22238562091499"/>
+        <menus:BrushSize Size="14" Text= "14" Number="140" Preview="7.29229691876744"/>
+        <menus:BrushSize Size="16" Text= "16" Number="160" Preview="7.34881535947715"/>
+        <menus:BrushSize Size="20" Text= "20" Number="200" Preview="7.43774509803923"/>
+        <menus:BrushSize Size="25" Text= "25" Number="250" Preview="7.52359477124182"/>
+        <menus:BrushSize Size="30" Text= "30" Number="300" Preview="7.59444444444448"/>
+        <menus:BrushSize Size="35" Text= "35" Number="350" Preview="7.65672268907562"/>
+        <menus:BrushSize Size="40" Text= "40" Number="400" Preview="7.71364379084969"/>
+        <menus:BrushSize Size="50" Text= "50" Number="500" Preview="7.81784313725495"/>
+        <menus:BrushSize Size="60" Text= "60" Number="600" Preview="7.9145424836601"/>
+        <menus:BrushSize Size="70" Text= "70" Number="700" Preview="8.00695611577959"/>
+        <menus:BrushSize Size="80" Text= "80" Number="800" Preview="8.0966911764706"/>
+        <menus:BrushSize Size="100" Text= "100" Number="1000" Preview="8.27133986928107"/>
+        <menus:BrushSize Size="120" Text= "120" Number="1200" Preview="8.44223856209145"/>
+        <menus:BrushSize Size="160" Text= "160" Number="1600" Preview="8.77841094771247"/>
+        <menus:BrushSize Size="200" Text= "200" Number="2000" Preview="9.11083333333339"/>
+        <menus:BrushSize Size="250" Text= "250" Number="2500" Preview="9.52383006535944"/>
+        <menus:BrushSize Size="300" Text= "300" Number="3000" Preview="9.9353267973856"/>
+        <menus:BrushSize Size="350" Text= "350" Number="3500" Preview="10.3459663865546"/>
+        <menus:BrushSize Size="400" Text= "400" Number="4000" Preview="10.7560702614379"/>
+        <menus:BrushSize Size="450" Text= "450" Number="4500" Preview="11.165816993464"/>
+        <menus:BrushSize Size="500" Text= "500" Number="5000" Preview="11.5753137254902"/>
+        <menus:BrushSize Size="600" Text= "600" Number="6000" Preview="12.3938071895425"/>
+        <menus:BrushSize Size="700" Text= "700" Number="7000" Preview="13.2118720821662"/>
+        <menus:BrushSize Size="800" Text= "800" Number="8000" Preview="14.029669117647"/>
+        <menus:BrushSize Size="1000" Text= "1000" Number="10000" Preview="15.6647810457516"/>
+        <menus:BrushSize Size="1200" Text= "1200" Number="12000" Preview="17.2995179738562"/>
+        <menus:BrushSize Size="1600" Text= "1600" Number="16000" Preview="20.5684293300654"/>
+        <menus:BrushSize Size="2000" Text= "2000" Number="20000" Preview="23.8369656862745"/>
+        <menus:BrushSize Size="2500" Text= "2500" Number="25000" Preview="27.9223830065359"/>
+        <menus:BrushSize Size="3000" Text= "3000" Number="30000" Preview="32.0076503267974"/>
+        <menus:BrushSize Size="3500" Text= "3500" Number="35000" Preview="36.0928319327732"/>
+        <menus:BrushSize Size="4000" Text= "4000" Number="40000" Preview="40.1779599673203"/>
+        <menus:BrushSize Size="5000" Text= "5000" Number="50000" Preview="48.3481196078431"/>
+
+    </ListView>
+</elements:Expander>
