@@ -20,7 +20,7 @@
         <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Transparent"/>
     </FrameworkElement.Resources>
 
-    
+
     <Grid>
 
         <ListView      
@@ -142,7 +142,7 @@
                     Group
                 </AppBarButton.Label>
             </AppBarButton>
-            
+
             <AppBarButton x:Name="UngroupButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="U"/>
@@ -168,7 +168,7 @@
             </AppBarButton>
 
             <AppBarSeparator/>
-            
+
             <AppBarButton x:Name="CutButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="X"/>
@@ -202,6 +202,32 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Paste
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarSeparator/>
+
+            <AppBarButton x:Name="MergeButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Download"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Merge
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="FlattenButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="F"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Download"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Flatten
                 </AppBarButton.Label>
             </AppBarButton>
 
