@@ -18,23 +18,6 @@
         Edit
     </elements:Expander.Title>
 
-    <elements:Expander.TopAppBar>
-        <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" >
-            <ListBoxItem x:Name="EditItem">
-                Edit
-            </ListBoxItem>
-            <ListBoxItem x:Name="SelectItem">
-                Select
-            </ListBoxItem>
-            <ListBoxItem x:Name="CombineAndGroupItem">
-                Combine &amp; Group
-            </ListBoxItem>
-            <ListBoxItem x:Name="SetupItem">
-                Setup
-            </ListBoxItem>
-        </ListBox>
-    </elements:Expander.TopAppBar>
-
     <UIElement.KeyboardAccelerators>
         <KeyboardAccelerator>
             <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
@@ -43,14 +26,20 @@
         <local:EditKeyboardAccelerator Modifiers="Control" Key="J" CommandParameter="Duplicate" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="C" CommandParameter="Copy" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="V" CommandParameter="Paste" Command="{x:Bind Command}" />
+
         <local:EditKeyboardAccelerator Key="Back" CommandParameter="Clear" Command="{x:Bind Command}" />
+        <local:EditKeyboardAccelerator Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
+        <local:EditKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
+
         <local:EditKeyboardAccelerator Modifiers="Control" Key="E" CommandParameter="Extract" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="M" CommandParameter="Merge" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="F" CommandParameter="Flatten" Command="{x:Bind Command}" />
+
         <local:EditKeyboardAccelerator Modifiers="Control" Key="A" CommandParameter="All" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="D" CommandParameter="Deselect" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="P" CommandParameter="Pixel" Command="{x:Bind Command}" />
+
         <local:EditKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Group" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="U" CommandParameter="Ungroup" Command="{x:Bind Command}" />
         <local:EditKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Release" Command="{x:Bind Command}" />
@@ -61,203 +50,67 @@
         <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <FlipView x:Name="FlipView" Height="328" Background="Transparent" >
-        <FlipViewItem>
-            <Grid ColumnSpacing="4" RowSpacing="4" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
+    <elements:Expander.TopAppBar>
+        <Grid Padding="6,0" ColumnSpacing="4" RowSpacing="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <local:EditButton Type="Cut" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton Type="Copy" Grid.Column="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton x:Name="PasteItem" Type="Paste" Grid.Column="2" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton x:Name="RemoveItem" Type="Clear" Grid.Column="3" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-                <local:EditItem Type="Cut" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+X
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Duplicate" Grid.Column="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+J
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
+            <local:EditButton Type="All" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton Type="Deselect" Grid.Column="1" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton Type="MarqueeInvert" Grid.Column="2" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton Type="Pixel" Grid.Column="3" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        </Grid>
+    </elements:Expander.TopAppBar>
 
-                <local:EditItem Type="Copy" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+C
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Paste" Grid.Column="1" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+V
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
+    <StackPanel Spacing="2">
 
-                <local:EditItem Type="Clear" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Back
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Extract" Grid.Column="1" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+E
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
+        <!--Editing-->
+        <TextBlock x:Name="EditingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Editing
+        </TextBlock>
+        <local:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Merge" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-                <local:EditItem Type="Merge" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+M
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Flatten" Grid.Column="1" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+F
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
+        <!--Grouping-->
+        <TextBlock x:Name="GroupingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Grouping
+        </TextBlock>
+        <local:EditItem Type="Feather" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Grow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-            </Grid>
-        </FlipViewItem>
-        <FlipViewItem>
-            <Grid ColumnSpacing="4" RowSpacing="4" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
+        <!--Select-->
+        <TextBlock x:Name="SelectTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Select
+        </TextBlock>
+        <local:EditItem Type="Group" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Release" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-                <local:EditItem Type="All" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+A
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Deselect" Grid.Column="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+D
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-
-                <local:EditItem Type="MarqueeInvert" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+I
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Pixel" Grid.Column="1" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+P
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-
-                <local:EditItem Type="Feather" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="MarqueeTransform" Grid.Column="1" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-                <local:EditItem Type="Grow" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="Shrink" Grid.Column="1" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-            </Grid>
-        </FlipViewItem>
-        <FlipViewItem>
-            <Grid ColumnSpacing="4" RowSpacing="4" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
-
-                <local:EditItem Type="Union" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="Exclude" Grid.Column="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-                <local:EditItem Type="Xor" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="Intersect" Grid.Column="1" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-                <local:EditItem Type="ExpandStroke" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="Release" Grid.Column="1" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+R
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-
-                <local:EditItem Type="Group" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+R
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-                <local:EditItem Type="Ungroup" Grid.Column="1" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" >
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Ctrl+U
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </local:EditItem>
-
-            </Grid>
-        </FlipViewItem>
-        <FlipViewItem>
-            <Grid ColumnSpacing="4" RowSpacing="4" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="80"/>
-                </Grid.RowDefinitions>
-
-                <local:EditItem Type="CropCanvas" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="Stretch" Grid.Column="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-                <local:EditItem Type="FlipHorizontal" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="FlipVertical" Grid.Column="1" Grid.Row="1" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-                <local:EditItem Type="LeftTurn" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="RightTurn" Grid.Column="1" Grid.Row="2" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:EditItem Type="OverTurn" Grid.Row="3" Height="Auto" VerticalAlignment="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-            </Grid>
-        </FlipViewItem>
-    </FlipView>
-    
+        <!--Combine-->
+        <TextBlock x:Name="CombineTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Combine
+        </TextBlock>
+        <local:EditItem Type="Union" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Xor" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        <local:EditItem Type="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+    </StackPanel>
 </elements:Expander>

@@ -28,6 +28,45 @@ namespace Luo_Painter.Menus
         }
     }
 
+    internal sealed class EditButton : TButton<OptionType>
+    {
+
+        Control Icon;
+        public EditButton()
+        {
+            base.IsEnabledChanged += (s, e) =>
+            {
+                if (this.Icon is null) return;
+                if (e.NewValue is bool value)
+                {
+                    this.Icon.GoToState(value);
+                }
+            };
+        }
+
+        protected override void OnTypeChanged(OptionType value)
+        {
+            this.Icon = new ContentControl
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            };
+            this.Icon.GoToState(base.IsEnabled);
+            base.Content = this.Icon;
+            base.CommandParameter = value;
+            base.HorizontalContentAlignment = HorizontalAlignment.Center;
+            base.VerticalContentAlignment = VerticalAlignment.Center;
+            ToolTipService.SetToolTip(this, new ToolTip
+            {
+                Content = value.ToString(),
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        }
+    }
+
     internal sealed class EditItem : TButton<OptionType>
     {
 
