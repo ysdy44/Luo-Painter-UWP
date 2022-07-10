@@ -37,9 +37,26 @@ namespace Luo_Painter.Layers
             foreach (ILayer item in this)
             {
                 if (item.Depth >= layer.Depth) continue;
-                foreach (ILayer chil in item.Children)
+                foreach (ILayer child in item.Children)
                 {
-                    if (chil.Id == layer.Id) return item;
+                    if (child.Id == layer.Id) return item;
+                }
+            }
+            return null;
+        }
+        public ILayer GetNeighbor(ILayer layer)
+        {
+            bool hasSelf = false;
+            foreach (ILayer item in this)
+            {
+                if (hasSelf)
+                {
+                    if (item.Depth == layer.Depth) return item;
+                    else return null;
+                }
+                else
+                {
+                    if (item.Id == layer.Id) hasSelf = true;
                 }
             }
             return null;
