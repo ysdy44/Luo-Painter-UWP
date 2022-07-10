@@ -123,6 +123,7 @@
     <Compile Include="BlendExtensions.cs" />
     <Compile Include="BlendGroupType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Blends.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
 using System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,6 +23,22 @@ namespace Luo_Painter.Blends
                 Source = new Uri($"ms-appx:///Luo Painter.Blends/Icons/{title}Icon.xaml")
             };
             return resource[$"{title}Icon"] as ControlTemplate;
+        }
+
+        public static Color ToColor(this TagType tagType)
+        {
+            switch (tagType)
+            {
+                case TagType.None: return Colors.Transparent;
+                case TagType.Red: return Colors.LightCoral;
+                case TagType.Orange: return Colors.Orange;
+                case TagType.Yellow: return Colors.Yellow;
+                case TagType.Green: return Colors.YellowGreen;
+                case TagType.Blue: return Colors.SkyBlue;
+                case TagType.Purple: return Colors.Plum;
+
+                default: return Colors.LightGray;
+            }
         }
 
     }
