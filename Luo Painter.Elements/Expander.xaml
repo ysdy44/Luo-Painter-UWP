@@ -9,6 +9,7 @@
 
 
     <Style TargetType="local:Expander">
+        <Setter Property="Visibility" Value="Collapsed" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
@@ -16,7 +17,8 @@
         <Setter Property="BorderBrush" Value="{ThemeResource FlyoutBorderThemeBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource FlyoutBorderThemeThickness}" />
         <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="{ThemeResource FlyoutContentThemePadding}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="320" />
         <Setter Property="MinWidth" Value="320" />
         <Setter Property="MaxWidth" Value="{ThemeResource FlyoutThemeMaxWidth}" />
         <Setter Property="MinHeight" Value="240" />
@@ -25,8 +27,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:Expander">
                     <Grid x:Name="RootGrid" 
-                          IsHitTestVisible="False"
-                          Visibility="Collapsed"
                           Opacity="0"
                           CornerRadius="8"
                           BorderThickness="{TemplateBinding BorderThickness}" 
@@ -38,12 +38,6 @@
                         <FrameworkElement.Resources>
                             <!--Storyboard-->
                             <Storyboard x:Key="HideStoryboard" >
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="IsHitTestVisible">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
-                                </ObjectAnimationUsingKeyFrames>
-                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Visibility">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
-                                </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimation Duration="0:0:0.2" From="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="RootGrid" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
@@ -51,12 +45,6 @@
                                 </DoubleAnimation>
                             </Storyboard>
                             <Storyboard x:Key="ShowStoryboard" >
-                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="IsHitTestVisible">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
-                                </ObjectAnimationUsingKeyFrames>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Visibility">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
-                                </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimation Duration="0:0:0.2" From="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="RootGrid" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
@@ -293,15 +281,13 @@
 
 
                         <!--Body-->
-                        <ScrollViewer Grid.Row="2" Margin="{TemplateBinding Padding}" >
-                            <ContentPresenter x:Name="ContentPresenter" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </ScrollViewer>
+                        <ContentPresenter x:Name="ContentPresenter" Grid.Row="2" Margin="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
 
                         <!--Body-->
                         <Border Grid.Row="1" Child="{TemplateBinding TopAppBar}">
                             <!--Child-->
                         </Border>
-                        
+
                         <!--Body-->
                         <Border Grid.Row="3" Child="{TemplateBinding BottomAppBar}">
                             <!--Child-->
