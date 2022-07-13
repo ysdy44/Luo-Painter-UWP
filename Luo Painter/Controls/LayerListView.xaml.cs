@@ -15,7 +15,7 @@ namespace Luo_Painter.Controls
 {
     internal class LayerCommand : RelayCommand<ILayer> { }
 
-    public sealed partial class LayerListView : Canvas
+    public sealed partial class LayerListView : Spliter
     {
         //@Delegate
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
@@ -34,35 +34,7 @@ namespace Luo_Painter.Controls
         private double ThumbeBottomConverter(double value) => value / 2 + 60;
         private Visibility SelectedVisibilityConverter(double value) => value > 70 + 70 ? Visibility.Visible : Visibility.Collapsed;
 
-        double StartingX;
-
         long SelectedItemToken;
-
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the state for <see cref="LayerListView"/>. </summary>
-        public bool IsShow
-        {
-            get => (bool)base.GetValue(IsShowProperty);
-            set => base.SetValue(IsShowProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "LayerListView.IsShow" /> dependency property. </summary>
-        public static readonly DependencyProperty IsShowProperty = DependencyProperty.Register(nameof(IsShow), typeof(bool), typeof(LayerListView), new PropertyMetadata(true, (sender, e) =>
-        {
-            LayerListView control = (LayerListView)sender;
-
-            if (e.NewValue is bool value)
-            {
-                if (value)
-                    control.ShowStoryboard.Begin();
-                else
-                    control.HideStoryboard.Begin();
-            }
-        }));
-
-
-        #endregion
 
         public FrameworkElement PlacementTarget => this.Grid;
         public int SelectedIndex { get => this.ListView.SelectedIndex; set => this.ListView.SelectedIndex = value; }
@@ -75,17 +47,6 @@ namespace Luo_Painter.Controls
         public LayerListView()
         {
             this.InitializeComponent();
-            this.Thumb.DragStarted += (s, e) => this.StartingX = base.Width;
-            this.Thumb.DragDelta += (s, e) => base.Width = System.Math.Clamp(this.StartingX -= e.HorizontalChange, 0, 6 * 70);
-            this.Thumb.DragCompleted += (s, e) => base.Width = this.ListViewWidthConverter(this.StartingX, 0);
-            base.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-                if (e.NewSize.Height == e.PreviousSize.Height) return;
-
-                this.ListView.Height = e.NewSize.Height;
-            };
             base.Unloaded += (s, e) =>
             {
                 // Unregister Listener
