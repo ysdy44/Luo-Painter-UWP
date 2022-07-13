@@ -10,7 +10,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}"
     >
@@ -84,29 +83,30 @@
     <FlipView x:Name="FlipView" Height="480" Background="Transparent" ItemsSource="{x:Bind Collection}">
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="local:AdjustmentGrouping">
-                <ItemsControl ItemsSource="{x:Bind}" >
+                <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
+                    <ItemsControl ItemsSource="{x:Bind}" >
 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="Margin" Value="4,2"/>
-                            <Setter Property="Width" Value="150"/>
-                            <Setter Property="Height" Value="92"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                            <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="4,2"/>
+                                <Setter Property="Width" Value="150"/>
+                                <Setter Property="Height" Value="92"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:AdjustmentImage
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:AdjustmentImage
                                     Padding="0"      
                                     HorizontalAlignment="Stretch"                                       
                                     VerticalAlignment="Stretch" 
@@ -118,18 +118,19 @@
                                     CommandParameter="{Binding}"                                         
                                     Command="{Binding ElementName=Button, Path=Command, Mode=OneWay}"
                                     >
-                                <ContentControl.ContentTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
-                                            <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </ContentControl.ContentTemplate>
-                            </local:AdjustmentImage>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                                    <ContentControl.ContentTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
+                                                <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ContentControl.ContentTemplate>
+                                </local:AdjustmentImage>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
 
-                </ItemsControl>
+                    </ItemsControl>
+                </ScrollViewer>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </FlipView>

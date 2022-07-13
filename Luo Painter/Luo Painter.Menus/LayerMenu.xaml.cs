@@ -28,7 +28,7 @@ namespace Luo_Painter.Menus
         private string RoundConverter(double value) => $"{value:0}";
 
         public ThumbSlider OpacitySlider => this.OpacitySliderCore;
-         public bool PasteIsEnabled
+        public bool PasteIsEnabled
         {
             get => this.PasteItem.IsEnabled;
             set => this.PasteItem.IsEnabled = value;
@@ -103,7 +103,10 @@ namespace Luo_Painter.Menus
                 this.OpacitySliderCore.IsEnabled = false;
                 this.BlendModeComboBox.IsEnabled = false;
                 this.BlendModeComboBox.SelectedIndex = -1;
+                this.TagTypeSegmented.IsEnabled = false;
 
+                this.CutItem.IsEnabled = false;
+                this.CopyItem.IsEnabled = false;
                 this.RemoveItem.IsEnabled = false;
             }
             else
@@ -116,7 +119,10 @@ namespace Luo_Painter.Menus
                 this.OpacitySliderCore.Value = layer.Opacity * 100;
                 this.BlendModeComboBox.IsEnabled = true;
                 this.BlendModeComboBox.SelectedIndex = layer.BlendMode.HasValue ? this.Collection.IndexOf(layer.BlendMode.Value) : 0;
+                this.TagTypeSegmented.IsEnabled = true;
 
+                this.CutItem.IsEnabled = true;
+                this.CopyItem.IsEnabled = true;
                 this.RemoveItem.IsEnabled = true;
             }
 

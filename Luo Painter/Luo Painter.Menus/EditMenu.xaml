@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"
-    MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}" 
     >
@@ -62,10 +61,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
+
             <local:EditButton Type="Cut" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <local:EditButton Type="Copy" Grid.Column="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditButton x:Name="PasteItem" Type="Paste" Grid.Column="2" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditButton x:Name="PasteItem" Type="Paste" Grid.Column="2" IsEnabled="False" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <local:EditButton x:Name="RemoveItem" Type="Clear" Grid.Column="3" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
             <local:EditButton Type="All" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
@@ -75,42 +74,45 @@
         </Grid>
     </elements:Expander.TopAppBar>
 
-    <StackPanel Spacing="2">
+    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
+        <StackPanel Spacing="2" Padding="6,4">
 
-        <!--Editing-->
-        <TextBlock x:Name="EditingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Editing
-        </TextBlock>
-        <local:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Merge" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <!--Editing-->
+            <TextBlock x:Name="EditingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Editing
+            </TextBlock>
+            <local:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Merge" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <!--Grouping-->
-        <TextBlock x:Name="GroupingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Grouping
-        </TextBlock>
-        <local:EditItem Type="Feather" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Grow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <!--Grouping-->
+            <TextBlock x:Name="GroupingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Grouping
+            </TextBlock>
+            <local:EditItem Type="Feather" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Grow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <!--Select-->
-        <TextBlock x:Name="SelectTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Select
-        </TextBlock>
-        <local:EditItem Type="Group" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Release" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <!--Select-->
+            <TextBlock x:Name="SelectTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Select
+            </TextBlock>
+            <local:EditItem Type="Group" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Release" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <!--Combine-->
-        <TextBlock x:Name="CombineTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Combine
-        </TextBlock>
-        <local:EditItem Type="Union" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Xor" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <local:EditItem Type="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-    </StackPanel>
+            <!--Combine-->
+            <TextBlock x:Name="CombineTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Combine
+            </TextBlock>
+            <local:EditItem Type="Union" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Xor" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        </StackPanel>
+    </ScrollViewer>
+
 </elements:Expander>

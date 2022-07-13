@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}" 
     >
@@ -20,15 +19,37 @@
 
     <ListView x:Name="ListView">
 
+        <ItemsControl.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0,0,0,1"/>
+                <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="historys:IHistory">
-                <TextBlock>
-                    <Run Text="{x:Bind Mode}"/>
-                    <Run Text="{x:Bind Type}"/>
-                </TextBlock>
+                <SwipeControl>
+                    <SwipeControl.RightItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItem>
+                                <SwipeItem.IconSource>
+                                    <SymbolIconSource Symbol="Undo"/>
+                                </SwipeItem.IconSource>
+                                <SwipeItem.Text>
+                                    Undo
+                                </SwipeItem.Text>
+                            </SwipeItem>
+                        </SwipeItems>
+                    </SwipeControl.RightItems>
+                    <TextBlock VerticalAlignment="Center">                   
+                        <Run Text="{x:Bind Mode}"/>                  
+                        <Run Text="{x:Bind Type}"/>
+                    </TextBlock>
+                </SwipeControl>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
-        
+
     </ListView>
 
 </elements:Expander>

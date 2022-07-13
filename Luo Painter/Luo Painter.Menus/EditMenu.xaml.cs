@@ -34,6 +34,11 @@ namespace Luo_Painter.Menus
         Control Icon;
         public EditButton()
         {
+            base.Loaded += (s, e) =>
+            {
+                if (this.Icon is null) return;
+                this.Icon.GoToState(base.IsEnabled);
+            };
             base.IsEnabledChanged += (s, e) =>
             {
                 if (this.Icon is null) return;

@@ -10,7 +10,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}"
     >
@@ -535,6 +534,12 @@
                             <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
                         </Style>
                     </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection>
+
+                        </TransitionCollection>
+                    </ItemsControl.ItemContainerTransitions>
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="brushes:PaintBrush">

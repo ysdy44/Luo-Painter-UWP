@@ -78,13 +78,5 @@ namespace Luo_Painter.Menus
         {
         }
 
-        public void OnNavigatedTo()
-        {
-        }
-
-        public void OnNavigatedFrom()
-        {
-        }
-
     }
 }

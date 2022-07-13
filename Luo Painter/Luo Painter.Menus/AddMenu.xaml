@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    MinWidth="320" 
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}" 
     >
@@ -23,12 +22,11 @@
         <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <StackPanel Spacing="2">
+    <StackPanel Spacing="2" Padding="6,4">
         <local:EditItem Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
         <local:EditItem Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
         <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
         <local:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
         <local:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
     </StackPanel>
 </elements:Expander>

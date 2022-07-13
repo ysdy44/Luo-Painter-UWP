@@ -313,14 +313,5 @@ namespace Luo_Painter.Menus
             this.IsEnable = true;
         }
 
-
-        public void OnNavigatedTo()
-        {
-        }
-
-        public void OnNavigatedFrom()
-        {
-        }
-
     }
 }

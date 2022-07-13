@@ -38,6 +38,9 @@
                         <FrameworkElement.Resources>
                             <!--Storyboard-->
                             <Storyboard x:Key="HideStoryboard" >
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="IsHitTestVisible">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+                                </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimation Duration="0:0:0.2" From="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="RootGrid" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
@@ -45,6 +48,9 @@
                                 </DoubleAnimation>
                             </Storyboard>
                             <Storyboard x:Key="ShowStoryboard" >
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="IsHitTestVisible">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+                                </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimation Duration="0:0:0.2" From="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="RootGrid" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
