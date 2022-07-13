@@ -84,6 +84,17 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Height = e.NewSize.Height;
             };
 
+            this.InkCanvasControl.CreateResources += (sender, args) =>
+            {
+                this.InkRender = new InkRender(sender, 320, 100);
+                this.Ink();
+            };
+            this.InkCanvasControl.Draw += (sender, args) =>
+            {
+                args.DrawingSession.DrawImage(this.InkRender.Source);
+            };
+
+
             this.CanvasControl.Draw += (sender, args) =>
             {
                 args.DrawingSession.Blend = CanvasBlend.Copy;
@@ -187,7 +198,7 @@ namespace Luo_Painter
                 this.ObservableCollection.Add(bitmapLayer);
                 this.LayerListView.SelectedIndex = 0;
 
-                args.TrackAsyncAction(this.CreateResourcesAsync(sender).AsAsyncAction());
+                args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>
             {

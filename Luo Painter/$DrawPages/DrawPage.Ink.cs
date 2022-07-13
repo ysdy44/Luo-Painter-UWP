@@ -42,12 +42,6 @@ namespace Luo_Painter
 
         private void ConstructBrush()
         {
-            this.InkCanvasControl.Draw += (sender, args) =>
-            {
-                args.DrawingSession.DrawImage(this.InkRender.Source);
-            };
-
-
             this.BrushMenu.ItemClick += async (s, brush) =>
             {
                 if (brush.Mask is PaintTexture mask) this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
@@ -239,6 +233,7 @@ namespace Luo_Painter
 
         private void Ink()
         {
+            if (this.InkRender is null) return;
             double size = this.InkPresenter.Size / 24 + 1;
             switch (this.InkType)
             {

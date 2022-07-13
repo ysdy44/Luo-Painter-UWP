@@ -170,7 +170,7 @@ namespace Luo_Painter
         byte[] BrushEdgeHardnessShaderCodeBytes;
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
-        private async Task CreateResourcesAsync(ICanvasResourceCreatorWithDpi resourceCreator)
+        private async Task CreateResourcesAsync()
         {
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
             this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
@@ -186,9 +186,6 @@ namespace Luo_Painter
             // Brush
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
-            // Ink
-            this.InkRender = new InkRender(resourceCreator, 320, 68);
-            this.Ink();
         }
         private async Task CreateDottedLineResourcesAsync()
         {
@@ -210,7 +207,7 @@ namespace Luo_Painter
 
             this.ConstructBrush();
             this.ConstructInk();
-            
+
             this.ConstructEdits();
             this.ConstructSetup();
 
@@ -246,7 +243,7 @@ namespace Luo_Painter
             this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
             this.AdjustmentButton.Click += (s, e) => this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
             this.OptionButton.Click += (s, e) => this.OptionMenu.Toggle(this.OptionButton, ExpanderPlacementMode.Bottom);
-            
+
             this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
             this.LayerListView.Remove += (s, e) => this.Edit(OptionType.Remove);
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);

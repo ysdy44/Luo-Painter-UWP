@@ -1094,7 +1094,7 @@
             <menus:PaintMenu x:Name="PaintMenu">
                 <menus:PaintMenu.TopAppBar>
                     <canvas:CanvasControl x:Name="InkCanvasControl" 
-                          Margin="0,12,0,22" Width="320" Height="68" 
+                          Width="320" Height="100" 
                           UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
                 </menus:PaintMenu.TopAppBar>
             </menus:PaintMenu>
