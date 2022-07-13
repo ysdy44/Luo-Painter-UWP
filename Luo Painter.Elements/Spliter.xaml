@@ -1,0 +1,141 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    >
+
+
+    <Style TargetType="local:Spliter">
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="MaxWidth" Value="420"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="{ThemeResource FlyoutBackgroundThemeBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource FlyoutBorderThemeBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Spliter">
+                    <Canvas x:Name="RootCanvas" Background="{TemplateBinding Background}">
+
+                        <FrameworkElement.Resources>
+                            <!--Storyboard-->
+                            <Storyboard x:Name="HideStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="ALine" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="BLine" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="ThumbBorder" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Name="ShowStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="ALine" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="BLine" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="ThumbBorder" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </FrameworkElement.Resources>
+
+                        <UIElement.RenderTransformOrigin>
+                            0.5,0.5
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <TranslateTransform x:Name="TranslateTransform" />
+                        </UIElement.RenderTransform>
+
+                        <!--Body-->
+                        <ContentPresenter x:Name="ContentPresenter" MinWidth="70" Width="{TemplateBinding Width}" Margin="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                        <Line x:Name="ALine" IsHitTestVisible="False" StrokeThickness="1" Stroke="{TemplateBinding BorderBrush}" />
+                        <Line x:Name="BLine" IsHitTestVisible="False" StrokeThickness="1" Stroke="{TemplateBinding BorderBrush}" />
+
+                        <Border x:Name="ThumbBorder" Width="22" Height="120" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" >
+                            <Thumb x:Name="Thumb" >
+                                <Thumb.Template>
+                                    <ControlTemplate TargetType="Thumb">
+                                        <Grid Background="Transparent">
+
+                                            <!--VisualState-->
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="PointerOver">
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPointerOver" />
+                                                            <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPressed" />
+                                                            <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled" />
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+
+                                            <Border 
+                                                x:Name="Background"                              
+                                                IsHitTestVisible="False"                           
+                                                Width="6" 
+                                                Height="36" 
+                                                Margin="3" 
+                                                VerticalAlignment="Center" 
+                                                CornerRadius="{TemplateBinding CornerRadius}" 
+                                                BorderThickness="{TemplateBinding BorderThickness}"            
+                                                BorderBrush="{TemplateBinding BorderBrush}"            
+                                                Background="{TemplateBinding Background}"           
+                                                />
+                                            <Border
+                                                x:Name="BackgroundPointerOver"                            
+                                                Opacity="0" 
+                                                IsHitTestVisible="False"
+                                                Width="6" 
+                                                Height="36" 
+                                                Margin="3" 
+                                                VerticalAlignment="Center" 
+                                                CornerRadius="{TemplateBinding CornerRadius}"          
+                                                BorderThickness="{TemplateBinding BorderThickness}"              
+                                                BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}"             
+                                                Background="{ThemeResource ThumbBackgroundPointerOver}"              
+                                                />
+                                            <Border 
+                                                x:Name="BackgroundPressed"                              
+                                                Opacity="0" 
+                                                IsHitTestVisible="False"
+                                                Width="6" 
+                                                Height="36" 
+                                                Margin="3" 
+                                                VerticalAlignment="Center" 
+                                                CornerRadius="{TemplateBinding CornerRadius}"          
+                                                Background="{ThemeResource ThumbBackgroundPressed}"             
+                                                BorderBrush="{ThemeResource ThumbBorderBrushPressed}"              
+                                                BorderThickness="{TemplateBinding BorderThickness}"                
+                                                />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Thumb.Template>
+                            </Thumb>
+                        </Border>
+
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

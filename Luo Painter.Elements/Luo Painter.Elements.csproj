@@ -150,6 +150,9 @@
       <DependentUpon>SizePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="SizePickerExtension.cs" />
+    <Compile Include="Spliter.xaml.cs">
+      <DependentUpon>Spliter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TIcon.cs" />
     <Compile Include="InverseProportion.cs" />
     <Compile Include="Marble.cs" />
@@ -346,6 +349,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SizePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Spliter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
