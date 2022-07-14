@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AlignmentGrid.cs" />
+    <Compile Include="AnimationListView.cs" />
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
     <Compile Include="ContentDialogExtensions.cs" />

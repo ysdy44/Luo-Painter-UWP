@@ -10,6 +10,14 @@ namespace Luo_Painter.Elements
     {
 
         public static void Toggle(this SelectorItem selectorItem) => selectorItem.IsSelected = !selectorItem.IsSelected;
+        public static void PokeZIndex(this UIElement element)
+        {
+            int oldZIndex = Canvas.GetZIndex(element);
+
+            Canvas.SetZIndex(element, oldZIndex + 1);
+            Canvas.SetZIndex(element, oldZIndex);
+        }
+
 
         public static T FindAncestor<T>(this DependencyObject reference)
         {
