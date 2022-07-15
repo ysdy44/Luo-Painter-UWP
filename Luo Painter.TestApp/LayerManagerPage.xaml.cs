@@ -50,11 +50,11 @@ namespace Luo_Painter.TestApp
 
             this.Nodes = new LayerNodes
             {
-                new BitmapLayer(this.CanvasDevice, 128, 128)
+                new GroupLayer(this.CanvasDevice, 128, 128)
                 {
                     Children =
                     {
-                        new BitmapLayer(this.CanvasDevice, 128, 128)
+                        new GroupLayer(this.CanvasDevice, 128, 128)
                         {
                             Children =
                             {
@@ -62,7 +62,7 @@ namespace Luo_Painter.TestApp
                                 new BitmapLayer(this.CanvasDevice, 128, 128)
                             }
                         },
-                        new BitmapLayer(this.CanvasDevice, 128, 128)
+                        new GroupLayer(this.CanvasDevice, 128, 128)
                         {
                             Children =
                             {
@@ -75,12 +75,21 @@ namespace Luo_Painter.TestApp
             };
 
 
+            this.Push(this.Nodes);
+
             foreach (ILayer item in this.Nodes)
             {
-                this.Layers.PushChild(item);
-
                 item.Arrange(0);
                 this.ObservableCollection.AddChild(item);
+            }
+        }
+
+        private void Push(LayerNodes layers)
+        {
+            foreach (ILayer item in layers)
+            {
+                this.Layers.Push(item);
+                this.Push(item.Children);
             }
         }
 
