@@ -72,7 +72,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.OptionMenu.ItemClick += async (s, type) =>
+            this.OtherMenu.ItemClick += async (s, type) =>
             {
                 switch (type)
                 {

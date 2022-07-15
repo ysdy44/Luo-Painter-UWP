@@ -251,7 +251,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Icons\OptionIcon.xaml">
+    <Page Include="Icons\OtherIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -308,10 +308,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Icons\ResetScaleIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Icons\SetupIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

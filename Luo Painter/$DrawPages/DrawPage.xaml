@@ -311,11 +311,11 @@
                     </UIElement.KeyboardAccelerators>
                     <local:ElementIcon Type="Adjustment"/>
                 </Button>
-                <Button x:Name="OptionButton" Style="{StaticResource AppButtonStyle}" >
+                <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="W"/>
                     </UIElement.KeyboardAccelerators>
-                    <local:ElementIcon Type="Option"/>
+                    <local:ElementIcon Type="Other"/>
                 </Button>
             </StackPanel>
 
@@ -1102,7 +1102,7 @@
             <menus:SizeMenu x:Name="SizeMenu" />
             <menus:EditMenu x:Name="EditMenu" />
             <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
-            <menus:OptionMenu x:Name="OptionMenu" />
+            <menus:OtherMenu x:Name="OtherMenu" />
             <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" />
             <menus:AddMenu x:Name="AddMenu"/>
             <menus:LayerMenu x:Name="LayerMenu"/>

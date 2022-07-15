@@ -22,8 +22,22 @@ namespace Luo_Painter
                 this.OptionClick(type);
             };
 
-            this.OptionMenu.ItemClick += (s, type) =>
+            this.OtherMenu.ItemClick += (s, type) =>
             {
+                switch (type)
+                {
+                    case OptionType.CropCanvas:
+                    case OptionType.Stretch:
+                    case OptionType.FlipHorizontal:
+                    case OptionType.FlipVertical:
+                    case OptionType.LeftTurn:
+                    case OptionType.RightTurn:
+                    case OptionType.OverTurn:
+                        return;
+                    default:
+                        break;
+                }
+
                 this.OptionClick(type);
             };
         }

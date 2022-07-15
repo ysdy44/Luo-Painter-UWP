@@ -12,9 +12,8 @@
         Edit,
         Layer,
         Adjustment,
-        Option,
+        Other,
         History,
-        Setup,
 
         Snap,
         SnapToTick,

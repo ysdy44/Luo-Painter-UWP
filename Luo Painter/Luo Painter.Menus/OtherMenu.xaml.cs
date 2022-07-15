@@ -28,7 +28,7 @@ namespace Luo_Painter.Menus
 
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
 
-    public sealed partial class OptionMenu : Expander
+    public sealed partial class OtherMenu : Expander
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick
@@ -36,9 +36,9 @@ namespace Luo_Painter.Menus
             remove => this.Command.Click -= value;
             add => this.Command.Click += value;
         }
-
+        
         //@Construct
-        public OptionMenu()
+        public OtherMenu()
         {
             this.InitializeComponent();
         }

@@ -1,5 +1,5 @@
 ﻿<elements:Expander
-    x:Class="Luo_Painter.Menus.OptionMenu"
+    x:Class="Luo_Painter.Menus.OtherMenu"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,7 +15,7 @@
     >
 
     <elements:Expander.Title>
-        Options
+        Others
     </elements:Expander.Title>
 
     <FrameworkElement.Resources>
@@ -39,9 +39,9 @@
             <local:EditItem Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <local:EditItem Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-            <!--More-->
-            <TextBlock x:Name="MoreTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                More
+            <!--Option-->
+            <TextBlock x:Name="OptionTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Option
             </TextBlock>
             <local:OptionItem Type="Transform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <local:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
