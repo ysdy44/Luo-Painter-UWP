@@ -125,6 +125,9 @@
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
+    <Compile Include="Docker.xaml.cs">
+      <DependentUpon>Docker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DPIExtensions.cs" />
     <Compile Include="ElementExtensions.cs" />
     <Compile Include="ElementGroupType.cs" />
@@ -180,6 +183,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Docker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Expander.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -4,6 +4,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <!--Expanders-->
+        <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Docker.xaml" />
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Expander.xaml" />
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Sheet.xaml" />
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Spliter.xaml" />

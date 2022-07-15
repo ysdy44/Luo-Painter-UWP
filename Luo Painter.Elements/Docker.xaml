@@ -1,0 +1,86 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    >
+
+
+    <Style TargetType="local:Docker">
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="MinWidth" Value="400" />
+        <Setter Property="MinHeight" Value="60" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Padding" Value="12,4" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{ThemeResource FlyoutBackgroundThemeBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource FlyoutBorderThemeBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Docker">
+                    <Border
+                        x:Name="RootGrid"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        >
+
+                        <FrameworkElement.Resources>
+                            <!--Storyboard-->
+                            <Storyboard x:Name="HideStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="IsEnabled">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="IsEnabled">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Name="ShowStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="IsEnabled">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="IsEnabled">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </FrameworkElement.Resources>
+
+                        <UIElement.RenderTransformOrigin>
+                            0.5,0.5
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <TranslateTransform x:Name="TranslateTransform" Y="60"/>
+                        </UIElement.RenderTransform>
+
+                        <StackPanel Spacing="8" Orientation="{TemplateBinding Orientation}">
+                            <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" MinWidth="{TemplateBinding MinWidth}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Grid ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" MinWidth="100" />
+                                    <ColumnDefinition Width="1*" MinWidth="100" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="PrimaryButton" IsEnabled="False" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" BorderThickness="1" Content="{TemplateBinding PrimaryButtonText}" Style="{StaticResource AccentButtonStyle}" >
+                                    <!--PrimaryButtonText-->
+                                </Button>
+                                <Button x:Name="SecondaryButton" Grid.Column="1" IsEnabled="False" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" BorderThickness="1" Content="{TemplateBinding SecondaryButtonText}" >
+                                    <!--SecondaryButtonText-->
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>
