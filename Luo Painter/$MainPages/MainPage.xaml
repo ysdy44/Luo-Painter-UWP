@@ -4,11 +4,414 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter"
+    xmlns:elements="using:Luo_Painter.Elements"
+    NavigationCacheMode="Required"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    <FrameworkElement.Tag>
+        <Button x:Name="RenameButton" CommandParameter="{x:Null}">
+            <ButtonBase.Command>
+                <local:ProjectCommand x:Name="RenameCommand"/>
+            </ButtonBase.Command>
+            <SymbolIcon Symbol="Rename"/>
+        </Button>
+    </FrameworkElement.Tag>
+
     <Grid>
+
+
+        <!--VisualState-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <!--Phone-->
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DupliateDocker.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="DeleteDocker.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="MoveDocker.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="DupliateDocker.Orientation" Value="Vertical"/>
+                        <Setter Target="DeleteDocker.Orientation" Value="Vertical"/>
+                        <Setter Target="MoveDocker.Orientation" Value="Vertical"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Pad-->
+                <VisualState x:Name="Pad">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DupliateDocker.Orientation" Value="Vertical"/>
+                        <Setter Target="DeleteDocker.Orientation" Value="Vertical"/>
+                        <Setter Target="MoveDocker.Orientation" Value="Vertical"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--PC-->
+                <VisualState x:Name="PC">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger  MinWindowWidth="1000" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
+        <!--Extension-->
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
+
+
+        <!--Canvas-->
+        <Canvas x:Name="Canvas" Background="{ThemeResource AppBackgroundDark}" >
+            <elements:AlignmentGrid x:Name="AlignmentGrid" IsHitTestVisible="False" />
+        </Canvas>
+
+
+        <!--Body-->
+        <elements:AnimationListView
+            x:Name="ListView"
+            IsItemClickEnabled="True"
+            SelectionMode="{x:Bind BooleanToSelectionModeConverter(ListView.IsItemClickEnabled), Mode=OneWay}"
+            ReorderMode="{x:Bind BooleanToReorderModeConverter(ListView.IsItemClickEnabled), Mode=OneWay}"
+            CanReorderItems="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
+            CanDragItems="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
+            AllowDrop="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
+            HeaderTemplate="{StaticResource AppListViewBaseHeader}"
+            FooterTemplate="{StaticResource AppListViewBaseFooter}"
+            ItemsSource="{x:Bind ObservableCollection}"
+            IsMultiSelectCheckBoxEnabled="False"
+            >
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" ItemWidth="210" ItemHeight="230"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition />
+                    <ContentThemeTransition />
+                    <ReorderThemeTransition />
+                    <EntranceThemeTransition IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Transitions">
+                        <Setter.Value>
+                            <TransitionCollection>
+
+                            </TransitionCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplateSelector>
+                <local:ProjectDataTemplateSelector>
+
+                    <local:ProjectDataTemplateSelector.None>
+                        <DataTemplate x:DataType="local:Project">
+                            <Border Margin="14,40,14,60" Padding="3" CornerRadius="4" BorderThickness="1" BorderBrush="#44000000" Background="White" >
+                                <Border Background="Black">
+                                    <FontIcon FontSize="28" Glyph="&#xE109;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource AppBlueLinearGradientBrush}" />
+                                </Border>
+                            </Border>
+                        </DataTemplate>
+                    </local:ProjectDataTemplateSelector.None>
+
+                    <local:ProjectDataTemplateSelector.File>
+                        <DataTemplate x:DataType="local:Project">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="4"/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="26,24" CornerRadius="4" MinWidth="60" MinHeight="60" MaxWidth="200" Padding="4" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#44000000" Background="White" >
+                                    <UIElement.RenderTransform>
+                                        <TransformGroup>
+                                            <TranslateTransform X="4"/>
+                                        </TransformGroup>
+                                    </UIElement.RenderTransform>
+                                    <Image Source="{x:Bind Thumbnail, Mode=OneWay}"/>
+                                </Border>
+                                <!--Selected-->
+                                <elements:SelectedIconPresenter IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
+                                <Button                       
+                                    Grid.Row="2"                       
+                                    Padding="0"                           
+                                    HorizontalAlignment="Center"                         
+                                    Background="{ThemeResource AppBackground}"
+                                    Foreground="{ThemeResource AppForeground}"                         
+                                    Style="{StaticResource TextBlockButtonStyle}"                        
+                                    CommandParameter="{x:Bind}"                        
+                                    Command="{Binding ElementName=RenameButton, Path=Command, Mode=OneWay}"                        
+                                    IsEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}"                        
+                                    >
+                                    <TextBlock Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Name, Mode=OneWay}" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </local:ProjectDataTemplateSelector.File>
+
+                    <local:ProjectDataTemplateSelector.Folder>
+                        <DataTemplate x:DataType="local:Project">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="4"/>
+                                </Grid.RowDefinitions>
+                                <Grid Margin="26,24" >
+                                    <Border CornerRadius="4" MinWidth="60" MinHeight="60" MaxWidth="200" Padding="4" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#44000000" Background="White" >
+                                        <UIElement.RenderTransformOrigin>
+                                            0.5,0.5
+                                        </UIElement.RenderTransformOrigin>
+                                        <UIElement.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="1.04" ScaleY="1.04"/>
+                                                <RotateTransform Angle="6"/>
+                                                <TranslateTransform X="-4" Y="-1"/>
+                                            </TransformGroup>
+                                        </UIElement.RenderTransform>
+                                        <Image Source="{x:Bind ThumbnailRight, Mode=OneWay}"/>
+                                    </Border>
+                                    <Border CornerRadius="4" MinWidth="60" MinHeight="60" MaxWidth="200" Padding="4" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#44000000" Background="White" >
+                                        <UIElement.RenderTransformOrigin>
+                                            0.5,0.5
+                                        </UIElement.RenderTransformOrigin>
+                                        <UIElement.RenderTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="-10"/>
+                                                <TranslateTransform X="-8"/>
+                                            </TransformGroup>
+                                        </UIElement.RenderTransform>
+                                        <Image Source="{x:Bind ThumbnailLeft, Mode=OneWay}"/>
+                                    </Border>
+                                    <Border CornerRadius="4" MinWidth="60" MinHeight="60" MaxWidth="200" Padding="4" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#44000000" Background="White" >
+                                        <UIElement.RenderTransform>
+                                            <TransformGroup>
+                                                <TranslateTransform X="4"/>
+                                            </TransformGroup>
+                                        </UIElement.RenderTransform>
+                                        <Image Source="{x:Bind Thumbnail, Mode=OneWay}"/>
+                                    </Border>
+                                    <!--Selected-->
+                                    <elements:SelectedIconPresenter IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
+                                </Grid>
+                                <TextBlock Grid.Row="2" HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Foreground="{ThemeResource AppForeground}" Text="{x:Bind Name, Mode=OneWay}" />
+                            </Grid>
+                        </DataTemplate>
+                    </local:ProjectDataTemplateSelector.Folder>
+
+                </local:ProjectDataTemplateSelector>
+            </ItemsControl.ItemTemplateSelector>
+
+        </elements:AnimationListView>
+
+
+        <!--Foot-->
+        <ListView 
+            x:Name="AppBarListView"
+            IsItemClickEnabled="True"
+            SelectionMode="None"
+            Padding="12,62,12,12"          
+            IsEnabled="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
+            Visibility="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Bottom"
+            >
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Width" Value="48"/>
+                    <Setter Property="Height" Value="48"/>
+                    <Setter Property="MinWidth" Value="32"/>
+                    <Setter Property="MinHeight" Value="32"/>
+                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Foreground" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
+                    <Setter Property="BorderBrush" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="Symbol">
+                    <local:ProjectIcon Type="{x:Bind}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <Symbol>Add</Symbol>
+            <Symbol>Pictures</Symbol>
+
+            <Symbol>Copy</Symbol>
+            <Symbol>Delete</Symbol>
+
+            <Symbol>MoveToFolder</Symbol>
+            <Symbol>NewFolder</Symbol>
+
+        </ListView>
+
+
+        <!--Head-->
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="TitleTextBlock" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}">
+                <UIElement.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
+                    </TransitionCollection>               
+                </UIElement.Transitions>
+                Luo Painter
+            </TextBlock>
+
+            <Button x:Name="DocumentationButton" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="DocumentationButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                        Open document webpage
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <FontIcon FontSize="20" Glyph="&#xE11B;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+            </Button>
+
+            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="SettingButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                        Open the settings page
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <FontIcon FontSize="22" Glyph="&#xE115;" FontWeight="Bold" FontFamily="Segoe UI Symbol" />
+            </Button>
+
+        </Grid>
+
+
+        <!--Docker-->
+        <elements:Docker x:Name="DupliateDocker" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
+            <elements:Docker.PrimaryButtonText>
+                OK
+            </elements:Docker.PrimaryButtonText>
+            <elements:Docker.SecondaryButtonText>
+                Cancel
+            </elements:Docker.SecondaryButtonText>
+            <TextBlock>
+                <Run/>
+                <Run x:Name="DupliateTitleRun" FontWeight="Bold">Dupliate project(s)</Run>
+                <LineBreak/>
+                <Run x:Name="DupliateSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to duplicate.</Run>
+            </TextBlock>
+        </elements:Docker>
+        <elements:Docker x:Name="DeleteDocker" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
+            <elements:Docker.PrimaryButtonText>
+                OK
+            </elements:Docker.PrimaryButtonText>
+            <elements:Docker.SecondaryButtonText>
+                Cancel
+            </elements:Docker.SecondaryButtonText>
+            <TextBlock>
+                <Run/>
+                <Run x:Name="DeleteTitleRun" FontWeight="Bold">Delete project(s)</Run>
+                <LineBreak/>
+                <Run x:Name="DeleteSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to delete.</Run>
+            </TextBlock>
+        </elements:Docker>
+        <elements:Docker x:Name="MoveDocker" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
+            <elements:Docker.PrimaryButtonText>
+                OK
+            </elements:Docker.PrimaryButtonText>
+            <elements:Docker.SecondaryButtonText>
+                Cancel
+            </elements:Docker.SecondaryButtonText>
+            <TextBlock>
+                <Run/>
+                <Run x:Name="MoveTitleRun" FontWeight="Bold">Move project(s)</Run>
+                <LineBreak/>
+                <Run x:Name="MoveSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to move.</Run>
+            </TextBlock>
+        </elements:Docker>
+
+
+        <!--Dialog-->
+        <ContentDialog x:Name="RenameDislog" Style="{StaticResource AppContentDialogStyle}">
+            <ContentDialog.PrimaryButtonText>
+                OK
+            </ContentDialog.PrimaryButtonText>
+            <ContentDialog.SecondaryButtonText>
+                Cancel
+            </ContentDialog.SecondaryButtonText>
+            <ContentDialog.Title>
+                Rename
+            </ContentDialog.Title>
+            <TextBox x:Name="RenameTextBox"/>
+        </ContentDialog>
+        <ContentDialog x:Name="AddDislog" Style="{StaticResource AppContentDialogStyle}">
+            <ContentDialog.PrimaryButtonText>
+                OK
+            </ContentDialog.PrimaryButtonText>
+            <ContentDialog.SecondaryButtonText>
+                Cancel
+            </ContentDialog.SecondaryButtonText>
+            <ContentDialog.Title>
+                New
+            </ContentDialog.Title>
+            <elements:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
+                <elements:SizePicker.WidthText>
+                    Width
+                </elements:SizePicker.WidthText>
+                <elements:SizePicker.HeightText>
+                    Height
+                </elements:SizePicker.HeightText>
+            </elements:SizePicker>
+        </ContentDialog>
+        <ContentDialog x:Name="NewDislog" Style="{StaticResource AppContentDialogStyle}">
+            <ContentDialog.PrimaryButtonText>
+                OK
+            </ContentDialog.PrimaryButtonText>
+            <ContentDialog.SecondaryButtonText>
+                Cancel
+            </ContentDialog.SecondaryButtonText>
+            <ContentDialog.Title>
+                Rename
+            </ContentDialog.Title>
+            <TextBox x:Name="NewTextBox"/>
+        </ContentDialog>
 
     </Grid>
 </Page>
