@@ -6,13 +6,16 @@ namespace Luo_Painter.Layers
     public sealed class LayerDictionary : Dictionary<string, ILayer>
     {
 
-        public void Push(ILayer layer)
-        { 
-            base.Add(layer.Id, layer);
-        }
-        public void PushChild(ILayer layer)
+        public void Push(ILayer layer) => this.Push(System.Guid.NewGuid().ToString(), layer);
+        public void Push(string id, ILayer layer)
         {
-            this.Push(layer);
+            layer.Id = id;
+            base.Add(id, layer);
+        }
+        private void PushCore(ILayer layer) => base.Add(layer.Id, layer);
+        internal void PushChild(ILayer layer)
+        {
+            this.PushCore(layer);
             foreach (ILayer item in layer.Children)
             {
                 this.PushChild(item);

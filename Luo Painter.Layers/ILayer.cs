@@ -12,7 +12,7 @@ namespace Luo_Painter.Layers
 {
     public interface ILayer : ILayerRender, IRender, IDrag, ISetup, INotifyPropertyChanged, ICommand
     {
-        string Id { get; }
+        string Id { get; set; }
         LayerNodes Children { get; }
 
         LayerType Type { get; }

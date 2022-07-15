@@ -21,7 +21,7 @@ namespace Luo_Painter.Layers
         public Vector2 ConvertOneToValue(Vector2 one) => new Vector2(one.X * this.Width, one.Y * this.Height);
 
 
-        public string Id { get; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
         public LayerNodes Children { get; } = new LayerNodes();
 
         public readonly Vector2 Center; // (125, 125)

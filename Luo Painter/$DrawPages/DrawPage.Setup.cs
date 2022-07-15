@@ -72,7 +72,7 @@ namespace Luo_Painter
                 }
             };
 
-            this.EditMenu.ItemClick += async (s, type) =>
+            this.OptionMenu.ItemClick += async (s, type) =>
             {
                 switch (type)
                 {
@@ -170,7 +170,7 @@ namespace Luo_Painter
             this.ObservableCollection.Clear();
             foreach (ILayer item in setups)
             {
-                this.Layers.Add(item.Id, item);
+                this.Layers.Push(item);
                 this.ObservableCollection.Add(item);
             }
             this.LayerSelectedIndex = index;
