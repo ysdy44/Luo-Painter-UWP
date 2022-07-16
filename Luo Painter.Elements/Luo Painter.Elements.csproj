@@ -146,6 +146,7 @@
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="InverseProportionRange.cs" />
+    <Compile Include="MetadataObservableCollection.cs" />
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
