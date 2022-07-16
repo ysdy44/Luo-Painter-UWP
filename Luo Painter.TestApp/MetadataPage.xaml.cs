@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
@@ -11,64 +12,64 @@ namespace Luo_Painter.TestApp
     public sealed partial class MetadataPage : Page
     {
 
-        IEnumerable<string> Items => this.Dictionary.Keys.OrderBy(c => c);
-        readonly IDictionary<string, string> Dictionary = new Dictionary<string, string>
+        IEnumerable<string> Items => this.Dictionary.Select(c => c.Path).OrderBy(c => c);
+        readonly IList<Metadata> Dictionary = new List<Metadata>
         {
-            ["AAA"] = "AAA",
-            ["BBB"] = "BBB",
-            ["CCC"] = "CCC",
+            new Metadata("AAA", "AAA"),
+            new Metadata("BBB", "BBB"),
+            new Metadata("CCC", "CCC"),
 
 
-            [@"AAA\111"] = "111",
-            [@"AAA\222"] = "222",
-            [@"AAA\333"] = "333",
+            new Metadata(@"AAA\111", "111"),
+            new Metadata(@"AAA\222", "222"),
+            new Metadata(@"AAA\333", "333"),
 
-            [@"BBB\111"] = "111",
-            [@"BBB\222"] = "222",
-            [@"BBB\333"] = "333",
+            new Metadata(@"BBB\111", "111"),
+            new Metadata(@"BBB\222", "222"),
+            new Metadata(@"BBB\333", "333"),
 
-            [@"CCC\111"] = "111",
-            [@"CCC\222"] = "222",
-            [@"CCC\333"] = "333",
-
-
-            [@"AAA\111\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"AAA\111\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"AAA\111\ⅢⅢⅢ"] = "ⅢⅢⅢ",
-
-            [@"AAA\222\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"AAA\222\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"AAA\222\ⅢⅢⅢ"] = "ⅢⅢⅢ",
-
-            [@"AAA\333\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"AAA\333\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"AAA\333\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"CCC\111", "111"),
+            new Metadata(@"CCC\222", "222"),
+            new Metadata(@"CCC\333", "333"),
 
 
-            [@"BBB\111\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"BBB\111\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"BBB\111\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"AAA\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"AAA\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"AAA\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            [@"BBB\222\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"BBB\222\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"BBB\222\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"AAA\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"AAA\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"AAA\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            [@"BBB\333\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"BBB\333\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"BBB\333\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"AAA\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"AAA\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"AAA\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
 
-            [@"CCC\111\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"CCC\111\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"CCC\111\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"BBB\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"BBB\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"BBB\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            [@"CCC\222\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"CCC\222\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"CCC\222\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"BBB\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"BBB\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"BBB\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            [@"CCC\333\ⅠⅠⅠ"] = "ⅠⅠⅠ",
-            [@"CCC\333\ⅡⅡⅡ"] = "ⅡⅡⅡ",
-            [@"CCC\333\ⅢⅢⅢ"] = "ⅢⅢⅢ",
+            new Metadata(@"BBB\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"BBB\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"BBB\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
+
+
+            new Metadata(@"CCC\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"CCC\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"CCC\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
+
+            new Metadata(@"CCC\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"CCC\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"CCC\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
+
+            new Metadata(@"CCC\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Metadata(@"CCC\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Metadata(@"CCC\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
         };
         readonly IDictionary<string, string[]> Nodes = new Dictionary<string, string[]>
         {
@@ -161,7 +162,7 @@ namespace Luo_Painter.TestApp
         };
 
         readonly MetadataObservableCollection Paths = new MetadataObservableCollection();
-        readonly ObservableCollection<string> Folders = new ObservableCollection<string>();
+        readonly ObservableCollection<Metadata> Folders = new ObservableCollection<Metadata>();
 
         public MetadataPage()
         {
@@ -185,9 +186,9 @@ namespace Luo_Painter.TestApp
 
             this.ListView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is string item)
+                if (e.ClickedItem is Metadata item)
                 {
-                    int removes = this.Paths.Navigate(item);
+                    int removes = this.Paths.Navigate(item.Path);
                     if (removes is 0) return;
 
                     this.Load();
@@ -195,7 +196,7 @@ namespace Luo_Painter.TestApp
             };
             this.GridView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is string item)
+                if (e.ClickedItem is Metadata item)
                 {
                     this.Paths.Add(item);
                     this.Load();
@@ -217,28 +218,45 @@ namespace Luo_Painter.TestApp
             if (folder is null) return;
             foreach (string item in folder)
             {
-                this.Folders.Add(this.Dictionary[item]);
+                foreach (Metadata item2 in this.Dictionary)
+                {
+                    if (item2.Path == item)
+                    {
+                        this.Folders.Add(item2);
+                    }
+                }
             }
         }
 
-        //private async void Load()
+        //private async Task<bool> Load()
         //{
         //    string path = this.Paths.GetPath();
         //
-        //    StorageFolder folder =
-        //        (path is null) ?
-        //        ApplicationData.Current.LocalFolder :
-        //        await StorageFolder.GetFolderFromPathAsync(
-        //            System.IO.Path.Combine(
-        //                ApplicationData.Current.LocalFolder.Path,
-        //                System.IO.Path.Combine(path)));
-        //
-        //    this.Folders.Clear();
-        //
-        //   if (folder is null) return;
-        //    foreach (StorageFolder item in await folder.GetFoldersAsync())
+        //    if (path is null)
         //    {
-        //        this.Folders.Add(item.DisplayName);
+        //        this.Folders.Clear();
+        //        foreach (StorageFolder item in await ApplicationData.Current.LocalFolder.GetFoldersAsync())
+        //        {
+        //            this.Folders.Add(new Metadata(item));
+        //        }
+        //        return true;
+        //    }
+        //
+        //    try
+        //    {
+        //        StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+        //        if (folder is null) return false;
+        //
+        //        this.Folders.Clear();
+        //        foreach (StorageFolder item in await folder.GetFoldersAsync())
+        //        {
+        //            this.Folders.Add(new Metadata(item));
+        //        }
+        //        return true;
+        //    }
+        //    catch (ArgumentException)
+        //    {
+        //        return false;
         //    }
         //}
 
