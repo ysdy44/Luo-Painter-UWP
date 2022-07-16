@@ -15,12 +15,15 @@ namespace Luo_Painter.Elements
     [TemplatePart(Name = nameof(TranslateTransform), Type = typeof(TranslateTransform))]
     [TemplatePart(Name = nameof(PrimaryButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(SecondaryButton), Type = typeof(Button))]
+    [TemplatePart(Name = nameof(Badge), Type = typeof(Border))]
     [ContentProperty(Name = nameof(Content))]
     public class Docker : ContentControl
     {
         //@Delegate
         public event RoutedEventHandler PrimaryButtonClick;
         public event RoutedEventHandler SecondaryButtonClick;
+
+        public bool PrimaryButtonIsEnabledFollowCount { get; set; }
 
         Border RootGrid;
         Storyboard HideStoryboard;
@@ -31,6 +34,8 @@ namespace Luo_Painter.Elements
 
         Button PrimaryButton;
         Button SecondaryButton;
+
+        Border Badge;
 
         #region DependencyProperty
 
@@ -99,6 +104,33 @@ namespace Luo_Painter.Elements
         }));
 
 
+        /// <summary> Gets or set the count for <see cref="Docker"/>'s badge. </summary>
+        public int Count
+        {
+            get => (int)base.GetValue(CountProperty);
+            set => base.SetValue(CountProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Docker.Count" /> dependency property. </summary>
+        public static readonly DependencyProperty CountProperty = DependencyProperty.Register(nameof(Count), typeof(int), typeof(Docker), new PropertyMetadata(0, (sender, e) =>
+        {
+            Docker control = (Docker)sender;
+
+            if (e.NewValue is int value)
+            {
+                if (value is 0)
+                {
+                    if (control.PrimaryButtonIsEnabledFollowCount) if (control.PrimaryButton is null is false) control.PrimaryButton.IsEnabled = false;
+                    if (control.Badge is null is false) control.Badge.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    if (control.PrimaryButtonIsEnabledFollowCount) if (control.PrimaryButton is null is false) control.PrimaryButton.IsEnabled = true;
+                    if (control.Badge is null is false) control.Badge.Visibility = Visibility.Visible;
+                }
+            }
+        }));
+
+
         #endregion
 
         //@Construct     
@@ -147,11 +179,18 @@ namespace Luo_Painter.Elements
 
             if (this.PrimaryButton is null is false) this.PrimaryButton.Click -= this.PrimaryButtonClick;
             this.PrimaryButton = base.GetTemplateChild(nameof(PrimaryButton)) as Button;
-            if (this.PrimaryButton is null is false) this.PrimaryButton.Click += this.PrimaryButtonClick;
+            if (this.PrimaryButton is null is false)
+            {
+                if (this.PrimaryButtonIsEnabledFollowCount) this.PrimaryButton.IsEnabled = this.Count is 0 is false;
+                this.PrimaryButton.Click += this.PrimaryButtonClick;
+            }
 
             if (this.SecondaryButton is null is false) this.SecondaryButton.Click -= this.SecondaryButtonClick;
             this.SecondaryButton = base.GetTemplateChild(nameof(SecondaryButton)) as Button;
             if (this.SecondaryButton is null is false) this.SecondaryButton.Click += this.SecondaryButtonClick;
+
+            this.Badge = base.GetTemplateChild(nameof(Badge)) as Border;
+            if (this.Badge is null is false) this.Badge.Visibility = (this.Count is 0) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void UpdateStoryboard()

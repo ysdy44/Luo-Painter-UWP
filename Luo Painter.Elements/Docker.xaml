@@ -36,20 +36,20 @@
                             <!--Storyboard-->
                             <Storyboard x:Name="HideStoryboard" >
                                 <DoubleAnimation Duration="0:0:0.1" By="{x:Null}" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
-                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="IsEnabled">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                                 </ObjectAnimationUsingKeyFrames>
-                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="IsEnabled">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.1" Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                                 </ObjectAnimationUsingKeyFrames>
                             </Storyboard>
                             <Storyboard x:Name="ShowStoryboard" >
                                 <DoubleAnimation Duration="0:0:0.15" By="{x:Null}" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True"/>
-                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="IsEnabled">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                                 </ObjectAnimationUsingKeyFrames>
-                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="IsEnabled">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                                 </ObjectAnimationUsingKeyFrames>
                             </Storyboard>
                         </FrameworkElement.Resources>
@@ -62,16 +62,23 @@
                         </UIElement.RenderTransform>
 
                         <StackPanel Spacing="8" Orientation="{TemplateBinding Orientation}">
-                            <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" MinWidth="{TemplateBinding MinWidth}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Grid>
+                                <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" MinWidth="{TemplateBinding MinWidth}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Border x:Name="Badge" Visibility="Collapsed" IsHitTestVisible="False" CornerRadius="12" Padding="4,1" MinWidth="24" Height="24" BorderThickness="1" BorderBrush="White" Background="{ThemeResource AccentButtonBackground}" HorizontalAlignment="Right" >
+                                    <ContentControl FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AccentButtonForeground}" Content="{TemplateBinding Count}">
+                                        <!--Count-->
+                                    </ContentControl>
+                                </Border>
+                            </Grid>
                             <Grid ColumnSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" MinWidth="100" />
                                     <ColumnDefinition Width="1*" MinWidth="100" />
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="PrimaryButton" IsEnabled="False" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" BorderThickness="1" Content="{TemplateBinding PrimaryButtonText}" Style="{StaticResource AccentButtonStyle}" >
+                                <Button x:Name="PrimaryButton" Visibility="Collapsed" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" BorderThickness="1" Content="{TemplateBinding PrimaryButtonText}" Style="{StaticResource AccentButtonStyle}" >
                                     <!--PrimaryButtonText-->
                                 </Button>
-                                <Button x:Name="SecondaryButton" Grid.Column="1" IsEnabled="False" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" BorderThickness="1" Content="{TemplateBinding SecondaryButtonText}" >
+                                <Button x:Name="SecondaryButton" Grid.Column="1" Visibility="Collapsed" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" BorderThickness="1" Content="{TemplateBinding SecondaryButtonText}" >
                                     <!--SecondaryButtonText-->
                                 </Button>
                             </Grid>
