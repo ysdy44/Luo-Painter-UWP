@@ -40,79 +40,45 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class ProjectIcon : TIcon<Symbol>
-    {
-        public ProjectIcon()
-        {
-            base.Loaded += (s, e) =>
-            {
-                ListViewItem parent = this.FindAncestor<ListViewItem>();
-                if (parent is null) return;
-                ToolTipService.SetToolTip(parent, new ToolTip
-                {
-                    Content = this.Type.ToString(),
-                    Placement = PlacementMode.Left,
-                    Style = App.Current.Resources["AppToolTipStyle"] as Style
-                });
-            };
-        }
-        protected override void OnTypeChanged(Symbol value)
-        {
-            base.Content = new SymbolIcon(value);
-        }
-    }
-
     public class Project : INotifyPropertyChanged
     {
 
         //@Static
         public static readonly Project Add = new Project();
 
-        public StorageItemTypes Type { get; set; }
+        public StorageItemTypes Type { get; }
 
-        public string Name
-        {
-            get => this.name;
-            set
-            {
-                this.name = value;
-                this.OnPropertyChanged(nameof(Name)); // Notify 
-            }
-        }
-        private string name;
+        public string Path { get; private set; }
+        public string Name { get; private set; }
+        public string DisplayName { get; private set; }
+        public DateTimeOffset DateCreated { get; private set; }
 
-        public string Thumbnail
-        {
-            get => this.thumbnail;
-            set
-            {
-                this.thumbnail = value;
-                this.OnPropertyChanged(nameof(Thumbnail)); // Notify 
-            }
-        }
-        private string thumbnail;
+        public string Thumbnail { get; }
+        public string ThumbnailLeft { get; }
+        public string ThumbnailRight { get; }
 
-        public string ThumbnailLeft
+        private Project() { }
+        public Project(StorageItemTypes type, StorageFolder folder, string thumbnail) : this(type, folder, thumbnail, thumbnail, thumbnail) { }
+        public Project(StorageItemTypes type, StorageFolder folder, string thumbnail, string thumbnail2) : this(type, folder, thumbnail, thumbnail2, thumbnail2) { }
+        public Project(StorageItemTypes type, StorageFolder folder, string thumbnail, string thumbnailLeft, string thumbnailRight)
         {
-            get => this.thumbnailLeft;
-            set
-            {
-                this.thumbnailLeft = value;
-                this.OnPropertyChanged(nameof(ThumbnailLeft)); // Notify 
-            }
-        }
-        private string thumbnailLeft;
+            this.Type = type;
 
-        public string ThumbnailRight
-        {
-            get => this.thumbnailRight;
-            set
-            {
-                this.thumbnailRight = value;
-                this.OnPropertyChanged(nameof(ThumbnailRight)); // Notify 
-            }
+            this.Path = folder.Path;
+            this.Name = folder.Name;
+            this.DisplayName = folder.DisplayName;
+            this.DateCreated = folder.DateCreated;
+
+            this.Thumbnail = thumbnail;
+            this.ThumbnailLeft = thumbnailLeft;
+            this.ThumbnailRight = thumbnailRight;
         }
-        private string thumbnailRight;
+
+        public void Rename(string displayName)
+        {
+            this.DisplayName = displayName;
+            this.OnPropertyChanged(nameof(DisplayName)); // Notify 
+        }
 
         //@Notify 
         /// <summary> Multicast event for property change notifications. </summary>
@@ -126,6 +92,74 @@ namespace Luo_Painter
 
     public sealed class ProjectObservableCollection : ObservableCollection<Project>
     {
+
+        public bool IsLuo(string name) => name.EndsWith(".luo");
+        public IAsyncOperation<IReadOnlyList<StorageFile>> GetFilesAsync(StorageFolder item)
+            => item.CreateFileQueryWithOptions(this.QueryOptions).GetFilesAsync(0, 3);
+
+        public readonly QueryOptions QueryOptions = new QueryOptions
+        {
+            FolderDepth = FolderDepth.Deep,
+            FileTypeFilter =
+            {
+                ".png"
+            }
+        };
+        public readonly IList<Project> Temp = new List<Project>();
+
+        public async void Load(string path)
+        {
+            if (path is null)
+            {
+                foreach (StorageFolder item in await ApplicationData.Current.LocalFolder.GetFoldersAsync())
+                {
+                    if (this.IsLuo(item.Name)) this.AddFile(item);
+                    else this.AddFolder(item, await this.GetFilesAsync(item));
+                }
+            }
+            else
+            {
+                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+                if (folder is null) return;
+
+                foreach (StorageFolder item in await folder.GetFoldersAsync())
+                {
+                    if (this.IsLuo(item.Name)) this.AddFile(item);
+                    else this.AddFolder(item, await this.GetFilesAsync(item));
+                }
+            }
+
+            base.Clear();
+            base.Add(Project.Add);
+            foreach (Project item in this.Temp)
+            {
+                base.Add(item);
+            }
+            this.Temp.Clear();
+        }
+
+        private void AddFile(StorageFolder item)
+        {
+            string thumbnail = System.IO.Path.Combine(item.Path, "Thumbnail.png");
+            this.Temp.Add(new Project(StorageItemTypes.File, item, thumbnail));
+        }
+        private void AddFolder(StorageFolder item, IReadOnlyList<StorageFile> images)
+        {
+            switch (images.Count)
+            {
+                case 0:
+                    break;
+                case 1:
+                    this.Temp.Add(new Project(StorageItemTypes.Folder, item, images[0].Path));
+                    break;
+                case 2:
+                    this.Temp.Add(new Project(StorageItemTypes.Folder, item, images[0].Path, images[1].Path));
+                    break;
+                default:
+                    this.Temp.Add(new Project(StorageItemTypes.Folder, item, images[0].Path, images[1].Path, images[2].Path));
+                    break;
+            }
+        }
     }
 
     public sealed partial class MainPage : Page
@@ -135,48 +169,99 @@ namespace Luo_Painter
         private ListViewReorderMode BooleanToReorderModeConverter(bool value) => value ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
 
         public int SelectedCount { get; private set; }
-        public ProjectObservableCollection ObservableCollection { get; } = new ProjectObservableCollection
-        {
-            Project.Add
-        };
+        public MetadataObservableCollection Paths { get; } = new MetadataObservableCollection();
+        public ProjectObservableCollection ObservableCollection { get; } = new ProjectObservableCollection();
+
+        private void Load() => this.ObservableCollection.Load(this.Paths.GetPath());
 
         public MainPage()
         {
             this.InitializeComponent();
+            this.Load();
             this.Canvas.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
                 this.AlignmentGrid.RebuildWithInterpolation(e.NewSize);
+
+                // Align Center
+                int p = (int)e.NewSize.Width % 210;
+                this.ListView.Padding = new Thickness(p / 2, 0, p / 2, 0);
+
+                // Width
+                int w = (int)e.NewSize.Width / 8;
+                this.HomeButton.Width = w;
+                this.BackButton.Width = w;
+            };
+
+            this.DocumentationButton.Click += (s, e) =>
+            {
+            };
+            this.SettingButton.Click += (s, e) =>
+            {
+            };
+
+            this.HomeButton.Click += (s, e) =>
+            {
+                if (this.Paths.GoHome())
+                {
+                    this.Load();
+                }
+            };
+            this.BackButton.Click += (s, e) =>
+            {
+                if (this.Paths.GoBack())
+                {
+                    this.Load();
+                }
+            };
+
+            this.PathListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is Metadata item)
+                {
+                    int removes = this.Paths.Navigate(item.Path);
+                    if (removes is 0) return;
+
+                    this.Load();
+                }
             };
 
             this.ListView.SelectionChanged += (s, e) =>
             {
                 this.SelectedCount += e.AddedItems.Count;
                 this.SelectedCount -= e.RemovedItems.Count;
+
+                this.DupliateDocker.Count = this.SelectedCount;
+                this.DeleteDocker.Count = this.SelectedCount;
+                this.MoveDocker.Count = this.SelectedCount;
             };
             this.ListView.ItemClick += async (s, e) =>
             {
-                if (e.ClickedItem is Project item)
+                if (e.ClickedItem is Project item2)
                 {
-                    switch (item.Type)
+                    switch (item2.Type)
                     {
                         case StorageItemTypes.File:
                             base.Frame.Navigate(typeof(DrawPage));
                             break;
                         case StorageItemTypes.Folder:
+                            this.Paths.Add(new Metadata(item2.Path, item2.Name));
+                            this.Load();
                             break;
                         case StorageItemTypes.None:
-                            ContentDialogResult result = await this.AddDislog.ShowInstance();
-
-                            switch (result)
                             {
-                                case ContentDialogResult.Primary:
-                                    base.Frame.Navigate(typeof(DrawPage));
-                                    break;
-                                default:
-                                    break;
+                                ContentDialogResult result = await this.AddDislog.ShowInstance();
+
+                                switch (result)
+                                {
+                                    case ContentDialogResult.Primary:
+                                        base.Frame.Navigate(typeof(DrawPage), this.SizePicker.Size);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             break;
                         default:
@@ -187,9 +272,9 @@ namespace Luo_Painter
 
             this.AppBarListView.ItemClick += async (s, e) =>
             {
-                if (e.ClickedItem is Symbol item)
+                if (e.ClickedItem is SymbolIcon item)
                 {
-                    switch (item)
+                    switch (item.Symbol)
                     {
                         case Symbol.Add:
                             ContentDialogResult result1 = await this.AddDislog.ShowInstance();
@@ -197,7 +282,7 @@ namespace Luo_Painter
                             switch (result1)
                             {
                                 case ContentDialogResult.Primary:
-                                    base.Frame.Navigate(typeof(DrawPage));
+                                    base.Frame.Navigate(typeof(DrawPage), this.SizePicker.Size);
                                     break;
                                 default:
                                     break;
@@ -275,19 +360,26 @@ namespace Luo_Painter
 
             this.RenameCommand.Click += async (s, e) =>
             {
-                this.RenameTextBox.Text = e.Name;
+                this.RenameTextBox.Text = e.DisplayName;
                 this.RenameTextBox.SelectAll();
 
                 ContentDialogResult result = await this.RenameDislog.ShowInstance();
                 switch (result)
                 {
                     case ContentDialogResult.Primary:
-                        e.Name = this.RenameTextBox.Text;
+                        string name = this.RenameTextBox.Text;
+                        if (string.IsNullOrEmpty(name))
+                        {
+                            break;
+                        }
+
+                        e.Rename(name);
                         break;
                     default:
                         break;
                 }
             };
         }
+
     }
 }
