@@ -1,0 +1,115 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.MetadataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Luo_Painter.TestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+
+        <ItemsControl Width="200" HorizontalAlignment="Right" ItemsSource="{x:Bind Items}" />
+
+        <GridView
+            x:Name="GridView"
+            Margin="0,0,200,0"
+            Padding="8"
+            IsItemClickEnabled="True"
+            ItemsSource="{x:Bind Folders}"                 
+            >
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Width" Value="120"/>
+                    <Setter Property="Height" Value="120"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="{ThemeResource SystemColorControlAccentBrush}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+        </GridView>
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <CommandBar.Content>
+                <ListView
+                    x:Name="ListView"               
+                    Height="40"
+                    VerticalAlignment="Top"                 
+                    SelectionMode="None"                          
+                    IsItemClickEnabled="True"                       
+                    ItemsSource="{x:Bind Paths}"                          
+                    >
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel Orientation="Horizontal" ItemsUpdatingScrollMode="KeepLastItemInView" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection>
+
+                        </TransitionCollection>
+                    </ItemsControl.ItemContainerTransitions>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="4,2"/>
+                            <Setter Property="Width" Value="Auto"/>
+                            <Setter Property="Height" Value="Auto"/>
+                            <Setter Property="MinWidth" Value="32"/>
+                            <Setter Property="MinHeight" Value="22"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="VerticalAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock>             
+                                <Run FontSize="10" FontWeight="Bold" Text="&#xE00F;" FontFamily="Segoe MDL2 Assets" />
+                                <Run/>
+                                <Run FontSize="14" Text="{x:Bind}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ListView>
+            </CommandBar.Content>
+
+            <AppBarButton x:Name="BackButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Back"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Back
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="HomeButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="H"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Home"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Home
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+
+    </Grid>
+</Page>
