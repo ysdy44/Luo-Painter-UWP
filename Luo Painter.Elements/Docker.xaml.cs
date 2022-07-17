@@ -24,6 +24,7 @@ namespace Luo_Painter.Elements
         public event RoutedEventHandler SecondaryButtonClick;
 
         public bool PrimaryButtonIsEnabledFollowCount { get; set; }
+        public ContentDialogButton DefaultButton { get; set; } = ContentDialogButton.Primary;
 
         Border RootGrid;
         Storyboard HideStoryboard;
@@ -92,6 +93,8 @@ namespace Luo_Painter.Elements
             {
                 if (value)
                 {
+                    control.UpdateDefaultButton();
+
                     if (control.ShowStoryboard is null) return;
                     control.ShowStoryboard.Begin();
                 }
@@ -204,6 +207,23 @@ namespace Luo_Painter.Elements
             if (this.TranslateTransform is null) return;
             if (this.IsShow) return;
             this.TranslateTransform.Y = base.ActualHeight;
+        }
+
+        private void UpdateDefaultButton()
+        {
+            switch (this.DefaultButton)
+            {
+                case ContentDialogButton.Primary:
+                    if (this.PrimaryButton is null) return;
+                    this.PrimaryButton.Focus(FocusState.Keyboard); 
+                    break;
+                case ContentDialogButton.Secondary:
+                    if (this.SecondaryButton is null) return;
+                    this.SecondaryButton.Focus(FocusState.Keyboard); 
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
