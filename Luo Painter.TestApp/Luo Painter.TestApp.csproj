@@ -146,6 +146,9 @@
     <Compile Include="ExpanderPage.xaml.cs">
       <DependentUpon>ExpanderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileImageSourcePage.xaml.cs">
+      <DependentUpon>FileImageSourcePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FloodSelectPage.xaml.cs">
       <DependentUpon>FloodSelectPage.xaml</DependentUpon>
     </Compile>
@@ -312,6 +315,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExpanderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FileImageSourcePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

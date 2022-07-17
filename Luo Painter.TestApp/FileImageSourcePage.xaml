@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.FileImageSourcePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Luo_Painter.TestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Margin="18" RadiusX="12" RadiusY="12" StrokeThickness="2" Stroke="Gray" StrokeDashArray="8, 4" />
+        <local:FileInkCanvas x:Name="InkCanvas" />
+
+        <StackPanel Grid.Column="1" Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">
+                I am a Image.
+            </TextBlock>
+            <Border MaxWidth="400" MaxHeight="400" MinWidth="200" MinHeight="200" Background="White">
+                <Image x:Name="Image" Stretch="Fill" >
+                    <!--Source-->
+                </Image>
+            </Border>
+            <Button x:Name="RefreshButton" Padding="22,6" HorizontalAlignment="Center" >
+                Refresh
+            </Button>
+            <Button x:Name="LocalButton" Padding="22,6" HorizontalAlignment="Center" >
+                Local Folder
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</Page>
