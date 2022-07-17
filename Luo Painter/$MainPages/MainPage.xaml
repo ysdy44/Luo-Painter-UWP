@@ -225,7 +225,7 @@
                 <local:ProjectDataTemplateSelector>
                      
                     <local:ProjectDataTemplateSelector.None>
-                        <DataTemplate x:DataType="local:Project">
+                        <DataTemplate x:DataType="local:ProjectNone">
                             <StackPanel Spacing="10" Margin="14,40,14,0" >
                                 <Border Width="158" Height="130" Padding="3" CornerRadius="4" BorderThickness="1" BorderBrush="#44000000" Background="White" >
                                     <Border Background="Black">
@@ -239,7 +239,7 @@
                     </local:ProjectDataTemplateSelector.None>
 
                     <local:ProjectDataTemplateSelector.File>
-                        <DataTemplate x:DataType="local:Project">
+                        <DataTemplate x:DataType="local:ProjectFile">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -253,7 +253,7 @@
                                             <TranslateTransform X="4"/>
                                         </TransformGroup>
                                     </UIElement.RenderTransform>
-                                    <Image Source="{x:Bind Thumbnail, Mode=OneWay}"/>
+                                    <Image Source="{x:Bind ImageSource, Mode=OneWay}"/>
                                 </Border>
                                 <!--Selected-->
                                 <elements:SelectedIconPresenter IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
@@ -275,7 +275,7 @@
                     </local:ProjectDataTemplateSelector.File>
 
                     <local:ProjectDataTemplateSelector.Folder>
-                        <DataTemplate x:DataType="local:Project">
+                        <DataTemplate x:DataType="local:ProjectFolder">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>

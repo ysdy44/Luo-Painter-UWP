@@ -62,8 +62,8 @@ namespace Luo_Painter
                         case StorageItemTypes.None:
                             return;
                         default:
-                            this.ObservableCollection.Remove(Project.Add);
-                            this.ObservableCollection.Insert(0, Project.Add);
+                            this.ObservableCollection.Remove(ProjectNone.Add);
+                            this.ObservableCollection.Insert(0, ProjectNone.Add);
                             break;
                     }
                 }
@@ -136,13 +136,24 @@ namespace Luo_Painter
             };
 
             this.DupliateDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DupliateHide);
-            this.DupliateDocker.PrimaryButtonClick += (s, e) => this.Action(ProjectAction.DupliateHide);
+            this.DupliateDocker.PrimaryButtonClick += async (s, e) =>
+            {
+                this.Action(ProjectAction.DupliateHide);
+            };
 
             this.DeleteDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DeleteHide);
-            this.DeleteDocker.PrimaryButtonClick += (s, e) => this.Action(ProjectAction.DeleteHide);
+            this.DeleteDocker.PrimaryButtonClick += async (s, e) =>
+            {
+                await this.ObservableCollection.DeleteAsync(this.ListView.SelectedItems);
+                this.Action(ProjectAction.DeleteHide);
+            };
 
             this.MoveDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.MoveHide);
-            this.MoveDocker.PrimaryButtonClick += (s, e) => this.Action(ProjectAction.MoveHide);
+            this.MoveDocker.PrimaryButtonClick += async (s, e) =>
+            {
+                await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), this.ListView.SelectedItems);
+                this.Action(ProjectAction.MoveHide);
+            };
 
             this.RenameCommand.Click += (s, e) => this.Action(ProjectAction.Rename, e);
 
@@ -154,6 +165,10 @@ namespace Luo_Painter
 
             this.MoveItem.Click += (s, e) => this.Action(ProjectAction.MoveShow, this.RenameItem.CommandParameter as Project);
             this.MoveItem2.Click += (s, e) => this.Action(ProjectAction.MoveShow, this.RenameItem.CommandParameter as Project);
+
+            this.RenameDialog.IsPrimaryButtonEnabled = false;
+            this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);
+            this.NewTextBox.TextChanged += (s, e) => this.NewDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.NewTextBox.Text);
         }
 
         private async void Action(ProjectAction action, Project item = null)
@@ -167,7 +182,9 @@ namespace Luo_Painter
                 case ProjectAction.Folder:
                     if (item is null) break;
                     this.Paths.Add(new Metadata(item.Path, item.Name));
+
                     this.Load();
+                    this.UpdateBack();
                     break;
 
                 case ProjectAction.Add:
@@ -177,7 +194,9 @@ namespace Luo_Painter
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
-                                base.Frame.Navigate(typeof(DrawPage), this.SizePicker.Size);
+                                StorageFolder file = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
+                                this.ObservableCollection.Insert(file);
+                                base.Frame.Navigate(typeof(DrawPage), new ProjectNone(this.SizePicker.Size, file));
                                 break;
                             default:
                                 break;
@@ -188,7 +207,7 @@ namespace Luo_Painter
                     break;
 
                 case ProjectAction.DupliateShow:
-                    this.ObservableCollection.Remove(Project.Add);
+                    this.ObservableCollection.Remove(ProjectNone.Add);
                     this.ListView.IsItemClickEnabled = false;
                     this.DupliateDocker.IsShow = true;
 
@@ -196,12 +215,12 @@ namespace Luo_Painter
                     this.ListView.SelectedItem = item;
                     break;
                 case ProjectAction.DupliateHide:
-                    this.ObservableCollection.Insert(0, Project.Add);
+                    this.ObservableCollection.Insert(0, ProjectNone.Add);
                     this.ListView.IsItemClickEnabled = true;
                     this.DupliateDocker.IsShow = false;
                     break;
                 case ProjectAction.DeleteShow:
-                    this.ObservableCollection.Remove(Project.Add);
+                    this.ObservableCollection.Remove(ProjectNone.Add);
                     this.ListView.IsItemClickEnabled = false;
                     this.DeleteDocker.IsShow = true;
 
@@ -209,12 +228,12 @@ namespace Luo_Painter
                     this.ListView.SelectedItem = item;
                     break;
                 case ProjectAction.DeleteHide:
-                    this.ObservableCollection.Insert(0, Project.Add);
+                    this.ObservableCollection.Insert(0, ProjectNone.Add);
                     this.ListView.IsItemClickEnabled = true;
                     this.DeleteDocker.IsShow = false;
                     break;
                 case ProjectAction.MoveShow:
-                    this.ObservableCollection.Remove(Project.Add);
+                    this.ObservableCollection.Remove(ProjectNone.Add);
                     this.ListView.IsItemClickEnabled = false;
                     this.MoveDocker.IsShow = true;
 
@@ -222,7 +241,7 @@ namespace Luo_Painter
                     this.ListView.SelectedItem = item;
                     break;
                 case ProjectAction.MoveHide:
-                    this.ObservableCollection.Insert(0, Project.Add);
+                    this.ObservableCollection.Insert(0, ProjectNone.Add);
                     this.ListView.IsItemClickEnabled = true;
                     this.MoveDocker.IsShow = false;
                     break;
@@ -231,11 +250,16 @@ namespace Luo_Painter
                     {
                         this.NewTextBox.Text = this.New;
                         this.NewTextBox.SelectAll();
+                        this.RenameTextBox.Focus(FocusState.Keyboard);
 
                         ContentDialogResult result = await this.NewDialog.ShowInstance();
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
+                                string name = this.NewTextBox.Text;
+                                if (string.IsNullOrEmpty(name)) break;
+
+                                await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), name);
                                 break;
                             default:
                                 break;
@@ -243,28 +267,25 @@ namespace Luo_Painter
                     }
                     break;
                 case ProjectAction.Rename:
+                    if (item is ProjectFile item2)
                     {
-                        if (item is null) break;
-                        this.RenameTextBox.Text = item.DisplayName;
+                        this.RenameTextBox.Text = item2.DisplayName;
                         this.RenameTextBox.SelectAll();
+                        this.RenameTextBox.Focus(FocusState.Keyboard);
 
                         ContentDialogResult result = await this.RenameDialog.ShowInstance();
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
                                 string name = this.RenameTextBox.Text;
-                                if (string.IsNullOrEmpty(name))
-                                {
-                                    break;
-                                }
+                                if (string.IsNullOrEmpty(name)) break;
 
-                                item.Rename(name);
+                                await item2.RenameAsync(name);
                                 break;
                             default:
                                 break;
                         }
                     }
-
                     break;
                 default:
                     break;
