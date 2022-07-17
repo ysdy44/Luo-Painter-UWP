@@ -35,6 +35,7 @@ namespace Luo_Painter.Layers.Models
         readonly byte[] Pixels;
         readonly IBuffer Buffer;
 
+        public IAsyncAction SaveAsync(IRandomAccessStream stream) => this.SourceRenderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
 
         //@Construct
         public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer) : this(resourceCreator, bitmapLayer.SourceRenderTarget, bitmapLayer.Width, bitmapLayer.Height) { }

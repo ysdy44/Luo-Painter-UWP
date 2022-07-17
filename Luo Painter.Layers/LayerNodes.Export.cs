@@ -2,7 +2,9 @@
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -12,6 +14,34 @@ namespace Luo_Painter.Layers
 {
     public sealed partial class LayerNodes : List<ILayer>, ILayerRender
     {
+
+        public IEnumerable<XElement> Save() =>
+            from layer
+            in this
+            select
+            layer.Children.Count is 0 ?
+            new XElement("Layerage", new XAttribute("Id", layer.Id)) :
+            new XElement("Layerage", new XAttribute("Id", layer.Id), new XElement("Children", layer.Children.Save()));
+
+        public void Load(IReadOnlyDictionary<string, ILayer> layers, XElement element)
+        {
+            if (element is null) return;
+
+            foreach (XElement item in element.Elements("Layerage"))
+            {
+                if (item.Attribute("Id") is XAttribute id2)
+                {
+                    string id = id2.Value;
+                    if (string.IsNullOrEmpty(id)) continue;
+
+                    ILayer layer = layers[id];
+                    base.Add(layer);
+
+                    this.Load(layers, item.Element("Children"));
+                }
+            }
+        }
+
 
         /// <summary>
         /// Saves the entire bitmap to the specified stream
@@ -64,7 +94,6 @@ namespace Luo_Painter.Layers
         /// <param name="height"> The height of image. </param>
         /// <param name="dpi"> The file dpi. </param>
         /// <param name="fileChoices"> The file choices. </param>
-        /// <param name="suggestedFileName"> The suggested name of file. </param>
         /// <param name="fileFormat"> The file format. </param>
         /// <param name="quality"> The file quality. </param>
         /// <returns> How many layers saved? </returns>
