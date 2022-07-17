@@ -82,37 +82,51 @@
 
 
             <!--StaticResource-->
+            <!--Make the Mouse-Contol the same size as the Touch-Control-->
+            <StaticResource x:Key="FlyoutThemeMinWidth" ResourceKey="FlyoutThemeTouchMinWidth" />
+            <StaticResource x:Key="MenuFlyoutItemThemePaddingNarrow" ResourceKey="MenuFlyoutItemThemePadding" />
+
             <StaticResource x:Key="CommandBarOverflowMinWidth" ResourceKey="CommandBarOverflowTouchMinWidth" />
             <StaticResource x:Key="AppBarButtonOverflowTextLabelPadding" ResourceKey="AppBarButtonOverflowTextTouchMargin" />
-
 
             <StaticResource x:Key="ComboBoxPopupThemeMinWidth" ResourceKey="ComboBoxPopupThemeTouchMinWidth" />
             <StaticResource x:Key="ComboBoxItemThemePadding" ResourceKey="ComboBoxItemThemeTouchPadding" />
             <StaticResource x:Key="ComboBoxItemRevealThemePadding" ResourceKey="ComboBoxItemRevealThemeTouchPadding" />
 
-            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelectedUnfocused" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="ComboBoxItemRevealBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+            <!--Make the Background binding the Acrylic-Brush-->
+            <StaticResource x:Key="MenuFlyoutPresenterBackground" ResourceKey="SystemControlAcrylicElementBrush"/>
+            <StaticResource x:Key="MenuFlyoutPresenterBorderBrush" ResourceKey="AppStroke"/>
+            <StaticResource x:Key="MenuFlyoutSeparatorThemeBrush" ResourceKey="AppStroke"/>
+            <Style TargetType="MenuFlyoutSeparator">
+                <Setter Property="Background" Value="{ThemeResource AppBorderBrush}" />
+                <Setter Property="Padding" Value="4,2" />
+            </Style>
 
-            
-            <SolidColorBrush x:Key="SliderTrackValueFill" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="SliderThumbBackground" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="SliderTrackValueFillPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="SliderTrackValueFillPressed" Color="{ThemeResource SystemAccentColor}"/>
+            <!--Make the Background binding the Accent-Brush-->
+            <StaticResource x:Key="ComboBoxItemRevealBackgroundSelected" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="ComboBoxItemRevealBackgroundSelectedUnfocused" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="ComboBoxItemRevealBackgroundSelectedPressed" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="ComboBoxItemRevealBackgroundSelectedPointerOver" ResourceKey="SystemColorControlAccentBrush" />
 
-            <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{ThemeResource SystemAccentColor}"/>
+            <StaticResource x:Key="SliderTrackValueFill" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="SliderThumbBackground" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="SliderTrackValueFillPointerOver" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="SliderTrackValueFillPressed" ResourceKey="SystemColorControlAccentBrush" />
 
-            <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
-            <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
-            <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
+            <StaticResource x:Key="ListViewItemBackgroundSelected" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="ListViewItemBackgroundSelectedPointerOver" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="ListViewItemBackgroundSelectedPressed" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="HyperlinkButtonForeground" ResourceKey="SystemColorControlAccentBrush" />
 
-            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="{ThemeResource SystemAccentColor}"/>
-            <SolidColorBrush x:Key="SystemControlHighlightAltBaseHighBrush" Color="White"/>
-            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="{ThemeResource SystemAccentColor}"/>
+            <!--Make the Background binding the White-Brush-->
+            <SolidColorBrush x:Key="White" Color="White"/>
+            <StaticResource x:Key="ListViewItemForegroundSelected" ResourceKey="White"/>
+            <StaticResource x:Key="ListViewItemForegroundSelectedPointerOver" ResourceKey="White"/>
+            <StaticResource x:Key="ListViewItemForegroundSelectedPressed" ResourceKey="White"/>
+
+            <StaticResource x:Key="SystemControlHighlightListAccentLowBrush" ResourceKey="SystemColorControlAccentBrush" />
+            <StaticResource x:Key="SystemControlHighlightAltBaseHighBrush" ResourceKey="White"/>
+            <StaticResource x:Key="SystemControlHighlightListAccentMediumBrush" ResourceKey="SystemColorControlAccentBrush" />
 
             <!--Merged-->
             <ResourceDictionary.MergedDictionaries>
