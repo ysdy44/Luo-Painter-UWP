@@ -17,6 +17,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
@@ -25,6 +26,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -170,6 +172,8 @@ namespace Luo_Painter
         byte[] BrushEdgeHardnessShaderCodeBytes;
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
+        private bool IsAdd;
+        private bool ReadyToDraw => this.CanvasVirtualControl.ReadyToDraw;
         private async Task CreateResourcesAsync()
         {
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
@@ -186,12 +190,20 @@ namespace Luo_Painter
             // Brush
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
+
+            if (this.IsAdd) return;
+
+            string path = this.ApplicationView.Title;
+            if (string.IsNullOrEmpty(path)) return;
+
+            await this.LoadAsync(this.ApplicationView.Title);
         }
         private async Task CreateDottedLineResourcesAsync()
         {
             this.DottedLineTransformShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
         }
 
+        //@Construct
         public DrawPage()
         {
             this.InitializeComponent();
@@ -226,8 +238,6 @@ namespace Luo_Painter
             this.ConstructStoryboard();
 
 
-            this.ApplicationView.Title = "*Untitled";
-
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
 
@@ -243,7 +253,7 @@ namespace Luo_Painter
             this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
             this.AdjustmentButton.Click += (s, e) => this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
             this.OtherButton.Click += (s, e) => this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
-            
+
             this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
             this.LayerListView.Remove += (s, e) => this.Edit(OptionType.Remove);
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
@@ -265,5 +275,75 @@ namespace Luo_Painter
                 e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
             };
         }
+
+        //@BackRequested
+        /// <summary> The current page no longer becomes an active page. </summary>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
+            {
+                manager.BackRequested -= this.BackRequested;
+                manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+        /// <summary> The current page becomes the active page. </summary>
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.IsAdd = false;
+
+            if (e.Parameter is Project item)
+            {
+                switch (item.Type)
+                {
+                    case StorageItemTypes.None:
+                        if (item is ProjectNone item2)
+                        {
+                            this.Transformer.Width = (int)item2.Size.Width;
+                            this.Transformer.Height = (int)item2.Size.Width;
+
+                            this.ApplicationView.Title = item2.Path;
+                            this.IsAdd = true;
+
+                            if (this.ReadyToDraw)
+                            {
+                                this.Load();
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            }
+                        }
+                        break;
+                    case StorageItemTypes.File:
+                        if (item is ProjectFile item3)
+                        {
+                            this.ApplicationView.Title = item3.Path;
+                            this.IsAdd = false;
+
+                            if (this.ReadyToDraw)
+                            {
+                                await this.LoadAsync(item3.Path);
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            }
+                        }
+                        break;
+                    default:
+                        this.ApplicationView.Title = string.Empty;
+                        this.IsAdd = false;
+                        break;
+                }
+            }
+
+            DisplayInformation display = DisplayInformation.GetForCurrentView();
+            if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
+            {
+                manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                manager.BackRequested += this.BackRequested;
+            }
+        }
+        private async void BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            await this.SaveAsync(this.ApplicationView.Title);
+        }
+
     }
 }

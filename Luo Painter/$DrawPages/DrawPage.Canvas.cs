@@ -191,13 +191,7 @@ namespace Luo_Painter
                 this.GradientMesh = new GradientMesh(this.CanvasDevice);
                 this.Clipboard = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
-                // Layer
-                BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-                this.Layers.Push(bitmapLayer);
-                this.Nodes.Add(bitmapLayer);
-                this.ObservableCollection.Add(bitmapLayer);
-                this.LayerListView.SelectedIndex = 0;
-
+                if (this.IsAdd) this.Load();
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>
