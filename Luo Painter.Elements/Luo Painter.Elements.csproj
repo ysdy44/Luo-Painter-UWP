@@ -138,6 +138,7 @@
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileImageSource.cs" />
     <Compile Include="FlexPanel.cs" />
     <Compile Include="FrameworkElementExtensions.cs" />
     <Compile Include="GradientStops.cs" />
