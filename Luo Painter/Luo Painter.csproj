@@ -137,6 +137,7 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
+    <Compile Include="%24MainPages\MainPage.Construct.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
