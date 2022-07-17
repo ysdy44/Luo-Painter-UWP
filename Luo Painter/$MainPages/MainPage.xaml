@@ -11,14 +11,116 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <FrameworkElement.Tag>
-        <Button x:Name="RenameButton" CommandParameter="{x:Null}">
-            <ButtonBase.Command>
-                <local:ProjectCommand x:Name="RenameCommand"/>
-            </ButtonBase.Command>
-            <SymbolIcon Symbol="Rename"/>
-        </Button>
-    </FrameworkElement.Tag>
+    <FrameworkElement.Resources>
+        <!--Flyout-->
+        <MenuFlyout x:Name="FileMenuFlyout">
+            <MenuFlyoutItem x:Name="RenameItem" CommandParameter="{x:Null}" >
+                <MenuFlyoutItem.Command>
+                    <local:ProjectCommand x:Name="RenameCommand"/>
+                </MenuFlyoutItem.Command>
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="Rename" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Rename
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem x:Name="DupliateItem" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Dupliate
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem x:Name="DeleteItem" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="Delete" Foreground="Red">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Delete
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem x:Name="MoveItem" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Move to Folder
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem x:Name="LocalItem" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Local Folder
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+        <MenuFlyout x:Name="FolderMenuFlyout">
+            <MenuFlyoutItem x:Name="DupliateItem2" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Dupliate
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem x:Name="DeleteItem2" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="Delete" Foreground="Red">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Delete
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem x:Name="MoveItem2" >
+                <MenuFlyoutItem.Icon>
+                    <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
+                        </UIElement.RenderTransform>
+                    </SymbolIcon>
+                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Text>
+                    Move to Folder
+                </MenuFlyoutItem.Text>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+    </FrameworkElement.Resources>
 
     <Grid>
 
@@ -121,14 +223,18 @@
 
             <ItemsControl.ItemTemplateSelector>
                 <local:ProjectDataTemplateSelector>
-
+                     
                     <local:ProjectDataTemplateSelector.None>
                         <DataTemplate x:DataType="local:Project">
-                            <Border Margin="14,40,14,60" Padding="3" CornerRadius="4" BorderThickness="1" BorderBrush="#44000000" Background="White" >
-                                <Border Background="Black">
-                                    <FontIcon FontSize="28" Glyph="&#xE109;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource AppBlueLinearGradientBrush}" />
-                                </Border>
-                            </Border>
+                            <StackPanel Spacing="10" Margin="14,40,14,0" >
+                                <Border Width="158" Height="130" Padding="3" CornerRadius="4" BorderThickness="1" BorderBrush="#44000000" Background="White" >
+                                    <Border Background="Black">
+                                        <FontIcon FontSize="28" Glyph="&#xE109;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource AppBlueLinearGradientBrush}" />
+                                    </Border>
+                                </Border>  
+                                <TextBlock HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" 
+                                           Text="{Binding ElementName=AddDialog, Path=Title, Mode=OneWay}"/>
+                            </StackPanel>
                         </DataTemplate>
                     </local:ProjectDataTemplateSelector.None>
 
@@ -158,10 +264,10 @@
                                     Background="{ThemeResource AppBackground}"
                                     Style="{StaticResource TextBlockButtonStyle}"                        
                                     CommandParameter="{x:Bind}"                        
-                                    Command="{Binding ElementName=RenameButton, Path=Command, Mode=OneWay}"                        
+                                    Command="{Binding ElementName=RenameItem, Path=Command, Mode=OneWay}"                        
                                     IsEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}"                        
                                     >
-                                    <TextBlock Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Name, Mode=OneWay}" />
+                                    <TextBlock Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind DisplayName, Mode=OneWay}" />
                                 </Button>
                                 <TextBlock Grid.Row="2" FontSize="10" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" Text="{x:Bind DateCreated,Mode=OneWay}"/>
                             </Grid>
@@ -214,7 +320,7 @@
                                     <!--Selected-->
                                     <elements:SelectedIconPresenter IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
                                 </Grid>
-                                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Name, Mode=OneWay}" />
+                                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind DisplayName, Mode=OneWay}" />
                                 <TextBlock Grid.Row="2" FontSize="10" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" Text="{x:Bind DateCreated,Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
@@ -323,11 +429,11 @@
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-
+            
             <ListViewItem>
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="AddToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        Add
+                        Create New
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Add"/>
@@ -472,7 +578,7 @@
 
 
         <!--Dialog-->
-        <ContentDialog x:Name="RenameDislog" Style="{StaticResource AppContentDialogStyle}">
+        <ContentDialog x:Name="RenameDialog" Style="{StaticResource AppContentDialogStyle}">
             <ContentDialog.PrimaryButtonText>
                 OK
             </ContentDialog.PrimaryButtonText>
@@ -484,7 +590,7 @@
             </ContentDialog.Title>
             <TextBox x:Name="RenameTextBox"/>
         </ContentDialog>
-        <ContentDialog x:Name="AddDislog" Style="{StaticResource AppContentDialogStyle}">
+        <ContentDialog x:Name="AddDialog" Style="{StaticResource AppContentDialogStyle}">
             <ContentDialog.PrimaryButtonText>
                 OK
             </ContentDialog.PrimaryButtonText>
@@ -492,7 +598,7 @@
                 Cancel
             </ContentDialog.SecondaryButtonText>
             <ContentDialog.Title>
-                New
+                Create New
             </ContentDialog.Title>
             <elements:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
                 <elements:SizePicker.WidthText>
@@ -503,7 +609,7 @@
                 </elements:SizePicker.HeightText>
             </elements:SizePicker>
         </ContentDialog>
-        <ContentDialog x:Name="NewDislog" Style="{StaticResource AppContentDialogStyle}">
+        <ContentDialog x:Name="NewDialog" Style="{StaticResource AppContentDialogStyle}">
             <ContentDialog.PrimaryButtonText>
                 OK
             </ContentDialog.PrimaryButtonText>

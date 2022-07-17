@@ -87,8 +87,12 @@ namespace Luo_Painter
                         switch (item.Type)
                         {
                             case StorageItemTypes.File:
+                                this.RenameItem.CommandParameter = item;
+                                this.FileMenuFlyout.ShowAt(this.ListView, e.GetPosition(this.ListView));
                                 break;
                             case StorageItemTypes.Folder:
+                                this.RenameItem.CommandParameter = item;
+                                this.FolderMenuFlyout.ShowAt(this.ListView, e.GetPosition(this.ListView));
                                 break;
                             default:
                                 break;
@@ -141,6 +145,15 @@ namespace Luo_Painter
             this.MoveDocker.PrimaryButtonClick += (s, e) => this.Action(ProjectAction.MoveHide);
 
             this.RenameCommand.Click += (s, e) => this.Action(ProjectAction.Rename, e);
+
+            this.DupliateItem.Click += (s, e) => this.Action(ProjectAction.DupliateShow, this.RenameItem.CommandParameter as Project);
+            this.DupliateItem2.Click += (s, e) => this.Action(ProjectAction.DupliateShow, this.RenameItem.CommandParameter as Project);
+
+            this.DeleteItem.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
+            this.DeleteItem2.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
+
+            this.MoveItem.Click += (s, e) => this.Action(ProjectAction.MoveShow, this.RenameItem.CommandParameter as Project);
+            this.MoveItem2.Click += (s, e) => this.Action(ProjectAction.MoveShow, this.RenameItem.CommandParameter as Project);
         }
 
         private async void Action(ProjectAction action, Project item = null)
@@ -159,7 +172,7 @@ namespace Luo_Painter
 
                 case ProjectAction.Add:
                     {
-                        ContentDialogResult result = await this.AddDislog.ShowInstance();
+                        ContentDialogResult result = await this.AddDialog.ShowInstance();
 
                         switch (result)
                         {
@@ -219,7 +232,7 @@ namespace Luo_Painter
                         this.NewTextBox.Text = this.New;
                         this.NewTextBox.SelectAll();
 
-                        ContentDialogResult result = await this.NewDislog.ShowInstance();
+                        ContentDialogResult result = await this.NewDialog.ShowInstance();
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
@@ -235,7 +248,7 @@ namespace Luo_Painter
                         this.RenameTextBox.Text = item.DisplayName;
                         this.RenameTextBox.SelectAll();
 
-                        ContentDialogResult result = await this.RenameDislog.ShowInstance();
+                        ContentDialogResult result = await this.RenameDialog.ShowInstance();
                         switch (result)
                         {
                             case ContentDialogResult.Primary:

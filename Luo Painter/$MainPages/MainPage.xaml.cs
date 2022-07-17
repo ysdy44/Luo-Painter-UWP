@@ -13,7 +13,7 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -66,7 +66,7 @@ namespace Luo_Painter
 
             this.Path = folder.Path;
             this.Name = folder.Name;
-            this.DisplayName = folder.DisplayName;
+            this.DisplayName = folder.DisplayName.Replace(".luo", string.Empty);
             this.DateCreated = folder.DateCreated;
 
             this.Thumbnail = thumbnail;
@@ -177,7 +177,10 @@ namespace Luo_Painter
         public MainPage()
         {
             this.InitializeComponent();
+            this.ConstructListView();
+            this.ConstructDialog();
             this.Load();
+
             this.Canvas.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
@@ -227,158 +230,34 @@ namespace Luo_Painter
                     this.Load();
                 }
             };
+        }
 
-            this.ListView.SelectionChanged += (s, e) =>
+        //@BackRequested
+        /// <summary> The current page no longer becomes an active page. </summary>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
             {
-                this.SelectedCount += e.AddedItems.Count;
-                this.SelectedCount -= e.RemovedItems.Count;
-
-                this.DupliateDocker.Count = this.SelectedCount;
-                this.DeleteDocker.Count = this.SelectedCount;
-                this.MoveDocker.Count = this.SelectedCount;
-            };
-            this.ListView.ItemClick += async (s, e) =>
+                manager.BackRequested -= this.BackRequested;
+                manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+        /// <summary> The current page becomes the active page. </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
             {
-                if (e.ClickedItem is Project item2)
-                {
-                    switch (item2.Type)
-                    {
-                        case StorageItemTypes.File:
-                            base.Frame.Navigate(typeof(DrawPage));
-                            break;
-                        case StorageItemTypes.Folder:
-                            this.Paths.Add(new Metadata(item2.Path, item2.Name));
-                            this.Load();
-                            break;
-                        case StorageItemTypes.None:
-                            {
-                                ContentDialogResult result = await this.AddDislog.ShowInstance();
-
-                                switch (result)
-                                {
-                                    case ContentDialogResult.Primary:
-                                        base.Frame.Navigate(typeof(DrawPage), this.SizePicker.Size);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            };
-
-            this.AppBarListView.ItemClick += async (s, e) =>
+                manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                manager.BackRequested += this.BackRequested;
+            }
+        }
+        private void BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            if (this.Paths.GoBack())
             {
-                if (e.ClickedItem is SymbolIcon item)
-                {
-                    switch (item.Symbol)
-                    {
-                        case Symbol.Add:
-                            ContentDialogResult result1 = await this.AddDislog.ShowInstance();
-
-                            switch (result1)
-                            {
-                                case ContentDialogResult.Primary:
-                                    base.Frame.Navigate(typeof(DrawPage), this.SizePicker.Size);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case Symbol.Pictures:
-                            break;
-
-                        case Symbol.Copy:
-                            this.ObservableCollection.Remove(Project.Add);
-                            this.ListView.IsItemClickEnabled = false;
-                            this.DupliateDocker.IsShow = true;
-                            break;
-                        case Symbol.Delete:
-                            this.ObservableCollection.Remove(Project.Add);
-                            this.ListView.IsItemClickEnabled = false;
-                            this.DeleteDocker.IsShow = true;
-                            break;
-
-                        case Symbol.MoveToFolder:
-                            this.ObservableCollection.Remove(Project.Add);
-                            this.ListView.IsItemClickEnabled = false;
-                            this.MoveDocker.IsShow = true;
-                            break;
-                        case Symbol.NewFolder:
-                            this.NewTextBox.Text = "New Folder";
-                            this.NewTextBox.SelectAll();
-
-                            ContentDialogResult result2 = await this.NewDislog.ShowInstance();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            };
-
-            this.DupliateDocker.SecondaryButtonClick += (s, e) =>
-            {
-                this.ObservableCollection.Insert(0, Project.Add);
-                this.ListView.IsItemClickEnabled = true;
-                this.DupliateDocker.IsShow = false;
-            };
-            this.DupliateDocker.PrimaryButtonClick += (s, e) =>
-            {
-                this.ObservableCollection.Insert(0, Project.Add);
-                this.ListView.IsItemClickEnabled = true;
-                this.DupliateDocker.IsShow = false;
-            };
-
-            this.DeleteDocker.SecondaryButtonClick += (s, e) =>
-            {
-                this.ObservableCollection.Insert(0, Project.Add);
-                this.ListView.IsItemClickEnabled = true;
-                this.DeleteDocker.IsShow = false;
-            };
-            this.DeleteDocker.PrimaryButtonClick += (s, e) =>
-            {
-                this.ObservableCollection.Insert(0, Project.Add);
-                this.ListView.IsItemClickEnabled = true;
-                this.DeleteDocker.IsShow = false;
-            };
-
-            this.MoveDocker.SecondaryButtonClick += (s, e) =>
-            {
-                this.ObservableCollection.Insert(0, Project.Add);
-                this.ListView.IsItemClickEnabled = true;
-                this.MoveDocker.IsShow = false;
-            };
-            this.MoveDocker.PrimaryButtonClick += (s, e) =>
-            {
-                this.ObservableCollection.Insert(0, Project.Add);
-                this.ListView.IsItemClickEnabled = true;
-                this.MoveDocker.IsShow = false;
-            };
-
-            this.RenameCommand.Click += async (s, e) =>
-            {
-                this.RenameTextBox.Text = e.DisplayName;
-                this.RenameTextBox.SelectAll();
-
-                ContentDialogResult result = await this.RenameDislog.ShowInstance();
-                switch (result)
-                {
-                    case ContentDialogResult.Primary:
-                        string name = this.RenameTextBox.Text;
-                        if (string.IsNullOrEmpty(name))
-                        {
-                            break;
-                        }
-
-                        e.Rename(name);
-                        break;
-                    default:
-                        break;
-                }
-            };
+                this.Load();
+            }
         }
 
     }
