@@ -138,6 +138,7 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
+    <Compile Include="%24MainPages\MainPage.Action.cs" />
     <Compile Include="%24MainPages\MainPage.Construct.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -414,6 +415,10 @@
     <ProjectReference Include="..\Luo Painter.Options\Luo Painter.Options.csproj">
       <Project>{ed8fd210-e644-4130-b622-bbb791e09e8d}</Project>
       <Name>Luo Painter.Options</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Projects\Luo Painter.Projects.csproj">
+      <Project>{FC4B6C5F-FA2E-4773-BCFD-18CCE86B25BA}</Project>
+      <Name>Luo Painter.Projects</Name>
     </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Shaders\Luo Painter.Shaders.csproj">
       <Project>{31ccde60-a61f-438d-a3ef-c26216f5f517}</Project>

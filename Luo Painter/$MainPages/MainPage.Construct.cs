@@ -9,25 +9,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal enum ProjectAction
-    {
-        File,
-        Folder,
-
-        Add,
-        Image,
-
-        DupliateShow,
-        DupliateHide,
-        DeleteShow,
-        DeleteHide,
-        MoveShow,
-        MoveHide,
-
-        New,
-        Rename,
-    }
-
     public sealed partial class MainPage : Page
     {
 
@@ -128,7 +109,6 @@ namespace Luo_Painter
                         case Symbol.Pictures: this.Action(ProjectAction.Image); break;
                         case Symbol.Copy: this.Action(ProjectAction.DupliateShow); break;
                         case Symbol.Delete: this.Action(ProjectAction.DeleteShow); break;
-                        case Symbol.MoveToFolder: this.Action(ProjectAction.MoveShow); break;
                         case Symbol.NewFolder: this.Action(ProjectAction.New); break;
                         default: break;
                     }
@@ -136,7 +116,7 @@ namespace Luo_Painter
             };
 
             this.DupliateDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DupliateHide);
-            this.DupliateDocker.PrimaryButtonClick += async (s, e) =>
+            this.DupliateDocker.PrimaryButtonClick += (s, e) =>
             {
                 this.Action(ProjectAction.DupliateHide);
             };
@@ -163,133 +143,9 @@ namespace Luo_Painter
             this.DeleteItem.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
             this.DeleteItem2.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
 
-            this.MoveItem.Click += (s, e) => this.Action(ProjectAction.MoveShow, this.RenameItem.CommandParameter as Project);
-            this.MoveItem2.Click += (s, e) => this.Action(ProjectAction.MoveShow, this.RenameItem.CommandParameter as Project);
-
             this.RenameDialog.IsPrimaryButtonEnabled = false;
             this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);
             this.NewTextBox.TextChanged += (s, e) => this.NewDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.NewTextBox.Text);
-        }
-
-        private async void Action(ProjectAction action, Project item = null)
-        {
-            switch (action)
-            {
-                case ProjectAction.File:
-                    if (item is null) break;
-                    base.Frame.Navigate(typeof(DrawPage), item);
-                    break;
-                case ProjectAction.Folder:
-                    if (item is null) break;
-                    this.Paths.Add(new Metadata(item.Path, item.Name));
-
-                    this.Load();
-                    this.UpdateBack();
-                    break;
-
-                case ProjectAction.Add:
-                    {
-                        ContentDialogResult result = await this.AddDialog.ShowInstance();
-
-                        switch (result)
-                        {
-                            case ContentDialogResult.Primary:
-                                StorageFolder file = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
-                                this.ObservableCollection.Insert(file);
-                                base.Frame.Navigate(typeof(DrawPage), new ProjectNone(this.SizePicker.Size, file));
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                case ProjectAction.Image:
-                    break;
-
-                case ProjectAction.DupliateShow:
-                    this.ObservableCollection.Remove(ProjectNone.Add);
-                    this.ListView.IsItemClickEnabled = false;
-                    this.DupliateDocker.IsShow = true;
-
-                    if (item is null) break;
-                    this.ListView.SelectedItem = item;
-                    break;
-                case ProjectAction.DupliateHide:
-                    this.ObservableCollection.Insert(0, ProjectNone.Add);
-                    this.ListView.IsItemClickEnabled = true;
-                    this.DupliateDocker.IsShow = false;
-                    break;
-                case ProjectAction.DeleteShow:
-                    this.ObservableCollection.Remove(ProjectNone.Add);
-                    this.ListView.IsItemClickEnabled = false;
-                    this.DeleteDocker.IsShow = true;
-
-                    if (item is null) break;
-                    this.ListView.SelectedItem = item;
-                    break;
-                case ProjectAction.DeleteHide:
-                    this.ObservableCollection.Insert(0, ProjectNone.Add);
-                    this.ListView.IsItemClickEnabled = true;
-                    this.DeleteDocker.IsShow = false;
-                    break;
-                case ProjectAction.MoveShow:
-                    this.ObservableCollection.Remove(ProjectNone.Add);
-                    this.ListView.IsItemClickEnabled = false;
-                    this.MoveDocker.IsShow = true;
-
-                    if (item is null) break;
-                    this.ListView.SelectedItem = item;
-                    break;
-                case ProjectAction.MoveHide:
-                    this.ObservableCollection.Insert(0, ProjectNone.Add);
-                    this.ListView.IsItemClickEnabled = true;
-                    this.MoveDocker.IsShow = false;
-                    break;
-
-                case ProjectAction.New:
-                    {
-                        this.NewTextBox.Text = this.New;
-                        this.NewTextBox.SelectAll();
-                        this.RenameTextBox.Focus(FocusState.Keyboard);
-
-                        ContentDialogResult result = await this.NewDialog.ShowInstance();
-                        switch (result)
-                        {
-                            case ContentDialogResult.Primary:
-                                string name = this.NewTextBox.Text;
-                                if (string.IsNullOrEmpty(name)) break;
-
-                                await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), name);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                case ProjectAction.Rename:
-                    if (item is ProjectFile item2)
-                    {
-                        this.RenameTextBox.Text = item2.DisplayName;
-                        this.RenameTextBox.SelectAll();
-                        this.RenameTextBox.Focus(FocusState.Keyboard);
-
-                        ContentDialogResult result = await this.RenameDialog.ShowInstance();
-                        switch (result)
-                        {
-                            case ContentDialogResult.Primary:
-                                string name = this.RenameTextBox.Text;
-                                if (string.IsNullOrEmpty(name)) break;
-
-                                await item2.RenameAsync(name);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
 
     }
