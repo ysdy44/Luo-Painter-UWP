@@ -124,6 +124,11 @@
     <Compile Include="Models\ProjectFolder.cs" />
     <Compile Include="Models\ProjectNone.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="ProjectObservableCollections\ProjectObservableCollection.Create.cs" />
+    <Compile Include="ProjectObservableCollections\ProjectObservableCollection.cs" />
+    <Compile Include="ProjectObservableCollections\ProjectObservableCollection.DeleteCopy.cs" />
+    <Compile Include="ProjectObservableCollections\ProjectObservableCollection.Load.cs" />
+    <Compile Include="ProjectObservableCollections\ProjectObservableCollection.OrderBy.cs" />
     <Compile Include="ProjectParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Projects.rd.xml" />
