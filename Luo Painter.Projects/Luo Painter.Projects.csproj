@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\ProjectFile.cs" />
     <Compile Include="Models\ProjectNone.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectParameter.cs" />
