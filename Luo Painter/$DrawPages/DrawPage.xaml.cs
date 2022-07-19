@@ -6,6 +6,8 @@ using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
+using Luo_Painter.Projects;
+using Luo_Painter.Projects.Models;
 using Luo_Painter.Shaders;
 using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
@@ -172,8 +174,31 @@ namespace Luo_Painter
         byte[] BrushEdgeHardnessShaderCodeBytes;
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
-        private bool IsAdd;
+        // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
+        // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
         private bool ReadyToDraw => this.CanvasVirtualControl.ReadyToDraw;
+        private StorageItemTypes NavigateType;
+
+        private void CreateResources()
+        {
+            this.Transformer.Fit();
+            this.ViewTool.Construct(this.Transformer);
+
+            this.Mesh = new Mesh(this.CanvasDevice, this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
+            this.GradientMesh = new GradientMesh(this.CanvasDevice);
+            this.Clipboard = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+
+            this.Displacement = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+            this.Displacement.RenderThumbnail();
+        }
+        private void CreateMarqueeResources()
+        {
+            this.Marquee = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+            this.Marquee.RenderThumbnail();
+
+            this.LayerListView.MarqueeSource = this.Marquee.Thumbnail;
+        }
+
         private async Task CreateResourcesAsync()
         {
             this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
@@ -191,12 +216,28 @@ namespace Luo_Painter
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
 
-            if (this.IsAdd) return;
 
+            // Load
             string path = this.ApplicationView.Title;
             if (string.IsNullOrEmpty(path)) return;
 
-            await this.LoadAsync(this.ApplicationView.Title);
+            switch (this.NavigateType)
+            {
+                case StorageItemTypes.None:
+                    this.Load();
+                    this.CreateResources();
+                    break;
+                case StorageItemTypes.File:
+                    await this.LoadImageAsync(this.ApplicationView.Title);
+                    this.CreateResources();
+                    break;
+                case StorageItemTypes.Folder:
+                    await this.LoadAsync(this.ApplicationView.Title);
+                    this.CreateResources();
+                    break;
+                default:
+                    break;
+            }
         }
         private async Task CreateDottedLineResourcesAsync()
         {
@@ -255,7 +296,7 @@ namespace Luo_Painter
             this.OtherButton.Click += (s, e) => this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
 
             this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
-            this.LayerListView.Remove += (s, e) => this.Edit(OptionType.Remove);
+            this.LayerListView.Remove += (s, e) => this.EditClick(OptionType.Remove);
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
 
 
@@ -289,46 +330,55 @@ namespace Luo_Painter
         /// <summary> The current page becomes the active page. </summary>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.IsAdd = false;
-
-            if (e.Parameter is Project item)
+            if (e.Parameter is ProjectParameter item)
             {
+                this.NavigateType = item.Type;
+                this.ApplicationView.Title = item.Path;
+
                 switch (item.Type)
                 {
                     case StorageItemTypes.None:
-                        if (item is ProjectNone item2)
+                        this.Transformer.Width = (int)item.Size.Width;
+                        this.Transformer.Height = (int)item.Size.Height;
+
+                        if (this.ReadyToDraw)
                         {
-                            this.Transformer.Width = (int)item2.Size.Width;
-                            this.Transformer.Height = (int)item2.Size.Width;
-
-                            this.ApplicationView.Title = item2.Path;
-                            this.IsAdd = true;
-
-                            if (this.ReadyToDraw)
-                            {
-                                this.Load();
-                                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                            }
+                            this.Load();
+                            this.CreateResources();
+                            this.CreateMarqueeResources();
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
                         }
                         break;
                     case StorageItemTypes.File:
-                        if (item is ProjectFile item3)
+                        if (this.ReadyToDraw)
                         {
-                            this.ApplicationView.Title = item3.Path;
-                            this.IsAdd = false;
-
-                            if (this.ReadyToDraw)
-                            {
-                                await this.LoadAsync(item3.Path);
-
-                                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                            }
+                            await this.LoadImageAsync(item.Path);
+                            this.CreateResources();
+                            this.CreateMarqueeResources();
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        }
+                        break;
+                    case StorageItemTypes.Folder:
+                        if (this.ReadyToDraw)
+                        {
+                            await this.LoadAsync(item.Path);
+                            this.CreateResources();
+                            this.CreateMarqueeResources();
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
                         }
                         break;
                     default:
-                        this.ApplicationView.Title = string.Empty;
-                        this.IsAdd = false;
                         break;
+                }
+            }
+            else
+            {
+                this.NavigateType = default;
+                this.ApplicationView.Title = string.Empty;
+
+                if (base.Frame.CanGoBack)
+                {
+                    base.Frame.GoBack();
                 }
             }
 

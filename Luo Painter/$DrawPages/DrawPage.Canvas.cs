@@ -153,11 +153,7 @@ namespace Luo_Painter
 
             this.CanvasAnimatedControl.CreateResources += (sender, args) =>
             {
-                this.Marquee = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-                this.Marquee.RenderThumbnail();
-                this.Displacement = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-                this.Displacement.RenderThumbnail();
-                this.LayerListView.MarqueeSource = this.Marquee.Thumbnail;
+                this.CreateMarqueeResources();
                 args.TrackAsyncAction(this.CreateDottedLineResourcesAsync().AsAsyncAction());
             };
             this.CanvasAnimatedControl.Draw += (sender, args) =>
@@ -184,14 +180,6 @@ namespace Luo_Painter
 
             this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
-                this.Transformer.Fit();
-                this.ViewTool.Construct(this.Transformer);
-
-                this.Mesh = new Mesh(this.CanvasDevice, sender.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
-                this.GradientMesh = new GradientMesh(this.CanvasDevice);
-                this.Clipboard = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-
-                if (this.IsAdd) this.Load();
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>

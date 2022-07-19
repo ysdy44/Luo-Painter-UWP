@@ -10,6 +10,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
@@ -22,53 +23,60 @@ namespace Luo_Painter
 
         public void Load()
         {
-            // 1. Clear
-            this.History.Clear();
-
-            this.Layers.Clear();
-            this.Nodes.Clear();
-            this.ObservableCollection.Clear();
-
-            // 2. Add
             BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
             this.Layers.Push(bitmapLayer);
             this.Nodes.Add(bitmapLayer);
             this.ObservableCollection.Add(bitmapLayer);
 
-            // 3. UI
             this.LayerListView.SelectedIndex = 0;
+        }
+
+        public async Task LoadImageAsync(string path)
+        {
+            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
+            foreach (StorageFile item2 in await item.GetFilesAsync())
+            {
+                using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
+                using (CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasDevice, accessStream))
+                {
+                    BitmapLayer bitmapLayer = new BitmapLayer(this.CanvasDevice, bitmap);
+
+                    this.Transformer.Width = bitmapLayer.Width;
+                    this.Transformer.Height = bitmapLayer.Height;
+                    this.Transformer.Fit();
+
+                    this.Layers.Push(bitmapLayer);
+                    this.Nodes.Add(bitmapLayer);
+                    this.ObservableCollection.Add(bitmapLayer);
+
+                    this.LayerListView.SelectedIndex = 0;
+                    break;
+                }
+            }
         }
 
         public async Task LoadAsync(string path)
         {
-            // 1. Clear
-            this.History.Clear();
-
-            this.Layers.Clear();
-            this.Nodes.Clear();
-            this.ObservableCollection.Clear();
+            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
 
-            StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(path);
-
-
-            // 2. Load Layers.xml
-            StorageFile file2 = await zipFolder.GetFileAsync("Layers.xml");
+            // 1. Load Layers.xml
+            StorageFile file2 = await item.GetFileAsync("Layers.xml");
             using (IRandomAccessStream accessStream2 = await file2.OpenAsync(FileAccessMode.ReadWrite))
             {
                 XDocument doc = XDocument.Load(accessStream2.AsStream());
 
-                foreach (XElement item in doc.Root.Elements("Layer"))
+                foreach (XElement item2 in doc.Root.Elements("Layer"))
                 {
-                    if (item is null) continue;
+                    if (item2 is null) continue;
 
-                    if (item.Attribute("Id") is XAttribute id2)
+                    if (item2.Attribute("Id") is XAttribute id2)
                     {
                         string id = id2.Value;
                         if (string.IsNullOrEmpty(id)) continue;
 
-                        if (item.Attribute("Type") is XAttribute type2)
+                        if (item2.Attribute("Type") is XAttribute type2)
                         {
                             ILayer layer = null;
                             {
@@ -76,9 +84,10 @@ namespace Luo_Painter
                                 switch (type)
                                 {
                                     case LayerType.Bitmap:
-                                        StorageFile file = await zipFolder.GetFileAsync(id);
+                                        StorageFile file = await item.GetFileAsync(id);
                                         if (file is null) continue;
 
+                                        // 2. Load CanvasBitmap
                                         using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                                         using (CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasDevice, accessStream))
                                         {
@@ -94,13 +103,13 @@ namespace Luo_Painter
                             }
                             if (layer is null) continue;
 
-                            if (item.Attribute("Name") is XAttribute name) layer.Name = name.Value;
-                            if (item.Attribute("Opacity") is XAttribute opacity) layer.Opacity = (float)opacity;
-                            if (item.Attribute("BlendMode") is XAttribute blendMode)
+                            if (item2.Attribute("Name") is XAttribute name) layer.Name = name.Value;
+                            if (item2.Attribute("Opacity") is XAttribute opacity) layer.Opacity = (float)opacity;
+                            if (item2.Attribute("BlendMode") is XAttribute blendMode)
                                 if (blendMode.Value is "None" is false)
                                     layer.BlendMode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), blendMode.Value);
-                            if (item.Attribute("Visibility") is XAttribute visibility) layer.Visibility = visibility.Value == "Collapsed" ? Visibility.Collapsed : Visibility.Visible;
-                            if (item.Attribute("IsExpand") is XAttribute isExpand) layer.IsExpand = (bool)isExpand;
+                            if (item2.Attribute("Visibility") is XAttribute visibility) layer.Visibility = visibility.Value == "Collapsed" ? Visibility.Collapsed : Visibility.Visible;
+                            if (item2.Attribute("IsExpand") is XAttribute isExpand) layer.IsExpand = (bool)isExpand;
 
                             this.Layers.Push(id, layer);
                         }
@@ -109,25 +118,27 @@ namespace Luo_Painter
             }
 
             // 3. Load Project.xml
-            StorageFile file3 = await zipFolder.GetFileAsync("Project.xml");
+            StorageFile file3 = await item.GetFileAsync("Project.xml");
             using (IRandomAccessStream accessStream3 = await file3.OpenAsync(FileAccessMode.ReadWrite))
             {
                 XDocument doc = XDocument.Load(accessStream3.AsStream());
                 if (doc.Root.Element("Width") is XElement width) this.Transformer.Width = (int)width;
                 if (doc.Root.Element("Height") is XElement height) this.Transformer.Height = (int)height;
                 if (doc.Root.Element("Index") is XElement index) this.LayerSelectedIndex = (int)index;
+                this.Transformer.Fit();
 
                 this.Nodes.Load(this.Layers, doc.Root.Element("Layerages"));
             }
 
             // 4. UI 
-            foreach (ILayer item in this.Nodes)
+            foreach (ILayer item3 in this.Nodes)
             {
-                item.Arrange(0);
-                this.ObservableCollection.AddChild(item);
+                item3.Arrange(0);
+                this.ObservableCollection.AddChild(item3);
             }
             this.LayerListView.SelectedIndex = 0;
         }
+
 
         public async Task SaveAsync(string path, bool isGoBack = true)
         {
