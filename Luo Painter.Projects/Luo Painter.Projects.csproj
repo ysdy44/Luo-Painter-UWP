@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Models\ProjectFile.cs" />
+    <Compile Include="Models\ProjectFolder.cs" />
     <Compile Include="Models\ProjectNone.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectParameter.cs" />
