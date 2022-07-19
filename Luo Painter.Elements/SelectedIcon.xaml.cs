@@ -8,6 +8,9 @@ namespace Luo_Painter.Elements
     public sealed class SelectedIconPresenter : Grid // ContentPresenter
     {
 
+        /// <summary> Please binding the <see cref="SelectorItem.IsSelected" /> of Ancestor in SelectedIcon.xaml.</summary>
+        internal ListViewItem Ancestor;
+
         #region DependencyProperty 
 
 
@@ -20,13 +23,34 @@ namespace Luo_Painter.Elements
         /// <summary> Identifies the <see cref = "SelectedIconPresenter.IsItemClickEnabled" /> dependency property. </summary>
         public static readonly DependencyProperty IsItemClickEnabledProperty = DependencyProperty.Register(nameof(IsItemClickEnabled), typeof(bool), typeof(SelectedIconPresenter), new PropertyMetadata(true));
 
+        public bool IsEnabled
+        {
+            get
+            {
+                if (this.Ancestor is null) return false;
+                return this.Ancestor.IsEnabled;
+            }
+            set
+            {
+                if (this.Ancestor is null) return;
+                this.Ancestor.IsEnabled = value;
+            }
+        }
 
         #endregion
 
         public SelectedIconPresenter()
         {
-            // base.Unloaded += (s, e) => this.Children.Clear();
-            base.Loaded += (s, e) => this.Children.Add(new SelectedIcon(this.FindAncestor<ListViewItem>(), this));
+            //base.Unloaded += (s, e) =>
+            //{
+            //    this.Ancestor = null;
+            //    this.Children.Clear();
+            //};
+            base.Loaded += (s, e) =>
+            {
+                this.Ancestor = this.FindAncestor<ListViewItem>();
+                this.Children.Add(new SelectedIcon(this));
+            };
         }
     }
 
@@ -37,14 +61,11 @@ namespace Luo_Painter.Elements
         private Brush BooleanToBrushConverter(bool value) => value ? base.BorderBrush : base.Background;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
-        /// <summary> Please binding the <see cref="SelectorItem.IsSelected" /> of Ancestor in SelectedIcon.xaml.</summary>
-        readonly ListViewItem Ancestor;
         readonly SelectedIconPresenter Presenter;
 
-        internal SelectedIcon(ListViewItem ancestor, SelectedIconPresenter presenter)
+        internal SelectedIcon(SelectedIconPresenter presenter)
         {
             this.InitializeComponent();
-            this.Ancestor = ancestor;
             this.Presenter = presenter;
         }
     }

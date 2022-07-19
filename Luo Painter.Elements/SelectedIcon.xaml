@@ -20,14 +20,14 @@
         HorizontalAlignment="Center" 
         VerticalAlignment="Center"
         Visibility="{x:Bind BooleanToVisibilityConverter(Presenter.IsItemClickEnabled), Mode=OneWay}" 
-        Background="{x:Bind BooleanToBrushConverter(Ancestor.IsSelected), Mode=OneWay}"
+        Background="{x:Bind BooleanToBrushConverter(Presenter.Ancestor.IsSelected), Mode=OneWay}"
         >
         <FontIcon
             Glyph="&#xE10B;" 
             FontSize="18" 
             FontFamily="Segoe UI Symbol" 
             Foreground="White"
-            Visibility="{x:Bind Ancestor.IsSelected, Mode=OneWay}" 
+            Visibility="{x:Bind Presenter.Ancestor.IsSelected, Mode=OneWay}" 
             />
     </Border>
 
