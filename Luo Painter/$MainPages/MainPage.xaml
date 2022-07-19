@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:models="using:Luo_Painter.Projects.Models"
     NavigationCacheMode="Required"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -107,16 +108,16 @@
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Name="MoveItem2" >
+            <MenuFlyoutItem x:Name="LocalItem2" >
                 <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                    <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
                         <UIElement.RenderTransform>
                             <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
                         </UIElement.RenderTransform>
                     </SymbolIcon>
                 </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
-                    Move to Folder
+                    Local Folder
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
         </MenuFlyout>
@@ -174,10 +175,7 @@
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
 
 
-        <!--Canvas-->
-        <Canvas x:Name="Canvas" Background="{ThemeResource AppBackgroundDark}" >
-            <elements:AlignmentGrid x:Name="AlignmentGrid" IsHitTestVisible="False" />
-        </Canvas>
+        <elements:AlignmentGrid x:Name="AlignmentGrid" IsHitTestVisible="False" Background="{ThemeResource AppBackgroundDark}"/>
 
 
         <!--Body-->
@@ -189,11 +187,25 @@
             CanReorderItems="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
             CanDragItems="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
             AllowDrop="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
-            HeaderTemplate="{StaticResource AppListViewBaseHeader}"
             FooterTemplate="{StaticResource AppListViewBaseFooter}"
             ItemsSource="{x:Bind ObservableCollection}"
             IsMultiSelectCheckBoxEnabled="False"
             >
+
+            <ListViewBase.Header>
+                <ListBox
+                    x:Name="OrderListBox"
+                    Height="42"
+                    Margin="4"
+                    SelectedIndex="0"
+                    Background="{ThemeResource AppBackgroundLight}"
+                    Style="{StaticResource AppSegmentListBoxStyle}"
+                    >
+                    <ListBoxItem x:Name="TypeItem" >Type</ListBoxItem>
+                    <ListBoxItem x:Name="TimeItem" >Date Created</ListBoxItem>
+                    <ListBoxItem x:Name="NameItem" >Name</ListBoxItem>
+                </ListBox>
+            </ListViewBase.Header>
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -203,7 +215,7 @@
 
             <ItemsControl.ItemContainerTransitions>
                 <TransitionCollection>
-  
+
                 </TransitionCollection>
             </ItemsControl.ItemContainerTransitions>
 
@@ -223,23 +235,36 @@
 
             <ItemsControl.ItemTemplateSelector>
                 <local:ProjectDataTemplateSelector>
-                     
+
                     <local:ProjectDataTemplateSelector.None>
-                        <DataTemplate x:DataType="local:ProjectNone">
-                            <StackPanel Spacing="10" Margin="14,40,14,0" >
+                        <DataTemplate x:DataType="models:ProjectNone">
+                            <Grid RowSpacing="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="4"/>
+                                </Grid.RowDefinitions>
                                 <Border Width="158" Height="130" Padding="3" CornerRadius="4" BorderThickness="1" BorderBrush="#44000000" Background="White" >
-                                    <Border Background="Black">
+                                    <Grid Background="Black">
                                         <FontIcon FontSize="28" Glyph="&#xE109;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource AppBlueLinearGradientBrush}" />
-                                    </Border>
-                                </Border>  
-                                <TextBlock HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" 
+                                        <!--Selected-->
+                                        <elements:SelectedIconPresenter IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
+                                    </Grid>
+                                </Border>
+                                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" 
                                            Text="{Binding ElementName=AddDialog, Path=Title, Mode=OneWay}"/>
-                            </StackPanel>
+                                <TextBlock Grid.Row="2" FontSize="10" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
+                                    <Run>1024</Run>
+                                    <Run>×</Run>
+                                    <Run>1024</Run>
+                                </TextBlock>
+                            </Grid>
                         </DataTemplate>
                     </local:ProjectDataTemplateSelector.None>
 
                     <local:ProjectDataTemplateSelector.File>
-                        <DataTemplate x:DataType="local:ProjectFile">
+                        <DataTemplate x:DataType="models:ProjectFile">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -248,15 +273,10 @@
                                     <RowDefinition Height="4"/>
                                 </Grid.RowDefinitions>
                                 <Border Margin="26,24" CornerRadius="4" MinWidth="60" MinHeight="60" MaxWidth="200" Padding="4" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#44000000" Background="White" >
-                                    <UIElement.RenderTransform>
-                                        <TransformGroup>
-                                            <TranslateTransform X="4"/>
-                                        </TransformGroup>
-                                    </UIElement.RenderTransform>
                                     <Image Source="{x:Bind ImageSource, Mode=OneWay}"/>
                                 </Border>
                                 <!--Selected-->
-                                <elements:SelectedIconPresenter IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
+                                <elements:SelectedIconPresenter IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
                                 <Button                       
                                     Grid.Row="1"                       
                                     Padding="0"                           
@@ -275,7 +295,7 @@
                     </local:ProjectDataTemplateSelector.File>
 
                     <local:ProjectDataTemplateSelector.Folder>
-                        <DataTemplate x:DataType="local:ProjectFolder">
+                        <DataTemplate x:DataType="models:ProjectFolder">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -318,9 +338,20 @@
                                         <Image Source="{x:Bind Thumbnail, Mode=OneWay}"/>
                                     </Border>
                                     <!--Selected-->
-                                    <elements:SelectedIconPresenter IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
+                                    <elements:SelectedIconPresenter IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" IsItemClickEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}" />
                                 </Grid>
-                                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind DisplayName, Mode=OneWay}" />
+                                <Button                       
+                                    Grid.Row="1"                       
+                                    Padding="0"                           
+                                    HorizontalAlignment="Center"                         
+                                    Background="{ThemeResource AppBackground}"
+                                    Style="{StaticResource TextBlockButtonStyle}"                        
+                                    CommandParameter="{x:Bind}"                        
+                                    Command="{Binding ElementName=RenameItem, Path=Command, Mode=OneWay}"                        
+                                    IsEnabled="{Binding ElementName=ListView, Path=IsItemClickEnabled, Mode=OneWay}"                        
+                                    >
+                                    <TextBlock Margin="14,4" FontWeight="Medium" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind DisplayName, Mode=OneWay}" />
+                                </Button>
                                 <TextBlock Grid.Row="2" FontSize="10" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" Text="{x:Bind DateCreated,Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
@@ -332,85 +363,15 @@
         </elements:AnimationListView>
 
 
-        <!--Metadata-->
-        <ListView
-            x:Name="PathListView"               
-            Margin="0,48,0,0"                   
-            Height="26"                    
-            VerticalAlignment="Top"                                
-            SelectionMode="None"    
-            IsItemClickEnabled="True"                                      
-            ItemsSource="{x:Bind Paths}"         
-            Background="{ThemeResource AppBackground}"
-            ScrollViewer.HorizontalScrollMode="Enabled"
-            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-            ScrollViewer.VerticalScrollMode="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-            >
-
-            <ListViewBase.Header>
-                <Button x:Name="HomeButton" FontSize="12" MinWidth="50" MaxWidth="80" Padding="4,2" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Foreground="{ThemeResource AppForeground}" >
-                    Home
-                </Button>
-            </ListViewBase.Header>
-
-            <ListViewBase.Footer>
-                <Button x:Name="BackButton" FontSize="12" MinWidth="50" MaxWidth="80" Padding="4,2" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Foreground="{ThemeResource AppForeground}" >
-                    Back
-                </Button>
-            </ListViewBase.Footer>
-
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsStackPanel Orientation="Horizontal" ItemsUpdatingScrollMode="KeepLastItemInView" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemContainerTransitions>
-                <TransitionCollection>
-
-                </TransitionCollection>
-            </ItemsControl.ItemContainerTransitions>
-
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="Padding" Value="4,0"/>
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="Height" Value="26"/>
-                    <Setter Property="MinWidth" Value="32"/>
-                    <Setter Property="MinHeight" Value="20"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="elements:Metadata">
-                    <TextBlock>
-                        <Run FontSize="10" FontWeight="Bold" Text="&#xE00F;" FontFamily="Segoe MDL2 Assets" />                            
-                        <Run/>                          
-                        <Run FontSize="12" Text="{x:Bind Name}"/>
-                    </TextBlock>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-
-        </ListView>
-
-
         <!--Foot-->
         <ListView 
             x:Name="AppBarListView"
             IsItemClickEnabled="True"
             SelectionMode="None"
-            Padding="12,62,12,12"          
-            IsEnabled="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
-            Visibility="{x:Bind ListView.IsItemClickEnabled, Mode=OneWay}"              
+            Padding="12,62,12,12"                  
             HorizontalAlignment="Right" 
             VerticalAlignment="Bottom"
+            Visibility="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}"
             >
 
             <ItemsControl.ItemContainerStyle>
@@ -429,7 +390,7 @@
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            
+
             <ListViewItem>
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="AddToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
@@ -483,7 +444,7 @@
 
         </ListView>
 
-        
+
         <!--Head-->
         <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
             <Grid.ColumnDefinitions>
@@ -501,7 +462,8 @@
                 Luo Painter
             </TextBlock>
 
-            <Button x:Name="DocumentationButton" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="DocumentationButton" Width="Auto" Style="{StaticResource AppButtonStyle}" 
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="DocumentationButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
                         Open document webpage
@@ -515,7 +477,8 @@
                 <FontIcon FontSize="20" Glyph="&#xE11B;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
             </Button>
 
-            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Style="{StaticResource AppButtonStyle}" 
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="SettingButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
                         Open the settings page
@@ -527,6 +490,88 @@
                     </TransitionCollection>
                 </ContentControl.ContentTransitions>
                 <FontIcon FontSize="22" Glyph="&#xE115;" FontWeight="Bold" FontFamily="Segoe UI Symbol" />
+            </Button>
+
+
+            <!--Metadata-->
+            <ListView
+                x:Name="PathListView"    
+                Visibility="Collapsed"
+                Grid.Column="1"
+                SelectionMode="None"    
+                IsItemClickEnabled="True"                                      
+                ItemsSource="{x:Bind Paths}"         
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                ScrollViewer.VerticalScrollMode="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                >
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal" ItemsUpdatingScrollMode="KeepLastItemInView" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="4"/>
+                        <Setter Property="Width" Value="Auto"/>
+                        <Setter Property="MinWidth" Value="64"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="elements:Metadata">
+                        <TextBlock>
+                            <Run FontSize="16" FontWeight="Bold" Text="&#xE00F;" FontFamily="Segoe MDL2 Assets" />                  
+                            <Run/>
+                            <Run FontSize="22" Text="{x:Bind Name}"/>
+                            <Run/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ListView>
+
+            <Button x:Name="HomeButton" Visibility="Collapsed" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="HomeButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                        Go Home
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <SymbolIcon Symbol="Home"/>
+            </Button>
+
+            <Button x:Name="BackButton" Grid.Column="2" Visibility="Collapsed" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="BackButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                        Go Back
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <SymbolIcon Symbol="Up"/>
             </Button>
 
         </Grid>
@@ -561,7 +606,21 @@
                 <Run x:Name="DeleteSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to delete.</Run>
             </TextBlock>
         </elements:Docker>
-        <elements:Docker x:Name="MoveDocker" PrimaryButtonIsEnabledFollowCount="True" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
+        <elements:Docker x:Name="SelectDocker" PrimaryButtonIsEnabledFollowCount="True" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
+            <elements:Docker.PrimaryButtonText>
+                OK
+            </elements:Docker.PrimaryButtonText>
+            <elements:Docker.SecondaryButtonText>
+                Cancel
+            </elements:Docker.SecondaryButtonText>
+            <TextBlock>
+                <Run/>
+                <Run x:Name="SelectTitleRun" FontWeight="Bold">Select project(s)</Run>
+                <LineBreak/>
+                <Run x:Name="SelectSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to move.</Run>
+            </TextBlock>
+        </elements:Docker>
+        <elements:Docker x:Name="MoveDocker" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
             <elements:Docker.PrimaryButtonText>
                 OK
             </elements:Docker.PrimaryButtonText>
@@ -572,7 +631,7 @@
                 <Run/>
                 <Run x:Name="MoveTitleRun" FontWeight="Bold">Move project(s)</Run>
                 <LineBreak/>
-                <Run x:Name="MoveSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to move.</Run>
+                <Run x:Name="MoveSubtitleRun" Foreground="{ThemeResource AppForeground}">Move the project(s) to this Folder.</Run>
             </TextBlock>
         </elements:Docker>
 
@@ -621,6 +680,6 @@
             </ContentDialog.Title>
             <TextBox x:Name="NewTextBox"/>
         </ContentDialog>
-        
+
     </Grid>
 </Page>

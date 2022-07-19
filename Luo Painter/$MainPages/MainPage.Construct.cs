@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Elements;
+﻿using Luo_Painter.Projects;
+using Luo_Painter.Projects.Models;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
@@ -43,6 +44,8 @@ namespace Luo_Painter
                         case StorageItemTypes.None:
                             return;
                         default:
+                            if (this.ObservableCollection.FirstOrDefault() == ProjectNone.Add) break;
+
                             this.ObservableCollection.Remove(ProjectNone.Add);
                             this.ObservableCollection.Insert(0, ProjectNone.Add);
                             break;
@@ -57,7 +60,7 @@ namespace Luo_Painter
 
                 this.DupliateDocker.Count = this.SelectedCount;
                 this.DeleteDocker.Count = this.SelectedCount;
-                this.MoveDocker.Count = this.SelectedCount;
+                this.SelectDocker.Count = this.SelectedCount;
             };
             this.ListView.RightTapped += (s, e) =>
             {
@@ -109,6 +112,7 @@ namespace Luo_Painter
                         case Symbol.Pictures: this.Action(ProjectAction.Image); break;
                         case Symbol.Copy: this.Action(ProjectAction.DupliateShow); break;
                         case Symbol.Delete: this.Action(ProjectAction.DeleteShow); break;
+                        case Symbol.MoveToFolder: this.Action(ProjectAction.SelectShow); break;
                         case Symbol.NewFolder: this.Action(ProjectAction.New); break;
                         default: break;
                     }
@@ -116,8 +120,9 @@ namespace Luo_Painter
             };
 
             this.DupliateDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DupliateHide);
-            this.DupliateDocker.PrimaryButtonClick += (s, e) =>
+            this.DupliateDocker.PrimaryButtonClick += async (s, e) =>
             {
+                await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), this.ListView.SelectedItems);
                 this.Action(ProjectAction.DupliateHide);
             };
 
@@ -128,10 +133,31 @@ namespace Luo_Painter
                 this.Action(ProjectAction.DeleteHide);
             };
 
+            this.SelectDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.SelectHide);
+            this.SelectDocker.PrimaryButtonClick += (s, e) =>
+            {
+                this.ClipboardPath = this.Paths.GetPath();
+                foreach (Project item in this.ListView.SelectedItems)
+                {
+                    switch (item.Type)
+                    {
+                        case StorageItemTypes.File:
+                            this.ClipboardProjects.Add(item.Path);
+                            break;
+                    }
+                }
+                this.Action(ProjectAction.SelectToMove);
+            };
+
             this.MoveDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.MoveHide);
             this.MoveDocker.PrimaryButtonClick += async (s, e) =>
             {
-                await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), this.ListView.SelectedItems);
+                string path = this.Paths.GetPath();
+                if (this.ClipboardPath != path) 
+                {
+                    await this.ObservableCollection.Move(path, this.ClipboardProjects);
+                }
+                this.ClipboardProjects.Clear();
                 this.Action(ProjectAction.MoveHide);
             };
 
@@ -143,6 +169,11 @@ namespace Luo_Painter
             this.DeleteItem.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
             this.DeleteItem2.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
 
+            this.MoveItem.Click += (s, e) => this.Action(ProjectAction.SelectShow, this.RenameItem.CommandParameter as Project);
+        
+            this.LocalItem.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter as Project);
+            this.LocalItem2.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter as Project);
+            
             this.RenameDialog.IsPrimaryButtonEnabled = false;
             this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);
             this.NewTextBox.TextChanged += (s, e) => this.NewDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.NewTextBox.Text);

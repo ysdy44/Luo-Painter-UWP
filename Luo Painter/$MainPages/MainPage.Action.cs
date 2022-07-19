@@ -82,6 +82,7 @@ namespace Luo_Painter
                     break;
 
                 case ProjectAction.DupliateShow:
+                    this.ObservableCollection.Enable(StorageItemTypes.File);
                     this.ListView.IsItemClickEnabled = false;
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.DupliateDocker.IsShow = true;
@@ -90,11 +91,13 @@ namespace Luo_Painter
                     this.ListView.SelectedItem = item;
                     break;
                 case ProjectAction.DupliateHide:
+                    this.ObservableCollection.Enable();
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.DupliateDocker.IsShow = false;
                     break;
                 case ProjectAction.DeleteShow:
+                    this.ObservableCollection.Enable(StorageItemTypes.File | StorageItemTypes.Folder);
                     this.ListView.IsItemClickEnabled = false;
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.DeleteDocker.IsShow = true;
@@ -103,27 +106,35 @@ namespace Luo_Painter
                     this.ListView.SelectedItem = item;
                     break;
                 case ProjectAction.DeleteHide:
+                    this.ObservableCollection.Enable();
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.DeleteDocker.IsShow = false;
                     break;
                 case ProjectAction.SelectShow:
+                    this.ObservableCollection.Enable(StorageItemTypes.File);
                     this.ListView.IsItemClickEnabled = false;
                     this.AppBarListView.IsItemClickEnabled = false;
+                    this.SelectDocker.IsShow = true;
 
                     if (item is null) break;
                     this.ListView.SelectedItem = item;
                     break;
                 case ProjectAction.SelectHide:
+                    this.ObservableCollection.Enable();
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
+                    this.SelectDocker.IsShow = false;
                     break;
                 case ProjectAction.SelectToMove:
+                    this.ObservableCollection.Enable(StorageItemTypes.Folder);
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = false;
+                    this.SelectDocker.IsShow = false;
                     this.MoveDocker.IsShow = true;
                     break;
                 case ProjectAction.MoveHide:
+                    this.ObservableCollection.Enable();
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.MoveDocker.IsShow = false;
