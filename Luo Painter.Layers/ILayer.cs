@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using System.Windows.Input;
-using Windows.UI.Xaml;
+using System.Xml.Linq;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Layers
@@ -19,6 +19,9 @@ namespace Luo_Painter.Layers
 
         ICanvasImage this[BitmapType type] { get; }
         ImageSource Thumbnail { get; }
+
+        XElement Save(object type);
+        void Load(XElement element);
 
         bool History(HistoryType type, object parameter);
 

@@ -133,6 +133,7 @@
     <Compile Include="LayerRenders\ILayerRender.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\LayerBase.Drag.cs" />
+    <Compile Include="Layers\LayerBase.Export.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />
     <Compile Include="Layers\LayerBase.Render.cs" />
     <Compile Include="Layers\LayerBase.Setup.cs" />
