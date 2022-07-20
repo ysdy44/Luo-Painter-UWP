@@ -177,6 +177,7 @@ namespace Luo_Painter
         // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
         // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
         private bool ReadyToDraw => this.CanvasVirtualControl.ReadyToDraw;
+        private bool IsEnabledToDraw { get => base.IsEnabled; set => base.IsEnabled = value; }
         private StorageItemTypes NavigateType;
 
         private void CreateResources()
@@ -224,16 +225,18 @@ namespace Luo_Painter
             switch (this.NavigateType)
             {
                 case StorageItemTypes.None:
-                    this.Load();
                     this.CreateResources();
+                    this.IsEnabledToDraw = true;
                     break;
                 case StorageItemTypes.File:
                     await this.LoadImageAsync(this.ApplicationView.Title);
                     this.CreateResources();
+                    this.IsEnabledToDraw = true;
                     break;
                 case StorageItemTypes.Folder:
                     await this.LoadAsync(this.ApplicationView.Title);
                     this.CreateResources();
+                    this.IsEnabledToDraw = true;
                     break;
                 default:
                     break;
@@ -338,14 +341,13 @@ namespace Luo_Painter
                 switch (item.Type)
                 {
                     case StorageItemTypes.None:
-                        this.Transformer.Width = (int)item.Size.Width;
-                        this.Transformer.Height = (int)item.Size.Height;
+                        this.Load(item.Size);
 
                         if (this.ReadyToDraw)
                         {
-                            this.Load();
                             this.CreateResources();
                             this.CreateMarqueeResources();
+                            this.IsEnabledToDraw = true;
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
                         }
                         break;
@@ -355,6 +357,7 @@ namespace Luo_Painter
                             await this.LoadImageAsync(item.Path);
                             this.CreateResources();
                             this.CreateMarqueeResources();
+                            this.IsEnabledToDraw = true;
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
                         }
                         break;
@@ -364,6 +367,7 @@ namespace Luo_Painter
                             await this.LoadAsync(item.Path);
                             this.CreateResources();
                             this.CreateMarqueeResources();
+                            this.IsEnabledToDraw = true;
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
                         }
                         break;
@@ -378,6 +382,7 @@ namespace Luo_Painter
 
                 if (base.Frame.CanGoBack)
                 {
+                    this.IsEnabledToDraw = false;
                     base.Frame.GoBack();
                 }
             }
@@ -392,7 +397,9 @@ namespace Luo_Painter
         private async void BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
-            await this.SaveAsync(this.ApplicationView.Title);
+
+            this.IsEnabledToDraw = false;
+            await this.SaveAsync(this.ApplicationView.Title, true);
         }
 
     }
