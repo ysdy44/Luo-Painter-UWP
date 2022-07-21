@@ -63,21 +63,31 @@ namespace Luo_Painter
             // CanvasBitmap
             XDocument docProject = null;
             XDocument docLayers = null;
-            IDictionary<string, CanvasBitmap> bitmaps = new Dictionary<string, CanvasBitmap>();
+            IDictionary<string, IBuffer> bitmaps = new Dictionary<string, IBuffer>();
             foreach (StorageFile item2 in await item.GetFilesAsync())
             {
                 string id = item2.Name;
                 if (string.IsNullOrEmpty(id)) continue;
 
-                using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
+                switch (id)
                 {
-                    switch (id)
-                    {
-                        case "Thumbnail.png": break;
-                        case "Project.xml": docProject = XDocument.Load(accessStream.AsStream()); break;
-                        case "Layers.xml": docLayers = XDocument.Load(accessStream.AsStream()); break;
-                        default: bitmaps.Add(id, await CanvasBitmap.LoadAsync(this.CanvasDevice, accessStream)); break;
-                    }
+                    case "Thumbnail.png":
+                        break;
+                    case "Project.xml":
+                        using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
+                        {
+                            docProject = XDocument.Load(accessStream.AsStream());
+                        }
+                        break;
+                    case "Layers.xml":
+                        using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
+                        {
+                            docLayers = XDocument.Load(accessStream.AsStream());
+                        }
+                        break;
+                    default:
+                        bitmaps.Add(id, await FileIO.ReadBufferAsync(item2));
+                        break;
                 }
             }
 
@@ -143,12 +153,6 @@ namespace Luo_Painter
                     this.LayerSelectedIndex = 0;
             }
 
-            foreach (var item2 in bitmaps)
-            {
-                if (item2.Value is null) continue;
-
-                item2.Value.Dispose();
-            }
             bitmaps.Clear();
         }
 
@@ -178,9 +182,10 @@ namespace Luo_Painter
                 switch (item2.Type)
                 {
                     case LayerType.Bitmap:
-                        using (IRandomAccessStream accessStream = await this.CreateStreamAsync(item, item2.Id))
+                        if (item2 is BitmapLayer bitmapLayer)
                         {
-                            await ((BitmapLayer)item2).SaveAsync(accessStream);
+                            StorageFile file = await item.CreateFileAsync(item2.Id, CreationCollisionOption.ReplaceExisting);
+                            await FileIO.WriteBufferAsync(file, bitmapLayer.GetPixelBytes());
                         }
                         break;
                     default:
