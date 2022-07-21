@@ -2,8 +2,13 @@
 using Luo_Painter.Projects;
 using Luo_Painter.Projects.Models;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,18 +40,69 @@ namespace Luo_Painter
     public sealed partial class MainPage : Page
     {
 
-        private async void Action(ProjectAction action, Project item = null)
+        private async void Action(ProjectAction action, Project project = null)
         {
             switch (action)
             {
                 case ProjectAction.File:
-                    if (item is null) break;
+                    {
+                        if (project is null) return;
 
-                    base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item.Path));
+                        StorageFolder item = await StorageFolder.GetFolderFromPathAsync(project.Path);
+                        if (item is null) return;
+
+                        XDocument docProject = null;
+                        XDocument docLayers = null;
+                        IDictionary<string, IBuffer> bitmaps = new Dictionary<string, IBuffer>();
+
+                        foreach (StorageFile item2 in await item.GetFilesAsync())
+                        {
+                            string id = item2.Name;
+                            if (string.IsNullOrEmpty(id)) continue;
+
+                            switch (id)
+                            {
+                                case "Thumbnail.png":
+                                    break;
+                                case "Project.xml":
+                                    using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
+                                    {
+                                        docProject = XDocument.Load(accessStream.AsStream());
+                                    }
+                                    break;
+                                case "Layers.xml":
+                                    using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
+                                    {
+                                        docLayers = XDocument.Load(accessStream.AsStream());
+                                    }
+                                    break;
+                                default:
+                                    bitmaps.Add(id, await FileIO.ReadBufferAsync(item2));
+                                    break;
+                            }
+                        }
+
+                        if (docProject is null) break;
+                        if (docLayers is null) break;
+
+                        if (docProject.Root.Element("Width") is XElement width2)
+                        {
+                            if (docProject.Root.Element("Height") is XElement height2)
+                            {
+                                if (int.TryParse(width2.Value, out int width))
+                                {
+                                    if (int.TryParse(height2.Value, out int height))
+                                    {
+                                        base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(project.Path, project.Name, width, height, docProject, docLayers, bitmaps));
+                                    }
+                                }
+                            }
+                        }
+                    }
                     break;
                 case ProjectAction.Folder:
-                    if (item is null) break;
-                    this.Paths.Add(new Metadata(item.Path, item.Name));
+                    if (project is null) break;
+                    this.Paths.Add(new Metadata(project.Path, project.Name));
 
                     this.Load();
                     this.UpdateBack();
@@ -59,9 +115,9 @@ namespace Luo_Painter
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
-                                StorageFolder item2 = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
-                                this.ObservableCollection.Insert(item2);
-                                base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item2.Path, this.SizePicker.Size));
+                                StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
+                                this.ObservableCollection.Insert(item);
+                                base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item.Path, item.Name, this.SizePicker.Size));
                                 break;
                             default:
                                 break;
@@ -73,11 +129,13 @@ namespace Luo_Painter
                         StorageFile file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
                         if (file is null) break;
 
-                        StorageFolder item2 = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
-                        StorageFile file2 = await file.CopyAsync(item2);
+                        ImageProperties prop = await file.Properties.GetImagePropertiesAsync();
+                        if (prop is null) break;
 
-                        this.ObservableCollection.Insert(item2);
-                        base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item2.Path, file2.Path));
+                        StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
+                        this.ObservableCollection.Insert(item);
+
+                        base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item.Path, item.Name, prop.Width, prop.Height, await FileIO.ReadBufferAsync(file)));
                     }
                     break;
 
@@ -87,8 +145,8 @@ namespace Luo_Painter
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.DupliateDocker.IsShow = true;
 
-                    if (item is null) break;
-                    this.ListView.SelectedItem = item;
+                    if (project is null) break;
+                    this.ListView.SelectedItem = project;
                     break;
                 case ProjectAction.DupliateHide:
                     this.ObservableCollection.Enable();
@@ -102,8 +160,8 @@ namespace Luo_Painter
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.DeleteDocker.IsShow = true;
 
-                    if (item is null) break;
-                    this.ListView.SelectedItem = item;
+                    if (project is null) break;
+                    this.ListView.SelectedItem = project;
                     break;
                 case ProjectAction.DeleteHide:
                     this.ObservableCollection.Enable();
@@ -117,8 +175,8 @@ namespace Luo_Painter
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.SelectDocker.IsShow = true;
 
-                    if (item is null) break;
-                    this.ListView.SelectedItem = item;
+                    if (project is null) break;
+                    this.ListView.SelectedItem = project;
                     break;
                 case ProjectAction.SelectHide:
                     this.ObservableCollection.Enable();
@@ -162,8 +220,8 @@ namespace Luo_Painter
                     break;
                 case ProjectAction.Rename:
                     {
-                        if (item is null) break;
-                        this.RenameTextBox.Text = item.DisplayName;
+                        if (project is null) break;
+                        this.RenameTextBox.Text = project.DisplayName;
                         this.RenameTextBox.SelectAll();
                         this.RenameTextBox.Focus(FocusState.Keyboard);
 
@@ -174,18 +232,18 @@ namespace Luo_Painter
                                 string name = this.RenameTextBox.Text;
                                 if (string.IsNullOrEmpty(name)) break;
 
-                                switch (item.Type)
+                                switch (project.Type)
                                 {
                                     case StorageItemTypes.File:
-                                        if (item is ProjectFile item2)
+                                        if (project is ProjectFile projectFile)
                                         {
-                                            await item2.RenameAsync(name);
+                                            await projectFile.RenameAsync(name);
                                         }
                                         break;
                                     case StorageItemTypes.Folder:
-                                        if (item is ProjectFolder item3)
+                                        if (project is ProjectFolder projectFolder)
                                         {
-                                            await item3.RenameAsync(name);
+                                            await projectFolder.RenameAsync(name);
                                         }
                                         break;
                                     default:
@@ -199,8 +257,8 @@ namespace Luo_Painter
                     break;
                 case ProjectAction.Local:
                     {
-                        if (item is null) break;
-                        await Launcher.LaunchFolderPathAsync(item.Path);
+                        if (project is null) break;
+                        await Launcher.LaunchFolderPathAsync(project.Path);
                     }
                     break;
                 default:

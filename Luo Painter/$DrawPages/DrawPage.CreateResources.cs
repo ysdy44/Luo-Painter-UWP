@@ -4,6 +4,7 @@ using Luo_Painter.Layers.Models;
 using Luo_Painter.Projects;
 using Luo_Painter.Shaders;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
@@ -28,31 +29,19 @@ namespace Luo_Painter
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
 
-        // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
-        // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
-        private bool ReadyToDraw => this.CanvasVirtualControl.ReadyToDraw;
-        private bool IsEnabledToDraw { set => base.IsEnabled = value; }
-        private string Title { get => this.ApplicationView.Title; set => this.ApplicationView.Title = value; }
-
-        private StorageItemTypes NavigateType;
-
-
-        private void CreateResources()
+        private void CreateResources(int width, int height)
         {
-            this.Transformer.Fit();
-            this.ViewTool.Construct(this.Transformer);
-
-            this.Mesh = new Mesh(this.CanvasDevice, this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25), this.Transformer.Width, this.Transformer.Height);
+            this.Mesh = new Mesh(this.CanvasDevice, this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25), width, height);
             this.GradientMesh = new GradientMesh(this.CanvasDevice);
-            this.Clipboard = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+            this.Clipboard = new BitmapLayer(this.CanvasDevice, width, height);
 
-            this.Displacement = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+            this.Displacement = new BitmapLayer(this.CanvasDevice, width, height);
             this.Displacement.RenderThumbnail();
         }
 
-        private void CreateMarqueeResources()
+        private void CreateMarqueeResources(int width, int height)
         {
-            this.Marquee = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+            this.Marquee = new BitmapLayer(this.CanvasDevice, width, height);
             this.Marquee.RenderThumbnail();
 
             this.LayerListView.MarqueeSource = this.Marquee.Thumbnail;
@@ -75,13 +64,6 @@ namespace Luo_Painter
             // Brush
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
-
-
-            // Load
-            string path = this.Title;
-            if (string.IsNullOrEmpty(path)) return;
-
-            await this.Navigated(this.NavigateType);
         }
 
         private async Task CreateDottedLineResourcesAsync()
@@ -90,63 +72,78 @@ namespace Luo_Painter
         }
 
 
-        public async Task Navigated(StorageItemTypes type)
-        {
-            switch (this.NavigateType)
-            {
-                case StorageItemTypes.None:
-                    this.CreateResources();
-                    this.IsEnabledToDraw = true;
-                    break;
-                case StorageItemTypes.File:
-                    await this.LoadImageAsync(this.Title);
-                    this.CreateResources();
-                    this.IsEnabledToDraw = true;
-                    break;
-                case StorageItemTypes.Folder:
-                    await this.LoadAsync(this.Title);
-                    this.CreateResources();
-                    this.IsEnabledToDraw = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public async Task Navigated(ProjectParameter item)
+        public void Navigated(ProjectParameter item)
         {
             switch (item.Type)
             {
                 case StorageItemTypes.None:
-                    this.Load(item.Size);
+                    BitmapLayer bitmapLayer1 = new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
+                    this.Layers.Push(bitmapLayer1);
+                    this.Nodes.Add(bitmapLayer1);
+                    this.ObservableCollection.Add(bitmapLayer1);
 
-                    if (this.ReadyToDraw)
-                    {
-                        this.CreateResources();
-                        this.CreateMarqueeResources();
-                        this.IsEnabledToDraw = true;
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-                    }
+                    this.LayerSelectedIndex = 0;
                     break;
                 case StorageItemTypes.File:
-                    if (this.ReadyToDraw)
-                    {
-                        await this.LoadImageAsync(item.Path);
-                        this.CreateResources();
-                        this.CreateMarqueeResources();
-                        this.IsEnabledToDraw = true;
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-                    }
+                    BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, item.Bitmap, item.Width, item.Height);
+                    this.Layers.Push(bitmapLayer2);
+                    this.Nodes.Add(bitmapLayer2);
+                    this.ObservableCollection.Add(bitmapLayer2);
+
+                    this.LayerSelectedIndex = 0;
                     break;
                 case StorageItemTypes.Folder:
-                    if (this.ReadyToDraw)
+                    // 2. Load Layers.xml
+                    // Layers
+                    foreach (XElement item2 in item.DocLayers.Root.Elements("Layer"))
                     {
-                        await this.LoadAsync(item.Path);
-                        this.CreateResources();
-                        this.CreateMarqueeResources();
-                        this.IsEnabledToDraw = true;
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        if (item2.Attribute("Id") is XAttribute id2 && item2.Attribute("Type") is XAttribute type2)
+                        {
+                            string id = id2.Value;
+                            if (string.IsNullOrEmpty(id)) continue;
+
+                            string type = type2.Value;
+                            if (string.IsNullOrEmpty(id)) continue;
+
+                            switch (type)
+                            {
+                                case "Bitmap":
+                                    BitmapLayer bitmapLayer3 =
+                                        item.Bitmaps.ContainsKey(id) ?
+                                        new BitmapLayer(this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height) :
+                                        new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
+                                    bitmapLayer3.Load(item2);
+                                    this.Layers.Push(id, bitmapLayer3);
+                                    break;
+                                case "Group":
+                                    GroupLayer groupLayer = new GroupLayer(this.CanvasDevice, item.Width, item.Height);
+                                    groupLayer.Load(item2);
+                                    this.Layers.Push(id, groupLayer);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
+
+
+                    // 3. Nodes 
+                    if (item.DocProject.Root.Element("Layerages") is XElement layerages)
+                    {
+                        this.Nodes.Load(this.Layers, layerages);
+                    }
+
+                    // 4. UI
+                    foreach (ILayer item2 in this.Nodes)
+                    {
+                        item2.Arrange(0);
+                        this.ObservableCollection.AddChild(item2);
+                    }
+
+                    if (item.DocProject.Root.Element("Index") is XElement index)
+                        this.LayerSelectedIndex = (int)index;
+                    else if (this.ObservableCollection.Count > 0)
+                        this.LayerSelectedIndex = 0;
                     break;
                 default:
                     break;

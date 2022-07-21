@@ -151,9 +151,10 @@ namespace Luo_Painter
                 }
             };
 
+
             this.CanvasAnimatedControl.CreateResources += (sender, args) =>
             {
-                this.CreateMarqueeResources();
+                this.CreateMarqueeResources(this.Transformer.Width, this.Transformer.Height);
                 args.TrackAsyncAction(this.CreateDottedLineResourcesAsync().AsAsyncAction());
             };
             this.CanvasAnimatedControl.Draw += (sender, args) =>
@@ -178,8 +179,10 @@ namespace Luo_Painter
                 });
             };
 
+
             this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
+                this.CreateResources(this.Transformer.Width, this.Transformer.Height);
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>

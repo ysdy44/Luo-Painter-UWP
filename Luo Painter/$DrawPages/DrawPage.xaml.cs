@@ -244,23 +244,38 @@ namespace Luo_Painter
             }
         }
         /// <summary> The current page becomes the active page. </summary>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
+            // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
             if (e.Parameter is ProjectParameter item)
             {
-                this.NavigateType = item.Type;
                 this.ApplicationView.Title = item.Path;
 
-                await this.Navigated(item);
+                this.Transformer.Width = item.Width;
+                this.Transformer.Height = item.Height;
+                this.Transformer.Fit();
+                this.ViewTool.Construct(this.Transformer);
+
+                this.Navigated(item);
+
+                if (this.CanvasVirtualControl.ReadyToDraw)
+                {
+                    this.CreateResources(item.Width, item.Height);
+                    this.CreateMarqueeResources(item.Width, item.Height);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                }
+
+                base.IsEnabled = true;
             }
             else
             {
-                this.NavigateType = default;
                 this.ApplicationView.Title = string.Empty;
 
                 if (base.Frame.CanGoBack)
                 {
-                    this.IsEnabledToDraw = false;
+                    base.IsEnabled = false;
                     base.Frame.GoBack();
                 }
             }
@@ -276,7 +291,7 @@ namespace Luo_Painter
         {
             e.Handled = true;
 
-            this.IsEnabledToDraw = false;
+            base.IsEnabled = false;
             await this.SaveAsync(this.ApplicationView.Title, true);
         }
 
