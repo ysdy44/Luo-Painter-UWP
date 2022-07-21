@@ -36,11 +36,57 @@ namespace Luo_Painter.Layers.Models
         readonly IBuffer Buffer;
 
         public IAsyncAction SaveAsync(IRandomAccessStream stream) => this.SourceRenderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
+        public IBuffer GetPixelBytes()
+        {
+            this.SourceRenderTarget.GetPixelBytes(this.Buffer);
+            return this.Buffer;
+        }
+
 
         //@Construct
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(resourceCreator, width, height)
+        {
+            this.OriginRenderTarget.SetPixelBytes(bytes);
+            this.SourceRenderTarget.SetPixelBytes(bytes);
+
+            this.RenderThumbnail();
+        }
+
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap) : this(resourceCreator, (int)bitmap.SizeInPixels.Width, (int)bitmap.SizeInPixels.Height)
+        {
+            this.OriginRenderTarget.CopyPixelsFromBitmap(bitmap);
+            this.SourceRenderTarget.CopyPixelsFromBitmap(bitmap);
+
+            this.RenderThumbnail();
+        }
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap, int width, int height) : this(resourceCreator, width, height)
+        {
+            int w = System.Math.Min(width, (int)bitmap.SizeInPixels.Width);
+            int h = System.Math.Min(height, (int)bitmap.SizeInPixels.Height);
+
+            this.OriginRenderTarget.CopyPixelsFromBitmap(bitmap, 0, 0, 0, 0, w, h);
+            this.SourceRenderTarget.CopyPixelsFromBitmap(bitmap, 0, 0, 0, 0, w, h);
+
+            this.RenderThumbnail();
+        }
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap, int width, int height, Vector2 offset) : this(resourceCreator, width, height)
+        {
+            int x = (int)offset.X;
+            int y = (int)offset.Y;
+
+            int w = System.Math.Min(width, (int)bitmap.SizeInPixels.Width);
+            int h = System.Math.Min(height, (int)bitmap.SizeInPixels.Height);
+
+            this.OriginRenderTarget.CopyPixelsFromBitmap(bitmap, x, y, 0, 0, w, h);
+            this.SourceRenderTarget.CopyPixelsFromBitmap(bitmap, x, y, 0, 0, w, h);
+
+            this.RenderThumbnail();
+        }
+
         public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer) : this(resourceCreator, bitmapLayer.SourceRenderTarget, bitmapLayer.Width, bitmapLayer.Height) { }
         public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, int width, int height) : this(resourceCreator, bitmapLayer.SourceRenderTarget, width, height) { }
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap) : this(resourceCreator, bitmap, (int)bitmap.SizeInPixels.Width, (int)bitmap.SizeInPixels.Height) { }
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, Vector2 offset) : this(resourceCreator, bitmapLayer.SourceRenderTarget, bitmapLayer.Width, bitmapLayer.Height, offset) { }
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, int width, int height, Vector2 offset) : this(resourceCreator, bitmapLayer.SourceRenderTarget, width, height, offset) { }
 
         public BitmapLayer(ICanvasResourceCreator resourceCreator, ICanvasImage image, int width, int height) : this(resourceCreator, width, height)
         {
@@ -55,11 +101,6 @@ namespace Luo_Painter.Layers.Models
 
             this.RenderThumbnail();
         }
-
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, Vector2 offset) : this(resourceCreator, bitmapLayer.SourceRenderTarget, bitmapLayer.Width, bitmapLayer.Height, offset) { }
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, int width, int height, Vector2 offset) : this(resourceCreator, bitmapLayer.SourceRenderTarget, width, height, offset) { }
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap, Vector2 offset) : this(resourceCreator, bitmap, (int)bitmap.SizeInPixels.Width, (int)bitmap.SizeInPixels.Height, offset) { }
-
         public BitmapLayer(ICanvasResourceCreator resourceCreator, ICanvasImage image, int width, int height, Vector2 offset) : this(resourceCreator, width, height)
         {
             using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
@@ -116,6 +157,7 @@ namespace Luo_Painter.Layers.Models
             };
             this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
+
 
         public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.SourceRenderTarget);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Render(background, new Transform2DEffect
