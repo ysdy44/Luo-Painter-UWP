@@ -21,6 +21,31 @@ namespace Luo_Painter.Layers
             Layerage[] redo = self.Nodes.Convert();
             return new ArrangeHistory(undo, redo);
         }
+        public static ArrangeHistory Setup(this ILayerManager self, IEnumerable<ILayer> adds, SetupSizes sizes)
+        {
+            int index = self.LayerSelectedIndex;
+
+            Layerage[] undo = self.Nodes.Convert();
+
+            self.Nodes.Clear();
+            foreach (ILayer item in adds)
+            {
+                self.Nodes.Add(item);
+            }
+
+            self.ObservableCollection.Clear();
+            foreach (ILayer item in adds)
+            {
+                item.Arrange(0);
+                self.ObservableCollection.AddChild(item);
+            }
+
+            self.LayerSelectedIndex = index;
+
+            /// History
+            Layerage[] redo = self.Nodes.Convert();
+            return (new ArrangeHistory(undo, redo, sizes));
+        }
 
         public static ArrangeHistory Add(this ILayerManager self, ILayer add)
         {

@@ -121,18 +121,23 @@ namespace Luo_Painter
             if (this.CropCanvasSlider.Value is 0d)
             {
                 this.Setup(w2, h2);
-                this.Setup(this.ObservableCollection.Select(c => c.Crop(this.CanvasDevice, w2, h2, offset)).ToArray(), new SetupSizes
+                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w2, h2, offset)).ToArray(), new SetupSizes
                 {
                     UndoParameter = new BitmapSize { Width = width, Height = height },
                     RedoParameter = new BitmapSize { Width = w, Height = h }
-                });
+                }));
+
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
             }
             else
             {
                 Matrix3x2 matrix = this.GetMatrix(this.CropTransformer.LeftTop);
 
                 this.Setup(w2, h2);
-                this.Setup(this.ObservableCollection.Select(c => c.Crop(this.CanvasDevice, w2, h2, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
+                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w2, h2, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
                 {
                     UndoParameter = new BitmapSize
                     {
@@ -144,7 +149,13 @@ namespace Luo_Painter
                         Width = w,
                         Height = h
                     }
-                });
+                }));
+
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
+
 
                 this.Transformer.Radian = 0f;
                 this.Transformer.ReloadMatrix();
