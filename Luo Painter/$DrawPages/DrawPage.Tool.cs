@@ -16,27 +16,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
-        private void ConstructTools()
-        {
-            this.ToolListView.ItemClick += (s, type) =>
-            {
-                this.ToolMenu.Title = type.ToString();
-
-                this.ToolResource.Source = new Uri(type.GetResource());
-                this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
-
-                this.ToolSwitchPresenter.Value = type;
-
-                this.SetInkToolType(type);
-
-                this.OptionType = type;
-                this.SetFootType(type);
-                this.SetCanvasState(default);
-            };
-            this.ToolListView.Construct(this.OptionType);
-        }
-
-
         private void Tool_Start(Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)

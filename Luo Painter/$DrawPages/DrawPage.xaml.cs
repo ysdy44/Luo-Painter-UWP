@@ -181,15 +181,10 @@ namespace Luo_Painter
             this.ConstructBrush();
             this.ConstructInk();
 
-            this.ConstructEdits();
             this.ConstructSetup();
 
-            this.ConstructOptions();
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();
-
-            this.ConstructTools();
-            this.ConstructMarquee();
             this.ConstructVector();
 
             this.ConstructHistory();
@@ -197,6 +192,15 @@ namespace Luo_Painter
             this.ConstructDialog();
             this.ConstructColor();
             this.ConstructStoryboard();
+
+
+            this.AddMenu.ItemClick += (s, type) => this.Click(type);
+            this.LayerMenu.ItemClick += (s, type) => this.Click(type);
+            this.EditMenu.ItemClick += (s, type) => this.Click(type);
+            this.AdjustmentMenu.ItemClick += (s, type) => this.Click(type);
+            this.OtherMenu.ItemClick += (s, type) => this.Click(type);
+            this.ToolListView.ItemClick += (s, type) => this.Click(type);
+            this.ToolListView.Construct(this.OptionType);
 
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
@@ -216,7 +220,7 @@ namespace Luo_Painter
             this.OtherButton.Click += (s, e) => this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
 
             this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
-            this.LayerListView.Remove += (s, e) => this.Edit(OptionType.Remove);
+            this.LayerListView.Remove += (s, e) => this.Click(OptionType.Remove);
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
 
 
@@ -260,6 +264,7 @@ namespace Luo_Painter
                 float ch = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(h);
                 this.Transformer.ControlWidth = cw;
                 this.Transformer.ControlHeight = ch;
+
                 this.Transformer.Width = item.Width;
                 this.Transformer.Height = item.Height;
                 this.Transformer.Fit();
