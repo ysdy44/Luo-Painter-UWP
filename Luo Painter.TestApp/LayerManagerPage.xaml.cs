@@ -31,7 +31,6 @@ namespace Luo_Painter.TestApp
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
         readonly Historian<IHistory> History = new Historian<IHistory>(20);
 
-        public LayerDictionary Layers { get; } = new LayerDictionary();
         public LayerNodes Nodes { get; }
         public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
         public IList<string> ClipboardLayers { get; } = new List<string>();
@@ -88,7 +87,6 @@ namespace Luo_Painter.TestApp
         {
             foreach (ILayer item in layers)
             {
-                this.Layers.Push(item);
                 this.Push(item.Children);
             }
         }
@@ -111,7 +109,6 @@ namespace Luo_Painter.TestApp
             this.AddButton.Click += (s, e) =>
             {
                 ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
-                this.Layers.Push(add);
 
                 /// History
                 int removes = this.History.Push(this.Add(add));
@@ -282,7 +279,7 @@ namespace Luo_Painter.TestApp
                         break;
                     case 1:
                         string id = this.ClipboardLayers.Single();
-                        if (this.Layers.ContainsKey(id))
+                        if (LayerDictionary.Instance.ContainsKey(id))
                         {
                             /// History
                             int removes = this.History.Push(this.Paste(this.CanvasDevice, 128, 128, id));
@@ -339,7 +336,6 @@ namespace Luo_Painter.TestApp
             {
                 ICanvasImage image = this.Nodes.Merge(null, null);
                 ILayer add = new BitmapLayer(this.CanvasDevice, image, 128, 128);
-                this.Layers.Push(add);
 
                 /// History
                 int removes = this.History.Push(this.Clear(add));
@@ -384,7 +380,7 @@ namespace Luo_Painter.TestApp
                     {
                         this.Nodes.Clear();
                         this.ObservableCollection.Clear();
-                        foreach (ILayer item in this.Layers.Permutation(arrangeHistory.UndoParameter))
+                        foreach (ILayer item in LayerDictionary.Instance.Permutation(arrangeHistory.UndoParameter))
                         {
                             this.Nodes.Add(item);
                             this.ObservableCollection.AddChild(item);
@@ -405,7 +401,7 @@ namespace Luo_Painter.TestApp
                     {
                         this.Nodes.Clear();
                         this.ObservableCollection.Clear();
-                        foreach (ILayer item in this.Layers.Permutation(arrangeHistory.RedoParameter))
+                        foreach (ILayer item in LayerDictionary.Instance.Permutation(arrangeHistory.RedoParameter))
                         {
                             this.Nodes.Add(item);
                             this.ObservableCollection.AddChild(item);
