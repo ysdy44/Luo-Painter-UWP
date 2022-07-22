@@ -249,12 +249,19 @@ namespace Luo_Painter
             // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
             if (e.Parameter is ProjectParameter item)
             {
-                this.ApplicationView.Title = item.Path;
-
+                float w = (float)Window.Current.Bounds.Width;
+                float h = (float)Window.Current.Bounds.Height;
+                float cw = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(w);
+                float ch = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(h);
+                this.Transformer.ControlWidth = cw;
+                this.Transformer.ControlHeight = ch;
                 this.Transformer.Width = item.Width;
                 this.Transformer.Height = item.Height;
                 this.Transformer.Fit();
+
                 this.ViewTool.Construct(this.Transformer);
+
+                this.ApplicationView.Title = item.Path;
 
                 this.Navigated(item);
 
@@ -289,6 +296,13 @@ namespace Luo_Painter
         private async void BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
+
+            if (this.IsFullScreen)
+            {
+                this.IsFullScreen = false;
+                this.SetFullScreenState(false);
+                return;
+            }
 
             base.IsEnabled = false;
             await this.SaveAsync(this.ApplicationView.Title, true);
