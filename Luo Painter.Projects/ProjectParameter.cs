@@ -16,9 +16,9 @@ namespace Luo_Painter.Projects
         public int Height;
 
         public IBuffer Bitmap;
-        
-        public XDocument DocProject;
-        public XDocument DocLayers;
+
+        public string DocProject;
+        public string DocLayers;
         public IDictionary<string, IBuffer> Bitmaps;
 
         public ProjectParameter(string path, string name, BitmapSize size)
@@ -41,7 +41,7 @@ namespace Luo_Painter.Projects
 
             this.Bitmap = bitmap;
         }
-        public ProjectParameter(string path, string name, int width, int height, XDocument docProject, XDocument docLayers, IDictionary<string, IBuffer> bitmaps)
+        public ProjectParameter(string path, string name, int width, int height, string docProject, string docLayers, IDictionary<string, IBuffer> bitmaps)
         {
             this.Type = StorageItemTypes.Folder;
             this.Path = path;

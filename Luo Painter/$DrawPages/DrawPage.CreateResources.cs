@@ -93,7 +93,8 @@ namespace Luo_Painter
                 case StorageItemTypes.Folder:
                     // 2. Load Layers.xml
                     // Layers
-                    foreach (XElement item2 in item.DocLayers.Root.Elements("Layer"))
+                    XDocument docLayers = XDocument.Load(item.DocLayers);
+                    foreach (XElement item2 in docLayers.Root.Elements("Layer"))
                     {
                         if (item2.Attribute("Id") is XAttribute id2 && item2.Attribute("Type") is XAttribute type2)
                         {
@@ -123,8 +124,10 @@ namespace Luo_Painter
                     }
 
 
-                    // 3. Nodes 
-                    if (item.DocProject.Root.Element("Layerages") is XElement layerages)
+                    // 2. Load Project.xml
+                    // Nodes 
+                    XDocument docProject = XDocument.Load(item.DocProject);
+                    if (docProject.Root.Element("Layerages") is XElement layerages)
                     {
                         this.Nodes.Load(layerages);
                     }
@@ -136,7 +139,7 @@ namespace Luo_Painter
                         this.ObservableCollection.AddChild(item2);
                     }
 
-                    if (item.DocProject.Root.Element("Index") is XElement index)
+                    if (docProject.Root.Element("Index") is XElement index)
                         this.LayerSelectedIndex = (int)index;
                     else if (this.ObservableCollection.Count > 0)
                         this.LayerSelectedIndex = 0;

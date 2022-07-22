@@ -51,8 +51,8 @@ namespace Luo_Painter
                         StorageFolder item = await StorageFolder.GetFolderFromPathAsync(project.Path);
                         if (item is null) return;
 
-                        XDocument docProject = null;
-                        XDocument docLayers = null;
+                        string docProject = null;
+                        string docLayers = null;
                         IDictionary<string, IBuffer> bitmaps = new Dictionary<string, IBuffer>();
 
                         foreach (StorageFile item2 in await item.GetFilesAsync())
@@ -65,16 +65,10 @@ namespace Luo_Painter
                                 case "Thumbnail.png":
                                     break;
                                 case "Project.xml":
-                                    using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
-                                    {
-                                        docProject = XDocument.Load(accessStream.AsStream());
-                                    }
+                                    docProject = item2.Path;
                                     break;
                                 case "Layers.xml":
-                                    using (IRandomAccessStream accessStream = await item2.OpenAsync(FileAccessMode.ReadWrite))
-                                    {
-                                        docLayers = XDocument.Load(accessStream.AsStream());
-                                    }
+                                    docLayers = item2.Path;
                                     break;
                                 default:
                                     bitmaps.Add(id, await FileIO.ReadBufferAsync(item2));
@@ -85,9 +79,10 @@ namespace Luo_Painter
                         if (docProject is null) break;
                         if (docLayers is null) break;
 
-                        if (docProject.Root.Element("Width") is XElement width2)
+                        XDocument docProject2 = XDocument.Load(docProject);
+                        if (docProject2.Root.Element("Width") is XElement width2)
                         {
-                            if (docProject.Root.Element("Height") is XElement height2)
+                            if (docProject2.Root.Element("Height") is XElement height2)
                             {
                                 if (int.TryParse(width2.Value, out int width))
                                 {
