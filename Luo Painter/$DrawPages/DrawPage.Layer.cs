@@ -75,13 +75,7 @@ namespace Luo_Painter
         {
             this.LayerListView.SelectedItemChanged += (s, item) => this.LayerMenu.SetSelectedItem(item);
 
-            this.LayerListView.DragItemsStarting += (s, e) =>
-            {
-                if (this.HasChangedLayers) return;
-                this.HasChangedLayers = true;
-
-                this.ChangedLayers = this.ObservableCollection.Select(c => c.Id);
-            };
+            this.LayerListView.DragItemsStarting += (s, e) => this.DragItemsStarting(e.Items);
             this.LayerListView.DragItemsCompleted += (s, e) =>
             {
                 switch (e.DropResult)
@@ -91,23 +85,13 @@ namespace Luo_Painter
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy:
                         break;
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move:
-                        {
-                            if (this.HasChangedLayers == false) break;
-                            this.HasChangedLayers = false;
+                        /// History
+                        int removes = this.History.Push(this.DragItemsCompleted(e.Items));
 
-                            if (this.ChangedLayers.Count() == 0) break;
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            // History
-                            string[] undo = this.ChangedLayers.ToArray();
-                            string[] redo = this.ObservableCollection.Select(c => c.Id).ToArray();
-                            int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-                            this.ChangedLayers = null;
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                        }
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
                         break;
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Link:
                         break;
