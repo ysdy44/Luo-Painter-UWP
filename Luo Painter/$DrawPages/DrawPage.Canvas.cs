@@ -182,6 +182,7 @@ namespace Luo_Painter
 
             this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
+                this.GradientMesh = new GradientMesh(this.CanvasDevice);
                 this.CreateResources(this.Transformer.Width, this.Transformer.Height);
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };

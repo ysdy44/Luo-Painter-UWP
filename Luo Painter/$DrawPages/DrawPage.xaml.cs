@@ -146,8 +146,9 @@ namespace Luo_Painter
         InkPresenter InkPresenter { get; } = new InkPresenter();
         InkRender InkRender { get; set; }
 
-        Mesh Mesh { get; set; }
         GradientMesh GradientMesh { get; set; }
+
+        Mesh Mesh { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }

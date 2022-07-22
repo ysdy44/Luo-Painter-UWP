@@ -32,7 +32,6 @@ namespace Luo_Painter
         private void CreateResources(int width, int height)
         {
             this.Mesh = new Mesh(this.CanvasDevice, this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25), width, height);
-            this.GradientMesh = new GradientMesh(this.CanvasDevice);
             this.Clipboard = new BitmapLayer(this.CanvasDevice, width, height);
 
             this.Displacement = new BitmapLayer(this.CanvasDevice, width, height);
