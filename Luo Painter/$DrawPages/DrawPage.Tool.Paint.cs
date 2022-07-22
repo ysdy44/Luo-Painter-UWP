@@ -13,13 +13,8 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
-        Vector2 Point;
-        Vector2 Position;
-        float Pressure;
-
         int MixX = -1;
         int MixY = -1;
-
 
 
         private void Paint_Start(Vector2 point, float pressure)

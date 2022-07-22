@@ -20,10 +20,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
-        IEnumerable<string> ChangedLayers;
-        bool HasChangedLayers;
-
-
         readonly IDictionary<string, string> NameUndoParameters = new Dictionary<string, string>();
         private IDictionary<string, string> CloneNameUndoParameters()
         {

@@ -158,6 +158,10 @@ namespace Luo_Painter
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;
 
+        Vector2 Point;
+        Vector2 Position;
+        float Pressure;
+
 
         //@Construct
         public DrawPage()
