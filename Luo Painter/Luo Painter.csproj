@@ -125,7 +125,6 @@
     <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.Click.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Method.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.DisplacementLiquefaction.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.GradientMapping.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.RippleEffect.cs" />

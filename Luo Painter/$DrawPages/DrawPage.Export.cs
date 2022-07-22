@@ -1,4 +1,6 @@
-﻿using Luo_Painter.Layers;
+﻿using Luo_Painter.Historys;
+using Luo_Painter.Historys.Models;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -102,6 +104,98 @@ namespace Luo_Painter
                 {
                     base.Frame.GoBack();
                 }
+            }
+        }
+
+
+        public async void AddAsync(IEnumerable<IStorageFile> items)
+        {
+            if (items is null) return;
+            if (items.Count() is 0) return;
+
+            Layerage[] undo = this.Nodes.Convert();
+
+            int count = 0;
+            int index = this.LayerSelectedIndex;
+            if (index > 0 && this.LayerSelectedItem is ILayer neighbor)
+            {
+                ILayer parent = this.ObservableCollection.GetParent(neighbor);
+                if (parent is null)
+                {
+                    int indexChild = this.Nodes.IndexOf(neighbor);
+
+                    foreach (IRandomAccessStreamReference item in items)
+                    {
+                        CanvasBitmap bitmap = await this.CreateBitmap(item);
+                        if (bitmap is null) continue;
+
+                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+
+                        this.Nodes.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                        count++;
+                    }
+                }
+                else
+                {
+                    int indexChild = parent.Children.IndexOf(neighbor);
+
+                    foreach (IRandomAccessStreamReference item in items)
+                    {
+                        CanvasBitmap bitmap = await this.CreateBitmap(item);
+                        if (bitmap is null) continue;
+
+                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+
+                        parent.Children.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                        count++;
+                    }
+                }
+
+                this.LayerSelectedIndex = index;
+            }
+            else
+            {
+                foreach (IRandomAccessStreamReference item in items)
+                {
+                    CanvasBitmap bitmap = await this.CreateBitmap(item);
+                    if (bitmap is null) continue;
+
+                    BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+
+                    this.Nodes.Insert(0, add);
+                    this.ObservableCollection.InsertChild(0, add);
+                    count++;
+                }
+
+                this.LayerSelectedIndex = 0;
+            }
+
+            /// History
+            Layerage[] redo = this.Nodes.Convert();
+            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
+        }
+
+        private async Task<CanvasBitmap> CreateBitmap(IRandomAccessStreamReference item)
+        {
+            if (item is null) return null;
+
+            try
+            {
+                using (IRandomAccessStreamWithContentType stream = await item.OpenReadAsync())
+                {
+                    return await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

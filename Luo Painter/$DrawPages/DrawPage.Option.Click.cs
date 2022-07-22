@@ -105,7 +105,7 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.AddImageLayer:
-                    this.AddAsync();
+                    this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop));
                     break;
                 case OptionType.CutLayer:
                     {
