@@ -47,7 +47,18 @@ namespace Luo_Painter
                 case HistoryMode.Arrange:
                     if (history is ArrangeHistory arrangeHistory)
                     {
-                        if (arrangeHistory.Sizes is SetupSizes size) this.Setup(size.UndoParameter);
+                        if (arrangeHistory.Sizes is SetupSizes size)
+                        {
+                            int w = (int)size.UndoParameter.Width;
+                            int h = (int)size.UndoParameter.Height;
+
+                            this.Transformer.Width = w;
+                            this.Transformer.Height = h;
+                            this.Transformer.Fit();
+
+                            this.CreateResources(w, h);
+                            this.CreateMarqueeResources(w, h);
+                        }
                         return this.Arrange(arrangeHistory.UndoParameter);
                     }
                     return false;
@@ -98,7 +109,18 @@ namespace Luo_Painter
                 case HistoryMode.Arrange:
                     if (history is ArrangeHistory arrangeHistory)
                     {
-                        if (arrangeHistory.Sizes is SetupSizes size) this.Setup(size.RedoParameter);
+                        if (arrangeHistory.Sizes is SetupSizes size)
+                        {
+                            int w = (int)size.RedoParameter.Width;
+                            int h = (int)size.RedoParameter.Height;
+
+                            this.Transformer.Width = w;
+                            this.Transformer.Height = h;
+                            this.Transformer.Fit();
+
+                            this.CreateResources(w, h);
+                            this.CreateMarqueeResources(w, h);
+                        }
                         return this.Arrange(arrangeHistory.RedoParameter);
                     }
                     return false;

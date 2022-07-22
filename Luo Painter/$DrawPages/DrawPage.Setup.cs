@@ -34,24 +34,30 @@ namespace Luo_Painter
                 uint width = (uint)width2;
                 uint height = (uint)height2;
 
-                uint w = this.StretchDialog.Size.Width;
-                uint h = this.StretchDialog.Size.Height;
-                if (w == width && h == height) return;
+                uint w2 = this.StretchDialog.Size.Width;
+                uint h2 = this.StretchDialog.Size.Height;
+                if (w2 == width && h2 == height) return;
 
-                int w2 = (int)w;
-                int h2 = (int)h;
+                int w = (int)w2;
+                int h = (int)h2;
 
                 switch (this.StretchDialog.SelectedIndex)
                 {
                     case 0:
                         {
                             CanvasImageInterpolation interpolation = this.StretchDialog.Interpolation;
-                            this.Setup(h2, w2);
+                            {
+                                this.Transformer.Width = w;
+                                this.Transformer.Height = h;
+                                this.Transformer.Fit();
 
-                            int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w2, h2, interpolation)).ToArray(), new SetupSizes
+                                this.CreateResources(w, h);
+                                this.CreateMarqueeResources(w, h);
+                            }
+                            int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray(), new SetupSizes
                             {
                                 UndoParameter = new BitmapSize { Width = width, Height = height },
-                                RedoParameter = new BitmapSize { Width = w, Height = h }
+                                RedoParameter = new BitmapSize { Width = w2, Height = h2 }
                             }));
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -65,14 +71,21 @@ namespace Luo_Painter
                             IndicatorMode indicator = this.StretchDialog.Indicator;
 
                             Vector2 vect = this.Transformer.GetIndicatorVector(indicator);
-                            this.Setup(h2, w2);
+                            {
+                                this.Transformer.Width = w;
+                                this.Transformer.Height = h;
+                                this.Transformer.Fit();
+
+                                this.CreateResources(w, h);
+                                this.CreateMarqueeResources(w, h);
+                            }
                             Vector2 vect2 = this.Transformer.GetIndicatorVector(indicator);
 
                             Vector2 offset = vect2 - vect;
-                            int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w2, h2, offset)).ToArray(), new SetupSizes
+                            int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray(), new SetupSizes
                             {
                                 UndoParameter = new BitmapSize { Width = width, Height = height },
-                                RedoParameter = new BitmapSize { Width = w, Height = h }
+                                RedoParameter = new BitmapSize { Width = w2, Height = h2 }
                             }));
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -146,7 +159,17 @@ namespace Luo_Painter
                         break;
                     case OptionType.LeftTurn:
                         {
-                            this.Setup(height2, width2);
+                            {
+                                int w = height2;
+                                int h = width2;
+
+                                this.Transformer.Width = w;
+                                this.Transformer.Height = h;
+                                this.Transformer.Fit();
+
+                                this.CreateResources(w, h);
+                                this.CreateMarqueeResources(w, h);
+                            }
 
                             int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.LeftTurn(this.CanvasDevice)).ToArray(), width2 == height2 ? null : new SetupSizes
                             {
@@ -162,7 +185,17 @@ namespace Luo_Painter
                         break;
                     case OptionType.RightTurn:
                         {
-                            this.Setup(height2, width2);
+                            {
+                                int w = height2;
+                                int h = width2;
+
+                                this.Transformer.Width = w;
+                                this.Transformer.Height = h;
+                                this.Transformer.Fit();
+
+                                this.CreateResources(w, h);
+                                this.CreateMarqueeResources(w, h);
+                            }
 
                             int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.RightTurn(this.CanvasDevice)).ToArray(), width2 == height2 ? null : new SetupSizes
                             {
@@ -190,16 +223,6 @@ namespace Luo_Painter
                         break;
                 }
             };
-        }
-
-        public void Setup(BitmapSize size) => this.Setup((int)size.Width, (int)size.Height);
-        public void Setup(int w, int h)
-        {
-            this.Transformer.Width = w;
-            this.Transformer.Height = h;
-            this.Transformer.ReloadMatrix();
-
-            this.Mesh = new Mesh(this.CanvasDevice, this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25), w, h);
         }
 
     }

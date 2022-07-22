@@ -106,11 +106,11 @@ namespace Luo_Painter
             float w3 = this.CropTransformer.MaxX - this.CropTransformer.MinX;
             float h3 = this.CropTransformer.MaxY - this.CropTransformer.MinY;
 
-            int w2 = (int)w3;
-            int h2 = (int)h3;
+            int w = (int)w3;
+            int h = (int)h3;
 
-            uint w = (uint)w2;
-            uint h = (uint)h2;
+            uint w2 = (uint)w;
+            uint h2 = (uint)h;
 
             Vector2 offset = new Vector2
             {
@@ -120,11 +120,17 @@ namespace Luo_Painter
 
             if (this.CropCanvasSlider.Value is 0d)
             {
-                this.Setup(w2, h2);
-                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w2, h2, offset)).ToArray(), new SetupSizes
+                this.Transformer.Width = w;
+                this.Transformer.Height = h;
+                this.Transformer.Fit();
+
+                this.CreateResources(w, h);
+                this.CreateMarqueeResources(w, h);
+
+                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray(), new SetupSizes
                 {
                     UndoParameter = new BitmapSize { Width = width, Height = height },
-                    RedoParameter = new BitmapSize { Width = w, Height = h }
+                    RedoParameter = new BitmapSize { Width = w2, Height = h2 }
                 }));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -135,9 +141,15 @@ namespace Luo_Painter
             else
             {
                 Matrix3x2 matrix = this.GetMatrix(this.CropTransformer.LeftTop);
+                {
+                    this.Transformer.Width = w;
+                    this.Transformer.Height = h;
+                    this.Transformer.Fit();
 
-                this.Setup(w2, h2);
-                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w2, h2, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
+                    this.CreateResources(w, h);
+                    this.CreateMarqueeResources(w, h);
+                }
+                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
                 {
                     UndoParameter = new BitmapSize
                     {
@@ -146,8 +158,8 @@ namespace Luo_Painter
                     },
                     RedoParameter = new BitmapSize
                     {
-                        Width = w,
-                        Height = h
+                        Width = w2,
+                        Height = h2
                     }
                 }));
 
