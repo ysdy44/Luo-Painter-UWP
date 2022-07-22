@@ -16,12 +16,12 @@ namespace Luo_Painter
 
         private void ConstructEdits()
         {
-            this.AddMenu.ItemClick += (s, type) => this.Edit(type);
-            this.LayerMenu.ItemClick += (s, type) => this.Edit(type);
-            this.EditMenu.ItemClick += (s, type) => this.Edit(type);
+            this.AddMenu.ItemClick += (s, type) => this.EditClick(type);
+            this.LayerMenu.ItemClick += (s, type) => this.EditClick(type);
+            this.EditMenu.ItemClick += (s, type) => this.EditClick(type);
         }
 
-        public void Edit(OptionType type)
+        public void EditClick(OptionType type)
         {
             switch (type)
             {
@@ -207,8 +207,8 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Duplicate: // CopyLayer + PasteLayer
-                    this.Edit(OptionType.CopyLayer);
-                    this.Edit(OptionType.PasteLayer);
+                    this.EditClick(OptionType.CopyLayer);
+                    this.EditClick(OptionType.PasteLayer);
                     break;
                 case OptionType.Copy:
                     {
@@ -507,16 +507,16 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Feather:
-                    this.EditClick(OptionType.Feather);
+                    this.Edit(OptionType.Feather);
                     break;
                 case OptionType.MarqueeTransform:
-                    this.EditClick(OptionType.MarqueeTransform);
+                    this.Edit(OptionType.MarqueeTransform);
                     break;
                 case OptionType.Grow:
-                    this.EditClick(OptionType.Grow);
+                    this.Edit(OptionType.Grow);
                     break;
                 case OptionType.Shrink:
-                    this.EditClick(OptionType.Shrink);
+                    this.Edit(OptionType.Shrink);
                     break;
                 case OptionType.Union:
                     break;
@@ -533,9 +533,8 @@ namespace Luo_Painter
             }
         }
 
-        private bool EditClick(OptionType type)
+        private bool Edit(OptionType type)
         {
-
             Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
