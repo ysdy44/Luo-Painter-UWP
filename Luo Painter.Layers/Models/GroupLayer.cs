@@ -14,7 +14,8 @@ namespace Luo_Painter.Layers.Models
 
 
         //@Construct
-        public GroupLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(resourceCreator, width, height)
+        public GroupLayer(ICanvasResourceCreator resourceCreator, int width, int height) : this(null, resourceCreator, width, height) { }
+        public GroupLayer(string id, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, resourceCreator, width, height)
         {
         }
 

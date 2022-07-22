@@ -78,7 +78,6 @@ namespace Luo_Painter
             {
                 case StorageItemTypes.None:
                     BitmapLayer bitmapLayer1 = new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
-                    this.Layers.Push(bitmapLayer1);
                     this.Nodes.Add(bitmapLayer1);
                     this.ObservableCollection.Add(bitmapLayer1);
 
@@ -86,7 +85,6 @@ namespace Luo_Painter
                     break;
                 case StorageItemTypes.File:
                     BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, item.Bitmap, item.Width, item.Height);
-                    this.Layers.Push(bitmapLayer2);
                     this.Nodes.Add(bitmapLayer2);
                     this.ObservableCollection.Add(bitmapLayer2);
 
@@ -110,15 +108,13 @@ namespace Luo_Painter
                                 case "Bitmap":
                                     BitmapLayer bitmapLayer3 =
                                         item.Bitmaps.ContainsKey(id) ?
-                                        new BitmapLayer(this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height) :
-                                        new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
+                                        new BitmapLayer(id, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height) :
+                                        new BitmapLayer(id, this.CanvasDevice, item.Width, item.Height);
                                     bitmapLayer3.Load(item2);
-                                    this.Layers.Push(id, bitmapLayer3);
                                     break;
                                 case "Group":
-                                    GroupLayer groupLayer = new GroupLayer(this.CanvasDevice, item.Width, item.Height);
+                                    GroupLayer groupLayer = new GroupLayer(id, this.CanvasDevice, item.Width, item.Height);
                                     groupLayer.Load(item2);
-                                    this.Layers.Push(id, groupLayer);
                                     break;
                                 default:
                                     break;
@@ -130,7 +126,7 @@ namespace Luo_Painter
                     // 3. Nodes 
                     if (item.DocProject.Root.Element("Layerages") is XElement layerages)
                     {
-                        this.Nodes.Load(this.Layers, layerages);
+                        this.Nodes.Load(layerages);
                     }
 
                     // 4. UI

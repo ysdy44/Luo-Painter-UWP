@@ -23,7 +23,7 @@ namespace Luo_Painter.Layers
             new XElement("Layerage", new XAttribute("Id", layer.Id)) :
             new XElement("Layerage", new XAttribute("Id", layer.Id), new XElement("Children", layer.Children.Save()));
 
-        public void Load(IReadOnlyDictionary<string, ILayer> layers, XElement element)
+        public void Load(XElement element)
         {
             if (element is null) return;
 
@@ -34,10 +34,13 @@ namespace Luo_Painter.Layers
                     string id = id2.Value;
                     if (string.IsNullOrEmpty(id)) continue;
 
-                    ILayer layer = layers[id];
+                    ILayer layer = LayerDictionary.Instance[id];
                     base.Add(layer);
 
-                    this.Load(layers, item.Element("Children"));
+                    XElement children = item.Element("Children");
+                    if (children is null) continue;
+
+                    layer.Children.Load(children);
                 }
             }
         }

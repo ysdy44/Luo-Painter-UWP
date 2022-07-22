@@ -64,7 +64,6 @@ namespace Luo_Painter
                 case OptionType.AddLayer:
                     {
                         ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-                        this.Layers.Push(add);
 
                         /// History
                         int removes = this.History.Push(this.Add(add));
@@ -141,7 +140,7 @@ namespace Luo_Painter
                                 break;
                             case 1:
                                 string id = this.ClipboardLayers.Single();
-                                if (this.Layers.ContainsKey(id))
+                                if (LayerDictionary.Instance.ContainsKey(id))
                                 {
                                     /// History
                                     int removes = this.History.Push(this.Paste(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id));
@@ -359,7 +358,6 @@ namespace Luo_Painter
                     {
                         ICanvasImage image = this.Nodes.Merge(null, null);
                         ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
-                        this.Layers.Push(add);
 
                         /// History
                         int removes = this.History.Push(this.Clear(add));

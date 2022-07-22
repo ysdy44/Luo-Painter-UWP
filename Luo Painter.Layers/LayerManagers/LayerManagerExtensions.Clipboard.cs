@@ -37,8 +37,8 @@ namespace Luo_Painter.Layers
 
         public static ArrangeHistory Paste(this ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, string id)
         {
-            ILayer add = self.Layers[id].Crop(resourceCreator, width, height);
-            self.Layers.PushChild(add);
+            ILayer add = LayerDictionary.Instance[id].Crop(resourceCreator, width, height);
+            LayerDictionary.Instance.PushChild(add);
             return self.Add(add);
         }
 
@@ -55,10 +55,10 @@ namespace Luo_Painter.Layers
                     // Homestay
                     foreach (string id in ids)
                     {
-                        ILayer layer = self.Layers[id];
+                        ILayer layer = LayerDictionary.Instance[id];
                         ILayer add = layer.Crop(resourceCreator, width, height);
                         add.Arrange(parent.Depth + 1);
-                        self.Layers.PushChild(add);
+                        LayerDictionary.Instance.PushChild(add);
 
                         self.Nodes.Insert(index, add);
                         self.ObservableCollection.InsertChild(index, add);
@@ -71,10 +71,10 @@ namespace Luo_Painter.Layers
                     // Homestay
                     foreach (string id in ids)
                     {
-                        ILayer layer = self.Layers[id];
+                        ILayer layer = LayerDictionary.Instance[id];
                         ILayer add = layer.Crop(resourceCreator, width, height);
                         add.Arrange(neighbor.Depth);
-                        self.Layers.PushChild(add);
+                        LayerDictionary.Instance.PushChild(add);
 
                         parent.Children.Insert(indexChild, add);
                         self.ObservableCollection.InsertChild(index, add);
@@ -88,10 +88,10 @@ namespace Luo_Painter.Layers
                 // Homestay
                 foreach (string id in ids)
                 {
-                    ILayer layer = self.Layers[id];
+                    ILayer layer = LayerDictionary.Instance[id];
                     ILayer add = layer.Crop(resourceCreator, width, height);
                     add.Arrange(0);
-                    self.Layers.PushChild(add);
+                    LayerDictionary.Instance.PushChild(add);
 
                     self.Nodes.Insert(0, add);
                     self.ObservableCollection.InsertChild(0, add);

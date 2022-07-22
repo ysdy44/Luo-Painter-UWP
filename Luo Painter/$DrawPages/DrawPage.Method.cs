@@ -105,7 +105,6 @@ namespace Luo_Painter
                         if (bitmap is null) continue;
 
                         BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-                        this.Layers.Push(add);
 
                         this.Nodes.Insert(indexChild, add);
                         this.ObservableCollection.InsertChild(index, add);
@@ -122,7 +121,6 @@ namespace Luo_Painter
                         if (bitmap is null) continue;
 
                         BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-                        this.Layers.Push(add);
 
                         parent.Children.Insert(indexChild, add);
                         this.ObservableCollection.InsertChild(index, add);
@@ -140,7 +138,6 @@ namespace Luo_Painter
                     if (bitmap is null) continue;
 
                     BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-                    this.Layers.Push(add);
 
                     this.Nodes.Insert(0, add);
                     this.ObservableCollection.InsertChild(0, add);

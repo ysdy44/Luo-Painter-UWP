@@ -134,7 +134,6 @@ namespace Luo_Painter
         CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         Historian<IHistory> History { get; } = new Historian<IHistory>();
 
-        public LayerDictionary Layers { get; } = new LayerDictionary();
         public LayerNodes Nodes { get; } = new LayerNodes();
         public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
         public IList<string> ClipboardLayers { get; } = new List<string>();

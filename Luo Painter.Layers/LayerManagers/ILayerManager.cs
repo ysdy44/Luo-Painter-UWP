@@ -4,7 +4,6 @@ namespace Luo_Painter.Layers
 {
     public interface ILayerManager
     {
-        LayerDictionary Layers { get; }
         LayerNodes Nodes { get; }
         LayerObservableCollection ObservableCollection { get; }
         IList<string> ClipboardLayers { get; }

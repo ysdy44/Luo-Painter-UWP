@@ -14,7 +14,6 @@ namespace Luo_Painter.Layers
             Layerage[] undo = self.Nodes.Convert();
 
             add.Children.Add(layer);
-            self.Layers.Push(add);
 
             // Run away from Home
             // Homestay
@@ -48,8 +47,6 @@ namespace Luo_Painter.Layers
         public static ArrangeHistory Group(this ILayerManager self, ILayer add, IEnumerable<object> layers)
         {
             Layerage[] undo = self.Nodes.Convert();
-
-            self.Layers.Push(add);
 
             int depth = int.MaxValue;
             foreach (ILayer layer in layers)
@@ -98,7 +95,10 @@ namespace Luo_Painter.Layers
             // Homestay
             if (parent2 is null)
             {
-                self.Nodes.Insert(indexChild2, add);
+                if (indexChild2 >= self.Nodes.Count)
+                    self.Nodes.Add(add);
+                else
+                    self.Nodes.Insert(indexChild2, add);
                 add.Arrange(0);
             }
             else

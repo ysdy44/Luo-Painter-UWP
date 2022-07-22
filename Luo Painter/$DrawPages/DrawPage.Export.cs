@@ -94,7 +94,7 @@ namespace Luo_Painter
             if (isGoBack)
             {
                 this.History.Clear();
-                this.Layers.Clear();
+                LayerDictionary.Instance.Clear();
                 this.Nodes.Clear();
                 this.ObservableCollection.Clear();
 

@@ -56,9 +56,9 @@ namespace Luo_Painter
                     {
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.UndoParameter);
-                        else if (this.Layers.ContainsKey(propertyHistory.Id))
+                        else if (LayerDictionary.Instance.ContainsKey(propertyHistory.Id))
                         {
-                            if (this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter))
+                            if (LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter))
                             {
                                 switch (propertyHistory.Type)
                                 {
@@ -81,8 +81,8 @@ namespace Luo_Painter
                     {
                         foreach (string id in propertysHistory.Ids)
                         {
-                            if (this.Layers.ContainsKey(id))
-                                return this.Layers[id].History(propertysHistory.PropertyType, propertysHistory[id]);
+                            if (LayerDictionary.Instance.ContainsKey(id))
+                                return LayerDictionary.Instance[id].History(propertysHistory.PropertyType, propertysHistory[id]);
                         }
                         return true;
                     }
@@ -107,9 +107,9 @@ namespace Luo_Painter
                     {
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.RedoParameter);
-                        else if (this.Layers.ContainsKey(propertyHistory.Id))
+                        else if (LayerDictionary.Instance.ContainsKey(propertyHistory.Id))
                         {
-                            if (this.Layers[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter))
+                            if (LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter))
                             {
                                 switch (propertyHistory.Type)
                                 {
@@ -132,8 +132,8 @@ namespace Luo_Painter
                     {
                         foreach (string id in propertysHistory.Ids)
                         {
-                            if (this.Layers.ContainsKey(id))
-                                return this.Layers[id].History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
+                            if (LayerDictionary.Instance.ContainsKey(id))
+                                return LayerDictionary.Instance[id].History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
                         }
                         return true;
                     }
@@ -152,9 +152,9 @@ namespace Luo_Painter
             foreach (Layerage layerage in layerages)
             {
                 string id = layerage.Id;
-                if (this.Layers.ContainsKey(id))
+                if (LayerDictionary.Instance.ContainsKey(id))
                 {
-                    ILayer layer = this.Layers[id];
+                    ILayer layer = LayerDictionary.Instance[id];
                     this.ObservableCollection.Add(layer);
                 }
             }

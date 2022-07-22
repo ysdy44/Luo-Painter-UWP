@@ -21,15 +21,23 @@ namespace Luo_Painter.Layers
         public Vector2 ConvertOneToValue(Vector2 one) => new Vector2(one.X * this.Width, one.Y * this.Height);
 
 
-        public string Id { get; set; }
+        public string Id { get; }
         public LayerNodes Children { get; } = new LayerNodes();
 
         public readonly Vector2 Center; // (125, 125)
         public readonly int Width; // 250
         public readonly int Height; // 250
 
-        public LayerBase(ICanvasResourceCreator resourceCreator, int width, int height)
+        public LayerBase(string id, ICanvasResourceCreator resourceCreator, int width, int height)
         {
+            if (id is null)
+            {
+                id = LayerDictionary.Instance.NewGuid();
+            }
+
+            this.Id = id;
+            LayerDictionary.Instance.Push(id, this as ILayer);
+
             this.Center = new Vector2((float)width / 2, (float)height / 2);
             this.Width = width;
             this.Height = height;

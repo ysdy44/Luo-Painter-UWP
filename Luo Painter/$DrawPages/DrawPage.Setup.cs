@@ -170,7 +170,6 @@ namespace Luo_Painter
             this.ObservableCollection.Clear();
             foreach (ILayer item in setups)
             {
-                this.Layers.Push(item);
                 this.ObservableCollection.Add(item);
             }
             this.LayerSelectedIndex = index;

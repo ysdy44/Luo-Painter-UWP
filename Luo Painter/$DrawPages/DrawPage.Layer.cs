@@ -128,9 +128,9 @@ namespace Luo_Painter
 
                     foreach (string id in ids)
                     {
-                        if (this.Layers.ContainsKey(id))
+                        if (LayerDictionary.Instance.ContainsKey(id))
                         {
-                            ILayer layer2 = this.Layers[id];
+                            ILayer layer2 = LayerDictionary.Instance[id];
                             if (layer2.Visibility != redo)
                             {
                                 undoParameters.Add(id, layer2.Visibility);

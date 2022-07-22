@@ -44,14 +44,6 @@ namespace Luo_Painter.Layers.Models
 
 
         //@Construct
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(resourceCreator, width, height)
-        {
-            this.OriginRenderTarget.SetPixelBytes(bytes);
-            this.SourceRenderTarget.SetPixelBytes(bytes);
-
-            this.RenderThumbnail();
-        }
-
         public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap) : this(resourceCreator, (int)bitmap.SizeInPixels.Width, (int)bitmap.SizeInPixels.Height)
         {
             this.OriginRenderTarget.CopyPixelsFromBitmap(bitmap);
@@ -115,7 +107,17 @@ namespace Luo_Painter.Layers.Models
             this.RenderThumbnail();
         }
 
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(resourceCreator, width, height)
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(null, resourceCreator, bytes, width, height) { }
+        public BitmapLayer(string id, ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(id, resourceCreator, width, height)
+        {
+            this.OriginRenderTarget.SetPixelBytes(bytes);
+            this.SourceRenderTarget.SetPixelBytes(bytes);
+
+            this.RenderThumbnail();
+        }
+
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height) : this(null, resourceCreator, width, height) { }
+        public BitmapLayer(string id, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, resourceCreator, width, height)
         {
             //@DPI
             this.OriginRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
