@@ -22,24 +22,36 @@ namespace Luo_Painter.Options
         TempOverlay = 64,
         HasState = 128,
 
-        // Foot
-        Edit = 1 << 28,
-        Option = 2 << 28,
-        Tool = 4 << 28,
+        // Root
+        File = 1 << 27,
+        Edit = 2 << 27,
+        Effect = 4 << 27,
+        Tool = 8 << 27,
+
+
+        // File
+        Close = File | 1 << 15,
+        Save = File | 2 << 15,
+        Export = File | 4 << 15,
+        ExportAll = File | 8 << 15,
+        Undo = File | 16 << 15,
+        Redo = File | 32 << 15,
+        FullScreen = File | 64 << 15,
+        UnFullScreen = File | 128 << 15,
 
 
         // Edit
-        Layering = Edit | 1 << 16,
-        Editing = Edit | 2 << 16,
-        Grouping = Edit | 4 << 16,
-        Select = Edit | 8 << 16,
-        Combine = Edit | 16 << 16,
-        Setup = Edit | 32 << 16,
+        Layering = Edit | 1 << 15,
+        Editing = Edit | 2 << 15,
+        Grouping = Edit | 4 << 15,
+        Select = Edit | 8 << 15,
+        Combine = Edit | 16 << 15,
+        Setup = Edit | 32 << 15,
 
         #region Edit
 
 
-        // Layer
+        // Layering
         Remove = Layering | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
         AddLayer = Layering | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
         AddImageLayer = Layering | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
@@ -106,22 +118,22 @@ namespace Luo_Painter.Options
         #endregion
 
 
-        // Option
-        More = Option | 1 << 16,
-        Adjustment = Option | 2 << 16,
-        Effect1 = Option | 4 << 16,
-        Effect2 = Option | 8 << 16,
-        Effect3 = Option | 16 << 16,
+        // Effect
+        Other = Effect | 1 << 15,
+        Adjustment = Effect | 2 << 15,
+        Effect1 = Effect | 4 << 15,
+        Effect2 = Effect | 8 << 15,
+        Effect3 = Effect | 16 << 15,
 
-        #region Option
+        #region Effect
 
 
-        // More
-        Transform = More | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        DisplacementLiquefaction = More | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        GradientMapping = More | 3 << 8 | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        RippleEffect = More | 4 << 8 | HasPreview | AllowDrag | ExistIcon | HasDifference | IsItemClickEnabled,
-        Fill = More | 5 << 8 | TempOverlay | HasPreview | ExistIcon | IsItemClickEnabled,
+        // Other
+        Transform = Other | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        DisplacementLiquefaction = Other | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        GradientMapping = Other | 3 << 8 | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        RippleEffect = Other | 4 << 8 | HasPreview | AllowDrag | ExistIcon | HasDifference | IsItemClickEnabled,
+        Fill = Other | 5 << 8 | TempOverlay | HasPreview | ExistIcon | IsItemClickEnabled,
 
 
         // Adjustment
@@ -170,14 +182,14 @@ namespace Luo_Painter.Options
 
 
         // Tool
-        Marquee = Tool | 1 << 16,
-        Selection = Tool | 2 << 16,
-        Paint = Tool | 4 << 16,
-        Vector = Tool | 8 << 16,
-        Curve = Tool | 16 << 16,
-        Text = Tool | 32 << 16,
-        Geometry = Tool | 64 << 16,
-        Pattern = Tool | 128 << 16,
+        Marquee = Tool | 1 << 15,
+        Selection = Tool | 2 << 15,
+        Paint = Tool | 4 << 15,
+        Vector = Tool | 8 << 15,
+        Curve = Tool | 16 << 15,
+        Text = Tool | 32 << 15,
+        Geometry = Tool | 64 << 15,
+        Pattern = Tool | 128 << 15,
 
         #region Tool
 

@@ -13,11 +13,13 @@ namespace Luo_Painter.Options
         public static bool AllowDrag(this OptionType type) => type.HasFlag(OptionType.AllowDrag);
         public static bool HasPreview(this OptionType type) => type.HasFlag(OptionType.HasPreview);
         public static bool HasDifference(this OptionType type) => type.HasFlag(OptionType.HasDifference);
+        public static bool TempOverlay(this OptionType type) => type.HasFlag(OptionType.TempOverlay);
         public static bool HasState(this OptionType type) => type.HasFlag(OptionType.HasState);
         public static void GoToState(this Control control, bool isEnabled) => VisualStateManager.GoToState(control, isEnabled ? "Normal" : "Disabled", true);
 
+        public static bool IsFile(this OptionType type) => type.HasFlag(OptionType.File);
         public static bool IsEdit(this OptionType type) => type.HasFlag(OptionType.Edit);
-        public static bool IsOption(this OptionType type) => type.HasFlag(OptionType.Option);
+        public static bool IsEffect(this OptionType type) => type.HasFlag(OptionType.Effect);
         public static bool IsTool(this OptionType type) => type.HasFlag(OptionType.Tool);
 
         public static string GetThumbnail(this OptionType type) => type.ExistThumbnail() ? $"ms-appx:///Luo Painter.Options/Thumbnails/{type}.jpg" : throw new NullReferenceException($"The {type} no Tumbnail.");

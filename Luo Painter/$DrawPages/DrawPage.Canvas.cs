@@ -211,7 +211,7 @@ namespace Luo_Painter
 
         private ICanvasImage GetMezzanine()
         {
-            if (this.OptionType.IsOption() is false)
+            if (this.OptionType.IsEffect() is false)
             {
                 switch (this.OptionType)
                 {
@@ -292,7 +292,7 @@ namespace Luo_Painter
                     this.ToolListView.IsShow = this.StartingToolShow;
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
-                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsOption());
+                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
                 this.Tool_Complete(point, properties.Pressure);
             };
 
@@ -319,7 +319,7 @@ namespace Luo_Painter
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsOption());
+                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
 
                 this.ViewTool.Construct(this.Transformer);
             };
