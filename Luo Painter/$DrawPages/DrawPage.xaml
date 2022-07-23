@@ -6,14 +6,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
-    xmlns:options="using:Luo_Painter.Options"
-    xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:layers="using:Luo_Painter.Layers"
     xmlns:controls="using:Luo_Painter.Controls"
+    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:menus="using:Luo_Painter.Menus"
     xmlns:tools="using:Luo_Painter.Tools"
-    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    NavigationCacheMode="Required"
+    IsEnabled="False"
     mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -26,7 +25,47 @@
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
         <!--Range-->
         <menus:SizeRange x:Name="SizeRange"/>
+        <!--Command-->
+        <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
+
+
+    <UIElement.KeyboardAccelerators>
+        <KeyboardAccelerator>
+            <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
+        </KeyboardAccelerator>
+        
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="S" CommandParameter="Save" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="Z" CommandParameter="Undo" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="Y" CommandParameter="Redo" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape" CommandParameter="FullScreen" Command="{x:Bind Command}" />
+        
+        
+        <local:OptionKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
+
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="X" CommandParameter="Cut" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="J" CommandParameter="Duplicate" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="C" CommandParameter="Copy" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="V" CommandParameter="Paste" Command="{x:Bind Command}" />
+
+        <local:OptionKeyboardAccelerator Key="Back" CommandParameter="Clear" Command="{x:Bind Command}" />
+ 
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="E" CommandParameter="Extract" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="M" CommandParameter="Merge" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="F" CommandParameter="Flatten" Command="{x:Bind Command}" />
+
+        
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="A" CommandParameter="All" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="D" CommandParameter="Deselect" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="P" CommandParameter="Pixel" Command="{x:Bind Command}" />
+
+        
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Group" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="U" CommandParameter="Ungroup" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Release" Command="{x:Bind Command}" />
+    </UIElement.KeyboardAccelerators>
 
 
     <Grid>
@@ -219,27 +258,15 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
                 <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Q"/>
-                    </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="NewWindow"/>
                 </Button>
                 <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="Z"/>
-                    </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Undo"/>
                 </Button>
                 <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="Y"/>
-                    </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
                 <Button x:Name="FullScreenButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape"/>
-                    </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="FullScreen"/>
                 </Button>
             </StackPanel>
@@ -247,9 +274,6 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="ToolButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="A"/>
-                    </UIElement.KeyboardAccelerators>
                     <!--Icon-->
                     <ContentControl x:Name="ToolIcon">
                         <FrameworkElement.Resources>
@@ -258,21 +282,12 @@
                     </ContentControl>
                 </Button>
                 <Button x:Name="PaintButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators >
-                        <KeyboardAccelerator Modifiers="None" Key="P" />
-                    </UIElement.KeyboardAccelerators >
                     <local:ElementIcon Type="Paint"/>
                 </Button>
                 <Button x:Name="BrushButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators >
-                        <KeyboardAccelerator Modifiers="None" Key="B" />
-                    </UIElement.KeyboardAccelerators >
                     <local:ElementIcon Type="Brush"/>
                 </Button>
                 <Button x:Name="SizeButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators >
-                        <KeyboardAccelerator Modifiers="None" Key="S" />
-                    </UIElement.KeyboardAccelerators >
                     <local:ElementIcon Type="Size"/>
                 </Button>
                 <Button x:Name="HistoryButton" Style="{StaticResource AppButtonStyle}" >
@@ -283,9 +298,6 @@
                             ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
                             ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
                             >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="E"/>
-                    </UIElement.KeyboardAccelerators>
                     <UIElement.ManipulationMode>
                         TranslateX, TranslateY
                     </UIElement.ManipulationMode>
@@ -300,21 +312,12 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators >
-                        <KeyboardAccelerator Modifiers="None" Key="G" />
-                    </UIElement.KeyboardAccelerators >
                     <local:ElementIcon Type="Edit"/>
                 </Button>
                 <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="W"/>
-                    </UIElement.KeyboardAccelerators>
                     <local:ElementIcon Type="Adjustment"/>
                 </Button>
                 <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="W"/>
-                    </UIElement.KeyboardAccelerators>
                     <local:ElementIcon Type="Other"/>
                 </Button>
             </StackPanel>
@@ -454,9 +457,6 @@
                     <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
                 <Button x:Name="FootSecondaryButton" Style="{StaticResource AppButtonStyle}">
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Escape"/>
-                    </UIElement.KeyboardAccelerators>
                     <SymbolIcon Symbol="{x:Bind FlowDirectionToSymbolConverter(FlowDirection), Mode=OneWay}"/>
                 </Button>
 
