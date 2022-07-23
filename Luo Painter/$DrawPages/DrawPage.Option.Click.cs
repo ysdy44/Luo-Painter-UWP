@@ -9,7 +9,10 @@ using Microsoft.Graphics.Canvas;
 using System;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -40,12 +43,110 @@ namespace Luo_Painter
                 //    break;
                 //case OptionType.HasState:
                 //    break;
+
+                //case OptionType.File:
+                //    break;
                 //case OptionType.Edit:
                 //    break;
-                //case OptionType.Option:
+                //case OptionType.Effect:
                 //    break;
                 //case OptionType.Tool:
                 //    break;
+
+                case OptionType.Close:
+                    if (this.IsFullScreen)
+                    {
+                        this.Click(OptionType.UnFullScreen);
+                    }
+                    else
+                    {
+                        base.IsEnabled = false;
+                        await this.SaveAsync(this.ApplicationView.Title, true);
+                    }
+                    break;
+                case OptionType.Save:
+                    base.IsEnabled = false;
+                    await this.SaveAsync(this.ApplicationView.Title, false);
+                    base.IsEnabled = true;
+                    break;
+                case OptionType.Export:
+                    {
+                        IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                        if (file is null) break;
+                        this.Tip("Saving...", this.ApplicationView.Title); // Tip
+
+                        // Export
+                        bool result = await this.Nodes.Export(file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
+                        if (result)
+                            this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
+                        else
+                            this.Tip("Failed to Save", "Try again?"); // Tip
+                    }
+                    break;
+                case OptionType.ExportAll:
+                    {
+                        IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
+                        if (folder is null) break;
+                        this.Tip("Saving...", this.ApplicationView.Title); // Tip
+
+                        // Export
+                        int result = await this.Nodes.ExportAllthis(folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
+                        this.Tip("Saved successfully", $"A total of {result} files"); // Tip
+                    }
+                    break;
+                case OptionType.Undo:
+                    {
+                        if (this.History.CanUndo is false) break;
+
+                        // History
+                        bool result = this.History.Undo(this.Undo);
+                        if (result is false) break;
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                        this.Tip("Undo", $"{this.History.Index} / {this.History.Count}"); // Tip
+                    }
+                    break;
+                case OptionType.Redo:
+                    {
+                        if (this.History.CanRedo is false) break;
+
+                        // History
+                        bool result = this.History.Redo(this.Redo);
+                        if (result is false) break;
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                        this.Tip("Redo", $"{this.History.Index} / {this.History.Count}"); // Tip
+                    }
+                    break;
+                case OptionType.FullScreen:
+                    if (this.ExpanderLightDismissOverlay.Hide()) break;
+
+                    if (this.IsFullScreen)
+                    {
+                        this.IsFullScreen = false;
+                        this.SetFullScreenState(false);
+                    }
+                    else
+                    {
+                        this.IsFullScreen = true;
+                        this.SetFullScreenState(true);
+                    }
+
+                    this.FullScreenKey.IsEnabled = false;
+                    await Task.Delay(200);
+                    this.FullScreenKey.IsEnabled = true;
+                    break;
+                case OptionType.UnFullScreen:
+                    this.IsFullScreen = false;
+                    this.SetFullScreenState(false);
+                    break;
+
                 //case OptionType.Layering:
                 //    break;
                 //case OptionType.Editing:
@@ -58,6 +159,7 @@ namespace Luo_Painter
                 //    break;
                 //case OptionType.Setup:
                 //    break;
+
                 case OptionType.Remove:
                     {
                         var items = this.LayerSelectedItems;
@@ -227,7 +329,7 @@ namespace Luo_Painter
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
-                            this.LayerMenu.PasteIsEnabled = true;
+                            this.EditMenu.PasteIsEnabled = true;
                         }
                         else
                         {
@@ -256,14 +358,14 @@ namespace Luo_Painter
                                     break;
                             }
 
-                            this.LayerMenu.PasteIsEnabled = true;
+                            this.EditMenu.PasteIsEnabled = true;
                         }
                     }
                     break;
                 case OptionType.Paste:
                     {
-                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+                        Color[] interpolationColors = this.Clipboard.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Clipboard.GetInterpolationBoundsMode(interpolationColors);
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
@@ -397,6 +499,7 @@ namespace Luo_Painter
                         this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
                     break;
+
                 case OptionType.Group:
                     {
                         var items = this.LayerSelectedItems;
@@ -486,6 +589,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
+
                 case OptionType.All:
                     {
                         // History
@@ -537,6 +641,8 @@ namespace Luo_Painter
                     break;
                 case OptionType.Feather:
                     {
+                        this.ExpanderLightDismissOverlay.Hide();
+
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -549,11 +655,12 @@ namespace Luo_Painter
                         this.OptionType = type;
                         this.SetFootType(type);
                         this.SetCanvasState(true);
-                        break;
                     }
                     break;
                 case OptionType.MarqueeTransform:
                     {
+                        this.ExpanderLightDismissOverlay.Hide();
+
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -578,11 +685,12 @@ namespace Luo_Painter
                         this.OptionType = type;
                         this.SetFootType(type);
                         this.SetCanvasState(true);
-                        break;
                     }
                     break;
                 case OptionType.Grow:
                     {
+                        this.ExpanderLightDismissOverlay.Hide();
+
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -595,11 +703,12 @@ namespace Luo_Painter
                         this.OptionType = type;
                         this.SetFootType(type);
                         this.SetCanvasState(true);
-                        break;
                     }
                     break;
                 case OptionType.Shrink:
                     {
+                        this.ExpanderLightDismissOverlay.Hide();
+
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -612,9 +721,9 @@ namespace Luo_Painter
                         this.OptionType = type;
                         this.SetFootType(type);
                         this.SetCanvasState(true);
-                        break;
                     }
                     break;
+
                 case OptionType.Union:
                     break;
                 case OptionType.Exclude:
@@ -625,6 +734,7 @@ namespace Luo_Painter
                     break;
                 case OptionType.ExpandStroke:
                     break;
+
                 case OptionType.CropCanvas:
                     {
                         this.ExpanderLightDismissOverlay.Hide();
@@ -828,7 +938,8 @@ namespace Luo_Painter
                         this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
                     break;
-                //case OptionType.More:
+
+                //case OptionType.Other:
                 //    break;
                 //case OptionType.Adjustment:
                 //    break;
@@ -838,6 +949,7 @@ namespace Luo_Painter
                 //    break;
                 //case OptionType.Effect3:
                 //    break;
+
                 case OptionType.Transform:
                     {
                         this.ExpanderLightDismissOverlay.Hide();
@@ -858,14 +970,14 @@ namespace Luo_Painter
                                     case SelectionType.PixelBounds:
                                         {
                                             PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
-                                            PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds);
+                                            PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds, InterpolationColors);
                                             this.SetTransform(bounds);
                                         }
                                         break;
                                     case SelectionType.MarqueePixelBounds:
                                         {
                                             PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
-                                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
+                                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, InterpolationColors);
                                             this.SetTransform(bounds);
                                         }
                                         break;
@@ -909,14 +1021,14 @@ namespace Luo_Painter
                                             case SelectionType.PixelBounds:
                                                 {
                                                     PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
-                                                    PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds);
+                                                    PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds, InterpolationColors);
                                                     this.SetTransform(bounds);
                                                 }
                                                 break;
                                             case SelectionType.MarqueePixelBounds:
                                                 {
                                                     PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
-                                                    PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds);
+                                                    PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, InterpolationColors);
                                                     this.SetTransform(bounds);
                                                 }
                                                 break;
@@ -1055,6 +1167,7 @@ namespace Luo_Painter
                 case OptionType.PinchPunch:
                 case OptionType.Morphology:
                     break;
+
                 //case OptionType.Marquee:
                 //    break;
                 //case OptionType.Selection:
@@ -1071,27 +1184,34 @@ namespace Luo_Painter
                 //    break;
                 //case OptionType.Pattern:
                 //    break;
+
                 case OptionType.MarqueeRectangular:
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
+
                 case OptionType.SelectionFlood:
                 case OptionType.SelectionBrush:
+
                 case OptionType.PaintBrush:
                 case OptionType.PaintWatercolorPen:
                 case OptionType.PaintPencil:
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
+
                 case OptionType.Cursor:
                 case OptionType.View:
                 case OptionType.Crop:
                 case OptionType.Brush:
                 case OptionType.Transparency:
                 case OptionType.Image:
+
                 case OptionType.Node:
                 case OptionType.Pen:
+
                 case OptionType.TextArtistic:
                 case OptionType.TextFrame:
+
                 case OptionType.GeometryRectangle:
                 case OptionType.GeometryEllipse:
                 case OptionType.GeometryRoundRect:
@@ -1106,6 +1226,7 @@ namespace Luo_Painter
                 case OptionType.GeometryArrow:
                 case OptionType.GeometryCapsule:
                 case OptionType.GeometryHeart:
+
                 case OptionType.PatternGrid:
                 case OptionType.PatternDiagonal:
                 case OptionType.PatternSpotted:
