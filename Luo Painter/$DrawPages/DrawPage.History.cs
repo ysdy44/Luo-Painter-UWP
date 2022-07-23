@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page, ILayerManager
-    { 
+    {
 
         public bool Undo(IHistory history)
         {
@@ -27,7 +27,17 @@ namespace Luo_Painter
                             this.CreateResources(w, h);
                             this.CreateMarqueeResources(w, h);
                         }
-                        return this.Arrange(arrangeHistory.UndoParameter);
+
+                        this.Nodes.Load(arrangeHistory.UndoParameter);
+
+                        this.ObservableCollection.Clear();
+                        foreach (ILayer item in this.Nodes)
+                        {
+                            item.Arrange(0);
+                            this.ObservableCollection.AddChild(item);
+                        }
+
+                        return true;
                     }
                     return false;
                 case HistoryMode.Property:
@@ -89,7 +99,17 @@ namespace Luo_Painter
                             this.CreateResources(w, h);
                             this.CreateMarqueeResources(w, h);
                         }
-                        return this.Arrange(arrangeHistory.RedoParameter);
+
+                        this.Nodes.Load(arrangeHistory.RedoParameter);
+
+                        this.ObservableCollection.Clear();
+                        foreach (ILayer item in this.Nodes)
+                        {
+                            item.Arrange(0);
+                            this.ObservableCollection.AddChild(item);
+                        }
+
+                        return true;
                     }
                     return false;
                 case HistoryMode.Property:
@@ -131,24 +151,6 @@ namespace Luo_Painter
                 default:
                     return false;
             }
-        }
-
-        private bool Arrange(Layerage[] layerages)
-        {
-            if (layerages is null) return false;
-            if (layerages.Length is 0) return false;
-
-            this.ObservableCollection.Clear();
-            foreach (Layerage layerage in layerages)
-            {
-                string id = layerage.Id;
-                if (LayerDictionary.Instance.ContainsKey(id))
-                {
-                    ILayer layer = LayerDictionary.Instance[id];
-                    this.ObservableCollection.Add(layer);
-                }
-            }
-            return true;
         }
 
     }

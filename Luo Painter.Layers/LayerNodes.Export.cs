@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using Luo_Painter.Historys;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,25 @@ namespace Luo_Painter.Layers
             }
         }
 
+        public void Load(Layerage[] layerages)
+        {
+            if (layerages is null) return;
+
+            foreach (Layerage item in layerages)
+            {
+                string id = item.Id;
+                if (string.IsNullOrEmpty(id)) continue;
+
+                ILayer layer = LayerDictionary.Instance[id];
+                layer.Children.Clear();
+                base.Add(layer);
+
+                Layerage[] children = item.Children;
+                if (children is null) continue;
+
+                layer.Children.Load(children);
+            }
+        }
 
         /// <summary>
         /// Saves the entire bitmap to the specified stream
@@ -100,7 +120,7 @@ namespace Luo_Painter.Layers
         /// <param name="fileFormat"> The file format. </param>
         /// <param name="quality"> The file quality. </param>
         /// <returns> How many layers saved? </returns>
-        public async Task<int> ExportAllthis(IStorageFolder folder, ICanvasResourceCreator resourceCreator, float width, float height, float dpi = 96, string fileChoices = ".Jpeg", CanvasBitmapFileFormat fileFormat = CanvasBitmapFileFormat.Jpeg, float quality = 1.0f)
+        public async Task<int> ExportAll(IStorageFolder folder, ICanvasResourceCreator resourceCreator, float width, float height, float dpi = 96, string fileChoices = ".Jpeg", CanvasBitmapFileFormat fileFormat = CanvasBitmapFileFormat.Jpeg, float quality = 1.0f)
         {
             if (this.Count is 0) return 0;
 

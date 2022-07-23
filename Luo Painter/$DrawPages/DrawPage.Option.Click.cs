@@ -90,7 +90,7 @@ namespace Luo_Painter
                         this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
                         // Export
-                        int result = await this.Nodes.ExportAllthis(folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
+                        int result = await this.Nodes.ExportAll(folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
                         this.Tip("Saved successfully", $"A total of {result} files"); // Tip
                     }
                     break;
