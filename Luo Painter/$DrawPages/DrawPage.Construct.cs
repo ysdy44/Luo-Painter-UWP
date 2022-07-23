@@ -20,56 +20,10 @@ namespace Luo_Painter
         }
 
 
-        private void ConstructDialog()
-        {
-            this.ExportMenu.ExportClick += async (s, e) =>
-            {
-                if (this.ExportMenu.IsAllLayers)
-                {
-                    IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
-                    if (folder is null) return;
-                    this.Tip("Saving...", this.ApplicationView.Title); // Tip
-
-                    // Export
-                    int result = await this.Nodes.ExportAllthis(folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
-                    this.Tip("Saved successfully", $"A total of {result} files"); // Tip
-                }
-                else
-                {
-                    IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
-                    if (file is null) return;
-                    this.Tip("Saving...", this.ApplicationView.Title); // Tip
-
-                    // Export
-                    bool result = await this.Nodes.Export(file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
-                    if (result)
-                        this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
-                    else
-                        this.Tip("Failed to Save", "Try again?"); // Tip
-                }
-            };
-        }
-
-
         public void Tip(string title, string subtitle)
         {
             this.ToastTip.Tip(title, subtitle);
-        }
-
-        private void ConstructColor()
-        {
-            this.ColorMenu.ColorChanged += (s, e) =>
-            {
-                switch (this.OptionType)
-                {
-                    case OptionType.GradientMapping:
-                        this.GradientMappingColorChanged(e.NewColor);
-                        break;
-                    default:
-                        break;
-                }
-            };
-        }
+        } 
 
 
         private void SetFullScreenState(bool isFullScreen)
@@ -110,33 +64,6 @@ namespace Luo_Painter
                 this.CanvasAnimatedControl.Paused = false;
                 this.CanvasAnimatedControl.Visibility = Visibility.Visible;
             }
-        }
-
-
-        private void ConstructStoryboard()
-        {
-            this.UnFullScreenButton.Click += (s, e) =>
-            {
-                this.IsFullScreen = false;
-                this.SetFullScreenState(false);
-            };
-            this.FullScreenButton.Click += async (s, e) =>
-            {
-                if (this.IsFullScreen)
-                {
-                    this.IsFullScreen = false;
-                    this.SetFullScreenState(false);
-                }
-                else
-                {
-                    this.IsFullScreen = true;
-                    this.SetFullScreenState(true);
-                }
-
-                this.FullScreenKey.IsEnabled = false;
-                await Task.Delay(200);
-                this.FullScreenKey.IsEnabled = true;
-            };
         }
 
 

@@ -213,12 +213,8 @@ namespace Luo_Painter
             this.ConstructRippleEffect();
             this.ConstructVector();
 
-            this.ConstructHistory();
 
-            this.ConstructDialog();
-            this.ConstructColor();
-            this.ConstructStoryboard();
-
+            this.Command.Click += (s, type) => this.Click(type);
 
             this.AddMenu.ItemClick += (s, type) => this.Click(type);
             this.LayerMenu.ItemClick += (s, type) => this.Click(type);
@@ -248,6 +244,27 @@ namespace Luo_Painter
             this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
             this.LayerListView.Remove += (s, e) => this.Click(OptionType.Remove);
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+
+
+            this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
+            this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
+
+            this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
+            this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
+    
+            this.ExportMenu.ExportClick += (s, e) => this.Click(this.ExportMenu.IsAllLayers ? OptionType.ExportAll : OptionType.Export);
+         
+            this.ColorMenu.ColorChanged += (s, e) =>
+            {
+                switch (this.OptionType)
+                {
+                    case OptionType.GradientMapping:
+                        this.GradientMappingColorChanged(e.NewColor);
+                        break;
+                    default:
+                        break;
+                }
+            };
 
 
             // Drag and Drop 
@@ -329,19 +346,11 @@ namespace Luo_Painter
                 manager.BackRequested += this.BackRequested;
             }
         }
-        private async void BackRequested(object sender, BackRequestedEventArgs e)
+        private void BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
 
-            if (this.IsFullScreen)
-            {
-                this.IsFullScreen = false;
-                this.SetFullScreenState(false);
-                return;
-            }
-
-            base.IsEnabled = false;
-            await this.SaveAsync(this.ApplicationView.Title, true);
+            this.Click(OptionType.Close);
         }
 
     }

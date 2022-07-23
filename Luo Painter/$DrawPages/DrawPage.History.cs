@@ -6,39 +6,7 @@ using Windows.UI.Xaml.Controls;
 namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page, ILayerManager
-    {
-
-        private void ConstructHistory()
-        {
-            this.UndoButton.Click += (s, e) =>
-            {
-                if (this.History.CanUndo == false) return;
-
-                // History
-                bool result = this.History.Undo(this.Undo);
-                if (result == false) return;
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
-                this.Tip("Undo", $"{this.History.Index} / {this.History.Count}"); // Tip
-            };
-            this.RedoButton.Click += (s, e) =>
-            {
-                if (this.History.CanRedo == false) return;
-
-                // History
-                bool result = this.History.Redo(this.Redo);
-                if (result == false) return;
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
-                this.Tip("Redo", $"{this.History.Index} / {this.History.Count}"); // Tip
-            };
-        }
+    { 
 
         public bool Undo(IHistory history)
         {
