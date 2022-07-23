@@ -25,6 +25,7 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -71,6 +72,16 @@ namespace Luo_Painter
     }
 
 
+    internal class OptionKeyboardAccelerator : KeyboardAccelerator
+    {
+        public OptionType CommandParameter { get; set; }
+        public OptionTypeCommand Command { get; set; }
+        public OptionKeyboardAccelerator() => base.Invoked += (s, e) => this.Command.Execute(this.CommandParameter);
+        public override string ToString() => this.CommandParameter.ToString();
+    }
+
+    internal class OptionTypeCommand : RelayCommand<OptionType> { }
+
     internal sealed class OptionIcon : TButton<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
@@ -80,7 +91,22 @@ namespace Luo_Painter
             base.Resources = resource;
         }
     }
-
+    internal sealed class OptionItem : TButton<OptionType>
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.CommandParameter = value;
+            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            {
+                Width = 32,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            }, value.ToString());
+        }
+    }
 
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : DependencyObject, ICase<OptionType>

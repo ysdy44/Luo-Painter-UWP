@@ -159,7 +159,7 @@
                 <VisualState x:Name="FullScreen">
                     <VisualState.Setters>
                         <Setter Target="ApplicationView.IsAccent" Value="True"/>
-                    
+
                         <Setter Target="HeadTransform.Y" Value="-50"/>
 
                         <Setter Target="UnFullScreenButton.Visibility" Value="Visible"/>
@@ -463,7 +463,7 @@
                 <local:OptionSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
                     <local:OptionCase Value="Feather">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <menus:EditIcon Type="Feather" Width="50" />
+                            <local:OptionIcon Type="Feather" Width="50" />
                             <TextBlock x:Name="FeatherTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Feather
                             </TextBlock>
@@ -471,7 +471,7 @@
                     </local:OptionCase>
                     <local:OptionCase Value="Grow">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <menus:EditIcon Type="Grow" Width="50" />
+                            <local:OptionIcon Type="Grow" Width="50" />
                             <TextBlock x:Name="GrowTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Grow
                             </TextBlock>
@@ -479,7 +479,7 @@
                     </local:OptionCase>
                     <local:OptionCase Value="Shrink">
                         <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <menus:EditIcon Type="Shrink" Width="50" />
+                            <local:OptionIcon Type="Shrink" Width="50" />
                             <TextBlock x:Name="ShrinkTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
                                 Shrink
                             </TextBlock>

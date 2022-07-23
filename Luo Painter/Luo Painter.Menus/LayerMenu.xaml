@@ -22,7 +22,7 @@
 
     <FrameworkElement.Resources>
         <!--Command-->
-        <local:OptionTypeCommand x:Name="Command"/>
+        <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
     <elements:Expander.TopAppBar>

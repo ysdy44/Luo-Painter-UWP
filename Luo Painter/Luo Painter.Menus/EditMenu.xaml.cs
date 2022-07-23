@@ -8,26 +8,6 @@ using Windows.UI.Xaml.Input;
 
 namespace Luo_Painter.Menus
 {
-    internal class EditKeyboardAccelerator : KeyboardAccelerator
-    {
-        public OptionType CommandParameter { get; set; }
-        public OptionTypeCommand Command { get; set; }
-        public EditKeyboardAccelerator() => base.Invoked += (s, e) => this.Command.Execute(this.CommandParameter);
-    }
-
-    internal sealed class EditIcon : TButton<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Width = 32;
-            base.VerticalContentAlignment = VerticalAlignment.Center;
-            base.HorizontalContentAlignment = HorizontalAlignment.Center;
-            base.Content = value.ToString();
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
-        }
-    }
-
     internal sealed class EditButton : TButton<OptionType>
     {
 
@@ -105,15 +85,6 @@ namespace Luo_Painter.Menus
         }
     }
 
-    internal sealed class EditAppBarButton : TAppBarButton<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.CommandParameter = value;
-            base.Label = value.ToString();
-        }
-    }
-
     public sealed partial class EditMenu : Expander
     {
         //@Delegate
@@ -123,6 +94,12 @@ namespace Luo_Painter.Menus
             add => this.Command.Click += value;
         }
         public void Execute(OptionType item) => this.Command.Execute(item);
+     
+        public bool PasteIsEnabled
+        {
+            get => this.PasteItem.IsEnabled;
+            set => this.PasteItem.IsEnabled = value;
+        }
 
         //@Construct
         public EditMenu()

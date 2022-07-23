@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:local="using:Luo_Painter.Menus"
     mc:Ignorable="d"
@@ -17,36 +18,9 @@
         Edit
     </elements:Expander.Title>
 
-    <UIElement.KeyboardAccelerators>
-        <KeyboardAccelerator>
-            <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
-        </KeyboardAccelerator>
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="X" CommandParameter="Cut" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="J" CommandParameter="Duplicate" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="C" CommandParameter="Copy" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="V" CommandParameter="Paste" Command="{x:Bind Command}" />
-
-        <local:EditKeyboardAccelerator Key="Back" CommandParameter="Clear" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
-
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="E" CommandParameter="Extract" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="M" CommandParameter="Merge" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="F" CommandParameter="Flatten" Command="{x:Bind Command}" />
-
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="A" CommandParameter="All" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="D" CommandParameter="Deselect" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="P" CommandParameter="Pixel" Command="{x:Bind Command}" />
-
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Group" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="U" CommandParameter="Ungroup" Command="{x:Bind Command}" />
-        <local:EditKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Release" Command="{x:Bind Command}" />
-    </UIElement.KeyboardAccelerators>
-
     <FrameworkElement.Resources>
         <!--Command-->
-        <local:OptionTypeCommand x:Name="Command"/>
+        <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
     <elements:Expander.TopAppBar>
