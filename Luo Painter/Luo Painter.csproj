@@ -147,6 +147,9 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContextAppBar.xaml.cs">
+      <DependentUpon>ContextAppBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
@@ -281,6 +284,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="%24MainPages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ContextAppBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

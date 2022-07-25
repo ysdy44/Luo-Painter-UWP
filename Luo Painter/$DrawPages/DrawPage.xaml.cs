@@ -82,13 +82,28 @@ namespace Luo_Painter
 
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
 
-    internal sealed class OptionIcon : TButton<OptionType>
+    internal sealed class OptionIcon : TIcon<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {
             base.Content = value.ToString();
             base.Template = value.GetTemplate(out ResourceDictionary resource);
             base.Resources = resource;
+        }
+    }
+    internal sealed class OptionItemIcon : TIcon<OptionType>
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            {
+                Width = 32,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Content = value,
+                Template = value.GetTemplate(out ResourceDictionary resource),
+                Resources = resource,
+            }, value.ToString());
         }
     }
     internal sealed class OptionItem : TButton<OptionType>
