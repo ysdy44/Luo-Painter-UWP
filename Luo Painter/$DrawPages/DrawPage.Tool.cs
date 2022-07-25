@@ -116,8 +116,7 @@ namespace Luo_Painter
 
                 case OptionType.SelectionBrush:
                     Vector2 position = this.ToPosition(point);
-                    bool isSubtract = this.SelectionComboBox.SelectedIndex != 0;
-                    this.Marquee.Marquee(this.Position, position, 32, isSubtract);
+                    this.Marquee.Marquee(this.Position, position, 32, this.AppBar.SelectionIsSubtract);
                     this.Marquee.Hit(RectExtensions.GetRect(this.Position, position, 32));
                     this.Position = position;
                     break;
@@ -182,8 +181,7 @@ namespace Luo_Painter
                 case OptionType.SelectionFlood:
                     if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                     {
-                        bool isSubtract = this.SelectionComboBox.SelectedIndex != 0;
-                        this.SelectionFlood(point, bitmapLayer, isSubtract);
+                        this.SelectionFlood(point, bitmapLayer, this.AppBar.SelectionIsSubtract);
                     }
                     else
                     {

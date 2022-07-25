@@ -59,8 +59,8 @@ namespace Luo_Painter
             Vector2 position = this.ToPosition(point);
             if (this.Position == position) return;
 
-            float radius = (float)this.DisplacementLiquefactionSizeSlider.Value;
-            float pressure = (float)this.DisplacementLiquefactionPressureSlider.Value / 100;
+            float radius = (float)this.AppBar.DisplacementLiquefactionSize;
+            float pressure = (float)this.AppBar.DisplacementLiquefactionPressure / 100;
 
             this.Displacement.Shade(new PixelShaderEffect(this.DisplacementLiquefactionShaderCodeBytes)
             {
@@ -69,7 +69,7 @@ namespace Luo_Painter
                 Properties =
                 {
                     /// <see cref="DisplacementLiquefactionMode"/> to <see cref="System.Int32"/>
-                    ["mode"] =1+this.DisplacementLiquefactionModeComboBox.SelectedIndex,
+                    ["mode"] =1+this.AppBar.DisplacementLiquefactionMode,
                     ["amount"] = this.DisplacementLiquefactionAmount,
                     ["pressure"] = pressure,
                     ["radius"] = radius,

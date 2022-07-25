@@ -15,117 +15,23 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
-        double StartingFootX;
-        double StartingFootY;
-
-
-        private void SetFootType(OptionType optionType)
+        private void SetFootType(OptionType type)
         {
-            if (optionType.AllowDrag())
-            {
-                this.FootThumb.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.FootThumb.Visibility = Visibility.Collapsed;
-            }
-
-            OptionType type = this.GetFootType(optionType);
-            this.FootSwitchPresenter.Value = type;
-            this.FootSwitchPresenter2.Value = type;
-            this.FootSwitchPresenter3.Value = type;
-
-            if (optionType.HasPreview())
-            {
-                this.FootHead.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.FootHead.Visibility = Visibility.Collapsed;
-            }
-
-            this.FootTransform2.X = this.FootTransform.X = 0;
-            this.FootTransform2.Y = this.FootTransform.Y = 0;
-        }
-        private OptionType GetFootType(OptionType type)
-        {
-            if (type == OptionType.MarqueeTransform) return OptionType.Transform;
-            else if (type.HasFlag(OptionType.Marquee)) return OptionType.Marquee;
-            else if (type.HasFlag(OptionType.Selection)) return OptionType.Selection;
-            else return type;
+            this.AppBar.Construct(type);
         }
 
 
         private void ConstructFoots()
         {
-            this.FootPanel.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                this.FootBorder.Width = e.NewSize.Width;
-                this.FootBorder.Height = e.NewSize.Height;
-
-                this.FootTransform2.X = this.FootTransform.X = 0;
-                this.FootTransform2.Y = this.FootTransform.Y = 0;
-            };
-
-            this.FootThumb.DragStarted += (s, e) =>
-            {
-                this.StartingFootX = this.FootTransform.X;
-                this.StartingFootY = this.FootTransform.Y;
-            };
-            this.FootThumb.DragDelta += (s, e) =>
-            {
-                if (this.FootPanel.Margin.Bottom == 0)
-                {
-                    this.StartingFootY += e.VerticalChange;
-
-                    this.FootTransform2.Y = this.FootTransform.Y = System.Math.Clamp(this.StartingFootY, 0, this.FootBorder.Height - 50);
-                }
-                else
-                {
-                    this.StartingFootX += e.HorizontalChange;
-                    this.StartingFootY += e.VerticalChange;
-
-                    this.FootTransform2.X = this.FootTransform.X = this.StartingFootX;
-                    this.FootTransform2.Y = this.FootTransform.Y = this.StartingFootY;
-                }
-            };
-            this.FootThumb.DragCompleted += (s, e) =>
-            {
-            };
         }
 
 
         private void ConstructFoot()
         {
-            this.FeatherSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.GrowSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.ShrinkSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.AppBar.CanvasControlInvalidate += this.CanvasControl.Invalidate;
+            this.AppBar.CanvasVirtualControlInvalidate += this.CanvasVirtualControl.Invalidate;
 
-            this.ExposureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.SaturationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.HueRotationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ContrastSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.TemperatureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.TintSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ShadowsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.HighlightsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ClaritySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.BlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            this.TransformComboBox.SelectionChanged += (s, e) =>
-            {
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-
-
-            this.FootSecondaryButton.Click += (s, e) =>
+            this.AppBar.SecondaryButtonClick += (s, e) =>
             {
                 if (this.OptionType is OptionType.CropCanvas)
                 {
@@ -138,7 +44,7 @@ namespace Luo_Painter
                 this.SetCanvasState(false);
             };
 
-            this.FootPrimaryButton.Click += (s, e) =>
+            this.AppBar.PrimaryButtonClick += (s, e) =>
             {
                 if (this.OptionType.HasPreview())
                 {
@@ -294,7 +200,6 @@ namespace Luo_Painter
                 case OptionType.None:
                     return image;
 
-
                 case OptionType.Transform:
                     return this.GetTransformPreview(image);
                 case OptionType.DisplacementLiquefaction:
@@ -304,136 +209,11 @@ namespace Luo_Painter
                 case OptionType.RippleEffect:
                     return this.GetRippleEffectPreview(image);
 
-
-                case OptionType.Feather:
-                    return new GaussianBlurEffect
-                    {
-                        BlurAmount = (float)this.FeatherSlider.Value,
-                        Source = image
-                    };
                 case OptionType.MarqueeTransform:
                     return this.GetTransformPreview(image);
-                case OptionType.Grow:
-                    int grow = (int)this.GrowSlider.Value;
-                    return new MorphologyEffect
-                    {
-                        Mode = MorphologyEffectMode.Dilate,
-                        Height = grow,
-                        Width = grow,
-                        Source = image
-                    };
-                case OptionType.Shrink:
-                    int shrink = (int)this.ShrinkSlider.Value;
-                    return new MorphologyEffect
-                    {
-                        Mode = MorphologyEffectMode.Erode,
-                        Height = shrink,
-                        Width = shrink,
-                        Source = image
-                    };
 
-
-                case OptionType.Gray:
-                    return new GrayscaleEffect
-                    {
-                        Source = image
-                    };
-                case OptionType.Invert:
-                    return new InvertEffect
-                    {
-                        Source = image
-                    };
-                case OptionType.Exposure:
-                    return new ExposureEffect
-                    {
-                        Exposure = (float)this.ExposureSlider.Value / 100,
-                        Source = image
-                    };
-                case OptionType.Brightness:
-                    float brightness = (float)this.BrightnessSlider.Value / 100;
-                    return new BrightnessEffect
-                    {
-                        WhitePoint = new Vector2(System.Math.Clamp(2 - brightness, 0, 1), 1),
-                        BlackPoint = new Vector2(System.Math.Clamp(1 - brightness, 0, 1), 0),
-                        Source = image
-                    };
-                case OptionType.Saturation:
-                    return new SaturationEffect
-                    {
-                        Saturation = (float)this.SaturationSlider.Value / 100,
-                        Source = image
-                    };
-                case OptionType.HueRotation:
-                    return new HueRotationEffect
-                    {
-                        Angle = (float)this.HueRotationSlider.Value / 180 * FanKit.Math.Pi,
-                        Source = image
-                    };
-                case OptionType.Contrast:
-                    return new ContrastEffect
-                    {
-                        Contrast = (float)this.ContrastSlider.Value / 100,
-                        Source = image
-                    };
-                case OptionType.Temperature:
-                    return new TemperatureAndTintEffect
-                    {
-                        Temperature = (float)this.TemperatureSlider.Value / 100,
-                        Tint = (float)this.TintSlider.Value / 100,
-                        Source = image
-                    };
-                case OptionType.HighlightsAndShadows:
-                    return new HighlightsAndShadowsEffect
-                    {
-                        Shadows = (float)this.ShadowsSlider.Value / 100,
-                        Highlights = (float)this.HighlightsSlider.Value / 100,
-                        Clarity = (float)this.ClaritySlider.Value / 100,
-                        MaskBlurAmount = (float)this.BlurSlider.Value / 100,
-                        Source = image
-                    };
-
-                case OptionType.LuminanceToAlpha:
-                    switch (this.LuminanceToAlphaComboBox.SelectedIndex)
-                    {
-                        case 0:
-                            return new LuminanceToAlphaEffect
-                            {
-                                Source = image
-                            };
-                        case 1:
-                            return new LuminanceToAlphaEffect
-                            {
-                                Source = new InvertEffect
-                                {
-                                    Source = image
-                                }
-                            };
-                        case 2:
-                            return new InvertEffect
-                            {
-                                Source = new LuminanceToAlphaEffect
-                                {
-                                    Source = new InvertEffect
-                                    {
-                                        Source = image
-                                    }
-                                }
-                            };
-                        default: return image;
-                    }
-                //case OptionType.Fog:
-                case OptionType.Sepia:
-                    return new SepiaEffect
-                    {
-                        Source = image
-                    };
-                case OptionType.Posterize:
-                    return new PosterizeEffect
-                    {
-                        Source = image
-                    };
-
-                default: return image;
+                default:
+                    return this.AppBar.GetPreview(type, image);
             }
         }
 

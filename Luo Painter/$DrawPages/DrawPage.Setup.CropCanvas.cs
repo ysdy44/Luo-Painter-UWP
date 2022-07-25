@@ -23,7 +23,7 @@ namespace Luo_Painter
 
         private void ConstructSetup()
         {
-            this.CropCanvasSlider.ValueChanged += (s, e) =>
+            this.AppBar.CropCanvasValueChanged += (s, e) =>
             {
                 double radian = e.NewValue / 180 * System.Math.PI;
                 this.Transformer.Radian = (float)radian;
@@ -52,7 +52,7 @@ namespace Luo_Painter
         {
             this.CropTransformer = new Transformer(0, 0, w, h);
 
-            this.CropCanvasSlider.Value = 0d;
+            this.AppBar.CropCanvasValue = 0d;
 
             if (this.Transformer.Radian == 0f) return;
             this.Transformer.Radian = 0f;
@@ -101,11 +101,11 @@ namespace Luo_Painter
 
         private void CancelCropCanvas()
         {
-            if (this.CropCanvasSlider.Value is 0d) return;
+            if (this.AppBar.CropCanvasValue is 0d) return;
 
             this.Transformer.Radian = 0f;
             this.Transformer.ReloadMatrix();
-            this.CropCanvasSlider.Value = 0;
+            this.AppBar.CropCanvasValue = 0;
         }
         private void PrimaryCropCanvas()
         {
@@ -130,7 +130,7 @@ namespace Luo_Painter
                 Y = -this.CropTransformer.MinY,
             };
 
-            if (this.CropCanvasSlider.Value is 0d)
+            if (this.AppBar.CropCanvasValue is 0d)
             {
                 this.Transformer.Width = w;
                 this.Transformer.Height = h;
@@ -183,7 +183,7 @@ namespace Luo_Painter
 
                 this.Transformer.Radian = 0f;
                 this.Transformer.ReloadMatrix();
-                this.CropCanvasSlider.Value = 0;
+                this.AppBar.CropCanvasValue = 0;
             }
         }
 

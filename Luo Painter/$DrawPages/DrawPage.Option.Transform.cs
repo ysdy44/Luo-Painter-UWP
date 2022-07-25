@@ -49,7 +49,7 @@ namespace Luo_Painter
 
         private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds)
         {
-            switch (this.TransformComboBox.SelectedIndex)
+            switch (this.AppBar.TransformMode)
             {
                 case 0:
                     break;
@@ -70,7 +70,7 @@ namespace Luo_Painter
 
         private ICanvasImage GetTransformPreview(ICanvasImage image)
         {
-            switch (this.TransformComboBox.SelectedIndex)
+            switch (this.AppBar.TransformMode)
             {
                 case 0:
                     return new Transform2DEffect
@@ -111,7 +111,7 @@ namespace Luo_Painter
         private void Transform_Start(Vector2 point)
         {
             this.StartingPosition = this.ToPosition(point);
-            switch (this.TransformComboBox.SelectedIndex)
+            switch (this.AppBar.TransformMode)
             {
                 case 0:
                     this.StartingMove = this.Move;
@@ -133,7 +133,7 @@ namespace Luo_Painter
         private void Transform_Delta(Vector2 point)
         {
             Vector2 position = this.ToPosition(point);
-            switch (this.TransformComboBox.SelectedIndex)
+            switch (this.AppBar.TransformMode)
             {
                 case 0:
                     this.Move = position - this.StartingPosition + this.StartingMove;
@@ -193,7 +193,7 @@ namespace Luo_Painter
 
         private void Transform_Complete(Vector2 point)
         {
-            switch (this.TransformComboBox.SelectedIndex)
+            switch (this.AppBar.TransformMode)
             {
                 case 0:
                     break;

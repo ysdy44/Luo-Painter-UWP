@@ -74,7 +74,7 @@ namespace Luo_Painter
             this.Point = point;
             this.Position = this.ToPosition(point);
 
-            switch (this.BrushComboBox.SelectedIndex)
+            switch (this.AppBar.BrushMode)
             {
                 case 0:
                     return;
@@ -107,7 +107,7 @@ namespace Luo_Painter
             if (this.SelectionType is SelectionType.None) return;
             if (Vector2.DistanceSquared(this.Point, point) < 100) return;
 
-            switch (this.BrushComboBox.SelectedIndex)
+            switch (this.AppBar.BrushMode)
             {
                 case 0:
                     break;
@@ -150,7 +150,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
 
-            switch (this.BrushComboBox.SelectedIndex)
+            switch (this.AppBar.BrushMode)
             {
                 case 0:
                     this.Brush(new CanvasSolidColorBrush(this.CanvasDevice, this.ColorMenu.Color));

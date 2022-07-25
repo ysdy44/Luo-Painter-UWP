@@ -81,7 +81,7 @@ namespace Luo_Painter
             this.Point = point;
             this.Position = this.ToPosition(point);
 
-            switch (this.TransparencyComboBox.SelectedIndex)
+            switch (this.AppBar.TransparencyMode)
             {
                 case 0:
                     this.LinearGradientBrush = new CanvasLinearGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
@@ -112,7 +112,7 @@ namespace Luo_Painter
             if (this.SelectionType is SelectionType.None) return;
             if (Vector2.DistanceSquared(this.Point, point) < 100) return;
 
-            switch (this.TransparencyComboBox.SelectedIndex)
+            switch (this.AppBar.TransparencyMode)
             {
                 case 0:
                     {
@@ -153,7 +153,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
 
-            switch (this.TransparencyComboBox.SelectedIndex)
+            switch (this.AppBar.TransparencyMode)
             {
                 case 0:
                     {
@@ -237,47 +237,62 @@ namespace Luo_Painter
                 case SelectionType.None:
                     break;
                 case SelectionType.All:
-                    CanvasCommandList commandList0 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList0.CreateDrawingSession())
                     {
-                        ds.FillRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, brush);
+                        using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
+                        {
+                            using (CanvasDrawingSession ds = commandList.CreateDrawingSession())
+                            {
+                                ds.FillRectangle(0, 0, this.BitmapLayer.Width, this.BitmapLayer.Height, brush);
+                            }
+                            this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.RalphaMaskEffectShaderCodeBytes)
+                            {
+                                Source1 = commandList,
+                                Source2 = this.BitmapLayer[BitmapType.Origin]
+                            }, BitmapType.Source);
+                        }
+
+                        // History
+                        int removes = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
                     }
-                    this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.RalphaMaskEffectShaderCodeBytes)
-                    {
-                        Source1 = commandList0,
-                        Source2 = this.BitmapLayer[BitmapType.Origin]
-                    }, BitmapType.Source);
-                    // History
-                    int removes1 = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
                     break;
                 case SelectionType.PixelBounds:
-                    CanvasCommandList commandList1 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList1.CreateDrawingSession())
                     {
-                        ds.FillRectangle(this.BrushBounds, brush);
+                        using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
+                        {
+                            using (CanvasDrawingSession ds = commandList.CreateDrawingSession())
+                            {
+                                ds.FillRectangle(this.BrushBounds, brush);
+                            }
+                            this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.RalphaMaskEffectShaderCodeBytes)
+                            {
+                                Source1 = commandList,
+                                Source2 = this.BitmapLayer[BitmapType.Origin]
+                            }, this.BrushBounds, BitmapType.Source);
+                        }
+
+                        // History
+                        int removes = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
                     }
-                    this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.RalphaMaskEffectShaderCodeBytes)
-                    {
-                        Source1 = commandList1,
-                        Source2 = this.BitmapLayer[BitmapType.Origin]
-                    }, this.BrushBounds, BitmapType.Source);
-                    // History
-                    int removes2 = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
                     break;
                 case SelectionType.MarqueePixelBounds:
-                    CanvasCommandList commandList2 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
                     {
-                        ds.FillRectangle(this.BrushBounds, brush);
+                        using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
+                        {
+                            using (CanvasDrawingSession ds = commandList.CreateDrawingSession())
+                            {
+                                ds.FillRectangle(this.BrushBounds, brush);
+                            }
+                            this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskEffectShaderCodeBytes)
+                            {
+                                Source1 = this.Marquee[BitmapType.Source],
+                                Source2 = this.BitmapLayer[BitmapType.Origin],
+                                Source3 = commandList
+                            }, this.BrushBounds, BitmapType.Source);
+                        }
+
+                        // History
+                        int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                     }
-                    this.BitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskEffectShaderCodeBytes)
-                    {
-                        Source1 = this.Marquee[BitmapType.Source],
-                        Source2 = this.BitmapLayer[BitmapType.Origin],
-                        Source3 = commandList2
-                    }, this.BrushBounds, BitmapType.Source);
-                    // History
-                    int removes3 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                     break;
                 default:
                     break;

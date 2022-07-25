@@ -96,40 +96,6 @@
                         <!--Expander-->
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
                         <Setter Target="ExportMenu.Height" Value="Auto"/>
-
-                        <!--Foot-->
-                        <Setter Target="FootBorder.CornerRadius" Value="0"/>
-                        <Setter Target="FootBorder.Margin" Value="0"/>
-                        <Setter Target="FootBorder.HorizontalAlignment" Value="Stretch"/>
-                        <Setter Target="FootBorder.BorderThickness" Value="0,1,0,0"/>
-                        <Setter Target="FootPanel.Margin" Value="0"/>
-                        <Setter Target="FootPanel.HorizontalAlignment" Value="Stretch"/>
-
-                        <!--Option-->
-                        <Setter Target="MarqueeComboBox.Margin" Value="0"/>
-                        <Setter Target="SelectionComboBox.Margin" Value="0"/>
-
-                        <Setter Target="GradientMappingSelector.Width" Value="Auto"/>
-
-                        <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
-                        <Setter Target="FrequencySlider.Width" Value="Auto"/>
-                        <Setter Target="PhaseSlider.Width" Value="Auto"/>
-                        <Setter Target="AmplitudeSlider.Width" Value="Auto"/>
-
-                        <Setter Target="TemperaturePanel.Orientation" Value="Vertical"/>
-                        <Setter Target="TemperatureSlider.Width" Value="Auto"/>
-                        <Setter Target="TintSlider.Width" Value="Auto"/>
-
-                        <Setter Target="HighlightsAndShadowsPanel1.Orientation" Value="Vertical"/>
-                        <Setter Target="HighlightsAndShadowsPanel2.Orientation" Value="Vertical"/>
-                        <Setter Target="DisplacementLiquefactionPanel.Orientation" Value="Vertical"/>
-                        <Setter Target="DisplacementLiquefactionPanel.HorizontalAlignment" Value="Stretch"/>
-                        <Setter Target="DisplacementLiquefactionSizeSlider.Width" Value="Auto"/>
-                        <Setter Target="DisplacementLiquefactionPressureSlider.Width" Value="Auto"/>
-                        <Setter Target="ShadowsSlider.Width" Value="Auto"/>
-                        <Setter Target="HighlightsSlider.Width" Value="Auto"/>
-                        <Setter Target="ClaritySlider.Width" Value="Auto"/>
-                        <Setter Target="BlurSlider.Width" Value="Auto"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -143,23 +109,6 @@
                         <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
                         <Setter Target="ExpanderLightDismissOverlay.Half" Value="True"/>
                         <Setter Target="ExportMenu.Height" Value="Auto"/>
-
-                        <!--Foot-->
-                        <Setter Target="FootBorder.CornerRadius" Value="8,8,0,0"/>
-                        <Setter Target="FootBorder.Margin" Value="0"/>
-                        <Setter Target="FootBorder.BorderThickness" Value="1,1,1,0"/>
-                        <Setter Target="FootPanel.Margin" Value="0"/>
-                        <!--Option-->
-                        <Setter Target="GradientMappingSelector.Width" Value="500"/>
-
-                        <Setter Target="RippleEffectPanel.Orientation" Value="Vertical"/>
-                        <Setter Target="FrequencySlider.Width" Value="Auto"/>
-                        <Setter Target="PhaseSlider.Width" Value="Auto"/>
-                        <Setter Target="AmplitudeSlider.Width" Value="Auto"/>
-
-                        <Setter Target="TemperaturePanel.Orientation" Value="Vertical"/>
-                        <Setter Target="TemperatureSlider.Width" Value="Auto"/>
-                        <Setter Target="TintSlider.Width" Value="Auto"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -178,8 +127,6 @@
                         <AdaptiveTrigger MinWindowWidth="1200"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--Option-->
-                        <Setter Target="HighlightsAndShadowsPanel.Orientation" Value="Horizontal"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -256,9 +203,24 @@
                 <TranslateTransform x:Name="HeadTransform" Y="0"/>
             </UIElement.RenderTransform>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
-                    <SymbolIcon Symbol="NewWindow"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
+                <SymbolIcon Symbol="NewWindow"/>
+            </Button>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Button x:Name="HomeButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <SymbolIcon Symbol="Home"/>
+                </Button>
+                <Button x:Name="SaveButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <SymbolIcon Symbol="Save"/>
                 </Button>
                 <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                     <SymbolIcon Symbol="Undo"/>
@@ -271,8 +233,7 @@
                 </Button>
             </StackPanel>
 
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button x:Name="ToolButton" Style="{StaticResource AppButtonStyle}" >
                     <!--Icon-->
                     <ContentControl x:Name="ToolIcon">
@@ -293,24 +254,24 @@
                 <Button x:Name="HistoryButton" Style="{StaticResource AppButtonStyle}" >
                     <local:ElementIcon Type="History"/>
                 </Button>
-                <Button x:Name="ColorButton" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
+            </StackPanel>
+
+            <Button x:Name="ColorButton" Grid.Column="4" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
                             ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
                             ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
                             ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
                             >
-                    <UIElement.ManipulationMode>
-                        TranslateX, TranslateY
-                    </UIElement.ManipulationMode>
-                    <Grid>
-                        <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
-                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
-                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
-                    </Grid>
-                </Button>
-            </StackPanel>
+                <UIElement.ManipulationMode>
+                    TranslateX, TranslateY
+                </UIElement.ManipulationMode>
+                <Grid>
+                    <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
+                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
+                </Grid>
+            </Button>
 
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
                     <local:ElementIcon Type="Edit"/>
                 </Button>
@@ -326,733 +287,7 @@
 
 
         <!--Foot-->
-        <Border x:Name="FootBorder" Margin="22" MinWidth="440" MinHeight="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicElementBrush}" >
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform x:Name="FootTransform2" Y="0"/>
-            </UIElement.RenderTransform>
-        </Border>
-        <Grid x:Name="FootPanel" Margin="22" MinWidth="440" MinHeight="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform x:Name="FootTransform" Y="0"/>
-            </UIElement.RenderTransform>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!--Head-->
-            <Thumb x:Name="FootThumb" >
-                <Thumb.Template>
-                    <ControlTemplate TargetType="Thumb">
-                        <Grid Background="Transparent">
-
-                            <!--VisualState-->
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPointerOver" />
-                                            <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPressed" />
-                                            <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled" />
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-
-                            <Border x:Name="Background"                              
-                                                IsHitTestVisible="False"                           
-                                                Width="36" 
-                                                Height="6" 
-                                                Margin="3" 
-                                                VerticalAlignment="Top" 
-                                                CornerRadius="{TemplateBinding CornerRadius}" 
-                                                BorderThickness="{TemplateBinding BorderThickness}"            
-                                                BorderBrush="{TemplateBinding BorderBrush}"            
-                                                Background="{TemplateBinding Background}"           
-                                                />
-                            <Border x:Name="BackgroundPointerOver"                            
-                                                Opacity="0" 
-                                                IsHitTestVisible="False"
-                                                Width="36"
-                                                Height="6" 
-                                                Margin="3" 
-                                                VerticalAlignment="Top" 
-                                                CornerRadius="{TemplateBinding CornerRadius}"          
-                                                BorderThickness="{TemplateBinding BorderThickness}"              
-                                                BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}"             
-                                                Background="{ThemeResource ThumbBackgroundPointerOver}"              
-                                                />
-                            <Border x:Name="BackgroundPressed"                              
-                                                Opacity="0" 
-                                                IsHitTestVisible="False"
-                                                Width="36" 
-                                                Height="6"
-                                                Margin="3" 
-                                                VerticalAlignment="Top" 
-                                                CornerRadius="{TemplateBinding CornerRadius}"          
-                                                Background="{ThemeResource ThumbBackgroundPressed}"             
-                                                BorderBrush="{ThemeResource ThumbBorderBrushPressed}"              
-                                                BorderThickness="{TemplateBinding BorderThickness}"                
-                                                />
-                        </Grid>
-                    </ControlTemplate>
-                </Thumb.Template>
-            </Thumb>
-
-            <local:OptionSwitchPresenter x:Name="FootSwitchPresenter" >
-                <local:OptionCase Value="Marquee">
-                    <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                        <local:ElementItem Type="New"/>
-                        <local:ElementItem Type="Union"/>
-                        <local:ElementItem Type="Exclude"/>
-                        <local:ElementItem Type="Simultaneously"/>
-                    </ListBox>
-                </local:OptionCase>
-                <local:OptionCase Value="Selection">
-                    <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                        <local:ElementItem Type="Add"/>
-                        <local:ElementItem Type="Subtract"/>
-                    </ListBox>
-                </local:OptionCase>
-                <local:OptionCase Value="Brush">
-                    <ListBox x:Name="BrushComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                        <TextBlock>Color</TextBlock>
-                        <TextBlock>LinearGradient</TextBlock>
-                        <TextBlock>RadialGradient</TextBlock>
-                        <TextBlock>EllipticalGradient</TextBlock>
-                    </ListBox>
-                </local:OptionCase>
-                <local:OptionCase Value="Transparency">
-                    <ListBox x:Name="TransparencyComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                        <TextBlock>LinearGradient</TextBlock>
-                        <TextBlock>RadialGradient</TextBlock>
-                        <TextBlock>EllipticalGradient</TextBlock>
-                    </ListBox>
-                </local:OptionCase>
-            </local:OptionSwitchPresenter>
-
-            <Grid x:Name="FootHead" Visibility="Collapsed" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="FootPrimaryButton" Grid.Column="2" Style="{StaticResource AppButtonStyle}">
-                    <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
-                </Button>
-                <Button x:Name="FootSecondaryButton" Style="{StaticResource AppButtonStyle}">
-                    <SymbolIcon Symbol="{x:Bind FlowDirectionToSymbolConverter(FlowDirection), Mode=OneWay}"/>
-                </Button>
-
-                <local:OptionSwitchPresenter x:Name="FootSwitchPresenter2" Grid.Column="1">
-                    <local:OptionCase Value="Feather">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Feather" Width="50" />
-                            <TextBlock x:Name="FeatherTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Feather
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Grow">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Grow" Width="50" />
-                            <TextBlock x:Name="GrowTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Grow
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Shrink">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Shrink" Width="50" />
-                            <TextBlock x:Name="ShrinkTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Shrink
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-
-                    <local:OptionCase Value="CropCanvas">
-                        <Border Style="{StaticResource AppRoundedBorderStyle}" >
-                            <Slider x:Name="CropCanvasSlider" 
-                                    Minimum="-180" Maximum="180" Value="0" TickFrequency="12" TickPlacement="Outside"                                  
-                                    Background="{StaticResource SystemControlDisabledBaseLowBrush}" Foreground="Transparent" VerticalAlignment="Center">
-                                <FrameworkElement.Resources>
-                                    <StaticResource x:Key="SliderThumbBackground" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
-
-                                    <StaticResource x:Key="SliderTrackFillPressed" ResourceKey="SystemControlDisabledBaseLowBrush"/>
-                                    <StaticResource x:Key="SliderThumbBackgroundPressed" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
-                                    <StaticResource x:Key="SliderTrackValueFillPressed" ResourceKey="SystemControlDisabledTransparentBrush"/>
-
-                                    <StaticResource x:Key="SliderTrackFillPointerOver" ResourceKey="SystemControlDisabledBaseLowBrush"/>
-                                    <StaticResource x:Key="SliderThumbBackgroundPointerOver" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
-                                    <StaticResource x:Key="SliderTrackValueFillPointerOver" ResourceKey="SystemControlDisabledTransparentBrush"/>
-                                </FrameworkElement.Resources>
-                            </Slider>
-                        </Border>
-                    </local:OptionCase>
-
-                    <local:OptionCase Value="Exposure">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Exposure" Width="50" />
-                            <TextBlock x:Name="ExposureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Exposure
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Brightness">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Brightness" Width="50" />
-                            <TextBlock x:Name="BrightnessTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Brightness
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Saturation">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Saturation" Width="50" />
-                            <TextBlock x:Name="SaturationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Saturation
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="HueRotation">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="HueRotation" Width="50" />
-                            <TextBlock x:Name="HueRotationTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Hue Rotation
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Contrast">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Contrast" Width="50" />
-                            <TextBlock x:Name="ContrastTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Contrast
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Temperature">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="Temperature" Width="50" />
-                            <TextBlock x:Name="TemperatureTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Temperature
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="HighlightsAndShadows">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="HighlightsAndShadows" Width="50" />
-                            <TextBlock x:Name="HighlightsAndShadowsTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Highlights and Shadows
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="LuminanceToAlpha">
-                        <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                            <x:String>Normal</x:String>
-                            <x:String>White Paper</x:String>
-                            <x:String>Black Paper</x:String>
-                        </ListBox>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Transform">
-                        <ListBox x:Name="TransformComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                            <x:String>Move</x:String>
-                            <x:String>Transform</x:String>
-                            <x:String>Free Transform</x:String>
-                        </ListBox>
-                    </local:OptionCase>
-                    <local:OptionCase Value="DisplacementLiquefaction">
-                        <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                            <x:String>Push</x:String>
-                            <x:String>Pinch</x:String>
-                            <x:String>Expand</x:String>
-                            <x:String>Twirl Left</x:String>
-                            <x:String>Twirl Right</x:String>
-                            <x:String>Reset</x:String>
-                        </ListBox>
-                    </local:OptionCase>
-                    <local:OptionCase Value="GradientMapping">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="GradientMapping" Width="50" />
-                            <TextBlock x:Name="GradientMappingTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Gradient Mapping
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="RippleEffect">
-                        <StackPanel IsHitTestVisible="False" Orientation="Horizontal" >
-                            <local:OptionIcon Type="RippleEffect" Width="50" />
-                            <TextBlock x:Name="RippleEffectTextBlock" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" >
-                                Ripple Effect
-                            </TextBlock>
-                        </StackPanel>
-                    </local:OptionCase>
-                </local:OptionSwitchPresenter>
-
-            </Grid>
-
-            <local:OptionSwitchPresenter x:Name="FootSwitchPresenter3" Grid.Row="1" >
-                <local:OptionCase Value="Feather">
-                    <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Feather
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="FeatherButton" Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Grow">
-                    <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Grow
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="GrowButton" Content="{x:Bind GrowSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Shrink">
-                    <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Shrink
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="ShrinkButton" Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Exposure">
-                    <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="Black" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Exposure
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="ExposureButton" Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Brightness">
-                    <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="Black" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Brightness
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="BrightnessButton" Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Saturation">
-                    <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="Gray" Offset="0"/>
-                                <GradientStop Color="#00A5FF" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Saturation
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="SaturationButton" Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="HueRotation">
-                    <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="#FFCE3B" Offset="0"/>
-                                <GradientStop Color="#72C075" Offset="0.125"/>
-                                <GradientStop Color="#46A7F6" Offset="0.25"/>
-                                <GradientStop Color="#784BB0" Offset="0.375"/>
-                                <GradientStop Color="#A336B5" Offset="0.5"/>
-                                <GradientStop Color="#EB2E6E" Offset="0.625"/>
-                                <GradientStop Color="#EC5449" Offset="0.75"/>
-                                <GradientStop Color="#FFA827" Offset="0.875"/>
-                                <GradientStop Color="#FFCE3B" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            HueRotation
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="HueRotationButton" Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Contrast">
-                    <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="#888888" Offset="0"/>
-
-                                <GradientStop Color="#6D6D6D" Offset="0.4"/>
-                                <GradientStop Color="#909090" Offset="0.5"/>
-
-                                <GradientStop Color="#353535" Offset="0.6"/>
-                                <GradientStop Color="#C9C9C9" Offset="0.7"/>
-
-                                <GradientStop Color="#000000" Offset="0.8"/>
-                                <GradientStop Color="#FFFFFF" Offset="1"/>
-
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Contrast
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="ContrastButton" Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </local:OptionCase>
-                <local:OptionCase Value="Temperature">
-                    <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
-                        <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="#3EADF5" Offset="0"/>
-                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                                    <GradientStop Color="#F99652" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Temperature
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="TemperatureButton" Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="#9680C9" Offset="0"/>
-                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                                    <GradientStop Color="#80763E" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Tint
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="TintButton" Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-                </local:OptionCase>
-                <local:OptionCase Value="HighlightsAndShadows">
-                    <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
-                        <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
-                            <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                <Slider.Background>
-                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                        <GradientStop Color="Black" Offset="0"/>
-                                        <GradientStop Color="Gray" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Slider.Background>
-                                <FrameworkElement.Tag>
-                                    Shadows
-                                </FrameworkElement.Tag>
-                                <Slider.Header>
-                                    <Button x:Name="ShadowsButton" Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
-                                            Padding="4,0" MinWidth="70" Height="28"
-                                            BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                        <Button.Flyout>
-                                            <Flyout>
-
-                                            </Flyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </Slider.Header>
-                            </Slider>
-                            <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                <Slider.Background>
-                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                        <GradientStop Color="Gray" Offset="0"/>
-                                        <GradientStop Color="White" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Slider.Background>
-                                <FrameworkElement.Tag>
-                                    Highlights
-                                </FrameworkElement.Tag>
-                                <Slider.Header>
-                                    <Button x:Name="HighlightsButton" Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
-                                            Padding="4,0" MinWidth="70" Height="28"
-                                            BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                        <Button.Flyout>
-                                            <Flyout>
-
-                                            </Flyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </Slider.Header>
-                            </Slider>
-                        </StackPanel>
-                        <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
-                            <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                <FrameworkElement.Tag>
-                                    Clarity
-                                </FrameworkElement.Tag>
-                                <Slider.Header>
-                                    <Button x:Name="ClarityButton" Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
-                                            Padding="4,0" MinWidth="70" Height="28"
-                                            BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                        <Button.Flyout>
-                                            <Flyout>
-
-                                            </Flyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </Slider.Header>
-                            </Slider>
-                            <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
-                                <FrameworkElement.Tag>
-                                    Blur
-                                </FrameworkElement.Tag>
-                                <Slider.Header>
-                                    <Button x:Name="BlurButton" Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
-                                            Padding="4,0" MinWidth="70" Height="28"
-                                            BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                        <Button.Flyout>
-                                            <Flyout>
-
-                                            </Flyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </Slider.Header>
-                            </Slider>
-                        </StackPanel>
-                    </StackPanel>
-                </local:OptionCase>
-                <local:OptionCase Value="DisplacementLiquefaction">
-                    <StackPanel x:Name="DisplacementLiquefactionPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <Slider x:Name="DisplacementLiquefactionSizeSlider" Width="260" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Size
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="DisplacementLiquefactionSizeButton" Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="32" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Pressure
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="DisplacementLiquefactionPressureButton" 
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind DisplacementLiquefactionPressureSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-                </local:OptionCase>
-                <local:OptionCase Value="GradientMapping">
-                    <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
-                        <elements:GradientStopSelector.ItemStyle>
-                            <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                                <Setter Property="Width" Value="50"/>
-                                <Setter Property="Height" Value="50"/>
-                                <Setter Property="Padding" Value="3"/>
-                            </Style>
-                        </elements:GradientStopSelector.ItemStyle>
-                        <elements:GradientStopSelector.ItemTemplate>
-                            <DataTemplate x:DataType="GradientStop">
-                                <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                        <Rectangle.Fill>
-                                            <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                </Border>
-                            </DataTemplate>
-                        </elements:GradientStopSelector.ItemTemplate>
-                    </elements:GradientStopSelectorWithUI>
-                </local:OptionCase>
-                <local:OptionCase Value="RippleEffect">
-                    <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
-                        <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Frequency
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="FrequencyButton" Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Phase
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="PhaseButton" Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Amplitude
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="AmplitudeButton" Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-
-                </local:OptionCase>
-            </local:OptionSwitchPresenter>
-
-        </Grid>
+        <controls:ContextAppBar x:Name="AppBar" />
 
 
         <!--Tool-->
@@ -1112,7 +347,7 @@
 
         <!--Tip-->
         <Border IsHitTestVisible="False" CornerRadius="6" Padding="12,3" MinHeight="40" Background="Red" RequestedTheme="Dark" HorizontalAlignment="Center" VerticalAlignment="Center"
-                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(GradientMappingSelector.IsHitTestVisible), Mode=OneWay}">
+                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(AppBar.Selector.IsHitTestVisible), Mode=OneWay}">
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon Symbol="Delete"/>
                 <ContentControl Width="12"/>
@@ -1141,10 +376,56 @@
 
         <!--Tip-->
         <controls:ToastTip x:Name="ToastTip" Visibility="Collapsed" IsHitTestVisible="False" />
+        <!--<Border
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Padding="2,32" CornerRadius="14" Background="{ThemeResource AppAcrylicOverlayBrush}">
+            <ItemsControl x:Name="ItemsControl2222" >
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="2" ItemWidth="320" ItemHeight="55"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="60,2">
+                            <TextBlock Text="{Binding Key}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
+                                -->
+        <!--Key-->
+        <!--
+                            </TextBlock>
+                            <TextBlock Text="{Binding Value}" FontSize="14" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
+                                -->
+        <!--Value-->
+        <!--
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </Border>-->
+        
 
         <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
         <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
 
+        <ItemsControl IsHitTestVisible="False" HorizontalAlignment="Left" x:Name="ItemsControl" Width="320" Height="320" Background="DodgerBlue" Foreground="White">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" VerticalAlignment="Bottom"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
 
     </Grid>
 </Page>
