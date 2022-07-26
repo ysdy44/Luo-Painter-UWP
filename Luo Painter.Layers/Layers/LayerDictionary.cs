@@ -12,14 +12,6 @@ namespace Luo_Painter.Layers
 
         internal string NewGuid() => System.Guid.NewGuid().ToString();
         internal void Push(string id, ILayer layer) => base.Add(id, layer);
-        internal void PushChild(ILayer layer)
-        {
-            base.Add(layer.Id, layer);
-            foreach (ILayer item in layer.Children)
-            {
-                this.PushChild(item);
-            }
-        }
 
         public IEnumerable<ILayer> Permutation(Layerage[] layerages)
         {

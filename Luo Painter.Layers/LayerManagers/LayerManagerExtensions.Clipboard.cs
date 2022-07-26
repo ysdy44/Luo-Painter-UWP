@@ -38,7 +38,6 @@ namespace Luo_Painter.Layers
         public static ArrangeHistory Paste(this ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, string id)
         {
             ILayer add = LayerDictionary.Instance[id].Crop(resourceCreator, width, height);
-            LayerDictionary.Instance.PushChild(add);
             return self.Add(add);
         }
 
@@ -58,7 +57,6 @@ namespace Luo_Painter.Layers
                         ILayer layer = LayerDictionary.Instance[id];
                         ILayer add = layer.Crop(resourceCreator, width, height);
                         add.Arrange(parent.Depth + 1);
-                        LayerDictionary.Instance.PushChild(add);
 
                         self.Nodes.Insert(index, add);
                         self.ObservableCollection.InsertChild(index, add);
@@ -74,7 +72,6 @@ namespace Luo_Painter.Layers
                         ILayer layer = LayerDictionary.Instance[id];
                         ILayer add = layer.Crop(resourceCreator, width, height);
                         add.Arrange(neighbor.Depth);
-                        LayerDictionary.Instance.PushChild(add);
 
                         parent.Children.Insert(indexChild, add);
                         self.ObservableCollection.InsertChild(index, add);
@@ -91,7 +88,6 @@ namespace Luo_Painter.Layers
                     ILayer layer = LayerDictionary.Instance[id];
                     ILayer add = layer.Crop(resourceCreator, width, height);
                     add.Arrange(0);
-                    LayerDictionary.Instance.PushChild(add);
 
                     self.Nodes.Insert(0, add);
                     self.ObservableCollection.InsertChild(0, add);
