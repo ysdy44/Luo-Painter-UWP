@@ -487,11 +487,14 @@ namespace Luo_Painter
                     break;
                 case OptionType.Flatten:
                     {
-                        ICanvasImage image = this.Nodes.Merge(null, null);
-                        ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
+                        using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
+                        {
+                            ICanvasImage image = this.Nodes.Merge(null, commandList);
+                            ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
 
-                        /// History
-                        int removes = this.History.Push(this.Clear(add));
+                            /// History
+                            int removes = this.History.Push(this.Clear(add));
+                        }
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 

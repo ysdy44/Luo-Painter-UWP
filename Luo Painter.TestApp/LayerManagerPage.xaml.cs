@@ -334,11 +334,14 @@ namespace Luo_Painter.TestApp
             };
             this.FlattenButton.Click += (s, e) =>
             {
-                ICanvasImage image = this.Nodes.Merge(null, null);
-                ILayer add = new BitmapLayer(this.CanvasDevice, image, 128, 128);
+                using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
+                {
+                    ICanvasImage image = this.Nodes.Merge(null, commandList);
+                    ILayer add = new BitmapLayer(this.CanvasDevice, image, 128, 128);
 
-                /// History
-                int removes = this.History.Push(this.Clear(add));
+                    /// History
+                    int removes = this.History.Push(this.Clear(add));
+                }
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
