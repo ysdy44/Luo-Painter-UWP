@@ -150,6 +150,9 @@
     <Compile Include="Controls\ContextAppBar.xaml.cs">
       <DependentUpon>ContextAppBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\KeyboardShortcuts.xaml.cs">
+      <DependentUpon>KeyboardShortcuts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
@@ -290,6 +293,10 @@
     <Page Include="Controls\ContextAppBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\KeyboardShortcuts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LayerListView.xaml">
       <Generator>MSBuild:Compile</Generator>
