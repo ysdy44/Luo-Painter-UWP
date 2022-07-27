@@ -200,18 +200,21 @@ namespace Luo_Painter
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
         InkType InkType { get; set; } = InkType.None;
 
+        bool IsReferenceImageResizing { get; set; }
+        ReferenceImage ReferenceImage { get; set; }
+        IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
+
         Vector2 Point;
         Vector2 Position;
         float Pressure;
 
-
+        
         //@Construct
         public DrawPage()
         {
             this.InitializeComponent();
             this.ConstructCanvas();
             this.ConstructOperator();
-            this.ConstructSimulater();
 
             this.ConstructLayers();
             this.ConstructLayer();
@@ -240,6 +243,11 @@ namespace Luo_Painter
             this.ToolListView.Construct(this.OptionType);
 
 
+            this.SimulateCanvas.Start += (point) => this.Tool_Start(point);
+            this.SimulateCanvas.Delta += (point) => this.Tool_Delta(point);
+            this.SimulateCanvas.Complete += (point) => this.Tool_Complete(point);
+
+
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
 
@@ -261,6 +269,9 @@ namespace Luo_Painter
             this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
 
 
+            this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
+            this.SaveButton.Click += (s, e) => this.Click(OptionType.Save);
+
             this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
             this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
 
@@ -271,7 +282,7 @@ namespace Luo_Painter
             this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
 
             this.ExportMenu.ExportClick += (s, e) => this.Click(this.ExportMenu.IsAllLayers ? OptionType.ExportAll : OptionType.Export);
-         
+
             this.ColorMenu.ColorChanged += (s, e) =>
             {
                 switch (this.OptionType)

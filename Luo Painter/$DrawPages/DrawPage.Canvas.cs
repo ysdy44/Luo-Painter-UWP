@@ -1,6 +1,8 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Elements;
+using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
@@ -15,7 +17,6 @@ using Windows.Graphics.Effects;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Luo_Painter.Layers;
 
 namespace Luo_Painter
 {
@@ -97,6 +98,12 @@ namespace Luo_Painter
 
             this.CanvasControl.Draw += (sender, args) =>
             {
+                Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
+                foreach (ReferenceImage item in this.ReferenceImages)
+                {
+                    item.Draw(args.DrawingSession, matrix);
+                }
+
                 args.DrawingSession.Blend = CanvasBlend.Copy;
 
                 switch (this.OptionType)
@@ -199,7 +206,7 @@ namespace Luo_Painter
                         using (ds.CreateLayer(1, this.Mesh.Geometry, this.Transformer.GetMatrix()))
                         {
                             // Layer
-                            if (this.OptionType.IsEdit() || this.BitmapLayer is null)
+                            if (this.OptionType.IsEdit() || this.OptionType.IsTool() || this.BitmapLayer is null)
                                 ds.DrawImage(this.Nodes.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                             else
                                 ds.DrawImage(this.Nodes.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
@@ -272,6 +279,31 @@ namespace Luo_Painter
                     this.StartingLayerShow = this.LayerListView.IsShow;//&& this.LayerListView.Width > 70;
                 }
                 this.SetCanvasState(true);
+
+                this.StartingPosition = this.Position = this.ToPosition(point);
+                this.Point = point;
+                this.Pressure = properties.Pressure;
+
+                for (int i = 0; i < this.ReferenceImages.Count; i++)
+                {
+                    ReferenceImage item = this.ReferenceImages[i];
+                    if (FanKit.Math.InNodeRadius(this.ToPoint(item.Size + item.Position), point))
+                    {
+                        this.ReferenceImage = item;
+                        this.IsReferenceImageResizing = true;
+                        this.CanvasControl.Invalidate();
+                        return;
+                    }
+                    if (item.Contains(this.Position))
+                    {
+                        item.Cache();
+                        this.ReferenceImage = item;
+                        this.IsReferenceImageResizing = false;
+                        this.CanvasControl.Invalidate();
+                        return;
+                    }
+                }
+
                 this.Tool_Start(point, properties.Pressure);
             };
             this.Operator.Single_Delta += (point, properties) =>
@@ -283,7 +315,26 @@ namespace Luo_Painter
                     if (this.StartingLayerShow && this.LayerListView.IsShow && point.X < base.ActualWidth && point.X > base.ActualWidth - this.LayerListView.Width)
                         this.LayerListView.IsShow = false;
                 }
-                this.Tool_Delta(point, properties.Pressure);
+
+                Vector2 position = this.ToPosition(point);
+
+                if (this.ReferenceImage is null)
+                {
+                    this.Tool_Delta(point, properties.Pressure);
+                }
+                else
+                {
+                    if (this.IsReferenceImageResizing)
+                        this.ReferenceImage.Resizing(position);
+                    else
+                        this.ReferenceImage.Add(position - this.StartingPosition);
+
+                    this.CanvasControl.Invalidate();
+                }
+
+                this.Position = position;
+                this.Point = point;
+                this.Pressure = properties.Pressure;
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
@@ -293,7 +344,16 @@ namespace Luo_Painter
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
                 this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
-                this.Tool_Complete(point, properties.Pressure);
+
+                if (this.ReferenceImage is null)
+                {
+                    this.Tool_Complete(point, properties.Pressure);
+                }
+                else
+                {
+                    this.ReferenceImage = null;
+                    this.CanvasControl.Invalidate();
+                }
             };
 
 
@@ -339,13 +399,6 @@ namespace Luo_Painter
 
                 this.ViewTool.Construct(this.Transformer);
             };
-        }
-
-        private void ConstructSimulater()
-        {
-            this.SimulateCanvas.Start += (point) => this.Tool_Start(point);
-            this.SimulateCanvas.Delta += (point) => this.Tool_Delta(point);
-            this.SimulateCanvas.Complete += (point) => this.Tool_Complete(point);
         }
 
     }
