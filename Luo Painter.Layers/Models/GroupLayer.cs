@@ -66,11 +66,5 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        protected override ILayer FlipHorizontalSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
-        protected override ILayer FlipVerticalSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
-        protected override ILayer LeftTurnSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
-        protected override ILayer RightTurnSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
-        protected override ILayer OverTurnSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
-
     }
 }

@@ -15,11 +15,5 @@ namespace Luo_Painter.Layers
         ILayer Skretch(ICanvasResourceCreator resourceCreator, int width, int height, CanvasImageInterpolation interpolation);
         ILayer Flip(ICanvasResourceCreator resourceCreator, BitmapFlip flip);
         ILayer Rotation(ICanvasResourceCreator resourceCreator, BitmapRotation rotation);
-       
-        ILayer FlipHorizontal(ICanvasResourceCreator resourceCreator);
-        ILayer FlipVertical(ICanvasResourceCreator resourceCreator);
-        ILayer LeftTurn(ICanvasResourceCreator resourceCreator);
-        ILayer RightTurn(ICanvasResourceCreator resourceCreator);
-        ILayer OverTurn(ICanvasResourceCreator resourceCreator);
     }
 }

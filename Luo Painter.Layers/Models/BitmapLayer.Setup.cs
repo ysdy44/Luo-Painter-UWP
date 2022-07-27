@@ -10,7 +10,7 @@ namespace Luo_Painter.Layers.Models
 
         protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new BitmapLayer(resourceCreator, this);
 
-        protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height ) => new BitmapLayer(resourceCreator, this.SourceRenderTarget, width, height);
+        protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height) => new BitmapLayer(resourceCreator, this.SourceRenderTarget, width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset) => new BitmapLayer(resourceCreator, this.SourceRenderTarget, width, height, offset);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation) => new BitmapLayer(resourceCreator, new Transform2DEffect
         {
@@ -46,12 +46,6 @@ namespace Luo_Painter.Layers.Models
                     return this.CloneSelf(resourceCreator);
             }
         }
-
-        protected override ILayer FlipHorizontalSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, 1, this.Center), CanvasImageInterpolation.NearestNeighbor);
-        protected override ILayer FlipVerticalSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(1, -1, this.Center), CanvasImageInterpolation.NearestNeighbor);
-        protected override ILayer LeftTurnSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Height, this.Width, Matrix3x2.CreateRotation(-FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(0, this.Width), CanvasImageInterpolation.NearestNeighbor);
-        protected override ILayer RightTurnSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Height, this.Width, Matrix3x2.CreateRotation(FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(this.Height, 0), CanvasImageInterpolation.NearestNeighbor);
-        protected override ILayer OverTurnSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, -1, this.Center), CanvasImageInterpolation.NearestNeighbor);
 
     }
 }

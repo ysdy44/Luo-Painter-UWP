@@ -17,12 +17,6 @@ namespace Luo_Painter.Layers
         protected abstract ILayer FlipSelf(ICanvasResourceCreator resourceCreator, BitmapFlip flip);
         protected abstract ILayer RotationSelf(ICanvasResourceCreator resourceCreator, BitmapRotation rotation);
 
-        protected abstract ILayer FlipHorizontalSelf(ICanvasResourceCreator resourceCreator);
-        protected abstract ILayer FlipVerticalSelf(ICanvasResourceCreator resourceCreator);
-        protected abstract ILayer LeftTurnSelf(ICanvasResourceCreator resourceCreator);
-        protected abstract ILayer RightTurnSelf(ICanvasResourceCreator resourceCreator);
-        protected abstract ILayer OverTurnSelf(ICanvasResourceCreator resourceCreator);
-
 
         public ILayer Clone(ICanvasResourceCreator resourceCreator)
         {
@@ -73,42 +67,6 @@ namespace Luo_Painter.Layers
             ILayer layer = this.RotationSelf(resourceCreator, rotation);
             layer.CopyWith(this);
             foreach (ILayer item in this.Children) layer.Children.Add(item.Rotation(resourceCreator, rotation));
-            return layer;
-        }
-
-        public ILayer FlipHorizontal(ICanvasResourceCreator resourceCreator)
-        {
-            ILayer layer = this.FlipHorizontalSelf(resourceCreator);
-            layer.CopyWith(this);
-            foreach (ILayer item in this.Children) layer.Children.Add(item.FlipHorizontal(resourceCreator));
-            return layer;
-        }
-        public ILayer FlipVertical(ICanvasResourceCreator resourceCreator)
-        {
-            ILayer layer = this.FlipVerticalSelf(resourceCreator);
-            layer.CopyWith(this);
-            foreach (ILayer item in this.Children) layer.Children.Add(item.FlipVertical(resourceCreator));
-            return layer;
-        }
-        public ILayer LeftTurn(ICanvasResourceCreator resourceCreator)
-        {
-            ILayer layer = this.LeftTurnSelf(resourceCreator);
-            layer.CopyWith(this);
-            foreach (ILayer item in this.Children) layer.Children.Add(item.LeftTurn(resourceCreator));
-            return layer;
-        }
-        public ILayer RightTurn(ICanvasResourceCreator resourceCreator)
-        {
-            ILayer layer = this.RightTurnSelf(resourceCreator);
-            layer.CopyWith(this);
-            foreach (ILayer item in this.Children) layer.Children.Add(item.RightTurn(resourceCreator));
-            return layer;
-        }
-        public ILayer OverTurn(ICanvasResourceCreator resourceCreator)
-        {
-            ILayer layer = this.OverTurnSelf(resourceCreator);
-            layer.CopyWith(this);
-            foreach (ILayer item in this.Children) layer.Children.Add(item.OverTurn(resourceCreator));
             return layer;
         }
 

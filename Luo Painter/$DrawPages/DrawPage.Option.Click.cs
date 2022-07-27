@@ -841,7 +841,7 @@ namespace Luo_Painter
 
                         this.Transformer.Fit();
 
-                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.FlipHorizontal(this.CanvasDevice)).ToArray(), null));
+                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray(), null));
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -855,7 +855,7 @@ namespace Luo_Painter
 
                         this.Transformer.Fit();
 
-                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.FlipVertical(this.CanvasDevice)).ToArray(), null));
+                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray(), null));
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -883,7 +883,7 @@ namespace Luo_Painter
                             this.CreateResources(w, h);
                             this.CreateMarqueeResources(w, h);
                         }
-                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.LeftTurn(this.CanvasDevice)).ToArray(), width2 == height2 ? null : new SetupSizes
+                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray(), width2 == height2 ? null : new SetupSizes
                         {
                             UndoParameter = new BitmapSize { Width = width, Height = height },
                             RedoParameter = new BitmapSize { Width = height, Height = width }
@@ -915,7 +915,7 @@ namespace Luo_Painter
                             this.CreateResources(w, h);
                             this.CreateMarqueeResources(w, h);
                         }
-                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.RightTurn(this.CanvasDevice)).ToArray(), width2 == height2 ? null : new SetupSizes
+                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray(), width2 == height2 ? null : new SetupSizes
                         {
                             UndoParameter = new BitmapSize { Width = width, Height = height },
                             RedoParameter = new BitmapSize { Width = height, Height = width }
@@ -933,7 +933,7 @@ namespace Luo_Painter
 
                         this.Transformer.Fit();
 
-                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.OverTurn(this.CanvasDevice)).ToArray(), null));
+                        int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray(), null));
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
