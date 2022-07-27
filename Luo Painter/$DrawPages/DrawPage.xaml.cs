@@ -266,7 +266,10 @@ namespace Luo_Painter
 
             this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
             this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
-    
+
+            this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
+            this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
+
             this.ExportMenu.ExportClick += (s, e) => this.Click(this.ExportMenu.IsAllLayers ? OptionType.ExportAll : OptionType.Export);
          
             this.ColorMenu.ColorChanged += (s, e) =>

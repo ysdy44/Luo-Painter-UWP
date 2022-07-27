@@ -228,6 +228,9 @@
                 <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
+                <Button x:Name="KeyButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                    <SymbolIcon Symbol="Keyboard"/>
+                </Button>
                 <Button x:Name="FullScreenButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                     <SymbolIcon Symbol="FullScreen"/>
                 </Button>
@@ -376,45 +379,9 @@
 
         <!--Tip-->
         <controls:ToastTip x:Name="ToastTip" Visibility="Collapsed" IsHitTestVisible="False" />
-        <!--<Border
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Padding="2,32" CornerRadius="14" Background="{ThemeResource AppAcrylicOverlayBrush}">
-            <ItemsControl x:Name="ItemsControl2222" >
+        <controls:KeyboardShortcuts x:Name="KeyboardShortcuts" Visibility="Collapsed" />
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="2" ItemWidth="320" ItemHeight="55"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
 
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentControl">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="60,2">
-                            <TextBlock Text="{Binding Key}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
-                                -->
-        <!--Key-->
-        <!--
-                            </TextBlock>
-                            <TextBlock Text="{Binding Value}" FontSize="14" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
-                                -->
-        <!--Value-->
-        <!--
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-
-            </ItemsControl>
-        </Border>-->
-        
 
         <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
         <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
