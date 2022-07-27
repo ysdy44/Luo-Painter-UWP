@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System.Numerics;
+using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers
 {
@@ -13,6 +14,8 @@ namespace Luo_Painter.Layers
         protected abstract ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation);
 
         protected abstract ILayer SkretchSelf(ICanvasResourceCreator resourceCreator, int width, int height, CanvasImageInterpolation interpolation);
+        protected abstract ILayer FlipSelf(ICanvasResourceCreator resourceCreator, BitmapFlip flip);
+        protected abstract ILayer RotationSelf(ICanvasResourceCreator resourceCreator, BitmapRotation rotation);
 
         protected abstract ILayer FlipHorizontalSelf(ICanvasResourceCreator resourceCreator);
         protected abstract ILayer FlipVerticalSelf(ICanvasResourceCreator resourceCreator);
@@ -56,6 +59,20 @@ namespace Luo_Painter.Layers
             ILayer layer = this.SkretchSelf(resourceCreator, width, height, interpolation);
             layer.CopyWith(this);
             foreach (ILayer item in this.Children) layer.Children.Add(item.Skretch(resourceCreator, width, height, interpolation));
+            return layer;
+        }
+        public ILayer Flip(ICanvasResourceCreator resourceCreator, BitmapFlip flip)
+        {
+            ILayer layer = this.FlipSelf(resourceCreator, flip);
+            layer.CopyWith(this);
+            foreach (ILayer item in this.Children) layer.Children.Add(item.Flip(resourceCreator, flip));
+            return layer;
+        }
+        public ILayer Rotation(ICanvasResourceCreator resourceCreator, BitmapRotation rotation)
+        {
+            ILayer layer = this.RotationSelf(resourceCreator, rotation);
+            layer.CopyWith(this);
+            foreach (ILayer item in this.Children) layer.Children.Add(item.Rotation(resourceCreator, rotation));
             return layer;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
+using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -19,6 +20,32 @@ namespace Luo_Painter.Layers.Models
         }, width, height);
 
         protected override ILayer SkretchSelf(ICanvasResourceCreator resourceCreator, int width, int height, CanvasImageInterpolation interpolation) => this.Crop(resourceCreator, width, height, Matrix3x2.CreateScale(width / (float)this.Width, height / (float)this.Height), interpolation);
+        protected override ILayer FlipSelf(ICanvasResourceCreator resourceCreator, BitmapFlip flip)
+        {
+            switch (flip)
+            {
+                case BitmapFlip.Horizontal:
+                    return this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, 1, this.Center), CanvasImageInterpolation.NearestNeighbor);
+                case BitmapFlip.Vertical:
+                    return this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(1, -1, this.Center), CanvasImageInterpolation.NearestNeighbor);
+                default:
+                    return this.CloneSelf(resourceCreator);
+            }
+        }
+        protected override ILayer RotationSelf(ICanvasResourceCreator resourceCreator, BitmapRotation rotation)
+        {
+            switch (rotation)
+            {
+                case BitmapRotation.Clockwise90Degrees: // RightTurn
+                    return this.Crop(resourceCreator, this.Height, this.Width, Matrix3x2.CreateRotation(FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(this.Height, 0), CanvasImageInterpolation.NearestNeighbor);
+                case BitmapRotation.Clockwise180Degrees: // OverTurn
+                    return this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, -1, this.Center), CanvasImageInterpolation.NearestNeighbor);
+                case BitmapRotation.Clockwise270Degrees: // LeftTurn
+                    return this.Crop(resourceCreator, this.Height, this.Width, Matrix3x2.CreateRotation(-FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(0, this.Width), CanvasImageInterpolation.NearestNeighbor);
+                default:
+                    return this.CloneSelf(resourceCreator);
+            }
+        }
 
         protected override ILayer FlipHorizontalSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, 1, this.Center), CanvasImageInterpolation.NearestNeighbor);
         protected override ILayer FlipVerticalSelf(ICanvasResourceCreator resourceCreator) => this.Crop(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(1, -1, this.Center), CanvasImageInterpolation.NearestNeighbor);
