@@ -26,22 +26,17 @@ namespace Luo_Painter
                 return;
             }
 
-            this.Point = point;
-            this.Position = this.ToPosition(point);
-            this.Pressure = pressure;
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.Position);
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void Paint_Delta(Vector2 point, float pressure)
+        private void Paint_Delta(Vector2 position, Vector2 point, float pressure)
         {
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            Vector2 position = this.ToPosition(point);
-
-            Rect rect = this.Position.GetRect(this.InkPresenter.Size);
+            Rect rect = position.GetRect(this.InkPresenter.Size);
             this.BitmapLayer.Hit(rect);
 
             if (this.Paint(this.BitmapLayer, position, pressure) is false) return;
@@ -52,15 +47,10 @@ namespace Luo_Painter
             {
                 this.CanvasVirtualControl.Invalidate(region); // Invalidate
             }
-
-            this.Point = point;
-            this.Position = position;
-            this.Pressure = pressure;
         }
 
-        private void Paint_Complete(Vector2 point, float pressure)
+        private void Paint_Complete(Vector2 position, Vector2 point, float pressure)
         {
-            this.Paint_Delta(point, pressure);
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 

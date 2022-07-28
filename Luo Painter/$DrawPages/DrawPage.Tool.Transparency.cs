@@ -55,7 +55,7 @@ namespace Luo_Painter
         }
 
 
-        private void Transparency_Start(Vector2 point)
+        private void Transparency_Start(Vector2 position, Vector2 point)
         {
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
@@ -78,23 +78,20 @@ namespace Luo_Painter
                     break;
             }
 
-            this.Point = point;
-            this.Position = this.ToPosition(point);
-
             switch (this.AppBar.TransparencyMode)
             {
                 case 0:
                     this.LinearGradientBrush = new CanvasLinearGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
                     {
-                        StartPoint = this.Position,
-                        EndPoint = this.Position,
+                        StartPoint = position,
+                        EndPoint = position,
                     };
                     break;
                 case 1:
                 case 2:
                     this.RadialGradientBrush = new CanvasRadialGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
                     {
-                        Center = this.Position,
+                        Center = position,
                         RadiusX = 10,
                         RadiusY = 10,
                     };
@@ -106,40 +103,28 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void Transparency_Delta(Vector2 point)
+        private void Transparency_Delta(Vector2 position, Vector2 point)
         {
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
-            if (Vector2.DistanceSquared(this.Point, point) < 100) return;
+            if (Vector2.DistanceSquared(this.StartingPoint, point) < 100) return;
 
             switch (this.AppBar.TransparencyMode)
             {
                 case 0:
-                    {
-                        Vector2 position = this.ToPosition(point);
-
-                        this.LinearGradientBrush.EndPoint = position;
-                        this.TransparencyClear(this.LinearGradientBrush);
-                    }
+                    this.LinearGradientBrush.EndPoint = position;
+                    this.TransparencyClear(this.LinearGradientBrush);
                     break;
                 case 1:
-                    {
-                        Vector2 position = this.ToPosition(point);
-
-                        this.RadialGradientBrush.RadiusX =
-                        this.RadialGradientBrush.RadiusY =
-                        Vector2.Distance(this.Position, position);
-                        this.TransparencyClear(this.RadialGradientBrush);
-                    }
+                    this.RadialGradientBrush.RadiusX =
+                    this.RadialGradientBrush.RadiusY =
+                    Vector2.Distance(this.StartingPosition, position);
+                    this.TransparencyClear(this.RadialGradientBrush);
                     break;
                 case 2:
-                    {
-                        Vector2 position = this.ToPosition(point);
-
-                        this.RadialGradientBrush.RadiusX = System.Math.Abs(this.Position.X - position.X);
-                        this.RadialGradientBrush.RadiusY = System.Math.Abs(this.Position.Y - position.Y);
-                        this.TransparencyClear(this.RadialGradientBrush);
-                    }
+                    this.RadialGradientBrush.RadiusX = System.Math.Abs(this.StartingPosition.X - position.X);
+                    this.RadialGradientBrush.RadiusY = System.Math.Abs(this.StartingPosition.Y - position.Y);
+                    this.TransparencyClear(this.RadialGradientBrush);
                     break;
                 default:
                     break;
@@ -148,7 +133,7 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void Transparency_Complete(Vector2 point)
+        private void Transparency_Complete(Vector2 position, Vector2 point)
         {
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
@@ -156,43 +141,31 @@ namespace Luo_Painter
             switch (this.AppBar.TransparencyMode)
             {
                 case 0:
+                    this.LinearGradientBrush?.Dispose();
+                    this.Transparency(new CanvasLinearGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
                     {
-                        Vector2 position = this.ToPosition(point);
-
-                        this.LinearGradientBrush?.Dispose();
-                        this.Transparency(new CanvasLinearGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
-                        {
-                            StartPoint = this.Position,
-                            EndPoint = position
-                        });
-                    }
+                        StartPoint = this.StartingPosition,
+                        EndPoint = position
+                    });
                     break;
                 case 1:
+                    float radius = Vector2.Distance(this.StartingPosition, position);
+                    this.RadialGradientBrush?.Dispose();
+                    this.Transparency(new CanvasRadialGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
                     {
-                        Vector2 position = this.ToPosition(point);
-
-                        float radius = Vector2.Distance(this.Position, position);
-                        this.RadialGradientBrush?.Dispose();
-                        this.Transparency(new CanvasRadialGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
-                        {
-                            Center = this.Position,
-                            RadiusX = radius,
-                            RadiusY = radius
-                        });
-                    }
+                        Center = this.StartingPosition,
+                        RadiusX = radius,
+                        RadiusY = radius
+                    });
                     break;
                 case 2:
+                    this.RadialGradientBrush?.Dispose();
+                    this.Transparency(new CanvasRadialGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
                     {
-                        Vector2 position = this.ToPosition(point);
-
-                        this.RadialGradientBrush?.Dispose();
-                        this.Transparency(new CanvasRadialGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
-                        {
-                            Center = this.Position,
-                            RadiusX = System.Math.Abs(this.Position.X - position.X),
-                            RadiusY = System.Math.Abs(this.Position.Y - position.Y)
-                        });
-                    }
+                        Center = this.StartingPosition,
+                        RadiusX = System.Math.Abs(this.StartingPosition.X - position.X),
+                        RadiusY = System.Math.Abs(this.StartingPosition.Y - position.Y)
+                    });
                     break;
                 default:
                     break;

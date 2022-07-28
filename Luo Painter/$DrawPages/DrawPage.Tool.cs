@@ -16,7 +16,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
-        private void Tool_Start(Vector2 point, float pressure = 0.5f)
+        private void Tool_Start(Vector2 position, Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)
             {
@@ -38,7 +38,6 @@ namespace Luo_Painter
                     this.Transform_Start(point);
                     break;
                 case OptionType.DisplacementLiquefaction:
-                    this.DisplacementLiquefaction_Start(point);
                     break;
                 case OptionType.GradientMapping:
                     break;
@@ -50,11 +49,10 @@ namespace Luo_Painter
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
-                    this.Marquee_Start(point);
+                    this.Marquee_Start(position, point);
                     break;
 
                 case OptionType.SelectionBrush:
-                    this.Position = this.ToPosition(point);
                     break;
 
                 case OptionType.PaintBrush:
@@ -69,22 +67,22 @@ namespace Luo_Painter
                     this.View_Start(point);
                     break;
                 case OptionType.Brush:
-                    this.Brush_Start(point);
+                    this.Brush_Start(position, point);
                     break;
                 case OptionType.Transparency:
-                    this.Transparency_Start(point);
+                    this.Transparency_Start(position, point);
                     break;
             }
         }
 
-        private void Tool_Delta(Vector2 point, float pressure = 0.5f)
+        private void Tool_Delta(Vector2 position, Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)
             {
                 case OptionType.Feather:
                     break;
                 case OptionType.MarqueeTransform:
-                    this.Transform_Delta(point);
+                    this.Transform_Delta(position, point);
                     break;
                 case OptionType.Grow:
                     break;
@@ -96,29 +94,27 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Transform:
-                    this.Transform_Delta(point);
+                    this.Transform_Delta(position, point);
                     break;
                 case OptionType.DisplacementLiquefaction:
-                    this.DisplacementLiquefaction_Delta(point);
+                    this.DisplacementLiquefaction_Delta(position, point);
                     break;
                 case OptionType.GradientMapping:
                     break;
                 case OptionType.RippleEffect:
-                    this.RippleEffect_Delta(point);
+                    this.RippleEffect_Delta(position, point);
                     break;
 
                 case OptionType.MarqueeRectangular:
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
-                    this.Marquee_Delta(point);
+                    this.Marquee_Delta(position, point);
                     break;
 
                 case OptionType.SelectionBrush:
-                    Vector2 position = this.ToPosition(point);
                     this.Marquee.Marquee(this.Position, position, 32, this.AppBar.SelectionIsSubtract);
                     this.Marquee.Hit(RectExtensions.GetRect(this.Position, position, 32));
-                    this.Position = position;
                     break;
 
                 case OptionType.PaintBrush:
@@ -126,29 +122,28 @@ namespace Luo_Painter
                 case OptionType.PaintPencil:
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
-                    this.Paint_Delta(point, pressure);
+                    this.Paint_Delta(position, point, pressure);
                     break;
 
                 case OptionType.View:
                     this.View_Delta(point);
                     break;
                 case OptionType.Brush:
-                    this.Brush_Delta(point);
+                    this.Brush_Delta(position, point);
                     break;
                 case OptionType.Transparency:
-                    this.Transparency_Delta(point);
+                    this.Transparency_Delta(position, point);
                     break;
             }
         }
 
-        private void Tool_Complete(Vector2 point, float pressure = 0.5f)
+        private void Tool_Complete(Vector2 position, Vector2 point, float pressure = 0.5f)
         {
             switch (this.OptionType)
             {
                 case OptionType.Feather:
                     break;
                 case OptionType.MarqueeTransform:
-                    this.Transform_Complete(point);
                     break;
                 case OptionType.Grow:
                     break;
@@ -160,7 +155,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Transform:
-                    this.Transform_Complete(point);
                     break;
                 case OptionType.DisplacementLiquefaction:
                     this.DisplacementLiquefaction_Complete(point);
@@ -168,20 +162,19 @@ namespace Luo_Painter
                 case OptionType.GradientMapping:
                     break;
                 case OptionType.RippleEffect:
-                    this.RippleEffect_Complete(point);
                     break;
 
                 case OptionType.MarqueeRectangular:
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
-                    this.Marquee_Complete(point);
+                    this.Marquee_Complete(position, point);
                     break;
 
                 case OptionType.SelectionFlood:
                     if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                     {
-                        this.SelectionFlood(point, bitmapLayer, this.AppBar.SelectionIsSubtract);
+                        this.SelectionFlood(position, point, bitmapLayer, this.AppBar.SelectionIsSubtract);
                     }
                     else
                     {
@@ -205,17 +198,18 @@ namespace Luo_Painter
                 case OptionType.PaintPencil:
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
-                    this.Paint_Complete(point, pressure);
+                    this.Paint_Delta(position, point, pressure);
+                    this.Paint_Complete(position, point, pressure);
                     break;
 
                 case OptionType.View:
                     this.View_Complete(point);
                     break;
                 case OptionType.Brush:
-                    this.Brush_Complete(point);
+                    this.Brush_Complete(position, point);
                     break;
                 case OptionType.Transparency:
-                    this.Transparency_Complete(point);
+                    this.Transparency_Complete(position, point);
                     break;
             }
         }

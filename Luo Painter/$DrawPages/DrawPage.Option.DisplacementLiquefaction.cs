@@ -49,14 +49,8 @@ namespace Luo_Painter
         }
 
 
-        private void DisplacementLiquefaction_Start(Vector2 point)
+        private void DisplacementLiquefaction_Delta(Vector2 position, Vector2 point)
         {
-            this.Position = this.ToPosition(point);
-        }
-
-        private void DisplacementLiquefaction_Delta(Vector2 point)
-        {
-            Vector2 position = this.ToPosition(point);
             if (this.Position == position) return;
 
             float radius = (float)this.AppBar.DisplacementLiquefactionSize;
@@ -83,8 +77,6 @@ namespace Luo_Painter
             {
                 this.CanvasVirtualControl.Invalidate(region); // Invalidate
             }
-
-            this.Position = position;
         }
 
         private void DisplacementLiquefaction_Complete(Vector2 point)

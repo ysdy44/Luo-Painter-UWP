@@ -15,7 +15,6 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page, ILayerManager
     {
-        Vector2 StartingPosition;
 
         Vector2 Move;
         Vector2 StartingMove;
@@ -110,7 +109,6 @@ namespace Luo_Painter
 
         private void Transform_Start(Vector2 point)
         {
-            this.StartingPosition = this.ToPosition(point);
             switch (this.AppBar.TransformMode)
             {
                 case 0:
@@ -130,9 +128,8 @@ namespace Luo_Painter
             }
         }
 
-        private void Transform_Delta(Vector2 point)
+        private void Transform_Delta(Vector2 position, Vector2 point)
         {
-            Vector2 position = this.ToPosition(point);
             switch (this.AppBar.TransformMode)
             {
                 case 0:
@@ -185,21 +182,6 @@ namespace Luo_Painter
                         default:
                             break;
                     }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void Transform_Complete(Vector2 point)
-        {
-            switch (this.AppBar.TransformMode)
-            {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
                     break;
                 default:
                     break;

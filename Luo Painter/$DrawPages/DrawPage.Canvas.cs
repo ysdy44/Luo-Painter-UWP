@@ -253,7 +253,7 @@ namespace Luo_Painter
                 this.SetCanvasState(true);
 
                 this.StartingPosition = this.Position = this.ToPosition(point);
-                this.Point = point;
+                this.StartingPoint = this.Point = point;
                 this.Pressure = properties.Pressure;
 
                 for (int i = 0; i < this.ReferenceImages.Count; i++)
@@ -276,7 +276,7 @@ namespace Luo_Painter
                     }
                 }
 
-                this.Tool_Start(point, properties.Pressure);
+                this.Tool_Start(this.Position, this.Point, properties.Pressure);
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
@@ -292,7 +292,7 @@ namespace Luo_Painter
 
                 if (this.ReferenceImage is null)
                 {
-                    this.Tool_Delta(point, properties.Pressure);
+                    this.Tool_Delta(position, point, properties.Pressure);
                 }
                 else
                 {
@@ -319,7 +319,7 @@ namespace Luo_Painter
 
                 if (this.ReferenceImage is null)
                 {
-                    this.Tool_Complete(point, properties.Pressure);
+                    this.Tool_Complete(this.ToPosition(point), point, properties.Pressure);
                 }
                 else
                 {

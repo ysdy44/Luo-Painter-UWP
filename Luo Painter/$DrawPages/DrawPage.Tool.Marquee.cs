@@ -21,26 +21,23 @@ namespace Luo_Painter
         {
         }
 
-        private void Marquee_Start(Vector2 point)
+        private void Marquee_Start(Vector2 position, Vector2 point)
         {
             this.MarqueeToolType = this.GetMarqueeToolType(this.OptionType);
-            this.StartingPosition = this.Position = this.ToPosition(point);
-            this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            this.MarqueeTool.Start(position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
-        private void Marquee_Delta(Vector2 point)
+        private void Marquee_Delta(Vector2 position, Vector2 point)
         {
-            this.Position = this.ToPosition(point);
-            this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            this.MarqueeTool.Delta(this.StartingPosition, position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
-        private void Marquee_Complete(Vector2 point)
+        private void Marquee_Complete(Vector2 position, Vector2 point)
         {
-            this.Position = this.ToPosition(point);
-            bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            bool redraw = this.MarqueeTool.Complete(this.StartingPosition, position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
             if (redraw is false) return;
 
             using (CanvasDrawingSession ds = this.Marquee.CreateDrawingSession())
@@ -60,10 +57,9 @@ namespace Luo_Painter
             this.MarqueeToolType = MarqueeToolType.None;
         }
 
-        private bool SelectionFlood(Vector2 point, BitmapLayer bitmapLayer, bool isSubtract)
+        private bool SelectionFlood(Vector2 position, Vector2 point, BitmapLayer bitmapLayer, bool isSubtract)
         {
-            this.Position = this.ToPosition(point);
-            bool result = bitmapLayer.FloodSelect(this.Position, Windows.UI.Colors.DodgerBlue);
+            bool result = bitmapLayer.FloodSelect(position, Windows.UI.Colors.DodgerBlue);
 
             if (result is false)
             {

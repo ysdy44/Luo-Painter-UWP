@@ -205,8 +205,10 @@ namespace Luo_Painter
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
 
-        Vector2 Point;
+        Vector2 StartingPosition;
         Vector2 Position;
+        Vector2 StartingPoint;
+        Vector2 Point;
         float Pressure;
 
 
@@ -229,7 +231,6 @@ namespace Luo_Painter
             this.ConstructSetup();
 
             this.ConstructGradientMapping();
-            this.ConstructRippleEffect();
             this.ConstructVector();
 
 
@@ -244,9 +245,21 @@ namespace Luo_Painter
             this.ToolListView.Construct(this.OptionType);
 
 
-            this.SimulateCanvas.Start += (point) => this.Tool_Start(point);
-            this.SimulateCanvas.Delta += (point) => this.Tool_Delta(point);
-            this.SimulateCanvas.Complete += (point) => this.Tool_Complete(point);
+            this.SimulateCanvas.Start += (point) =>
+            {
+                this.StartingPosition = this.Position = this.ToPosition(point);
+                this.StartingPoint = this.Point = point;
+                this.Pressure = 0.5f;
+                this.Tool_Start(this.Position, this.Point);
+            };
+            this.SimulateCanvas.Delta += (point) =>
+            {
+                Vector2 position = this.ToPosition(point);
+                this.Tool_Delta(position, point);
+                this.Position = position;
+                this.Point = point;
+            };
+            this.SimulateCanvas.Complete += (point) => this.Tool_Complete(this.ToPosition(point), point);
 
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
