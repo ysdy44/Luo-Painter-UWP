@@ -188,8 +188,9 @@ namespace Luo_Painter
         InkRender InkRender { get; set; }
 
         GradientMesh GradientMesh { get; set; }
+        CanvasBitmap GrayAndWhiteMesh { get; set; }
 
-        Mesh Mesh { get; set; }
+        BitmapLayer Mesh { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
@@ -208,7 +209,7 @@ namespace Luo_Painter
         Vector2 Position;
         float Pressure;
 
-        
+
         //@Construct
         public DrawPage()
         {

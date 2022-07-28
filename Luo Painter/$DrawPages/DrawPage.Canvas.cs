@@ -20,42 +20,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal sealed class Mesh
-    {
-        // Mesh
-        public readonly CanvasBitmap Bitmap;
-        public readonly ICanvasImage Image;
-        public readonly CanvasGeometry Geometry;
-        public Mesh(ICanvasResourceCreator resourceCreator, float scale, int width, int height)
-        {
-            this.Bitmap = CanvasBitmap.CreateFromColors(resourceCreator, new Color[]
-            {
-                Colors.LightGray, Colors.White,
-                Colors.White, Colors.LightGray
-            }, 2, 2);
-
-            this.Image = new BorderEffect
-            {
-                ExtendX = CanvasEdgeBehavior.Wrap,
-                ExtendY = CanvasEdgeBehavior.Wrap,
-                Source = new ScaleEffect
-                {
-                    Scale = new Vector2(scale),
-                    BorderMode = EffectBorderMode.Hard,
-                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    Source = new BorderEffect
-                    {
-                        ExtendX = CanvasEdgeBehavior.Wrap,
-                        ExtendY = CanvasEdgeBehavior.Wrap,
-                        Source = this.Bitmap
-                    }
-                }
-            };
-
-            this.Geometry = CanvasGeometry.CreateRectangle(resourceCreator, 0, 0, width, height);
-        }
-    }
-
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
@@ -190,6 +154,11 @@ namespace Luo_Painter
             this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
                 this.GradientMesh = new GradientMesh(this.CanvasDevice);
+                this.GrayAndWhiteMesh = CanvasBitmap.CreateFromColors(this.CanvasDevice, new Color[]
+                {
+                    Colors.LightGray, Colors.White,
+                    Colors.White, Colors.LightGray
+                }, 2, 2);
                 this.CreateResources(this.Transformer.Width, this.Transformer.Height);
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
@@ -198,19 +167,22 @@ namespace Luo_Painter
                 foreach (Rect region in args.InvalidatedRegions)
                 {
                     using (CanvasDrawingSession ds = sender.CreateDrawingSession(region))
+                    using (Transform2DEffect mesh = new Transform2DEffect
+                    {
+                        Source = this.Mesh[BitmapType.Source],
+                        TransformMatrix = this.Transformer.GetMatrix(),
+                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                    })
                     {
                         //@DPI 
                         ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                         // Mesh
-                        using (ds.CreateLayer(1, this.Mesh.Geometry, this.Transformer.GetMatrix()))
-                        {
-                            // Layer
-                            if (this.OptionType.IsEdit() || this.OptionType.IsTool() || this.BitmapLayer is null)
-                                ds.DrawImage(this.Nodes.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
-                            else
-                                ds.DrawImage(this.Nodes.Render(this.Mesh.Image, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
-                        }
+                        // Layer
+                        if (this.OptionType.IsEdit() || this.BitmapLayer is null)
+                            ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
+                        else
+                            ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
                     }
                 }
             };

@@ -3,6 +3,9 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Projects;
 using Luo_Painter.Shaders;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
+using System.Numerics;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Storage;
@@ -31,7 +34,23 @@ namespace Luo_Painter
 
         private void CreateResources(int width, int height)
         {
-            this.Mesh = new Mesh(this.CanvasDevice, this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25), width, height);
+            float scale = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25);
+            using (ScaleEffect scaleEffect = new ScaleEffect
+            {
+                Scale = new Vector2(scale),
+                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                Source = this.GrayAndWhiteMesh
+            })
+            using (BorderEffect borderEffect = new BorderEffect
+            {
+                ExtendX = CanvasEdgeBehavior.Wrap,
+                ExtendY = CanvasEdgeBehavior.Wrap,
+                Source = scaleEffect
+            })
+            {
+                this.Mesh = new BitmapLayer(this.CanvasDevice, borderEffect, width, height);
+            }
+
             this.Clipboard = new BitmapLayer(this.CanvasDevice, width, height);
 
             this.Displacement = new BitmapLayer(this.CanvasDevice, width, height);
