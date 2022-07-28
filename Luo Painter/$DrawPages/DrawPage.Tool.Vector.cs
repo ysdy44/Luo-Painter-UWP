@@ -16,6 +16,8 @@ namespace Luo_Painter
             {
                 this.Transformer.Radian = (float)radian;
                 this.Transformer.ReloadMatrix();
+
+                this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
@@ -23,6 +25,8 @@ namespace Luo_Painter
             {
                 this.Transformer.Scale = (float)scale;
                 this.Transformer.ReloadMatrix();
+
+                this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
@@ -30,17 +34,23 @@ namespace Luo_Painter
             {
                 this.Transformer.Position += vector * 20;
                 this.Transformer.ReloadMatrix();
+
+                this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.ViewTool.RemoteControl.ValueChangeStarted += (s, value) => this.Transformer.CacheMove(Vector2.Zero);
             this.ViewTool.RemoteControl.ValueChangeDelta += (s, value) =>
             {
                 this.Transformer.Move(value);
+
+                this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.ViewTool.RemoteControl.ValueChangeCompleted += (s, value) =>
             {
                 this.Transformer.Move(value);
+
+                this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
         }
@@ -55,8 +65,8 @@ namespace Luo_Painter
         {
             this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
 
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
         private void View_Complete(Vector2 point)
         {
