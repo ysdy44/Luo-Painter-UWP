@@ -72,6 +72,10 @@ namespace Luo_Painter
                 case OptionType.Transparency:
                     this.Transparency_Start(position, point);
                     break;
+
+                case OptionType.GeometryRectangle:
+                    this.GeometryRectangle_Start(position, point);
+                    break;
             }
         }
 
@@ -133,6 +137,10 @@ namespace Luo_Painter
                     break;
                 case OptionType.Transparency:
                     this.Transparency_Delta(position, point);
+                    break;
+
+                case OptionType.GeometryRectangle:
+                    this.GeometryRectangle_Delta(position, point);
                     break;
             }
         }
@@ -210,6 +218,10 @@ namespace Luo_Painter
                     break;
                 case OptionType.Transparency:
                     this.Transparency_Complete(position, point);
+                    break;
+
+                case OptionType.GeometryRectangle:
+                    this.GeometryRectangle_Complete(position, point);
                     break;
             }
         }
