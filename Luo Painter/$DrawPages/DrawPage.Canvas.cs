@@ -303,10 +303,6 @@ namespace Luo_Painter
 
                     this.CanvasControl.Invalidate();
                 }
-
-                this.Position = position;
-                this.Point = point;
-                this.Pressure = properties.Pressure;
             };
             this.Operator.Single_Complete += (point, properties) =>
             {

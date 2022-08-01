@@ -47,6 +47,10 @@ namespace Luo_Painter
             {
                 this.CanvasVirtualControl.Invalidate(region); // Invalidate
             }
+
+            this.Position = position;
+            this.Point = point;
+            this.Pressure = pressure;
         }
 
         private void Paint_Complete(Vector2 position, Vector2 point, float pressure)

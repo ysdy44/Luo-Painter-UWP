@@ -252,13 +252,7 @@ namespace Luo_Painter
                 this.Pressure = 0.5f;
                 this.Tool_Start(this.Position, this.Point);
             };
-            this.SimulateCanvas.Delta += (point) =>
-            {
-                Vector2 position = this.ToPosition(point);
-                this.Tool_Delta(position, point);
-                this.Position = position;
-                this.Point = point;
-            };
+            this.SimulateCanvas.Delta += (point) => this.Tool_Delta(this.ToPosition(point), point);
             this.SimulateCanvas.Complete += (point) => this.Tool_Complete(this.ToPosition(point), point);
 
 
