@@ -410,6 +410,7 @@ namespace Luo_Painter.Layers.Models
         public PixelBounds CreatePixelBounds(PixelBounds interpolationBounds, Color[] interpolationColors)
         {
             // Left
+            bool hasMaxLeft = false;
             int indexLeft = interpolationBounds.Left;
             int maxLeft = BitmapLayer.Unit;
             for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
@@ -417,66 +418,158 @@ namespace Luo_Painter.Layers.Models
                 byte a = interpolationColors[indexLeft + y * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                //this.Hits[indexLeft + y * this.XLength] = true;
                 int left = PixelBounds.CreateLeftFromBitmap(this.SourceRenderTarget, indexLeft * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
                 if (left is int.MaxValue) continue;
 
-                if (maxLeft > left) maxLeft = left;
+                if (maxLeft > left)
+                {
+                    hasMaxLeft = true;
+                    maxLeft = left;
+                }
             }
+
+            if (hasMaxLeft is false)
+            {
+                indexLeft = interpolationBounds.Left + 1;
+                maxLeft = BitmapLayer.Unit;
+                for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
+                {
+                    byte a = interpolationColors[indexLeft + y * this.XLength].A;
+                    if (a is byte.MinValue) continue;
+
+                    int left = PixelBounds.CreateLeftFromBitmap(this.SourceRenderTarget, indexLeft * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    if (left is int.MaxValue) continue;
+
+                    if (maxLeft > left)
+                    {
+                        maxLeft = left;
+                    }
+                }
+            }
+
 
             // Top
             int indexTop = interpolationBounds.Top;
             int maxTop = BitmapLayer.Unit;
+            bool hasMaxTop = false;
             for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
             {
                 byte a = interpolationColors[x + indexTop * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                //this.Hits[x + indexTop * this.XLength] = true;
                 int top = PixelBounds.CreateTopFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexTop * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
                 if (top is int.MaxValue) continue;
 
-                if (maxTop > top) maxTop = top;
+                if (maxTop > top)
+                {
+                    hasMaxTop = true;
+                    maxTop = top;
+                }
             }
+
+            if (hasMaxTop is false)
+            {
+                indexTop = interpolationBounds.Top + 1;
+                maxTop = BitmapLayer.Unit;
+                for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
+                {
+                    byte a = interpolationColors[x + indexTop * this.XLength].A;
+                    if (a is byte.MinValue) continue;
+
+                    int top = PixelBounds.CreateTopFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexTop * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    if (top is int.MaxValue) continue;
+
+                    if (maxTop > top)
+                    {
+                        maxTop = top;
+                    }
+                }
+            }
+
 
             // Right
             int indexRight = interpolationBounds.Right - 1;
-            int minRight = BitmapLayer.Unit;
+            int minRight = 0;
+            bool hasMinRight = false;
             for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
             {
                 byte a = interpolationColors[indexRight + y * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                //this.Hits[indexRight + y * this.XLength] = true;
                 int right = PixelBounds.CreateRightFromBitmap(this.SourceRenderTarget, indexRight * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
                 if (right is int.MinValue) continue;
 
-                if (minRight < right) minRight = right;
+                if (minRight < right)
+                {
+                    hasMinRight = true;
+                    minRight = right;
+                }
             }
+
+            if (hasMinRight is false)
+            {
+                indexRight = interpolationBounds.Right - 2;
+                minRight = 0;
+                for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
+                {
+                    byte a = interpolationColors[indexRight + y * this.XLength].A;
+                    if (a is byte.MinValue) continue;
+
+                    int right = PixelBounds.CreateRightFromBitmap(this.SourceRenderTarget, indexRight * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    if (right is int.MinValue) continue;
+
+                    if (minRight < right)
+                    {
+                        minRight = right;
+                    }
+                }
+            }
+
 
             // Bottom
             int indexBottom = interpolationBounds.Bottom - 1;
-            int minBottom = BitmapLayer.Unit;
+            int minBottom = 0;
+            bool hasMinBottom = false;
             for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
             {
                 byte a = interpolationColors[x + indexBottom * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                //this.Hits[x + indexBottom * this.XLength] = true;
                 int bottom = PixelBounds.CreateBottomFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexBottom * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
                 if (bottom is int.MinValue) continue;
 
-                if (minBottom < bottom) minBottom = bottom;
+                if (minBottom < bottom)
+                {
+                    hasMinBottom = true;
+                    minBottom = bottom;
+                }
             }
 
+            if (hasMinBottom is false)
+            {
+                indexBottom = interpolationBounds.Bottom - 2;
+                minBottom = 0;
+                for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
+                {
+                    byte a = interpolationColors[x + indexBottom * this.XLength].A;
+                    if (a is byte.MinValue) continue;
 
-            PixelBounds b2 = interpolationBounds.Scale(BitmapLayer.Unit, this.Width, this.Height);
+                    int bottom = PixelBounds.CreateBottomFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexBottom * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    if (bottom is int.MinValue) continue;
+
+                    if (minBottom < bottom)
+                    {
+                        minBottom = bottom;
+                    }
+                }
+            }
+
             return new PixelBounds
             {
-                Left = maxLeft + b2.Left,
-                Top = maxTop + b2.Top,
-                Right = b2.Right - BitmapLayer.Unit + minRight,
-                Bottom = b2.Bottom - BitmapLayer.Unit + minBottom
+                Left = indexLeft * BitmapLayer.Unit + maxLeft,
+                Top = indexTop * BitmapLayer.Unit + maxTop,
+                Right = System.Math.Min(this.Width, indexRight * BitmapLayer.Unit + minRight),
+                Bottom = System.Math.Min(this.Height, indexBottom * BitmapLayer.Unit + minBottom)
             };
         }
 
