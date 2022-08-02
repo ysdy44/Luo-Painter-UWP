@@ -118,6 +118,12 @@ namespace Luo_Painter
                         {
                             args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
                         }
+                        if (this.OptionType.HasFlag(OptionType.Geometry))
+                        {
+                            if (this.BitmapLayer is null) break;
+
+                            args.DrawingSession.DrawBound(this.BoundsTransformer, matrix);
+                        }
                         break;
                 }
             };
@@ -198,17 +204,15 @@ namespace Luo_Painter
                         return this.GetBrushPreview();
                     case OptionType.Transparency:
                         return this.GetTransparencyPreview();
-                    case OptionType.GeometryRectangle:
-                        return new CompositeEffect
-                        {
-                            Sources =
-                            {
-                                this.BitmapLayer[BitmapType.Source],
-                                this.BitmapLayer[BitmapType.Temp]
-                            }
-                        };
                     default:
-                        return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]));
+                        if (this.OptionType.HasFlag(OptionType.Geometry))
+                        {
+                            return new CompositeEffect { Sources = { this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp] } };
+                        }
+                        else
+                        {
+                            return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]));
+                        }
                 }
             }
 

@@ -69,18 +69,21 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-
-        public void Hit(Rect rect)
+        
+        public void Hit(FanKit.Transformers.Transformer transformer) => this.Hit((int)transformer.MinX, (int)transformer.MinY, (int)transformer.MaxX, (int)transformer.MaxY);
+        public void Hit(FanKit.Transformers.TransformerBorder border) => this.Hit((int)border.Left, (int)border.Top, (int)border.Right, (int)border.Bottom);
+        public void Hit(Rect rect) => this.Hit((int)rect.Left, (int)rect.Top, (int)rect.Right, (int)rect.Bottom);
+        public void Hit(int rectLeft, int rectTop, int rectRight, int rectBottom)
         {
-            if (rect.Left > this.Width) return;
-            if (rect.Top > this.Height) return;
-            if (rect.Right < 0) return;
-            if (rect.Bottom < 0) return;
+            if (rectLeft > this.Width) return;
+            if (rectTop > this.Height) return;
+            if (rectRight < 0) return;
+            if (rectBottom < 0) return;
 
-            int left = Math.Max(0, (int)rect.Left / BitmapLayer.Unit);
-            int top = Math.Max(0, (int)rect.Top / BitmapLayer.Unit);
-            int right = Math.Min(this.XLength, (int)Math.Ceiling(rect.Right / BitmapLayer.Unit));
-            int bottom = Math.Min(this.YLength, (int)Math.Ceiling(rect.Bottom / BitmapLayer.Unit));
+            int left = Math.Max(0, rectLeft / BitmapLayer.Unit);
+            int top = Math.Max(0, rectTop / BitmapLayer.Unit);
+            int right = Math.Min(this.XLength, rectRight / BitmapLayer.Unit);
+            int bottom = Math.Min(this.YLength, rectBottom / BitmapLayer.Unit);
             for (int x = left; x < right; x++)
             {
                 for (int y = top; y < bottom; y++)

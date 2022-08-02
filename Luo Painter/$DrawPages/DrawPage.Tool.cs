@@ -73,8 +73,11 @@ namespace Luo_Painter
                     this.Transparency_Start(position, point);
                     break;
 
-                case OptionType.GeometryRectangle:
-                    this.GeometryRectangle_Start(position, point);
+                default:
+                    if (this.OptionType.HasFlag(OptionType.Geometry))
+                    {
+                        this.Geometry_Start(position, point);
+                    }
                     break;
             }
         }
@@ -139,8 +142,11 @@ namespace Luo_Painter
                     this.Transparency_Delta(position, point);
                     break;
 
-                case OptionType.GeometryRectangle:
-                    this.GeometryRectangle_Delta(position, point);
+                default:
+                    if (this.OptionType.HasFlag(OptionType.Geometry))
+                    {
+                        this.Geometry_Delta(position, point);
+                    }
                     break;
             }
         }
@@ -220,8 +226,11 @@ namespace Luo_Painter
                     this.Transparency_Complete(position, point);
                     break;
 
-                case OptionType.GeometryRectangle:
-                    this.GeometryRectangle_Complete(position, point);
+                default:
+                    if (this.OptionType.HasFlag(OptionType.Geometry))
+                    {
+                        this.Geometry_Complete(position, point);
+                    }
                     break;
             }
         }
