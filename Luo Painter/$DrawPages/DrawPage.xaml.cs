@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Blends;
+﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
@@ -210,6 +211,13 @@ namespace Luo_Painter
         Vector2 StartingPoint;
         Vector2 Point;
         float Pressure;
+
+        Transformer StartingBoundsTransformer;
+        Transformer BoundsTransformer;
+        TransformerMode BoundsMode;
+        Matrix3x2 BoundsMatrix;
+        bool IsBoundsMove;
+        private void Controller(Vector2 position) => this.BoundsTransformer = this.IsBoundsMove ? this.StartingBoundsTransformer + (position - this.StartingPosition) : FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer);
 
 
         //@Construct

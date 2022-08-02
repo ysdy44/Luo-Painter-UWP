@@ -21,13 +21,6 @@ namespace Luo_Painter
 
         TransformerBorder Bounds;
 
-        TransformerMode BoundsMode;
-        bool IsBoundsMove;
-
-        Transformer BoundsTransformer;
-        Transformer StartingBoundsTransformer;
-        Matrix3x2 BoundsMatrix;
-
         Transformer BoundsFreeTransformer;
         Matrix3x2 BoundsFreeMatrix;
         Vector2 BoundsFreeDistance;
@@ -139,10 +132,7 @@ namespace Luo_Painter
                     this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 1:
-                    this.BoundsTransformer =
-                        this.IsBoundsMove ?
-                        this.StartingBoundsTransformer + (position - this.StartingPosition) :
-                        FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer);
+                    this.Controller(position);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
