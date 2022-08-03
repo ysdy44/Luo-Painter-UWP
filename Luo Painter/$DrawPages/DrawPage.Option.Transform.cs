@@ -39,21 +39,21 @@ namespace Luo_Painter
             this.BoundsFreeDistance = Vector2.Zero;
         }
 
-        private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds)
+        private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds, Matrix3x2 matrix)
         {
             switch (this.AppBar.TransformMode)
             {
                 case 0:
                     break;
                 case 1:
-                    ds.DrawBoundNodes(this.BoundsTransformer, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                    ds.DrawBoundNodes(this.BoundsTransformer, matrix);
                     break;
                 case 2:
-                    ds.DrawBound(this.BoundsFreeTransformer, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                    ds.DrawNode2(sender.Dpi.ConvertPixelsToDips(Vector2.Transform(this.BoundsFreeTransformer.LeftTop, this.Transformer.GetMatrix())));
-                    ds.DrawNode2(sender.Dpi.ConvertPixelsToDips(Vector2.Transform(this.BoundsFreeTransformer.RightTop, this.Transformer.GetMatrix())));
-                    ds.DrawNode2(sender.Dpi.ConvertPixelsToDips(Vector2.Transform(this.BoundsFreeTransformer.RightBottom, this.Transformer.GetMatrix())));
-                    ds.DrawNode2(sender.Dpi.ConvertPixelsToDips(Vector2.Transform(this.BoundsFreeTransformer.LeftBottom, this.Transformer.GetMatrix())));
+                    ds.DrawBound(this.BoundsFreeTransformer, matrix);
+                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftTop, matrix));
+                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightTop, matrix));
+                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightBottom, matrix));
+                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftBottom, matrix));
                     break;
                 default:
                     break;
@@ -110,7 +110,7 @@ namespace Luo_Painter
                 case 1:
                     this.StartingMove = this.Move;
                     this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.BoundsTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                    this.IsBoundsMove = this.BoundsMode == TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
+                    this.IsBoundsMove = this.BoundsMode is TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
                     this.StartingBoundsTransformer = this.BoundsTransformer;
                     break;
                 case 2:
@@ -132,11 +132,25 @@ namespace Luo_Painter
                     this.CanvasControl.Invalidate(); // Invalidate
                     break;
                 case 1:
-                    this.Controller(position);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    if (this.IsBoundsMove)
+                    {
+                        this.BoundsTransformer = this.StartingBoundsTransformer + (position - this.StartingPosition);
+                        this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-                    this.CanvasControl.Invalidate(); // Invalidate
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
+                    }
+                    else if (this.BoundsMode == default)
+                    {
+                    }
+                    else
+                    {
+                        this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer, this.IsShift, this.IsCtrl);
+                        this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
+                    }
                     break;
                 case 2:
                     switch (this.BoundsMode)

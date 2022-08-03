@@ -92,7 +92,7 @@ namespace Luo_Painter
                                 args.DrawingSession.Transform = Matrix3x2.Identity;
                                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
 
-                                this.DrawTransform(sender, args.DrawingSession);
+                                this.DrawTransform(sender, args.DrawingSession, matrix);
                                 break;
                         }
                         break;
@@ -102,7 +102,7 @@ namespace Luo_Painter
                         break;
 
                     case OptionType.Transform:
-                        this.DrawTransform(sender, args.DrawingSession);
+                        this.DrawTransform(sender, args.DrawingSession, matrix);
                         break;
                     case OptionType.DisplacementLiquefaction:
                         this.DrawDisplacementLiquefaction(sender, args.DrawingSession);
