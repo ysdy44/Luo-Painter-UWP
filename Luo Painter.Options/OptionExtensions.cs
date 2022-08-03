@@ -22,6 +22,11 @@ namespace Luo_Painter.Options
         public static bool IsEffect(this OptionType type) => type.HasFlag(OptionType.Effect);
         public static bool IsTool(this OptionType type) => type.HasFlag(OptionType.Tool);
 
+        public static bool IsMarquee(this OptionType type) => type.HasFlag(OptionType.Marquee);
+        public static bool IsSelection(this OptionType type) => type.HasFlag(OptionType.Selection);
+        public static bool IsGeometry(this OptionType type) => type.HasFlag(OptionType.Geometry);
+        public static OptionType ToGeometryTransform(this OptionType type) => type.IsGeometry() ? (type | OptionType.HasPreview | OptionType.AllowDrag) : type;
+
         public static string GetThumbnail(this OptionType type) => type.ExistThumbnail() ? $"ms-appx:///Luo Painter.Options/Thumbnails/{type}.jpg" : throw new NullReferenceException($"The {type} no Tumbnail.");
         public static string GetResource(this OptionType type) => type.ExistIcon() ? $"ms-appx:///Luo Painter.Options/Icons/{type}Icon.xaml" : throw new NullReferenceException($"The {type} no Icon.");
         public static ControlTemplate GetTemplate(this OptionType type, ResourceDictionary resource) => resource[$"{type}Icon"] as ControlTemplate;

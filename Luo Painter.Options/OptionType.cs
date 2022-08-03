@@ -265,5 +265,27 @@ namespace Luo_Painter.Options
 
         #endregion
 
+
+        // GeometryTransform
+        // Geometry0
+        GeometryRectangleTransform = GeometryRectangle | HasPreview | AllowDrag,
+        GeometryEllipseTransform = GeometryEllipse | HasPreview | AllowDrag,
+        // Geometry1
+        GeometryRoundRectTransform = GeometryRoundRect | HasPreview | AllowDrag,
+        GeometryTriangleTransform = GeometryTriangle | HasPreview | AllowDrag,
+        GeometryDiamondTransform = GeometryDiamond | HasPreview | AllowDrag,
+        // Geometry2
+        GeometryPentagonTransform = GeometryPentagon | HasPreview | AllowDrag,
+        GeometryStarTransform = GeometryStar | HasPreview | AllowDrag,
+        GeometryCogTransform = GeometryCog | HasPreview | AllowDrag,
+        // Geometry3
+        GeometryDountTransform = GeometryDount | HasPreview | AllowDrag,
+        GeometryPieTransform = GeometryPie | HasPreview | AllowDrag,
+        GeometryCookieTransform = GeometryCookie | HasPreview | AllowDrag,
+        // Geometry4
+        GeometryArrowTransform = GeometryArrow | HasPreview | AllowDrag,
+        GeometryCapsuleTransform = GeometryCapsule | HasPreview | AllowDrag,
+        GeometryHeartTransform = GeometryHeart | HasPreview | AllowDrag,
+
     }
 }
