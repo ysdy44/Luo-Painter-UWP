@@ -4,6 +4,7 @@ using Luo_Painter.Options;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Geometry;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -23,6 +24,7 @@ namespace Luo_Painter.Controls
     public sealed partial class ContextAppBar : UserControl
     {
         //@Delegate 
+        public event System.Action GeometryInvalidate;
         public event System.Action CanvasControlInvalidate;
         public event System.Action CanvasVirtualControlInvalidate;
         public event RoutedEventHandler PrimaryButtonClick;
@@ -136,6 +138,25 @@ namespace Luo_Painter.Controls
                 this.CanvasVirtualControlInvalidate?.Invoke();
                 this.CanvasControlInvalidate?.Invoke();
             };
+
+            this.RoundRectCornerSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.TriangleCenterSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.DiamondMidSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.PentagonPointsSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.StarPointsSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.StarInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.CogCountSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.CogInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.CogToothSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.CogNotchSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.DountHoleRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.PieSweepAngleSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.CookieInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.CookieSweepAngleSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.ArrowWidthSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.ArrowLeftTailComboBox.SelectionChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.ArrowRightTailComboBox.SelectionChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+            this.HeartSpreadSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
         }
 
         public void Construct(OptionType type)
@@ -169,8 +190,8 @@ namespace Luo_Painter.Controls
         private OptionType GetType(OptionType type)
         {
             if (type is OptionType.MarqueeTransform) return OptionType.Transform;
-            else if (type.HasFlag(OptionType.Marquee)) return OptionType.Marquee;
-            else if (type.HasFlag(OptionType.Selection)) return OptionType.Selection;
+            else if (type.IsMarquee()) return OptionType.Marquee;
+            else if (type.IsSelection()) return OptionType.Selection;
             else return type;
         }
         private ContextAppBarState GetState(OptionType type)
@@ -181,6 +202,80 @@ namespace Luo_Painter.Controls
                 return ContextAppBarState.Main;
 
             return type.AllowDrag() ? ContextAppBarState.DragPreview : ContextAppBarState.Preview;
+        }
+
+        public CanvasGeometry CreateGeometry(ICanvasResourceCreator resourceCreator, OptionType type, ITransformerLTRB transformerLTRB)
+        {
+            switch (type)
+            {
+                case OptionType.GeometryRectangle:
+                case OptionType.GeometryRectangleTransform:
+                    return TransformerGeometry.CreateRectangle(resourceCreator, transformerLTRB);
+                case OptionType.GeometryEllipse:
+                case OptionType.GeometryEllipseTransform:
+                    return TransformerGeometry.CreateEllipse(resourceCreator, transformerLTRB);
+                case OptionType.GeometryRoundRect:
+                case OptionType.GeometryRoundRectTransform:
+                    return TransformerGeometry.CreateRoundRect(resourceCreator, transformerLTRB,
+                        (float)(this.RoundRectCornerSlider.Value / 100));
+                case OptionType.GeometryTriangle:
+                case OptionType.GeometryTriangleTransform:
+                    return TransformerGeometry.CreateTriangle(resourceCreator, transformerLTRB,
+                        (float)(this.TriangleCenterSlider.Value / 100));
+                case OptionType.GeometryDiamond:
+                case OptionType.GeometryDiamondTransform:
+                    return TransformerGeometry.CreateDiamond(resourceCreator, transformerLTRB,
+                        (float)(this.DiamondMidSlider.Value / 100));
+                case OptionType.GeometryPentagon:
+                case OptionType.GeometryPentagonTransform:
+                    return TransformerGeometry.CreatePentagon(resourceCreator, transformerLTRB,
+                        (int)this.PentagonPointsSlider.Value);
+                case OptionType.GeometryStar:
+                case OptionType.GeometryStarTransform:
+                    return TransformerGeometry.CreateStar(resourceCreator, transformerLTRB,
+                        (int)this.StarPointsSlider.Value,
+                        (float)(this.StarInnerRadiusSlider.Value / 100));
+                case OptionType.GeometryCog:
+                case OptionType.GeometryCogTransform:
+                    return TransformerGeometry.CreateCog(resourceCreator, transformerLTRB,
+                        (int)this.CogCountSlider.Value,
+                        (float)(this.CogInnerRadiusSlider.Value / 100),
+                        (float)(this.CogToothSlider.Value / 100),
+                        (float)(this.CogNotchSlider.Value / 100));
+                case OptionType.GeometryDount:
+                case OptionType.GeometryDountTransform:
+                    return TransformerGeometry.CreateDount(resourceCreator, transformerLTRB,
+                        (float)(this.DountHoleRadiusSlider.Value / 100));
+                case OptionType.GeometryPie:
+                case OptionType.GeometryPieTransform:
+                    return TransformerGeometry.CreatePie(resourceCreator, transformerLTRB,
+                        (float)this.PieSweepAngleSlider.Value * FanKit.Math.Pi / 180);
+                case OptionType.GeometryCookie:
+                case OptionType.GeometryCookieTransform:
+                    return TransformerGeometry.CreateCookie(resourceCreator, transformerLTRB,
+                        (float)this.CookieInnerRadiusSlider.Value / 100,
+                        (float)this.CookieSweepAngleSlider.Value * FanKit.Math.Pi / 180);
+                case OptionType.GeometryArrow:
+                case OptionType.GeometryArrowTransform:
+                    return TransformerGeometry.CreateArrow(resourceCreator, transformerLTRB, 
+                        false, 10,
+                        (float)(this.ArrowWidthSlider.Value / 100),
+                        this.ArrowLeftTailComboBox.SelectedIndex is 0 ? 
+                            GeometryArrowTailType.None :
+                            GeometryArrowTailType.Arrow,
+                        this.ArrowRightTailComboBox.SelectedIndex is 0 ? 
+                            GeometryArrowTailType.None : 
+                            GeometryArrowTailType.Arrow);
+                case OptionType.GeometryCapsule:
+                case OptionType.GeometryCapsuleTransform:
+                    return TransformerGeometry.CreateCapsule(resourceCreator, transformerLTRB);
+                case OptionType.GeometryHeart:
+                case OptionType.GeometryHeartTransform:
+                    return TransformerGeometry.CreateHeart(resourceCreator, transformerLTRB,
+                        (float)(this.HeartSpreadSlider.Value / 100));
+                default:
+                    return TransformerGeometry.CreateRectangle(resourceCreator, transformerLTRB);
+            }
         }
 
         public ICanvasImage GetPreview(OptionType type, ICanvasImage image)
