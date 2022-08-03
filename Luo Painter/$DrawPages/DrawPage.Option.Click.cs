@@ -656,7 +656,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.SetFootType(type);
+                        this.AppBar.Construct(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -686,7 +686,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.SetFootType(type);
+                        this.AppBar.Construct(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -704,7 +704,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.SetFootType(type);
+                        this.AppBar.Construct(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -722,7 +722,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.SetFootType(type);
+                        this.AppBar.Construct(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -748,7 +748,7 @@ namespace Luo_Painter
                         this.SetCropCanvas(width2, height2);
 
                         this.OptionType = OptionType.CropCanvas;
-                        this.SetFootType(OptionType.CropCanvas);
+                        this.AppBar.Construct(OptionType.CropCanvas);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -992,7 +992,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.SetFootType(type);
+                                this.AppBar.Construct(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1051,7 +1051,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.SetFootType(type);
+                                this.AppBar.Construct(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1080,7 +1080,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.SetFootType(type);
+                                this.AppBar.Construct(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1116,7 +1116,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.SetFootType(type);
+                                this.AppBar.Construct(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1244,7 +1244,7 @@ namespace Luo_Painter
                         this.SetInkToolType(type);
 
                         this.OptionType = type;
-                        this.SetFootType(type);
+                        this.AppBar.Construct(type);
                         this.SetCanvasState(default);
                     }
                     break;

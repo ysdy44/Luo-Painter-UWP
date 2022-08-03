@@ -15,11 +15,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager
     {
 
-        private void SetFootType(OptionType type)
-        {
-            this.AppBar.Construct(type);
-        }
-
 
         private void ConstructFoots()
         {
@@ -46,7 +41,7 @@ namespace Luo_Painter
 
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedItem;
-                this.SetFootType(this.ToolListView.SelectedItem);
+                this.AppBar.Construct(this.ToolListView.SelectedItem);
                 this.SetCanvasState(false);
             };
 
@@ -78,7 +73,7 @@ namespace Luo_Painter
 
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedItem;
-                this.SetFootType(this.ToolListView.SelectedItem);
+                this.AppBar.Construct(this.ToolListView.SelectedItem);
                 this.SetCanvasState(false);
             };
         }

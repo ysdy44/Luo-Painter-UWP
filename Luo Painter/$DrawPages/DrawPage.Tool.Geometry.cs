@@ -109,7 +109,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
 
             this.OptionType = this.OptionType.ToGeometryTransform();
-            this.SetFootType(this.OptionType);
+            this.AppBar.Construct(this.OptionType);
             this.SetCanvasState(true);
         }
 
