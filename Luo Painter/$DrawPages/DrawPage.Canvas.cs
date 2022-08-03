@@ -114,11 +114,21 @@ namespace Luo_Painter
                         break;
 
                     default:
-                        if (this.OptionType.HasFlag(OptionType.Marquee))
+                        if (this.OptionType.IsGeometry())
+                        {
+                            if (this.BitmapLayer is null) break;
+
+                            args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
+                            break;
+                        }
+
+                        if (this.OptionType.IsMarquee())
                         {
                             args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+                            break;
                         }
-                        if (this.OptionType.HasFlag(OptionType.Geometry))
+
+                        if (this.OptionType.IsGeometry())
                         {
                             if (this.BitmapLayer is null) break;
 
@@ -196,6 +206,11 @@ namespace Luo_Painter
 
         private ICanvasImage GetMezzanine()
         {
+            if (this.OptionType.IsGeometry())
+            {
+                return new CompositeEffect { Sources = { this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp] } };
+            }
+
             if (this.OptionType.IsEffect() is false)
             {
                 switch (this.OptionType)

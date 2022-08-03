@@ -74,9 +74,16 @@ namespace Luo_Painter
                     break;
 
                 default:
-                    if (this.OptionType.HasFlag(OptionType.Geometry))
+                    if (this.OptionType.IsGeometry())
                     {
-                        this.Geometry_Start(position, point);
+                        if (this.OptionType.HasPreview())
+                        {
+                            this.Transform_Start(point);
+                        }
+                        else
+                        {
+                            this.Geometry_Start(position, point);
+                        }
                     }
                     break;
             }
@@ -143,9 +150,16 @@ namespace Luo_Painter
                     break;
 
                 default:
-                    if (this.OptionType.HasFlag(OptionType.Geometry))
+                    if (this.OptionType.IsGeometry())
                     {
-                        this.Geometry_Delta(position, point);
+                        if (this.OptionType.HasPreview())
+                        {
+                            this.GeometryTransform_Delta(position, point);
+                        }
+                        else
+                        {
+                            this.Geometry_Delta(position, point);
+                        }
                     }
                     break;
             }
@@ -227,9 +241,15 @@ namespace Luo_Painter
                     break;
 
                 default:
-                    if (this.OptionType.HasFlag(OptionType.Geometry))
+                    if (this.OptionType.IsGeometry())
                     {
-                        this.Geometry_Complete(position, point);
+                        if (this.OptionType.HasPreview())
+                        {
+                        }
+                        else
+                        {
+                            this.Geometry_Complete(position, point);
+                        }
                     }
                     break;
             }

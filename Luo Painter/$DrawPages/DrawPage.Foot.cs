@@ -28,6 +28,8 @@ namespace Luo_Painter
 
         private void ConstructFoot()
         {
+            this.AppBar.GeometryInvalidate += this.GeometryInvalidate;
+
             this.AppBar.CanvasControlInvalidate += this.CanvasControl.Invalidate;
             this.AppBar.CanvasVirtualControlInvalidate += this.CanvasVirtualControl.Invalidate;
 
@@ -36,6 +38,10 @@ namespace Luo_Painter
                 if (this.OptionType is OptionType.CropCanvas)
                 {
                     this.CancelCropCanvas();
+                }
+                if (this.OptionType.IsGeometry())
+                {
+                    this.CancelGeometryTransform();
                 }
 
                 this.BitmapLayer = null;
@@ -51,6 +57,10 @@ namespace Luo_Painter
                     if (this.OptionType is OptionType.CropCanvas)
                     {
                         this.PrimaryCropCanvas();
+                    }
+                    else if (this.OptionType.IsGeometry())
+                    {
+                        this.PrimaryGeometryTransform();
                     }
                     else if (this.OptionType.IsEdit())
                     {
