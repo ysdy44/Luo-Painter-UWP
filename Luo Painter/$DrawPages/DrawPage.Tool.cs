@@ -76,14 +76,7 @@ namespace Luo_Painter
                 default:
                     if (this.OptionType.IsGeometry())
                     {
-                        if (this.OptionType.HasPreview())
-                        {
-                            this.Transform_Start(point);
-                        }
-                        else
-                        {
-                            this.Geometry_Start(position, point);
-                        }
+                        this.Geometry_Start(position, point);
                     }
                     break;
             }
@@ -152,14 +145,7 @@ namespace Luo_Painter
                 default:
                     if (this.OptionType.IsGeometry())
                     {
-                        if (this.OptionType.HasPreview())
-                        {
-                            this.GeometryTransform_Delta(position, point);
-                        }
-                        else
-                        {
-                            this.Geometry_Delta(position, point);
-                        }
+                        this.GeometryTransform_Delta(position, point);
                     }
                     break;
             }
@@ -243,13 +229,7 @@ namespace Luo_Painter
                 default:
                     if (this.OptionType.IsGeometry())
                     {
-                        if (this.OptionType.HasPreview())
-                        {
-                        }
-                        else
-                        {
-                            this.Geometry_Complete(position, point);
-                        }
+                        this.GeometryTransform_Delta(position, point);
                     }
                     break;
             }

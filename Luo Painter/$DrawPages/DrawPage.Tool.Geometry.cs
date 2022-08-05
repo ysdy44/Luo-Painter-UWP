@@ -81,32 +81,18 @@ namespace Luo_Painter
                 return;
             }
 
+            if (this.OptionType.HasPreview())
+            {
+                // GeometryTransform_Start
+                this.Transform_Start(point);
+                return;
+            }
+
+            this.IsBoundsMove = false;
+            this.BoundsMode = default;
             this.BoundsTransformer = new Transformer(this.StartingPosition, position, this.IsCtrl, this.IsShift);
 
             this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
-        }
-
-        private void Geometry_Delta(Vector2 position, Vector2 point)
-        {
-            if (this.BitmapLayer is null) return;
-
-            this.BoundsTransformer = new Transformer(this.StartingPosition, position, this.IsCtrl, this.IsShift);
-
-            using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
-            {
-                ds.Clear(Colors.Transparent);
-                ds.FillGeometry(this.AppBar.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.ColorMenu.Color);
-            }
-
-            this.CanvasControl.Invalidate(); // Invalidate
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
-        }
-
-        private void Geometry_Complete(Vector2 position, Vector2 point)
-        {
-            if (this.BitmapLayer is null) return;
 
             this.OptionType = this.OptionType.ToGeometryTransform();
             this.AppBar.Construct(this.OptionType);
