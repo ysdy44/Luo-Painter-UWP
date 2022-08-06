@@ -258,6 +258,9 @@
     <Compile Include="SwitchPresenterPage.xaml.cs">
       <DependentUpon>SwitchPresenterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TextLayoutsPage.xaml.cs">
+      <DependentUpon>TextLayoutsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
     </Compile>
@@ -463,6 +466,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SwitchPresenterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TextLayoutsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
