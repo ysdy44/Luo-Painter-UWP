@@ -18,16 +18,112 @@
 
     <Grid>
         <xaml:CanvasControl x:Name="CanvasControl"/>
-    
+
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <CommandBar.Content>
                 <TextBlock x:Name="TextBlock" Margin="12,10,2,0">
-                    
+                    Range: 0~0
                 </TextBlock>
             </CommandBar.Content>
 
-            <AppBarButton x:Name="ClearButton" >
+            <AppBarButton x:Name="AllButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="SelectAll"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Select All
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="UpButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Up"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Up"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Up
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="DownButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Down"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Download"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Down
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="LeftButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Left"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Back"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Left
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="RightButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Right"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Forward"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Right
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ShiftLeftButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Shift" Key="Left"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Back"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Shift Left
+                </AppBarButton.Label>
+            </AppBarButton>
+            
+            <AppBarButton x:Name="ShiftRightButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Shift" Key="Right"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Forward"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Shift Right
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="BackButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Back"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Delete"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Back
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="DeleteButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Delete"/>
                 </UIElement.KeyboardAccelerators>
@@ -35,12 +131,12 @@
                     <SymbolIcon Symbol="Delete"/>
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
-                    Clear
+                    Delete
                 </AppBarButton.Label>
             </AppBarButton>
 
         </CommandBar>
-        
+
     </Grid>
-    
+
 </Page>
