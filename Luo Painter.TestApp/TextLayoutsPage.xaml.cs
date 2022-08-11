@@ -5,7 +5,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using System.Numerics;
 using Windows.Foundation;
-using Windows.System;
+using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Text.Core;
@@ -16,27 +16,30 @@ namespace Luo_Painter.TestApp
 {
     public sealed partial class TextLayoutsPage : Page
     {
-        //@Key
-        private bool IsKeyDown(VirtualKey key) => Window.Current.CoreWindow.GetKeyState(key).HasFlag(CoreVirtualKeyStates.Down);
-        private bool IsCtrl => this.IsKeyDown(VirtualKey.Control);
-        private bool IsShift => this.IsKeyDown(VirtualKey.Shift);
-        private bool IsAlt => this.IsKeyDown(VirtualKey.Menu);
-        private bool IsSpace => this.IsKeyDown(VirtualKey.Space);
-
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
+        private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
-        string Text = "The quick brown fox jumps over the lazy dog.";
-        CanvasTextFormat TextFormat;
+        public int Start { get => this.CustomEditor.Start; private set => this.CustomEditor.Start = value; }
+        public int End { get => this.CustomEditor.End; private set => this.CustomEditor.End = value; }
+
+        readonly CustomEditor CustomEditor = new CustomEditor
+        {
+            Text = "The quick brown fox jumps over the lazy dog."
+        };
+
+        readonly CanvasTextFormat TextFormat = new CanvasTextFormat
+        {
+            FontSize = 150,
+            HorizontalAlignment = CanvasHorizontalAlignment.Center,
+            VerticalAlignment = CanvasVerticalAlignment.Center
+        };
         CanvasTextLayout TextLayout;
 
         CanvasTextLayoutRegion TextLayoutRegion;
 
-        CoreTextRange Selection;
-
-        public bool HasSelection => this.Start != this.End;
-        public int Start { get => this.Selection.StartCaretPosition; private set => this.Selection.StartCaretPosition = value; }
-        public int End { get => this.Selection.EndCaretPosition; private set => this.Selection.EndCaretPosition = value; }
+        Rect TextBounds;
+        Rect ControlBounds;
 
         public TextLayoutsPage()
         {
@@ -44,23 +47,53 @@ namespace Luo_Painter.TestApp
             this.ConstructCanvas();
             this.ConstructOperator();
             this.ConstructCustomEditor();
+
+            base.Unloaded += (s, e) => this.CustomEditor.RemoveInternalFocus();
+            base.Loaded += (s, e) => this.CustomEditor.SetInternalFocus();
         }
 
         private void ConstructCustomEditor()
         {
-            this.AllButton.Click += (s, e) => this.Caret(0, this.Text.Length);
+            this.AllButton.Click += (s, e) => this.CustomEditor.SelectAll();
+            this.UpButton.Click += (s, e) => this.CustomEditor.SelectToStart();
+            this.DownButton.Click += (s, e) => this.CustomEditor.SelectToEnd();
 
-            this.UpButton.Click += (s, e) => this.Caret(0, 0);
-            this.DownButton.Click += (s, e) => this.Caret(this.Text.Length, this.Text.Length);
+            this.LeftButton.Click += (s, e) => this.CustomEditor.KeyLeft(false);
+            this.RightButton.Click += (s, e) => this.CustomEditor.KeyRight(false);
+            this.ShiftLeftButton.Click += (s, e) => this.CustomEditor.KeyLeft(true);
+            this.ShiftRightButton.Click += (s, e) => this.CustomEditor.KeyRight(true);
 
-            this.LeftButton.Click += (s, e) => this.Move(true, false);
-            this.RightButton.Click += (s, e) => this.Move(false, false);
+            this.BackButton.Click += (s, e) => this.CustomEditor.KeyBack();
+            this.DeleteButton.Click += (s, e) => this.CustomEditor.KeyDelete();
 
-            this.ShiftLeftButton.Click += (s, e) => this.Move(true, true);
-            this.ShiftRightButton.Click += (s, e) => this.Move(false, true);
+            this.CustomEditor.UpdateTextUIAction += () =>
+            {
+                this.TextBlock.Text = this.CustomEditor.ToString();
+                this.CanvasControl.Invalidate();
+            };
+            this.CustomEditor.UpdateTextLayoutAction += () =>
+            {
+                this.TextLayout = new CanvasTextLayout(this.CanvasControl, this.CustomEditor.Text, this.TextFormat, this.Transformer.Width, this.Transformer.Height);
+            };
 
-            this.BackButton.Click += (s, e) => this.Delete(true);
-            this.DeleteButton.Click += (s, e) => this.Delete(false);
+            this.CustomEditor.LayoutRequested += (sender, args) =>
+            {
+                if (this.TextLayout is null) return;
+
+                double scale = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+                this.ControlBounds = Window.Current.CoreWindow.Bounds;
+                this.ControlBounds.X *= scale;
+                this.ControlBounds.Y *= scale;
+                this.ControlBounds.Width *= scale;
+                this.ControlBounds.Height *= scale;
+                args.Request.LayoutBounds.ControlBounds = this.ControlBounds;
+
+                Vector2 p = this.ToPoint(this.TextLayout.GetCaretPosition(this.Start, false));
+                this.TextBounds.X = this.ControlBounds.X + this.CanvasControl.Dpi.ConvertDipsToPixels(p.X);
+                this.TextBounds.Y = this.ControlBounds.Y + this.CanvasControl.Dpi.ConvertDipsToPixels(p.Y);
+                this.TextBounds.Width = this.TextBounds.Height = this.Transformer.Scale * (150 + 75);
+                args.Request.LayoutBounds.TextBounds = this.TextBounds;
+            };
         }
 
         private void ConstructCanvas()
@@ -78,13 +111,7 @@ namespace Luo_Painter.TestApp
             {
                 this.Transformer.Fit();
 
-                this.TextFormat = new CanvasTextFormat
-                {
-                    FontSize = 150,
-                    HorizontalAlignment = CanvasHorizontalAlignment.Center,
-                    VerticalAlignment = CanvasVerticalAlignment.Center
-                };
-                this.TextLayout = new CanvasTextLayout(sender, this.Text, this.TextFormat, this.Transformer.Width, this.Transformer.Height);
+                this.TextLayout = new CanvasTextLayout(sender, this.CustomEditor.Text, this.TextFormat, this.Transformer.Width, this.Transformer.Height);
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
@@ -97,26 +124,17 @@ namespace Luo_Painter.TestApp
                 }, this.Transformer, Colors.Black);
                 args.DrawingSession.Transform = this.Transformer.GetMatrix();
 
-                if (this.HasSelection)
+                if (this.CustomEditor.HasSelection())
                 {
-                    int first = System.Math.Min(this.Start, this.End);
-                    int length = System.Math.Abs(this.End - this.Start);
-
-                    foreach (CanvasTextLayoutRegion description in this.TextLayout.GetCharacterRegions(first, length))
+                    foreach (CanvasTextLayoutRegion description in this.TextLayout.GetCharacterRegions(this.CustomEditor.First(), this.CustomEditor.Length()))
                     {
                         args.DrawingSession.FillRectangle(description.LayoutBounds, Colors.DodgerBlue);
                     }
                 }
                 else
                 {
-                    foreach (CanvasTextLayoutRegion description in this.TextLayout.GetCharacterRegions(this.Start, 1))
-                    {
-                        Rect r = description.LayoutBounds;
-                        float l = (float)r.Left;
-                        float t = (float)r.Top;
-                        float b = (float)r.Bottom;
-                        args.DrawingSession.DrawLine(l, t, l, b, Colors.Black, 2 * sender.Dpi.ConvertPixels());
-                    }
+                    Vector2 caret = this.TextLayout.GetCaretPosition(this.Start, false);
+                    args.DrawingSession.DrawLine(caret.X, caret.Y, caret.X, caret.Y + 75 + 150, Colors.Black, 2 * sender.Dpi.ConvertPixels());
                 }
 
                 args.DrawingSession.DrawTextLayout(this.TextLayout, 0, 0, Colors.Black);
@@ -133,14 +151,15 @@ namespace Luo_Painter.TestApp
             {
                 Vector2 position = this.ToPosition(point);
 
-                this.TextLayout.HitTest(position.X, position.Y, out this.TextLayoutRegion);
+                this.TextLayout.HitTest(position, out this.TextLayoutRegion);
 
                 if (position.X > this.TextLayoutRegion.LayoutBounds.X + this.TextLayoutRegion.LayoutBounds.Width / 2)
                     this.Start = this.End = 1 + this.TextLayoutRegion.CharacterIndex;
                 else
                     this.Start = this.End = this.TextLayoutRegion.CharacterIndex;
 
-                this.UpdateTextUI();
+                this.TextBlock.Text = this.CustomEditor.ToString();
+                this.CanvasControl.Invalidate();
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
@@ -153,11 +172,14 @@ namespace Luo_Painter.TestApp
                 else
                     this.End = this.TextLayoutRegion.CharacterIndex;
 
-                this.UpdateTextUI();
+                this.TextBlock.Text = this.CustomEditor.ToString();
+                this.CanvasControl.Invalidate();
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                this.UpdateTextUI();
+                this.TextBlock.Text = this.CustomEditor.ToString();
+                this.CustomEditor.NotifySelection();
+                this.CanvasControl.Invalidate();
             };
 
 
@@ -207,99 +229,6 @@ namespace Luo_Painter.TestApp
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-        }
-
-        private void Caret(int start, int end)
-        {
-            if (this.Start == start && this.End == end) return;
-
-            this.Start = start;
-            this.End = end;
-
-            this.UpdateTextUI();
-        }
-
-        private void Move(bool isLeft, bool isShift)
-        {
-            if (isLeft)
-            {
-                if (this.End <= 0) return;
-                this.End--;
-            }
-            else
-            {
-                if (this.End >= this.Text.Length) return;
-                this.End++;
-            }
-
-            if (isShift is false)
-            {
-                this.Start = this.End;
-            }
-
-            this.UpdateTextUI();
-        }
-
-        private void Delete(bool isLeft)
-        {
-            if (this.HasSelection)
-            {
-                int first = System.Math.Min(this.Start, this.End);
-                int last = System.Math.Max(this.Start, this.End);
-
-                if (first <= 0)
-                {
-                    if (last >= this.Text.Length)
-                        this.Text = string.Empty;
-                    else
-                        this.Text = this.Text.Substring(last + 1);
-
-                    this.End = this.Start = 0;
-                }
-                else
-                {
-                    if (last >= this.Text.Length)
-                        this.Text = this.Text.Substring(0, first);
-                    else
-                        this.Text = this.Text.Substring(0, first) + this.Text.Substring(last + 1);
-
-                    this.End = this.Start = first;
-                }
-            }
-            else
-            {
-                int index = System.Math.Min(this.Start, this.End);
-
-                if (isLeft)
-                {
-                    if (index <= 0) return;
-                    else if (index >= this.Text.Length)
-                        this.Text = this.Text.Substring(0, index - 1);
-                    else
-                        this.Text = this.Text.Substring(0, index - 1) + this.Text.Substring(index);
-                    this.Start = this.End = index - 1;
-                }
-                else
-                {
-                    if (index >= this.Text.Length) return;
-                    else if (index <= 0)
-                        this.Text = this.Text.Substring(index + 1);
-                    else
-                        this.Text = this.Text.Substring(0, index) + this.Text.Substring(index + 1);
-                }
-            }
-
-            this.UpdateTextUI(true);
-        }
-
-        private void UpdateTextUI(bool isRelayout = false)
-        {
-            this.TextBlock.Text = $"Range: {this.Start}~{this.End}";
-            if (isRelayout)
-            {
-                this.TextLayout = new CanvasTextLayout(this.CanvasControl, this.Text, this.TextFormat, this.Transformer.Width, this.Transformer.Height);
-            }
-            this.CanvasControl.Invalidate();
         }
 
     }
