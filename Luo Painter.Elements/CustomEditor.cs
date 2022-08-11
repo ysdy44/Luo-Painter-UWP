@@ -1,7 +1,4 @@
-﻿using System;
-using Windows.Foundation;
-using Windows.System;
-using Windows.UI.Core;
+﻿using Windows.Foundation;
 using Windows.UI.Text.Core;
 using Windows.UI.ViewManagement;
 
@@ -14,106 +11,75 @@ namespace Luo_Painter.Elements
         public event TypedEventHandler<CoreTextEditContext, CoreTextLayoutRequestedEventArgs> LayoutRequested { remove => this.EditContext.LayoutRequested -= value; add => this.EditContext.LayoutRequested += value; }
 
         public event System.Action UpdateTextUIAction;
+        public event System.Action UpdateTextLayoutAction;
         private void UpdateTextUI() => this.UpdateTextUIAction?.Invoke();
-
-        //@Static
-        private static string PreserveTrailingSpaces(string s) => s + "\ufeff";
-
-
-        readonly CoreTextEditContext EditContext = CoreTextServicesManager.GetForCurrentView().CreateEditContext();
-
-        public string Text = string.Empty;
-        public string TextRange(CoreTextRange range) => this.Text.Substring(range.StartCaretPosition, range.EndCaretPosition - range.StartCaretPosition);
-
-        public CoreTextRange Selection;
-
-        public bool InternalFocus = false;
-
-        bool ExtendingLeft = false;
+        private void UpdateTextLayout() => this.UpdateTextLayoutAction?.Invoke();
 
         readonly InputPane InputPane = InputPane.GetForCurrentView();
+        readonly CoreTextEditContext EditContext = CoreTextServicesManager.GetForCurrentView().CreateEditContext();
 
-        readonly CoreWindow CoreWindow = CoreWindow.GetForCurrentThread();
+        public bool InternalFocus { get; private set; }
+        public string Text { get; set; } = string.Empty;
+        public string TextRange(CoreTextRange range) => this.Text.Substring(range.StartCaretPosition, range.EndCaretPosition - range.StartCaretPosition);
+
+        CoreTextRange selection;
+        public CoreTextRange Selection => this.selection;
+
+        public int Start { get => this.selection.StartCaretPosition; set => this.selection.StartCaretPosition = value; }
+        public int End { get => this.selection.EndCaretPosition; set => this.selection.EndCaretPosition = value; }
+
+        public int First() => System.Math.Min(this.Start, this.End);
+        public int Last() => System.Math.Max(this.Start, this.End);
+        public int Length() => System.Math.Abs(this.End - this.Start);
+        public bool HasSelection() => this.Start != this.End;
 
         public CustomEditor()
         {
             this.EditContext.InputPaneDisplayPolicy = CoreTextInputPaneDisplayPolicy.Manual;
             this.EditContext.InputScope = CoreTextInputScope.Text;
-            this.EditContext.TextRequested += (sender, args) =>
-            {
-                CoreTextTextRequest request = args.Request;
-
-                int startIndex = request.Range.StartCaretPosition;
-                int endIndex = Math.Min(request.Range.EndCaretPosition, this.Text.Length);
-                request.Text = this.Text.Substring(startIndex, endIndex - startIndex);
-            };
-
-            this.EditContext.SelectionRequested += (sender, args) =>
-            {
-                CoreTextSelectionRequest request = args.Request;
-                request.Selection = this.Selection;
-            };
 
             this.EditContext.FocusRemoved += (sender, args) => this.RemoveInternalFocusWorker();
 
+            this.EditContext.SelectionRequested += (sender, args) => args.Request.Selection = this.selection;
+            this.EditContext.SelectionUpdating += (sender, args) => this.selection = args.Selection;
+
+            this.EditContext.TextRequested += (sender, args) =>
+            {
+                int startIndex = args.Request.Range.StartCaretPosition;
+                int endIndex = System.Math.Min(args.Request.Range.EndCaretPosition, this.Text.Length);
+                args.Request.Text = this.Text.Substring(startIndex, endIndex - startIndex);
+            };
             this.EditContext.TextUpdating += (sender, args) =>
             {
-                CoreTextRange range = args.Range;
-                string newText = args.Text;
-                CoreTextRange newSelection = args.NewSelection;
+                if (this.HasSelection()) this.Delete(true);
 
                 this.Text =
-                this.Text.Substring(0, range.StartCaretPosition) +
-                newText +
-                this.Text.Substring(Math.Min(this.Text.Length, range.EndCaretPosition));
+                this.Text.Substring(0, args.Range.StartCaretPosition) +
+                args.Text +
+                this.Text.Substring(System.Math.Min(this.Text.Length, args.Range.EndCaretPosition));
+                this.UpdateTextLayout();
 
-                newSelection.EndCaretPosition = newSelection.StartCaretPosition;
-
-                this.SetSelection(newSelection);
-            };
-
-            this.EditContext.SelectionUpdating += (sender, args) =>
-            {
-                CoreTextRange range = args.Selection;
-
-                this.SetSelection(range);
+                this.Start = this.End = args.NewSelection.StartCaretPosition;
+                this.UpdateTextUI();
             };
 
             this.EditContext.FormatUpdating += (sender, args) =>
             {
-                if (args.TextColor is null)
-                {
-                }
-                else
-                {
-                }
+                if (args.TextColor is null) { }
 
-                if (args.BackgroundColor is null)
-                {
-                }
-                else
-                {
-                }
+                if (args.BackgroundColor is null) { }
 
-                if (args.UnderlineType is null)
-                {
-                }
-                else
-                {
-                }
+                if (args.UnderlineType is null) { }
             };
 
-
-            this.EditContext.CompositionStarted += (s, e) =>
-            {
-            };
-
-            this.EditContext.CompositionCompleted += (s, e) =>
-            {
-            };
-
-            this.UpdateTextUI();
+            this.EditContext.CompositionStarted += (s, e) => { };
+            this.EditContext.CompositionCompleted += (s, e) => { };
         }
+
+
+        public override string ToString() => $"Range: {this.Start}~{this.End}";
+
+        public void NotifySelection() => this.EditContext.NotifySelectionChanged(this.selection);
 
 
         public void SetInternalFocus()
@@ -150,142 +116,103 @@ namespace Luo_Painter.Elements
         }
 
 
-        public void KeyBack()
+        public void KeyBack() => this.Delete(true);
+        public void KeyDelete() => this.Delete(false);
+
+        public void KeyLeft(bool isShift = false) => this.Move(true, isShift);
+        public void KeyRight(bool isShift = false) => this.Move(false, isShift);
+
+        public void SelectAll() => this.Caret(0, this.Text.Length);
+        public void SelectToStart() => this.Caret(0, 0);
+        public void SelectToEnd() => this.Caret(this.Text.Length, this.Text.Length);
+
+
+        private void Caret(int start, int end)
         {
-            CoreTextRange range = this.Selection;
+            if (this.Start == start && this.End == end) return;
 
-            if (this.HasSelection())
-            {
-                this.ReplaceText(range, "");
-            }
-            else if (range.StartCaretPosition > 0)
-            {
-                range.StartCaretPosition = range.StartCaretPosition - 1;
-                this.ReplaceText(range, "");
-            }
-        }
+            this.Start = start;
+            this.End = end;
 
-        public void KeyDelete()
-        {
-            CoreTextRange range = this.Selection;
-
-            if (this.HasSelection())
-            {
-                this.ReplaceText(range, "");
-            }
-            else if (range.EndCaretPosition < this.Text.Length)
-            {
-                range.EndCaretPosition = range.StartCaretPosition + 1;
-                this.ReplaceText(range, "");
-            }
-        }
-
-        public void KeyLeft()
-        {
-            CoreTextRange range = this.Selection;
-
-            if (this.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down))
-            {
-                if (!this.HasSelection())
-                {
-                    this.ExtendingLeft = true;
-                }
-
-                this.AdjustSelectionEndpoint(-1);
-            }
-            else
-            {
-                if (this.HasSelection())
-                {
-                    range.EndCaretPosition = range.StartCaretPosition;
-                    this.SetSelectionAndNotify(range);
-                }
-                else
-                {
-                    range.StartCaretPosition = Math.Max(0, range.StartCaretPosition - 1);
-                    range.EndCaretPosition = range.StartCaretPosition;
-                    this.SetSelectionAndNotify(range);
-                }
-            }
-        }
-
-        public void KeyRight()
-        {
-            CoreTextRange range = this.Selection;
-
-            if (this.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down))
-            {
-                if (!this.HasSelection())
-                {
-                    this.ExtendingLeft = false;
-                }
-
-                this.AdjustSelectionEndpoint(+1);
-            }
-            else
-            {
-                if (this.HasSelection())
-                {
-                    range.StartCaretPosition = range.EndCaretPosition;
-                    this.SetSelectionAndNotify(range);
-                }
-                else
-                {
-                    range.StartCaretPosition = Math.Min(this.Text.Length, range.StartCaretPosition + 1);
-                    range.EndCaretPosition = range.StartCaretPosition;
-                    this.SetSelectionAndNotify(range);
-                }
-            }
-        }
-
-
-        private void AdjustSelectionEndpoint(int direction)
-        {
-            CoreTextRange range = this.Selection;
-            if (this.ExtendingLeft)
-            {
-                range.StartCaretPosition = Math.Max(0, range.StartCaretPosition + direction);
-            }
-            else
-            {
-                range.EndCaretPosition = Math.Min(this.Text.Length, range.EndCaretPosition + direction);
-            }
-
-            this.SetSelectionAndNotify(range);
-        }
-
-
-        private void ReplaceText(CoreTextRange modifiedRange, string text)
-        {
-            CoreTextRange range = this.Selection;
-
-            this.Text = this.Text.Substring(0, modifiedRange.StartCaretPosition) +
-              text +
-              this.Text.Substring(modifiedRange.EndCaretPosition);
-
-            range.StartCaretPosition = modifiedRange.StartCaretPosition + text.Length;
-            range.EndCaretPosition = range.StartCaretPosition;
-
-            this.SetSelection(range);
-
-            this.EditContext.NotifyTextChanged(modifiedRange, text.Length, range);
-        }
-
-        public bool HasSelection() => this.Selection.StartCaretPosition != this.Selection.EndCaretPosition;
-
-        private void SetSelection(CoreTextRange selection)
-        {
-            this.Selection = selection;
-
+            this.NotifySelection();
             this.UpdateTextUI();
         }
 
-        private void SetSelectionAndNotify(CoreTextRange selection)
+        private void Move(bool isLeft, bool isShift)
         {
-            this.SetSelection(selection);
-            this.EditContext.NotifySelectionChanged(this.Selection);
+            if (isLeft)
+            {
+                if (this.End <= 0) return;
+                this.End--;
+            }
+            else
+            {
+                if (this.End >= this.Text.Length) return;
+                this.End++;
+            }
+
+            if (isShift is false)
+            {
+                this.Start = this.End;
+            }
+
+            this.NotifySelection();
+            this.UpdateTextUI();
+        }
+
+        private void Delete(bool isLeft)
+        {
+            if (this.HasSelection())
+            {
+                int first = this.First();
+                int last = this.Last();
+
+                if (first <= 0)
+                {
+                    if (last >= this.Text.Length)
+                        this.Text = string.Empty;
+                    else
+                        this.Text = this.Text.Substring(last);
+
+                    this.End = this.Start = 0;
+                }
+                else
+                {
+                    if (last >= this.Text.Length)
+                        this.Text = this.Text.Substring(0, first);
+                    else
+                        this.Text = this.Text.Substring(0, first) + this.Text.Substring(last);
+
+                    this.End = this.Start = first;
+                }
+            }
+            else
+            {
+                int index = this.First();
+
+                if (isLeft)
+                {
+                    if (index <= 0) return;
+                    else if (index >= this.Text.Length)
+                        this.Text = this.Text.Substring(0, index - 1);
+                    else
+                        this.Text = this.Text.Substring(0, index - 1) + this.Text.Substring(index);
+                    this.Start = this.End = index - 1;
+                }
+                else
+                {
+                    if (index >= this.Text.Length) return;
+                    else if (index <= 0)
+                        this.Text = this.Text.Substring(index + 1);
+                    else
+                        this.Text = this.Text.Substring(0, index) + this.Text.Substring(index + 1);
+                }
+            }
+
+            this.NotifySelection();
+            this.UpdateTextUI();
+            this.UpdateTextLayout();
         }
 
     }
-
 }
