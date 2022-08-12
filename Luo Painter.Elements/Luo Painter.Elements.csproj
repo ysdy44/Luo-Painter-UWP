@@ -133,9 +133,13 @@
     <Compile Include="ElementExtensions.cs" />
     <Compile Include="ElementGroupType.cs" />
     <Compile Include="ElementType.cs" />
+    <Compile Include="Expander.Construct.cs" />
+    <Compile Include="Expander.Math.cs" />
+    <Compile Include="Expander.Method.cs" />
     <Compile Include="Expander.xaml.cs">
       <DependentUpon>Expander.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExpanderLightDismissOverlay.cs" />
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
