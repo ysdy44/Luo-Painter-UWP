@@ -19,13 +19,57 @@
     <Grid>
         <xaml:CanvasControl x:Name="CanvasControl"/>
 
-        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <CommandBar Margin="12,112" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
-                <TextBlock x:Name="TextBlock" Margin="12,10,2,0">
-                    Range: 0~0
-                </TextBlock>
-            </CommandBar.Content>
+            <ContentControl.Content>
+                <ComboBox x:Name="ComboBox" Margin="4,4,2,0" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock Text="{x:Bind}" FontFamily="{x:Bind}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ComboBox>
+            </ContentControl.Content>
+            
+            <AppBarButton x:Name="BoldButton" >
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Bold"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Bold
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="ItalicButton" >
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Italic"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Italic
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="UnderlineButton" >
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Underline"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Underline
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="StrikethroughButton" >
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Pin"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Strike through
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+
+        <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <AppBarButton x:Name="AllButton" >
                 <UIElement.KeyboardAccelerators>
@@ -44,7 +88,7 @@
                     <KeyboardAccelerator Modifiers="None" Key="Up"/>
                 </UIElement.KeyboardAccelerators>
                 <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Up"/>
+                    <SymbolIcon Symbol="Upload"/>
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Up
@@ -62,6 +106,8 @@
                     Down
                 </AppBarButton.Label>
             </AppBarButton>
+
+            <AppBarSeparator/>
 
             <AppBarButton x:Name="LeftButton" >
                 <UIElement.KeyboardAccelerators>
@@ -98,7 +144,7 @@
                     Shift Left
                 </AppBarButton.Label>
             </AppBarButton>
-            
+
             <AppBarButton x:Name="ShiftRightButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Shift" Key="Right"/>
@@ -110,6 +156,56 @@
                     Shift Right
                 </AppBarButton.Label>
             </AppBarButton>
+
+        </CommandBar>
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <ContentControl.Content>
+                <TextBlock x:Name="TextBlock" Margin="12,10,2,0">
+                    Range: 0~0
+                </TextBlock>
+            </ContentControl.Content>
+
+            <AppBarSeparator/>
+
+            <AppBarButton x:Name="CutButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="X"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Cut"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Cut
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="CopyButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Copy"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Copy
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="PasteButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="V"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Paste"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Paste
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarSeparator/>
 
             <AppBarButton x:Name="BackButton" >
                 <UIElement.KeyboardAccelerators>
