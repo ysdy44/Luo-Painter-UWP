@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="TextFormat.cs" />
     <Compile Include="TextFormatItem.cs" />
+    <Compile Include="TextFormatWithSelection.cs" />
     <Compile Include="TextRangeExtensions.cs" />
     <Compile Include="TIcon.cs" />
     <Compile Include="InverseProportion.cs" />
