@@ -167,6 +167,7 @@
     <Compile Include="Spliter.xaml.cs">
       <DependentUpon>Spliter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TextRangeExtensions.cs" />
     <Compile Include="TIcon.cs" />
     <Compile Include="InverseProportion.cs" />
     <Compile Include="Marble.cs" />
