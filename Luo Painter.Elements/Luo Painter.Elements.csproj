@@ -125,7 +125,6 @@
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
-    <Compile Include="CustomEditor.cs" />
     <Compile Include="Docker.xaml.cs">
       <DependentUpon>Docker.xaml</DependentUpon>
     </Compile>
