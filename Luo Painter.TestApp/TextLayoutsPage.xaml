@@ -19,7 +19,9 @@
     <Grid>
         <xaml:CanvasControl x:Name="CanvasControl"/>
 
-        <CommandBar Margin="12,112" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <ListView x:Name="ListView" HorizontalAlignment="Right" />
+
+        <CommandBar x:Name="AppBar" IsEnabled="False" Margin="12,112" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
                 <ComboBox x:Name="ComboBox" Margin="4,4,2,0" >
@@ -30,42 +32,42 @@
                     </ItemsControl.ItemTemplate>
                 </ComboBox>
             </ContentControl.Content>
-            
-            <AppBarButton x:Name="BoldButton" >
-                <AppBarButton.Icon>
+
+            <AppBarToggleButton x:Name="BoldButton" >
+                <AppBarToggleButton.Icon>
                     <SymbolIcon Symbol="Bold"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
                     Bold
-                </AppBarButton.Label>
-            </AppBarButton>
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
 
-            <AppBarButton x:Name="ItalicButton" >
-                <AppBarButton.Icon>
+            <AppBarToggleButton x:Name="ItalicButton" >
+                <AppBarToggleButton.Icon>
                     <SymbolIcon Symbol="Italic"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
                     Italic
-                </AppBarButton.Label>
-            </AppBarButton>
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
 
-            <AppBarButton x:Name="UnderlineButton" >
-                <AppBarButton.Icon>
+            <AppBarToggleButton x:Name="UnderlineButton" >
+                <AppBarToggleButton.Icon>
                     <SymbolIcon Symbol="Underline"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
                     Underline
-                </AppBarButton.Label>
-            </AppBarButton>
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
 
-            <AppBarButton x:Name="StrikethroughButton" >
-                <AppBarButton.Icon>
+            <AppBarToggleButton x:Name="StrikethroughButton" >
+                <AppBarToggleButton.Icon>
                     <SymbolIcon Symbol="Pin"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
                     Strike through
-                </AppBarButton.Label>
-            </AppBarButton>
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
 
         </CommandBar>
 
@@ -228,6 +230,18 @@
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Delete
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="EnterButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Enter"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Send"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Enter
                 </AppBarButton.Label>
             </AppBarButton>
 
