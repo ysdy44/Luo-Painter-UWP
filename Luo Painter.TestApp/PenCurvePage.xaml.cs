@@ -1,10 +1,12 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
@@ -16,8 +18,18 @@ namespace Luo_Painter.TestApp
     public sealed partial class PenCurvePage : Page
     {
 
+        //@Key
+        private bool IsSmooth => this.SmoothButton.IsChecked is true;
+
+        //@Converter
+        private Symbol SymbolConverter(bool? value) => value is true ? Symbol.Pin : Symbol.UnPin;
+        private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
+        private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
+        private CanvasGeometry ToPoint(CanvasGeometry geometry) => geometry.Transform(this.CanvasControl.Dpi.ConvertPixelsToDips((this.Transformer.GetMatrix())));
+
         CanvasBitmap CanvasBitmap;
         NodeCollection Nodes;
+        Transformer Border;
 
         public PenCurvePage()
         {
@@ -49,21 +61,39 @@ namespace Luo_Painter.TestApp
 
         private void ConstructCanvas()
         {
+            this.CanvasControl.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                Vector2 size = this.CanvasControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
+                this.Transformer.ControlWidth = size.X;
+                this.Transformer.ControlHeight = size.Y;
+            };
             this.CanvasControl.CreateResources += (sender, args) =>
             {
+                this.Transformer.Fit();
+                this.Border = new Transformer(this.Transformer.Width, this.Transformer.Height, Vector2.Zero);
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                if (this.CanvasBitmap is null is false) args.DrawingSession.DrawImage(CanvasBitmap);
+                Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
+                args.DrawingSession.DrawBound(this.Border, matrix);
+
+                if (this.CanvasBitmap is null is false) args.DrawingSession.DrawImage(new Transform2DEffect
+                {
+                    Source = this.CanvasBitmap,
+                    TransformMatrix = matrix
+                });
 
                 if (this.Nodes is null) return;
-                Matrix3x2 matrix = this.CanvasControl.Dpi.ConvertPixelsToDips();
-                CanvasGeometry geometry = this.Nodes.CreateGeometry(sender).Transform(matrix);
 
-                args.DrawingSession.DrawGeometry(geometry, Colors.DodgerBlue, 3);
+                CanvasGeometry geometry = this.ToPoint(this.Nodes.CreateGeometry(sender));
+                args.DrawingSession.DrawGeometry(geometry, Colors.DodgerBlue, (3));
+
                 foreach (Node item in Nodes)
                 {
-                    args.DrawingSession.FillCircle(Vector2.Transform(item.Point, matrix), 2, Colors.Red);
+                    args.DrawingSession.FillCircle(this.ToPoint(item.Point), (2), Colors.Red);
                 }
 
                 //args.DrawingSession.DrawNodeCollection(this.Nodes, matrix);
@@ -82,7 +112,7 @@ namespace Luo_Painter.TestApp
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                Vector2 position = this.ToPosition(point);
 
                 if (this.Nodes is null)
                 {
@@ -106,7 +136,7 @@ namespace Luo_Painter.TestApp
             {
                 if (this.Nodes is null) return;
 
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                Vector2 position = this.ToPosition(point);
                 this.PenCurve(position);
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -115,7 +145,7 @@ namespace Luo_Painter.TestApp
             {
                 if (this.Nodes is null) return;
 
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                Vector2 position = this.ToPosition(point);
                 this.PenCurve(position);
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -125,8 +155,56 @@ namespace Luo_Painter.TestApp
             {
                 if (this.Nodes is null) return;
 
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(e.GetCurrentPoint(this.CanvasControl).Position.ToVector2());
+                Vector2 position = this.ToPosition(e.GetCurrentPoint(this.CanvasControl).Position.ToVector2());
                 this.PenCurve(position);
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+
+            // Right
+            this.Operator.Right_Start += (point) =>
+            {
+                this.Transformer.CacheMove(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Right_Delta += (point) =>
+            {
+                this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Right_Complete += (point) =>
+            {
+                this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+
+            // Double
+            this.Operator.Double_Start += (center, space) =>
+            {
+                this.Transformer.CachePinch(this.CanvasControl.Dpi.ConvertDipsToPixels(center), this.CanvasControl.Dpi.ConvertDipsToPixels(space));
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Double_Delta += (center, space) =>
+            {
+                this.Transformer.Pinch(this.CanvasControl.Dpi.ConvertDipsToPixels(center), this.CanvasControl.Dpi.ConvertDipsToPixels(space));
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.Operator.Double_Complete += (center, space) =>
+            {
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+            // Wheel
+            this.Operator.Wheel_Changed += (point, space) =>
+            {
+                if (space > 0)
+                    this.Transformer.ZoomIn(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
+                else
+                    this.Transformer.ZoomOut(this.CanvasControl.Dpi.ConvertDipsToPixels(point), 1.05f);
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -192,7 +270,6 @@ namespace Luo_Painter.TestApp
             {
                 int i = this.Nodes.Count - 1;
 
-                this.Nodes[i].IsChecked = true;
                 this.Nodes[i].IsSmooth = false;
 
                 this.Nodes[i].Point = position;
@@ -202,8 +279,7 @@ namespace Luo_Painter.TestApp
             {
                 int i = this.Nodes.Count - 2;
 
-                this.Nodes[i].IsChecked = true;
-                this.Nodes[i].IsSmooth = true;
+                this.Nodes[i].IsSmooth = this.IsSmooth;
 
                 this.Nodes[i].Point = position;
                 this.Nodes[i].LeftControlPoint = position;
@@ -216,23 +292,23 @@ namespace Luo_Painter.TestApp
             {
                 int i = 1;
 
-                this.Nodes[i].IsChecked = true;
-                this.Nodes[i].IsSmooth = true;
+                if (this.Nodes[i].IsSmooth)
+                {
+                    Vector2 point = this.Nodes[i].Point;
+                    Vector2 left = (point + this.Nodes[i - 1].Point) / 2;
+                    Vector2 right = this.Nodes[i + 1].Point;
 
-                Vector2 point = this.Nodes[i].Point;
-                Vector2 left = (point + this.Nodes[i - 1].Point) / 2;
-                Vector2 right = this.Nodes[i + 1].Point;
+                    Vector2 center = (left + right) / 2;
+                    Vector2 centerP = (center + point) / 2;
 
-                Vector2 center = (left + right) / 2;
-                Vector2 centerP = (center + point) / 2;
+                    float leftLength = (centerP - left).Length();
+                    float rightLength = (centerP - right).Length();
+                    float leftRightLength = leftLength + rightLength;
 
-                float leftLength = (centerP - left).Length();
-                float rightLength = (centerP - right).Length();
-                float leftRightLength = leftLength + rightLength;
-
-                Vector2 vector = right - left;
-                this.Nodes[i].LeftControlPoint = point - leftLength / leftRightLength * vector;
-                this.Nodes[i].RightControlPoint = point + rightLength / leftRightLength / 2 * vector;
+                    Vector2 vector = right - left;
+                    this.Nodes[i].LeftControlPoint = point - leftLength / leftRightLength * vector;
+                    this.Nodes[i].RightControlPoint = point + rightLength / leftRightLength / 2 * vector;
+                }
             }
 
             if (this.Nodes.Count <= 4) return;
@@ -240,23 +316,23 @@ namespace Luo_Painter.TestApp
             // Nodes
             for (int i = 2; i < this.Nodes.Count - 2; i++)
             {
-                this.Nodes[i].IsChecked = true;
-                this.Nodes[i].IsSmooth = true;
+                if (this.Nodes[i].IsSmooth)
+                {
+                    Vector2 point = this.Nodes[i].Point;
+                    Vector2 left = this.Nodes[i - 1].Point;
+                    Vector2 right = this.Nodes[i + 1].Point;
 
-                Vector2 point = this.Nodes[i].Point;
-                Vector2 left = this.Nodes[i - 1].Point;
-                Vector2 right = this.Nodes[i + 1].Point;
+                    Vector2 center = (left + right) / 2;
+                    Vector2 centerP = (center + point) / 2;
 
-                Vector2 center = (left + right) / 2;
-                Vector2 centerP = (center + point) / 2;
+                    float leftLength = (centerP - left).Length();
+                    float rightLength = (centerP - right).Length();
+                    float leftRightLength = leftLength + rightLength;
 
-                float leftLength = (centerP - left).Length();
-                float rightLength = (centerP - right).Length();
-                float leftRightLength = leftLength + rightLength;
-
-                Vector2 vector = right - left;
-                this.Nodes[i].LeftControlPoint = point - leftLength / leftRightLength / 2 * vector;
-                this.Nodes[i].RightControlPoint = point + rightLength / leftRightLength / 2 * vector;
+                    Vector2 vector = right - left;
+                    this.Nodes[i].LeftControlPoint = point - leftLength / leftRightLength / 2 * vector;
+                    this.Nodes[i].RightControlPoint = point + rightLength / leftRightLength / 2 * vector;
+                }
             }
         }
 

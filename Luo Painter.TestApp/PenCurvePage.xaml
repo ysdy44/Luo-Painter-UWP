@@ -13,6 +13,7 @@
     <FrameworkElement.Resources>
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasTransformer x:Name="Transformer" />
     </FrameworkElement.Resources>
 
     <Grid>
@@ -26,7 +27,7 @@
                     <Run Foreground="DodgerBlue">Curve</Run>
                 </TextBlock>
             </ContentControl.Content>
-            
+
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="A"/>
@@ -38,6 +39,20 @@
                     Add
                 </AppBarButton.Label>
             </AppBarButton>
+
+            <AppBarSeparator/>
+
+            <AppBarToggleButton x:Name="SmoothButton" IsChecked="True" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="S"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarToggleButton.Icon>
+                    <SymbolIcon Symbol="{x:Bind SymbolConverter(SmoothButton.IsChecked), Mode=OneWay}"/>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
+                    Smooth
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
 
             <AppBarButton x:Name="ClearButton" >
                 <UIElement.KeyboardAccelerators>
