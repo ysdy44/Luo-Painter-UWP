@@ -289,26 +289,17 @@ namespace Luo_Painter.TestApp
             if (this.Nodes.Count <= 3) return;
 
             // First
+            if (this.Nodes[1].IsSmooth)
             {
-                int i = 1;
+                Vector2 point = this.Nodes[1].Point;
+                Vector2 vector = this.Nodes[2].LeftControlPoint - (point + this.Nodes[0].RightControlPoint) / 2;
 
-                if (this.Nodes[i].IsSmooth)
-                {
-                    Vector2 point = this.Nodes[i].Point;
-                    Vector2 left = (point + this.Nodes[i - 1].Point) / 2;
-                    Vector2 right = this.Nodes[i + 1].Point;
+                float left = (point - (point + this.Nodes[0].Point) / 2).Length();
+                float right = (point - this.Nodes[2].Point).Length();
+                float length = left + right;
 
-                    Vector2 center = (left + right) / 2;
-                    Vector2 centerP = (center + point) / 2;
-
-                    float leftLength = (centerP - left).Length();
-                    float rightLength = (centerP - right).Length();
-                    float leftRightLength = leftLength + rightLength;
-
-                    Vector2 vector = right - left;
-                    this.Nodes[i].LeftControlPoint = point - leftLength / leftRightLength * vector;
-                    this.Nodes[i].RightControlPoint = point + rightLength / leftRightLength / 2 * vector;
-                }
+                this.Nodes[1].LeftControlPoint = point - left / length * vector;
+                this.Nodes[1].RightControlPoint = point + right / length / 2 * vector;
             }
 
             if (this.Nodes.Count <= 4) return;
@@ -319,19 +310,14 @@ namespace Luo_Painter.TestApp
                 if (this.Nodes[i].IsSmooth)
                 {
                     Vector2 point = this.Nodes[i].Point;
-                    Vector2 left = this.Nodes[i - 1].Point;
-                    Vector2 right = this.Nodes[i + 1].Point;
+                    Vector2 vector = this.Nodes[i + 1].LeftControlPoint - this.Nodes[i - 1].RightControlPoint;
 
-                    Vector2 center = (left + right) / 2;
-                    Vector2 centerP = (center + point) / 2;
+                    float left = (point - this.Nodes[i - 1].Point).Length();
+                    float right = (point - this.Nodes[i + 1].Point).Length();
+                    float length = left + right;
 
-                    float leftLength = (centerP - left).Length();
-                    float rightLength = (centerP - right).Length();
-                    float leftRightLength = leftLength + rightLength;
-
-                    Vector2 vector = right - left;
-                    this.Nodes[i].LeftControlPoint = point - leftLength / leftRightLength / 2 * vector;
-                    this.Nodes[i].RightControlPoint = point + rightLength / leftRightLength / 2 * vector;
+                    this.Nodes[i].LeftControlPoint = point - left / length / 2 * vector;
+                    this.Nodes[i].RightControlPoint = point + right / length / 2 * vector;
                 }
             }
         }
