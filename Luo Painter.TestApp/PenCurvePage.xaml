@@ -18,7 +18,16 @@
 
     <Grid>
         <xaml:CanvasControl x:Name="CanvasControl" />
-        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+        <ListBox x:Name="ListBox" SelectedIndex="0" Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+
+        <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
                 <TextBlock Margin="12,10,2,0" >
@@ -39,20 +48,6 @@
                     Add
                 </AppBarButton.Label>
             </AppBarButton>
-
-            <AppBarSeparator/>
-
-            <AppBarToggleButton x:Name="SmoothButton" IsChecked="True" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="S"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarToggleButton.Icon>
-                    <SymbolIcon Symbol="{x:Bind SymbolConverter(SmoothButton.IsChecked), Mode=OneWay}"/>
-                </AppBarToggleButton.Icon>
-                <AppBarToggleButton.Label>
-                    Smooth
-                </AppBarToggleButton.Label>
-            </AppBarToggleButton>
 
             <AppBarButton x:Name="ClearButton" >
                 <UIElement.KeyboardAccelerators>

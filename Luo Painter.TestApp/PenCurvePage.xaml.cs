@@ -6,20 +6,43 @@ using Microsoft.Graphics.Canvas.Geometry;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
+    internal enum PenCurveTool
+    {
+        Curve,
+        Line,
+        RectChoose,
+        Move,
+    }
+
     public sealed partial class PenCurvePage : Page
     {
 
         //@Key
-        private bool IsSmooth => this.SmoothButton.IsChecked is true;
+        private PenCurveTool Mode
+        {
+            get
+            {
+                switch (this.ListBox.SelectedIndex)
+                {
+                    case 0: return PenCurveTool.Curve;
+                    case 1: return PenCurveTool.Line;
+                    case 2: return PenCurveTool.RectChoose;
+                    case 3: return PenCurveTool.Move;
+                    default: return default;
+                }
+            }
+        }
 
         //@Converter
         private Symbol SymbolConverter(bool? value) => value is true ? Symbol.Pin : Symbol.UnPin;
@@ -29,7 +52,11 @@ namespace Luo_Painter.TestApp
 
         CanvasBitmap CanvasBitmap;
         NodeCollection Nodes;
+        CanvasGeometry Geometry;
         Transformer Border;
+
+        TransformerRect TransformerRect;
+        Vector2 StartingPosition;
 
         public PenCurvePage()
         {
@@ -41,6 +68,9 @@ namespace Luo_Painter.TestApp
 
         private void ConstructPenCurve()
         {
+            this.ListBox.ItemsSource = System.Enum.GetValues(typeof(PenCurveTool));
+            this.ListBox.SelectedIndex = 0;
+
             this.AddButton.Click += async (s, e) =>
             {
                 StorageFile file = await this.PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -88,12 +118,41 @@ namespace Luo_Painter.TestApp
 
                 if (this.Nodes is null) return;
 
-                CanvasGeometry geometry = this.ToPoint(this.Nodes.CreateGeometry(sender));
-                args.DrawingSession.DrawGeometry(geometry, Colors.DodgerBlue, (3));
-
-                foreach (Node item in Nodes)
+                args.DrawingSession.DrawGeometry(ToPoint(this.Geometry), Colors.DodgerBlue, 1);
+                foreach (Node item in this.Nodes)
                 {
-                    args.DrawingSession.FillCircle(this.ToPoint(item.Point), (2), Colors.Red);
+                    switch (item.Type)
+                    {
+                        case NodeType.BeginFigure:
+                        case NodeType.Node:
+                            Vector2 p = this.ToPoint(item.Point);
+                            if (item.IsSmooth)
+                            {
+                                if (item.IsChecked) args.DrawingSession.FillCircle(p, 4, Colors.White);
+                                args.DrawingSession.FillCircle(p, 3, Colors.DodgerBlue);
+                            }
+                            else
+                            {
+                                if (item.IsChecked) args.DrawingSession.FillRectangle(p.X - 3, p.Y - 3, 6, 6, Colors.White);
+                                args.DrawingSession.FillRectangle(p.X - 2, p.Y - 2, 4, 4, Colors.DodgerBlue);
+                            }
+                            break;
+                    }
+                }
+
+                switch (this.Mode)
+                {
+                    case PenCurveTool.RectChoose:
+                        if (this.TransformerRect.Width == default) break;
+                        if (this.TransformerRect.Height == default) break;
+                        {
+                            CanvasGeometry canvasGeometry = this.TransformerRect.ToRectangle(this.CanvasControl);
+                            CanvasGeometry canvasGeometryTransform = canvasGeometry.Transform(matrix);
+                            args.DrawingSession.DrawGeometryDodgerBlue(canvasGeometryTransform);
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
                 //args.DrawingSession.DrawNodeCollection(this.Nodes, matrix);
@@ -113,23 +172,54 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += (point, properties) =>
             {
                 Vector2 position = this.ToPosition(point);
-
-                if (this.Nodes is null)
+                switch (this.Mode)
                 {
-                    this.Nodes = new NodeCollection(position, position);
-                }
-                else
-                {
-                    this.Nodes.PenAdd(new Node
-                    {
-                        Point = position,
-                        LeftControlPoint = position,
-                        RightControlPoint = position,
-                        IsChecked = true,
-                        IsSmooth = false,
-                    });
+                    case PenCurveTool.Curve:
+                    case PenCurveTool.Line:
+                        if (this.Nodes is null)
+                        {
+                            this.Nodes = new NodeCollection(position, position);
+                        }
+                        else
+                        {
+                            this.Nodes.PenAdd(new Node
+                            {
+                                Point = position,
+                                LeftControlPoint = position,
+                                RightControlPoint = position,
+                                IsSmooth = false,
+                            });
+                        }
+                        this.Geometry = this.Nodes.CreateGeometry(CanvasControl);
+                        break;
+                    case PenCurveTool.RectChoose:
+                        this.TransformerRect = new TransformerRect(position, position);
+                        this.Nodes.BoxChoose(this.TransformerRect);
+                        break;
+                    case PenCurveTool.Move:
+                        if (this.Nodes is null) break;
+
+                        this.Nodes.Index = -1;
+                        foreach (Node item in this.Nodes)
+                        {
+                            switch (item.Type)
+                            {
+                                case NodeType.BeginFigure:
+                                case NodeType.Node:
+                                    item.CacheTransform();
+                                    if (FanKit.Math.InNodeRadius(position, item.Point))
+                                    {
+                                        this.Nodes.Index = this.Nodes.IndexOf(item);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
+                this.StartingPosition = position;
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
@@ -137,7 +227,47 @@ namespace Luo_Painter.TestApp
                 if (this.Nodes is null) return;
 
                 Vector2 position = this.ToPosition(point);
-                this.PenCurve(position);
+                switch (this.Mode)
+                {
+                    case PenCurveTool.Curve:
+                    case PenCurveTool.Line:
+                        this.PenCurve(position, this.Mode is PenCurveTool.Curve);
+                        this.Geometry?.Dispose();
+                        this.Geometry = this.Nodes.CreateGeometry(this.CanvasControl);
+                        break;
+                    case PenCurveTool.RectChoose:
+                        this.TransformerRect = new TransformerRect(this.StartingPosition, position);
+                        this.Nodes.BoxChoose(this.TransformerRect);
+                        break;
+                    case PenCurveTool.Move:
+                        if (this.Nodes.Index is -1)
+                        {
+                            foreach (Node item in this.Nodes)
+                            {
+                                switch (item.Type)
+                                {
+                                    case NodeType.BeginFigure:
+                                    case NodeType.Node:
+                                        if (item.IsChecked)
+                                        {
+                                            item.TransformAdd(position - this.StartingPosition);
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Node item = this.Nodes.SelectedItem;
+                            item.TransformAdd(position - this.StartingPosition);
+                        }
+
+                        this.Geometry?.Dispose();
+                        this.Geometry = this.Nodes.CreateGeometry(this.CanvasControl);
+                        break;
+                    default:
+                        break;
+                }
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -146,7 +276,22 @@ namespace Luo_Painter.TestApp
                 if (this.Nodes is null) return;
 
                 Vector2 position = this.ToPosition(point);
-                this.PenCurve(position);
+                switch (this.Mode)
+                {
+                    case PenCurveTool.Curve:
+                    case PenCurveTool.Line:
+                        this.PenCurve(position, this.Mode is PenCurveTool.Curve);
+                        this.Geometry?.Dispose();
+                        this.Geometry = this.Nodes.CreateGeometry(this.CanvasControl);
+                        break;
+                    case PenCurveTool.RectChoose:
+                        this.TransformerRect = default;
+                        break;
+                    case PenCurveTool.Move:
+                        break;
+                    default:
+                        break;
+                }
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -155,10 +300,26 @@ namespace Luo_Painter.TestApp
             {
                 if (this.Nodes is null) return;
 
-                Vector2 position = this.ToPosition(e.GetCurrentPoint(this.CanvasControl).Position.ToVector2());
-                this.PenCurve(position);
+                PointerPoint pp = e.GetCurrentPoint(this.CanvasControl);
+                switch (pp.PointerDevice.PointerDeviceType)
+                {
+                    case PointerDeviceType.Touch:
+                        return;
+                }
 
-                this.CanvasControl.Invalidate(); // Invalidate
+                switch (this.Mode)
+                {
+                    case PenCurveTool.Curve:
+                    case PenCurveTool.Line:
+                        Vector2 position = this.ToPosition(pp.Position.ToVector2());
+                        this.PenCurve(position, this.Mode is PenCurveTool.Curve);
+                        this.Geometry?.Dispose();
+                        this.Geometry = this.Nodes.CreateGeometry(CanvasControl);
+                        this.CanvasControl.Invalidate(); // Invalidate
+                        break;
+                    default:
+                        break;
+                }
             };
 
 
@@ -254,11 +415,11 @@ namespace Luo_Painter.TestApp
         /// Curve all Points (Begin + First + Nodes + Last + End).
         /// </summary>
         /// <param name="position"> The control position. </param>
-        private void PenCurve(Vector2 position)
+        private void PenCurve(Vector2 position, bool isSmooth, bool isPos = true)
         {
             if (this.Nodes.Count <= 2) return;
 
-            // Begin
+            // 0. Begin
             //{
             //    int i = 0;
             //
@@ -266,59 +427,65 @@ namespace Luo_Painter.TestApp
             //    this.Nodes[i].IsSmooth = false;
             //}
 
-            // End
+            // 1. First
+            if (this.Nodes.Count > 3)
             {
-                int i = this.Nodes.Count - 1;
+                if (this.Nodes[1].IsSmooth)
+                {
+                    Vector2 point = this.Nodes[1].Point;
+                    Vector2 vector = this.Nodes[2].LeftControlPoint - (point + this.Nodes[0].RightControlPoint) / 2;
 
-                this.Nodes[i].IsSmooth = false;
+                    float left = (point - (point + this.Nodes[0].Point) / 2).Length();
+                    float right = (point - this.Nodes[2].Point).Length();
+                    float length = left + right;
 
-                this.Nodes[i].Point = position;
+                    this.Nodes[1].LeftControlPoint = point - left / length * vector;
+                    this.Nodes[1].RightControlPoint = point + right / length / 2 * vector;
+                }
             }
 
-            // Last
+            // 2. Nodes
+            if (this.Nodes.Count > 4)
+            {
+                for (int i = 2; i < this.Nodes.Count - 2; i++)
+                {
+                    if (this.Nodes[i].IsSmooth)
+                    {
+                        Vector2 point = this.Nodes[i].Point;
+                        Vector2 vector = this.Nodes[i + 1].LeftControlPoint - this.Nodes[i - 1].RightControlPoint;
+
+                        float left = (point - this.Nodes[i - 1].Point).Length();
+                        float right = (point - this.Nodes[i + 1].Point).Length();
+                        float length = left + right;
+
+                        this.Nodes[i].LeftControlPoint = point - left / length / 2 * vector;
+                        this.Nodes[i].RightControlPoint = point + right / length / 2 * vector;
+                    }
+                }
+            }
+
+            // 3. Last
+            if (isPos)
             {
                 int i = this.Nodes.Count - 2;
 
-                this.Nodes[i].IsSmooth = this.IsSmooth;
+                this.Nodes[i].IsSmooth = isSmooth;
 
                 this.Nodes[i].Point = position;
                 this.Nodes[i].LeftControlPoint = position;
                 this.Nodes[i].RightControlPoint = position;
             }
 
-            if (this.Nodes.Count <= 3) return;
-
-            // First
-            if (this.Nodes[1].IsSmooth)
+            // 4. End
+            if (isPos)
             {
-                Vector2 point = this.Nodes[1].Point;
-                Vector2 vector = this.Nodes[2].LeftControlPoint - (point + this.Nodes[0].RightControlPoint) / 2;
+                int i = this.Nodes.Count - 1;
 
-                float left = (point - (point + this.Nodes[0].Point) / 2).Length();
-                float right = (point - this.Nodes[2].Point).Length();
-                float length = left + right;
+                this.Nodes[i].IsSmooth = false;
 
-                this.Nodes[1].LeftControlPoint = point - left / length * vector;
-                this.Nodes[1].RightControlPoint = point + right / length / 2 * vector;
-            }
-
-            if (this.Nodes.Count <= 4) return;
-
-            // Nodes
-            for (int i = 2; i < this.Nodes.Count - 2; i++)
-            {
-                if (this.Nodes[i].IsSmooth)
-                {
-                    Vector2 point = this.Nodes[i].Point;
-                    Vector2 vector = this.Nodes[i + 1].LeftControlPoint - this.Nodes[i - 1].RightControlPoint;
-
-                    float left = (point - this.Nodes[i - 1].Point).Length();
-                    float right = (point - this.Nodes[i + 1].Point).Length();
-                    float length = left + right;
-
-                    this.Nodes[i].LeftControlPoint = point - left / length / 2 * vector;
-                    this.Nodes[i].RightControlPoint = point + right / length / 2 * vector;
-                }
+                this.Nodes[i].Point = position;
+                this.Nodes[i].LeftControlPoint = position;
+                this.Nodes[i].RightControlPoint = position;
             }
         }
 
