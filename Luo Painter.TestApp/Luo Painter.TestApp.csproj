@@ -170,6 +170,9 @@
     <Compile Include="PenCurvePage.xaml.cs">
       <DependentUpon>PenCurvePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PenHitterPage.xaml.cs">
+      <DependentUpon>PenHitterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RippleEffectPage.xaml.cs">
       <DependentUpon>RippleEffectPage.xaml</DependentUpon>
     </Compile>
@@ -356,6 +359,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PenCurvePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PenHitterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
