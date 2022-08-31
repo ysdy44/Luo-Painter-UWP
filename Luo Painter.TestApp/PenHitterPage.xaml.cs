@@ -7,26 +7,26 @@ namespace Luo_Painter.TestApp
 {
     internal struct PenHitter
     {
-        int Distance;
+        int StrokeWidth;
 
         public bool IsContains;
         public bool IsHit;
         public Vector2 Target;
 
-        public void Hit(CanvasGeometry geometry, Vector2 position, int distance = 32)
+        public void Hit(CanvasGeometry geometry, Vector2 position, int strokeWidth = 32)
         {
-            this.Distance = distance;
+            this.StrokeWidth = strokeWidth;
 
             this.IsContains = false;
             this.IsHit = false;
             this.Target = Vector2.Zero;
 
-            for (int i = 0; i < distance; i++)
+            for (int i = 0; i < strokeWidth; i++)
             {
                 this.IsContains = geometry.StrokeContainsPoint(position, i + i);
                 if (this.IsContains)
                 {
-                    this.Distance = i;
+                    this.StrokeWidth = i;
                     this.Hit2(geometry, position);
                     return;
                 }
@@ -42,8 +42,8 @@ namespace Luo_Painter.TestApp
                 int angle = i * 30;
 
                 float radians = angle / 180f * FanKit.Math.Pi;
-                this.Target.Y = position.Y - this.Distance * (float)System.Math.Sin(radians);
-                this.Target.X = position.X + this.Distance * (float)System.Math.Cos(radians);
+                this.Target.Y = position.Y - this.StrokeWidth * (float)System.Math.Sin(radians);
+                this.Target.X = position.X + this.StrokeWidth * (float)System.Math.Cos(radians);
 
                 this.IsHit = geometry.StrokeContainsPoint(this.Target, 2);
                 if (this.IsHit)
@@ -57,25 +57,24 @@ namespace Luo_Painter.TestApp
         // angle-30° ~ angle+30°
         private void Hit3(CanvasGeometry geometry, Vector2 position, int angle)
         {
-            for (int i = 0; i < 30; i++)
+            // Zero 
+            if (this.Hit4(geometry, position, angle)) return;
+            for (int i = 1; i < 30; i++)
             {
                 // Positive 
-                float radians1 = (angle + i) / 180f * FanKit.Math.Pi;
-                this.Target.Y = position.Y - this.Distance * (float)System.Math.Sin(radians1);
-                this.Target.X = position.X + this.Distance * (float)System.Math.Cos(radians1);
-
-                this.IsHit = geometry.StrokeContainsPoint(this.Target, 1);
-                if (this.IsHit) return;
-
-
+                if (this.Hit4(geometry, position, angle + i)) return;
                 // Negative
-                float radians2 = (angle - i) / 180f * FanKit.Math.Pi;
-                this.Target.Y = position.Y - this.Distance * (float)System.Math.Sin(radians2);
-                this.Target.X = position.X + this.Distance * (float)System.Math.Cos(radians2);
-
-                this.IsHit = geometry.StrokeContainsPoint(this.Target, 1);
-                if (this.IsHit) return;
+                if (this.Hit4(geometry, position, angle - i)) return;
             }
+        }
+
+        private bool Hit4(CanvasGeometry geometry, Vector2 position, int angle)
+        {
+            float radians = angle / 180f * FanKit.Math.Pi;
+            this.Target.Y = position.Y - this.StrokeWidth * (float)System.Math.Sin(radians);
+            this.Target.X = position.X + this.StrokeWidth * (float)System.Math.Cos(radians);
+
+            return geometry.StrokeContainsPoint(this.Target, 1);
         }
     }
 
@@ -103,18 +102,18 @@ namespace Luo_Painter.TestApp
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                args.DrawingSession.DrawGeometry(Geometry, Hitter.IsContains ? Colors.Orange : Colors.DodgerBlue);
+                args.DrawingSession.DrawGeometry(this.Geometry, this.Hitter.IsContains ? Colors.Orange : Colors.DodgerBlue);
 
-                if (Hitter.IsContains)
+                if (this.Hitter.IsContains)
                 {
-                    args.DrawingSession.DrawLine(Hitter.Target, Position, Hitter.IsHit ? Colors.Orange : Colors.DodgerBlue, 2);
+                    args.DrawingSession.DrawLine(this.Hitter.Target, this.Position, this.Hitter.IsHit ? Colors.Orange : Colors.DodgerBlue, 2);
 
-                    args.DrawingSession.FillCircle(Hitter.Target, 4, Colors.White);
-                    args.DrawingSession.FillCircle(Hitter.Target, 3, Colors.DodgerBlue);
+                    args.DrawingSession.FillCircle(this.Hitter.Target, 4, Colors.White);
+                    args.DrawingSession.FillCircle(this.Hitter.Target, 3, Colors.DodgerBlue);
                 }
 
-                args.DrawingSession.FillCircle(Position, 4, Colors.White);
-                args.DrawingSession.FillCircle(Position, 3, Colors.DodgerBlue);
+                args.DrawingSession.FillCircle(this.Position, 4, Colors.White);
+                args.DrawingSession.FillCircle(this.Position, 3, Colors.DodgerBlue);
             };
         }
 
