@@ -167,6 +167,9 @@
     <Compile Include="NightSkyTimeLapsePage.xaml.cs">
       <DependentUpon>NightSkyTimeLapsePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PenBSplinesPage.xaml.cs">
+      <DependentUpon>PenBSplinesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PenCurvePage.xaml.cs">
       <DependentUpon>PenCurvePage.xaml</DependentUpon>
     </Compile>
@@ -358,6 +361,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="NightSkyTimeLapsePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PenBSplinesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
