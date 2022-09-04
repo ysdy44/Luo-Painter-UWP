@@ -4,6 +4,8 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
@@ -17,6 +19,82 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
+    internal class PenStrokes : List<Vector2>
+    {
+        public PenStrokes(CanvasGeometry geometry, float strokeWidth = 12) : base
+        (
+            from i
+            in Enumerable.Range(0, (int)(geometry.ComputePathLength() / strokeWidth))
+            select geometry.ComputePointOnPath(i * strokeWidth)
+        )
+        { }
+
+        public int[] GetStrokes(IEnumerable<Node> nodes) => nodes.Select(this.GetStroke).ToArray();
+        public int GetNode(int[] nodesStroke, Vector2 position)
+        {
+            int stroke = this.GetStroke(position);
+
+            int strokeLeft = this.GetStrokeLeft(nodesStroke, stroke);
+            if (strokeLeft is int.MinValue) return -1;
+
+            int strokeRight = this.GetStrokeRight(nodesStroke, stroke);
+            if (strokeRight is int.MaxValue) return -1;
+
+            int index = System.Math.Max(strokeLeft, strokeRight);
+            for (int i = 0; i < nodesStroke.Length; i++)
+            {
+                if (nodesStroke[i] == index)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private int GetStroke(Node node) => this.GetStroke(node.Point);
+        private int GetStroke(Vector2 position)
+        {
+            int index = -1;
+            float distance = float.MaxValue;
+
+            for (int i = 0; i < base.Count; i++)
+            {
+                float d = Vector2.Distance(position, base[i]);
+                if (distance > d)
+                {
+                    distance = d;
+                    index = i;
+                }
+            }
+            return index;
+        }
+
+        private int GetStrokeLeft(IEnumerable<int> nodesStroke, int stroke)
+        {
+            int index = int.MinValue;
+
+            foreach (int item in nodesStroke)
+            {
+                if (stroke > item)
+                    if (index < item)
+                        index = item;
+            }
+            return index;
+        }
+        private int GetStrokeRight(IEnumerable<int> nodesStroke, int stroke)
+        {
+            int index = int.MaxValue;
+
+            foreach (int item in nodesStroke)
+            {
+                if (stroke < item)
+                    if (index > item)
+                        index = item;
+            }
+            return index;
+        }
+
+    }
+
     internal enum PenCurveTool
     {
         Curve,
@@ -127,6 +205,7 @@ namespace Luo_Painter.TestApp
                 if (this.Nodes is null) return;
 
                 args.DrawingSession.DrawGeometry(this.ToPoint(this.Geometry), Colors.DodgerBlue, 1);
+                // args.DrawingSession.DrawNodeCollection(this.Nodes, matrix);
                 foreach (Node item in this.Nodes)
                 {
                     switch (item.Type)
@@ -172,19 +251,13 @@ namespace Luo_Painter.TestApp
                     case PenCurveTool.Cutter:
                         Vector2 sp = this.ToPoint(this.StartingPosition);
                         Vector2 pp = this.ToPoint(this.Position);
-                        args.DrawingSession.DrawLine(sp, pp, Colors.DodgerBlue, 2);
-
-                        args.DrawingSession.FillCircle(sp, 4, Colors.White);
-                        args.DrawingSession.FillCircle(sp, 3, Colors.DodgerBlue);
-
-                        args.DrawingSession.FillCircle(pp, 4, Colors.White);
-                        args.DrawingSession.FillCircle(pp, 3, Colors.DodgerBlue);
+                        args.DrawingSession.DrawLine(sp, pp, Colors.Orange, 2);
 
                         if (this.Cutter.IsHit)
                         {
                             Vector2 p = this.ToPoint(this.Cutter.Target);
                             args.DrawingSession.FillCircle(p, 4, Colors.White);
-                            args.DrawingSession.FillCircle(p, 3, Colors.DodgerBlue);
+                            args.DrawingSession.FillCircle(p, 3, Colors.Orange);
                         }
                         break;
                     default:
@@ -252,10 +325,10 @@ namespace Luo_Painter.TestApp
                         }
                         break;
                     case PenCurveTool.Hitter:
-                        this.Hitter.Hit(this.Geometry, this.Position, (int)(32 / this.Transformer.Scale));
+                        this.Hitter.Hit(this.Geometry, this.Position, 32 / this.Transformer.Scale);
                         break;
                     case PenCurveTool.Cutter:
-                        this.Cutter.Hit(this.Geometry, this.StartingPosition, this.Position, (int)(32 / this.Transformer.Scale));
+                        this.Cutter.Hit(this.Geometry, this.StartingPosition, this.Position, 32 / this.Transformer.Scale);
                         break;
                     default:
                         break;
@@ -304,14 +377,16 @@ namespace Luo_Painter.TestApp
                             item.TransformAdd(this.Position - this.StartingPosition);
                         }
 
+                        this.PenCurve(default, default, default);
+
                         this.Geometry?.Dispose();
                         this.Geometry = this.Nodes.CreateGeometry(this.CanvasControl);
                         break;
                     case PenCurveTool.Hitter:
-                        this.Hitter.Hit(this.Geometry, this.Position, (int)(32 / this.Transformer.Scale));
+                        this.Hitter.Hit(this.Geometry, this.Position, 32 / this.Transformer.Scale);
                         break;
                     case PenCurveTool.Cutter:
-                        this.Cutter.Hit(this.Geometry, this.StartingPosition, this.Position, (int)(32 / this.Transformer.Scale));
+                        this.Cutter.Hit(this.Geometry, this.StartingPosition, this.Position, 32 / this.Transformer.Scale);
                         break;
                     default:
                         break;
@@ -338,10 +413,41 @@ namespace Luo_Painter.TestApp
                     case PenCurveTool.Move:
                         break;
                     case PenCurveTool.Hitter:
-                        this.Hitter.Hit(this.Geometry, this.Position, (int)(32 / this.Transformer.Scale));
-                        break;
                     case PenCurveTool.Cutter:
-                        this.Cutter.Hit(this.Geometry, this.StartingPosition, this.Position, (int)(32 / this.Transformer.Scale));
+                        Vector2 target = Vector2.Zero;
+
+                        if (this.StartingPosition == this.Position)
+                        {
+                            this.Hitter.Hit(this.Geometry, this.Position, 32 / this.Transformer.Scale);
+                            if (this.Hitter.IsHit) target = this.Hitter.Target;
+                            else break;
+                        }
+                        else
+                        {
+                            this.Cutter.Hit(this.Geometry, this.StartingPosition, this.Position, 8 / this.Transformer.Scale);
+                            if (this.Cutter.IsHit) target = this.Cutter.Target;
+                            else break;
+                        }
+
+                        PenStrokes strokes = new PenStrokes(this.Geometry);
+                        int[] nodesStroke = strokes.GetStrokes(this.Nodes);
+
+                        int index = strokes.GetNode(nodesStroke, target);
+                        if (index is -1) break;
+
+                        this.Nodes.Insert(index, new Node
+                        {
+                            IsChecked = true,
+                            IsSmooth = true,
+                            Point = target,
+                            LeftControlPoint = target,
+                            RightControlPoint = target,
+                        });
+
+                        this.PenCurve(default, default, default);
+
+                        this.Geometry?.Dispose();
+                        this.Geometry = this.Nodes.CreateGeometry(this.CanvasControl);
                         break;
                     default:
                         break;
@@ -380,7 +486,7 @@ namespace Luo_Painter.TestApp
                         this.Geometry = this.Nodes.CreateGeometry(this.CanvasControl);
                         break;
                     case PenCurveTool.Hitter:
-                        this.Hitter.Hit(this.Geometry, this.Position, (int)(32 / this.Transformer.Scale));
+                        this.Hitter.Hit(this.Geometry, this.Position, 32 / this.Transformer.Scale);
                         break;
                     case PenCurveTool.Cutter:
                         break;

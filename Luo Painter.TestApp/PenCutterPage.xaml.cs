@@ -7,14 +7,14 @@ namespace Luo_Painter.TestApp
 {
     internal struct PenCutter
     {
-        int StrokeWidth;
+        float StrokeWidth;
         float Length;
 
         public bool IsContains;
         public bool IsHit;
         public Vector2 Target;
 
-        public void Hit(CanvasGeometry geometry, Vector2 startingPosition, Vector2 position, int strokeWidth = 32)
+        public void Hit(CanvasGeometry geometry, Vector2 startingPosition, Vector2 position, float strokeWidth = 32)
         {
             this.StrokeWidth = strokeWidth;
             this.Length = Vector2.Distance(position, startingPosition);
@@ -30,7 +30,7 @@ namespace Luo_Painter.TestApp
                 this.IsHit = geometry.StrokeContainsPoint(this.Target, 1);
                 if (this.IsHit) return;
 
-                for (int i = 1; i < this.StrokeWidth; i++)
+                for (float i = 1; i < this.StrokeWidth; i++)
                 {
                     this.Target = Vector2.Lerp(position, startingPosition, i / this.Length);
                     this.IsHit = geometry.StrokeContainsPoint(this.Target, 1);
@@ -51,7 +51,7 @@ namespace Luo_Painter.TestApp
                     this.IsHit = geometry.StrokeContainsPoint(this.Target, 1);
                     if (this.IsHit) return;
 
-                    for (int i = 1; i < this.StrokeWidth; i++)
+                    for (float i = 1; i < this.StrokeWidth; i++)
                     {
                         // Positive 
                         this.Target = Vector2.Lerp(position, startingPosition, (lerp + i) / this.Length);

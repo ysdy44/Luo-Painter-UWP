@@ -7,13 +7,13 @@ namespace Luo_Painter.TestApp
 {
     internal struct PenHitter
     {
-        int StrokeWidth;
+        float StrokeWidth;
 
         public bool IsContains;
         public bool IsHit;
         public Vector2 Target;
 
-        public void Hit(CanvasGeometry geometry, Vector2 position, int strokeWidth = 32)
+        public void Hit(CanvasGeometry geometry, Vector2 position, float strokeWidth = 32)
         {
             this.StrokeWidth = strokeWidth;
 
