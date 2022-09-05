@@ -16,52 +16,88 @@
         <transformers:CanvasTransformer x:Name="Transformer" />
     </FrameworkElement.Resources>
 
-    <Grid>
-        <xaml:CanvasControl x:Name="CanvasControl" />
 
-        <ListBox x:Name="ListBox" SelectedIndex="0" Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+    <SplitView x:Name="SplitView" OpenPaneLength="200" PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="True" >
+        <SplitView.Pane>
+            <ListView
+                x:Name="ListView" 
+                SelectedIndex="0"
+                ItemsSource="{x:Bind ObservableCollection}"         
+                >
 
-        <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" >
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
 
-            <ContentControl.Content>
-                <TextBlock Margin="12,10,2,0" >
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ListViewBase.Header>
+                    <Button x:Name="AddNodesButton" HorizontalAlignment="Stretch">
+                        Add Nodes
+                    </Button>
+                </ListViewBase.Header>
+
+            </ListView>
+        </SplitView.Pane>
+
+
+        <Grid>
+            <xaml:CanvasControl x:Name="CanvasControl" />
+
+            <ListBox x:Name="ListBox" SelectedIndex="0" Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+            <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+                <ContentControl.Content>
+                    <TextBlock Margin="12,10,2,0" >
                     <Run Foreground="Red">Pen</Run>
                     <Run>+</Run>
                     <Run Foreground="DodgerBlue">Curve</Run>
-                </TextBlock>
-            </ContentControl.Content>
+                    </TextBlock>
+                </ContentControl.Content>
 
-            <AppBarButton x:Name="AddButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="A"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Add"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Add
-                </AppBarButton.Label>
-            </AppBarButton>
+                <AppBarButton x:Name="AddButton" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="A"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Add"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Add
+                    </AppBarButton.Label>
+                </AppBarButton>
+                
+                <AppBarSeparator/>
+                
+                <AppBarButton x:Name="ClearButton" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Delete"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Clear
+                    </AppBarButton.Label>
+                </AppBarButton>
 
-            <AppBarButton x:Name="ClearButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Delete"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Clear
-                </AppBarButton.Label>
-            </AppBarButton>
+            </CommandBar>
+        </Grid>
 
-        </CommandBar>
-    </Grid>
+
+    </SplitView>
 
 </Page>
