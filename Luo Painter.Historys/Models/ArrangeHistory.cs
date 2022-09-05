@@ -17,7 +17,6 @@ namespace Luo_Painter.Historys.Models
         public Layerage[] UndoParameter { get; }
         public Layerage[] RedoParameter { get; }
         public SetupSizes Sizes { get; private set; }
-        public ArrangeHistory(IEnumerable<string> undoParameter, IEnumerable<string> redoParameter, SetupSizes sizes = null) : this(undoParameter.Select(c => new Layerage { Id = c }).ToArray(), redoParameter.Select(c => new Layerage { Id = c }).ToArray(), sizes) { }
         public ArrangeHistory(Layerage[] undoParameter, Layerage[] redoParameter, SetupSizes sizes = null)
         {
             this.UndoParameter = undoParameter;

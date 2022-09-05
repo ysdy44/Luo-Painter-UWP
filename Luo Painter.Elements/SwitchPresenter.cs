@@ -78,7 +78,7 @@ namespace Luo_Painter.Elements
 
         private void EvaluateCases(T value)
         {
-            if (this.SwitchCases == null || this.SwitchCases.Count == 0)
+            if (this.SwitchCases is null || this.SwitchCases.Count is 0)
             {
                 base.Content = null;
             }

@@ -18,11 +18,10 @@
     >
 
     <FrameworkElement.Tag>
-        <Button x:Name="VisualButton" Visibility="Collapsed" 
-                    CommandParameter="{x:Null}">
-            <Button.Command>
+        <Button x:Name="VisualButton" CommandParameter="{x:Null}">
+            <ButtonBase.Command>
                 <local:LayerCommand x:Name="VisualCommand"/>
-            </Button.Command>
+            </ButtonBase.Command>
             <SymbolIcon Symbol="View"/>
         </Button>
     </FrameworkElement.Tag>
@@ -141,7 +140,7 @@
             </DataTemplate>
         </ItemsControl.ItemTemplate>
 
-        <ListView.Header>
+        <ListViewBase.Header>
             <Grid Height="55" Background="{ThemeResource AppBackgroundLight}" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="69"/>
@@ -157,7 +156,7 @@
                 </Border>
                 <SymbolIcon Grid.Column="2" Symbol="SelectAll" />
             </Grid>
-        </ListView.Header>
+        </ListViewBase.Header>
 
         <ListView.Footer>
             <Grid x:Name="Grid" Height="50" Background="{ThemeResource AppBackgroundLight}" >

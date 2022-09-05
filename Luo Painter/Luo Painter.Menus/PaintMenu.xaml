@@ -13,7 +13,7 @@
     d:DesignWidth="400"
     BorderBrush="{ThemeResource AppStroke}" 
     Background="{ThemeResource SystemControlAcrylicElementBrush}" 
-    Title="{x:Bind Type,Mode=OneWay}"
+    Title="{x:Bind Type, Mode=OneWay}"
     >
 
     <FrameworkElement.Resources>
@@ -51,9 +51,9 @@
                     Opacity
                 </FrameworkElement.Tag>
                 <Slider.Header>
-                    <Button 
-                    Padding="4,0" MinWidth="44" Height="28"
-                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    <Button x:Name="OpacityButton"
+                        Padding="4,0" MinWidth="44" Height="28"
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -74,9 +74,9 @@
                     Spacing
                 </FrameworkElement.Tag>
                 <Slider.Header>
-                    <Button      
-                    Padding="4,0" MinWidth="44" Height="28"
-                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    <Button x:Name="SpacingButton"
+                        Padding="4,0" MinWidth="44" Height="28"
+                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                         <Button.Flyout>
                             <Flyout>
 
@@ -94,12 +94,12 @@
 
             <!--Mode-->
             <TextBlock x:Name="ModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                       Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
                 Mode
             </TextBlock>
 
             <ListBox x:Name="ModeComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}"
-                 Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                     Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
                 <TextBlock>None</TextBlock>
                 <TextBlock>Blur</TextBlock>
                 <TextBlock>Mosaic</TextBlock>
@@ -108,13 +108,13 @@
 
             <!--BlendMode-->
             <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                       Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
                 Blend Mode
             </TextBlock>
 
             <ComboBox x:Name="BlendModeComboBox" Margin="2,4" SelectedIndex="0"
-                  IsEnabled="{x:Bind Int0ToBooleanConverter(ModeComboBox.SelectedIndex), Mode=OneWay}"
-                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                      IsEnabled="{x:Bind Int0ToBooleanConverter(ModeComboBox.SelectedIndex), Mode=OneWay}"
+                      Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="effects:BlendEffectMode">
@@ -141,12 +141,12 @@
 
             <!--Hardness-->
             <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                       Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
                 Hardness
             </TextBlock>
 
             <ListView x:Name="HardnessListView" Margin="2,4" SelectedIndex="0" IsItemClickEnabled="True" Style="{StaticResource AppListBoxListViewStyle}"
-              Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                      Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
                 <luo_painter:ElementIcon Type="BrushEdgeHardnessNone"/>
                 <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine"/>
                 <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic"/>
@@ -158,12 +158,12 @@
 
             <!--Mask-->
             <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                       Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
                 Mask
             </TextBlock>
 
             <Border Height="146" Margin="2,4" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
-                Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                    Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
                 <StackPanel Orientation="Horizontal" Spacing="9">
                     <Border Width="128" Height="128" CornerRadius="4" Background="Black">
                         <Image>
@@ -188,12 +188,12 @@
 
             <!--Pattern-->
             <TextBlock x:Name="PatternTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
+                       Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
                 Pattern
             </TextBlock>
 
             <Border Height="146" Margin="2,4" Padding="9" CornerRadius="4" Background="{ThemeResource SystemAltLowColor}" 
-                Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
+                    Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
                 <StackPanel Orientation="Horizontal" Spacing="9">
                     <Border Width="128" Height="128" CornerRadius="4" Background="Black">
                         <Image>

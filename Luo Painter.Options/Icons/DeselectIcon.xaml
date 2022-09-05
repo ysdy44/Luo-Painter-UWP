@@ -16,7 +16,7 @@
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
                             <Setter Target="Grid.Opacity" Value="0.5"/>
-                            <Setter Target="RedPathIcon.Fill" Value="Gray"/>
+                            <Setter Target="RedPathIcon.Foreground" Value="Gray"/>
                         </VisualState.Setters>
                     </VisualState>
 
