@@ -9,7 +9,7 @@
     >
 
     <ListView x:Name="ListView" IsItemClickEnabled="True">
-        <ListView.Header>
+        <ListViewBase.Header>
             <Canvas x:Name="Canvas"
                 Margin="12" Width="400" Height="300"
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -76,7 +76,7 @@
 
             </Canvas>
 
-        </ListView.Header>
+        </ListViewBase.Header>
         <!--Animals-->
     </ListView>
 

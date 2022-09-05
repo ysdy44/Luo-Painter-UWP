@@ -33,12 +33,12 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <ComboBox x:Name="InkTypeComboBox" SelectedIndex="0" VerticalAlignment="Center">
                     <x:String>EraseDry</x:String>
                     <x:String>EraseWetOpacity</x:String>
                 </ComboBox>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="OpacityButton" >
                 <UIElement.KeyboardAccelerators>

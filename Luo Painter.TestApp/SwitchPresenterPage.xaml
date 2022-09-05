@@ -10,7 +10,7 @@
     >
 
     <ListView x:Name="ListView" Grid.Row="1" IsItemClickEnabled="True">
-        <ListView.Header>
+        <ListViewBase.Header>
             <Border 
                 Margin="12" MaxWidth="400" MaxHeight="400"
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -39,7 +39,7 @@
                 </Viewbox>
             </Border>
 
-        </ListView.Header>
+        </ListViewBase.Header>
         <!--Animals-->
     </ListView>
 

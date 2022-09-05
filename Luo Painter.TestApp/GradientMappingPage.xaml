@@ -84,11 +84,11 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <TextBlock Margin="12,10,2,0">
                    Drop to Remove ( Y less than -50 )
                 </TextBlock>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>

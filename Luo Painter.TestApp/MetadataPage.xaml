@@ -41,7 +41,7 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <ListView
                     x:Name="ListView"               
                     Height="40"
@@ -51,11 +51,11 @@
                     ItemsSource="{x:Bind Paths}"                          
                     >
 
-                    <ListView.ItemsPanel>
+                    <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsStackPanel Orientation="Horizontal" ItemsUpdatingScrollMode="KeepLastItemInView" />
                         </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
+                    </ItemsControl.ItemsPanel>
 
                     <ItemsControl.ItemContainerTransitions>
                         <TransitionCollection>
@@ -88,7 +88,7 @@
                     </ItemsControl.ItemTemplate>
 
                 </ListView>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="BackButton" >
                 <UIElement.KeyboardAccelerators>

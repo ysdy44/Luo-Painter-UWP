@@ -46,11 +46,11 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <TextBlock x:Name="TextBlock" Margin="12,10,2,0">
                     None
                 </TextBlock>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="AddButton">
                 <UIElement.KeyboardAccelerators>

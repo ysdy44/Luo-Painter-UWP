@@ -28,7 +28,7 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <TextBlock Margin="12,10,2,0" >
                     <Run Foreground="YellowGreen">Bounds</Run>
                     <Run>></Run>
@@ -36,7 +36,7 @@
                     <Run>></Run>
                     <Run Foreground="DodgerBlue">PixelBounds</Run>
                 </TextBlock>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>

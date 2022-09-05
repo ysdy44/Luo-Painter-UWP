@@ -60,11 +60,11 @@
                             </TransitionCollection>
                         </ItemsControl.ItemContainerTransitions>
                         
-                        <ListView.Header>
+                        <ListViewBase.Header>
                             <Button x:Name="ClearButton" Height="32" HorizontalAlignment="Stretch">
                                 <SymbolIcon Symbol="Delete"/>
                             </Button>
-                        </ListView.Header>
+                        </ListViewBase.Header>
                         
                     </ListView>
                     

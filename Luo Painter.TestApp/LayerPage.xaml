@@ -64,13 +64,13 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <TextBlock Margin="12,10,2,0">
                     <Run>Selection</Run>
                     <Run>Add:</Run><Run x:Name="AddRun"/>
                     <Run>Removed:</Run><Run x:Name="RemovedRun"/>
                 </TextBlock>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="SelectAllButton" Icon="SelectAll">
                 <UIElement.KeyboardAccelerators>
@@ -105,12 +105,10 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton                               
-                    x:Name="VisualButton"                                  
-                    CommandParameter="{x:Null}">
-                    <AppBarButton.Command>
+                <AppBarButton x:Name="VisualButton" CommandParameter="{x:Null}">
+                    <ButtonBase.Command>
                         <local:LayerCommand x:Name="VisualCommand"/>
-                    </AppBarButton.Command>
+                    </ButtonBase.Command>
                     <AppBarButton.Icon>
                         <SymbolIcon Symbol="View" />
                     </AppBarButton.Icon>

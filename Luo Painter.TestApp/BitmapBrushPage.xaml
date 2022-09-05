@@ -53,14 +53,14 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <ComboBox x:Name="InkTypeComboBox" SelectedIndex="0" VerticalAlignment="Center">
                     <x:String>CircleDry</x:String>
                     <x:String>CircleWetOpacity</x:String>
                     <x:String>CircleWetBlendMode</x:String>
                     <x:String>CircleWetOpacityBlendMode</x:String>
                 </ComboBox>
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton x:Name="OpacityButton" >
                 <UIElement.KeyboardAccelerators>

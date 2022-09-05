@@ -219,11 +219,11 @@
                 </GroupStyle>
             </ItemsControl.GroupStyle>
 
-            <ListView.Header>
+            <ListViewBase.Header>
                 <Button HorizontalAlignment="Stretch">
                     Header
                 </Button>
-            </ListView.Header>
+            </ListViewBase.Header>
 
             <ListView.Footer>
                 <Button HorizontalAlignment="Stretch">
@@ -300,11 +300,11 @@
                 </GroupStyle>
             </ItemsControl.GroupStyle>
 
-            <ListView.Header>
+            <ListViewBase.Header>
                 <Button HorizontalAlignment="Stretch">
                     Header
                 </Button>
-            </ListView.Header>
+            </ListViewBase.Header>
 
             <ListView.Footer>
                 <Button HorizontalAlignment="Stretch">

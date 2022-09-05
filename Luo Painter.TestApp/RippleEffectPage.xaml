@@ -48,9 +48,9 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <CommandBar.Content>
+            <ContentControl.Content>
                 <Slider x:Name="Slider" Margin="12,4,2,0" MinWidth="200" Value="0" Minimum="0" Maximum="2000" />
-            </CommandBar.Content>
+            </ContentControl.Content>
 
             <AppBarButton>
                 <AppBarButton.Flyout>
