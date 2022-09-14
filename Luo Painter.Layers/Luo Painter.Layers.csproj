@@ -153,6 +153,7 @@
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
     <Compile Include="Models\BitmapLayer.Setup.cs" />
     <Compile Include="Models\CurveLayer.Anchor.cs" />
+    <Compile Include="Models\CurveLayer.AnchorCollection.cs" />
     <Compile Include="Models\GroupLayer.cs" />
     <Compile Include="PixelBounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
