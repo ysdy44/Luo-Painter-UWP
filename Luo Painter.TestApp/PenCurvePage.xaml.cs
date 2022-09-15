@@ -159,11 +159,25 @@ namespace Luo_Painter.TestApp
         private void ConstructPenCurve()
         {
             this.ListView.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.AddNodesButton.Click += (s, e) =>
+            this.AddAnchorsButton.Click += (s, e) =>
             {
+                int count = this.ObservableCollection.Count;
+
                 this.ObservableCollection.Add(new AnchorCollection());
-                this.ListView.SelectedIndex = this.ObservableCollection.Count - 1;
+                this.ListView.SelectedIndex = count;
+
                 this.CanvasControl.Invalidate(); // Invalidate
+            };
+            this.RemoveAnchorsButton.Click += (s, e) =>
+            {
+                int index = this.ListView.SelectedIndex;
+                if (index >= 0)
+                {
+                    this.ObservableCollection.RemoveAt(index);
+                    this.ListView.SelectedIndex = index - 1;
+
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
             };
 
             this.ListBox.ItemsSource = System.Enum.GetValues(typeof(PenCurveTool));
@@ -177,6 +191,57 @@ namespace Luo_Painter.TestApp
                     if (anchors is null) return;
 
                     anchors.BuildGeometry(this.CanvasControl);
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
+
+            this.ResetPressureButton.Click += (s, e) =>
+            {
+                int index = this.ListView.SelectedIndex;
+                if (index >= 0)
+                {
+                    AnchorCollection curve = this.ObservableCollection[index];
+                    if (curve is null) return;
+
+                    foreach (Anchor item in curve)
+                    {
+                        if (item.IsChecked) item.Pressure = 1;
+                    }
+
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
+            this.PressureSlider.ValueChanged += (s, e) =>
+            {
+                int index = this.ListView.SelectedIndex;
+                if (index >= 0)
+                {
+                    AnchorCollection curve = this.ObservableCollection[index];
+                    if (curve is null) return;
+
+                    float value = (float)e.NewValue;
+                    if (value > 0)
+                    {
+                        foreach (Anchor item in curve)
+                        {
+                            if (item.IsChecked) item.Pressure = 1 + value;
+                        }
+                    }
+                    else if (value < 0)
+                    {
+                        foreach (Anchor item in curve)
+                        {
+                            if (item.IsChecked) item.Pressure = -1 / value;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Anchor item in curve)
+                        {
+                            if (item.IsChecked) item.Pressure = 1;
+                        }
+                    }
+
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -196,7 +261,34 @@ namespace Luo_Painter.TestApp
                 int index = this.ListView.SelectedIndex;
                 if (index >= 0)
                 {
-                    this.ObservableCollection[index] = null;
+                    AnchorCollection curve = this.ObservableCollection[index];
+
+                    if (curve is null)
+                    {
+                        this.ObservableCollection.RemoveAt(index);
+                        this.ListView.SelectedIndex = index - 1;
+
+                        this.CanvasControl.Invalidate(); // Invalidate
+                        return;
+                    }
+
+                    Anchor[] uncheck = curve.Where(c => c.IsChecked is false).ToArray();
+                    if (uncheck.Length < 2)
+                    {
+                        this.ObservableCollection.RemoveAt(index);
+                        this.ListView.SelectedIndex = index - 1;
+
+                        this.CanvasControl.Invalidate(); // Invalidate
+                        return;
+                    }
+
+                    curve.Clear();
+                    foreach (Anchor item in uncheck)
+                    {
+                        curve.Add(item);
+                    }
+
+                    curve.BuildGeometry(this.CanvasControl);
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };

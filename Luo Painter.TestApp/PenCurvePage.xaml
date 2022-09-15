@@ -38,10 +38,16 @@
                 </ItemsControl.ItemContainerTransitions>
 
                 <ListViewBase.Header>
-                    <Button x:Name="AddNodesButton" HorizontalAlignment="Stretch">
-                        Add Nodes
+                    <Button x:Name="AddAnchorsButton" HorizontalAlignment="Stretch">
+                        Add Anchors
                     </Button>
                 </ListViewBase.Header>
+
+                <ListViewBase.Footer>
+                    <Button x:Name="RemoveAnchorsButton" HorizontalAlignment="Stretch">
+                        Remove Anchors
+                    </Button>
+                </ListViewBase.Footer>
 
             </ListView>
         </SplitView.Pane>
@@ -50,13 +56,37 @@
         <Grid>
             <xaml:CanvasControl x:Name="CanvasControl" />
 
-            <ListBox x:Name="ListBox" SelectedIndex="0" Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <ListBox x:Name="ListBox" SelectedIndex="0" Margin="12,112" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
+
+            <CommandBar x:Name="AppBar" Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+                <ContentControl.Content>
+                    <Slider
+                        x:Name="PressureSlider" 
+                        Width="200" 
+                        Margin="4,4,2,0" 
+                        Minimum="-10"
+                        Maximum="9"
+                        StepFrequency="0.1"
+                        />
+                </ContentControl.Content>
+
+                <AppBarButton x:Name="ResetPressureButton" >
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Refresh"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Reset Pressure
+                    </AppBarButton.Label>
+                </AppBarButton>
+
+            </CommandBar>
 
             <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
@@ -79,9 +109,9 @@
                         Add
                     </AppBarButton.Label>
                 </AppBarButton>
-                
+
                 <AppBarSeparator/>
-                
+
                 <AppBarButton x:Name="ClearButton" >
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="None" Key="Delete"/>
@@ -95,8 +125,8 @@
                 </AppBarButton>
 
             </CommandBar>
-        </Grid>
 
+        </Grid>
 
     </SplitView>
 
