@@ -21,82 +21,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    internal class PenStrokes : List<Vector2>
-    {
-        public PenStrokes(CanvasGeometry geometry, float strokeWidth = 12) : base
-        (
-            from i
-            in Enumerable.Range(0, (int)(geometry.ComputePathLength() / strokeWidth))
-            select geometry.ComputePointOnPath(i * strokeWidth)
-        )
-        { }
-
-        public int[] GetStrokes(IEnumerable<Anchor> anchors) => anchors.Select(this.GetStroke).ToArray();
-        public int GetNode(int[] anchorsStroke, Vector2 position)
-        {
-            int stroke = this.GetStroke(position);
-
-            int strokeLeft = this.GetStrokeLeft(anchorsStroke, stroke);
-            if (strokeLeft is int.MinValue) return -1;
-
-            int strokeRight = this.GetStrokeRight(anchorsStroke, stroke);
-            if (strokeRight is int.MaxValue) return -1;
-
-            int index = System.Math.Max(strokeLeft, strokeRight);
-            for (int i = 0; i < anchorsStroke.Length; i++)
-            {
-                if (anchorsStroke[i] == index)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        private int GetStroke(Anchor anchor) => this.GetStroke(anchor.Point);
-        private int GetStroke(Vector2 position)
-        {
-            int index = -1;
-            float distance = float.MaxValue;
-
-            for (int i = 0; i < base.Count; i++)
-            {
-                float d = Vector2.Distance(position, base[i]);
-                if (distance > d)
-                {
-                    distance = d;
-                    index = i;
-                }
-            }
-            return index;
-        }
-
-        private int GetStrokeLeft(IEnumerable<int> anchorsStroke, int stroke)
-        {
-            int index = int.MinValue;
-
-            foreach (int item in anchorsStroke)
-            {
-                if (stroke > item)
-                    if (index < item)
-                        index = item;
-            }
-            return index;
-        }
-        private int GetStrokeRight(IEnumerable<int> anchorsStroke, int stroke)
-        {
-            int index = int.MaxValue;
-
-            foreach (int item in anchorsStroke)
-            {
-                if (stroke < item)
-                    if (index > item)
-                        index = item;
-            }
-            return index;
-        }
-
-    }
-
     internal enum PenCurveTool
     {
         Curve,
@@ -205,7 +129,7 @@ namespace Luo_Painter.TestApp
 
                     foreach (Anchor item in curve)
                     {
-                        if (item.IsChecked) item.Pressure = 1;
+                        item.Pressure = 1;
                     }
 
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -231,7 +155,7 @@ namespace Luo_Painter.TestApp
                     {
                         foreach (Anchor item in curve)
                         {
-                            if (item.IsChecked) item.Pressure = -1 / value;
+                            if (item.IsChecked) item.Pressure = -1 / (value - 1);
                         }
                     }
                     else
@@ -321,41 +245,133 @@ namespace Luo_Painter.TestApp
                     TransformMatrix = matrix
                 });
 
+                foreach (AnchorCollection items in this.ObservableCollection)
+                {
+                    if (items is null) continue;
+                    if (items.Count is 0) continue;
+
+                    Anchor previousItem = null;
+                    foreach (Anchor item in items)
+                    {
+                        if (previousItem is null is false)
+                        {
+                            if (previousItem.Geometry is null is false)
+                            {
+                                if (previousItem.Pressure == item.Pressure)
+                                {
+                                    float sw = item.Pressure * 2 * this.Transformer.Scale;
+
+                                    for (float i = 0; i < previousItem.ComputePathLength; i += sw)
+                                    {
+                                        Vector2 p = this.ToPoint(previousItem.Geometry.ComputePointOnPath(i));
+                                        args.DrawingSession.FillCircle(p, sw + sw, Colors.Red);
+                                    }
+                                }
+                                else
+                                {
+                                    float i = 0;
+                                    do
+                                    {
+                                        Vector2 p = this.ToPoint(previousItem.Geometry.ComputePointOnPath(i));
+
+                                        float percentage = i / previousItem.ComputePathLength;
+                                        float cos = (float)System.Math.Cos(percentage * System.Math.PI) / 2 + 0.5f;
+                                        float strokeWidth = cos * previousItem.Pressure + (1 - cos) * item.Pressure;
+
+                                        if (strokeWidth < 0.2f)
+                                        {
+                                            i += 0.5f;
+                                        }
+                                        else
+                                        {
+                                            float sw = strokeWidth * 2 * this.Transformer.Scale;
+                                            args.DrawingSession.FillCircle(p, sw + sw, Colors.Red);
+                                            i += sw;
+                                        }
+                                    } while (i < previousItem.ComputePathLength);
+                                }
+                            }
+                        }
+
+                        previousItem = item;
+                    }
+
+                    previousItem = items.Last();
+                    if (previousItem is null is false)
+                    {
+                        if (previousItem.Geometry is null is false)
+                        {
+                            if (previousItem.Pressure == 1)
+                            {
+                                float sw = 2 * this.Transformer.Scale;
+
+                                for (float i = 0; i < previousItem.ComputePathLength; i += sw)
+                                {
+                                    Vector2 p = this.ToPoint(previousItem.Geometry.ComputePointOnPath(i));
+                                    args.DrawingSession.FillCircle(p, sw + sw, Colors.Red);
+                                }
+                            }
+                            else
+                            {
+                                float i = 0;
+                                do
+                                {
+                                    Vector2 p = this.ToPoint(previousItem.Geometry.ComputePointOnPath(i));
+
+                                    float percentage = i / previousItem.ComputePathLength;
+                                    float cos = (float)System.Math.Cos(percentage * System.Math.PI) / 2 + 0.5f;
+                                    float strokeWidth = cos * previousItem.Pressure + (1 - cos);
+
+                                    if (strokeWidth < 0.2f)
+                                    {
+                                        i += 0.5f;
+                                    }
+                                    else
+                                    {
+                                        float sw = strokeWidth * 2 * this.Transformer.Scale;
+                                        args.DrawingSession.FillCircle(p, sw + sw, Colors.Red);
+                                        i += sw;
+                                    }
+                                } while (i < previousItem.ComputePathLength);
+                            }
+                        }
+                    }
+
+                }
+
                 int index = this.ListView.SelectedIndex;
                 if (index >= 0)
                 {
                     AnchorCollection anchors = this.ObservableCollection[index];
-
-                    foreach (AnchorCollection item in this.ObservableCollection)
+                    if (anchors is null is false)
                     {
-                        if (item is null) continue;
-                        if (item.Geometry is null) continue;
-
-                        Color color = anchors == item ? Colors.DodgerBlue : Colors.Gray;
-                        args.DrawingSession.DrawGeometry(this.ToPoint(item.Geometry), color, 1);
-                    }
-
-                    if (anchors is null) return;
-
-                    foreach (Anchor item in anchors)
-                    {
-                        Vector2 p = this.ToPoint(item.Point);
-                        if (item.IsSmooth)
+                        foreach (Anchor item in anchors)
                         {
-                            if (item.IsChecked) args.DrawingSession.FillCircle(p, 4, Colors.White);
-                            args.DrawingSession.FillCircle(p, 3, Colors.DodgerBlue);
-                        }
-                        else
-                        {
-                            if (item.IsChecked) args.DrawingSession.FillRectangle(p.X - 3, p.Y - 3, 6, 6, Colors.White);
-                            args.DrawingSession.FillRectangle(p.X - 2, p.Y - 2, 4, 4, Colors.DodgerBlue);
-                        }
-                    }
+                            if (item is null) continue;
 
-                    //for (int i = 0; i < anchors.Count; i++)
-                    //{
-                    //    args.DrawingSession.DrawText(i.ToString(), Vector2.Transform(anchors[i].Point, matrix) - new Vector2(40, 40), Colors.Red);
-                    //}
+                            if (item.Geometry is null is false)
+                            {
+                                args.DrawingSession.DrawGeometry(this.ToPoint(item.Geometry), Colors.DodgerBlue, 1);
+                            }
+
+                            Vector2 p = this.ToPoint(item.Point);
+                            if (item.IsSmooth)
+                            {
+                                if (item.IsChecked) args.DrawingSession.FillCircle(p, 4, Colors.White);
+                                args.DrawingSession.FillCircle(p, 3, Colors.DodgerBlue);
+                            }
+                            else
+                            {
+                                if (item.IsChecked) args.DrawingSession.FillRectangle(p.X - 3, p.Y - 3, 6, 6, Colors.White);
+                                args.DrawingSession.FillRectangle(p.X - 2, p.Y - 2, 4, 4, Colors.DodgerBlue);
+                            }
+                        }
+
+                        //for (int i = 0; i < anchors.Count; i++)
+                        //{
+                        //    args.DrawingSession.DrawText(i.ToString(), Vector2.Transform(anchors[i].Point, matrix) - new Vector2(40, 40), Colors.Red);
+                        //}
+                    }
                 }
 
                 switch (this.Mode)
@@ -452,10 +468,20 @@ namespace Luo_Painter.TestApp
                             }
                             break;
                         case PenCurveTool.Hitter:
-                            this.Hitter.Hit(anchors.Geometry, this.Position, 32 / this.Transformer.Scale);
+                            foreach (Anchor item in anchors)
+                            {
+                                if (item.Geometry is null) continue;
+                                this.Hitter.Hit(item.Geometry, this.Position, 32 / this.Transformer.Scale);
+                                if (this.Hitter.IsHit) break;
+                            }
                             break;
                         case PenCurveTool.Cutter:
-                            this.Cutter.Hit(anchors.Geometry, this.StartingPosition, this.Position, 32 / this.Transformer.Scale);
+                            foreach (Anchor item in anchors)
+                            {
+                                if (item.Geometry is null) continue;
+                                this.Cutter.Hit(item.Geometry, this.StartingPosition, this.Position, 32 / this.Transformer.Scale);
+                                if (this.Cutter.IsHit) break;
+                            }
                             break;
                         default:
                             break;
@@ -505,10 +531,20 @@ namespace Luo_Painter.TestApp
                             anchors.BuildGeometry(this.CanvasControl);
                             break;
                         case PenCurveTool.Hitter:
-                            this.Hitter.Hit(anchors.Geometry, this.Position, 32 / this.Transformer.Scale);
+                            foreach (Anchor item in anchors)
+                            {
+                                if (item.Geometry is null) continue;
+                                this.Hitter.Hit(item.Geometry, this.Position, 32 / this.Transformer.Scale);
+                                if (this.Hitter.IsHit) break;
+                            }
                             break;
                         case PenCurveTool.Cutter:
-                            this.Cutter.Hit(anchors.Geometry, this.StartingPosition, this.Position, 32 / this.Transformer.Scale);
+                            foreach (Anchor item in anchors)
+                            {
+                                if (item.Geometry is null) continue;
+                                this.Cutter.Hit(item.Geometry, this.StartingPosition, this.Position, 32 / this.Transformer.Scale);
+                                if (this.Cutter.IsHit) break;
+                            }
                             break;
                         default:
                             break;
@@ -540,35 +576,48 @@ namespace Luo_Painter.TestApp
                             break;
                         case PenCurveTool.Hitter:
                         case PenCurveTool.Cutter:
-                            Vector2 target = Vector2.Zero;
-
                             if (this.StartingPosition == this.Position)
                             {
-                                this.Hitter.Hit(anchors.Geometry, this.Position, 32 / this.Transformer.Scale);
-                                if (this.Hitter.IsHit) target = this.Hitter.Target;
-                                else break;
+                                Anchor target = null;
+                                foreach (Anchor item in anchors)
+                                {
+                                    this.Hitter.Hit(item.Geometry, this.Position, 32 / this.Transformer.Scale);
+                                    if (this.Hitter.IsHit)
+                                    {
+                                        target = item;
+                                        break;
+                                    }
+                                }
+                                if (target is null) return;
+
+                                anchors.Insert(anchors.IndexOf(target) + 1, new Anchor
+                                {
+                                    IsSmooth = true,
+                                    Point = this.Hitter.Target,
+                                });
+                                anchors.BuildGeometry(this.CanvasControl);
                             }
                             else
                             {
-                                this.Cutter.Hit(anchors.Geometry, this.StartingPosition, this.Position, 8 / this.Transformer.Scale);
-                                if (this.Cutter.IsHit) target = this.Cutter.Target;
-                                else break;
+                                Anchor target = null;
+                                foreach (Anchor item in anchors)
+                                {
+                                    this.Cutter.Hit(item.Geometry, this.StartingPosition, this.Position, 8 / this.Transformer.Scale);
+                                    if (this.Cutter.IsHit)
+                                    {
+                                        target = item;
+                                        break;
+                                    }
+                                }
+                                if (target is null) return;
+
+                                anchors.Insert(anchors.IndexOf(target) + 1, new Anchor
+                                {
+                                    IsSmooth = true,
+                                    Point = this.Cutter.Target,
+                                });
+                                anchors.BuildGeometry(this.CanvasControl);
                             }
-
-                            PenStrokes strokes = new PenStrokes(anchors.Geometry);
-                            int[] anchorsStroke = strokes.GetStrokes(anchors);
-
-                            int index2 = strokes.GetNode(anchorsStroke, target);
-                            if (index2 is -1) break;
-
-                            anchors.Insert(index2, new Anchor
-                            {
-                                IsChecked = true,
-                                IsSmooth = true,
-                                Point = target,
-                            });
-
-                            anchors.BuildGeometry(this.CanvasControl);
                             break;
                         default:
                             break;
@@ -612,7 +661,12 @@ namespace Luo_Painter.TestApp
                             anchors.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
                             break;
                         case PenCurveTool.Hitter:
-                            this.Hitter.Hit(anchors.Geometry, this.Position, 32 / this.Transformer.Scale);
+                            foreach (Anchor item in anchors)
+                            {
+                                if (item.Geometry is null) continue;
+                                this.Hitter.Hit(item.Geometry, this.Position, 32 / this.Transformer.Scale);
+                                if (this.Hitter.IsHit) break;
+                            }
                             break;
                         case PenCurveTool.Cutter:
                             break;

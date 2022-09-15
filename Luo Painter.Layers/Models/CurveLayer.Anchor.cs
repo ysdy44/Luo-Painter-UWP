@@ -1,14 +1,17 @@
 ﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Geometry;
+using System;
 using System.Numerics;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed class Anchor : ICacheTransform
+    public sealed class Anchor : ICacheTransform, IDisposable
     {
         /// <summary> Pressure. </summary>
-        public float Pressure { get; set; }
+        public float Pressure { get; set; } = 1;
         /// <summary> The cache of <see cref="Anchor.Pressure"/>. </summary>
-        public float StartingPressure { get; private set; }
+        public float StartingPressure { get; private set; } = 1;
 
         /// <summary> Point. </summary>
         public Vector2 Point { get; set; }
@@ -25,6 +28,8 @@ namespace Luo_Painter.Layers.Models
         /// <summary> The cache of <see cref="Anchor.IsSmooth"/>. </summary>
         public bool StartingIsSmooth { get; private set; }
 
+        public CanvasGeometry Geometry { get; private set; }
+        public float ComputePathLength { get; private set; }
 
         /// <summary>
         /// Get own copy.
@@ -37,10 +42,8 @@ namespace Luo_Painter.Layers.Models
                 Pressure = this.Pressure,
                 StartingPressure = this.StartingPressure,
 
-
                 Point = this.Point,
                 StartingPoint = this.StartingPoint,
-
 
                 IsChecked = this.IsChecked,
                 StartingIsChecked = this.StartingIsChecked,
@@ -48,6 +51,59 @@ namespace Luo_Painter.Layers.Models
                 IsSmooth = this.IsSmooth,
                 StartingIsSmooth = this.StartingIsSmooth,
             };
+        }
+
+
+        /// <summary>
+        /// <see cref="CanvasPathBuilder.AddLine(Vector2)"/>
+        /// </summary>
+        public void AddLine(ICanvasResourceCreator resourceCreator, Vector2 endPoint)
+        {
+            this.Dispose();
+            using (CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator))
+            {
+                pathBuilder.BeginFigure(this.Point, default);
+
+                pathBuilder.AddLine(endPoint);
+
+                pathBuilder.EndFigure(CanvasFigureLoop.Open);
+                this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
+                this.ComputePathLength = this.Geometry.ComputePathLength();
+            }
+        }
+        /// <summary>
+        /// <see cref="CanvasPathBuilder.AddCubicBezier(Vector2, Vector2, Vector2)"/>
+        /// </summary>
+        public void AddCubicBezier(ICanvasResourceCreator resourceCreator, Vector2 rightControlPoint, Vector2 leftControlPoint, Vector2 point)
+        {
+            this.Dispose();
+            using (CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator))
+            {
+                pathBuilder.BeginFigure(this.Point, default);
+
+                pathBuilder.AddCubicBezier(rightControlPoint, leftControlPoint, point);
+
+                pathBuilder.EndFigure(CanvasFigureLoop.Open);
+                this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
+                this.ComputePathLength = this.Geometry.ComputePathLength();
+            }
+        }
+        /// <summary>
+        /// <see cref="CanvasPathBuilder.AddCubicBezier(Vector2, Vector2, Vector2)"/>
+        /// </summary>
+        public void AddCubicBezier(ICanvasResourceCreator resourceCreator, Vector2 rightControlPoint, Vector2 point)
+        {
+            this.Dispose();
+            using (CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator))
+            {
+                pathBuilder.BeginFigure(this.Point, default);
+
+                pathBuilder.AddCubicBezier(rightControlPoint, point, point);
+
+                pathBuilder.EndFigure(CanvasFigureLoop.Open);
+                this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
+                this.ComputePathLength = this.Geometry.ComputePathLength();
+            }
         }
 
 
@@ -105,5 +161,10 @@ namespace Luo_Painter.Layers.Models
         /// <returns> Return **true** if the vector was contained in rectangle. </returns>
         public bool Contained(TransformerRect transformerRect) => this.Contained(transformerRect.Left, transformerRect.Top, transformerRect.Right, transformerRect.Bottom);
 
+        public void Dispose()
+        {
+            this.Geometry?.Dispose();
+            this.Geometry = null;
+        }
     }
 }

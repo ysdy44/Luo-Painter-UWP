@@ -1,8 +1,9 @@
 ﻿using FanKit.Transformers;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Geometry;
+using System.Linq;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -11,7 +12,6 @@ namespace Luo_Painter.Layers.Models
 
         public int Index = -1;
         public Anchor SelectedItem => (this.Index is -1) ? null : base[this.Index];
-        public CanvasGeometry Geometry { get; private set; }
 
 
         /// <summary>
@@ -19,70 +19,37 @@ namespace Luo_Painter.Layers.Models
         /// </summary> 
         public void BuildGeometry(ICanvasResourceCreator resourceCreator)
         {
-            this.Geometry?.Dispose();
-
             switch (base.Count)
             {
                 case 0:
                     break;
                 case 1:
+                    this.Single().Dispose();
                     break;
                 case 2:
-                    {
-                        // Counterclockwise
-                        CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator);
-
-                        // 0. Begin
-                        Vector2 beginPoint = base[0].Point;
-                        pathBuilder.BeginFigure(beginPoint, default);
-
-                        // 3. Last
-                        Vector2 lastPoint = base[1].Point;
-                        pathBuilder.AddLine(lastPoint);
-
-                        pathBuilder.EndFigure(CanvasFigureLoop.Open);
-                        this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
-                        break;
-                    }
+                    this.First().AddLine(resourceCreator, this.Last().Point);
+                    this.Last().Dispose();
+                    break;
                 default:
-                    this.Geometry = this.CreateGeometry(resourceCreator, Vector2.Zero, false, false);
+                    this.CreateGeometry(resourceCreator, Vector2.Zero, false, false);
                     break;
             }
         }
-
         /// <summary>
         /// (Begin + First + Anchors + Last + End).
         /// </summary>        
         public void BuildGeometry(ICanvasResourceCreator resourceCreator, Vector2 position, bool isSmooth)
         {
-            this.Geometry?.Dispose();
-
             switch (base.Count)
             {
                 case 0:
                     break;
                 case 1:
-                    {
-                        // Counterclockwise
-                        CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator);
-
-                        // 0. Begin
-                        Vector2 beginPoint = base[0].Point;
-                        pathBuilder.BeginFigure(beginPoint, default);
-
-                        // 3. Last
-                        pathBuilder.AddLine(position);
-
-                        pathBuilder.EndFigure(CanvasFigureLoop.Open);
-                        this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
-                        break;
-                    }
+                    // Begin + End
+                    this.First().AddLine(resourceCreator, position);
+                    break;
                 case 2:
                     {
-                        // Counterclockwise
-                        CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator);
-
-                        // Vector2 previousLeftControlPoint;
                         Vector2 previousRightControlPoint;
 
 
@@ -90,9 +57,6 @@ namespace Luo_Painter.Layers.Models
                         Anchor begin = base[0];
                         Vector2 beginPoint = begin.Point;
 
-                        pathBuilder.BeginFigure(beginPoint, default);
-
-                        // previousLeftControlPoint = beginPoint;
                         previousRightControlPoint = beginPoint;
 
 
@@ -102,63 +66,27 @@ namespace Luo_Painter.Layers.Models
 
                         if (first.IsSmooth is false && begin.IsSmooth is false)
                         {
-                            pathBuilder.AddLine(firstPoint);
-
-                            // previousLeftControlPoint = point;
+                            begin.AddLine(resourceCreator, firstPoint);
                             previousRightControlPoint = firstPoint;
                         }
                         else
                         {
-                            Vector2 vector = position - (firstPoint + begin.Point) / 2;
-
-                            float left = (firstPoint - (firstPoint + begin.Point) / 2).Length();
-                            float right = (firstPoint - position).Length();
-                            float length = left + right;
-
-                            Vector2 leftControlPoint = firstPoint - System.Math.Min(left, right) / length * vector;
-                            Vector2 rightControlPoint = firstPoint + right / length / 2 * vector;
-
-                            pathBuilder.AddCubicBezier(previousRightControlPoint, leftControlPoint, firstPoint);
-
-                            // previousLeftControlPoint = leftControlPoint;
-                            previousRightControlPoint = rightControlPoint;
+                            Vector2 leftControlPoint = AnchorCollection.CubicBezierFirst(firstPoint, beginPoint, position, ref previousRightControlPoint);
+                            begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, firstPoint);
                         }
 
 
-                        // 3. Last
-                        {
-                            Anchor current = base[base.Count - 1];
-                            Anchor previous = base[base.Count - 2];
-                            Vector2 point = current.Point;
-                            Vector2 vector = position - previous.Point;
+                        // 4. End
+                        Anchor last = base[base.Count - 1];
 
-                            float left = (point - previous.Point).Length();
-                            float right = (point - position).Length();
-                            float length = left + right;
-
-                            Vector2 leftControlPoint = point - System.Math.Min(left, right) / length / 2 * vector;
-                            Vector2 rightControlPoint = point + right / length / 2 * vector;
-
-                            if (current.IsSmooth is false && previous.IsSmooth is false)
-                                pathBuilder.AddLine(point);
-                            else
-                                pathBuilder.AddCubicBezier(previousRightControlPoint, leftControlPoint, point);
-
-
-                            // 4. End
-                            if (isSmooth is false && current.IsSmooth is false)
-                                pathBuilder.AddLine(position);
-                            else
-                                pathBuilder.AddCubicBezier(rightControlPoint, position, position);
-                        }
-
-
-                        pathBuilder.EndFigure(CanvasFigureLoop.Open);
-                        this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
-                        break;
+                        if (isSmooth is false && last.IsSmooth is false)
+                            first.AddLine(resourceCreator, position);
+                        else
+                            first.AddCubicBezier(resourceCreator, previousRightControlPoint, position);
                     }
+                    break;
                 default:
-                    this.Geometry = this.CreateGeometry(resourceCreator, position, isSmooth, true);
+                    this.CreateGeometry(resourceCreator, position, isSmooth, true);
                     break;
             }
         }
@@ -168,12 +96,8 @@ namespace Luo_Painter.Layers.Models
         /// </summary>
         /// <param name="resourceCreator"> The resource-creator. </param>
         /// <returns> The created geometry. </returns>
-        private CanvasGeometry CreateGeometry(ICanvasResourceCreator resourceCreator, Vector2 position, bool isSmooth, bool hasPosition)
+        private void CreateGeometry(ICanvasResourceCreator resourceCreator, Vector2 position, bool isSmooth, bool hasPosition)
         {
-            // Counterclockwise
-            CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator);
-
-            // Vector2 previousLeftControlPoint;
             Vector2 previousRightControlPoint;
 
 
@@ -181,9 +105,6 @@ namespace Luo_Painter.Layers.Models
             Anchor begin = base[0];
             Vector2 beginPoint = begin.Point;
 
-            pathBuilder.BeginFigure(beginPoint, default);
-
-            // previousLeftControlPoint = beginPoint;
             previousRightControlPoint = beginPoint;
 
 
@@ -193,28 +114,16 @@ namespace Luo_Painter.Layers.Models
 
             if (first.IsSmooth is false && begin.IsSmooth is false)
             {
-                pathBuilder.AddLine(firstPoint);
-
-                // previousLeftControlPoint = point;
+                begin.AddLine(resourceCreator, firstPoint);
                 previousRightControlPoint = firstPoint;
             }
             else
             {
-                // 1. First
                 Anchor next = base[2];
-                Vector2 vector = next.Point - (firstPoint + begin.Point) / 2;
+                Vector2 nextPoint = next.Point;
 
-                float left = (firstPoint - (firstPoint + begin.Point) / 2).Length();
-                float right = (firstPoint - next.Point).Length();
-                float length = left + right;
-
-                Vector2 leftControlPoint = firstPoint - System.Math.Min(left, right) / length * vector;
-                Vector2 rightControlPoint = firstPoint + right / length / 2 * vector;
-
-                pathBuilder.AddCubicBezier(previousRightControlPoint, leftControlPoint, firstPoint);
-
-                // previousLeftControlPoint = leftControlPoint;
-                previousRightControlPoint = rightControlPoint;
+                Vector2 leftControlPoint = AnchorCollection.CubicBezierFirst(firstPoint, beginPoint, nextPoint, ref previousRightControlPoint);
+                begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, firstPoint);
             }
 
 
@@ -224,75 +133,93 @@ namespace Luo_Painter.Layers.Models
                 Anchor current = base[i];
                 Anchor previous = base[i - 1];
                 Vector2 point = current.Point;
+                Vector2 previousPoint = previous.Point;
 
                 if (current.IsSmooth is false && previous.IsSmooth is false)
                 {
-                    pathBuilder.AddLine(point);
-
-                    // previousLeftControlPoint = point;
+                    previous.AddLine(resourceCreator, point);
                     previousRightControlPoint = point;
                 }
                 else
                 {
                     Anchor next = base[i + 1];
-                    Vector2 vector = next.Point - previous.Point;
+                    Vector2 nextPoint = next.Point;
 
-                    float left = (point - previous.Point).Length();
-                    float right = (point - next.Point).Length();
-                    float length = left + right;
-
-                    Vector2 leftControlPoint = point - System.Math.Min(left, right) / length / 2 * vector;
-                    Vector2 rightControlPoint = point + right / length / 2 * vector;
-
-                    pathBuilder.AddCubicBezier(previousRightControlPoint, leftControlPoint, point);
-
-                    // previousLeftControlPoint = leftControlPoint;
-                    previousRightControlPoint = rightControlPoint;
+                    Vector2 rightControlPoint = previousRightControlPoint;
+                    Vector2 leftControlPoint = AnchorCollection.CubicBezier(point, previousPoint, nextPoint, ref previousRightControlPoint);
+                    previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, point);
                 }
             }
 
 
-            // 3. Last
+            if (hasPosition)
             {
+                // 3. Last
+                Anchor current = base[base.Count - 1];
+                Anchor previous = base[base.Count - 2];
+                Vector2 point = current.Point;
+                Vector2 previousPoint = previous.Point;
+
+                Vector2 rightControlPoint = previousRightControlPoint;
+                Vector2 leftControlPoint = AnchorCollection.CubicBezier(point, previousPoint, position, ref previousRightControlPoint);
+
+                if (current.IsSmooth is false && previous.IsSmooth is false)
+                    previous.AddLine(resourceCreator, point);
+                else
+                    previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, point);
+
+
+                // 4. End
+                if (isSmooth is false && current.IsSmooth is false)
+                    current.AddLine(resourceCreator, position);
+                else
+                    current.AddCubicBezier(resourceCreator, previousRightControlPoint, position);
+            }
+            else
+            {
+                // 3. Last
                 Anchor current = base[base.Count - 1];
                 Anchor previous = base[base.Count - 2];
                 Vector2 point = current.Point;
 
-                if (hasPosition)
-                {
-                    Vector2 vector = position - previous.Point;
-
-                    float left = (point - previous.Point).Length();
-                    float right = (point - position).Length();
-                    float length = left + right;
-
-                    Vector2 leftControlPoint = point - System.Math.Min(left, right) / length / 2 * vector;
-                    Vector2 rightControlPoint = point + right / length / 2 * vector;
-
-                    if (current.IsSmooth is false && previous.IsSmooth is false)
-                        pathBuilder.AddLine(point);
-                    else
-                        pathBuilder.AddCubicBezier(previousRightControlPoint, leftControlPoint, point);
-
-
-                    // 4. End
-                    if (isSmooth is false && current.IsSmooth is false)
-                        pathBuilder.AddLine(position);
-                    else
-                        pathBuilder.AddCubicBezier(rightControlPoint, position, position);
-                }
+                if (current.IsSmooth is false && previous.IsSmooth is false)
+                    previous.AddLine(resourceCreator, point);
                 else
-                {
-                    if (current.IsSmooth is false && previous.IsSmooth is false)
-                        pathBuilder.AddLine(point);
-                    else
-                        pathBuilder.AddCubicBezier(previousRightControlPoint, point, point);
-                }
+                    previous.AddCubicBezier(resourceCreator, previousRightControlPoint, point);
+
+                current.Dispose();
             }
+        }
 
 
-            pathBuilder.EndFigure(CanvasFigureLoop.Open);
-            return CanvasGeometry.CreatePath(pathBuilder);
+        //@Static
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Vector2 CubicBezier(Vector2 point, Vector2 previousPoint, Vector2 nextPoint, ref Vector2 rightControlPoint)
+        {
+            Vector2 vector = nextPoint - previousPoint;
+
+            float left = (point - previousPoint).Length();
+            float right = (point - nextPoint).Length();
+            float length = left + right;
+
+            Vector2 leftControlPoint = point - System.Math.Min(left, right) / length / 2 * vector;
+            rightControlPoint = point + right / length / 2 * vector;
+
+            return leftControlPoint;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Vector2 CubicBezierFirst(Vector2 firstPoint, Vector2 beginPoint, Vector2 nextPoint, ref Vector2 rightControlPoint)
+        {
+            Vector2 vector = nextPoint - (firstPoint + beginPoint) / 2;
+
+            float left = (firstPoint - (firstPoint + beginPoint) / 2).Length();
+            float right = (firstPoint - nextPoint).Length();
+            float length = left + right;
+
+            Vector2 leftControlPoint = firstPoint - System.Math.Min(left, right) / length * vector;
+            rightControlPoint = firstPoint + right / length / 2 * vector;
+
+            return leftControlPoint;
         }
 
 
