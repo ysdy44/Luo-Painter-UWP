@@ -14,6 +14,14 @@
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
+        <!--Style-->
+        <Style TargetType="Slider">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="4,4,2,0"/>
+            <Setter Property="Minimum" Value="-9"/>
+            <Setter Property="Maximum" Value="9"/>
+            <Setter Property="StepFrequency" Value="0.1"/>
+        </Style>
     </FrameworkElement.Resources>
 
 
@@ -64,17 +72,10 @@
                 </ListBox.ItemsPanel>
             </ListBox>
 
-            <CommandBar x:Name="AppBar" Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
                 <ContentControl.Content>
-                    <Slider
-                        x:Name="PressureSlider" 
-                        Width="200" 
-                        Margin="4,4,2,0" 
-                        Minimum="-10"
-                        Maximum="9"
-                        StepFrequency="0.1"
-                        />
+                    <Slider x:Name="PressureSlider" />
                 </ContentControl.Content>
 
                 <AppBarButton x:Name="ResetPressureButton" >
