@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Geometry;
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -104,6 +105,37 @@ namespace Luo_Painter.Layers.Models
                 this.Geometry = CanvasGeometry.CreatePath(pathBuilder);
                 this.ComputePathLength = this.Geometry.ComputePathLength();
             }
+        }
+
+
+        //@Static
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static Vector2 CubicBezier(Vector2 point, Vector2 previousPoint, Vector2 nextPoint, ref Vector2 rightControlPoint)
+        {
+            Vector2 vector = nextPoint - previousPoint;
+
+            float left = (point - previousPoint).Length();
+            float right = (point - nextPoint).Length();
+            float length = left + right;
+
+            Vector2 leftControlPoint = point - System.Math.Min(left, right) / length / 2 * vector;
+            rightControlPoint = point + right / length / 2 * vector;
+
+            return leftControlPoint;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static Vector2 CubicBezierFirst(Vector2 firstPoint, Vector2 beginPoint, Vector2 nextPoint, ref Vector2 rightControlPoint)
+        {
+            Vector2 vector = nextPoint - (firstPoint + beginPoint) / 2;
+
+            float left = (firstPoint - (firstPoint + beginPoint) / 2).Length();
+            float right = (firstPoint - nextPoint).Length();
+            float length = left + right;
+
+            Vector2 leftControlPoint = firstPoint - System.Math.Min(left, right) / length * vector;
+            rightControlPoint = firstPoint + right / length / 2 * vector;
+
+            return leftControlPoint;
         }
 
 

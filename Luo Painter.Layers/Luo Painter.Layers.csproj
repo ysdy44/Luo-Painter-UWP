@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BitmapType.cs" />
+    <Compile Include="CanvasDrawingSessionExtensions.cs" />
     <Compile Include="IDrag.cs" />
     <Compile Include="ILayer.cs" />
     <Compile Include="IRender.cs" />

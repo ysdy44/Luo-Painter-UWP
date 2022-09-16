@@ -1,9 +1,8 @@
 ﻿using FanKit.Transformers;
 using Microsoft.Graphics.Canvas;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace Luo_Painter.Layers.Models
 {
@@ -17,37 +16,37 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// (Begin + First + Anchors + Last).
         /// </summary> 
-        public void BuildGeometry(ICanvasResourceCreator resourceCreator)
+        public bool BuildGeometry(ICanvasResourceCreator resourceCreator)
         {
             switch (base.Count)
             {
                 case 0:
-                    break;
+                    return false;
                 case 1:
                     this.Single().Dispose();
-                    break;
+                    return false;
                 case 2:
                     this.First().AddLine(resourceCreator, this.Last().Point);
                     this.Last().Dispose();
-                    break;
+                    return true;
                 default:
                     this.CreateGeometry(resourceCreator, Vector2.Zero, false, false);
-                    break;
+                    return true;
             }
         }
         /// <summary>
         /// (Begin + First + Anchors + Last + End).
         /// </summary>        
-        public void BuildGeometry(ICanvasResourceCreator resourceCreator, Vector2 position, bool isSmooth)
+        public bool BuildGeometry(ICanvasResourceCreator resourceCreator, Vector2 position, bool isSmooth)
         {
             switch (base.Count)
             {
                 case 0:
-                    break;
+                    return false;
                 case 1:
                     // Begin + End
                     this.First().AddLine(resourceCreator, position);
-                    break;
+                    return true;
                 case 2:
                     {
                         Vector2 previousRightControlPoint;
@@ -71,7 +70,7 @@ namespace Luo_Painter.Layers.Models
                         }
                         else
                         {
-                            Vector2 leftControlPoint = AnchorCollection.CubicBezierFirst(firstPoint, beginPoint, position, ref previousRightControlPoint);
+                            Vector2 leftControlPoint = Anchor.CubicBezierFirst(firstPoint, beginPoint, position, ref previousRightControlPoint);
                             begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, firstPoint);
                         }
 
@@ -84,10 +83,10 @@ namespace Luo_Painter.Layers.Models
                         else
                             first.AddCubicBezier(resourceCreator, previousRightControlPoint, position);
                     }
-                    break;
+                    return true;
                 default:
                     this.CreateGeometry(resourceCreator, position, isSmooth, true);
-                    break;
+                    return true;
             }
         }
 
@@ -122,7 +121,7 @@ namespace Luo_Painter.Layers.Models
                 Anchor next = base[2];
                 Vector2 nextPoint = next.Point;
 
-                Vector2 leftControlPoint = AnchorCollection.CubicBezierFirst(firstPoint, beginPoint, nextPoint, ref previousRightControlPoint);
+                Vector2 leftControlPoint = Anchor.CubicBezierFirst(firstPoint, beginPoint, nextPoint, ref previousRightControlPoint);
                 begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, firstPoint);
             }
 
@@ -146,7 +145,7 @@ namespace Luo_Painter.Layers.Models
                     Vector2 nextPoint = next.Point;
 
                     Vector2 rightControlPoint = previousRightControlPoint;
-                    Vector2 leftControlPoint = AnchorCollection.CubicBezier(point, previousPoint, nextPoint, ref previousRightControlPoint);
+                    Vector2 leftControlPoint = Anchor.CubicBezier(point, previousPoint, nextPoint, ref previousRightControlPoint);
                     previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, point);
                 }
             }
@@ -161,7 +160,7 @@ namespace Luo_Painter.Layers.Models
                 Vector2 previousPoint = previous.Point;
 
                 Vector2 rightControlPoint = previousRightControlPoint;
-                Vector2 leftControlPoint = AnchorCollection.CubicBezier(point, previousPoint, position, ref previousRightControlPoint);
+                Vector2 leftControlPoint = Anchor.CubicBezier(point, previousPoint, position, ref previousRightControlPoint);
 
                 if (current.IsSmooth is false && previous.IsSmooth is false)
                     previous.AddLine(resourceCreator, point);
@@ -189,37 +188,6 @@ namespace Luo_Painter.Layers.Models
 
                 current.Dispose();
             }
-        }
-
-
-        //@Static
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Vector2 CubicBezier(Vector2 point, Vector2 previousPoint, Vector2 nextPoint, ref Vector2 rightControlPoint)
-        {
-            Vector2 vector = nextPoint - previousPoint;
-
-            float left = (point - previousPoint).Length();
-            float right = (point - nextPoint).Length();
-            float length = left + right;
-
-            Vector2 leftControlPoint = point - System.Math.Min(left, right) / length / 2 * vector;
-            rightControlPoint = point + right / length / 2 * vector;
-
-            return leftControlPoint;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Vector2 CubicBezierFirst(Vector2 firstPoint, Vector2 beginPoint, Vector2 nextPoint, ref Vector2 rightControlPoint)
-        {
-            Vector2 vector = nextPoint - (firstPoint + beginPoint) / 2;
-
-            float left = (firstPoint - (firstPoint + beginPoint) / 2).Length();
-            float right = (firstPoint - nextPoint).Length();
-            float length = left + right;
-
-            Vector2 leftControlPoint = firstPoint - System.Math.Min(left, right) / length * vector;
-            rightControlPoint = firstPoint + right / length / 2 * vector;
-
-            return leftControlPoint;
         }
 
 
