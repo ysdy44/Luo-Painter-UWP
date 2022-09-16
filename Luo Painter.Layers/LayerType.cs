@@ -4,5 +4,6 @@
     {
         Bitmap,
         Group,
+        Curve,
     }
 }

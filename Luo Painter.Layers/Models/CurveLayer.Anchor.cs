@@ -53,6 +53,40 @@ namespace Luo_Painter.Layers.Models
                 StartingIsSmooth = this.StartingIsSmooth,
             };
         }
+        public Anchor Clone(Vector2 offset)
+        {
+            return new Anchor
+            {
+                Pressure = this.Pressure,
+                StartingPressure = this.StartingPressure,
+
+                Point = this.Point + offset,
+                StartingPoint = this.StartingPoint + offset,
+
+                IsChecked = this.IsChecked,
+                StartingIsChecked = this.StartingIsChecked,
+
+                IsSmooth = this.IsSmooth,
+                StartingIsSmooth = this.StartingIsSmooth,
+            };
+        }
+        public Anchor Clone(Matrix3x2 matrix)
+        {
+            return new Anchor
+            {
+                Pressure = this.Pressure,
+                StartingPressure = this.StartingPressure,
+
+                Point = Vector2.Transform(this.Point, matrix),
+                StartingPoint = Vector2.Transform(this.StartingPoint, matrix),
+
+                IsChecked = this.IsChecked,
+                StartingIsChecked = this.StartingIsChecked,
+
+                IsSmooth = this.IsSmooth,
+                StartingIsSmooth = this.StartingIsSmooth,
+            };
+        }
 
 
         /// <summary>
