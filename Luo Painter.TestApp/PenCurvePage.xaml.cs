@@ -160,6 +160,36 @@ namespace Luo_Painter.TestApp
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
+            this.ColorPicker.ColorChanged += (s, e) =>
+            {
+                if (e.NewColor == e.OldColor) return;
+
+                int index = this.ListView.SelectedIndex;
+                if (index >= 0)
+                {
+                    CurveLayer layer = this.ObservableCollection[index];
+                    if (layer is null) return;
+
+                    layer.Color = e.NewColor;
+                    layer.BuildGeometry(this.CanvasControl);
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
+            this.StrokeWidthSlider.ValueChanged += (s, e) =>
+            {
+                if (e.NewValue == e.OldValue) return;
+
+                int index = this.ListView.SelectedIndex;
+                if (index >= 0)
+                {
+                    CurveLayer layer = this.ObservableCollection[index];
+                    if (layer is null) return;
+
+                    layer.StrokeWidth = (float)e.NewValue;
+                    layer.BuildGeometry(this.CanvasControl);
+                    this.CanvasControl.Invalidate(); // Invalidate
+                }
+            };
 
             this.AddButton.Click += async (s, e) =>
             {
@@ -223,7 +253,7 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 this.Transformer.Fit();
-                this.ObservableCollection.Add(new CurveLayer( this.CanvasControl, this.Transformer.Width, this.Transformer.Height)
+                this.ObservableCollection.Add(new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height)
                 {
                     Color = Colors.Red,
                     StrokeWidth = 5
@@ -263,8 +293,8 @@ namespace Luo_Painter.TestApp
 
                             if (item.Geometry is null is false)
                             {
-                                args.DrawingSession.DrawGeometry(this.ToPoint(item.Geometry), Colors.DodgerBlue, 1);
-                            }
+                            args.DrawingSession.DrawGeometry(this.ToPoint(item.Geometry), Colors.DodgerBlue, 1);
+                        }
                             Vector2 p = this.ToPoint(item.Point);
                             if (item.IsSmooth)
                             {

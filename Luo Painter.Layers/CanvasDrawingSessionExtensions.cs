@@ -40,47 +40,34 @@ namespace Luo_Painter.Layers
 
         private static void FillAnchor(this CanvasDrawingSession ds, Anchor anchor, Color color, float strokeWidth)
         {
-            float sw = anchor.Pressure * strokeWidth;
+            float sw = anchor.Pressure * strokeWidth / 2;
+            float swHalf = sw / 2;
 
             // 1.Head
-            ds.FillCircle(anchor.Point, sw * 4, color);
+            ds.FillCircle(anchor.Point, sw, color);
 
             // 2.Body
-            for (float i = sw; i < anchor.ComputePathLength; i += sw)
+            for (float i = swHalf; i < anchor.ComputePathLength; i += swHalf)
             {
-                ds.FillCircle(anchor.Geometry.ComputePointOnPath(i), sw * 4, color);
+                ds.FillCircle(anchor.Geometry.ComputePointOnPath(i), sw, color);
             }
         }
         private static void FillAnchor(this CanvasDrawingSession ds, Anchor anchor, float pressure, Color color, float strokeWidth)
         {
-            float i;
-
             // 1.Head
-            if (anchor.Pressure < strokeWidth / 8)
-            {
-                i = strokeWidth / 4;
-            }
-            else
-            {
-                ds.FillCircle(anchor.Point, anchor.Pressure * 4, color);
-                i = anchor.Pressure;
-            }
+            float sw2 = System.Math.Max(0.4f, anchor.Pressure * strokeWidth / 2);
+
+            ds.FillCircle(anchor.Point, sw2, color);
+            float i = sw2 / 2;
 
             // 2.Body
             do
             {
                 float pect = i / anchor.ComputePathLength;
-                float sw = (pect * pressure + (1 - pect) * anchor.Pressure) * strokeWidth;
+                float sw = System.Math.Max(0.4f, (pect * pressure + (1 - pect) * anchor.Pressure) * strokeWidth / 2);
 
-                if (sw < strokeWidth / 8)
-                {
-                    i += strokeWidth / 4;
-                }
-                else
-                {
-                    ds.FillCircle(anchor.Geometry.ComputePointOnPath(i), sw * 4, color);
-                    i += sw;
-                }
+                ds.FillCircle(anchor.Geometry.ComputePointOnPath(i), sw, color);
+                i += sw / 2;
             } while (i < anchor.ComputePathLength);
         }
 
@@ -112,9 +99,7 @@ namespace Luo_Painter.Layers
             }
 
             // 3.Foot
-            float sw = previous.Pressure * strokeWidth;
-
-            ds.FillCircle(previous.Point, sw * 4, color);
+            ds.FillCircle(previous.Point, System.Math.Max(0.4f, previous.Pressure * strokeWidth / 2), color);
         }
         /// <summary>
         /// (Head+Body + Head+Body + Head+Body + ... + Head+Body+Foot)
@@ -154,11 +139,7 @@ namespace Luo_Painter.Layers
             }
 
             // 3.Foot
-            {
-                float sw = strokeWidth;
-
-                ds.FillCircle(point, sw * 4, color);
-            }
+            ds.FillCircle(point, System.Math.Max(0.4f, strokeWidth / 2), color);
         }
 
     }

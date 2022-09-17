@@ -108,6 +108,9 @@ namespace Luo_Painter.Layers.Models
             {
                 using (CanvasDrawingSession ds = this.Source.CreateDrawingSession())
                 {
+                    //@DPI 
+                    ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
                     ds.Clear(Colors.Transparent);
                     ds.FillAnchorCollection(this.Anchors, this.Color, this.StrokeWidth);
                 }
@@ -119,6 +122,9 @@ namespace Luo_Painter.Layers.Models
             {
                 using (CanvasDrawingSession ds = this.Source.CreateDrawingSession())
                 {
+                    //@DPI 
+                    ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
                     ds.Clear(Colors.Transparent);
                     ds.FillAnchorCollection(this.Anchors, position, this.Color, this.StrokeWidth);
                 }

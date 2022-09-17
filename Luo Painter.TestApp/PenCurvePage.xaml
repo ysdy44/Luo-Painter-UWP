@@ -14,14 +14,6 @@
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
-        <!--Style-->
-        <Style TargetType="Slider">
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Margin" Value="4,4,2,0"/>
-            <Setter Property="Minimum" Value="-9"/>
-            <Setter Property="Maximum" Value="9"/>
-            <Setter Property="StepFrequency" Value="0.1"/>
-        </Style>
     </FrameworkElement.Resources>
 
 
@@ -75,7 +67,13 @@
             <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
                 <ContentControl.Content>
-                    <Slider x:Name="PressureSlider" />
+                    <Slider
+                        x:Name="PressureSlider"   
+                        Width="200"
+                        Margin="4,4,2,0"
+                        Minimum="-9"
+                        Maximum="9"
+                        StepFrequency="0.1"/>
                 </ContentControl.Content>
 
                 <AppBarButton x:Name="ResetPressureButton" >
@@ -84,6 +82,49 @@
                     </AppBarButton.Icon>
                     <AppBarButton.Label>
                         Reset Pressure
+                    </AppBarButton.Label>
+                </AppBarButton>
+
+                <AppBarButton>
+                    <Button.Flyout>
+                        <Flyout>
+                            <ColorPicker
+                                x:Name="ColorPicker"
+                                Color="Red"
+                                ColorSpectrumShape="Ring"
+                                IsMoreButtonVisible="False"
+                                IsColorSliderVisible="False"
+                                IsColorChannelTextInputVisible="False"
+                                IsHexInputVisible="False"
+                                IsAlphaEnabled="False"
+                                IsAlphaSliderVisible="True"
+                                IsAlphaTextInputVisible="True" />
+                        </Flyout>
+                    </Button.Flyout>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="FontColor"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Color
+                    </AppBarButton.Label>
+                </AppBarButton>
+
+                <AppBarButton>
+                    <Button.Flyout>
+                        <Flyout>
+                            <Slider 
+                                x:Name="StrokeWidthSlider" 
+                                Width="200" 
+                                Value="4" 
+                                Minimum="10" 
+                                Maximum="40"/>
+                        </Flyout>
+                    </Button.Flyout>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Edit"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Stroke Width
                     </AppBarButton.Label>
                 </AppBarButton>
 
