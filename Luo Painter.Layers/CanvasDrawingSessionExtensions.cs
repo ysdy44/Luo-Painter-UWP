@@ -8,17 +8,17 @@ namespace Luo_Painter.Layers
     public static class CanvasDrawingSessionExtensions
     {
 
-        private static void DrawAnchor(this CanvasDrawingSession ds, Anchor anchor, Vector2 position)
+        private static void DrawAnchor(this CanvasDrawingSession ds, Anchor anchor, Vector2 point)
         {
             if (anchor.IsSmooth)
             {
-                if (anchor.IsChecked) ds.FillCircle(position, 4, Colors.White);
-                ds.FillCircle(position, 3, Colors.DodgerBlue);
+                if (anchor.IsChecked) ds.FillCircle(point, 4, Colors.White);
+                ds.FillCircle(point, 3, Colors.DodgerBlue);
             }
             else
             {
-                if (anchor.IsChecked) ds.FillRectangle(position.X - 3, position.Y - 3, 6, 6, Colors.White);
-                ds.FillRectangle(position.X - 2, position.Y - 2, 4, 4, Colors.DodgerBlue);
+                if (anchor.IsChecked) ds.FillRectangle(point.X - 3, point.Y - 3, 6, 6, Colors.White);
+                ds.FillRectangle(point.X - 2, point.Y - 2, 4, 4, Colors.DodgerBlue);
             }
         }
 

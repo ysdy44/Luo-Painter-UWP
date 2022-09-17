@@ -89,11 +89,7 @@ namespace Luo_Painter.TestApp
             {
                 int count = this.ObservableCollection.Count;
 
-                this.ObservableCollection.Add(new CurveLayer( this.CanvasControl, this.Transformer.Width, this.Transformer.Height)
-                {
-                    Color = Colors.Red,
-                    StrokeWidth = 5
-                });
+                this.ObservableCollection.Add(new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height));
                 this.ListView.SelectedIndex = count;
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -120,7 +116,16 @@ namespace Luo_Painter.TestApp
                     CurveLayer layer = this.ObservableCollection[index];
                     if (layer is null) return;
 
-                    layer.BuildGeometry(this.CanvasControl);
+                    switch (this.Mode)
+                    {
+                        case PenCurveTool.Curve:
+                        case PenCurveTool.Line:
+                            layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
+                            break;
+                        default:
+                            layer.BuildGeometry(this.CanvasControl);
+                            break;
+                    }
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -207,25 +212,9 @@ namespace Luo_Painter.TestApp
                 if (index >= 0)
                 {
                     CurveLayer layer = this.ObservableCollection[index];
-
-                    if (layer is null)
-                    {
-                        this.ObservableCollection.RemoveAt(index);
-                        this.ListView.SelectedIndex = index - 1;
-
-                        this.CanvasControl.Invalidate(); // Invalidate
-                        return;
-                    }
+                    if (layer is null) return;
 
                     Anchor[] uncheck = layer.Anchors.Where(c => c.IsChecked is false).ToArray();
-                    if (uncheck.Length < 2)
-                    {
-                        this.ObservableCollection.RemoveAt(index);
-                        this.ListView.SelectedIndex = index - 1;
-
-                        this.CanvasControl.Invalidate(); // Invalidate
-                        return;
-                    }
 
                     layer.Anchors.Clear();
                     foreach (Anchor item in uncheck)
@@ -253,22 +242,19 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 this.Transformer.Fit();
-                this.ObservableCollection.Add(new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height)
-                {
-                    Color = Colors.Red,
-                    StrokeWidth = 5
-                });
+                this.ObservableCollection.Add(new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height));
                 this.Border = new Transformer(this.Transformer.Width, this.Transformer.Height, Vector2.Zero);
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
-                args.DrawingSession.DrawBound(this.Border, matrix);
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 if (this.CanvasBitmap is null is false) args.DrawingSession.DrawImage(new Transform2DEffect
                 {
                     Source = this.CanvasBitmap,
-                    TransformMatrix = matrix
+                    TransformMatrix = this.Transformer.GetMatrix(),
+                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                 });
 
                 foreach (CurveLayer items in this.ObservableCollection)
@@ -277,43 +263,36 @@ namespace Luo_Painter.TestApp
                     args.DrawingSession.DrawImage(new Transform2DEffect
                     {
                         Source = items[BitmapType.Source],
-                        TransformMatrix = matrix
+                        TransformMatrix = this.Transformer.GetMatrix(),
+                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                     });
                 }
+
+
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+
+                Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
+                args.DrawingSession.DrawBound(this.Border, matrix);
 
                 int index = this.ListView.SelectedIndex;
                 if (index >= 0)
                 {
                     CurveLayer layer = this.ObservableCollection[index];
-                    if (layer is null is false)
+                    if (layer is null) return;
+
+                    foreach (Anchor item in layer.Anchors)
                     {
-                        foreach (Anchor item in layer.Anchors)
-                        {
-                            if (item is null) continue;
-
-                            if (item.Geometry is null is false)
-                            {
-                            args.DrawingSession.DrawGeometry(this.ToPoint(item.Geometry), Colors.DodgerBlue, 1);
-                        }
-                            Vector2 p = this.ToPoint(item.Point);
-                            if (item.IsSmooth)
-                            {
-                                if (item.IsChecked) args.DrawingSession.FillCircle(p, 4, Colors.White);
-                                args.DrawingSession.FillCircle(p, 3, Colors.DodgerBlue);
-                            }
-                            else
-                            {
-                                if (item.IsChecked) args.DrawingSession.FillRectangle(p.X - 3, p.Y - 3, 6, 6, Colors.White);
-                                args.DrawingSession.FillRectangle(p.X - 2, p.Y - 2, 4, 4, Colors.DodgerBlue);
-                            }
-                        }
-                        args.DrawingSession.DrawAnchorCollection(layer.Anchors, matrix);
-
-                        //for (int i = 0; i < layer.Anchors.Count; i++)
-                        //{
-                        //    args.DrawingSession.DrawText(i.ToString(), Vector2.Transform(layer[i].Point, matrix) - new Vector2(40, 40), Colors.Red);
-                        //}
+                        if (item is null) continue;
+                        if (item.Geometry is null) continue;
+                        args.DrawingSession.DrawGeometry(this.ToPoint(item.Geometry), Colors.DodgerBlue, 1);
                     }
+                    args.DrawingSession.DrawAnchorCollection(layer.Anchors, matrix);
+
+                    //for (int i = 0; i < layer.Anchors.Count; i++)
+                    //{
+                    //    args.DrawingSession.DrawText(i.ToString(), Vector2.Transform(layer[i].Point, matrix) - new Vector2(40, 40), Colors.Red);
+                    //}
                 }
 
                 switch (this.Mode)
@@ -360,7 +339,7 @@ namespace Luo_Painter.TestApp
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.Position = this.ToPosition(point);
+                this.StartingPosition = this.Position = this.ToPosition(point);
 
                 int index = this.ListView.SelectedIndex;
                 if (index >= 0)
@@ -371,20 +350,17 @@ namespace Luo_Painter.TestApp
                     {
                         case PenCurveTool.Curve:
                         case PenCurveTool.Line:
-                            if (layer is null)
+                            if (layer.Anchors.Count is 0)
                             {
-                                this.ObservableCollection[index] = new CurveLayer( this.CanvasControl, this.Transformer.Width, this.Transformer.Height, new AnchorCollection
+                                layer.Anchors.Add(new Anchor
                                 {
-                                    new Anchor
-                                    {
-                                        Point = point,
-                                        IsSmooth = this.Mode is PenCurveTool.Curve,
-                                    }
-                                })
-                                {
-                                    Color = Colors.Red,
-                                    StrokeWidth = 5,
-                                };
+                                    Point = this.Position,
+                                    IsSmooth = this.Mode is PenCurveTool.Curve,
+                                });
+
+                                layer.Color = this.ColorPicker.Color;
+                                layer.StrokeWidth = (float)this.StrokeWidthSlider.Value;
+                                layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
                             }
                             else
                             {
@@ -393,8 +369,9 @@ namespace Luo_Painter.TestApp
                                     Point = this.Position,
                                     IsSmooth = this.Mode is PenCurveTool.Curve,
                                 });
+
+                                layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
                             }
-                            layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
                             break;
                         case PenCurveTool.RectChoose:
                             this.TransformerRect = new TransformerRect(this.Position, this.Position);
@@ -434,7 +411,6 @@ namespace Luo_Painter.TestApp
                     }
                 }
 
-                this.StartingPosition = this.Position;
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
