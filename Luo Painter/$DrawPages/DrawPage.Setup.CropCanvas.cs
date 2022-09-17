@@ -63,7 +63,7 @@ namespace Luo_Painter
         {
             Transformer crop = FanKit.Transformers.Transformer.Multiplies(this.CropTransformer, this.GetMatrixWithoutRadian(sender.Dpi));
 
-            ds.Clear(CanvasDrawingSessionExtensions.ShadowColor);
+            ds.Clear(FanKit.Transformers.CanvasDrawingSessionExtensions.ShadowColor);
             ds.FillRectangle(crop.MinX, crop.MinY, crop.MaxX - crop.MinX, crop.MaxY - crop.MinY, Colors.Transparent);
 
             ds.DrawCrop(crop);

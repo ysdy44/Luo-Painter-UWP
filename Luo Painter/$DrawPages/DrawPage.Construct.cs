@@ -23,7 +23,7 @@ namespace Luo_Painter
         public void Tip(string title, string subtitle)
         {
             this.ToastTip.Tip(title, subtitle);
-        } 
+        }
 
 
         private void SetFullScreenState(bool isFullScreen)
@@ -45,7 +45,7 @@ namespace Luo_Painter
 
         private void SetCanvasState(bool isPaused)
         {
-            if (this.CanvasAnimatedControl.Paused == isPaused) return;
+            // if (this.CanvasAnimatedControl.Paused == isPaused) return;
 
             if (isPaused)
             {

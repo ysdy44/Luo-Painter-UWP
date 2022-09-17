@@ -38,8 +38,8 @@
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentControl">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
@@ -48,10 +48,10 @@
                     <DataTemplate x:DataType="local:KeyboardShortcut">
                         <Grid Padding="60,2">
                             <TextBlock Text="{x:Bind Key}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
-                                    <!--Key-->
+                                <!--Key-->
                             </TextBlock>
                             <TextBlock Text="{x:Bind Value}" FontSize="14" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
-                                    <!--Value-->
+                                <!--Value-->
                             </TextBlock>
                         </Grid>
                     </DataTemplate>

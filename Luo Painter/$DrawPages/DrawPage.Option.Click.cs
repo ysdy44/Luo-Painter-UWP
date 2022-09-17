@@ -747,6 +747,7 @@ namespace Luo_Painter
 
                         this.SetCropCanvas(width2, height2);
 
+                        this.BitmapLayer = null;
                         this.OptionType = OptionType.CropCanvas;
                         this.AppBar.Construct(OptionType.CropCanvas);
                         this.SetCanvasState(true);
@@ -1243,6 +1244,7 @@ namespace Luo_Painter
 
                         this.SetInkToolType(type);
 
+                        this.BitmapLayer = null;
                         this.OptionType = type;
                         this.AppBar.Construct(type);
                         this.SetCanvasState(default);
