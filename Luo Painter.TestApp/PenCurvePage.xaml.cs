@@ -71,6 +71,9 @@ namespace Luo_Painter.TestApp
         Vector2 StartingPosition;
         Vector2 Position;
 
+        Vector2 StartingPreviousPosition;
+        Vector2 PreviousPosition;
+
         PenHitter Hitter;
         PenCutter Cutter;
 
@@ -120,7 +123,7 @@ namespace Luo_Painter.TestApp
                     {
                         case PenCurveTool.Curve:
                         case PenCurveTool.Line:
-                            layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
+                            layer.BuildGeometry(this.CanvasControl, this.PreviousPosition, this.Mode is PenCurveTool.Curve);
                             break;
                         default:
                             layer.BuildGeometry(this.CanvasControl);
@@ -339,8 +342,6 @@ namespace Luo_Painter.TestApp
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.StartingPosition = this.Position = this.ToPosition(point);
-
                 int index = this.ListView.SelectedIndex;
                 if (index >= 0)
                 {
@@ -352,6 +353,10 @@ namespace Luo_Painter.TestApp
                         case PenCurveTool.Line:
                             if (layer.Anchors.Count is 0)
                             {
+                                this.StartingPreviousPosition = this.PreviousPosition =
+                                this.StartingPosition = this.Position =
+                                this.ToPosition(point);
+
                                 layer.Anchors.Add(new Anchor
                                 {
                                     Point = this.Position,
@@ -364,21 +369,27 @@ namespace Luo_Painter.TestApp
                             }
                             else
                             {
+                                this.StartingPreviousPosition = this.PreviousPosition;
+                                this.StartingPosition = this.Position = this.ToPosition(point);
+
                                 layer.Anchors.Add(new Anchor
                                 {
-                                    Point = this.Position,
+                                    Point = this.StartingPreviousPosition,
                                     IsSmooth = this.Mode is PenCurveTool.Curve,
                                 });
 
-                                layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
+                                layer.BuildGeometry(this.CanvasControl, this.StartingPreviousPosition, this.Mode is PenCurveTool.Curve);
                             }
                             break;
                         case PenCurveTool.RectChoose:
+                            this.StartingPosition = this.Position = this.ToPosition(point);
                             this.TransformerRect = new TransformerRect(this.Position, this.Position);
                             layer.BoxChoose(this.TransformerRect);
                             break;
                         case PenCurveTool.Move:
                             if (layer is null) break;
+
+                            this.StartingPosition = this.Position = this.ToPosition(point);
 
                             layer.Index = -1;
                             foreach (Anchor item in layer.Anchors)
@@ -391,6 +402,7 @@ namespace Luo_Painter.TestApp
                             }
                             break;
                         case PenCurveTool.Hitter:
+                            this.StartingPosition = this.Position = this.ToPosition(point);
                             foreach (Anchor item in layer.Anchors)
                             {
                                 if (item.Geometry is null) continue;
@@ -399,6 +411,7 @@ namespace Luo_Painter.TestApp
                             }
                             break;
                         case PenCurveTool.Cutter:
+                            this.StartingPosition = this.Position = this.ToPosition(point);
                             foreach (Anchor item in layer.Anchors)
                             {
                                 if (item.Geometry is null) continue;
@@ -427,7 +440,8 @@ namespace Luo_Painter.TestApp
                     {
                         case PenCurveTool.Curve:
                         case PenCurveTool.Line:
-                            layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
+                            this.PreviousPosition = this.StartingPreviousPosition + this.Position - this.StartingPosition;
+                            layer.BuildGeometry(this.CanvasControl, this.PreviousPosition, this.Mode is PenCurveTool.Curve);
                             break;
                         case PenCurveTool.RectChoose:
                             this.TransformerRect = new TransformerRect(this.StartingPosition, this.Position);
@@ -489,7 +503,8 @@ namespace Luo_Painter.TestApp
                     {
                         case PenCurveTool.Curve:
                         case PenCurveTool.Line:
-                            layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
+                            this.PreviousPosition = this.StartingPreviousPosition + this.Position - this.StartingPosition;
+                            layer.BuildGeometry(this.CanvasControl, this.PreviousPosition, this.Mode is PenCurveTool.Curve);
                             break;
                         case PenCurveTool.RectChoose:
                             this.TransformerRect = default;
@@ -592,57 +607,6 @@ namespace Luo_Painter.TestApp
 
                                 layer.BuildGeometry(this.CanvasControl);
                             }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-
-            this.CanvasControl.PointerMoved += (s, e) =>
-            {
-                switch (this.Mode)
-                {
-                    case PenCurveTool.Curve:
-                    case PenCurveTool.Line:
-                    case PenCurveTool.Hitter:
-                        break;
-                    default:
-                        return;
-                }
-
-                PointerPoint pp = e.GetCurrentPoint(this.CanvasControl);
-                switch (pp.PointerDevice.PointerDeviceType)
-                {
-                    case PointerDeviceType.Touch:
-                        return;
-                }
-
-                this.Position = this.ToPosition(pp.Position.ToVector2());
-
-                int index = this.ListView.SelectedIndex;
-                if (index >= 0)
-                {
-                    CurveLayer layer = this.ObservableCollection[index];
-                    if (layer is null) return;
-
-                    switch (this.Mode)
-                    {
-                        case PenCurveTool.Curve:
-                        case PenCurveTool.Line:
-                            layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
-                            break;
-                        case PenCurveTool.Hitter:
-                            foreach (Anchor item in layer.Anchors)
-                            {
-                                if (item.Geometry is null) continue;
-                                this.Hitter.Hit(item.Geometry, this.Position, 32 / this.Transformer.Scale);
-                                if (this.Hitter.IsHit) break;
-                            }
-                            break;
-                        case PenCurveTool.Cutter:
                             break;
                         default:
                             break;
