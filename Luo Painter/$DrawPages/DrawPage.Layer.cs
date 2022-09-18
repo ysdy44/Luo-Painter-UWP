@@ -71,7 +71,7 @@ namespace Luo_Painter
         {
             this.LayerListView.SelectedItemChanged += (s, item) => this.LayerMenu.SetSelectedItem(item);
 
-            this.LayerListView.DragItemsStarting += (s, e) => this.DragItemsStarting(e.Items);
+            this.LayerListView.DragItemsStarting += (s, e) => this.LayerManager.DragItemsStarting(this, e.Items);
             this.LayerListView.DragItemsCompleted += (s, e) =>
             {
                 switch (e.DropResult)
@@ -82,7 +82,7 @@ namespace Luo_Painter
                         break;
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move:
                         /// History
-                        int removes = this.History.Push(this.DragItemsCompleted(e.Items));
+                        int removes = this.History.Push(this.LayerManager.DragItemsCompleted(this, e.Items));
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 

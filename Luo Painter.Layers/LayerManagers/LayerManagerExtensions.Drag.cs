@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public static partial class LayerManagerExtensions
+    public sealed partial class LayerManagerExtensions
     {
 
-        public static void DragItemsStarting(this ILayerManager self, IList<object> layers)
+        public void DragItemsStarting(ILayerManager self, IList<object> layers)
         {
             foreach (ILayer item in layers)
             {
@@ -15,7 +15,7 @@ namespace Luo_Painter.Layers
             }
         }
 
-        public static ArrangeHistory DragItemsCompleted(this ILayerManager self, IReadOnlyList<object> layers)
+        public ArrangeHistory DragItemsCompleted(ILayerManager self, IReadOnlyList<object> layers)
         {
             Layerage[] undo = self.Nodes.Convert();
 

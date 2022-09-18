@@ -1,13 +1,14 @@
 ﻿using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Luo_Painter.Layers
 {
-    public static partial class LayerManagerExtensions
+    public sealed partial class LayerManagerExtensions
     {
 
-        public static ArrangeHistory Clear(this ILayerManager self, ILayer add)
+        public ArrangeHistory Clear(ILayerManager self, ILayer add)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -21,7 +22,7 @@ namespace Luo_Painter.Layers
             Layerage[] redo = self.Nodes.Convert();
             return new ArrangeHistory(undo, redo);
         }
-        public static ArrangeHistory Setup(this ILayerManager self, IEnumerable<ILayer> adds, SetupSizes sizes)
+        public ArrangeHistory Setup(ILayerManager self, IEnumerable<ILayer> adds, SetupSizes sizes)
         {
             int index = self.LayerSelectedIndex;
 
@@ -47,7 +48,7 @@ namespace Luo_Painter.Layers
             return (new ArrangeHistory(undo, redo, sizes));
         }
 
-        public static ArrangeHistory Add(this ILayerManager self, ILayer add)
+        public ArrangeHistory Add(ILayerManager self, ILayer add)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -89,7 +90,7 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Remove(this ILayerManager self, ILayer layer)
+        public ArrangeHistory Remove(ILayerManager self, ILayer layer)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -113,11 +114,11 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Remove(this ILayerManager self, IEnumerable<object> layers)
+        public ArrangeHistory Remove(ILayerManager self, IEnumerable<object> layers)
         {
             Layerage[] undo = self.Nodes.Convert();
 
-            foreach (ILayer layer in layers)
+            foreach (ILayer layer in layers.Cast<ILayer>())
             {
                 // Run away from Home
                 ILayer parent = self.ObservableCollection.GetParent(layer);

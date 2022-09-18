@@ -60,15 +60,15 @@ namespace Luo_Painter
             }
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream accessStream = await this.CreateStreamAsync(item, "Layers.xml"))
+            using (IRandomAccessStream stream = await this.CreateStreamAsync(item, "Layers.xml"))
             {
-                docLayers.Save(accessStream.AsStream());
+                docLayers.Save(stream.AsStream());
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream accessStream = await this.CreateStreamAsync(item, "Project.xml"))
+            using (IRandomAccessStream stream = await this.CreateStreamAsync(item, "Project.xml"))
             {
-                docProject.Save(accessStream.AsStream());
+                docProject.Save(stream.AsStream());
             }
 
             // 5. Save Thumbnail.png
@@ -76,7 +76,7 @@ namespace Luo_Painter
             float scaleY = 256f / this.Transformer.Height;
             float scale = System.Math.Min(scaleX, scaleY);
 
-            using (IRandomAccessStream accessStream = await this.CreateStreamAsync(item, "Thumbnail.png"))
+            using (IRandomAccessStream stream = await this.CreateStreamAsync(item, "Thumbnail.png"))
             using (ScaleEffect image = new ScaleEffect
             {
                 InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
@@ -88,7 +88,7 @@ namespace Luo_Painter
                 {
                     Width = scale * this.Transformer.Width,
                     Height = scale * this.Transformer.Height,
-                }, 96, this.CanvasDevice, accessStream, CanvasBitmapFileFormat.Png);
+                }, 96, this.CanvasDevice, stream, CanvasBitmapFileFormat.Png);
             }
 
 

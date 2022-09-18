@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public static partial class LayerManagerExtensions
+    public sealed partial class LayerManagerExtensions
     {
 
-        public static ArrangeHistory Group(this ILayerManager self, ILayer add, ILayer layer)
+        public ArrangeHistory Group(ILayerManager self, ILayer add, ILayer layer)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -44,7 +44,7 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Group(this ILayerManager self, ILayer add, IEnumerable<object> layers)
+        public ArrangeHistory Group(ILayerManager self, ILayer add, IEnumerable<object> layers)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -121,7 +121,7 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Ungroup(this ILayerManager self, ILayer layer)
+        public ArrangeHistory Ungroup(ILayerManager self, ILayer layer)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -166,7 +166,7 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Release(this ILayerManager self, ILayer layer)
+        public ArrangeHistory Release(ILayerManager self, ILayer layer)
         {
             Layerage[] undo;
 
@@ -214,7 +214,7 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public static ArrangeHistory Release(this ILayerManager self, IEnumerable<object> layers)
+        public ArrangeHistory Release(ILayerManager self, IEnumerable<object> layers)
         {
             Layerage[] undo = self.Nodes.Convert();
 

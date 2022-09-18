@@ -8,6 +8,7 @@
     xmlns:local="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:layers="using:Luo_Painter.Layers"
     xmlns:menus="using:Luo_Painter.Menus"
     xmlns:tools="using:Luo_Painter.Tools"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -22,7 +23,10 @@
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind Canvas}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
+        <!--Extension-->
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
+        <layers:LayerManagerExtensions x:Name="LayerManager"/>
+        <layers:LayerRenderExtensions x:Name="LayerRender"/>
         <!--Range-->
         <menus:SizeRange x:Name="SizeRange"/>
         <!--Command-->
@@ -34,13 +38,13 @@
         <KeyboardAccelerator>
             <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
         </KeyboardAccelerator>
-        
+
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="S" CommandParameter="Save" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="Z" CommandParameter="Undo" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="Y" CommandParameter="Redo" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape" CommandParameter="FullScreen" Command="{x:Bind Command}" />
-        
-        
+
+
         <local:OptionKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
 
@@ -50,18 +54,18 @@
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="V" CommandParameter="Paste" Command="{x:Bind Command}" />
 
         <local:OptionKeyboardAccelerator Key="Back" CommandParameter="Clear" Command="{x:Bind Command}" />
- 
+
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="E" CommandParameter="Extract" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="M" CommandParameter="Merge" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="F" CommandParameter="Flatten" Command="{x:Bind Command}" />
 
-        
+
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="A" CommandParameter="All" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="D" CommandParameter="Deselect" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="P" CommandParameter="Pixel" Command="{x:Bind Command}" />
 
-        
+
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Group" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="U" CommandParameter="Ungroup" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Release" Command="{x:Bind Command}" />

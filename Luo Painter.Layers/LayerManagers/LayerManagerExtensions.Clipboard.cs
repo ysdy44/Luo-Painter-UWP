@@ -5,28 +5,28 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public static partial class LayerManagerExtensions
+    public sealed partial class LayerManagerExtensions
     {
 
-        public static ArrangeHistory Cut(this ILayerManager self, ILayer layer)
+        public ArrangeHistory Cut(ILayerManager self, ILayer layer)
         {
-            self.Copy(layer);
-            return self.Remove(layer);
+            this.Copy(self, layer);
+            return this.Remove(self, layer);
         }
 
-        public static ArrangeHistory Cut(this ILayerManager self, IEnumerable<object> layers)
+        public ArrangeHistory Cut(ILayerManager self, IEnumerable<object> layers)
         {
-            self.Copy(layers);
-            return self.Remove(layers);
+            this.Copy(self, layers);
+            return this.Remove(self, layers);
         }
 
-        public static void Copy(this ILayerManager self, ILayer layer)
+        public void Copy(ILayerManager self, ILayer layer)
         {
             self.ClipboardLayers.Clear();
             self.ClipboardLayers.Add(layer.Id);
         }
 
-        public static void Copy(this ILayerManager self, IEnumerable<object> layers)
+        public void Copy(ILayerManager self, IEnumerable<object> layers)
         {
             self.ClipboardLayers.Clear();
             foreach (ILayer layer in layers)
@@ -35,13 +35,13 @@ namespace Luo_Painter.Layers
             }
         }
 
-        public static ArrangeHistory Paste(this ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, string id)
+        public ArrangeHistory Paste(ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, string id)
         {
             ILayer add = LayerDictionary.Instance[id].Crop(resourceCreator, width, height);
-            return self.Add(add);
+            return this.Add(self, add);
         }
 
-        public static ArrangeHistory Paste(this ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, IEnumerable<string> ids)
+        public ArrangeHistory Paste(ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, IEnumerable<string> ids)
         {
             Layerage[] undo = self.Nodes.Convert();
 

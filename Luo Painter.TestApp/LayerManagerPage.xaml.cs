@@ -93,11 +93,11 @@ namespace Luo_Painter.TestApp
 
         private void ConstructLayers()
         {
-            this.ListView.DragItemsStarting += (s, e) => this.DragItemsStarting(e.Items);
+            this.ListView.DragItemsStarting += (s, e) => this.LayerManager.DragItemsStarting(this, e.Items);
             this.ListView.DragItemsCompleted += (s, e) =>
             {
                 /// History
-                int removes = this.History.Push(this.DragItemsCompleted(e.Items));
+                int removes = this.History.Push(this.LayerManager.DragItemsCompleted(this, e.Items));
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -111,7 +111,7 @@ namespace Luo_Painter.TestApp
                 ILayer add = new BitmapLayer(this.CanvasDevice, 128, 128);
 
                 /// History
-                int removes = this.History.Push(this.Add(add));
+                int removes = this.History.Push(this.LayerManager.Add(this, add));
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;
                 this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -127,7 +127,7 @@ namespace Luo_Painter.TestApp
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             /// History
-                            int removes = this.History.Push(this.Remove(layer));
+                            int removes = this.History.Push(this.LayerManager.Remove(this, layer));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -136,7 +136,7 @@ namespace Luo_Painter.TestApp
                     default:
                         {
                             /// History
-                            int removes = this.History.Push(this.Remove(items));
+                            int removes = this.History.Push(this.LayerManager.Remove(this, items));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -157,7 +157,7 @@ namespace Luo_Painter.TestApp
                             ILayer add = new GroupLayer(this.CanvasDevice, 128, 128);
 
                             /// History
-                            int removes = this.History.Push(this.Group(add, layer));
+                            int removes = this.History.Push(this.LayerManager.Group(this, add, layer));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -168,7 +168,7 @@ namespace Luo_Painter.TestApp
                             ILayer add = new GroupLayer(this.CanvasDevice, 128, 128);
 
                             /// History
-                            int removes = this.History.Push(this.Group(add, items));
+                            int removes = this.History.Push(this.LayerManager.Group(this, add, items));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -183,7 +183,7 @@ namespace Luo_Painter.TestApp
                     if (layer.Children.Count is 0) return;
 
                     /// History
-                    int removes = this.History.Push(this.Ungroup(layer));
+                    int removes = this.History.Push(this.LayerManager.Ungroup(this, layer));
 
                     this.UndoButton.IsEnabled = this.History.CanUndo;
                     this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -199,7 +199,7 @@ namespace Luo_Painter.TestApp
                     case 1:
                         if (this.LayerSelectedItem is ILayer layer)
                         {
-                            if (this.Release(layer) is IHistory history)
+                            if (this.LayerManager.Release(this, layer) is IHistory history)
                             {
                                 /// History
                                 int removes = this.History.Push(history);
@@ -212,7 +212,7 @@ namespace Luo_Painter.TestApp
                     default:
                         {
                             /// History
-                            int removes = this.History.Push(this.Release(items));
+                            int removes = this.History.Push(this.LayerManager.Release(this, items));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -233,7 +233,7 @@ namespace Luo_Painter.TestApp
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             /// History
-                            int removes = this.History.Push(this.Cut(layer));
+                            int removes = this.History.Push(this.LayerManager.Cut(this, layer));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -243,7 +243,7 @@ namespace Luo_Painter.TestApp
                     default:
                         {
                             /// History
-                            int removes = this.History.Push(this.Cut(items));
+                            int removes = this.History.Push(this.LayerManager.Cut(this, items));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -262,11 +262,11 @@ namespace Luo_Painter.TestApp
                         break;
                     case 1:
                         if (this.LayerSelectedItem is ILayer layer)
-                            this.Copy(layer);
+                            this.LayerManager.Copy(this, layer);
                         this.PasteButton.IsEnabled = this.ClipboardLayers.Count is 0 is false;
                         break;
                     default:
-                        this.Copy(items);
+                        this.LayerManager.Copy(this, items);
                         this.PasteButton.IsEnabled = this.ClipboardLayers.Count is 0 is false;
                         break;
                 }
@@ -282,7 +282,7 @@ namespace Luo_Painter.TestApp
                         if (LayerDictionary.Instance.ContainsKey(id))
                         {
                             /// History
-                            int removes = this.History.Push(this.Paste(this.CanvasDevice, 128, 128, id));
+                            int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, 128, 128, id));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -291,7 +291,7 @@ namespace Luo_Painter.TestApp
                     default:
                         {
                             /// History
-                            int removes = this.History.Push(this.Paste(this.CanvasDevice, 128, 128, this.ClipboardLayers));
+                            int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, 128, 128, this.ClipboardLayers));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -319,7 +319,7 @@ namespace Luo_Painter.TestApp
                                         bitmapLayer.RenderThumbnail();
 
                                         /// History
-                                        int removes2 = this.History.Push(this.Remove(neighbor));
+                                        int removes2 = this.History.Push(this.LayerManager.Remove(this, neighbor));
 
                                         this.UndoButton.IsEnabled = this.History.CanUndo;
                                         this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -340,7 +340,7 @@ namespace Luo_Painter.TestApp
                     ILayer add = new BitmapLayer(this.CanvasDevice, image, 128, 128);
 
                     /// History
-                    int removes = this.History.Push(this.Clear(add));
+                    int removes = this.History.Push(this.LayerManager.Clear(this, add));
                 }
 
                 this.UndoButton.IsEnabled = this.History.CanUndo;

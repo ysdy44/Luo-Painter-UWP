@@ -18,6 +18,8 @@
         <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
         <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent"/>
         <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Transparent"/>
+        <!--Extensions-->
+        <layers:LayerManagerExtensions x:Name="LayerManager"/>
     </FrameworkElement.Resources>
 
 

@@ -139,7 +139,7 @@ namespace Luo_Painter
                 this.CreateResources(w, h);
                 this.CreateMarqueeResources(w, h);
 
-                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray(), new SetupSizes
+                int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray(), new SetupSizes
                 {
                     UndoParameter = new BitmapSize { Width = width, Height = height },
                     RedoParameter = new BitmapSize { Width = w2, Height = h2 }
@@ -161,7 +161,7 @@ namespace Luo_Painter
                     this.CreateResources(w, h);
                     this.CreateMarqueeResources(w, h);
                 }
-                int removes = this.History.Push(this.Setup(this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
+                int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
                 {
                     UndoParameter = new BitmapSize
                     {
