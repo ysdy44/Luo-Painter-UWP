@@ -23,22 +23,55 @@ namespace Luo_Painter.Options
         HasState = 128,
 
         // Root
-        File = 1 << 27,
+        App = 1 << 27,
         Edit = 2 << 27,
         Effect = 4 << 27,
         Tool = 8 << 27,
 
 
+        // App
+        File = App | 1 << 15,
+        Menu = App | 2 << 15,
+
+        #region App
+
+
         // File
-        Close = File | 1 << 15,
-        Save = File | 2 << 15,
-        Export = File | 4 << 15,
-        ExportAll = File | 8 << 15,
-        ExportCurrent = File | 16 << 15,
-        Undo = File | 32 << 15,
-        Redo = File | 64 << 15,
-        FullScreen = File | 128 << 15,
-        UnFullScreen = File | 256 << 15,
+        Close = File | 1 << 8,
+        Save = File | 2 << 8,
+
+        Export = File | 3 << 8,
+        ExportAll = File | 4 << 8,
+        ExportCurrent = File | 5 << 8,
+
+        Undo = File | 6 << 8,
+        Redo = File | 7 << 8,
+
+        FullScreen = File | 8 << 8,
+        UnFullScreen = File | 9 << 8,
+
+
+        // Menu
+        ExportMenu = Menu | 1 << 8,
+
+        ToolMenu = Menu | 2 << 8,
+        HistoryMenu = Menu | 3 << 8,
+        ColorMenu = Menu | 4 << 8,
+
+        EditMenu = Menu | 5 << 8,
+        AdjustmentMenu = Menu | 6 << 8,
+        OtherMenu = Menu | 7 << 8,
+
+        PaintMenu = Menu | 8 << 8,
+        BrushMenu = Menu | 9 << 8,
+        SizeMenu = Menu | 10 << 8,
+
+        LayerMenu = Menu | 11 << 8,
+        AddMenu = Menu | 12 << 8,
+        AddMenuWithRename = Menu | 13 << 8,
+
+
+        #endregion
 
 
         // Edit

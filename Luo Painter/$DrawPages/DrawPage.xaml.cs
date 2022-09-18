@@ -168,7 +168,6 @@ namespace Luo_Painter
         private bool ReverseBooleanConverter(bool? value) => value == false;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
-        private Symbol FlowDirectionToSymbolConverter(FlowDirection value) => value is FlowDirection.LeftToRight ? Symbol.Back : Symbol.Forward;
 
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
@@ -218,7 +217,6 @@ namespace Luo_Painter
         TransformerMode BoundsMode;
         Matrix3x2 BoundsMatrix;
         bool IsBoundsMove;
-        private void Controller(Vector2 position) => this.BoundsTransformer = this.IsBoundsMove ? this.StartingBoundsTransformer + (position - this.StartingPosition) : FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer);
 
 
         //@Construct
@@ -268,22 +266,24 @@ namespace Luo_Painter
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
 
-            this.ExportButton.Click += (s, e) => this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
 
-            this.ToolButton.Click += (s, e) => this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
-            this.PaintButton.Click += (s, e) => this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
-            this.BrushButton.Click += (s, e) => this.BrushMenu.Toggle(this.BrushButton, ExpanderPlacementMode.Bottom);
-            this.SizeButton.Click += (s, e) => this.SizeMenu.Toggle(this.SizeButton, ExpanderPlacementMode.Bottom);
-            this.HistoryButton.Click += (s, e) => this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
-            this.ColorButton.Click += (s, e) => this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
+            this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
+   
+            this.ToolButton.Click += (s, e) => this.Click(OptionType.ToolMenu);
+            this.HistoryButton.Click += (s, e) => this.Click(OptionType.HistoryMenu);
+            this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
+           
+            this.EditButton.Click += (s, e) => this.Click(OptionType.EditMenu);
+            this.AdjustmentButton.Click += (s, e) => this.Click(OptionType.AdjustmentMenu);
+            this.OtherButton.Click += (s, e) => this.Click(OptionType.OtherMenu);
+       
+            this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
+            this.BrushButton.Click += (s, e) => this.Click(OptionType.BrushMenu);
+            this.SizeButton.Click += (s, e) => this.Click(OptionType.SizeMenu);
 
-            this.EditButton.Click += (s, e) => this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
-            this.AdjustmentButton.Click += (s, e) => this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
-            this.OtherButton.Click += (s, e) => this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
-
-            this.LayerListView.Add += (s, e) => this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+            this.LayerListView.Add += (s, e) => this.Click(OptionType.AddMenu);
             this.LayerListView.Remove += (s, e) => this.Click(OptionType.Remove);
-            this.LayerListView.Opening += (s, e) => this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+            this.LayerListView.Opening += (s, e) => this.Click(OptionType.LayerMenu);
 
 
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
@@ -297,6 +297,7 @@ namespace Luo_Painter
 
             this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
             this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
+
 
             this.ExportMenu.ExportClick += (s, e) =>
             {

@@ -44,13 +44,20 @@ namespace Luo_Painter
                 //case OptionType.HasState:
                 //    break;
 
-                //case OptionType.File:
+
+                //case OptionType.App:
                 //    break;
                 //case OptionType.Edit:
                 //    break;
                 //case OptionType.Effect:
                 //    break;
                 //case OptionType.Tool:
+                //    break;
+
+
+                //case OptionType.File:
+                //    break;
+                //case OptionType.Menu:
                 //    break;
 
                 case OptionType.Close:
@@ -163,6 +170,58 @@ namespace Luo_Painter
                 case OptionType.UnFullScreen:
                     this.IsFullScreen = false;
                     this.SetFullScreenState(false);
+                    break;
+
+                case OptionType.ExportMenu:
+                    this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.ToolMenu:
+                    this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.HistoryMenu:
+                    this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.ColorMenu:
+                    this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.EditMenu:
+                    this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.AdjustmentMenu:
+                    this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.OtherMenu:
+                    this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.PaintMenu:
+                    this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.BrushMenu:
+                    this.BrushMenu.Toggle(this.BrushButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.SizeMenu:
+                    this.SizeMenu.Toggle(this.SizeButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.LayerMenu:
+                    this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+                    break;
+                case OptionType.AddMenu:
+                    this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+                    break;
+                case OptionType.AddMenuWithRename:
+                    switch (this.AddMenu.State)
+                    {
+                        case ExpanderState.Collapsed:
+                            if (this.LayerListView.Width > 0)
+                                this.AddMenu.ShowAt(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+                            else
+                                this.AddMenu.ShowAt(this.LayerListView, ExpanderPlacementMode.Left);
+                            this.AddMenu.Rename();
+                            break;
+                        default:
+                            this.AddMenu.Rename();
+                            break;
+                    }
                     break;
 
                 //case OptionType.Layering:

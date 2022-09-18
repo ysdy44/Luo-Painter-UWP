@@ -38,11 +38,17 @@
         <KeyboardAccelerator>
             <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
         </KeyboardAccelerator>
-
+        
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="S" CommandParameter="Save" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="Z" CommandParameter="Undo" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="Y" CommandParameter="Redo" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape" CommandParameter="FullScreen" Command="{x:Bind Command}" />
+
+
+        <local:OptionKeyboardAccelerator Modifiers="None" Key="F2" CommandParameter="AddMenuWithRename" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="None" Key="F3" CommandParameter="AddMenu" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="None" Key="F5" CommandParameter="PaintMenu" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="None" Key="F6" CommandParameter="BrushMenu" Command="{x:Bind Command}" />
 
 
         <local:OptionKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
