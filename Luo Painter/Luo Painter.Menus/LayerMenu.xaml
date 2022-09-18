@@ -5,10 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
-    xmlns:blends="using:Luo_Painter.Blends"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:local="using:Luo_Painter.Menus"
-    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
@@ -40,98 +38,27 @@
         </Grid>
     </elements:Expander.TopAppBar>
 
-    <StackPanel Spacing="2" Padding="6,4">
+    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
+        <StackPanel Spacing="2" Padding="6,4">
 
-        <!--Opacity-->
-        <elements:ThumbSlider x:Name="OpacitySliderCore" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
-            <FrameworkElement.Tag>
-                Opacity
-            </FrameworkElement.Tag>
-            <Slider.Header>
-                <Button 
-                    Padding="4,0" MinWidth="44" Height="28"
-                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                    <Button.Flyout>
-                        <Flyout>
+            <!--Grouping-->
+            <TextBlock x:Name="GroupingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Grouping
+            </TextBlock>
+            <local:EditItem Type="Group" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Release" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-                        </Flyout>
-                    </Button.Flyout>
-                    <TextBlock>
-                      
-                        <Run Text="{x:Bind RoundConverter(OpacitySliderCore.Value), Mode=OneWay}" />
-                        <Run>%</Run>
-                    </TextBlock>
-                </Button>
-            </Slider.Header>
-        </elements:ThumbSlider>
+            <!--Combine-->
+            <TextBlock x:Name="CombineTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Combine
+            </TextBlock>
+            <local:EditItem Type="Union" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Xor" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <local:EditItem Type="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-        <!--BlendMode-->
-        <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            BlendMode
-        </TextBlock>
-        <ComboBox x:Name="BlendModeComboBox" >
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="effects:BlendEffectMode">
-                    <luo_painter:BlendIcon Type="{x:Bind}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-
-            <ItemsControl.ItemsSource>
-                <local:BlendList x:Name="Collection">
-                    <!--None-->
-                    <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
-                    <!--Darken-->
-                    <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
-                    <!--Lighten-->
-                    <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
-                    <!--Contrast-->
-                    <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
-                    <!--Difference-->
-                    <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Division</effects:BlendEffectMode>
-                    <!--Color-->
-                    <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Color</effects:BlendEffectMode>
-                    <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
-                </local:BlendList>
-            </ItemsControl.ItemsSource>
-
-        </ComboBox>
-
-        <!--Name-->
-        <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Name
-        </TextBlock>
-        <TextBox x:Name="NameTextBox" >
-            <TextBox.PlaceholderText>
-                Input Text...
-            </TextBox.PlaceholderText>
-        </TextBox>
-
-        <!--TagType-->
-        <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Tag Type
-        </TextBlock>
-        <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
-
-    </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </elements:Expander>
