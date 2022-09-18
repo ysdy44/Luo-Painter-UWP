@@ -3,10 +3,16 @@ using Microsoft.Graphics.Canvas;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Menus
 {
+    public enum ExportMode
+    {
+        None,
+        All,
+        Current,
+    }
+
     public sealed partial class ExportMenu : Expander
     {
 
@@ -18,7 +24,19 @@ namespace Luo_Painter.Menus
         }
 
         //@Content
-        public bool IsAllLayers => this.ComboBox.SelectedIndex is 0 is false;
+        public ExportMode Mode
+        {
+            get
+            {
+                switch (this.ComboBox.SelectedIndex)
+                {
+                    case 0: return ExportMode.None;
+                    case 1: return ExportMode.All;
+                    case 2: return ExportMode.Current;
+                    default: return ExportMode.None;
+                }
+            }
+        }
         public int DPI
         {
             get

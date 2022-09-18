@@ -34,10 +34,11 @@ namespace Luo_Painter.Options
         Save = File | 2 << 15,
         Export = File | 4 << 15,
         ExportAll = File | 8 << 15,
-        Undo = File | 16 << 15,
-        Redo = File | 32 << 15,
-        FullScreen = File | 64 << 15,
-        UnFullScreen = File | 128 << 15,
+        ExportCurrent = File | 16 << 15,
+        Undo = File | 32 << 15,
+        Redo = File | 64 << 15,
+        FullScreen = File | 128 << 15,
+        UnFullScreen = File | 256 << 15,
 
 
         // Edit

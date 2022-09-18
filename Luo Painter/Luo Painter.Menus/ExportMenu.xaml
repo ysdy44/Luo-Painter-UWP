@@ -19,7 +19,8 @@
     <elements:Expander.TopAppBar>
         <ListBox x:Name="ComboBox" SelectedIndex="0" >
             <ListBoxItem x:Name="NoneItem">Export</ListBoxItem>
-            <ListBoxItem x:Name="AllLayerItem">Export All Layer</ListBoxItem>
+            <ListBoxItem x:Name="AllItem">Export All</ListBoxItem>
+            <ListBoxItem x:Name="CurrentItem">Export Current</ListBoxItem>
         </ListBox>
     </elements:Expander.TopAppBar>
     

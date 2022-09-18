@@ -6,6 +6,7 @@ using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Menus;
 using Luo_Painter.Options;
 using Luo_Painter.Projects;
 using Luo_Painter.Projects.Models;
@@ -297,7 +298,16 @@ namespace Luo_Painter
             this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
             this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
 
-            this.ExportMenu.ExportClick += (s, e) => this.Click(this.ExportMenu.IsAllLayers ? OptionType.ExportAll : OptionType.Export);
+            this.ExportMenu.ExportClick += (s, e) =>
+            {
+                switch (this.ExportMenu.Mode)
+                {
+                    case ExportMode.None: this.Click(OptionType.Export); break;
+                    case ExportMode.All: this.Click(OptionType.ExportAll); break;
+                    case ExportMode.Current: this.Click(OptionType.ExportCurrent); break;
+                    default: break;
+                }
+            };
 
             this.ColorMenu.ColorChanged += (s, e) =>
             {

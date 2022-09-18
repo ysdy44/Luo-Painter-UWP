@@ -76,7 +76,7 @@ namespace Luo_Painter
                         this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
                         // Export
-                        bool result = await this.Nodes.Export(file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
+                        bool result = await this.LayerRender.Export(this.Nodes, file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
                         if (result)
                             this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
                         else
@@ -90,8 +90,26 @@ namespace Luo_Painter
                         this.Tip("Saving...", this.ApplicationView.Title); // Tip
 
                         // Export
-                        int result = await this.Nodes.ExportAll(folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
+                        int result = await this.LayerRender.ExportAll(this.Nodes, folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
                         this.Tip("Saved successfully", $"A total of {result} files"); // Tip
+                    }
+                    break;
+                case OptionType.ExportCurrent:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                            if (file is null) break;
+                            this.Tip("Saving...", this.ApplicationView.Title); // Tip
+
+                            // Export
+                            bool result = await this.LayerRender.Export(layer, file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
+                            if (result)
+                                this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
+                            else
+                                this.Tip("Failed to Save", "Try again?"); // Tip
+                        }
+                        else this.Tip("No Layer", "Create a new Layer?");
                     }
                     break;
                 case OptionType.Undo:
