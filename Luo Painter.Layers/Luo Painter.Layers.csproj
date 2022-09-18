@@ -132,6 +132,7 @@
     <Compile Include="LayerManagers\LayerManagerExtensions.Grouping.cs" />
     <Compile Include="LayerManagers\LayerManagerExtensions.Layering.cs" />
     <Compile Include="LayerRenders\ILayerRender.cs" />
+    <Compile Include="LayerRenders\LayerRenderExtensions.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.Export.cs" />
