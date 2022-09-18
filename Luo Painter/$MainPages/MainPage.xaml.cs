@@ -150,9 +150,11 @@ namespace Luo_Painter
         /// <summary> The current page becomes the active page. </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            string path = this.ApplicationView.Title;
+            string path = this.ApplicationView.PersistedStateId;
             this.ObservableCollection.Refresh(path);
+
             this.ApplicationView.Title = string.Empty;
+            this.ApplicationView.PersistedStateId = string.Empty;
 
             if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
             {

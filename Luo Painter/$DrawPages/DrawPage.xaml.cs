@@ -359,7 +359,8 @@ namespace Luo_Painter
 
                 this.ViewTool.Construct(this.Transformer);
 
-                this.ApplicationView.Title = item.Path;
+                this.ApplicationView.Title = item.Name;
+                this.ApplicationView.PersistedStateId = item.Path;
 
                 this.Navigated(item);
 
@@ -376,6 +377,7 @@ namespace Luo_Painter
             else
             {
                 this.ApplicationView.Title = string.Empty;
+                this.ApplicationView.PersistedStateId = string.Empty;
 
                 if (base.Frame.CanGoBack)
                 {

@@ -89,6 +89,8 @@ namespace Luo_Painter.Elements
 
         /// <summary> <see cref="ApplicationView.Title"/> </summary>
         public string Title { get => this.View.Title; set => this.View.Title = value; }
+        /// <summary> <see cref="ApplicationView.PersistedStateId"/> </summary>
+        public string PersistedStateId { get => this.View.PersistedStateId; set => this.View.PersistedStateId = value; }
 
 
         /// <summary> <see cref="ApplicationView.IsFullScreenMode"/> </summary>

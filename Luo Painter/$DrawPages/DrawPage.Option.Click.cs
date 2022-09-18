@@ -61,12 +61,12 @@ namespace Luo_Painter
                     else
                     {
                         base.IsEnabled = false;
-                        await this.SaveAsync(this.ApplicationView.Title, true);
+                        await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
                     }
                     break;
                 case OptionType.Save:
                     base.IsEnabled = false;
-                    await this.SaveAsync(this.ApplicationView.Title, false);
+                    await this.SaveAsync(this.ApplicationView.PersistedStateId, false);
                     base.IsEnabled = true;
                     break;
                 case OptionType.Export:
