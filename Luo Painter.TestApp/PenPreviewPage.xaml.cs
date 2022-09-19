@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Microsoft.Graphics.Canvas;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -17,7 +18,8 @@ namespace Luo_Painter.TestApp
             return 1;
         }
 
-        readonly AnchorCollection Anchors = new AnchorCollection
+        AnchorCollection Anchors;
+        AnchorCollection CreateAnchors() => new AnchorCollection(this.CanvasControl, 650, 200)
         {
             new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(100, 80), Pressure = 0.2f },
             new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(250, 120) },
@@ -32,36 +34,40 @@ namespace Luo_Painter.TestApp
             this.ConstructCanvas();
         }
 
+        private void ValueChanged(int index, float value)
+        {
+            this.Anchors[index].Pressure = this.ToPressure(value);
+            this.Anchors.BuildGeometry(this.CanvasControl);
+            this.Anchors.Invalidate();
+            this.CanvasControl.Invalidate(); // Invalidate
+        }
+
         private void ConstructPenPreview()
         {
-            void valueChanged(int index, float value)
-            {
-                this.Anchors[index].Pressure = this.ToPressure(value);
-                this.CanvasControl.Invalidate(); // Invalidate
-            }
-
             this.ResetPressure0Button.Click += (s, e) => this.Pressure0Slider.Value = -4;
-            this.Pressure0Slider.ValueChanged += (s, e) => valueChanged(0, (float)e.NewValue);
+            this.Pressure0Slider.ValueChanged += (s, e) => this.ValueChanged(0, (float)e.NewValue);
 
             this.ResetPressure1Button.Click += (s, e) => this.Pressure1Slider.Value = 0;
-            this.Pressure1Slider.ValueChanged += (s, e) => valueChanged(1, (float)e.NewValue);
+            this.Pressure1Slider.ValueChanged += (s, e) => this.ValueChanged(1, (float)e.NewValue);
 
             this.ResetPressure2Button.Click += (s, e) => this.Pressure2Slider.Value = 0;
-            this.Pressure2Slider.ValueChanged += (s, e) => valueChanged(2, (float)e.NewValue);
+            this.Pressure2Slider.ValueChanged += (s, e) => this.ValueChanged(2, (float)e.NewValue);
 
             this.ResetPressure3Button.Click += (s, e) => this.Pressure3Slider.Value = -4;
-            this.Pressure3Slider.ValueChanged += (s, e) => valueChanged(3, (float)e.NewValue);
+            this.Pressure3Slider.ValueChanged += (s, e) => this.ValueChanged(3, (float)e.NewValue);
         }
 
         private void ConstructCanvas()
         {
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.Anchors.BuildGeometry(sender);
+                this.Anchors = this.Create(sender);
+                this.Anchors.Color = Colors.DodgerBlue;
+                this.Anchors.StrokeWidth = 5;
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
-                args.DrawingSession.FillAnchorCollection(this.Anchors, Colors.DodgerBlue, 5);
+                args.DrawingSession.DrawImage(this.Anchors.Source);
                 args.DrawingSession.DrawAnchorCollection(this.Anchors);
             };
         }

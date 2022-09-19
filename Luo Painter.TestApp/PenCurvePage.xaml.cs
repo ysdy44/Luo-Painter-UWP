@@ -111,27 +111,6 @@ namespace Luo_Painter.TestApp
 
             this.ListBox.ItemsSource = System.Enum.GetValues(typeof(PenCurveTool));
             this.ListBox.SelectedIndex = 0;
-            this.ListBox.SelectionChanged += (s, e) =>
-            {
-                int index = this.ListView.SelectedIndex;
-                if (index >= 0)
-                {
-                    CurveLayer layer = this.ObservableCollection[index];
-                    if (layer is null) return;
-
-                    switch (this.Mode)
-                    {
-                        case PenCurveTool.Curve:
-                        case PenCurveTool.Line:
-                            layer.BuildGeometry(this.CanvasControl, this.PreviousPosition, this.Mode is PenCurveTool.Curve);
-                            break;
-                        default:
-                            layer.BuildGeometry(this.CanvasControl);
-                            break;
-                    }
-                    this.CanvasControl.Invalidate(); // Invalidate
-                }
-            };
 
             this.ResetPressureButton.Click += (s, e) =>
             {
@@ -146,7 +125,8 @@ namespace Luo_Painter.TestApp
                         item.Pressure = 1;
                     }
 
-                    layer.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -164,7 +144,8 @@ namespace Luo_Painter.TestApp
                         if (item.IsChecked) item.Pressure = value;
                     }
 
-                    layer.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -178,8 +159,8 @@ namespace Luo_Painter.TestApp
                     CurveLayer layer = this.ObservableCollection[index];
                     if (layer is null) return;
 
-                    layer.Color = e.NewColor;
-                    layer.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Color = e.NewColor;
+                    layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -193,8 +174,9 @@ namespace Luo_Painter.TestApp
                     CurveLayer layer = this.ObservableCollection[index];
                     if (layer is null) return;
 
-                    layer.StrokeWidth = (float)e.NewValue;
-                    layer.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.StrokeWidth = (float)e.NewValue;
+                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -225,7 +207,8 @@ namespace Luo_Painter.TestApp
                         layer.Anchors.Add(item);
                     }
 
-                    layer.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
             };
@@ -363,9 +346,12 @@ namespace Luo_Painter.TestApp
                                     IsSmooth = this.Mode is PenCurveTool.Curve,
                                 });
 
-                                layer.Color = this.ColorPicker.Color;
-                                layer.StrokeWidth = (float)this.StrokeWidthSlider.Value;
-                                layer.BuildGeometry(this.CanvasControl, this.Position, this.Mode is PenCurveTool.Curve);
+                                layer.Anchors.Color = this.ColorPicker.Color;
+                                layer.Anchors.StrokeWidth = (float)this.StrokeWidthSlider.Value;
+
+                                layer.Anchors.ClosePoint = this.Position;
+                                layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
+                                layer.Anchors.BuildGeometry(this.CanvasControl);
                             }
                             else
                             {
@@ -378,26 +364,28 @@ namespace Luo_Painter.TestApp
                                     IsSmooth = this.Mode is PenCurveTool.Curve,
                                 });
 
-                                layer.BuildGeometry(this.CanvasControl, this.StartingPreviousPosition, this.Mode is PenCurveTool.Curve);
+                                layer.Anchors.ClosePoint = this.StartingPreviousPosition;
+                                layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
+                                layer.Anchors.BuildGeometry(this.CanvasControl);
                             }
                             break;
                         case PenCurveTool.RectChoose:
                             this.StartingPosition = this.Position = this.ToPosition(point);
                             this.TransformerRect = new TransformerRect(this.Position, this.Position);
-                            layer.BoxChoose(this.TransformerRect);
+                            layer.Anchors.BoxChoose(this.TransformerRect);
                             break;
                         case PenCurveTool.Move:
                             if (layer is null) break;
 
                             this.StartingPosition = this.Position = this.ToPosition(point);
 
-                            layer.Index = -1;
+                            layer.Anchors.Index = -1;
                             foreach (Anchor item in layer.Anchors)
                             {
                                 item.CacheTransform();
                                 if (FanKit.Math.InNodeRadius(this.Position, item.Point))
                                 {
-                                    layer.Index = layer.Anchors.IndexOf(item);
+                                    layer.Anchors.Index = layer.Anchors.IndexOf(item);
                                 }
                             }
                             break;
@@ -441,14 +429,18 @@ namespace Luo_Painter.TestApp
                         case PenCurveTool.Curve:
                         case PenCurveTool.Line:
                             this.PreviousPosition = this.StartingPreviousPosition + this.Position - this.StartingPosition;
-                            layer.BuildGeometry(this.CanvasControl, this.PreviousPosition, this.Mode is PenCurveTool.Curve);
+
+                            layer.Anchors.ClosePoint = this.PreviousPosition;
+                            layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
+                            layer.Anchors.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.RectChoose:
                             this.TransformerRect = new TransformerRect(this.StartingPosition, this.Position);
-                            layer.BoxChoose(this.TransformerRect);
+                            layer.Anchors.BoxChoose(this.TransformerRect);
                             break;
                         case PenCurveTool.Move:
-                            if (layer.Index is -1)
+                            if (layer.Anchors.Index is -1)
                             {
                                 foreach (Anchor item in layer.Anchors)
                                 {
@@ -460,11 +452,12 @@ namespace Luo_Painter.TestApp
                             }
                             else
                             {
-                                Anchor item = layer.SelectedItem;
+                                Anchor item = layer.Anchors.SelectedItem;
                                 item.TransformAdd(this.Position - this.StartingPosition);
                             }
 
-                            layer.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.Hitter:
                             foreach (Anchor item in layer.Anchors)
@@ -504,7 +497,11 @@ namespace Luo_Painter.TestApp
                         case PenCurveTool.Curve:
                         case PenCurveTool.Line:
                             this.PreviousPosition = this.StartingPreviousPosition + this.Position - this.StartingPosition;
-                            layer.BuildGeometry(this.CanvasControl, this.PreviousPosition, this.Mode is PenCurveTool.Curve);
+
+                            layer.Anchors.ClosePoint = this.PreviousPosition;
+                            layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
+                            layer.Anchors.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.RectChoose:
                             this.TransformerRect = default;
@@ -558,7 +555,8 @@ namespace Luo_Painter.TestApp
                                     });
                                 }
 
-                                layer.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.Invalidate();
                             }
                             else
                             {
@@ -605,7 +603,8 @@ namespace Luo_Painter.TestApp
                                     });
                                 }
 
-                                layer.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.Invalidate();
                             }
                             break;
                         default:
