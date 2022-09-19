@@ -37,7 +37,7 @@ namespace Luo_Painter.TestApp
         private void ValueChanged(int index, float value)
         {
             this.Anchors[index].Pressure = this.ToPressure(value);
-            this.Anchors.BuildGeometry(this.CanvasControl);
+            this.Anchors.Segment(this.CanvasControl);
             this.Anchors.Invalidate();
             this.CanvasControl.Invalidate(); // Invalidate
         }
@@ -61,7 +61,7 @@ namespace Luo_Painter.TestApp
         {
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.Anchors = this.Create(sender);
+                this.Anchors = this.CreateAnchors();
                 this.Anchors.Color = Colors.DodgerBlue;
                 this.Anchors.StrokeWidth = 5;
             };

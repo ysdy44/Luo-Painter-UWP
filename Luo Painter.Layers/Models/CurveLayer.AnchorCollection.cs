@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Microsoft.Graphics.Canvas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -7,7 +8,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed class AnchorCollection : List<Anchor>
+    public sealed class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
     {
 
         internal readonly CanvasRenderTarget SourceRenderTarget;
@@ -39,7 +40,7 @@ namespace Luo_Painter.Layers.Models
             {
                 anchors.Add(item.Clone());
             }
-            anchors.BuildGeometry(resourceCreator);
+            anchors.Segment(resourceCreator);
             anchors.Invalidate();
             return anchors;
         }
@@ -50,7 +51,7 @@ namespace Luo_Painter.Layers.Models
             {
                 anchors.Add(item.Clone(offset));
             }
-            anchors.BuildGeometry(resourceCreator);
+            anchors.Segment(resourceCreator);
             anchors.Invalidate();
             return anchors;
         }
@@ -61,7 +62,7 @@ namespace Luo_Painter.Layers.Models
             {
                 anchors.Add(item.Clone(matrix));
             }
-            anchors.BuildGeometry(resourceCreator);
+            anchors.Segment(resourceCreator);
             anchors.Invalidate();
             return anchors;
         }
@@ -82,21 +83,23 @@ namespace Luo_Painter.Layers.Models
         public void Invalidate()
         {
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-            {
+            {                
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 ds.Clear(Colors.Transparent);
-
-                if (this.IsClosed)
-                    ds.FillAnchorCollection(this, this.Color, this.StrokeWidth);
-                else
-                    ds.FillAnchorCollection(this, this.ClosePoint, this.Color, this.StrokeWidth);
+                foreach (Anchor anchor in this)
+                {
+                    foreach (Vector3 item in anchor.Strokes)
+                    {
+                        ds.FillCircle(item.X, item.Y, item.Z, this.Color);
+                    }
+                }
             }
         }
 
 
-        public bool BuildGeometry(ICanvasResourceCreator resourceCreator)
+        public bool Segment(ICanvasResourceCreator resourceCreator)
         {
             // Begin + First + Anchors + Last
             if (this.IsClosed)
@@ -109,7 +112,7 @@ namespace Luo_Painter.Layers.Models
                         this.Single().Dispose();
                         return false;
                     case 2:
-                        this.First().AddLine(resourceCreator, this.Last().Point);
+                        this.First().AddLine(resourceCreator, this.Last(), this.StrokeWidth);
                         this.Last().Dispose();
                         return true;
                     default:
@@ -125,7 +128,7 @@ namespace Luo_Painter.Layers.Models
                         return false;
                     case 1:
                         // Begin + End
-                        this.First().AddLine(resourceCreator, this.ClosePoint);
+                        this.First().AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
                         return true;
                     case 2:
                         {
@@ -145,13 +148,13 @@ namespace Luo_Painter.Layers.Models
 
                             if (first.IsSmooth is false && begin.IsSmooth is false)
                             {
-                                begin.AddLine(resourceCreator, firstPoint);
+                                begin.AddLine(resourceCreator, first, this.StrokeWidth);
                                 previousRightControlPoint = firstPoint;
                             }
                             else
                             {
                                 Vector2 leftControlPoint = Anchor.CubicBezierFirst(firstPoint, beginPoint, this.ClosePoint, ref previousRightControlPoint);
-                                begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, firstPoint);
+                                begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, first, this.StrokeWidth);
                             }
 
 
@@ -159,15 +162,18 @@ namespace Luo_Painter.Layers.Models
                             Anchor last = base[base.Count - 1];
 
                             if (this.CloseIsSmooth is false && last.IsSmooth is false)
-                                first.AddLine(resourceCreator, this.ClosePoint);
+                                first.AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
                             else
-                                first.AddCubicBezier(resourceCreator, previousRightControlPoint, this.ClosePoint);
+                                first.AddCubicBezier(resourceCreator, previousRightControlPoint, this.ClosePoint, this.StrokeWidth);
                         }
                         return true;
                     default:
                         break;
                 }
             }
+
+
+            // default
             {
                 Vector2 previousRightControlPoint;
 
@@ -185,7 +191,7 @@ namespace Luo_Painter.Layers.Models
 
                 if (first.IsSmooth is false && begin.IsSmooth is false)
                 {
-                    begin.AddLine(resourceCreator, firstPoint);
+                    begin.AddLine(resourceCreator, first, this.StrokeWidth);
                     previousRightControlPoint = firstPoint;
                 }
                 else
@@ -194,7 +200,7 @@ namespace Luo_Painter.Layers.Models
                     Vector2 nextPoint = next.Point;
 
                     Vector2 leftControlPoint = Anchor.CubicBezierFirst(firstPoint, beginPoint, nextPoint, ref previousRightControlPoint);
-                    begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, firstPoint);
+                    begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, first, this.StrokeWidth);
                 }
 
 
@@ -208,7 +214,7 @@ namespace Luo_Painter.Layers.Models
 
                     if (current.IsSmooth is false && previous.IsSmooth is false)
                     {
-                        previous.AddLine(resourceCreator, point);
+                        previous.AddLine(resourceCreator, current, this.StrokeWidth);
                         previousRightControlPoint = point;
                     }
                     else
@@ -218,7 +224,7 @@ namespace Luo_Painter.Layers.Models
 
                         Vector2 rightControlPoint = previousRightControlPoint;
                         Vector2 leftControlPoint = Anchor.CubicBezier(point, previousPoint, nextPoint, ref previousRightControlPoint);
-                        previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, point);
+                        previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, current, this.StrokeWidth);
                     }
                 }
 
@@ -235,28 +241,27 @@ namespace Luo_Painter.Layers.Models
                     Vector2 leftControlPoint = Anchor.CubicBezier(point, previousPoint, this.ClosePoint, ref previousRightControlPoint);
 
                     if (current.IsSmooth is false && previous.IsSmooth is false)
-                        previous.AddLine(resourceCreator, point);
+                        previous.AddLine(resourceCreator, current, this.StrokeWidth);
                     else
-                        previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, point);
+                        previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, current, this.StrokeWidth);
 
 
                     // 4. End
                     if (this.CloseIsSmooth is false && current.IsSmooth is false)
-                        current.AddLine(resourceCreator, this.ClosePoint);
+                        current.AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
                     else
-                        current.AddCubicBezier(resourceCreator, previousRightControlPoint, this.ClosePoint);
+                        current.AddCubicBezier(resourceCreator, previousRightControlPoint, this.ClosePoint, this.StrokeWidth);
                 }
                 else
                 {
                     // 3. Last
                     Anchor current = base[base.Count - 1];
                     Anchor previous = base[base.Count - 2];
-                    Vector2 point = current.Point;
 
                     if (current.IsSmooth is false && previous.IsSmooth is false)
-                        previous.AddLine(resourceCreator, point);
+                        previous.AddLine(resourceCreator, current, this.StrokeWidth);
                     else
-                        previous.AddCubicBezier(resourceCreator, previousRightControlPoint, point);
+                        previous.AddCubicBezier(resourceCreator, previousRightControlPoint, current, this.StrokeWidth);
 
                     current.Dispose();
                 }
@@ -365,7 +370,14 @@ namespace Luo_Painter.Layers.Models
         public void BoxChoose(TransformerRect boxRect) => this.RectChoose(boxRect.Left, boxRect.Top, boxRect.Right, boxRect.Bottom);
 
 
-        public override string ToString() => "Anchors";
+        public void Dispose()
+        {
+            this.Source.Dispose();
+            foreach (Anchor item in this)
+            {
+                item.Dispose();
+            }
+        }
 
     }
 }

@@ -125,7 +125,7 @@ namespace Luo_Painter.TestApp
                         item.Pressure = 1;
                     }
 
-                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Segment(this.CanvasControl);
                     layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
@@ -144,7 +144,7 @@ namespace Luo_Painter.TestApp
                         if (item.IsChecked) item.Pressure = value;
                     }
 
-                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Segment(this.CanvasControl);
                     layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
@@ -175,7 +175,7 @@ namespace Luo_Painter.TestApp
                     if (layer is null) return;
 
                     layer.Anchors.StrokeWidth = (float)e.NewValue;
-                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Segment(this.CanvasControl);
                     layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
@@ -207,7 +207,7 @@ namespace Luo_Painter.TestApp
                         layer.Anchors.Add(item);
                     }
 
-                    layer.Anchors.BuildGeometry(this.CanvasControl);
+                    layer.Anchors.Segment(this.CanvasControl);
                     layer.Anchors.Invalidate();
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
@@ -351,7 +351,7 @@ namespace Luo_Painter.TestApp
 
                                 layer.Anchors.ClosePoint = this.Position;
                                 layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                                layer.Anchors.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.Segment(this.CanvasControl);
                             }
                             else
                             {
@@ -366,7 +366,7 @@ namespace Luo_Painter.TestApp
 
                                 layer.Anchors.ClosePoint = this.StartingPreviousPosition;
                                 layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                                layer.Anchors.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.Segment(this.CanvasControl);
                             }
                             break;
                         case PenCurveTool.RectChoose:
@@ -432,7 +432,7 @@ namespace Luo_Painter.TestApp
 
                             layer.Anchors.ClosePoint = this.PreviousPosition;
                             layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                            layer.Anchors.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.Segment(this.CanvasControl);
                             layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.RectChoose:
@@ -456,7 +456,7 @@ namespace Luo_Painter.TestApp
                                 item.TransformAdd(this.Position - this.StartingPosition);
                             }
 
-                            layer.Anchors.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.Segment(this.CanvasControl);
                             layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.Hitter:
@@ -500,7 +500,7 @@ namespace Luo_Painter.TestApp
 
                             layer.Anchors.ClosePoint = this.PreviousPosition;
                             layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                            layer.Anchors.BuildGeometry(this.CanvasControl);
+                            layer.Anchors.Segment(this.CanvasControl);
                             layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.RectChoose:
@@ -555,7 +555,7 @@ namespace Luo_Painter.TestApp
                                     });
                                 }
 
-                                layer.Anchors.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.Segment(this.CanvasControl);
                                 layer.Anchors.Invalidate();
                             }
                             else
@@ -603,7 +603,7 @@ namespace Luo_Painter.TestApp
                                     });
                                 }
 
-                                layer.Anchors.BuildGeometry(this.CanvasControl);
+                                layer.Anchors.Segment(this.CanvasControl);
                                 layer.Anchors.Invalidate();
                             }
                             break;
