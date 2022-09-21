@@ -35,17 +35,20 @@ namespace Luo_Painter.TestApp
             this.InitializeComponent();
             base.Loaded += (s, e) => this.AutoSuggestBox.Focus(FocusState.Keyboard);
 
-            this.Hyperlink0.Inlines.Add(new Run { Text = typeof(PenCurvePage).Name });
-            this.Hyperlink0.Click += (s, e) => this.Navigate(typeof(PenCurvePage).Name);
+            this.Hyperlink0.Inlines.Add(new Run { Text = typeof(PenCurve2Page).Name });
+            this.Hyperlink0.Click += (s, e) => this.Navigate(typeof(PenCurve2Page).Name);
 
-            this.Hyperlink1.Inlines.Add(new Run { Text = typeof(TextLayoutsPage).Name });
-            this.Hyperlink1.Click += (s, e) => this.Navigate(typeof(TextLayoutsPage).Name);
+            this.Hyperlink1.Inlines.Add(new Run { Text = typeof(PenCurvePage).Name });
+            this.Hyperlink1.Click += (s, e) => this.Navigate(typeof(PenCurvePage).Name);
 
-            this.Hyperlink2.Inlines.Add(new Run { Text = typeof(LayerManagerPage).Name });
-            this.Hyperlink2.Click += (s, e) => this.Navigate(typeof(LayerManagerPage).Name);
+            this.Hyperlink2.Inlines.Add(new Run { Text = typeof(TextLayoutsPage).Name });
+            this.Hyperlink2.Click += (s, e) => this.Navigate(typeof(TextLayoutsPage).Name);
 
-            this.Hyperlink3.Inlines.Add(new Run { Text = typeof(DisplacementLiquefactionPage).Name });
-            this.Hyperlink3.Click += (s, e) => this.Navigate(typeof(DisplacementLiquefactionPage).Name);
+            this.Hyperlink3.Inlines.Add(new Run { Text = typeof(LayerManagerPage).Name });
+            this.Hyperlink3.Click += (s, e) => this.Navigate(typeof(LayerManagerPage).Name);
+
+            this.Hyperlink4.Inlines.Add(new Run { Text = typeof(DisplacementLiquefactionPage).Name });
+            this.Hyperlink4.Click += (s, e) => this.Navigate(typeof(DisplacementLiquefactionPage).Name);
 
             this.ListView.ItemClick += (s, e) =>
             {

@@ -294,8 +294,8 @@ namespace Luo_Painter.TestApp
                 Vector2 point = this.Nodes[1].Point;
                 Vector2 vector = this.Nodes[2].LeftControlPoint - (point + this.Nodes[0].RightControlPoint) / 2;
 
-                float left = (point - (point + this.Nodes[0].Point) / 2).Length();
-                float right = (point - this.Nodes[2].Point).Length();
+                float left = (point - (point + this.Nodes[0].Point) / 2).LengthSquared();
+                float right = (point - this.Nodes[2].Point).LengthSquared();
                 float length = left + right;
 
                 this.Nodes[1].LeftControlPoint = point - left / length * vector;
@@ -312,8 +312,8 @@ namespace Luo_Painter.TestApp
                     Vector2 point = this.Nodes[i].Point;
                     Vector2 vector = this.Nodes[i + 1].LeftControlPoint - this.Nodes[i - 1].RightControlPoint;
 
-                    float left = (point - this.Nodes[i - 1].Point).Length();
-                    float right = (point - this.Nodes[i + 1].Point).Length();
+                    float left = (point - this.Nodes[i - 1].Point).LengthSquared();
+                    float right = (point - this.Nodes[i + 1].Point).LengthSquared();
                     float length = left + right;
 
                     this.Nodes[i].LeftControlPoint = point - left / length / 2 * vector;
