@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.PenCurve2Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Transformer-->
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasTransformer x:Name="Transformer" />
+    </FrameworkElement.Resources>
+
+    <Grid>
+        <xaml:CanvasControl x:Name="CanvasControl" />
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <ContentControl.Content>
+                <TextBlock Margin="12,10,2,0" >
+                    <Run Foreground="Red">Pen</Run>
+                    <Run>+</Run>
+                    <Run Foreground="DodgerBlue">Curve</Run>
+                </TextBlock>
+            </ContentControl.Content>
+
+            <AppBarButton x:Name="AddButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="A"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Add"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Add
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarSeparator/>
+
+            <AppBarToggleButton x:Name="SmoothButton" IsChecked="True" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="S"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarToggleButton.Icon>
+                    <SymbolIcon Symbol="{x:Bind SymbolConverter(SmoothButton.IsChecked), Mode=OneWay}"/>
+                </AppBarToggleButton.Icon>
+                <AppBarToggleButton.Label>
+                    Smooth
+                </AppBarToggleButton.Label>
+            </AppBarToggleButton>
+
+            <AppBarButton x:Name="ClearButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Delete"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Clear
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+    </Grid>
+
+</Page>
