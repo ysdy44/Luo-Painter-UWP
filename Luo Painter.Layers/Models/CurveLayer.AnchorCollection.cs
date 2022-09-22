@@ -83,7 +83,7 @@ namespace Luo_Painter.Layers.Models
         public void Invalidate()
         {
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-            {                
+            {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
@@ -99,174 +99,161 @@ namespace Luo_Painter.Layers.Models
         }
 
 
+        /// <summary>
+        /// Begin + First + Anchors + Last + End
+        /// </summary>
         public bool Segment(ICanvasResourceCreator resourceCreator)
         {
-            // Begin + First + Anchors + Last
-            if (this.IsClosed)
+            switch (this.IsClosed ? base.Count : this.Count + 1)
             {
-                switch (base.Count)
-                {
-                    case 0:
-                        return false;
-                    case 1:
-                        this.Single().Dispose();
-                        return false;
-                    case 2:
-                        this.First().AddLine(resourceCreator, this.Last(), this.StrokeWidth);
-                        this.Last().Dispose();
-                        return true;
-                    default:
-                        break;
-                }
-            }
-            // Begin + First + Anchors + Last + End
-            else
-            {
-                switch (base.Count)
-                {
-                    case 0:
-                        return false;
-                    case 1:
-                        // Begin + End
-                        this.First().AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
-                        return true;
-                    case 2:
+                case 0:
+                case 1:
+                    return false;
+                case 2:
+                    // Begin
+                    this.First().AddLine(resourceCreator, this.IsClosed ? this.Last().Point : this.ClosePoint, this.StrokeWidth);
+                    return true;
+                case 3:
+                    {
+                        Anchor begin = base[0];
+                        Anchor first = base[1];
+                        Vector2 firstPoint = first.Point;
+
+                        // Begin
+                        if (first.IsSmooth is false && begin.IsSmooth is false)
                         {
-                            Vector2 previousRightControlPoint;
+                            first.LeftControlPoint = firstPoint;
+                            first.RightControlPoint = firstPoint;
+                            begin.AddLine(resourceCreator, first, this.StrokeWidth);
+                        }
+                        else
+                        {
+                            Vector2 vector = ClosePoint - (firstPoint + begin.Point) / 2;
 
+                            float left = (firstPoint - (firstPoint + begin.Point) / 2).Length();
+                            float right = (firstPoint - ClosePoint).Length();
+                            float length = left + right;
 
-                            // 0. Begin
-                            Anchor begin = base[0];
-                            Vector2 beginPoint = begin.Point;
+                            first.LeftControlPoint = firstPoint - System.Math.Min(left, right) / length * vector;
+                            first.RightControlPoint = firstPoint + right / length / 2 * vector;
+                            begin.AddCubicBezier(resourceCreator, begin.Point, first.LeftControlPoint, first, this.StrokeWidth);
+                        }
 
-                            previousRightControlPoint = beginPoint;
+                        // End
+                        if (this.IsClosed)
+                        {
+                            Anchor end = base[2];
+                            Vector2 endPoint = end.Point;
 
+                            end.LeftControlPoint = endPoint;
+                            end.RightControlPoint = endPoint;
 
-                            // 1. First
-                            Anchor first = base[1];
-                            Vector2 firstPoint = first.Point;
-
-                            if (first.IsSmooth is false && begin.IsSmooth is false)
-                            {
-                                begin.AddLine(resourceCreator, first, this.StrokeWidth);
-                                previousRightControlPoint = firstPoint;
-                            }
+                            if (end.IsSmooth is false && first.IsSmooth is false)
+                                first.AddLine(resourceCreator, endPoint, this.StrokeWidth);
                             else
-                            {
-                                Vector2 leftControlPoint = Anchor.CubicBezierFirst(firstPoint, beginPoint, this.ClosePoint, ref previousRightControlPoint);
-                                begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, first, this.StrokeWidth);
-                            }
-
-
-                            // 4. End
-                            Anchor last = base[base.Count - 1];
-
-                            if (this.CloseIsSmooth is false && last.IsSmooth is false)
+                                first.AddCubicBezier(resourceCreator, first.RightControlPoint, endPoint, endPoint, this.StrokeWidth);
+                        }
+                        else
+                        {
+                            if (this.CloseIsSmooth is false && first.IsSmooth is false)
                                 first.AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
                             else
-                                first.AddCubicBezier(resourceCreator, previousRightControlPoint, this.ClosePoint, this.StrokeWidth);
+                                first.AddCubicBezier(resourceCreator, first.RightControlPoint, this.ClosePoint, this.ClosePoint, this.StrokeWidth);
                         }
-                        return true;
-                    default:
-                        break;
-                }
-            }
-
-
-            // default
-            {
-                Vector2 previousRightControlPoint;
-
-
-                // 0. Begin
-                Anchor begin = base[0];
-                Vector2 beginPoint = begin.Point;
-
-                previousRightControlPoint = beginPoint;
-
-
-                // 1. First
-                Anchor first = base[1];
-                Vector2 firstPoint = first.Point;
-
-                if (first.IsSmooth is false && begin.IsSmooth is false)
-                {
-                    begin.AddLine(resourceCreator, first, this.StrokeWidth);
-                    previousRightControlPoint = firstPoint;
-                }
-                else
-                {
-                    Anchor next = base[2];
-                    Vector2 nextPoint = next.Point;
-
-                    Vector2 leftControlPoint = Anchor.CubicBezierFirst(firstPoint, beginPoint, nextPoint, ref previousRightControlPoint);
-                    begin.AddCubicBezier(resourceCreator, beginPoint, leftControlPoint, first, this.StrokeWidth);
-                }
-
-
-                // 2. Anchors
-                for (int i = 2; i < base.Count - 1; i++)
-                {
-                    Anchor current = base[i];
-                    Anchor previous = base[i - 1];
-                    Vector2 point = current.Point;
-                    Vector2 previousPoint = previous.Point;
-
-                    if (current.IsSmooth is false && previous.IsSmooth is false)
-                    {
-                        previous.AddLine(resourceCreator, current, this.StrokeWidth);
-                        previousRightControlPoint = point;
                     }
-                    else
+                    return true;
+                default:
                     {
-                        Anchor next = base[i + 1];
-                        Vector2 nextPoint = next.Point;
+                        Anchor begin = base[0];
+                        Anchor first = base[1];
+                        Vector2 firstPoint = first.Point;
 
-                        Vector2 rightControlPoint = previousRightControlPoint;
-                        Vector2 leftControlPoint = Anchor.CubicBezier(point, previousPoint, nextPoint, ref previousRightControlPoint);
-                        previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, current, this.StrokeWidth);
+                        // Begin
+                        if (first.IsSmooth is false && begin.IsSmooth is false)
+                        {
+                            first.LeftControlPoint = firstPoint;
+                            first.RightControlPoint = firstPoint;
+                            begin.AddLine(resourceCreator, firstPoint, this.StrokeWidth);
+                        }
+                        else
+                        {
+                            Anchor next = base[2];
+                            Vector2 beginPoint = begin.Point;
+
+                            Vector2 vector = next.LeftControlPoint - (firstPoint + beginPoint) / 2;
+
+                            float left = (firstPoint - (firstPoint + beginPoint) / 2).LengthSquared();
+                            float right = (firstPoint - next.Point).LengthSquared();
+                            float length = left + right;
+
+                            first.LeftControlPoint = firstPoint - left / length * vector;
+                            first.RightControlPoint = firstPoint + right / length / 2 * vector;
+                            begin.AddCubicBezier(resourceCreator, beginPoint, first.LeftControlPoint, firstPoint, this.StrokeWidth);
+                        }
+
+                        // First + Anchors
+                        for (int i = 2; i < base.Count - 1; i++)
+                        {
+                            Anchor current = base[i];
+                            Anchor previous = base[i - 1];
+                            Vector2 point = current.Point;
+
+                            if (current.IsSmooth is false && previous.IsSmooth is false)
+                            {
+                                current.LeftControlPoint = point;
+                                current.RightControlPoint = point;
+                                previous.AddLine(resourceCreator, point, this.StrokeWidth);
+                            }
+                            else
+                            {
+                                Anchor next = base[i + 1];
+
+                                Vector2 vector = next.LeftControlPoint - previous.RightControlPoint;
+
+                                float left = (point - previous.Point).LengthSquared();
+                                float right = (point - next.Point).LengthSquared();
+                                float length = left + right;
+
+                                current.LeftControlPoint = point - left / length / 2 * vector;
+                                current.RightControlPoint = point + right / length / 2 * vector;
+                                previous.AddCubicBezier(resourceCreator, previous.RightControlPoint, current.LeftControlPoint, point, this.StrokeWidth);
+                            }
+                        }
+
+                        // Last + End
+                        if (this.IsClosed is false)
+                        {
+                            Anchor last = base[base.Count - 2];
+                            Anchor end = base[base.Count - 1];
+                            Vector2 endPoint = end.Point;
+
+                            if (end.IsSmooth is false && last.IsSmooth is false)
+                            {
+                                end.LeftControlPoint = endPoint;
+                                end.RightControlPoint = endPoint;
+                                last.AddLine(resourceCreator, endPoint, this.StrokeWidth);
+                            }
+                            else
+                            {
+                                Vector2 vector = this.ClosePoint - last.RightControlPoint;
+
+                                float left = (endPoint - last.Point).LengthSquared();
+                                float right = (endPoint - this.ClosePoint).LengthSquared();
+                                float length = left + right;
+
+                                end.LeftControlPoint = endPoint - left / length / 2 * vector;
+                                end.RightControlPoint = endPoint + right / length / 2 * vector;
+                                last.AddCubicBezier(resourceCreator, last.RightControlPoint, end.LeftControlPoint, endPoint, this.StrokeWidth);
+                            }
+
+                            if (this.CloseIsSmooth is false && end.IsSmooth is false)
+                                end.AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
+                            else
+                                end.AddCubicBezier(resourceCreator, end.RightControlPoint, this.ClosePoint, this.ClosePoint, this.StrokeWidth);
+                        }
                     }
-                }
-
-
-                if (this.IsClosed is false)
-                {
-                    // 3. Last
-                    Anchor current = base[base.Count - 1];
-                    Anchor previous = base[base.Count - 2];
-                    Vector2 point = current.Point;
-                    Vector2 previousPoint = previous.Point;
-
-                    Vector2 rightControlPoint = previousRightControlPoint;
-                    Vector2 leftControlPoint = Anchor.CubicBezier(point, previousPoint, this.ClosePoint, ref previousRightControlPoint);
-
-                    if (current.IsSmooth is false && previous.IsSmooth is false)
-                        previous.AddLine(resourceCreator, current, this.StrokeWidth);
-                    else
-                        previous.AddCubicBezier(resourceCreator, rightControlPoint, leftControlPoint, current, this.StrokeWidth);
-
-
-                    // 4. End
-                    if (this.CloseIsSmooth is false && current.IsSmooth is false)
-                        current.AddLine(resourceCreator, this.ClosePoint, this.StrokeWidth);
-                    else
-                        current.AddCubicBezier(resourceCreator, previousRightControlPoint, this.ClosePoint, this.StrokeWidth);
-                }
-                else
-                {
-                    // 3. Last
-                    Anchor current = base[base.Count - 1];
-                    Anchor previous = base[base.Count - 2];
-
-                    if (current.IsSmooth is false && previous.IsSmooth is false)
-                        previous.AddLine(resourceCreator, current, this.StrokeWidth);
-                    else
-                        previous.AddCubicBezier(resourceCreator, previousRightControlPoint, current, this.StrokeWidth);
-
-                    current.Dispose();
-                }
+                    return true;
             }
-            return true;
         }
 
 

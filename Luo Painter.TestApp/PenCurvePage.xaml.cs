@@ -343,6 +343,8 @@ namespace Luo_Painter.TestApp
                                 layer.Anchors.Add(new Anchor
                                 {
                                     Point = this.Position,
+                                    LeftControlPoint = this.Position,
+                                    RightControlPoint = this.Position,
                                     IsSmooth = this.Mode is PenCurveTool.Curve,
                                 });
 
@@ -361,6 +363,8 @@ namespace Luo_Painter.TestApp
                                 layer.Anchors.Add(new Anchor
                                 {
                                     Point = this.StartingPreviousPosition,
+                                    LeftControlPoint = this.StartingPreviousPosition,
+                                    RightControlPoint = this.StartingPreviousPosition,
                                     IsSmooth = this.Mode is PenCurveTool.Curve,
                                 });
 
