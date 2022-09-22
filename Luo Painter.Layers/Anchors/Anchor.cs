@@ -4,11 +4,10 @@ using Microsoft.Graphics.Canvas.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
-namespace Luo_Painter.Layers.Models
+namespace Luo_Painter.Layers
 {
-    public sealed class Anchor : Node, IDisposable
+    public sealed partial class Anchor : Node, IDisposable
     {
         /// <summary> Pressure. </summary>
         public float Pressure { get; set; } = 1;

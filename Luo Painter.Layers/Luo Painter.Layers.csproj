@@ -120,6 +120,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnchorCollections\AnchorCollection.cs" />
+    <Compile Include="Anchors\Anchor.cs" />
     <Compile Include="BitmapType.cs" />
     <Compile Include="CanvasDrawingSessionExtensions.cs" />
     <Compile Include="IDrag.cs" />
@@ -154,8 +156,6 @@
     <Compile Include="Models\BitmapLayer.PixelBounds.cs" />
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
     <Compile Include="Models\BitmapLayer.Setup.cs" />
-    <Compile Include="Models\CurveLayer.Anchor.cs" />
-    <Compile Include="Models\CurveLayer.AnchorCollection.cs" />
     <Compile Include="Models\CurveLayer.cs" />
     <Compile Include="Models\GroupLayer.cs" />
     <Compile Include="PixelBounds.cs" />

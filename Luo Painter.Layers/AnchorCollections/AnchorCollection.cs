@@ -6,9 +6,9 @@ using System.Linq;
 using System.Numerics;
 using Windows.UI;
 
-namespace Luo_Painter.Layers.Models
+namespace Luo_Painter.Layers
 {
-    public sealed class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
+    public sealed partial class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
     {
 
         internal readonly CanvasRenderTarget SourceRenderTarget;
