@@ -8,6 +8,29 @@ namespace Luo_Painter.Layers
 {
     public sealed partial class Anchor : Node, IDisposable
     {
+        /// <summary>
+        /// Don't change this Magic Code !
+        /// </summary>
+        public void Segment(Vector2 right, Vector2 left)
+        {
+            Vector2 rightVector = right - this.Point;
+            Vector2 leftVector = left - this.Point;
+
+            float leftLength = leftVector.Length();
+            float rightLength = rightVector.Length();
+
+            float length = leftLength + rightLength;
+            float distance = (left - right).Length() / length / length / 4;
+
+            Vector2 vector =
+                Vector2.Normalize(rightVector) * leftLength
+                - Vector2.Normalize(leftVector) * rightLength
+                + right - left;
+
+            this.LeftControlPoint = this.Point - leftLength * distance * vector;
+            this.RightControlPoint = this.Point + rightLength * distance * vector;
+        }
+
         readonly Vector2[] LinePoints = new Vector2[2];
         internal CanvasGeometry Line(ICanvasResourceCreator resourceCreator, Vector2 point)
         {
