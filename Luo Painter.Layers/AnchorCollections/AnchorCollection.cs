@@ -14,7 +14,7 @@ namespace Luo_Painter.Layers
         public Color[] GetPixelColors(int left, int top, int width, int height) => this.SourceRenderTarget.GetPixelColors(left, top, width, height);
 
         public Color Color { get; set; } = Colors.Black;
-        public float StrokeWidth { get; set; } = 1;
+        public float StrokeWidth { get; set; } = 4;
 
         public bool IsClosed { get; set; }
         public Vector2 ClosePoint { get; set; }
@@ -74,7 +74,7 @@ namespace Luo_Painter.Layers
                 Index = this.Index
             };
         }
-        
+
         public void Dispose()
         {
             this.Source.Dispose();

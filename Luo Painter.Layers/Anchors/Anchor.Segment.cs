@@ -8,6 +8,11 @@ namespace Luo_Painter.Layers
 {
     public sealed partial class Anchor : Node, IDisposable
     {
+        public void SegmentLine()
+        {
+            this.LeftControlPoint = this.Point;
+            this.RightControlPoint = this.Point;
+        }
         /// <summary>
         /// Don't change this Magic Code !
         /// </summary>
@@ -22,12 +27,31 @@ namespace Luo_Painter.Layers
             float length = leftLength + rightLength;
             float distance = (left - right).Length() / length / length / 4;
 
-            Vector2 vector =
-                Vector2.Normalize(rightVector) * leftLength
-                - Vector2.Normalize(leftVector) * rightLength
-                + right - left;
+            Vector2 vector = right - left
+                + Vector2.Normalize(rightVector) * leftLength
+                - Vector2.Normalize(leftVector) * rightLength;
 
             this.LeftControlPoint = this.Point - leftLength * distance * vector;
+            this.RightControlPoint = this.Point + rightLength * distance * vector;
+        }
+        public void SegmentFirst(Vector2 right, Vector2 begin)
+        {
+            Vector2 left = (this.Point + begin) / 2;
+
+            Vector2 rightVector = right - this.Point;
+            Vector2 leftVector = left - this.Point;
+
+            float leftLength = leftVector.Length();
+            float rightLength = rightVector.Length();
+
+            float length = leftLength + rightLength;
+            float distance = (left - right).Length() / length / length / 4;
+
+            Vector2 vector = right - left
+                + Vector2.Normalize(rightVector) * leftLength
+                - Vector2.Normalize(leftVector) * rightLength;
+
+            this.LeftControlPoint = this.Point - leftLength * distance * vector * 2.2360679774997896964091736687313f; // √5
             this.RightControlPoint = this.Point + rightLength * distance * vector;
         }
 

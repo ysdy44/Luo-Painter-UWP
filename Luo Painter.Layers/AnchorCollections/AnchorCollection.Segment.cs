@@ -54,37 +54,30 @@ namespace Luo_Painter.Layers
                     {
                         Anchor begin = base[0];
                         Anchor first = base[1];
-                        Vector2 firstPoint = first.Point;
 
                         // Begin
                         if (first.IsSmooth is false && begin.IsSmooth is false)
                         {
-                            first.LeftControlPoint = firstPoint;
-                            first.RightControlPoint = firstPoint;
+                            first.SegmentLine();
                             begin.AddLine(resourceCreator, first, this.StrokeWidth);
                         }
                         else
                         {
-                            Vector2 beginPoint = begin.Point;
-
-                            first.Segment(this.ClosePoint, (firstPoint + beginPoint) / 2);
-                            begin.AddCubicBezier(resourceCreator, beginPoint, first.LeftControlPoint, first, this.StrokeWidth);
+                            first.SegmentFirst(this.ClosePoint, begin.Point);
+                            begin.AddCubicBezier(resourceCreator, begin.Point, first.LeftControlPoint, first, this.StrokeWidth);
                         }
 
                         // End
                         if (this.IsClosed)
                         {
                             Anchor end = base[2];
-                            Vector2 endPoint = end.Point;
-
-                            end.LeftControlPoint = endPoint;
-                            end.RightControlPoint = endPoint;
 
                             if (end.IsSmooth is false && first.IsSmooth is false)
-                                first.AddLine(resourceCreator, endPoint, this.StrokeWidth);
+                                first.AddLine(resourceCreator, end.Point, this.StrokeWidth);
                             else
-                                first.AddCubicBezier(resourceCreator, first.RightControlPoint, endPoint, end, this.StrokeWidth);
+                                first.AddCubicBezier(resourceCreator, first.RightControlPoint, end.Point, end, this.StrokeWidth);
 
+                            end.SegmentLine();
                             end.Dispose();
                         }
                         else
@@ -100,22 +93,19 @@ namespace Luo_Painter.Layers
                     {
                         Anchor begin = base[0];
                         Anchor first = base[1];
-                        Vector2 firstPoint = first.Point;
 
                         // Begin
                         if (first.IsSmooth is false && begin.IsSmooth is false)
                         {
-                            first.LeftControlPoint = firstPoint;
-                            first.RightControlPoint = firstPoint;
-                            begin.AddLine(resourceCreator, firstPoint, this.StrokeWidth);
+                            first.SegmentLine();
+                            begin.AddLine(resourceCreator, first.Point, this.StrokeWidth);
                         }
                         else
                         {
                             Anchor next = base[2];
-                            Vector2 beginPoint = begin.Point;
 
-                            first.Segment(next.Point, (firstPoint + beginPoint) / 2);
-                            begin.AddCubicBezier(resourceCreator, beginPoint, first.LeftControlPoint, first, this.StrokeWidth);
+                            first.SegmentFirst(next.Point, begin.Point);
+                            begin.AddCubicBezier(resourceCreator, begin.Point, first.LeftControlPoint, first, this.StrokeWidth);
                         }
 
                         // First + Anchors
@@ -123,13 +113,11 @@ namespace Luo_Painter.Layers
                         {
                             Anchor current = base[i];
                             Anchor previous = base[i - 1];
-                            Vector2 point = current.Point;
 
                             if (current.IsSmooth is false && previous.IsSmooth is false)
                             {
-                                current.LeftControlPoint = point;
-                                current.RightControlPoint = point;
-                                previous.AddLine(resourceCreator, point, this.StrokeWidth);
+                                current.SegmentLine();
+                                previous.AddLine(resourceCreator, current.Point, this.StrokeWidth);
                             }
                             else
                             {
@@ -143,13 +131,11 @@ namespace Luo_Painter.Layers
                         // Last
                         Anchor last = base[base.Count - 2];
                         Anchor end = base[base.Count - 1];
-                        Vector2 endPoint = end.Point;
 
                         if (end.IsSmooth is false && last.IsSmooth is false)
                         {
-                            end.LeftControlPoint = endPoint;
-                            end.RightControlPoint = endPoint;
-                            last.AddLine(resourceCreator, endPoint, this.StrokeWidth);
+                            end.SegmentLine();
+                            last.AddLine(resourceCreator, end.Point, this.StrokeWidth);
                         }
                         else
                         {

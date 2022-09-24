@@ -19,13 +19,6 @@ namespace Luo_Painter.TestApp
         }
 
         AnchorCollection Anchors;
-        AnchorCollection CreateAnchors() => new AnchorCollection(this.CanvasControl, 650, 200)
-        {
-            new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(100, 80), Pressure = 0.2f },
-            new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(250, 120) },
-            new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(400, 120) },
-            new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(550, 80), Pressure = 0.2f },
-        };
 
         public PenPreviewPage()
         {
@@ -36,6 +29,8 @@ namespace Luo_Painter.TestApp
 
         private void ValueChanged(int index, float value)
         {
+            if (this.Anchors is null) return;
+
             this.Anchors[index].Pressure = this.ToPressure(value);
             this.Anchors.Segment(this.CanvasControl);
             this.Anchors.Invalidate();
@@ -61,9 +56,20 @@ namespace Luo_Painter.TestApp
         {
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.Anchors = this.CreateAnchors();
+                this.Anchors = new AnchorCollection(this.CanvasControl, 650, 200)
+                {
+                    new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(100, 80), Pressure = 0.2f },
+                    new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(250, 120) },
+                    new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(400, 120) },
+                    new Anchor{ IsSmooth = true, IsChecked = true, Point = new Vector2(550, 80), Pressure = 0.2f },
+                };
+
+                this.Anchors.IsClosed = true;
                 this.Anchors.Color = Colors.DodgerBlue;
-                this.Anchors.StrokeWidth = 5;
+                this.Anchors.StrokeWidth = 22;
+
+                this.Anchors.Segment(sender);
+                this.Anchors.Invalidate();
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
