@@ -13,10 +13,10 @@ namespace Luo_Painter.Layers
         /// <summary> The cache of <see cref="Anchor.Pressure"/>. </summary>
         public float StartingPressure { get; private set; } = 1;
 
+        /// <summary> Geometric Shapes. </summary>
         public CanvasGeometry Geometry { get; private set; }
-        public float ComputePathLength { get; private set; }
-
-        public IList<Vector3> Strokes { get; } = new List<Vector3>();
+        internal float ComputePathLength { get; private set; }
+        internal IList<Vector3> Strokes { get; } = new List<Vector3>();
 
         /// <summary>
         /// Get own copy.
@@ -28,28 +28,38 @@ namespace Luo_Painter.Layers
             {
                 Pressure = this.Pressure,
 
-                Point = this.Point,
-                LeftControlPoint = this.LeftControlPoint,
-                RightControlPoint = this.RightControlPoint,
+                Point = base.Point,
+                LeftControlPoint = base.LeftControlPoint,
+                RightControlPoint = base.RightControlPoint,
 
-                IsChecked = this.IsChecked,
-                IsSmooth = this.IsSmooth,
+                IsChecked = base.IsChecked,
+                IsSmooth = base.IsSmooth,
             };
         }
-        public Anchor Clone(Vector2 offset)
+        /// <summary>
+        /// Get own copy.
+        /// </summary>
+        /// <param name="vector"> The add value use to summed. </param>
+        /// <returns> The cloned anchor. </returns>
+        public Anchor Clone(Vector2 vector)
         {
             return new Anchor
             {
                 Pressure = this.Pressure,
 
-                Point = this.Point + offset,
-                LeftControlPoint = this.LeftControlPoint + offset,
-                RightControlPoint = this.RightControlPoint + offset,
+                Point = base.Point + vector,
+                LeftControlPoint = base.LeftControlPoint + vector,
+                RightControlPoint = base.RightControlPoint + vector,
 
-                IsChecked = this.IsChecked,
-                IsSmooth = this.IsSmooth,
+                IsChecked = base.IsChecked,
+                IsSmooth = base.IsSmooth,
             };
         }
+        /// <summary>
+        /// Get own copy.
+        /// </summary>
+        /// <param name="matrix"> The resulting matrix. </param>
+        /// <returns> The cloned anchor. </returns>
         public Anchor Clone(Matrix3x2 matrix)
         {
             return new Anchor
@@ -57,15 +67,15 @@ namespace Luo_Painter.Layers
                 Pressure = this.Pressure,
                 StartingPressure = this.StartingPressure,
 
-                Point = Vector2.Transform(this.Point, matrix),
-                LeftControlPoint = Vector2.Transform(this.LeftControlPoint, matrix),
-                RightControlPoint = Vector2.Transform(this.RightControlPoint, matrix),
+                Point = Vector2.Transform(base.Point, matrix),
+                LeftControlPoint = Vector2.Transform(base.LeftControlPoint, matrix),
+                RightControlPoint = Vector2.Transform(base.RightControlPoint, matrix),
 
-                IsChecked = this.IsChecked,
-                IsSmooth = this.IsSmooth,
+                IsChecked = base.IsChecked,
+                IsSmooth = base.IsSmooth,
             };
         }
-        
+
         public void Dispose()
         {
             this.Geometry?.Dispose();

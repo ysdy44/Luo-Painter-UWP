@@ -8,18 +8,17 @@ namespace Luo_Painter.Layers
 {
     public sealed partial class Anchor : Node, IDisposable
     {
-        public void SegmentLine()
+        // Don't change this Magic Code !
+        internal void SegmentLine()
         {
-            this.LeftControlPoint = this.Point;
-            this.RightControlPoint = this.Point;
+            base.LeftControlPoint = base.Point;
+            base.RightControlPoint = base.Point;
         }
-        /// <summary>
-        /// Don't change this Magic Code !
-        /// </summary>
-        public void Segment(Vector2 right, Vector2 left)
+        // Don't change this Magic Code !
+        internal void Segment(Vector2 right, Vector2 left)
         {
-            Vector2 rightVector = right - this.Point;
-            Vector2 leftVector = left - this.Point;
+            Vector2 rightVector = right - base.Point;
+            Vector2 leftVector = left - base.Point;
 
             float leftLength = leftVector.Length();
             float rightLength = rightVector.Length();
@@ -31,15 +30,16 @@ namespace Luo_Painter.Layers
                 + Vector2.Normalize(rightVector) * leftLength
                 - Vector2.Normalize(leftVector) * rightLength;
 
-            this.LeftControlPoint = this.Point - leftLength * distance * vector;
-            this.RightControlPoint = this.Point + rightLength * distance * vector;
+            base.LeftControlPoint = base.Point - leftLength * distance * vector;
+            base.RightControlPoint = base.Point + rightLength * distance * vector;
         }
-        public void SegmentFirst(Vector2 right, Vector2 begin)
+        // Don't change this Magic Code !
+        internal void SegmentFirst(Vector2 right, Vector2 begin)
         {
-            Vector2 left = (this.Point + begin) / 2;
+            Vector2 left = (base.Point + begin) / 2;
 
-            Vector2 rightVector = right - this.Point;
-            Vector2 leftVector = left - this.Point;
+            Vector2 rightVector = right - base.Point;
+            Vector2 leftVector = left - base.Point;
 
             float leftLength = leftVector.Length();
             float rightLength = rightVector.Length();
@@ -51,22 +51,22 @@ namespace Luo_Painter.Layers
                 + Vector2.Normalize(rightVector) * leftLength
                 - Vector2.Normalize(leftVector) * rightLength;
 
-            this.LeftControlPoint = this.Point - leftLength * distance * vector * 2.2360679774997896964091736687313f; // √5
-            this.RightControlPoint = this.Point + rightLength * distance * vector;
+            base.LeftControlPoint = base.Point - leftLength * distance * vector * 2.2360679774997896964091736687313f; // √5
+            base.RightControlPoint = base.Point + rightLength * distance * vector;
         }
 
         readonly Vector2[] LinePoints = new Vector2[2];
-        internal CanvasGeometry Line(ICanvasResourceCreator resourceCreator, Vector2 point)
+        private CanvasGeometry Line(ICanvasResourceCreator resourceCreator, Vector2 point)
         {
-            this.LinePoints[0] = this.Point;
+            this.LinePoints[0] = base.Point;
             this.LinePoints[1] = point;
             return CanvasGeometry.CreatePolygon(resourceCreator, this.LinePoints);
         }
-        internal CanvasGeometry CubicBezier(ICanvasResourceCreator resourceCreator, Vector2 rightControlPoint, Vector2 leftControlPoint, Vector2 point)
+        private CanvasGeometry CubicBezier(ICanvasResourceCreator resourceCreator, Vector2 rightControlPoint, Vector2 leftControlPoint, Vector2 point)
         {
             using (CanvasPathBuilder pathBuilder = new CanvasPathBuilder(resourceCreator))
             {
-                pathBuilder.BeginFigure(this.Point, default);
+                pathBuilder.BeginFigure(base.Point, default);
 
                 pathBuilder.AddCubicBezier(rightControlPoint, leftControlPoint, point);
 
@@ -81,14 +81,14 @@ namespace Luo_Painter.Layers
             float swHalf = sw / 2;
 
             // 1.Head
-            this.Strokes.Add(new Vector3(this.Point, sw));
+            this.Strokes.Add(new Vector3(base.Point, sw));
 
             // 2.Body
             for (float i = swHalf; i < this.ComputePathLength; i += swHalf)
             {
                 float pect = i / this.ComputePathLength;
 
-                this.Strokes.Add(new Vector3(Vector2.Lerp(this.Point, point, pect), sw));
+                this.Strokes.Add(new Vector3(Vector2.Lerp(base.Point, point, pect), sw));
             }
         }
         private void StrokeLine(Vector2 point, float pressure, float strokeWidth)
@@ -96,7 +96,7 @@ namespace Luo_Painter.Layers
             // 1.Head
             float sw2 = System.Math.Max(0.4f, this.Pressure * strokeWidth / 2);
 
-            this.Strokes.Add(new Vector3(this.Point, sw2));
+            this.Strokes.Add(new Vector3(base.Point, sw2));
             float i = sw2 / 2;
 
             // 2.Body
@@ -105,7 +105,7 @@ namespace Luo_Painter.Layers
                 float pect = i / this.ComputePathLength;
                 float sw = System.Math.Max(0.4f, (pect * pressure + (1 - pect) * this.Pressure) * strokeWidth / 2);
 
-                this.Strokes.Add(new Vector3(Vector2.Lerp(this.Point, point, pect), sw));
+                this.Strokes.Add(new Vector3(Vector2.Lerp(base.Point, point, pect), sw));
                 i += sw / 2;
             } while (i < this.ComputePathLength);
         }
@@ -116,7 +116,7 @@ namespace Luo_Painter.Layers
             float swHalf = sw / 2;
 
             // 1.Head
-            this.Strokes.Add(new Vector3(this.Point, sw));
+            this.Strokes.Add(new Vector3(base.Point, sw));
 
             // 2.Body
             for (float i = swHalf; i < this.ComputePathLength; i += swHalf)
@@ -129,7 +129,7 @@ namespace Luo_Painter.Layers
             // 1.Head
             float sw2 = System.Math.Max(0.4f, this.Pressure * strokeWidth / 2);
 
-            this.Strokes.Add(new Vector3(this.Point, sw2));
+            this.Strokes.Add(new Vector3(base.Point, sw2));
             float i = sw2 / 2;
 
             // 2.Body

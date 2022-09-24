@@ -353,7 +353,7 @@ namespace Luo_Painter.TestApp
 
                                 layer.Anchors.ClosePoint = this.Position;
                                 layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                                layer.Anchors.Segment(this.CanvasControl);
+                                layer.Anchors.Segment(this.CanvasControl, false);
                             }
                             else
                             {
@@ -370,7 +370,7 @@ namespace Luo_Painter.TestApp
 
                                 layer.Anchors.ClosePoint = this.StartingPreviousPosition;
                                 layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                                layer.Anchors.Segment(this.CanvasControl);
+                                layer.Anchors.Segment(this.CanvasControl, false);
                             }
                             break;
                         case PenCurveTool.RectChoose:
@@ -436,7 +436,7 @@ namespace Luo_Painter.TestApp
 
                             layer.Anchors.ClosePoint = this.PreviousPosition;
                             layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                            layer.Anchors.Segment(this.CanvasControl);
+                            layer.Anchors.Segment(this.CanvasControl, false);
                             layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.RectChoose:
@@ -504,7 +504,7 @@ namespace Luo_Painter.TestApp
 
                             layer.Anchors.ClosePoint = this.PreviousPosition;
                             layer.Anchors.CloseIsSmooth = this.Mode is PenCurveTool.Curve;
-                            layer.Anchors.Segment(this.CanvasControl);
+                            layer.Anchors.Segment(this.CanvasControl, false);
                             layer.Anchors.Invalidate();
                             break;
                         case PenCurveTool.RectChoose:

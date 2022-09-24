@@ -10,6 +10,9 @@ namespace Luo_Painter.Layers
 {
     public sealed partial class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
     {
+        /// <summary>
+        /// Called when the value of properties that describe the size and location of the <see cref="Anchor.Strokes"/> change.
+        /// </summary>
         public void Invalidate()
         {
             using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
@@ -25,14 +28,28 @@ namespace Luo_Painter.Layers
                         ds.FillCircle(item.X, item.Y, item.Z, this.Color);
                     }
                 }
+
+                // End~ (ClosePoint)
+                if (this.IsClosed is false) ds.FillCircle(this.ClosePoint, this.StrokeWidth / 2, this.Color);
             }
         }
 
         /// <summary>
-        /// Begin + First + Anchors + Last + End
+        /// Causes the <see cref="AnchorCollection"/> to load a new Strokes into the <see cref="Anchor"/> using the specified <see cref="AnchorCollection.ClosePoint"/>.
         /// </summary>
-        public bool Segment(ICanvasResourceCreator resourceCreator)
+        /// <param name="resourceCreator"> The resource-creator. </param>
+        /// <param name="updateAll">
+        /// **True** to update all when changing the segments; otherwise, **False** to update Last and End. The default is **True**.
+        /// </param>
+        /// <returns> **True** if the segments is changed; otherwise, **False**. </returns>
+        public bool Segment(ICanvasResourceCreator resourceCreator, bool updateAll = true)
         {
+            // IsClosed is true
+            // Begin~ First~ Anchors~ Last~
+
+            // IsClosed is false
+            // Begin~ First~ Anchors~ Last~ End~ (ClosePoint)
+
             switch (this.IsClosed ? base.Count : this.Count + 1)
             {
                 case 0:
@@ -91,40 +108,43 @@ namespace Luo_Painter.Layers
                     return true;
                 default:
                     {
-                        Anchor begin = base[0];
-                        Anchor first = base[1];
-
-                        // Begin
-                        if (first.IsSmooth is false && begin.IsSmooth is false)
+                        if (this.IsClosed || updateAll)
                         {
-                            first.SegmentLine();
-                            begin.AddLine(resourceCreator, first.Point, this.StrokeWidth);
-                        }
-                        else
-                        {
-                            Anchor next = base[2];
+                            Anchor begin = base[0];
+                            Anchor first = base[1];
 
-                            first.SegmentFirst(next.Point, begin.Point);
-                            begin.AddCubicBezier(resourceCreator, begin.Point, first.LeftControlPoint, first, this.StrokeWidth);
-                        }
-
-                        // First + Anchors
-                        for (int i = 2; i < base.Count - 1; i++)
-                        {
-                            Anchor current = base[i];
-                            Anchor previous = base[i - 1];
-
-                            if (current.IsSmooth is false && previous.IsSmooth is false)
+                            // Begin
+                            if (first.IsSmooth is false && begin.IsSmooth is false)
                             {
-                                current.SegmentLine();
-                                previous.AddLine(resourceCreator, current.Point, this.StrokeWidth);
+                                first.SegmentLine();
+                                begin.AddLine(resourceCreator, first.Point, this.StrokeWidth);
                             }
                             else
                             {
-                                Anchor next = base[i + 1];
+                                Anchor next = base[2];
 
-                                current.Segment(next.Point, previous.Point);
-                                previous.AddCubicBezier(resourceCreator, previous.RightControlPoint, current.LeftControlPoint, current, this.StrokeWidth);
+                                first.SegmentFirst(next.Point, begin.Point);
+                                begin.AddCubicBezier(resourceCreator, begin.Point, first.LeftControlPoint, first, this.StrokeWidth);
+                            }
+
+                            // First + Anchors
+                            for (int i = 2; i < base.Count - 1; i++)
+                            {
+                                Anchor current = base[i];
+                                Anchor previous = base[i - 1];
+
+                                if (current.IsSmooth is false && previous.IsSmooth is false)
+                                {
+                                    current.SegmentLine();
+                                    previous.AddLine(resourceCreator, current.Point, this.StrokeWidth);
+                                }
+                                else
+                                {
+                                    Anchor next = base[i + 1];
+
+                                    current.Segment(next.Point, previous.Point);
+                                    previous.AddCubicBezier(resourceCreator, previous.RightControlPoint, current.LeftControlPoint, current, this.StrokeWidth);
+                                }
                             }
                         }
 
