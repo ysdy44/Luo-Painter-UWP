@@ -185,6 +185,9 @@
     <Compile Include="PenPreviewPage.xaml.cs">
       <DependentUpon>PenPreviewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PenStabilizerPage.xaml.cs">
+      <DependentUpon>PenStabilizerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RippleEffectPage.xaml.cs">
       <DependentUpon>RippleEffectPage.xaml</DependentUpon>
     </Compile>
@@ -400,6 +403,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PenPreviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PenStabilizerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

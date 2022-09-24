@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.PenStabilizerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Transformer-->
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasTransformer x:Name="Transformer" />
+    </FrameworkElement.Resources>
+
+
+    <SplitView x:Name="SplitView" OpenPaneLength="200" PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="True" >
+        <SplitView.Pane>
+            <ListView
+                x:Name="ListView" 
+                SelectedIndex="0"
+                ItemsSource="{x:Bind ObservableCollection}"         
+                >
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" >
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+
+                <ListViewBase.Header>
+                    <Button x:Name="AddAnchorsButton" HorizontalAlignment="Stretch">
+                        Add Anchors
+                    </Button>
+                </ListViewBase.Header>
+
+                <ListViewBase.Footer>
+                    <Button x:Name="RemoveAnchorsButton" HorizontalAlignment="Stretch">
+                        Remove Anchors
+                    </Button>
+                </ListViewBase.Footer>
+
+            </ListView>
+        </SplitView.Pane>
+
+
+        <Grid>
+            <xaml:CanvasControl x:Name="CanvasControl" />
+
+            <ListBox x:Name="ListBox" ItemsSource="{x:Bind Stabilizers}" SelectedIndex="10" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+        </Grid>
+
+    </SplitView>
+
+</Page>
