@@ -21,7 +21,7 @@ namespace Luo_Painter.TestApp
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
-        readonly ObservableCollection<CurveLayer> ObservableCollection = new ObservableCollection<CurveLayer>();
+        CurveLayer CurveLayer;
         Transformer Border;
         Vector2 Position;
         Vector2 LastPoint;
@@ -57,28 +57,6 @@ namespace Luo_Painter.TestApp
 
         private void ConstructPenStabilizer()
         {
-            this.ListView.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
-            this.AddAnchorsButton.Click += (s, e) =>
-            {
-                int count = this.ObservableCollection.Count;
-
-                this.ObservableCollection.Add(new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height));
-                this.ListView.SelectedIndex = count;
-
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-            this.RemoveAnchorsButton.Click += (s, e) =>
-            {
-                int index = this.ListView.SelectedIndex;
-                if (index >= 0)
-                {
-                    this.ObservableCollection.RemoveAt(index);
-                    this.ListView.SelectedIndex = index - 1;
-
-                    this.CanvasControl.Invalidate(); // Invalidate
-                }
-            };
-
             this.ListBox.SelectionChanged += (s, e) =>
             {
                 int index = this.ListBox.SelectedIndex;
@@ -101,7 +79,7 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 this.Transformer.Fit();
-                this.ObservableCollection.Add(new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height));
+                this.CurveLayer = new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height);
                 this.Border = new Transformer(this.Transformer.Width, this.Transformer.Height, Vector2.Zero);
             };
             this.CanvasControl.Draw += (sender, args) =>
@@ -109,16 +87,12 @@ namespace Luo_Painter.TestApp
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                foreach (CurveLayer items in this.ObservableCollection)
+                args.DrawingSession.DrawImage(new Transform2DEffect
                 {
-                    if (items is null) continue;
-                    args.DrawingSession.DrawImage(new Transform2DEffect
-                    {
-                        Source = items[BitmapType.Source],
-                        TransformMatrix = this.Transformer.GetMatrix(),
-                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    });
-                }
+                    Source = this.CurveLayer.Source,
+                    TransformMatrix = this.Transformer.GetMatrix(),
+                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                });
 
 
                 //@DPI 
@@ -127,13 +101,10 @@ namespace Luo_Painter.TestApp
                 Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
                 args.DrawingSession.DrawBound(this.Border, matrix);
 
-                int index = this.ListView.SelectedIndex;
-                if (index < 0) return;
-
-                CurveLayer layer = this.ObservableCollection[index];
-                if (layer is null) return;
-
-                args.DrawingSession.DrawAnchorCollection(layer.Anchors, matrix);
+                foreach (AnchorCollection anchors in this.CurveLayer.Anchorss)
+                {
+                    args.DrawingSession.DrawAnchorCollection(anchors, matrix);
+                }
             };
         }
 
@@ -144,38 +115,41 @@ namespace Luo_Painter.TestApp
             {
                 this.LastPoint = this.Position = this.ToPosition(point);
 
-                CurveLayer layer = new CurveLayer(this.CanvasControl, this.Transformer.Width, this.Transformer.Height);
-                layer.Anchors.Add(new Anchor
+                AnchorCollection anchors = new AnchorCollection(this.CanvasControl, this.Transformer.Width, this.Transformer.Height)
                 {
-                    Point = this.LastPoint,
-                    LeftControlPoint = this.LastPoint,
-                    RightControlPoint = this.LastPoint,
-                    IsSmooth = true,
-                    IsChecked = true,
-                });
+                    new Anchor
+                    {
+                        Point = this.LastPoint,
+                        LeftControlPoint = this.LastPoint,
+                        RightControlPoint = this.LastPoint,
+                        IsSmooth = true,
+                        IsChecked = true,
+                    }
+                };
 
-                layer.Anchors.ClosePoint = this.Position;
-                layer.Anchors.CloseIsSmooth = true;
-                layer.Anchors.Segment(this.CanvasControl, false);
+                anchors.ClosePoint = this.Position;
+                anchors.CloseIsSmooth = true;
+                anchors.Segment(this.CanvasControl, false);
 
-                layer.Anchors.Color = Colors.DodgerBlue;
-                layer.Anchors.Invalidate();
+                anchors.Color = Colors.DodgerBlue;
+                anchors.Invalidate();
 
-                int count = this.ObservableCollection.Count;
-                this.ObservableCollection.Add(layer);
-                this.ListView.SelectedIndex = count;
+                int count = this.CurveLayer.Anchorss.Count;
+                this.CurveLayer.Anchorss.Add(anchors);
+                this.CurveLayer.Index = count;
 
+                this.CurveLayer.Invalidate();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
                 Vector2 position = this.ToPosition(point);
 
-                CurveLayer layer = this.ObservableCollection.Last();
+                AnchorCollection anchors = this.CurveLayer.Anchorss.Last();
                 if (Vector2.DistanceSquared(this.LastPoint, position) > this.Stabilizer)
                 {
                     this.LastPoint = position;
-                    layer.Anchors.Add(new Anchor
+                    anchors.Add(new Anchor
                     {
                         Point = this.LastPoint,
                         LeftControlPoint = this.LastPoint,
@@ -185,20 +159,21 @@ namespace Luo_Painter.TestApp
                     });
                 }
 
-                layer.Anchors.ClosePoint = position;
-                layer.Anchors.CloseIsSmooth = true;
-                layer.Anchors.Segment(this.CanvasControl);
-                layer.Anchors.Invalidate();
+                anchors.ClosePoint = position;
+                anchors.CloseIsSmooth = true;
+                anchors.Segment(this.CanvasControl);
+                anchors.Invalidate();
 
                 this.Position = position;
+                this.CurveLayer.Invalidate();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
                 this.Position = this.ToPosition(point);
 
-                CurveLayer layer = this.ObservableCollection.Last();
-                layer.Anchors.Add(new Anchor
+                AnchorCollection anchors = this.CurveLayer.Anchorss.Last();
+                anchors.Add(new Anchor
                 {
                     Point = this.Position,
                     LeftControlPoint = this.Position,
@@ -207,11 +182,12 @@ namespace Luo_Painter.TestApp
                     IsChecked = true,
                 });
 
-                layer.Anchors.ClosePoint = this.Position;
-                layer.Anchors.CloseIsSmooth = false;
-                layer.Anchors.Segment(this.CanvasControl, false);
-                layer.Anchors.Invalidate();
+                anchors.ClosePoint = this.Position;
+                anchors.CloseIsSmooth = false;
+                anchors.Segment(this.CanvasControl, false);
+                anchors.Invalidate();
 
+                this.CurveLayer.Invalidate();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
 

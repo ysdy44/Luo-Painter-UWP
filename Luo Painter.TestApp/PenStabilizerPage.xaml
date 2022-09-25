@@ -17,55 +17,17 @@
     </FrameworkElement.Resources>
 
 
-    <SplitView x:Name="SplitView" OpenPaneLength="200" PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="True" >
-        <SplitView.Pane>
-            <ListView
-                x:Name="ListView" 
-                SelectedIndex="0"
-                ItemsSource="{x:Bind ObservableCollection}"         
-                >
+    <Grid>
+        <xaml:CanvasControl x:Name="CanvasControl" />
 
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ListViewItem" >
-                        <Setter Property="Background" Value="Transparent" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
+        <ListBox x:Name="ListBox" ItemsSource="{x:Bind Stabilizers}" SelectedIndex="10" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
 
-                <ItemsControl.ItemContainerTransitions>
-                    <TransitionCollection>
-
-                    </TransitionCollection>
-                </ItemsControl.ItemContainerTransitions>
-
-                <ListViewBase.Header>
-                    <Button x:Name="AddAnchorsButton" HorizontalAlignment="Stretch">
-                        Add Anchors
-                    </Button>
-                </ListViewBase.Header>
-
-                <ListViewBase.Footer>
-                    <Button x:Name="RemoveAnchorsButton" HorizontalAlignment="Stretch">
-                        Remove Anchors
-                    </Button>
-                </ListViewBase.Footer>
-
-            </ListView>
-        </SplitView.Pane>
-
-
-        <Grid>
-            <xaml:CanvasControl x:Name="CanvasControl" />
-
-            <ListBox x:Name="ListBox" ItemsSource="{x:Bind Stabilizers}" SelectedIndex="10" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-
-        </Grid>
-
-    </SplitView>
+    </Grid>
 
 </Page>
