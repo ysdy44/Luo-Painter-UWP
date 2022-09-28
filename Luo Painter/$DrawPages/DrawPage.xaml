@@ -193,7 +193,7 @@
 
         <!--Canvas-->
         <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Background="{ThemeResource AppBackgroundDark}" >
-            <elements:AlignmentGrid x:Name="AlignmentGrid" IsHitTestVisible="False" />
+            <elements:AlignmentGridWithLines x:Name="AlignmentGrid" IsHitTestVisible="False" />
             <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" IsHitTestVisible="False" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
             <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
             <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />

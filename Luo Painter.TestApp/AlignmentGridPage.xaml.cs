@@ -8,18 +8,35 @@ namespace Luo_Painter.TestApp
         public AlignmentGridPage()
         {
             this.InitializeComponent();
-            base.SizeChanged += (s, e) =>
+            this.Canvas1.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                bool result = this.AlignmentGrid.RebuildWithInterpolation(e.NewSize);
+                bool result = this.AlignmentGrid1.RebuildWithInterpolation(e.NewSize);
 
-                this.RebuildRun.Text = $"{result}";
-                this.ColumnRun.Text = $"{this.AlignmentGrid.Column}";
-                this.RowRun.Text = $"{this.AlignmentGrid.Row}";
-                this.WidthRun.Text = $"{this.AlignmentGrid.Width} ({e.NewSize.Width})";
-                this.HeightRun.Text = $"{this.AlignmentGrid.Height} ({e.NewSize.Height})";
+                this.RectangleGeometry1.Rect = new Rect(default, e.NewSize);
+
+                this.RebuildRun1.Text = $"{result}";
+                this.ColumnRun1.Text = $"{this.AlignmentGrid1.Column}";
+                this.RowRun1.Text = $"{this.AlignmentGrid1.Row}";
+                this.WidthRun1.Text = $"{this.AlignmentGrid1.Width} ({e.NewSize.Width})";
+                this.HeightRun1.Text = $"{this.AlignmentGrid1.Height} ({e.NewSize.Height})";
+            };
+            this.Canvas2.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                bool result = this.AlignmentGrid2.RebuildWithInterpolation(e.NewSize);
+            
+                this.RectangleGeometry2.Rect = new Rect(default, e.NewSize);
+
+                this.RebuildRun2.Text = $"{result}";
+                this.ColumnRun2.Text = $"{this.AlignmentGrid2.Column}";
+                this.RowRun2.Text = $"{this.AlignmentGrid2.Row}";
+                this.WidthRun2.Text = $"{this.AlignmentGrid2.Width} ({e.NewSize.Width})";
+                this.HeightRun2.Text = $"{this.AlignmentGrid2.Height} ({e.NewSize.Height})";
             };
         }
     }

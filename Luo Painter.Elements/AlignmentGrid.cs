@@ -1,4 +1,5 @@
-﻿using Windows.Foundation;
+﻿using System.Collections.Generic;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -7,16 +8,87 @@ using Windows.UI.Xaml.Shapes;
 namespace Luo_Painter.Elements
 {
     /// <summary>
+    /// AlignmentGrid with Lines.
+    /// </summary>
+    public sealed class AlignmentGridWithLines : AlignmentGrid
+    {
+        protected override IEnumerable<Line> Lines(int width, int height)
+        {
+            for (int x = 0; x < base.Column; x++)
+            {
+                int left = x * AlignmentGrid.Step;
+                yield return new Line
+                {
+                    X1 = left,
+                    X2 = left,
+                    Y1 = 0,
+                    Y2 = height,
+                    StrokeThickness = 1,
+                    Stroke = base.LineBrush
+                };
+            }
+
+            for (int y = 0; y < base.Row; y++)
+            {
+                int top = y * AlignmentGrid.Step;
+                yield return new Line
+                {
+                    X1 = 0,
+                    X2 = width,
+                    Y1 = top,
+                    Y2 = top,
+                    StrokeThickness = 1,
+                    Stroke = this.LineBrush
+                };
+            }
+        }
+    }
+
+    /// <summary>
+    /// AlignmentGrid with Spot.
+    /// </summary>
+    public sealed class AlignmentGridWithSpot : AlignmentGrid
+    {
+        protected override IEnumerable<Line> Lines(int width, int height)
+        {
+            for (int y = 1; y < base.Row; y++)
+            {
+                int top = y * AlignmentGrid.Step;
+                yield return new Line
+                {
+                    X1 = 0,
+                    Y1 = top,
+                    X2 = width,
+                    Y2 = top,
+                    Stroke = this.LineBrush,
+                    StrokeStartLineCap = PenLineCap.Flat,
+                    StrokeEndLineCap = PenLineCap.Flat,
+                    StrokeDashCap = PenLineCap.Flat,
+                    StrokeThickness = 3,
+                    StrokeDashArray =
+                    {
+                        1,
+                        AlignmentGrid.Step / 3 - 1,
+                    }
+                };
+            }
+        }
+    }
+
+    /// <summary>
     /// AlignmentGrid is used to display a grid to help aligning controls
     /// </summary>
-    public sealed class AlignmentGrid : Canvas
+    public abstract class AlignmentGrid : Canvas
     {
+        //@Abstract
+        protected abstract IEnumerable<Line> Lines(int width, int height);
+
         /// <summary>
         /// Step for <see cref="AlignmentGrid"/>'s lines, Default 20.
         /// </summary>
         public const int Step = 20;
 
-        readonly SolidColorBrush LineBrush = new SolidColorBrush(Color.FromArgb(38, 127, 127, 127));
+        protected readonly SolidColorBrush LineBrush = new SolidColorBrush(Color.FromArgb(38, 127, 127, 127));
 
         /// <summary>
         /// Column for <see cref="AlignmentGrid"/>'s lines, Default 0.
@@ -63,31 +135,9 @@ namespace Luo_Painter.Elements
 
             // 4. Lines
             base.Children.Clear();
-            for (int x = 0; x < this.Column; x++)
+            foreach (Line item in this.Lines(width, height))
             {
-                int left = x * AlignmentGrid.Step;
-                base.Children.Add(new Line
-                {
-                    X1 = left,
-                    X2 = left,
-                    Y1 = 0,
-                    Y2 = height,
-                    StrokeThickness = 1,
-                    Stroke = this.LineBrush
-                });
-            }
-            for (int y = 0; y < this.Row; y++)
-            {
-                int top = y * AlignmentGrid.Step;
-                base.Children.Add(new Line
-                {
-                    X1 = 0,
-                    X2 = width,
-                    Y1 = top,
-                    Y2 = top,
-                    StrokeThickness = 1,
-                    Stroke = this.LineBrush
-                });
+                base.Children.Add(item);
             }
         }
 

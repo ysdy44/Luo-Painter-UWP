@@ -9,30 +9,69 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <Canvas>
-        <elements:AlignmentGrid x:Name="AlignmentGrid" IsHitTestVisible="False"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Style="{StaticResource BaseTextBlockStyle}">
-            <LineBreak/>
-            <Run>AlignmentGrid</Run>
-            <LineBreak/>
-            <LineBreak/>
-            <Run>Rebuild:</Run>
-            <Run x:Name="RebuildRun">False</Run>
-            <LineBreak/>
-            <Run>Column:</Run>
-            <Run x:Name="ColumnRun">0</Run>
-            <LineBreak/>
-            <Run>Row:</Run>
-            <Run x:Name="RowRun">0</Run>
-            <LineBreak/>
-            <Run>Width:</Run>
-            <Run x:Name="WidthRun">0</Run>
-            <LineBreak/>
-            <Run>Height:</Run>
-            <Run x:Name="HeightRun">0</Run>
-            <LineBreak/>
-        </TextBlock>
-    </Canvas>
+        <Canvas x:Name="Canvas1">
+            <elements:AlignmentGridWithLines x:Name="AlignmentGrid1" IsHitTestVisible="False">
+                <UIElement.Clip>
+                    <RectangleGeometry x:Name="RectangleGeometry1"/>
+                </UIElement.Clip>
+            </elements:AlignmentGridWithLines>
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                <LineBreak/>
+                <Run>AlignmentGrid</Run>
+                <LineBreak/>
+                <LineBreak/>
+                <Run>Rebuild:</Run>
+                <Run x:Name="RebuildRun1">False</Run>
+                <LineBreak/>
+                <Run>Column:</Run>
+                <Run x:Name="ColumnRun1">0</Run>
+                <LineBreak/>
+                <Run>Row:</Run>
+                <Run x:Name="RowRun1">0</Run>
+                <LineBreak/>
+                <Run>Width:</Run>
+                <Run x:Name="WidthRun1">0</Run>
+                <LineBreak/>
+                <Run>Height:</Run>
+                <Run x:Name="HeightRun1">0</Run>
+                <LineBreak/>
+            </TextBlock>
+        </Canvas>
 
+        <Canvas x:Name="Canvas2" Grid.Column="1">
+            <elements:AlignmentGridWithSpot x:Name="AlignmentGrid2" IsHitTestVisible="False">
+                <UIElement.Clip>
+                    <RectangleGeometry x:Name="RectangleGeometry2"/>
+                </UIElement.Clip>
+            </elements:AlignmentGridWithSpot>
+            <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                <LineBreak/>
+                <Run>AlignmentGrid</Run>
+                <LineBreak/>
+                <LineBreak/>
+                <Run>Rebuild:</Run>
+                <Run x:Name="RebuildRun2">False</Run>
+                <LineBreak/>
+                <Run>Column:</Run>
+                <Run x:Name="ColumnRun2">0</Run>
+                <LineBreak/>
+                <Run>Row:</Run>
+                <Run x:Name="RowRun2">0</Run>
+                <LineBreak/>
+                <Run>Width:</Run>
+                <Run x:Name="WidthRun2">0</Run>
+                <LineBreak/>
+                <Run>Height:</Run>
+                <Run x:Name="HeightRun2">0</Run>
+                <LineBreak/>
+            </TextBlock>
+        </Canvas>
+
+    </Grid>
 </Page>
