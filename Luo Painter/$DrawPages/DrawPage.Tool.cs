@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
@@ -13,7 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         private void Tool_Start(Vector2 position, Vector2 point, float pressure = 0.5f)

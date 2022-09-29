@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         bool IsBrushOpaque => this.BrushOpaqueCheckBox.IsChecked is true;

@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
@@ -13,7 +14,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         Vector2 Move;

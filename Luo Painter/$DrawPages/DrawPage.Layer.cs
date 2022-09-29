@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
@@ -17,7 +18,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         readonly IDictionary<string, string> NameUndoParameters = new Dictionary<string, string>();

@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Elements;
+﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
@@ -55,7 +56,7 @@ namespace Luo_Painter
         }
     }
 
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
         public GradientStopSelectorWithUI GradientMappingSelector => this.AppBar.Selector;
 

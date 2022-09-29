@@ -8,10 +8,11 @@ using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Luo_Painter.Layers;
+using Luo_Painter.Brushes;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         MarqueeToolType MarqueeToolType;

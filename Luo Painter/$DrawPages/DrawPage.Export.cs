@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Historys;
+﻿using Luo_Painter.Brushes;
+using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
@@ -21,7 +22,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         private async Task<IRandomAccessStream> CreateStreamAsync(StorageFolder storageFolder, string desiredName) => await (await storageFolder.CreateFileAsync(desiredName, CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite);

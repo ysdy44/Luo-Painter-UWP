@@ -35,7 +35,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         //@Key
@@ -55,7 +55,7 @@ namespace Luo_Painter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
-        CanvasDevice CanvasDevice { get; } = new CanvasDevice();
+        public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         Historian<IHistory> History { get; } = new Historian<IHistory>();
 
         public LayerNodes Nodes { get; } = new LayerNodes();
@@ -67,7 +67,7 @@ namespace Luo_Painter
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
         InkMixer InkMixer { get; set; } = new InkMixer();
-        InkPresenter InkPresenter { get; } = new InkPresenter();
+        public InkPresenter InkPresenter { get; } = new InkPresenter();
         InkRender InkRender { get; set; }
 
         GradientMesh GradientMesh { get; set; }
@@ -82,7 +82,7 @@ namespace Luo_Painter
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
-        InkType InkType { get; set; } = InkType.None;
+        public InkType InkType { get; set; } = InkType.None;
 
         bool IsReferenceImageResizing { get; set; }
         ReferenceImage ReferenceImage { get; set; }
@@ -150,15 +150,15 @@ namespace Luo_Painter
 
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
-   
+
             this.ToolButton.Click += (s, e) => this.Click(OptionType.ToolMenu);
             this.HistoryButton.Click += (s, e) => this.Click(OptionType.HistoryMenu);
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
-           
+
             this.EditButton.Click += (s, e) => this.Click(OptionType.EditMenu);
             this.AdjustmentButton.Click += (s, e) => this.Click(OptionType.AdjustmentMenu);
             this.OtherButton.Click += (s, e) => this.Click(OptionType.OtherMenu);
-       
+
             this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
             this.BrushButton.Click += (s, e) => this.Click(OptionType.BrushMenu);
             this.SizeButton.Click += (s, e) => this.Click(OptionType.SizeMenu);
