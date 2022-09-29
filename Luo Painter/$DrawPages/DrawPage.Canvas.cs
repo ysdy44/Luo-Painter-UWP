@@ -51,12 +51,18 @@ namespace Luo_Painter
 
             this.InkCanvasControl.CreateResources += (sender, args) =>
             {
-                this.InkRender = new InkRender(sender, 320, 100);
-                this.Ink();
+                this.InkRender = new InkRender
+                {
+                    //@DPI
+                    ScaleForDPI = sender.Dpi.ConvertPixels(),
+                    SizeInPixels = new InkRenderSize((int)sender.Dpi.ConvertDipsToPixels(320), (int)sender.Dpi.ConvertDipsToPixels(100)),
+                    Size = new InkRenderSize(320, 100),
+                };
             };
             this.InkCanvasControl.Draw += (sender, args) =>
             {
-                args.DrawingSession.DrawImage(this.InkRender.Source);
+                if (this.InkRender is null) return;
+                this.Ink(args.DrawingSession);
             };
 
 
@@ -76,6 +82,7 @@ namespace Luo_Painter
                     case OptionType.MarqueeTransform:
                     case OptionType.Grow:
                     case OptionType.Shrink:
+                    case OptionType.SelectionBrush:
                         //@DPI 
                         args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                         args.DrawingSession.Transform = this.Transformer.GetMatrix();

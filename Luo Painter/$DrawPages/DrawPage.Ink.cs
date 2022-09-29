@@ -35,7 +35,6 @@ namespace Luo_Painter
             this.InkType = this.InkPresenter.GetType();
 
             if (this.InkRender is null) return;
-            this.Ink();
             this.InkCanvasControl.Invalidate();
         }
 
@@ -54,7 +53,12 @@ namespace Luo_Painter
                 this.PaintMenu.Construct(brush);
 
                 this.InkType = this.InkPresenter.GetType();
-                this.Ink();
+                this.InkCanvasControl.Invalidate();
+            };
+
+            this.SizeMenu.ItemClick += (s, size) =>
+            {
+                this.InkPresenter.Size = (float)size;
                 this.InkCanvasControl.Invalidate();
             };
         }
@@ -64,7 +68,6 @@ namespace Luo_Painter
             this.PaintMenu.InkSizeChanged += (s, e) =>
             {
                 this.InkPresenter.Size = e;
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.InkOpacityChanged += (s, e) =>
@@ -76,13 +79,11 @@ namespace Luo_Painter
             this.PaintMenu.InkSpacingChanged += (s, e) =>
             {
                 this.InkPresenter.Spacing = e;
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.InkHardnessChanged += (s, e) =>
             {
                 this.InkPresenter.Hardness = e;
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
 
@@ -91,7 +92,6 @@ namespace Luo_Painter
             {
                 this.InkPresenter.Mode = mode;
                 this.InkType = this.InkPresenter.GetType();
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
 
@@ -109,7 +109,6 @@ namespace Luo_Painter
                 }
 
                 this.InkType = this.InkPresenter.GetType();
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
 
@@ -120,7 +119,6 @@ namespace Luo_Painter
                 if (result)
                 {
                     this.InkType = this.InkPresenter.GetType();
-                    this.Ink();
                     this.InkCanvasControl.Invalidate();
                 }
             };
@@ -131,7 +129,6 @@ namespace Luo_Painter
                 this.InkPresenter.SetMask(false);
 
                 this.InkType = this.InkPresenter.GetType();
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.PatternClosed += (s, e) =>
@@ -154,7 +151,6 @@ namespace Luo_Painter
                 else this.InkPresenter.SetMask(true);
 
                 this.InkType = this.InkPresenter.GetType();
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.PatternOpened += async (s, e) =>
@@ -171,7 +167,6 @@ namespace Luo_Painter
                 else this.InkPresenter.SetPattern(true);
 
                 this.InkType = this.InkPresenter.GetType();
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
 
@@ -179,13 +174,11 @@ namespace Luo_Painter
             this.PaintMenu.InkRotateChanged += (s, e) =>
             {
                 this.InkPresenter.Rotate = e;
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
             this.PaintMenu.InkStepChanged += (s, e) =>
             {
                 this.InkPresenter.Step = e;
-                this.Ink();
                 this.InkCanvasControl.Invalidate();
             };
         }
@@ -231,9 +224,8 @@ namespace Luo_Painter
         }
 
 
-        private void Ink()
+        private void Ink(CanvasDrawingSession ds)
         {
-            if (this.InkRender is null) return;
             double size = this.InkPresenter.Size / 24 + 1;
             switch (this.InkType)
             {
@@ -249,7 +241,7 @@ namespace Luo_Painter
                 case InkType.BrushWetPatternMix:
                 case InkType.BrushWetBlur:
                 case InkType.BrushWetPatternBlur:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(this.BrushEdgeHardnessShaderCodeBytes, base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
                 case InkType.MaskBrushDry:
                 case InkType.MaskBrushWetPattern:
@@ -263,7 +255,7 @@ namespace Luo_Painter
                 case InkType.MaskBrushWetPatternMix:
                 case InkType.MaskBrushWetBlur:
                 case InkType.MaskBrushWetPatternBlur:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(this.BrushEdgeHardnessWithTextureShaderCodeBytes, base.ActualTheme is ElementTheme.Light ? Vector4.Zero : Vector4.One, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, Vector4.One, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
                 case InkType.LineDry:
                 case InkType.LineWetPattern:
@@ -277,10 +269,13 @@ namespace Luo_Painter
                 case InkType.LineWetPatternMix:
                 case InkType.LineWetBlur:
                 case InkType.LineWetPatternBlur:
-                    this.InkRender.DrawLine((float)size, base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White);
+                    this.InkRender.DrawLine(ds, (float)size, Colors.White);
+                    break;
+                case InkType.Liquefy:
+                    this.InkRender.IsometricFillCircle(ds, Colors.White, (float)size, 0.25f);
                     break;
                 default:
-                    this.InkRender.IsometricFillCircle(base.ActualTheme is ElementTheme.Light ? Colors.Black : Colors.White, (float)size, this.InkPresenter.Spacing);
+                    this.InkRender.IsometricFillCircle(ds, Colors.White, (float)size, this.InkPresenter.Spacing);
                     break;
             }
         }
