@@ -226,6 +226,18 @@ namespace Luo_Painter
         /// <summary> The current page no longer becomes an active page. </summary>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            switch (e.NavigationMode)
+            {
+                case NavigationMode.New:
+                    break;
+                case NavigationMode.Back:
+                    break;
+                default:
+                    break;
+            }
+
+            base.IsEnabled = false;
+
             if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
             {
                 manager.BackRequested -= this.BackRequested;
@@ -235,49 +247,59 @@ namespace Luo_Painter
         /// <summary> The current page becomes the active page. </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
-            // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
-            if (e.Parameter is ProjectParameter item)
+            switch (e.NavigationMode)
             {
-                float w = (float)Window.Current.Bounds.Width;
-                float h = (float)Window.Current.Bounds.Height;
-                float cw = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(w);
-                float ch = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(h);
-                this.Transformer.ControlWidth = cw;
-                this.Transformer.ControlHeight = ch;
+                case NavigationMode.Back:
+                    break;
+                case NavigationMode.New:
+                    // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
+                    // Others Open: Page.OnNavigatedTo (ReadyToDraw=true)
+                    if (e.Parameter is ProjectParameter item)
+                    {
+                        float w = (float)Window.Current.Bounds.Width;
+                        float h = (float)Window.Current.Bounds.Height;
+                        float cw = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(w);
+                        float ch = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(h);
+                        this.Transformer.ControlWidth = cw;
+                        this.Transformer.ControlHeight = ch;
 
-                this.Transformer.Width = item.Width;
-                this.Transformer.Height = item.Height;
-                this.Transformer.Fit();
+                        this.Transformer.Width = item.Width;
+                        this.Transformer.Height = item.Height;
+                        this.Transformer.Fit();
 
-                this.ViewTool.Construct(this.Transformer);
+                        this.ViewTool.Construct(this.Transformer);
 
-                this.ApplicationView.Title = item.Name;
-                this.ApplicationView.PersistedStateId = item.Path;
+                        this.ApplicationView.Title = item.Name;
+                        this.ApplicationView.PersistedStateId = item.Path;
 
-                this.Navigated(item);
+                        this.Navigated(item);
 
-                if (this.CanvasVirtualControl.ReadyToDraw)
-                {
-                    this.CreateResources(item.Width, item.Height);
-                    this.CreateMarqueeResources(item.Width, item.Height);
+                        if (this.CanvasVirtualControl.ReadyToDraw)
+                        {
+                            this.CreateResources(item.Width, item.Height);
+                            this.CreateMarqueeResources(item.Width, item.Height);
 
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-                }
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        }
+                    }
+                    else
+                    {
+                        this.ApplicationView.Title = string.Empty;
+                        this.ApplicationView.PersistedStateId = string.Empty;
 
-                base.IsEnabled = true;
+                        if (base.Frame.CanGoBack)
+                        {
+                            base.IsEnabled = false;
+                            base.Frame.GoBack();
+                            return;
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                this.ApplicationView.Title = string.Empty;
-                this.ApplicationView.PersistedStateId = string.Empty;
 
-                if (base.Frame.CanGoBack)
-                {
-                    base.IsEnabled = false;
-                    base.Frame.GoBack();
-                }
-            }
+            base.IsEnabled = true;
 
             DisplayInformation display = DisplayInformation.GetForCurrentView();
             if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)

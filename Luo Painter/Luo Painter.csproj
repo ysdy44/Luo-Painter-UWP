@@ -116,6 +116,17 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="%24BrushPages\BrushPage.Canvas.cs" />
+    <Compile Include="%24BrushPages\BrushPage.CreateResources.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Ink.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Ink1.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Ink2.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Ink3.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Paint.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Tool.Paint.cs" />
+    <Compile Include="%24BrushPages\BrushPage.xaml.cs">
+      <DependentUpon>BrushPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
     <Compile Include="%24DrawPages\DrawPage.CreateResources.cs" />
@@ -285,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="%24BrushPages\BrushPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="%24DrawPages\DrawPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
