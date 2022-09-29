@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:local="using:Luo_Painter.Menus"
     xmlns:options="using:Luo_Painter.Options"
     mc:Ignorable="d"
     d:DesignHeight="400"
@@ -22,7 +21,7 @@
     <elements:Expander.TopAppBar>
         <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind Collection}">
             <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:AdjustmentGrouping">
+                <DataTemplate x:DataType="luo_painter:AdjustmentGrouping">
                     <TextBlock Text="{x:Bind Key}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -39,8 +38,8 @@
 
     <FrameworkElement.Resources>
         <!--Collection-->
-        <local:AdjustmentGroupingList x:Name="Collection">
-            <local:AdjustmentGrouping Key="Adjustment">
+        <luo_painter:AdjustmentGroupingList x:Name="Collection">
+            <luo_painter:AdjustmentGrouping Key="Adjustment">
                 <options:OptionType>Gray</options:OptionType>
                 <options:OptionType>Invert</options:OptionType>
                 <options:OptionType>Exposure</options:OptionType>
@@ -50,8 +49,8 @@
                 <options:OptionType>Contrast</options:OptionType>
                 <options:OptionType>Temperature</options:OptionType>
                 <options:OptionType>HighlightsAndShadows</options:OptionType>
-            </local:AdjustmentGrouping>
-            <local:AdjustmentGrouping Key="Effect1">
+            </luo_painter:AdjustmentGrouping>
+            <luo_painter:AdjustmentGrouping Key="Effect1">
                 <options:OptionType>GaussianBlur</options:OptionType>
                 <options:OptionType>DirectionalBlur</options:OptionType>
                 <options:OptionType>Sharpen</options:OptionType>
@@ -61,8 +60,8 @@
                 <options:OptionType>Border</options:OptionType>
                 <options:OptionType>Emboss</options:OptionType>
                 <options:OptionType>Lighting</options:OptionType>
-            </local:AdjustmentGrouping>
-            <local:AdjustmentGrouping Key="Effect2">
+            </luo_painter:AdjustmentGrouping>
+            <luo_painter:AdjustmentGrouping Key="Effect2">
                 <options:OptionType>LuminanceToAlpha</options:OptionType>
                 <options:OptionType>Fog</options:OptionType>
                 <options:OptionType>Sepia</options:OptionType>
@@ -72,18 +71,18 @@
                 <options:OptionType>DiscreteTransfer</options:OptionType>
                 <options:OptionType>Vignette</options:OptionType>
                 <options:OptionType>GammaTransfer</options:OptionType>
-            </local:AdjustmentGrouping>
-            <local:AdjustmentGrouping Key="Effect3">
+            </luo_painter:AdjustmentGrouping>
+            <luo_painter:AdjustmentGrouping Key="Effect3">
                 <options:OptionType>Glass</options:OptionType>
                 <options:OptionType>PinchPunch</options:OptionType>
                 <options:OptionType>Morphology</options:OptionType>
-            </local:AdjustmentGrouping>
-        </local:AdjustmentGroupingList>
+            </luo_painter:AdjustmentGrouping>
+        </luo_painter:AdjustmentGroupingList>
     </FrameworkElement.Resources>
 
     <FlipView x:Name="FlipView" Height="480" Background="Transparent" ItemsSource="{x:Bind Collection}">
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="local:AdjustmentGrouping">
+            <DataTemplate x:DataType="luo_painter:AdjustmentGrouping">
                 <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
                     <ItemsControl ItemsSource="{x:Bind}" >
 
@@ -107,7 +106,7 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:AdjustmentImage
+                                <luo_painter:AdjustmentImage
                                     Padding="0"      
                                     HorizontalAlignment="Stretch"                                       
                                     VerticalAlignment="Stretch" 
@@ -126,7 +125,7 @@
                                             </Border>
                                         </DataTemplate>
                                     </ContentControl.ContentTemplate>
-                                </local:AdjustmentImage>
+                                </luo_painter:AdjustmentImage>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
 

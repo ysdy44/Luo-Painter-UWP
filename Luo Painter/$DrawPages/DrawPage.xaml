@@ -28,7 +28,7 @@
         <layers:LayerManagerExtensions x:Name="LayerManager"/>
         <layers:LayerRenderExtensions x:Name="LayerRender"/>
         <!--Range-->
-        <menus:SizeRange x:Name="SizeRange"/>
+        <local:SizeRange x:Name="SizeRange"/>
         <!--Command-->
         <local:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>

@@ -10,13 +10,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Menus
 {
-    internal sealed class BrushGroupingList : List<BrushGrouping> { }
-    internal class BrushGrouping : List<PaintBrush>, IList<PaintBrush>, IGrouping<PaintBrushGroupType, PaintBrush>
-    {
-        public PaintBrushGroupType Key { set; get; }
-    }
-
-    internal class BrushCommand : RelayCommand<PaintBrush> { }
     internal sealed class BrushListView : ListView
     {
 

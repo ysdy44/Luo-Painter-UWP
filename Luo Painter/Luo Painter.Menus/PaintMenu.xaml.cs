@@ -7,16 +7,6 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Menus
 {
-    internal sealed class SizeRange : InverseProportionRange
-    {
-        public SizeRange() : base(12, 1, 400, 100000) { }
-    }
-
-    internal sealed class SpacingRange : InverseProportionRange
-    {
-        public SpacingRange() : base(25, 10, 400, 1000000) { }
-    }
-
     public sealed partial class PaintMenu : Expander
     {
         //@Delegate  

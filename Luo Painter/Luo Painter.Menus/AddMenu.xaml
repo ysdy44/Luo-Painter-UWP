@@ -63,7 +63,7 @@
                 </ItemsControl.ItemTemplate>
 
                 <ItemsControl.ItemsSource>
-                    <local:BlendList x:Name="Collection">
+                    <luo_painter:BlendList x:Name="Collection">
                         <!--None-->
                         <effects:BlendEffectMode>-1</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
@@ -97,7 +97,7 @@
                         <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Color</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
-                    </local:BlendList>
+                    </luo_painter:BlendList>
                 </ItemsControl.ItemsSource>
 
             </ComboBox>
@@ -124,8 +124,8 @@
             <TextBlock x:Name="AddTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                 Add
             </TextBlock>
-            <local:EditItem Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
         </StackPanel>
     </ScrollViewer>

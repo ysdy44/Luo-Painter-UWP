@@ -10,8 +10,6 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Menus
 {
-    internal sealed class BlendList : List<BlendEffectMode> { }
-
     public sealed partial class LayerMenu : Expander
     {
         //@Delegate

@@ -46,7 +46,7 @@
 
     <elements:Expander.BottomAppBar>
         <ListView x:Name="ListView" IsItemClickEnabled="True" SelectionMode="None" ItemsSource="{x:Bind ObservableCollection}" >
-            
+
             <UIElement.RenderTransformOrigin>
                 0.5,0.5
             </UIElement.RenderTransformOrigin>
@@ -88,23 +88,24 @@
                     </Rectangle>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-            
+
         </ListView>
     </elements:Expander.BottomAppBar>
 
-    <ColorPicker x:Name="ColorPicker" 
-                 Color="Black" 
-                 IsMoreButtonVisible="False" 
-                 IsHexInputVisible="False" 
-                 IsColorSpectrumVisible="True"
-                 IsColorSliderVisible="True"
-                 IsColorPreviewVisible="False"
-                 IsColorChannelTextInputVisible="False" 
-                 IsAlphaTextInputVisible="False" 
-                 IsAlphaSliderVisible="False" 
-                 IsAlphaEnabled="False" 
-                 ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"
-                 ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ColorListBox.SelectedIndex),Mode=OneWay}"
-                 />
+    <ColorPicker
+        x:Name="ColorPicker"                
+        Color="Black"               
+        IsMoreButtonVisible="False"                
+        IsHexInputVisible="False"                
+        IsColorSpectrumVisible="True"            
+        IsColorSliderVisible="True"             
+        IsColorPreviewVisible="False"             
+        IsColorChannelTextInputVisible="False"              
+        IsAlphaTextInputVisible="False"            
+        IsAlphaSliderVisible="False"             
+        IsAlphaEnabled="False"              
+        ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ColorShapeButton.IsChecked),Mode=OneWay}"             
+        ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ColorListBox.SelectedIndex),Mode=OneWay}"             
+        />
 
 </elements:Expander>

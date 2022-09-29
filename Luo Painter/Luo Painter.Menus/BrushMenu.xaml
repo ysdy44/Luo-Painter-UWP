@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
-    xmlns:local="using:Luo_Painter.Menus"
+    xmlns:elements="using:Luo_Painter.Elements" xmlns:local="using:Luo_Painter.Menus"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
@@ -21,15 +21,15 @@
     <FrameworkElement.Tag>
         <Button x:Name="Button" CommandParameter="{x:Null}" Style="{x:Null}" >
             <ButtonBase.Command>
-                <local:BrushCommand x:Name="Command"/>
+                <luo_painter:BrushCommand x:Name="Command"/>
             </ButtonBase.Command>
         </Button>
     </FrameworkElement.Tag>
 
     <FrameworkElement.Resources>
         <!--Collection-->
-        <local:BrushGroupingList x:Name="Collection">
-            <local:BrushGrouping Key="Universal">
+        <luo_painter:BrushGroupingList x:Name="Collection">
+            <luo_painter:BrushGrouping Key="Universal">
                 <brushes:PaintBrush
                     Size="12" 
                     Opacity="1" 
@@ -112,8 +112,8 @@
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/09/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/09/Render.png"
                     />
-            </local:BrushGrouping>
-            <local:BrushGrouping Key="Flash">
+            </luo_painter:BrushGrouping>
+            <luo_painter:BrushGrouping Key="Flash">
                 <brushes:PaintBrush
                     Size="300" 
                     Opacity="0.9" 
@@ -189,8 +189,8 @@
                             Texture="ms-appx:///Luo Painter.Brushes/Flash/04/Texture.png"/>
                     </brushes:PaintBrush.Mask>
                 </brushes:PaintBrush>
-            </local:BrushGrouping>
-            <local:BrushGrouping Key="Splodge">
+            </luo_painter:BrushGrouping>
+            <luo_painter:BrushGrouping Key="Splodge">
                 <brushes:PaintBrush 
                     Size="120" 
                     Opacity="0.7" 
@@ -343,8 +343,8 @@
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/09/Texture.png" />
                     </brushes:PaintBrush.Mask>
                 </brushes:PaintBrush>
-            </local:BrushGrouping>
-            <local:BrushGrouping Key="Scratch">
+            </luo_painter:BrushGrouping>
+            <luo_painter:BrushGrouping Key="Scratch">
                 <brushes:PaintBrush
                     Size="222" 
                     Opacity="0.49" 
@@ -497,14 +497,14 @@
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/09/Texture.png" />
                     </brushes:PaintBrush.Mask>
                 </brushes:PaintBrush>
-            </local:BrushGrouping>
-        </local:BrushGroupingList>
+            </luo_painter:BrushGrouping>
+        </luo_painter:BrushGroupingList>
     </FrameworkElement.Resources>
 
     <elements:Expander.TopAppBar>
         <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind Collection}">
             <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:BrushGrouping">
+                <DataTemplate x:DataType="luo_painter:BrushGrouping">
                     <TextBlock Text="{x:Bind Key}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -513,7 +513,7 @@
 
     <FlipView x:Name="FlipView" MaxHeight="500" Background="Transparent" ItemsSource="{x:Bind Collection}">
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="local:BrushGrouping">
+            <DataTemplate x:DataType="luo_painter:BrushGrouping">
                 <local:BrushListView               
                         IsItemClickEnabled="True"
                         ItemsSource="{x:Bind}"                

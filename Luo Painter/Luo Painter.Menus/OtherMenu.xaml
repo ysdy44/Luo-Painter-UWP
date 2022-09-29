@@ -6,8 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:local="using:Luo_Painter.Menus"
-    xmlns:options="using:Luo_Painter.Options"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
@@ -31,14 +29,14 @@
             <TextBlock x:Name="SetupTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                 Setup
             </TextBlock>
-            <local:EditItem Type="CropCanvas" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="CropCanvas" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
-            <local:EditItem Type="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <local:EditItem Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
             <!--Option-->
             <TextBlock x:Name="OptionTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >

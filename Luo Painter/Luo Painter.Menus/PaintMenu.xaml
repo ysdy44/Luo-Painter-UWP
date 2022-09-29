@@ -4,9 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:local="using:Luo_Painter.Menus"
     xmlns:luo_painter="using:Luo_Painter"
+    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     d:DesignHeight="400"
@@ -18,8 +17,8 @@
 
     <FrameworkElement.Resources>
         <!--Range-->
-        <local:SizeRange x:Name="SizeRange"/>
-        <local:SpacingRange x:Name="SpacingRange"/>
+        <luo_painter:SizeRange x:Name="SizeRange"/>
+        <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Size-->
         <elements:SizePickerExtension x:Name="Step"/>
     </FrameworkElement.Resources>
