@@ -20,14 +20,14 @@ namespace Luo_Painter.Brushes
                 return InkPresenter.GetComposite(image, this.GetMosaic(image, wet));
             else if (type.HasFlag(InkType.WetComposite))
             {
-                if (type.HasFlag(InkType.WetCompositeBlend))
+                if (type.HasFlag(InkType.WetComposite_Blend))
                     return new BlendEffect
                     {
                         Mode = this.BlendMode,
                         Background = image,
                         Foreground = wet
                     };
-                else if (type.HasFlag(InkType.WetCompositeEraseOpacity))
+                else if (type.HasFlag(InkType.WetComposite_Erase_Opacity))
                     return this.GetErase(image, wet);
                 else
                     return null;
@@ -40,68 +40,68 @@ namespace Luo_Painter.Brushes
         {
             switch (type)
             {
-                case InkType.BrushWetPattern:
-                case InkType.BrushWetPatternMix:
-                case InkType.MaskBrushWetPattern:
-                case InkType.MaskBrushWetPatternMix:
-                case InkType.CircleWetPattern:
-                case InkType.CircleWetPatternMix:
-                case InkType.LineWetPattern:
-                case InkType.LineWetPatternMix:
-                case InkType.BrushWetPatternBlend:
-                case InkType.MaskBrushWetPatternBlend:
-                case InkType.CircleWetPatternBlend:
-                case InkType.LineWetPatternBlend:
-                case InkType.BrushWetPatternBlur:
-                case InkType.MaskBrushWetPatternBlur:
-                case InkType.CircleWetPatternBlur:
-                case InkType.LineWetPatternBlur:
-                case InkType.EraseWetPatternOpacity:
+                case InkType.Brush_Wet_Pattern:
+                case InkType.Brush_Wet_Pattern_Mix:
+                case InkType.MaskBrush_Wet_Pattern:
+                case InkType.MaskBrush_Wet_Pattern_Mix:
+                case InkType.Circle_Wet_Pattern:
+                case InkType.Circle_Wet_Pattern_Mix:
+                case InkType.Line_Wet_Pattern:
+                case InkType.Line_Wet_Pattern_Mix:
+                case InkType.Brush_WetComposite_Pattern_Blend:
+                case InkType.MaskBrush_WetComposite_Pattern_Blend:
+                case InkType.Circle_WetComposite_Pattern_Blend:
+                case InkType.Line_WetComposite_Pattern_Blend:
+                case InkType.Brush_WetBlur_Pattern_Blur:
+                case InkType.MaskBrush_WetBlur_Pattern_Blur:
+                case InkType.Circle_WetBlur_Pattern_Blur:
+                case InkType.Line_WetBlur_Pattern_Blur:
+                case InkType.Erase_WetComposite_Pattern_Opacity:
                     return this.GetPattern(image);
 
-                case InkType.BrushWetOpacity:
-                case InkType.MaskBrushWetOpacity:
-                case InkType.CircleWetOpacity:
-                case InkType.LineWetOpacity:
+                case InkType.Brush_Wet_Opacity:
+                case InkType.MaskBrush_Wet_Opacity:
+                case InkType.Circle_Wet_Opacity:
+                case InkType.Line_Wet_Opacity:
                     return new OpacityEffect
                     {
                         Opacity = this.Opacity,
                         Source = image
                     };
 
-                case InkType.BrushWetPatternOpacity:
-                case InkType.MaskBrushWetPatternOpacity:
-                case InkType.CircleWetPatternOpacity:
-                case InkType.LineWetPatternOpacity:
-                case InkType.BrushWetPatternOpacityBlend:
-                case InkType.MaskBrushWetPatternOpacityBlend:
-                case InkType.CircleWetPatternOpacityBlend:
-                case InkType.LineWetPatternOpacityBlend:
+                case InkType.Brush_Wet_Pattern_Opacity:
+                case InkType.MaskBrush_Wet_Pattern_Opacity:
+                case InkType.Circle_Wet_Pattern_Opacity:
+                case InkType.Line_Wet_Pattern_Opacity:
+                case InkType.Brush_WetComposite_Pattern_Opacity_Blend:
+                case InkType.MaskBrush_WetComposite_Pattern_Opacity_Blend:
+                case InkType.Circle_WetComposite_Pattern_Opacity_Blend:
+                case InkType.Line_WetComposite_Pattern_Opacity_Blend:
                     return new OpacityEffect
                     {
                         Opacity = this.Opacity,
                         Source = this.GetPattern(image)
                     };
 
-                case InkType.BrushWetBlend:
-                case InkType.MaskBrushWetBlend:
-                case InkType.CircleWetBlend:
-                case InkType.LineWetBlend:
-                case InkType.BrushWetBlur:
-                case InkType.MaskBrushWetBlur:
-                case InkType.CircleWetBlur:
-                case InkType.LineWetBlur:
-                case InkType.BrushWetMosaic:
-                case InkType.MaskBrushWetMosaic:
-                case InkType.CircleWetMosaic:
-                case InkType.LineWetMosaic:
-                case InkType.EraseWetOpacity:
+                case InkType.Brush_WetComposite_Blend:
+                case InkType.MaskBrush_WetComposite_Blend:
+                case InkType.Circle_WetComposite_Blend:
+                case InkType.Line_WetComposite_Blend:
+                case InkType.Brush_WetBlur_Blur:
+                case InkType.MaskBrush_WetBlur_Blur:
+                case InkType.Circle_WetBlur_Blur:
+                case InkType.Line_WetBlur_Blur:
+                case InkType.Brush_WetMosaic_Mosaic:
+                case InkType.MaskBrush_WetMosaic_Mosaic:
+                case InkType.Circle_WetMosaic_Mosaic:
+                case InkType.Line_WetMosaic_Mosaic:
+                case InkType.Erase_WetComposite_Opacity:
                     return image;
 
-                case InkType.BrushWetOpacityBlend:
-                case InkType.MaskBrushWetOpacityBlend:
-                case InkType.CircleWetOpacityBlend:
-                case InkType.LineWetOpacityBlend:
+                case InkType.Brush_WetComposite_Opacity_Blend:
+                case InkType.MaskBrush_WetComposite_Opacity_Blend:
+                case InkType.Circle_WetComposite_Opacity_Blend:
+                case InkType.Line_WetComposite_Opacity_Blend:
                     return new OpacityEffect
                     {
                         Opacity = this.Opacity,

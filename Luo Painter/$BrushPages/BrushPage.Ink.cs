@@ -117,46 +117,46 @@ namespace Luo_Painter
             double size = this.InkPresenter.Size / 24 + 1;
             switch (this.InkType)
             {
-                case InkType.BrushDry:
-                case InkType.BrushWetPattern:
-                case InkType.BrushWetOpacity:
-                case InkType.BrushWetPatternOpacity:
-                case InkType.BrushWetBlend:
-                case InkType.BrushWetPatternBlend:
-                case InkType.BrushWetOpacityBlend:
-                case InkType.BrushWetPatternOpacityBlend:
-                case InkType.BrushDryMix:
-                case InkType.BrushWetPatternMix:
-                case InkType.BrushWetBlur:
-                case InkType.BrushWetPatternBlur:
+                case InkType.Brush_Dry:
+                case InkType.Brush_Wet_Pattern:
+                case InkType.Brush_Wet_Opacity:
+                case InkType.Brush_Wet_Pattern_Opacity:
+                case InkType.Brush_WetComposite_Blend:
+                case InkType.Brush_WetComposite_Pattern_Blend:
+                case InkType.Brush_WetComposite_Opacity_Blend:
+                case InkType.Brush_WetComposite_Pattern_Opacity_Blend:
+                case InkType.Brush_Dry_Mix:
+                case InkType.Brush_Wet_Pattern_Mix:
+                case InkType.Brush_WetBlur_Blur:
+                case InkType.Brush_WetBlur_Pattern_Blur:
                     this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
-                case InkType.MaskBrushDry:
-                case InkType.MaskBrushWetPattern:
-                case InkType.MaskBrushWetOpacity:
-                case InkType.MaskBrushWetPatternOpacity:
-                case InkType.MaskBrushWetBlend:
-                case InkType.MaskBrushWetPatternBlend:
-                case InkType.MaskBrushWetOpacityBlend:
-                case InkType.MaskBrushWetPatternOpacityBlend:
-                case InkType.MaskBrushDryMix:
-                case InkType.MaskBrushWetPatternMix:
-                case InkType.MaskBrushWetBlur:
-                case InkType.MaskBrushWetPatternBlur:
+                case InkType.MaskBrush_Dry:
+                case InkType.MaskBrush_Wet_Pattern:
+                case InkType.MaskBrush_Wet_Opacity:
+                case InkType.MaskBrush_Wet_Pattern_Opacity:
+                case InkType.MaskBrush_WetComposite_Blend:
+                case InkType.MaskBrush_WetComposite_Pattern_Blend:
+                case InkType.MaskBrush_WetComposite_Opacity_Blend:
+                case InkType.MaskBrush_WetComposite_Pattern_Opacity_Blend:
+                case InkType.MaskBrush_Dry_Mix:
+                case InkType.MaskBrush_Wet_Pattern_Mix:
+                case InkType.MaskBrush_WetBlur_Blur:
+                case InkType.MaskBrush_WetBlur_Pattern_Blur:
                     this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, Vector4.One, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
-                case InkType.LineDry:
-                case InkType.LineWetPattern:
-                case InkType.LineWetOpacity:
-                case InkType.LineWetPatternOpacity:
-                case InkType.LineWetBlend:
-                case InkType.LineWetPatternBlend:
-                case InkType.LineWetOpacityBlend:
-                case InkType.LineWetPatternOpacityBlend:
-                case InkType.LineDryMix:
-                case InkType.LineWetPatternMix:
-                case InkType.LineWetBlur:
-                case InkType.LineWetPatternBlur:
+                case InkType.Line_Dry:
+                case InkType.Line_Wet_Pattern:
+                case InkType.Line_Wet_Opacity:
+                case InkType.Line_Wet_Pattern_Opacity:
+                case InkType.Line_WetComposite_Blend:
+                case InkType.Line_WetComposite_Pattern_Blend:
+                case InkType.Line_WetComposite_Opacity_Blend:
+                case InkType.Line_WetComposite_Pattern_Opacity_Blend:
+                case InkType.Line_Dry_Mix:
+                case InkType.Line_Wet_Pattern_Mix:
+                case InkType.Line_WetBlur_Blur:
+                case InkType.Line_WetBlur_Pattern_Blur:
                     this.InkRender.DrawLine(ds, (float)size, Colors.White);
                     break;
                 case InkType.Liquefy:

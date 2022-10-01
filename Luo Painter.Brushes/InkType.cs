@@ -11,12 +11,14 @@ namespace Luo_Painter.Brushes
         Dry = 1,
         // Wet
         Wet = 1 << 1,
+        // Wet
         WetBlur = 1 << 2,
+        // Wet
         WetMosaic = 1 << 3,
         // WetComposite
         WetComposite = 1 << 4,
-        WetCompositeBlend = 1 << 5 | WetComposite,
-        WetCompositeEraseOpacity = 1 << 6 | WetComposite,
+        WetComposite_Blend = 1 << 5 | WetComposite,
+        WetComposite_Erase_Opacity = 1 << 6 | WetComposite,
 
         // Mode
         Blend = 1 << 7,
@@ -34,25 +36,25 @@ namespace Luo_Painter.Brushes
         #region Brush
 
 
-        BrushDry = Brush | Dry,
+        Brush_Dry = Brush | Dry,
 
-        BrushWetPattern = Brush | Wet | Pattern,
-        BrushWetOpacity = Brush | Wet | Opacity,
-        BrushWetPatternOpacity = Brush | Wet | Pattern | Opacity,
+        Brush_Wet_Pattern = Brush | Wet | Pattern,
+        Brush_Wet_Opacity = Brush | Wet | Opacity,
+        Brush_Wet_Pattern_Opacity = Brush | Wet | Pattern | Opacity,
 
-        BrushWetBlend = Brush | WetCompositeBlend | Blend,
-        BrushWetPatternBlend = Brush | WetCompositeBlend | Pattern | Blend,
-        BrushWetOpacityBlend = Brush | WetCompositeBlend | Opacity | Blend,
-        BrushWetPatternOpacityBlend = Brush | WetCompositeBlend | Pattern | Opacity | Blend,
+        Brush_WetComposite_Blend = Brush | WetComposite_Blend | Blend,
+        Brush_WetComposite_Pattern_Blend = Brush | WetComposite_Blend | Pattern | Blend,
+        Brush_WetComposite_Opacity_Blend = Brush | WetComposite_Blend | Opacity | Blend,
+        Brush_WetComposite_Pattern_Opacity_Blend = Brush | WetComposite_Blend | Pattern | Opacity | Blend,
 
-        BrushWetBlur = Brush | WetBlur | Blur,
-        BrushWetPatternBlur = Brush | WetBlur | Pattern | Blur,
+        Brush_WetBlur_Blur = Brush | WetBlur | Blur,
+        Brush_WetBlur_Pattern_Blur = Brush | WetBlur | Pattern | Blur,
 
-        BrushWetMosaic = Brush | WetMosaic | Mosaic,
-        BrushWetPatternMosaic = Brush | WetMosaic | Pattern | Mosaic,
+        Brush_WetMosaic_Mosaic = Brush | WetMosaic | Mosaic,
+        Brush_WetMosaic_Pattern_Mosaic = Brush | WetMosaic | Pattern | Mosaic,
 
-        BrushDryMix = Brush | Dry | Mix,
-        BrushWetPatternMix = Brush | Wet | Pattern | Mix,
+        Brush_Dry_Mix = Brush | Dry | Mix,
+        Brush_Wet_Pattern_Mix = Brush | Wet | Pattern | Mix,
 
 
         #endregion
@@ -61,25 +63,25 @@ namespace Luo_Painter.Brushes
         #region MaskBrush
 
 
-        MaskBrushDry = Brush | Dry | Mask,
+        MaskBrush_Dry = Brush | Dry | Mask,
 
-        MaskBrushWetPattern = Brush | Wet | Mask | Pattern,
-        MaskBrushWetOpacity = Brush | Wet | Mask | Opacity,
-        MaskBrushWetPatternOpacity = Brush | Wet | Mask | Pattern | Opacity,
+        MaskBrush_Wet_Pattern = Brush | Wet | Mask | Pattern,
+        MaskBrush_Wet_Opacity = Brush | Wet | Mask | Opacity,
+        MaskBrush_Wet_Pattern_Opacity = Brush | Wet | Mask | Pattern | Opacity,
 
-        MaskBrushWetBlend = Brush | WetCompositeBlend | Mask | Blend,
-        MaskBrushWetPatternBlend = Brush | WetCompositeBlend | Mask | Pattern | Blend,
-        MaskBrushWetOpacityBlend = Brush | WetCompositeBlend | Mask | Opacity | Blend,
-        MaskBrushWetPatternOpacityBlend = Brush | WetCompositeBlend | Mask | Pattern | Opacity | Blend,
+        MaskBrush_WetComposite_Blend = Brush | WetComposite_Blend | Mask | Blend,
+        MaskBrush_WetComposite_Pattern_Blend = Brush | WetComposite_Blend | Mask | Pattern | Blend,
+        MaskBrush_WetComposite_Opacity_Blend = Brush | WetComposite_Blend | Mask | Opacity | Blend,
+        MaskBrush_WetComposite_Pattern_Opacity_Blend = Brush | WetComposite_Blend | Mask | Pattern | Opacity | Blend,
 
-        MaskBrushWetBlur = Brush | WetBlur | Mask | Blur,
-        MaskBrushWetPatternBlur = Brush | WetBlur | Mask | Pattern | Blur,
+        MaskBrush_WetBlur_Blur = Brush | WetBlur | Mask | Blur,
+        MaskBrush_WetBlur_Pattern_Blur = Brush | WetBlur | Mask | Pattern | Blur,
 
-        MaskBrushWetMosaic = Brush | WetMosaic | Mask | Mosaic,
-        MaskBrushWetPatternMosaic = Brush | WetMosaic | Mask | Pattern | Mosaic,
+        MaskBrush_WetMosaic_Mosaic = Brush | WetMosaic | Mask | Mosaic,
+        MaskBrush_WetMosaic_Pattern_Mosaic = Brush | WetMosaic | Mask | Pattern | Mosaic,
 
-        MaskBrushDryMix = Brush | Dry | Mask | Mix,
-        MaskBrushWetPatternMix = Brush | Wet | Mask | Pattern | Mix,
+        MaskBrush_Dry_Mix = Brush | Dry | Mask | Mix,
+        MaskBrush_Wet_Pattern_Mix = Brush | Wet | Mask | Pattern | Mix,
 
 
         #endregion
@@ -89,25 +91,25 @@ namespace Luo_Painter.Brushes
         #region Circle
 
 
-        CircleDry = Circle | Dry,
+        Circle_Dry = Circle | Dry,
 
-        CircleWetPattern = Circle | Wet | Pattern,
-        CircleWetOpacity = Circle | Wet | Opacity,
-        CircleWetPatternOpacity = Circle | Wet | Pattern | Opacity,
+        Circle_Wet_Pattern = Circle | Wet | Pattern,
+        Circle_Wet_Opacity = Circle | Wet | Opacity,
+        Circle_Wet_Pattern_Opacity = Circle | Wet | Pattern | Opacity,
 
-        CircleWetBlend = Circle | WetCompositeBlend | Blend,
-        CircleWetPatternBlend = Circle | WetCompositeBlend | Pattern | Blend,
-        CircleWetOpacityBlend = Circle | WetCompositeBlend | Opacity | Blend,
-        CircleWetPatternOpacityBlend = Circle | WetCompositeBlend | Pattern | Opacity | Blend,
+        Circle_WetComposite_Blend = Circle | WetComposite_Blend | Blend,
+        Circle_WetComposite_Pattern_Blend = Circle | WetComposite_Blend | Pattern | Blend,
+        Circle_WetComposite_Opacity_Blend = Circle | WetComposite_Blend | Opacity | Blend,
+        Circle_WetComposite_Pattern_Opacity_Blend = Circle | WetComposite_Blend | Pattern | Opacity | Blend,
 
-        CircleWetBlur = Circle | WetBlur | Blur,
-        CircleWetPatternBlur = Circle | WetBlur | Pattern | Blur,
+        Circle_WetBlur_Blur = Circle | WetBlur | Blur,
+        Circle_WetBlur_Pattern_Blur = Circle | WetBlur | Pattern | Blur,
 
-        CircleWetMosaic = Circle | WetMosaic | Mosaic,
-        CircleWetPatternMosaic = Circle | WetMosaic | Pattern | Mosaic,
+        Circle_WetMosaic_Mosaic = Circle | WetMosaic | Mosaic,
+        Circle_WetMosaic_Pattern_Mosaic = Circle | WetMosaic | Pattern | Mosaic,
 
-        CircleDryMix = Circle | Dry | Mix,
-        CircleWetPatternMix = Circle | Wet | Pattern | Mix,
+        Circle_Dry_Mix = Circle | Dry | Mix,
+        Circle_Wet_Pattern_Mix = Circle | Wet | Pattern | Mix,
 
 
         #endregion
@@ -117,25 +119,25 @@ namespace Luo_Painter.Brushes
         #region Line
 
 
-        LineDry = Line | Dry,
+        Line_Dry = Line | Dry,
 
-        LineWetPattern = Line | Wet | Pattern,
-        LineWetOpacity = Line | Wet | Opacity,
-        LineWetPatternOpacity = Line | Wet | Pattern | Opacity,
+        Line_Wet_Pattern = Line | Wet | Pattern,
+        Line_Wet_Opacity = Line | Wet | Opacity,
+        Line_Wet_Pattern_Opacity = Line | Wet | Pattern | Opacity,
 
-        LineWetBlend = Line | WetCompositeBlend | Blend,
-        LineWetPatternBlend = Line | WetCompositeBlend | Pattern | Blend,
-        LineWetOpacityBlend = Line | WetCompositeBlend | Opacity | Blend,
-        LineWetPatternOpacityBlend = Line | WetCompositeBlend | Pattern | Opacity | Blend,
+        Line_WetComposite_Blend = Line | WetComposite_Blend | Blend,
+        Line_WetComposite_Pattern_Blend = Line | WetComposite_Blend | Pattern | Blend,
+        Line_WetComposite_Opacity_Blend = Line | WetComposite_Blend | Opacity | Blend,
+        Line_WetComposite_Pattern_Opacity_Blend = Line | WetComposite_Blend | Pattern | Opacity | Blend,
 
-        LineWetBlur = Line | WetBlur | Blur,
-        LineWetPatternBlur = Line | WetBlur | Pattern | Blur,
+        Line_WetBlur_Blur = Line | WetBlur | Blur,
+        Line_WetBlur_Pattern_Blur = Line | WetBlur | Pattern | Blur,
 
-        LineWetMosaic = Line | WetMosaic | Mosaic,
-        LineWetPatternMosaic = Line | WetMosaic | Pattern | Mosaic,
+        Line_WetMosaic_Mosaic = Line | WetMosaic | Mosaic,
+        Line_WetMosaic_Pattern_Mosaic = Line | WetMosaic | Pattern | Mosaic,
 
-        LineDryMix = Line | Dry | Mix,
-        LineWetPatternMix = Line | Wet | Pattern | Mix,
+        Line_Dry_Mix = Line | Dry | Mix,
+        Line_Wet_Pattern_Mix = Line | Wet | Pattern | Mix,
 
 
         #endregion
@@ -144,10 +146,10 @@ namespace Luo_Painter.Brushes
         Erase = 1 << 17,
         #region Erase
 
-        EraseDry = Erase | Dry,
+        Erase_Dry = Erase | Dry,
 
-        EraseWetOpacity = Erase | WetCompositeEraseOpacity | Opacity,
-        EraseWetPatternOpacity = Erase | WetCompositeEraseOpacity | Pattern | Opacity,
+        Erase_WetComposite_Opacity = Erase | WetComposite_Erase_Opacity | Opacity,
+        Erase_WetComposite_Pattern_Opacity = Erase | WetComposite_Erase_Opacity | Pattern | Opacity,
 
 
         #endregion
