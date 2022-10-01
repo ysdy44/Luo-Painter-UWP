@@ -34,8 +34,8 @@ namespace Luo_Painter
                 {
                     //@DPI
                     ScaleForDPI = sender.Dpi.ConvertPixels(),
-                    SizeInPixels = new InkRenderSize((int)sender.Dpi.ConvertDipsToPixels(320), (int)sender.Dpi.ConvertDipsToPixels(100)),
-                    Size = new InkRenderSize(320, 100),
+                    SizeInPixels = new InkRenderSize((int)sender.Dpi.ConvertDipsToPixels(320), (int)sender.Dpi.ConvertDipsToPixels(120)),
+                    Size = new InkRenderSize(320, 120),
                 };
             };
             this.InkCanvasControl.Draw += (sender, args) =>
@@ -58,9 +58,7 @@ namespace Luo_Painter
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                args.DrawingSession.DrawImage(
-                    this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source],
-                        this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp])));
+                this.Paint(args.DrawingSession);
             };
         }
 

@@ -43,19 +43,8 @@ namespace Luo_Painter
 
             // History
             this.BitmapLayer.Flush();
-   
+
             this.CanvasControl.Invalidate(); // Invalidate
-        }
-
-
-        private bool Paint()
-        {
-            if (this.InkType.HasFlag(InkType.Dry)) return true;
-            else if (this.InkType.HasFlag(InkType.Wet)) { this.BitmapLayer.Draw(this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp])); return true; }
-            else if (this.InkType.HasFlag(InkType.WetBlur)) { this.BitmapLayer.Draw(this.InkPresenter.GetBlur(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp])); return true; }
-            else if (this.InkType.HasFlag(InkType.WetMosaic)) { this.BitmapLayer.Draw(this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp])); return true; }
-            else if (this.InkType.HasFlag(InkType.WetComposite)) { this.BitmapLayer.DrawCopy(this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Origin], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]))); return true; }
-            else return false;
         }
 
 
