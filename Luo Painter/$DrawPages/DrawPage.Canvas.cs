@@ -49,22 +49,6 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Height = e.NewSize.Height;
             };
 
-            this.InkCanvasControl.CreateResources += (sender, args) =>
-            {
-                this.InkRender = new InkRender
-                {
-                    //@DPI
-                    ScaleForDPI = sender.Dpi.ConvertPixels(),
-                    SizeInPixels = new InkRenderSize((int)sender.Dpi.ConvertDipsToPixels(320), (int)sender.Dpi.ConvertDipsToPixels(100)),
-                    Size = new InkRenderSize(320, 100),
-                };
-            };
-            this.InkCanvasControl.Draw += (sender, args) =>
-            {
-                if (this.InkRender is null) return;
-                this.Ink(args.DrawingSession);
-            };
-
 
             this.CanvasControl.Draw += (sender, args) =>
             {

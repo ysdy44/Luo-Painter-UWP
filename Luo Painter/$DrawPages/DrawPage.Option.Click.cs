@@ -195,7 +195,7 @@ namespace Luo_Painter
                     this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
                     break;
                 case OptionType.PaintMenu:
-                    this.PaintMenu.Toggle(this.PaintButton, ExpanderPlacementMode.Bottom);
+                    base.Frame.Navigate(typeof(BrushPage), (IInkParameter)this);
                     break;
                 case OptionType.BrushMenu:
                     this.BrushMenu.Toggle(this.BrushButton, ExpanderPlacementMode.Bottom);

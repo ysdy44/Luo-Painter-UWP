@@ -97,10 +97,11 @@
                         <Setter Target="ToolButton.Width" Value="60"/>
                         <Setter Target="EditButton.Width" Value="60"/>
                         <Setter Target="AdjustmentButton.Width" Value="60"/>
-                        <Setter Target="OptionButton.Width" Value="60"/>
+                        <Setter Target="OtherButton.Width" Value="60"/>
+                        <Setter Target="PaintButton.Width" Value="60"/>
+                        <Setter Target="BrushButton.Width" Value="60"/>
+                        <Setter Target="SizeButton.Width" Value="60"/>
                         <Setter Target="HistoryButton.Width" Value="60"/>
-                        <Setter Target="SetupButton.Width" Value="60"/>
-                        <Setter Target="LayerButton.Width" Value="60"/>
                         <Setter Target="ColorButton.Width" Value="60"/>
 
                         <!--Expander-->
@@ -339,13 +340,6 @@
                     </local:OptionCase>
                 </local:OptionSwitchPresenter>
             </elements:Expander>
-            <menus:PaintMenu x:Name="PaintMenu">
-                <menus:PaintMenu.TopAppBar>
-                    <canvas:CanvasControl x:Name="InkCanvasControl" 
-                          Width="320" Height="100" 
-                          UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-                </menus:PaintMenu.TopAppBar>
-            </menus:PaintMenu>
             <menus:BrushMenu x:Name="BrushMenu" />
             <menus:SizeMenu x:Name="SizeMenu" />
             <menus:EditMenu x:Name="EditMenu" />
