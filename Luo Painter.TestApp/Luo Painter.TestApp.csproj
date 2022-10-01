@@ -209,9 +209,6 @@
     <Compile Include="AtlasEffectPage.xaml.cs">
       <DependentUpon>AtlasEffectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BitmapEraseBrushPage.xaml.cs">
-      <DependentUpon>BitmapEraseBrushPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BitmapRegionPage.xaml.cs">
       <DependentUpon>BitmapRegionPage.xaml</DependentUpon>
     </Compile>
@@ -432,10 +429,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AtlasEffectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="BitmapEraseBrushPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
