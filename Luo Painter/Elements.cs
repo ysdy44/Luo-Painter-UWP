@@ -12,9 +12,24 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+using Luo_Painter.Projects;
 
 namespace Luo_Painter
 {
+    internal sealed class MainPageToDrawPageAttribute : Attribute
+    {
+        readonly NavigationMode NavigationMode;
+        public MainPageToDrawPageAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
+        public override string ToString() => $"{typeof(MainPage)} to {typeof(DrawPage)}, Parameter is {typeof(ProjectParameter)}, NavigationMode is {this.NavigationMode}";
+    }
+    internal sealed class DrawPageToBrushPageAttribute : Attribute
+    {
+        readonly NavigationMode NavigationMode;
+        public DrawPageToBrushPageAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
+        public override string ToString() => $"{typeof(DrawPage)} to {typeof(BrushPage)}, Parameter is {typeof(IInkParameter)}, NavigationMode is {this.NavigationMode}";
+    }
+
     internal sealed class SizeRange : InverseProportionRange
     {
         public SizeRange() : base(12, 1, 400, 100000) { }

@@ -12,6 +12,7 @@ using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -40,6 +41,7 @@ namespace Luo_Painter
     public sealed partial class MainPage : Page
     {
 
+        [MainPageToDrawPage(NavigationMode.Forward)]
         private async void Action(ProjectAction action, Project project = null)
         {
             switch (action)

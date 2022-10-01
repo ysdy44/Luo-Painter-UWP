@@ -74,6 +74,7 @@ namespace Luo_Painter
 
 
         //@Construct
+        [DrawPageToBrushPage(NavigationMode.Back)]
         public BrushPage()
         {
             this.InitializeComponent();
@@ -226,6 +227,7 @@ namespace Luo_Painter
                 manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
+        [DrawPageToBrushPage(NavigationMode.New)]
         /// <summary> The current page becomes the active page. </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -245,6 +247,8 @@ namespace Luo_Painter
                 {
                     base.Frame.GoBack();
                 }
+
+                throw new NullReferenceException($"{nameof(this.InkParameter)} is null.");
             }
 
             this.IsEnabled = true;
@@ -255,6 +259,7 @@ namespace Luo_Painter
                 manager.BackRequested += this.BackRequested;
             }
         }
+        [DrawPageToBrushPage(NavigationMode.Back)]
         private void BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;

@@ -244,6 +244,7 @@ namespace Luo_Painter
                 manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
+        [MainPageToDrawPage(NavigationMode.New)]
         /// <summary> The current page becomes the active page. </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
