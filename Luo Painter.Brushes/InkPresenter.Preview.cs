@@ -21,12 +21,7 @@ namespace Luo_Painter.Brushes
             else if (type.HasFlag(InkType.WetComposite))
             {
                 if (type.HasFlag(InkType.WetComposite_Blend))
-                    return new BlendEffect
-                    {
-                        Mode = this.BlendMode,
-                        Background = image,
-                        Foreground = wet
-                    };
+                    return this.GetBlend(image, wet);
                 else if (type.HasFlag(InkType.WetComposite_Erase_Opacity))
                     return this.GetErase(image, wet);
                 else
@@ -42,12 +37,16 @@ namespace Luo_Painter.Brushes
             {
                 case InkType.Brush_Wet_Pattern:
                 case InkType.Brush_Wet_Pattern_Mix:
+                case InkType.Brush_WetMosaic_Pattern_Mosaic:
                 case InkType.MaskBrush_Wet_Pattern:
                 case InkType.MaskBrush_Wet_Pattern_Mix:
+                case InkType.MaskBrush_WetMosaic_Pattern_Mosaic:
                 case InkType.Circle_Wet_Pattern:
                 case InkType.Circle_Wet_Pattern_Mix:
+                case InkType.Circle_WetMosaic_Pattern_Mosaic:
                 case InkType.Line_Wet_Pattern:
                 case InkType.Line_Wet_Pattern_Mix:
+                case InkType.Line_WetMosaic_Pattern_Mosaic:
                 case InkType.Brush_WetComposite_Pattern_Blend:
                 case InkType.MaskBrush_WetComposite_Pattern_Blend:
                 case InkType.Circle_WetComposite_Pattern_Blend:
@@ -63,11 +62,7 @@ namespace Luo_Painter.Brushes
                 case InkType.MaskBrush_Wet_Opacity:
                 case InkType.Circle_Wet_Opacity:
                 case InkType.Line_Wet_Opacity:
-                    return new OpacityEffect
-                    {
-                        Opacity = this.Opacity,
-                        Source = image
-                    };
+                    return this.GetOpacity(image);
 
                 case InkType.Brush_Wet_Pattern_Opacity:
                 case InkType.MaskBrush_Wet_Pattern_Opacity:
@@ -77,11 +72,7 @@ namespace Luo_Painter.Brushes
                 case InkType.MaskBrush_WetComposite_Pattern_Opacity_Blend:
                 case InkType.Circle_WetComposite_Pattern_Opacity_Blend:
                 case InkType.Line_WetComposite_Pattern_Opacity_Blend:
-                    return new OpacityEffect
-                    {
-                        Opacity = this.Opacity,
-                        Source = this.GetPattern(image)
-                    };
+                    return this.GetOpacity(this.GetPattern(image));
 
                 case InkType.Brush_WetComposite_Blend:
                 case InkType.MaskBrush_WetComposite_Blend:
@@ -95,18 +86,14 @@ namespace Luo_Painter.Brushes
                 case InkType.MaskBrush_WetMosaic_Mosaic:
                 case InkType.Circle_WetMosaic_Mosaic:
                 case InkType.Line_WetMosaic_Mosaic:
-                case InkType.Erase_WetComposite_Opacity:
                     return image;
 
                 case InkType.Brush_WetComposite_Opacity_Blend:
                 case InkType.MaskBrush_WetComposite_Opacity_Blend:
                 case InkType.Circle_WetComposite_Opacity_Blend:
                 case InkType.Line_WetComposite_Opacity_Blend:
-                    return new OpacityEffect
-                    {
-                        Opacity = this.Opacity,
-                        Source = image
-                    };
+                case InkType.Erase_WetComposite_Opacity:
+                    return this.GetOpacity(image);
 
                 default:
                     return null;
@@ -114,10 +101,23 @@ namespace Luo_Painter.Brushes
         }
 
 
-        public ICanvasImage GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
-        public ICanvasImage GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, this.Size * this.Opacity);
-        public ICanvasImage GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
-        public ICanvasImage GetPattern(IGraphicsEffectSource image) => InkPresenter.GetPattern(image, this.Pattern, new Vector2
+        public OpacityEffect GetOpacity(IGraphicsEffectSource image) => new OpacityEffect
+        {
+            Opacity = this.Opacity,
+            Source = image
+        };
+        public BlendEffect GetBlend(IGraphicsEffectSource image, IGraphicsEffectSource wet) => new BlendEffect
+        {
+            Mode = this.BlendMode,
+            Background = image,
+            Foreground = wet
+        };
+
+
+        public ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
+        public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, this.Size * this.Opacity);
+        public AlphaMaskEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
+        public AlphaMaskEffect GetPattern(IGraphicsEffectSource image) => InkPresenter.GetPattern(image, this.Pattern, new Vector2
         {
             X = this.Step / (float)this.Pattern.SizeInPixels.Width,
             Y = this.Step / (float)this.Pattern.SizeInPixels.Height
@@ -125,7 +125,7 @@ namespace Luo_Painter.Brushes
 
 
         //@Static  
-        public static ICanvasImage GetDraw(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
+        public static CompositeEffect GetDraw(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
         {
             Sources =
             {
@@ -137,7 +137,7 @@ namespace Luo_Painter.Brushes
                 }
             }
         };
-        public static ICanvasImage GetComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
+        public static CompositeEffect GetComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
         {
             Sources =
             {
@@ -145,7 +145,7 @@ namespace Luo_Painter.Brushes
                 image2
             }
         };
-        public static ICanvasImage GetDrawComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2, IGraphicsEffectSource alphaMask) => new CompositeEffect
+        public static CompositeEffect GetDrawComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2, IGraphicsEffectSource alphaMask) => new CompositeEffect
         {
             Sources =
             {
@@ -158,7 +158,7 @@ namespace Luo_Painter.Brushes
             }
         };
 
-        public static ICanvasImage GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float opacity) => new ArithmeticCompositeEffect
+        public static ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float opacity) => new ArithmeticCompositeEffect
         {
             MultiplyAmount = 0,
             Source1Amount = 1,
@@ -167,7 +167,7 @@ namespace Luo_Painter.Brushes
             Source1 = image,
             Source2 = alphaMask,
         };
-        public static ICanvasImage GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float blurAmount) => new AlphaMaskEffect
+        public static AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float blurAmount) => new AlphaMaskEffect
         {
             AlphaMask = alphaMask,
             Source = new GaussianBlurEffect
@@ -177,7 +177,7 @@ namespace Luo_Painter.Brushes
                 Source = image
             }
         };
-        public static ICanvasImage GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float size) => new AlphaMaskEffect
+        public static AlphaMaskEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float size) => new AlphaMaskEffect
         {
             AlphaMask = alphaMask,
             Source = new ScaleEffect
@@ -192,7 +192,7 @@ namespace Luo_Painter.Brushes
                 }
             }
         };
-        public static ICanvasImage GetPattern(IGraphicsEffectSource image, IGraphicsEffectSource pattern, Vector2 scale) => new AlphaMaskEffect
+        public static AlphaMaskEffect GetPattern(IGraphicsEffectSource image, IGraphicsEffectSource pattern, Vector2 scale) => new AlphaMaskEffect
         {
             AlphaMask = new BorderEffect
             {
