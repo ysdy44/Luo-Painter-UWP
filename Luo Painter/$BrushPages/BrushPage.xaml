@@ -36,62 +36,63 @@
         PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
         >
         <SplitView.Pane>
-            <ScrollViewer x:Name="ScrollViewer">
-                <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <!--Tool-->
+                <Grid BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumDark}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
 
-                    <!--Tool-->
-                    <Grid Height="49" Background="{ThemeResource AppBackgroundMediumDark}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="ToolComboBox" Margin="12,2" SelectedIndex="0" HorizontalAlignment="Stretch">
+                        <local:ToolItem Type="PaintBrush"/>
+                        <local:ToolItem Type="PaintWatercolorPen"/>
+                        <local:ToolItem Type="PaintPencil"/>
+                        <local:ToolItem Type="PaintEraseBrush"/>
+                        <local:ToolItem Type="PaintLiquefaction"/>
+                    </ComboBox>
 
-                        <ComboBox x:Name="ToolComboBox" Margin="12,2" SelectedIndex="0" HorizontalAlignment="Stretch">
-                            <local:ToolItem Type="PaintBrush"/>
-                            <local:ToolItem Type="PaintWatercolorPen"/>
-                            <local:ToolItem Type="PaintPencil"/>
-                            <local:ToolItem Type="PaintEraseBrush"/>
-                            <local:ToolItem Type="PaintLiquefaction"/>
-                        </ComboBox>
+                    <Button x:Name="CloseButton" Visibility="Collapsed" Grid.Column="1" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="CloseButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                                Close the Menu
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="Cancel"/>
+                    </Button>
 
-                        <Button x:Name="CloseButton" Visibility="Collapsed" Grid.Column="1" Width="Auto" Style="{StaticResource AppButtonStyle}" >
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="CloseButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
-                                    Close the Menu
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                            <SymbolIcon Symbol="Cancel"/>
-                        </Button>
+                    <Button x:Name="PinButton" Grid.Column="1" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="PinButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                                Pin the Menu
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="{x:Bind PinSymbolConverter(SplitView.DisplayMode), Mode=OneWay}"/>
+                    </Button>
 
-                        <Button x:Name="PinButton" Grid.Column="1" Width="Auto" Style="{StaticResource AppButtonStyle}" >
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="PinButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
-                                    Pin the Menu
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                            <SymbolIcon Symbol="{x:Bind PinSymbolConverter(SplitView.DisplayMode), Mode=OneWay}"/>
-                        </Button>
+                </Grid>
 
-                    </Grid>
-
-
-                    <!--Ink-->
-                    <canvas:CanvasControl               
-                        x:Name="InkCanvasControl"       
-                        Margin="0,24,0,10" 
-                        Width="320"                
-                        Height="100"               
-                        UseSharedDevice="True"                 
-                        CustomDevice="{x:Bind CanvasDevice}"               
-                        />
-
-
-                    <!--Paint-->
+                <!--Paint-->
+                <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}" >
                     <StackPanel Padding="6,0" >
 
+                        <!--Ink-->
+                        <canvas:CanvasControl               
+                            x:Name="InkCanvasControl"       
+                            Margin="0,14,0,0" 
+                            Width="320"                
+                            Height="120"               
+                            UseSharedDevice="True"                 
+                            CustomDevice="{x:Bind CanvasDevice}"               
+                            />
 
-                        <Border CornerRadius="8" Margin="0,4" Background="{ThemeResource SystemAltLowColor}" >
+
+                        <Border CornerRadius="8" Margin="0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                             <StackPanel>
 
                                 <!--Size-->
@@ -244,22 +245,22 @@
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Padding="9" CornerRadius="8" Background="Black" >
+                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                 <Grid>
-                                    <Ellipse Opacity="0.5" Fill="White" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlendRadioButton.IsChecked), Mode=OneWay}" >
+                                    <Ellipse Fill="{ThemeResource AppForeground}" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlendRadioButton.IsChecked), Mode=OneWay}" >
                                         <UIElement.RenderTransform>
                                             <TranslateTransform X="20"/>
                                         </UIElement.RenderTransform>
                                     </Ellipse>
-                                    <Ellipse Opacity="0.5" Fill="White" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlendRadioButton.IsChecked), Mode=OneWay}" >
+                                    <Ellipse Fill="{ThemeResource AppForeground}" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlendRadioButton.IsChecked), Mode=OneWay}" >
                                         <UIElement.RenderTransform>
                                             <TranslateTransform X="-20"/>
                                         </UIElement.RenderTransform>
                                     </Ellipse>
-                                    <Path Opacity="0.8" Width="86" Height="106"  HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlurRadioButton.IsChecked), Mode=OneWay}" >
+                                    <Path Width="86" Height="106"  HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlurRadioButton.IsChecked), Mode=OneWay}" >
                                         <Shape.Fill>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                <GradientStop Offset="0" Color="White"/>
+                                                <GradientStop Offset="0" Color="{ThemeResource SystemAltHighColor}"/>
                                                 <GradientStop Offset="1" Color="Gray"/>
                                             </LinearGradientBrush>
                                         </Shape.Fill>
@@ -273,11 +274,11 @@
                                             </PathGeometry>
                                         </Path.Data>
                                     </Path>
-                                    <Path Opacity="0.5" Width="86" Height="106" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(MixRadioButton.IsChecked), Mode=OneWay}" >
+                                    <Path Width="86" Height="106" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(MixRadioButton.IsChecked), Mode=OneWay}" >
                                         <Shape.Fill>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                                 <GradientStop Offset="0" Color="Gray"/>
-                                                <GradientStop Offset="1" Color="Black"/>
+                                                <GradientStop Offset="1" Color="{ThemeResource SystemBaseHighColor}"/>
                                             </LinearGradientBrush>
                                         </Shape.Fill>
                                         <Path.Data>
@@ -291,39 +292,39 @@
                                         </Path.Data>
                                     </Path>
                                     <Canvas Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(MosaicRadioButton.IsChecked), Mode=OneWay}" >
-                                        <Rectangle Canvas.Left="40" Canvas.Top="40" Width="20" Height="20" Fill="White" />
-                                        <Rectangle Canvas.Left="40" Canvas.Top="60" Width="20" Height="20" Fill="White" Opacity="0.95" />
-                                        <Rectangle Canvas.Left="20" Canvas.Top="40" Width="20" Height="20" Fill="White" Opacity="0.95" />
-                                        <Rectangle Canvas.Left="40" Canvas.Top="20" Width="20" Height="20" Fill="White" Opacity="0.95" />
-                                        <Rectangle Canvas.Left="60" Canvas.Top="40" Width="20" Height="20" Fill="White" Opacity="0.95" />
+                                        <Rectangle Canvas.Left="40" Canvas.Top="40" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" />
+                                        <Rectangle Canvas.Left="40" Canvas.Top="60" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.95" />
+                                        <Rectangle Canvas.Left="20" Canvas.Top="40" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.95" />
+                                        <Rectangle Canvas.Left="40" Canvas.Top="20" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.95" />
+                                        <Rectangle Canvas.Left="60" Canvas.Top="40" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.95" />
 
-                                        <Rectangle Canvas.Left="60" Canvas.Top="20" Width="20" Height="20" Fill="White" Opacity="0.87" />
-                                        <Rectangle Canvas.Left="20" Canvas.Top="20" Width="20" Height="20" Fill="White" Opacity="0.87" />
-                                        <Rectangle Canvas.Left="60" Canvas.Top="60" Width="20" Height="20" Fill="White" Opacity="0.87" />
-                                        <Rectangle Canvas.Left="20" Canvas.Top="60" Width="20" Height="20" Fill="White" Opacity="0.87" />
+                                        <Rectangle Canvas.Left="60" Canvas.Top="20" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.87" />
+                                        <Rectangle Canvas.Left="20" Canvas.Top="20" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.87" />
+                                        <Rectangle Canvas.Left="60" Canvas.Top="60" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.87" />
+                                        <Rectangle Canvas.Left="20" Canvas.Top="60" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.87" />
 
-                                        <Rectangle Canvas.Left="80" Canvas.Top="40" Width="20" Height="20" Fill="White" Opacity="0.75" />
-                                        <Rectangle Canvas.Left="40" Canvas.Top="0" Width="20" Height="20" Fill="White" Opacity="0.75" />
-                                        <Rectangle Canvas.Left="0" Canvas.Top="40" Width="20" Height="20" Fill="White" Opacity="0.75" />
-                                        <Rectangle Canvas.Left="40" Canvas.Top="80" Width="20" Height="20" Fill="White" Opacity="0.75" />
+                                        <Rectangle Canvas.Left="80" Canvas.Top="40" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.75" />
+                                        <Rectangle Canvas.Left="40" Canvas.Top="0" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.75" />
+                                        <Rectangle Canvas.Left="0" Canvas.Top="40" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.75" />
+                                        <Rectangle Canvas.Left="40" Canvas.Top="80" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.75" />
 
-                                        <Rectangle Canvas.Left="20" Canvas.Top="0" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="60" Canvas.Top="0" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="80" Canvas.Top="20" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="0" Canvas.Top="60" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="0" Canvas.Top="20" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="20" Canvas.Top="80" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="60" Canvas.Top="80" Width="20" Height="20" Fill="White" Opacity="0.5" />
-                                        <Rectangle Canvas.Left="80" Canvas.Top="60" Width="20" Height="20" Fill="White" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="20" Canvas.Top="0" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="60" Canvas.Top="0" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="80" Canvas.Top="20" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="0" Canvas.Top="60" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="0" Canvas.Top="20" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="20" Canvas.Top="80" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="60" Canvas.Top="80" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
+                                        <Rectangle Canvas.Left="80" Canvas.Top="60" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.5" />
 
-                                        <Rectangle Canvas.Left="80" Width="20" Height="20" Fill="White" Opacity="0.15" />
-                                        <Rectangle Width="20" Height="20" Fill="White" Opacity="0.15" />
-                                        <Rectangle Canvas.Top="80" Width="20" Height="20" Fill="White" Opacity="0.15" />
-                                        <Rectangle Canvas.Top="80" Canvas.Left="80" Width="20" Height="20" Fill="White" Opacity="0.15" />
+                                        <Rectangle Canvas.Left="80" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.15" />
+                                        <Rectangle Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.15" />
+                                        <Rectangle Canvas.Top="80" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.15" />
+                                        <Rectangle Canvas.Top="80" Canvas.Left="80" Width="20" Height="20" Fill="{ThemeResource AppBarItemForegroundThemeBrush}" Opacity="0.15" />
                                     </Canvas>
                                 </Grid>
                             </Border>
-                            <Border Grid.Column="1" Padding="9,3" CornerRadius="8" Background="{ThemeResource SystemAltLowColor}" >
+                            <Border Grid.Column="1" Padding="9,3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="4" >
                                     <RadioButton x:Name="BlendRadioButton" GroupName="Mode" IsChecked="True" 
                                                  Foreground="{ThemeResource SystemColorControlAccentBrush}"
@@ -365,7 +366,7 @@
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border CornerRadius="8" Background="Black">
+                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                 <Viewbox>
                                     <Grid>
                                         <local:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
@@ -376,7 +377,7 @@
                                     </Grid>
                                 </Viewbox>
                             </Border>
-                            <Border Grid.Column="1" Padding="9,3" CornerRadius="8" Background="{ThemeResource SystemAltLowColor}" >
+                            <Border Grid.Column="1" Padding="9,3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="4" >
                                     <RadioButton x:Name="NoneRadioButton" GroupName="Hardness" IsChecked="True">
                                         None
@@ -414,7 +415,7 @@
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border CornerRadius="8" Background="Black">
+                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
                                 <Image>
                                     <Image.Source>
                                         <BitmapImage x:Name="MaskImage">
@@ -423,7 +424,7 @@
                                     </Image.Source>
                                 </Image>
                             </Border>
-                            <Border Grid.Column="1" Padding="9" CornerRadius="8" Background="{ThemeResource SystemAltLowColor}" >
+                            <Border Grid.Column="1" Padding="9" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="6" Padding="0,4" >
                                     <Button x:Name="SelectMaskButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                                         Select
@@ -453,7 +454,7 @@
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border CornerRadius="8" Background="Black">
+                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
                                 <Image>
                                     <Image.Source>
                                         <BitmapImage x:Name="PatternImage">
@@ -462,7 +463,7 @@
                                     </Image.Source>
                                 </Image>
                             </Border>
-                            <Border Grid.Column="1" Padding="9" CornerRadius="8" Background="{ThemeResource SystemAltLowColor}" >
+                            <Border Grid.Column="1" Padding="9" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="6" Padding="0,4" >
                                     <Button x:Name="SelectPatternButton" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                                         Select
@@ -480,10 +481,9 @@
                                Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" />
 
                     </StackPanel>
+                </ScrollViewer>
 
-
-                </StackPanel>
-            </ScrollViewer>
+            </Grid>
         </SplitView.Pane>
         <Grid>
 
@@ -552,7 +552,7 @@
 
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
 
-                <Button x:Name="ImageButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16"  Background="#222222" >
+                <Button x:Name="ImageButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <Button.KeyboardAccelerators>
                         <KeyboardAccelerator Key="M"/>
                         <KeyboardAccelerator Key="I"/>
@@ -565,7 +565,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="ClearButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16"  Background="#222222" >
+                <Button x:Name="ClearButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <Button.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Back"/>
                         <KeyboardAccelerator Key="Delete"/>
