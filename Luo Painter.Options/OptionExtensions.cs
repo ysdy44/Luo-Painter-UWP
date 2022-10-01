@@ -24,6 +24,7 @@ namespace Luo_Painter.Options
 
         public static bool IsMarquee(this OptionType type) => type.HasFlag(OptionType.Marquee);
         public static bool IsSelection(this OptionType type) => type.HasFlag(OptionType.Selection);
+        public static bool IsPaint(this OptionType type) => type.HasFlag(OptionType.Paint);
         public static bool IsGeometry(this OptionType type) => type.HasFlag(OptionType.Geometry);
         public static OptionType ToGeometryTransform(this OptionType type) => type.IsGeometry() ? (type | OptionType.HasPreview | OptionType.AllowDrag) : type;
 

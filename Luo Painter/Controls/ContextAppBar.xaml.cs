@@ -29,9 +29,16 @@ namespace Luo_Painter.Controls
         public event System.Action CanvasVirtualControlInvalidate;
         public event RoutedEventHandler PrimaryButtonClick;
         public event RoutedEventHandler SecondaryButtonClick;
+        public event RangeBaseValueChangedEventHandler SizeValueChanged { add => this.SizeSlider.ValueChanged += value; remove => this.SizeSlider.ValueChanged -= value; }
+        public event RangeBaseValueChangedEventHandler OpacityValueChanged { add => this.OpacitySlider.ValueChanged += value; remove => this.OpacitySlider.ValueChanged -= value; }
         public event RangeBaseValueChangedEventHandler CropCanvasValueChanged { add => this.CropCanvasSlider.ValueChanged += value; remove => this.CropCanvasSlider.ValueChanged -= value; }
 
         //@Converter
+        private double SizeConverter(double value) => this.SizeRange.ConvertXToY(value);
+        private double FontSizeConverter(double value) => this.SizeConverter(value) / 4 + 1;
+        private string SizeToStringConverter(double value) => System.String.Format("{0:F}", this.SizeConverter(value));
+        private double OpacityConverter(double value) => value / 100;
+        private string OpacityToStringConverter(double value) => $"{(int)value} %";
         private Symbol FlowDirectionToSymbolConverter(FlowDirection value) => value is FlowDirection.LeftToRight ? Symbol.Back : Symbol.Forward;
 
         //@Content
@@ -44,6 +51,11 @@ namespace Luo_Painter.Controls
         public bool SelectionIsSubtract => this.SelectionComboBox.SelectedIndex is 0 is false;
         public double DisplacementLiquefactionSize => (float)this.DisplacementLiquefactionSizeSlider.Value;
         public double DisplacementLiquefactionPressure => (float)this.DisplacementLiquefactionPressureSlider.Value;
+        public double SizeValue
+        {
+            get => this.SizeSlider.Value;
+            set => this.SizeSlider.Value = value;
+        }
         public double CropCanvasValue
         {
             get => this.CropCanvasSlider.Value;
@@ -192,6 +204,7 @@ namespace Luo_Painter.Controls
             if (type is OptionType.MarqueeTransform) return OptionType.Transform;
             else if (type.IsMarquee()) return OptionType.Marquee;
             else if (type.IsSelection()) return OptionType.Selection;
+            else if (type.IsPaint()) return OptionType.Paint;
             else return type;
         }
         private ContextAppBarState GetState(OptionType type)
@@ -257,14 +270,14 @@ namespace Luo_Painter.Controls
                         (float)this.CookieSweepAngleSlider.Value * FanKit.Math.Pi / 180);
                 case OptionType.GeometryArrow:
                 case OptionType.GeometryArrowTransform:
-                    return TransformerGeometry.CreateArrow(resourceCreator, transformerLTRB, 
+                    return TransformerGeometry.CreateArrow(resourceCreator, transformerLTRB,
                         false, 10,
                         (float)(this.ArrowWidthSlider.Value / 100),
-                        this.ArrowLeftTailComboBox.SelectedIndex is 0 ? 
+                        this.ArrowLeftTailComboBox.SelectedIndex is 0 ?
                             GeometryArrowTailType.None :
                             GeometryArrowTailType.Arrow,
-                        this.ArrowRightTailComboBox.SelectedIndex is 0 ? 
-                            GeometryArrowTailType.None : 
+                        this.ArrowRightTailComboBox.SelectedIndex is 0 ?
+                            GeometryArrowTailType.None :
                             GeometryArrowTailType.Arrow);
                 case OptionType.GeometryCapsule:
                 case OptionType.GeometryCapsuleTransform:
