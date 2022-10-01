@@ -212,9 +212,6 @@
     <Compile Include="BitmapEraseBrushPage.xaml.cs">
       <DependentUpon>BitmapEraseBrushPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BitmapBrushPage.xaml.cs">
-      <DependentUpon>BitmapBrushPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BitmapRegionPage.xaml.cs">
       <DependentUpon>BitmapRegionPage.xaml</DependentUpon>
     </Compile>
@@ -439,10 +436,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BitmapEraseBrushPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="BitmapBrushPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
