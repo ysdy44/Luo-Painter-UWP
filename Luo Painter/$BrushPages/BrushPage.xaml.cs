@@ -3,6 +3,7 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System;
+using System.Diagnostics.Tracing;
 using System.Numerics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -10,6 +11,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -29,6 +31,31 @@ namespace Luo_Painter
             }
         }
 
+        Color Color
+        {
+            get
+            {
+                switch (base.ActualTheme)
+                {
+                    case ElementTheme.Light: return Colors.Black;
+                    case ElementTheme.Dark: return Colors.White;
+                    default: return Colors.DodgerBlue;
+                }
+            }
+        }
+        Vector4 ColorHdr
+        {
+            get
+            {
+                switch (base.ActualTheme)
+                {
+                    case ElementTheme.Light: return new Vector4(0, 0, 0, 1);
+                    case ElementTheme.Dark: return Vector4.One;
+                    default: return BitmapLayer.DodgerBlue;
+                }
+            }
+        }
+
         CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 
         InkMixer InkMixer { get; set; } = new InkMixer();
@@ -44,7 +71,7 @@ namespace Luo_Painter
 
 
         IInkParameter InkParameter;
-        
+
 
         //@Construct
         public BrushPage()
@@ -128,6 +155,8 @@ namespace Luo_Painter
             this.ClearButton.Click += (s, e) =>
             {
                 this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+
                 this.CanvasControl.Invalidate();
             };
             this.ImageButton.Click += async (s, e) =>
@@ -141,6 +170,10 @@ namespace Luo_Painter
                     {
                         CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
                         this.BitmapLayer.Draw(bitmap);
+
+                        // History
+                        this.BitmapLayer.Flush();
+
                         this.CanvasControl.Invalidate(); // Invalidate
                     }
                 }
@@ -203,7 +236,6 @@ namespace Luo_Painter
                 this.InkPresenter.ToolType = InkType.Brush;
                 this.Type = InkType.Brush;
                 this.InkType = this.InkPresenter.GetType();
-
             }
             else
             {

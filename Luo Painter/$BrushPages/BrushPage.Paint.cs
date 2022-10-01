@@ -19,7 +19,7 @@ namespace Luo_Painter
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
                         RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
-                        Vector4.One,
+                        this.ColorHdr,
                         this.Position, position,
                         this.Pressure, pressure,
                         this.InkPresenter.Size,
@@ -41,7 +41,7 @@ namespace Luo_Painter
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
                         RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
-                        Vector4.One,
+                        this.ColorHdr,
                         this.Position, position,
                         this.Pressure, pressure,
                         this.InkPresenter.Size,
@@ -77,7 +77,7 @@ namespace Luo_Painter
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
                         RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        Vector4.One,
+                        this.ColorHdr,
                         this.InkPresenter.Mask,
                         this.InkPresenter.Rotate,
                         this.Position, position,
@@ -101,7 +101,7 @@ namespace Luo_Painter
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
                         RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        Vector4.One,
+                        this.ColorHdr,
                         this.InkPresenter.Mask,
                         this.InkPresenter.Rotate,
                         this.Position, position,
@@ -141,7 +141,7 @@ namespace Luo_Painter
 
                 case InkType.Circle_Dry:
                     return this.BitmapLayer.IsometricFillCircle(
-                        Colors.White,
+                        this.Color,
                         this.Position, position,
                         this.Pressure, pressure,
                         this.InkPresenter.Size,
@@ -160,7 +160,7 @@ namespace Luo_Painter
                 case InkType.Circle_WetMosaic_Mosaic:
                 case InkType.Circle_WetMosaic_Pattern_Mosaic:
                     return this.BitmapLayer.IsometricFillCircle(
-                        Colors.White,
+                        this.Color,
                         this.Position, position,
                         this.Pressure, pressure,
                         this.InkPresenter.Size,
@@ -186,7 +186,7 @@ namespace Luo_Painter
                         BitmapType.Temp);
 
                 case InkType.Line_Dry:
-                    this.BitmapLayer.DrawLine(this.Position, position, Colors.White, this.InkPresenter.Size, BitmapType.Source);
+                    this.BitmapLayer.DrawLine(this.Position, position, this.Color, this.InkPresenter.Size, BitmapType.Source);
                     return true;
 
                 case InkType.Line_Wet_Pattern:
@@ -200,7 +200,7 @@ namespace Luo_Painter
                 case InkType.Line_WetBlur_Pattern_Blur:
                 case InkType.Line_WetMosaic_Mosaic:
                 case InkType.Line_WetMosaic_Pattern_Mosaic:
-                    this.BitmapLayer.DrawLine(this.Position, position, Colors.White, this.InkPresenter.Size, BitmapType.Temp);
+                    this.BitmapLayer.DrawLine(this.Position, position, this.Color, this.InkPresenter.Size, BitmapType.Temp);
                     return true;
 
                 case InkType.Line_Dry_Mix:

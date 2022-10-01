@@ -57,13 +57,13 @@ namespace Luo_Painter
         #region DependencyProperty
 
 
-        /// <summary> Gets or set the type for <see cref="PaintMenu"/>. </summary>
+        /// <summary> Gets or set the type for <see cref="BrushPage"/>. </summary>
         public InkType Type
         {
             get => (InkType)base.GetValue(TypeProperty);
             set => base.SetValue(TypeProperty, value);
         }
-        /// <summary> Identifies the <see cref = "PaintMenu.IsAccent" /> dependency property. </summary>
+        /// <summary> Identifies the <see cref = "BrushPage.Type" /> dependency property. </summary>
         public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(BrushPage), new PropertyMetadata(default(InkType)));
 
 
@@ -129,7 +129,7 @@ namespace Luo_Painter
                 case InkType.Brush_Wet_Pattern_Mix:
                 case InkType.Brush_WetBlur_Blur:
                 case InkType.Brush_WetBlur_Pattern_Blur:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
                 case InkType.MaskBrush_Dry:
                 case InkType.MaskBrush_Wet_Pattern:
@@ -143,7 +143,7 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Wet_Pattern_Mix:
                 case InkType.MaskBrush_WetBlur_Blur:
                 case InkType.MaskBrush_WetBlur_Pattern_Blur:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, Vector4.One, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
                     break;
                 case InkType.Line_Dry:
                 case InkType.Line_Wet_Pattern:
@@ -157,13 +157,13 @@ namespace Luo_Painter
                 case InkType.Line_Wet_Pattern_Mix:
                 case InkType.Line_WetBlur_Blur:
                 case InkType.Line_WetBlur_Pattern_Blur:
-                    this.InkRender.DrawLine(ds, (float)size, Colors.White);
+                    this.InkRender.DrawLine(ds, (float)size, this.Color);
                     break;
                 case InkType.Liquefy:
-                    this.InkRender.IsometricFillCircle(ds, Colors.White, (float)size, 0.25f);
+                    this.InkRender.IsometricFillCircle(ds, this.Color, (float)size, 0.25f);
                     break;
                 default:
-                    this.InkRender.IsometricFillCircle(ds, Colors.White, (float)size, this.InkPresenter.Spacing);
+                    this.InkRender.IsometricFillCircle(ds, this.Color, (float)size, this.InkPresenter.Spacing);
                     break;
             }
         }
