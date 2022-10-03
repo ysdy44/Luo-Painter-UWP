@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Brushes
 {
-    public struct InkRenderSize
+    internal struct InkRenderSize
     {
         public readonly int Width;
         public readonly int Height;
@@ -26,10 +26,11 @@ namespace Luo_Painter.Brushes
     public sealed class InkRender
     {
 
-        public float ScaleForDPI { get; set; }
-        public InkRenderSize SizeInPixels { get; set; }
-        public InkRenderSize Size { get; set; }
+        //@Const
+        public const int Width = 320;
+        public const int Height = 120;
 
+        private readonly InkRenderSize Size = new InkRenderSize(InkRender.Width, InkRender.Height);
         private readonly CanvasStrokeStyle CanvasStrokeStyle = new CanvasStrokeStyle
         {
             StartCap = CanvasCapStyle.Round,
@@ -76,8 +77,8 @@ namespace Luo_Painter.Brushes
         public void IsometricFillCircle(
             CanvasDrawingSession ds,
             Color color,
-            float size = 22f,
-            float spacing = 0.25f
+            float size,
+            float spacing
             )
         {
             float x = this.Size.Open.X;
@@ -114,12 +115,13 @@ namespace Luo_Painter.Brushes
             CanvasDrawingSession ds,
             byte[] shaderCode,
             Vector4 colorHdr,
-            float size = 22f,
-            float spacing = 0.25f,
-            int hardness = 0
+            float size,
+            float spacing,
+            int hardness,
+            float scaleForDPI
             )
         {
-            float x = this.SizeInPixels.Open.X;
+            float x = this.Size.Open.X * scaleForDPI;
 
             //@DPI 
             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
@@ -133,7 +135,7 @@ namespace Luo_Painter.Brushes
                     ["hardness"] = hardness,
                     ["pressure"] = 1f,
                     ["radius"] = size * 0.001f,
-                    ["targetPosition"] = this.SizeInPixels.Open,
+                    ["targetPosition"] = this.Size.Open * scaleForDPI,
                     ["color"] = colorHdr
                 }
             });
@@ -144,7 +146,7 @@ namespace Luo_Painter.Brushes
                     ["hardness"] = hardness,
                     ["pressure"] = 1f,
                     ["radius"] = size * 0.001f,
-                    ["targetPosition"] = this.SizeInPixels.End,
+                    ["targetPosition"] = this.Size.End * scaleForDPI,
                     ["color"] = colorHdr
                 }
             });
@@ -152,15 +154,15 @@ namespace Luo_Painter.Brushes
             do
             {
                 // 1. Get Radian
-                double radian = this.Radian(x / this.SizeInPixels.Width);
-                float offsetY = 20 * (float)this.OffsetY(radian) * this.ScaleForDPI;
+                double radian = this.Radian(x / (this.Size.Width * scaleForDPI));
+                float offsetY = 20 * (float)this.OffsetY(radian) * scaleForDPI;
                 float pressure = (float)this.Pressure(radian);
 
                 // 2. Get Position
-                Vector2 position = new Vector2(x, this.SizeInPixels.Height / 2 + offsetY);
+                Vector2 position = new Vector2(x, this.Size.Height * scaleForDPI / 2 + offsetY);
 
                 // 3. Draw
-                float sizePressure = size * pressure / this.ScaleForDPI / this.ScaleForDPI + this.ScaleForDPI;
+                float sizePressure = size * pressure / scaleForDPI / scaleForDPI + scaleForDPI;
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
@@ -175,7 +177,7 @@ namespace Luo_Painter.Brushes
 
                 // 4. Foreach
                 x += sizePressure * spacing;
-            } while (x < this.SizeInPixels.End.X);
+            } while (x < this.Size.End.X * scaleForDPI);
         }
 
 
@@ -188,13 +190,14 @@ namespace Luo_Painter.Brushes
             Vector4 colorHdr,
             CanvasBitmap texture,
             bool rotate,
-            float size = 22f,
-            float spacing = 0.25f,
-            int hardness = 0
+            float size,
+            float spacing,
+            int hardness,
+            float scaleForDPI
             )
         {
-            Vector2 position = this.SizeInPixels.Open;
-            float x = this.SizeInPixels.Open.X;
+            Vector2 position = this.Size.Open * scaleForDPI;
+            float x = this.Size.Open.X * scaleForDPI;
 
             //@DPI 
             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
@@ -204,16 +207,16 @@ namespace Luo_Painter.Brushes
             do
             {
                 // 1. Get Radian
-                double radian = this.Radian(x / this.SizeInPixels.Width);
-                float offsetY = 20 * (float)this.OffsetY(radian) * this.ScaleForDPI;
+                double radian = this.Radian(x / (this.Size.Width * scaleForDPI));
+                float offsetY = 20 * (float)this.OffsetY(radian) * scaleForDPI;
                 float pressure = (float)this.Pressure(radian);
 
                 // 2. Get Position
-                Vector2 targetPosition = new Vector2(x, this.SizeInPixels.Height / 2 + offsetY);
+                Vector2 targetPosition = new Vector2(x, this.Size.Height * scaleForDPI / 2 + offsetY);
                 Vector2 normalization = Vector2.Normalize(targetPosition - position);
 
                 // 3. Draw
-                float sizePressure = size * pressure / this.ScaleForDPI / this.ScaleForDPI + this.ScaleForDPI;
+                float sizePressure = size * pressure / scaleForDPI / scaleForDPI + scaleForDPI;
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -232,7 +235,7 @@ namespace Luo_Painter.Brushes
 
                 // 4. Foreach
                 x += sizePressure * spacing;
-            } while (x < this.SizeInPixels.End.X);
+            } while (x < this.Size.End.X * scaleForDPI);
         }
 
     }

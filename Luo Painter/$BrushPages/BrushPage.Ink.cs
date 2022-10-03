@@ -129,7 +129,8 @@ namespace Luo_Painter
                 case InkType.Brush_Wet_Pattern_Mix:
                 case InkType.Brush_WetBlur_Blur:
                 case InkType.Brush_WetBlur_Pattern_Blur:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
+                    //@DPI
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness, this.InkCanvasControl.Dpi.ConvertPixels());
                     break;
                 case InkType.MaskBrush_Dry:
                 case InkType.MaskBrush_Wet_Pattern:
@@ -143,7 +144,8 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Wet_Pattern_Mix:
                 case InkType.MaskBrush_WetBlur_Blur:
                 case InkType.MaskBrush_WetBlur_Pattern_Blur:
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness);
+                    //@DPI
+                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness, this.InkCanvasControl.Dpi.ConvertPixels());
                     break;
                 case InkType.Line_Dry:
                 case InkType.Line_Wet_Pattern:

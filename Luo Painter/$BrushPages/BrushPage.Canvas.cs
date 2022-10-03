@@ -32,10 +32,6 @@ namespace Luo_Painter
             {
                 this.InkRender = new InkRender
                 {
-                    //@DPI
-                    ScaleForDPI = sender.Dpi.ConvertPixels(),
-                    SizeInPixels = new InkRenderSize((int)sender.Dpi.ConvertDipsToPixels(320), (int)sender.Dpi.ConvertDipsToPixels(120)),
-                    Size = new InkRenderSize(320, 120),
                 };
             };
             this.InkCanvasControl.Draw += (sender, args) =>
