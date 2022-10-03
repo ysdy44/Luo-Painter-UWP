@@ -17,6 +17,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
+    public struct Stroke
+    {
+        public Vector2 StartingPosition;
+        public Vector2 Position;
+        public float StartingPressure;
+        public float Pressure;
+    }
+
     public sealed partial class BrushPage : Page
     {
 
@@ -31,30 +39,6 @@ namespace Luo_Painter
             }
         }
 
-        Color Color
-        {
-            get
-            {
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light: return Colors.Black;
-                    case ElementTheme.Dark: return Colors.White;
-                    default: return Colors.DodgerBlue;
-                }
-            }
-        }
-        Vector4 ColorHdr
-        {
-            get
-            {
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light: return new Vector4(0, 0, 0, 1);
-                    case ElementTheme.Dark: return Vector4.One;
-                    default: return BitmapLayer.DodgerBlue;
-                }
-            }
-        }
 
         CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 
@@ -65,9 +49,13 @@ namespace Luo_Painter
 
         InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
 
-        Vector2 Position;
-        float Pressure;
 
+        Vector2 StartingPosition;
+        Vector2 Position;
+        float StartingPressure;
+        float Pressure;
+        Color Color = Colors.White;
+        Vector4 ColorHdr = Vector4.One;
 
         IInkParameter InkParameter;
 
@@ -83,6 +71,23 @@ namespace Luo_Painter
             this.ConstructInk1();
             this.ConstructInk2();
             this.ConstructInk3();
+
+            base.ActualThemeChanged += (s, e) =>
+            {
+                switch (base.ActualTheme)
+                {
+                    case ElementTheme.Light:
+                        this.Color = Colors.Black;
+                        this.ColorHdr = new Vector4(0, 0, 0, 1);
+                        break;
+                    case ElementTheme.Dark:
+                        this.Color = Colors.White;
+                        this.ColorHdr = Vector4.One;
+                        break;
+                    default:
+                        break;
+                }
+            };
 
             this.CloseButton.Click += (s, e) => this.SplitView.IsPaneOpen = false;
             this.ShowButton.Click += (s, e) => this.SplitView.IsPaneOpen = !this.SplitView.IsPaneOpen;
@@ -153,6 +158,7 @@ namespace Luo_Painter
             };
             this.ClearButton.Click += (s, e) =>
             {
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
                 this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
                 this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
 

@@ -35,6 +35,60 @@
         DisplayMode="Inline"
         PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
         >
+
+        <!--VisualState-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <!--Phone-->
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True"/>
+                        <Setter Target="SplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Pad-->
+                <VisualState x:Name="Pad">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True"/>
+                        <Setter Target="SplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--PC-->
+                <VisualState x:Name="PC">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True"/>
+                        <Setter Target="SplitView.DisplayMode" Value="Inline"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Hub-->
+                <VisualState x:Name="Hub">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True"/>
+                        <Setter Target="SplitView.DisplayMode" Value="Inline"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        
         <SplitView.Pane>
             <Grid>
                 <Grid.RowDefinitions>

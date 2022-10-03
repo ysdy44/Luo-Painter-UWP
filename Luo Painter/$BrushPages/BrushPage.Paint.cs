@@ -293,17 +293,17 @@ namespace Luo_Painter
         }
 
 
-        private bool Paint(Vector2 position, float pressure)
+        private bool Paint(Stroke location)
         {
             switch (this.InkType)
             {
                 case InkType.Brush_Dry:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.ColorHdr,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -321,11 +321,11 @@ namespace Luo_Painter
                 case InkType.Brush_WetMosaic_Mosaic:
                 case InkType.Brush_WetMosaic_Pattern_Mosaic:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.ColorHdr,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -333,11 +333,11 @@ namespace Luo_Painter
 
                 case InkType.Brush_Wet_Pattern_Mix:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.InkMixer.ColorHdr,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -345,11 +345,11 @@ namespace Luo_Painter
 
                 case InkType.Brush_Dry_Mix:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessShaderCodeBytes,
                         this.InkMixer.ColorHdr,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -357,13 +357,13 @@ namespace Luo_Painter
 
                 case InkType.MaskBrush_Dry:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.ColorHdr,
                         this.InkPresenter.Mask,
                         this.InkPresenter.Rotate,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -381,13 +381,13 @@ namespace Luo_Painter
                 case InkType.MaskBrush_WetMosaic_Mosaic:
                 case InkType.MaskBrush_WetMosaic_Pattern_Mosaic:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.ColorHdr,
                         this.InkPresenter.Mask,
                         this.InkPresenter.Rotate,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -395,13 +395,13 @@ namespace Luo_Painter
 
                 case InkType.MaskBrush_Dry_Mix:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.InkMixer.ColorHdr,
                         this.InkPresenter.Mask,
                         this.InkPresenter.Rotate,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -409,13 +409,13 @@ namespace Luo_Painter
 
                 case InkType.MaskBrush_Wet_Pattern_Mix:
                     return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size),
+                        RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size),
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes,
                         this.InkMixer.ColorHdr,
                         this.InkPresenter.Mask,
                         this.InkPresenter.Rotate,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         (int)this.InkPresenter.Hardness,
@@ -424,8 +424,8 @@ namespace Luo_Painter
                 case InkType.Circle_Dry:
                     return this.BitmapLayer.IsometricFillCircle(
                         this.Color,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         BitmapType.Source);
@@ -443,8 +443,8 @@ namespace Luo_Painter
                 case InkType.Circle_WetMosaic_Pattern_Mosaic:
                     return this.BitmapLayer.IsometricFillCircle(
                         this.Color,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         BitmapType.Temp);
@@ -452,8 +452,8 @@ namespace Luo_Painter
                 case InkType.Circle_Dry_Mix:
                     return this.BitmapLayer.IsometricFillCircle(
                         this.InkMixer.Color,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         BitmapType.Source);
@@ -461,14 +461,14 @@ namespace Luo_Painter
                 case InkType.Circle_Wet_Pattern_Mix:
                     return this.BitmapLayer.IsometricFillCircle(
                         this.InkMixer.Color,
-                        this.Position, position,
-                        this.Pressure, pressure,
+                        location.StartingPosition, location.Position,
+                        location.StartingPressure, location.Pressure,
                         this.InkPresenter.Size,
                         this.InkPresenter.Spacing,
                         BitmapType.Temp);
 
                 case InkType.Line_Dry:
-                    this.BitmapLayer.DrawLine(this.Position, position, this.Color, this.InkPresenter.Size, BitmapType.Source);
+                    this.BitmapLayer.DrawLine(location.StartingPosition, location.Position, this.Color, this.InkPresenter.Size, BitmapType.Source);
                     return true;
 
                 case InkType.Line_Wet_Pattern:
@@ -482,23 +482,23 @@ namespace Luo_Painter
                 case InkType.Line_WetBlur_Pattern_Blur:
                 case InkType.Line_WetMosaic_Mosaic:
                 case InkType.Line_WetMosaic_Pattern_Mosaic:
-                    this.BitmapLayer.DrawLine(this.Position, position, this.Color, this.InkPresenter.Size, BitmapType.Temp);
+                    this.BitmapLayer.DrawLine(location.StartingPosition, location.Position, this.Color, this.InkPresenter.Size, BitmapType.Temp);
                     return true;
 
                 case InkType.Line_Dry_Mix:
-                    this.BitmapLayer.DrawLine(this.Position, position, this.InkMixer.Color, this.InkPresenter.Size, BitmapType.Source);
+                    this.BitmapLayer.DrawLine(location.StartingPosition, location.Position, this.InkMixer.Color, this.InkPresenter.Size, BitmapType.Source);
                     return true;
 
                 case InkType.Line_Wet_Pattern_Mix:
-                    this.BitmapLayer.DrawLine(this.Position, position, this.InkMixer.Color, this.InkPresenter.Size, BitmapType.Temp);
+                    this.BitmapLayer.DrawLine(location.StartingPosition, location.Position, this.InkMixer.Color, this.InkPresenter.Size, BitmapType.Temp);
                     return true;
 
                 case InkType.Erase_Dry:
-                    return this.BitmapLayer.IsometricErasingDry(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+                    return this.BitmapLayer.IsometricErasingDry(location.StartingPosition, location.Position, location.StartingPressure, location.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
                 case InkType.Erase_WetComposite_Opacity:
                 case InkType.Erase_WetComposite_Pattern_Opacity:
-                    return this.BitmapLayer.IsometricErasingWet(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+                    return this.BitmapLayer.IsometricErasingWet(location.StartingPosition, location.Position, location.StartingPressure, location.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
                 case InkType.Liquefy:
                     this.BitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
@@ -508,11 +508,11 @@ namespace Luo_Painter
                         Properties =
                         {
                             ["radius"] = this.BitmapLayer.ConvertValueToOne(this.InkPresenter.Size),
-                            ["position"] = this.BitmapLayer .ConvertValueToOne(this.Position),
-                            ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(position),
-                            ["pressure"] = pressure,
+                            ["position"] = this.BitmapLayer .ConvertValueToOne(location.StartingPosition),
+                            ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(location.Position),
+                            ["pressure"] = location.Pressure,
                         }
-                    }, RectExtensions.GetRect(this.Position, position, this.InkPresenter.Size));
+                    }, RectExtensions.GetRect(location.StartingPosition, location.Position, this.InkPresenter.Size));
                     return true;
 
                 default:
