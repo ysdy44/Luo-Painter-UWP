@@ -60,7 +60,6 @@ namespace Luo_Painter
 
         InkMixer InkMixer { get; set; } = new InkMixer();
         InkPresenter InkPresenter => this.InkParameter.InkPresenter;
-        InkRender InkRender { get; set; }
 
         BitmapLayer BitmapLayer { get; set; }
 
@@ -141,7 +140,6 @@ namespace Luo_Painter
 
                 this.InkType = this.InkPresenter.GetType();
 
-                if (this.InkRender is null) return;
                 this.InkCanvasControl.Invalidate();
             };
 

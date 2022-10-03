@@ -68,7 +68,6 @@ namespace Luo_Painter
 
         InkMixer InkMixer { get; set; } = new InkMixer();
         public InkPresenter InkPresenter { get; } = new InkPresenter();
-        InkRender InkRender { get; set; }
 
         GradientMesh GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }

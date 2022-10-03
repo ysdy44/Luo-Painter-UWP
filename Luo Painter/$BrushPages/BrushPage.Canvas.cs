@@ -28,16 +28,9 @@ namespace Luo_Painter
                 this.CreateResources((int)size.X, (int)size.Y);
             };
 
-            this.InkCanvasControl.CreateResources += (sender, args) =>
-            {
-                this.InkRender = new InkRender
-                {
-                };
-            };
             this.InkCanvasControl.Draw += (sender, args) =>
             {
                 if (this.ShaderCodeByteIsEnabled is false) return;
-                if (this.InkRender is null) return;
                 this.Ink(args.DrawingSession);
             };
 

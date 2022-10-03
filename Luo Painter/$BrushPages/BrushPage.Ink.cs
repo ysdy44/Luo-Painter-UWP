@@ -114,7 +114,6 @@ namespace Luo_Painter
 
         private void Ink(CanvasDrawingSession ds)
         {
-            double size = this.InkPresenter.Size / 24 + 1;
             switch (this.InkType)
             {
                 case InkType.Brush_Dry:
@@ -130,7 +129,7 @@ namespace Luo_Painter
                 case InkType.Brush_WetBlur_Blur:
                 case InkType.Brush_WetBlur_Pattern_Blur:
                     //@DPI
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness, this.InkCanvasControl.Dpi.ConvertPixels());
+                    this.InkPresenter.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
                     break;
                 case InkType.MaskBrush_Dry:
                 case InkType.MaskBrush_Wet_Pattern:
@@ -145,7 +144,7 @@ namespace Luo_Painter
                 case InkType.MaskBrush_WetBlur_Blur:
                 case InkType.MaskBrush_WetBlur_Pattern_Blur:
                     //@DPI
-                    this.InkRender.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, this.InkPresenter.Size, this.InkPresenter.Spacing, (int)this.InkPresenter.Hardness, this.InkCanvasControl.Dpi.ConvertPixels());
+                    this.InkPresenter.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
                     break;
                 case InkType.Line_Dry:
                 case InkType.Line_Wet_Pattern:
@@ -159,13 +158,13 @@ namespace Luo_Painter
                 case InkType.Line_Wet_Pattern_Mix:
                 case InkType.Line_WetBlur_Blur:
                 case InkType.Line_WetBlur_Pattern_Blur:
-                    this.InkRender.DrawLine(ds, (float)size, this.Color);
+                    this.InkPresenter.DrawLine(ds, this.Color);
                     break;
                 case InkType.Liquefy:
-                    this.InkRender.IsometricFillCircle(ds, this.Color, (float)size, 0.25f);
+                    this.InkPresenter.IsometricFillCircle(ds, this.Color, true);
                     break;
                 default:
-                    this.InkRender.IsometricFillCircle(ds, this.Color, (float)size, this.InkPresenter.Spacing);
+                    this.InkPresenter.IsometricFillCircle(ds, this.Color, false);
                     break;
             }
         }
