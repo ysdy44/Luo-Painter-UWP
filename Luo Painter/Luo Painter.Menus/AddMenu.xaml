@@ -117,7 +117,7 @@
                 Tag Type
             </TextBlock>
             <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
-            
+
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
             <!--Add-->
@@ -126,6 +126,7 @@
             </TextBlock>
             <luo_painter:EditItem Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
         </StackPanel>
     </ScrollViewer>

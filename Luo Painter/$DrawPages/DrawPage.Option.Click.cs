@@ -289,6 +289,19 @@ namespace Luo_Painter
                 case OptionType.AddImageLayer:
                     this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop));
                     break;
+                case OptionType.AddCurveLayer:
+                    {
+                        ILayer add = new CurveLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+
+                        /// History
+                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
                 case OptionType.CutLayer:
                     {
                         var items = this.LayerSelectedItems;
