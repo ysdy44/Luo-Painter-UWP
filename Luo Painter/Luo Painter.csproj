@@ -146,6 +146,7 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Pen.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
     <Compile Include="%24MainPages\MainPage.Action.cs" />

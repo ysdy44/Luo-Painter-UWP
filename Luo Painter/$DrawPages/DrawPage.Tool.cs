@@ -74,6 +74,10 @@ namespace Luo_Painter
                     this.Transparency_Start(position, point);
                     break;
 
+                case OptionType.Pen:
+                    this.Pen_Start(position);
+                    break;
+
                 default:
                     if (this.OptionType.IsGeometry())
                     {
@@ -141,6 +145,10 @@ namespace Luo_Painter
                     break;
                 case OptionType.Transparency:
                     this.Transparency_Delta(position, point);
+                    break;
+
+                case OptionType.Pen:
+                    this.Pen_Delta(position);
                     break;
 
                 default:
@@ -225,6 +233,10 @@ namespace Luo_Painter
                     break;
                 case OptionType.Transparency:
                     this.Transparency_Complete(position, point);
+                    break;
+
+                case OptionType.Pen:
+                    this.Pen_Complete(position);
                     break;
 
                 default:

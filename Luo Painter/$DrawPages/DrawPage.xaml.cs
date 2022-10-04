@@ -77,6 +77,7 @@ namespace Luo_Painter
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
         BitmapLayer Displacement { get; set; }
+        CurveLayer CurveLayer { get; set; }
 
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
@@ -121,6 +122,8 @@ namespace Luo_Painter
             this.ConstructGradientMapping();
             this.ConstructVector();
 
+            this.ConstructPen();
+            
 
             this.Command.Click += (s, type) => this.Click(type);
 
