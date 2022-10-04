@@ -568,9 +568,6 @@
                         Width="300"                
                         SmallChange="1000"                              
                         StepFrequency="1000"                                 
-                        Value="{x:Bind SizeRange.XRange.Default}"                                
-                        Minimum="{x:Bind SizeRange.XRange.Minimum}"                                 
-                        Maximum="{x:Bind SizeRange.XRange.Maximum}" 
                         FontSize="{x:Bind FontSizeConverter(SizeSlider.Value), Mode=OneWay}"             
                         Tag="{x:Bind SizeToStringConverter(SizeSlider.Value), Mode=OneWay}"             
                         >
@@ -584,9 +581,6 @@
                         x:Name="OpacitySlider"      
                         Grid.Column="1"
                         Width="300"                 
-                        Value="100"                                               
-                        Minimum="0"                                
-                        Maximum="100"                
                         FontSize="{x:Bind FontSizeConverter(SizeSlider.Value), Mode=OneWay}"                   
                         Tag="{x:Bind OpacityToStringConverter(OpacitySlider.Value), Mode=OneWay}"         
                         >

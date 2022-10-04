@@ -15,6 +15,8 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        bool InkIsEnabled;
+
         private void SetInkToolType(OptionType type)
         {
             InkType toolType;
@@ -48,26 +50,37 @@ namespace Luo_Painter
                 this.InkPresenter.Construct(brush);
                 this.InkType = this.InkPresenter.GetType();
 
-                this.AppBar.SizeValue = brush.Size;
+                this.InkIsEnabled = false;
+                this.AppBar.ConstructInk(this.InkPresenter, true);
+                this.InkIsEnabled = true;
             };
 
             this.SizeMenu.ItemClick += (s, size) =>
             {
                 this.InkPresenter.Size = (float)size;
 
-                this.AppBar.SizeValue = size;
+                this.InkIsEnabled = false;
+                this.AppBar.ConstructInk(this.InkPresenter, true);
+                this.InkIsEnabled = true;
             };
         }
 
         private void ConstructInk()
         {
+            this.AppBar.ConstructInk(this.InkPresenter, false);
+            this.InkIsEnabled = true;
+
             this.AppBar.SizeValueChanged += (s, e) =>
             {
+                if (this.InkIsEnabled is false) return;
+
                 double size = this.SizeRange.ConvertXToY(e.NewValue);
                 this.InkPresenter.Size = (float)size;
             };
             this.AppBar.OpacityValueChanged += (s, e) =>
             {
+                if (this.InkIsEnabled is false) return;
+
                 double opacity = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.Opacity = (float)opacity;
                 this.InkType = this.InkPresenter.GetType();

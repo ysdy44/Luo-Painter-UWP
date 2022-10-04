@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Options;
 using Luo_Painter.Shaders;
@@ -35,7 +36,7 @@ namespace Luo_Painter.Controls
         public event RoutedEventHandler PenCloseButtonClick { add => this.PenCloseButton.Click += value; remove => this.PenCloseButton.Click -= value; }
 
         //@Converter
-        private double SizeConverter(double value) => this.SizeRange.ConvertXToY(value);
+        public double SizeConverter(double value) => this.SizeRange.ConvertXToY(value);
         private double FontSizeConverter(double value) => this.SizeConverter(value) / 4 + 1;
         private string SizeToStringConverter(double value) => System.String.Format("{0:F}", this.SizeConverter(value));
         private double OpacityConverter(double value) => value / 100;
@@ -171,6 +172,27 @@ namespace Luo_Painter.Controls
             this.ArrowLeftTailComboBox.SelectionChanged += (s, e) => this.GeometryInvalidate?.Invoke();
             this.ArrowRightTailComboBox.SelectionChanged += (s, e) => this.GeometryInvalidate?.Invoke();
             this.HeartSpreadSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
+        }
+
+        public void ConstructInk(InkPresenter presenter, bool onlyValue)
+        {
+            // 1.Minimum
+            if (onlyValue is false)
+            {
+                this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
+                this.OpacitySlider.Minimum = 0d;
+            }
+
+            // 2.Value
+            this.SizeSlider.Value = this.SizeRange.ConvertYToX(presenter.Size);
+            this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
+
+            // 3.Maximum
+            if (onlyValue is false)
+            {
+                this.SizeSlider.Maximum = this.SizeRange.XRange.Maximum;
+                this.OpacitySlider.Maximum = 100d;
+            }
         }
 
         public void Construct(OptionType type)
