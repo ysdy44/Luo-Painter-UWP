@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Brushes;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
@@ -61,7 +62,7 @@ namespace Luo_Painter
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip("No Layer", "Create a new Layer?");
+                this.Tip(TipType.NoLayer);
                 return;
             }
 
@@ -69,7 +70,7 @@ namespace Luo_Painter
             switch (this.SelectionType)
             {
                 case SelectionType.None:
-                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                    this.Tip(TipType.NoPixelForBitmapLayer);
                     return;
                 case SelectionType.All:
                     break;

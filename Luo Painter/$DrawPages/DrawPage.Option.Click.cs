@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
@@ -71,6 +72,12 @@ namespace Luo_Painter
                     else
                     {
                         base.IsEnabled = false;
+
+                        //@Debug
+                        // OptionType becomes Tool when it is Effect
+                        this.OptionType = this.ToolListView.SelectedItem;
+                        this.AppBar.Construct(this.ToolListView.SelectedItem);
+
                         await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
                     }
                     break;
@@ -83,25 +90,25 @@ namespace Luo_Painter
                     {
                         IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
                         if (file is null) break;
-                        this.Tip("Saving...", this.ApplicationView.Title); // Tip
+                        this.Tip(TipType.Saving);
 
                         // Export
                         bool result = await this.LayerRender.Export(this.Nodes, file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
                         if (result)
-                            this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
+                            this.Tip(TipType.SaveSuccess);
                         else
-                            this.Tip("Failed to Save", "Try again?"); // Tip
+                            this.Tip(TipType.SaveFailed);
                     }
                     break;
                 case OptionType.ExportAll:
                     {
                         IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
                         if (folder is null) break;
-                        this.Tip("Saving...", this.ApplicationView.Title); // Tip
+                        this.Tip(TipType.Saving);
 
                         // Export
                         int result = await this.LayerRender.ExportAll(this.Nodes, folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
-                        this.Tip("Saved successfully", $"A total of {result} files"); // Tip
+                        this.Tip(TipType.SaveSuccess);
                     }
                     break;
                 case OptionType.ExportCurrent:
@@ -110,16 +117,16 @@ namespace Luo_Painter
                         {
                             IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
                             if (file is null) break;
-                            this.Tip("Saving...", this.ApplicationView.Title); // Tip
+                            this.Tip(TipType.Saving);
 
                             // Export
                             bool result = await this.LayerRender.Export(layer, file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
                             if (result)
-                                this.Tip("Saved successfully", this.ApplicationView.Title); // Tip
+                                this.Tip(TipType.SaveSuccess);
                             else
-                                this.Tip("Failed to Save", "Try again?"); // Tip
+                                this.Tip(TipType.SaveFailed);
                         }
-                        else this.Tip("No Layer", "Create a new Layer?");
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.Undo:
@@ -134,7 +141,7 @@ namespace Luo_Painter
 
                         this.UndoButton.IsEnabled = this.History.CanUndo;
                         this.RedoButton.IsEnabled = this.History.CanRedo;
-                        this.Tip("Undo", $"{this.History.Index} / {this.History.Count}"); // Tip
+                        this.Tip(TipType.Undo);
                     }
                     break;
                 case OptionType.Redo:
@@ -149,7 +156,7 @@ namespace Luo_Painter
 
                         this.UndoButton.IsEnabled = this.History.CanUndo;
                         this.RedoButton.IsEnabled = this.History.CanRedo;
-                        this.Tip("Redo", $"{this.History.Index} / {this.History.Count}"); // Tip
+                        this.Tip(TipType.Redo);
                     }
                     break;
                 case OptionType.FullScreen:
@@ -424,10 +431,7 @@ namespace Luo_Painter
                             this.RedoButton.IsEnabled = this.History.CanRedo;
                             this.EditMenu.PasteIsEnabled = true;
                         }
-                        else
-                        {
-                            this.Tip("No Layer", "Create a new Layer?");
-                        }
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.Duplicate: // CopyLayer + PasteLayer
@@ -462,7 +466,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                            this.Tip(TipType.NoPixelForBitmapLayer);
                             break;
                         }
 
@@ -517,7 +521,7 @@ namespace Luo_Painter
 
                             if (mode is PixelBoundsMode.Transarent)
                             {
-                                this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                this.Tip(TipType.NoPixelForBitmapLayer);
                                 break;
                             }
 
@@ -744,7 +748,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip("No Pixel", "The Marquee is Transparent.");
+                            this.Tip(TipType.NoPixelForMarquee);
                             break;
                         }
 
@@ -762,7 +766,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip("No Pixel", "The Marquee is Transparent.");
+                            this.Tip(TipType.NoPixelForMarquee);
                             break;
                         }
 
@@ -792,7 +796,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip("No Pixel", "The Marquee is Transparent.");
+                            this.Tip(TipType.NoPixelForMarquee);
                             break;
                         }
 
@@ -810,7 +814,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip("No Pixel", "The Marquee is Transparent.");
+                            this.Tip(TipType.NoPixelForMarquee);
                             break;
                         }
 
@@ -850,7 +854,9 @@ namespace Luo_Painter
                     {
                         this.ExpanderLightDismissOverlay.Hide();
 
+                        this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
                         ContentDialogResult result = await this.StretchDialog.ShowInstance();
+
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
@@ -1058,7 +1064,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
                                     break;
                                 }
 
@@ -1090,9 +1096,9 @@ namespace Luo_Painter
                                 this.SetCanvasState(true);
                                 break;
                             }
-                            else this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                            else this.Tip(TipType.NotBitmapLayer);
                         }
-                        else this.Tip("No Layer", "Create a new Layer?");
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.DisplacementLiquefaction:
@@ -1106,7 +1112,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
                                     break;
                                 }
 
@@ -1149,9 +1155,9 @@ namespace Luo_Painter
                                 this.SetCanvasState(true);
                                 break;
                             }
-                            else this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                            else this.Tip(TipType.NotBitmapLayer);
                         }
-                        else this.Tip("No Layer", "Create a new Layer?");
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.GradientMapping:
@@ -1165,7 +1171,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
                                     break;
                                 }
 
@@ -1178,9 +1184,9 @@ namespace Luo_Painter
                                 this.SetCanvasState(true);
                                 break;
                             }
-                            else this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                            else this.Tip(TipType.NotBitmapLayer);
                         }
-                        else this.Tip("No Layer", "Create a new Layer?");
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.RippleEffect:
@@ -1203,7 +1209,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
                                     break;
                                 }
 
@@ -1214,9 +1220,9 @@ namespace Luo_Painter
                                 this.SetCanvasState(true);
                                 break;
                             }
-                            else this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                            else this.Tip(TipType.NotBitmapLayer);
                         }
-                        else this.Tip("No Layer", "Create a new Layer?");
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.Gray:
@@ -1231,16 +1237,16 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
                                     break;
                                 }
 
                                 this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                                 break;
                             }
-                            else this.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
+                            else this.Tip(TipType.NotBitmapLayer);
                         }
-                        else this.Tip("No Layer", "Create a new Layer?");
+                        else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.GaussianBlur:

@@ -9,6 +9,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Luo_Painter.Layers;
 using Luo_Painter.Brushes;
+using Luo_Painter.Blends;
 
 namespace Luo_Painter
 {
@@ -22,21 +23,20 @@ namespace Luo_Painter
         {
         }
 
-        private void Marquee_Start(Vector2 position, Vector2 point)
+        private void Marquee_Start(Vector2 position)
         {
             this.MarqueeToolType = this.GetMarqueeToolType(this.OptionType);
             this.MarqueeTool.Start(position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
-        private void Marquee_Delta(Vector2 position, Vector2 point)
+        private void Marquee_Delta(Vector2 position)
         {
             this.MarqueeTool.Delta(this.StartingPosition, position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
-
-        private void Marquee_Complete(Vector2 position, Vector2 point)
+        private void Marquee_Complete(Vector2 position)
         {
             bool redraw = this.MarqueeTool.Complete(this.StartingPosition, position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
             if (redraw is false) return;
@@ -64,7 +64,7 @@ namespace Luo_Painter
 
             if (result is false)
             {
-                this.Tip("No Pixel", "The current Pixel is Transparent.");
+                this.Tip(TipType.NoPixel);
                 return false;
             }
 
@@ -75,7 +75,7 @@ namespace Luo_Painter
             switch (mode)
             {
                 case PixelBoundsMode.Transarent:
-                    this.Tip("No Pixel", "The Marquee is Transparent.");
+                    this.Tip(TipType.NoPixelForMarquee);
                     return false;
                 case PixelBoundsMode.Solid:
                     this.EditMenu.Execute(isSubtract ? OptionType.Deselect : OptionType.All);

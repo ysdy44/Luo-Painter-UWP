@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
@@ -78,7 +79,7 @@ namespace Luo_Painter
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip("No Layer", "Create a new Layer?");
+                this.Tip(TipType.NoLayer);
                 return;
             }
 

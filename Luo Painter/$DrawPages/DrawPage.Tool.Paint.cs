@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Brushes;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
@@ -17,12 +18,18 @@ namespace Luo_Painter
         int MixY = -1;
 
 
-        private void Paint_Start(Vector2 point, float pressure)
+        private void Paint_Start()
         {
+            if (this.LayerSelectedItem is null)
+            {
+                this.Tip(TipType.NoLayer);
+                return;
+            }
+
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip("No Layer", "Create a new Layer?");
+                this.Tip(TipType.NotBitmapLayer);
                 return;
             }
 
@@ -53,7 +60,7 @@ namespace Luo_Painter
             this.Pressure = pressure;
         }
 
-        private void Paint_Complete(Vector2 position, Vector2 point, float pressure)
+        private void Paint_Complete()
         {
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;

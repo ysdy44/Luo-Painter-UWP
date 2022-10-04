@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
@@ -85,7 +86,7 @@ namespace Luo_Painter
             {
                 this.AppBar.Rippler.Spread = Vector2.Distance(this.RipplerCenter, this.RipplerPoint) / 512 / 1.41421356f;
 
-                this.Tip("Spread", $"{this.AppBar.Rippler.Spread * 100:0.00}%"); // Tip
+                this.Tip(TipType.Spread);
             }
             else
             {

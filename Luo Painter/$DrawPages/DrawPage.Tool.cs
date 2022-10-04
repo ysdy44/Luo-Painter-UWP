@@ -50,7 +50,7 @@ namespace Luo_Painter
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
-                    this.Marquee_Start(position, point);
+                    this.Marquee_Start(position);
                     break;
 
                 case OptionType.SelectionBrush:
@@ -61,14 +61,14 @@ namespace Luo_Painter
                 case OptionType.PaintPencil:
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
-                    this.Paint_Start(point, pressure);
+                    this.Paint_Start();
                     break;
 
                 case OptionType.View:
                     this.View_Start(point);
                     break;
                 case OptionType.Brush:
-                    this.Brush_Start(position, point);
+                    this.Brush_Start(position);
                     break;
                 case OptionType.Transparency:
                     this.Transparency_Start(position, point);
@@ -121,12 +121,13 @@ namespace Luo_Painter
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
-                    this.Marquee_Delta(position, point);
+                    this.Marquee_Delta(position);
                     break;
 
                 case OptionType.SelectionBrush:
                     this.Marquee.Marquee(this.Position, position, 32, this.AppBar.SelectionIsSubtract);
                     this.Marquee.Hit(RectExtensions.GetRect(this.Position, position, 32));
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
 
                 case OptionType.PaintBrush:
@@ -191,7 +192,7 @@ namespace Luo_Painter
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
-                    this.Marquee_Complete(position, point);
+                    this.Marquee_Complete(position);
                     break;
 
                 case OptionType.SelectionFlood:
@@ -201,7 +202,7 @@ namespace Luo_Painter
                     }
                     else
                     {
-                        this.Tip("No Layer", "Create a new Layer?");
+                        this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.SelectionBrush:
@@ -210,6 +211,7 @@ namespace Luo_Painter
                         int removes = this.History.Push(this.Marquee.GetBitmapHistory());
                         this.Marquee.Flush();
                         this.Marquee.RenderThumbnail();
+                        this.CanvasControl.Invalidate(); // Invalidate
 
                         this.UndoButton.IsEnabled = this.History.CanUndo;
                         this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -222,14 +224,14 @@ namespace Luo_Painter
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
                     this.Paint_Delta(position, point, pressure);
-                    this.Paint_Complete(position, point, pressure);
+                    this.Paint_Complete();
                     break;
 
                 case OptionType.View:
                     this.View_Complete(point);
                     break;
                 case OptionType.Brush:
-                    this.Brush_Complete(position, point);
+                    this.Brush_Complete(position);
                     break;
                 case OptionType.Transparency:
                     this.Transparency_Complete(position, point);

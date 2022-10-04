@@ -379,7 +379,7 @@ namespace Luo_Painter
                 else
                     this.Transformer.ZoomOut(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), 1.05f);
 
-                this.Tip("Zoom", $"{this.Transformer.Scale * 100:0.00}%"); // Tip
+                this.Tip(TipType.Zoom);
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.CanvasControl.Invalidate(); // Invalidate
