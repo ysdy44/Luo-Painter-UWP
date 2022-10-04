@@ -612,6 +612,21 @@
                     <TextBlock>EllipticalGradient</TextBlock>
                 </ListBox>
             </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Pen">
+                <Grid Margin="32,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="PenComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
+                        <TextBlock>Curve</TextBlock>
+                        <TextBlock>Line</TextBlock>
+                    </ListBox>
+                    <Button x:Name="PenCloseButton" Grid.Column="1" Style="{StaticResource AppBorderButtonStyle}" >
+                        Close
+                    </Button>
+                </Grid>
+            </luo_painter:OptionCase>
         </luo_painter:OptionSwitchPresenter>
 
         <!--Thumb-->

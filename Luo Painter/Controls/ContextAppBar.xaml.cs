@@ -32,6 +32,7 @@ namespace Luo_Painter.Controls
         public event RangeBaseValueChangedEventHandler SizeValueChanged { add => this.SizeSlider.ValueChanged += value; remove => this.SizeSlider.ValueChanged -= value; }
         public event RangeBaseValueChangedEventHandler OpacityValueChanged { add => this.OpacitySlider.ValueChanged += value; remove => this.OpacitySlider.ValueChanged -= value; }
         public event RangeBaseValueChangedEventHandler CropCanvasValueChanged { add => this.CropCanvasSlider.ValueChanged += value; remove => this.CropCanvasSlider.ValueChanged -= value; }
+        public event RoutedEventHandler PenCloseButtonClick { add => this.PenCloseButton.Click += value; remove => this.PenCloseButton.Click -= value; }
 
         //@Converter
         private double SizeConverter(double value) => this.SizeRange.ConvertXToY(value);
@@ -75,6 +76,7 @@ namespace Luo_Painter.Controls
                 }
             }
         }
+        public bool PenIsSmooth => this.PenComboBox.SelectedIndex is 0;
 
         Point StartingPosition;
 
