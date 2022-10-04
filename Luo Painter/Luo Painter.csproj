@@ -186,6 +186,7 @@
     </Compile>
     <Compile Include="Elements.cs" />
     <Compile Include="FileUtils\FileUtil.Clipboard.cs" />
+    <Compile Include="FileUtils\FileUtil.Folder.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
     <Compile Include="Luo Painter.Menus\AddMenu.xaml.cs">

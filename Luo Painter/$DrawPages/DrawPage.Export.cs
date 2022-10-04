@@ -25,7 +25,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private async Task<IRandomAccessStream> CreateStreamAsync(StorageFolder storageFolder, string desiredName) => await (await storageFolder.CreateFileAsync(desiredName, CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite);
         private XElement Save(ILayer layer) => layer.Save(layer.Type);
         public async Task SaveAsync(string path, bool isGoBack)
         {
@@ -61,13 +60,13 @@ namespace Luo_Painter
             }
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream stream = await this.CreateStreamAsync(item, "Layers.xml"))
+            using (IRandomAccessStream stream = await item.CreateStreamAsync("Layers.xml"))
             {
                 docLayers.Save(stream.AsStream());
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream stream = await this.CreateStreamAsync(item, "Project.xml"))
+            using (IRandomAccessStream stream = await item.CreateStreamAsync("Project.xml"))
             {
                 docProject.Save(stream.AsStream());
             }
@@ -77,7 +76,7 @@ namespace Luo_Painter
             float scaleY = 256f / this.Transformer.Height;
             float scale = System.Math.Min(scaleX, scaleY);
 
-            using (IRandomAccessStream stream = await this.CreateStreamAsync(item, "Thumbnail.png"))
+            using (IRandomAccessStream stream = await item.CreateStreamAsync("Thumbnail.png"))
             using (ScaleEffect image = new ScaleEffect
             {
                 InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
