@@ -19,6 +19,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -26,6 +27,7 @@ namespace Luo_Painter
     {
 
         private XElement Save(ILayer layer) => layer.Save(layer.Type);
+        [MainPageToDrawPage(NavigationMode.Back)]
         public async Task SaveAsync(string path, bool isGoBack)
         {
             XDocument docLayers = new XDocument(new XElement("Root", this.ObservableCollection.Select(this.Save)));
@@ -45,14 +47,18 @@ namespace Luo_Painter
             }
 
             // 2. Save Bitmaps 
-            foreach (ILayer item2 in this.ObservableCollection)
+            foreach (ILayer layer in this.ObservableCollection)
             {
-                switch (item2.Type)
+                switch (layer.Type)
                 {
                     case LayerType.Bitmap:
-                        StorageFile file = await item.CreateFileAsync(item2.Id, CreationCollisionOption.ReplaceExisting);
-                        IBuffer buffer = ((BitmapLayer)item2).GetPixelBytes();
-                        await FileIO.WriteBufferAsync(file, buffer);
+                        if (layer is BitmapLayer bitmapLayer)
+                        {
+                            // Write Buffer
+                            StorageFile file = await item.CreateFileAsync(layer.Id, CreationCollisionOption.ReplaceExisting);
+                            IBuffer bytes = bitmapLayer.GetPixelBytes();
+                            await FileIO.WriteBufferAsync(file, bytes);
+                        }
                         break;
                     default:
                         break;

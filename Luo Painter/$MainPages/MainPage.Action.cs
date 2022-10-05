@@ -52,65 +52,14 @@ namespace Luo_Painter
                     {
                         if (project is null) break;
 
-                        StorageFolder item = await FileUtil.GetFolderFromPathAsync(project.Path);
-                        if (item is null)
+                        ProjectParameter parameter = await this.SaveAsync(project);
+                        if (parameter is null)
                         {
                             await new MessageDialog("Folder not found.").ShowAsync();
                             break;
                         }
 
-                        string docProject = null;
-                        string docLayers = null;
-                        IDictionary<string, IBuffer> bitmaps = new Dictionary<string, IBuffer>();
-
-                        foreach (StorageFile file in await item.GetFilesAsync())
-                        {
-                            string id = file.Name;
-                            if (string.IsNullOrEmpty(id)) continue;
-
-                            switch (id)
-                            {
-                                case "Thumbnail.png":
-                                    break;
-                                case "Project.xml":
-                                    docProject = file.Path;
-                                    break;
-                                case "Layers.xml":
-                                    docLayers = file.Path;
-                                    break;
-                                default:
-                                    bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
-                                    break;
-                            }
-                        }
-
-                        if (docProject is null)
-                        {
-                            await new MessageDialog("Project not found.").ShowAsync();
-                            break;
-                        }
-                        //@Debug
-                        // docLayers is Nullable 
-                        // if (docLayers is null) 
-                        // {
-                        //     await new MessageDialog("Layers not found.").ShowAsync();
-                        //     break;
-                        // }
-
-                        XDocument docProject2 = XDocument.Load(docProject);
-                        if (docProject2.Root.Element("Width") is XElement width2)
-                        {
-                            if (docProject2.Root.Element("Height") is XElement height2)
-                            {
-                                if (int.TryParse(width2.Value, out int width))
-                                {
-                                    if (int.TryParse(height2.Value, out int height))
-                                    {
-                                        base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(project.Path, project.Name, width, height, docProject, docLayers, bitmaps));
-                                    }
-                                }
-                            }
-                        }
+                        base.Frame.Navigate(typeof(DrawPage), parameter);
                     }
                     break;
                 case ProjectAction.Folder:
@@ -129,20 +78,12 @@ namespace Luo_Painter
                         {
                             case ContentDialogResult.Primary:
                                 BitmapSize size = this.SizePicker.Size;
-                                StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
 
-                                //@Debug
-                                // Save Project.xml
-                                using (IRandomAccessStream stream = await item.CreateStreamAsync("Project.xml"))
-                                {
-                                    new XDocument(new XElement("Root",
-                                        new XElement("Width", size.Width),
-                                        new XElement("Height", size.Height)
-                                        )).Save(stream.AsStream());
-                                }
+                                StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
+                                ProjectParameter parameter = await this.SaveAsync(item, size);
 
                                 this.ObservableCollection.Insert(item);
-                                base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item.Path, item.Name, size));
+                                base.Frame.Navigate(typeof(DrawPage), parameter);
                                 break;
                             default:
                                 break;
@@ -154,13 +95,16 @@ namespace Luo_Painter
                         StorageFile file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
                         if (file is null) break;
 
-                        ImageProperties prop = await file.Properties.GetImagePropertiesAsync();
-                        if (prop is null) break;
+                        using (StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView))
+                        using (IRandomAccessStream streamBitmap = await file.OpenAsync(FileAccessMode.ReadWrite))
+                        using (Microsoft.Graphics.Canvas.CanvasBitmap bitmap = await Microsoft.Graphics.Canvas.CanvasBitmap.LoadAsync(Microsoft.Graphics.Canvas.CanvasDevice.GetSharedDevice(), streamBitmap))
+                        {
+                            StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
+                            ProjectParameter parameter = await this.SaveAsync(item, bitmap, thumbnail);
 
-                        StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
-                        this.ObservableCollection.Insert(item);
-
-                        base.Frame.Navigate(typeof(DrawPage), new ProjectParameter(item.Path, item.Name, prop.Width, prop.Height, await FileIO.ReadBufferAsync(file)));
+                            this.ObservableCollection.Insert(item);
+                            base.Frame.Navigate(typeof(DrawPage), parameter);
+                        }
                     }
                     break;
 
