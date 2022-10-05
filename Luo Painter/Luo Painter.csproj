@@ -151,6 +151,7 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
     <Compile Include="%24MainPages\MainPage.Action.cs" />
     <Compile Include="%24MainPages\MainPage.Construct.cs" />
+    <Compile Include="%24MainPages\MainPage.Export.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
