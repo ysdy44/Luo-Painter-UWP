@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Xml.Linq;
 using Windows.UI;
 
 namespace Luo_Painter.Layers
@@ -12,6 +13,9 @@ namespace Luo_Painter.Layers
         internal readonly CanvasRenderTarget SourceRenderTarget;
         public ICanvasImage Source => this.SourceRenderTarget;
         public Color[] GetPixelColors(int left, int top, int width, int height) => this.SourceRenderTarget.GetPixelColors(left, top, width, height);
+
+        public bool StartingIsChecked { get; }
+        public bool IsChecked { get; set; }
 
         public Color Color { get; set; } = Colors.Black;
         public float StrokeWidth { get; set; } = 4;
@@ -23,10 +27,20 @@ namespace Luo_Painter.Layers
         public int Index = -1;
         public Anchor SelectedItem => (this.Index is -1) ? null : base[this.Index];
 
+        //@Construct
         public AnchorCollection(ICanvasResourceCreator resourceCreator, int width, int height)
         {
             //@DPI
             this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
+        }
+        public AnchorCollection(XElement item, ICanvasResourceCreator resourceCreator, int width, int height)
+        {
+            //@DPI
+            this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
+
+            this.Load(item); 
+            this.Segment(resourceCreator);
+            this.Invalidate();
         }
 
         public AnchorCollection Clone(ICanvasResourceCreator resourceCreator, int width, int height)
@@ -77,7 +91,7 @@ namespace Luo_Painter.Layers
 
         public void Dispose()
         {
-            this.Source.Dispose();
+            this.SourceRenderTarget.Dispose();
             foreach (Anchor item in this)
             {
                 item.Dispose();

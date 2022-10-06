@@ -80,10 +80,6 @@ namespace Luo_Painter.Layers
             float sw = this.Pressure * strokeWidth / 2;
             float swHalf = sw / 2;
 
-            // 1.Head
-            this.Strokes.Add(new Vector3(base.Point, sw));
-
-            // 2.Body
             for (float i = swHalf; i < this.ComputePathLength; i += swHalf)
             {
                 float pect = i / this.ComputePathLength;
@@ -93,13 +89,9 @@ namespace Luo_Painter.Layers
         }
         private void StrokeLine(Vector2 point, float pressure, float strokeWidth)
         {
-            // 1.Head
             float sw2 = System.Math.Max(0.4f, this.Pressure * strokeWidth / 2);
-
-            this.Strokes.Add(new Vector3(base.Point, sw2));
             float i = sw2 / 2;
 
-            // 2.Body
             do
             {
                 float pect = i / this.ComputePathLength;
@@ -115,10 +107,6 @@ namespace Luo_Painter.Layers
             float sw = this.Pressure * strokeWidth / 2;
             float swHalf = sw / 2;
 
-            // 1.Head
-            this.Strokes.Add(new Vector3(base.Point, sw));
-
-            // 2.Body
             for (float i = swHalf; i < this.ComputePathLength; i += swHalf)
             {
                 this.Strokes.Add(new Vector3(this.Geometry.ComputePointOnPath(i), sw));
@@ -126,13 +114,9 @@ namespace Luo_Painter.Layers
         }
         private void StrokeCubicBezier(float pressure, float strokeWidth)
         {
-            // 1.Head
             float sw2 = System.Math.Max(0.4f, this.Pressure * strokeWidth / 2);
-
-            this.Strokes.Add(new Vector3(base.Point, sw2));
             float i = sw2 / 2;
 
-            // 2.Body
             do
             {
                 float pect = i / this.ComputePathLength;

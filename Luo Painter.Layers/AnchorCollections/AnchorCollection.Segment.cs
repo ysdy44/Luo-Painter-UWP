@@ -23,6 +23,8 @@ namespace Luo_Painter.Layers
                 ds.Clear(Colors.Transparent);
                 foreach (Anchor anchor in this)
                 {
+                    ds.FillCircle(anchor.Point, anchor.Pressure * this.StrokeWidth / 2, this.Color);
+
                     foreach (Vector3 item in anchor.Strokes)
                     {
                         ds.FillCircle(item.X, item.Y, item.Z, this.Color);
@@ -117,7 +119,7 @@ namespace Luo_Painter.Layers
                             if (first.IsSmooth is false && begin.IsSmooth is false)
                             {
                                 first.SegmentLine();
-                                begin.AddLine(resourceCreator, first.Point, this.StrokeWidth);
+                                begin.AddLine(resourceCreator, first, this.StrokeWidth);
                             }
                             else
                             {
@@ -136,7 +138,7 @@ namespace Luo_Painter.Layers
                                 if (current.IsSmooth is false && previous.IsSmooth is false)
                                 {
                                     current.SegmentLine();
-                                    previous.AddLine(resourceCreator, current.Point, this.StrokeWidth);
+                                    previous.AddLine(resourceCreator, current, this.StrokeWidth);
                                 }
                                 else
                                 {
@@ -155,7 +157,7 @@ namespace Luo_Painter.Layers
                         if (end.IsSmooth is false && last.IsSmooth is false)
                         {
                             end.SegmentLine();
-                            last.AddLine(resourceCreator, end.Point, this.StrokeWidth);
+                            last.AddLine(resourceCreator, end, this.StrokeWidth);
                         }
                         else
                         {

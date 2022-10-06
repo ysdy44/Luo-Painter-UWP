@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="AnchorCollections\AnchorCollection.CacheTransform.cs" />
     <Compile Include="AnchorCollections\AnchorCollection.cs" />
+    <Compile Include="AnchorCollections\AnchorCollection.Export.cs" />
     <Compile Include="AnchorCollections\AnchorCollection.Segment.cs" />
     <Compile Include="Anchors\Anchor.Builder.cs" />
     <Compile Include="Anchors\Anchor.cs" />
