@@ -109,8 +109,8 @@ namespace Luo_Painter.Layers.Models
             this.RenderThumbnail();
         }
 
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(null, resourceCreator, bytes, width, height) { }
-        public BitmapLayer(string id, ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(id, resourceCreator, width, height)
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(null, null, resourceCreator, bytes, width, height) { }
+        public BitmapLayer(string id, XElement element, ICanvasResourceCreator resourceCreator, IBuffer bytes, int width, int height) : this(id, element, resourceCreator, width, height)
         {
             this.OriginRenderTarget.SetPixelBytes(bytes);
             this.SourceRenderTarget.SetPixelBytes(bytes);
@@ -118,8 +118,8 @@ namespace Luo_Painter.Layers.Models
             this.RenderThumbnail();
         }
 
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height) : this(null, resourceCreator, width, height) { }
-        public BitmapLayer(string id, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, resourceCreator, width, height)
+        public BitmapLayer(ICanvasResourceCreator resourceCreator, int width, int height) : this(null, null, resourceCreator, width, height) { }
+        public BitmapLayer(string id, XElement element, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, element, resourceCreator, width, height)
         {
             //@DPI
             this.OriginRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
@@ -162,6 +162,8 @@ namespace Luo_Painter.Layers.Models
             this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
 
+        public XElement Save() => base.Save(this.Type);
+
 
         public void RenderThumbnail() => base.RenderThumbnail(this.SourceRenderTarget);
 
@@ -180,5 +182,15 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+     
+            this.OriginRenderTarget.Dispose();
+            this.SourceRenderTarget.Dispose();
+            this.TempRenderTarget.Dispose();
+
+            this.Interpolation.Dispose();
+        }
     }
 }

@@ -22,17 +22,47 @@ namespace Luo_Painter.Layers.Models
 
 
         //@Construct
-        public CurveLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(null, resourceCreator, width, height)
+        public CurveLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(null, null, resourceCreator, width, height)
         {
             //@DPI
             this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.Anchorss = new List<AnchorCollection>();
         }
-        private CurveLayer(ICanvasResourceCreator resourceCreator, IEnumerable<AnchorCollection> anchors, int width, int height) : base(null, resourceCreator, width, height)
+        private CurveLayer(ICanvasResourceCreator resourceCreator, IEnumerable<AnchorCollection> anchors, int width, int height) : base(null, null, resourceCreator, width, height)
         {
             //@DPI
             this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.Anchorss = new List<AnchorCollection>(anchors);
+            this.Invalidate();
+        }
+        public CurveLayer(string id, XElement element, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, element, resourceCreator, width, height)
+        {
+            //@DPI
+            this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
+
+            if (element is null is false)
+            {
+                if (element.Element("Data") is XElement data)
+                {
+                    this.Anchorss = new List<AnchorCollection>
+                    (
+                        from item
+                        in data.Elements("AnchorCollection") 
+                        select new AnchorCollection(item, resourceCreator, width, height)
+                    );
+                    this.Invalidate();
+                    return;
+                }
+            }
+
+            this.Anchorss = new List<AnchorCollection>();
+        }
+
+        public XElement Save()
+        {
+            XElement element = base.Save(this.Type);
+            element.Add(new XElement("Data", this.Anchorss.Select(c => c.Save())));
+            return element;
         }
 
 
@@ -116,5 +146,15 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            this.SourceRenderTarget.Dispose();
+            foreach (AnchorCollection item in this.Anchorss)
+            {
+                item.Dispose();
+            }
+        }
     }
 }

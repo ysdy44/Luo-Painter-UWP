@@ -113,9 +113,9 @@ namespace Luo_Painter
                     // 2. Load Layers.xml
                     // Layers
                     XDocument docLayers = XDocument.Load(item.DocLayers);
-                    foreach (XElement item2 in docLayers.Root.Elements("Layer"))
+                    foreach (XElement layer in docLayers.Root.Elements("Layer"))
                     {
-                        if (item2.Attribute("Id") is XAttribute id2 && item2.Attribute("Type") is XAttribute type2)
+                        if (layer.Attribute("Id") is XAttribute id2 && layer.Attribute("Type") is XAttribute type2)
                         {
                             string id = id2.Value;
                             if (string.IsNullOrEmpty(id)) continue;
@@ -126,15 +126,16 @@ namespace Luo_Painter
                             switch (type)
                             {
                                 case "Bitmap":
-                                    BitmapLayer bitmapLayer3 =
-                                        item.Bitmaps.ContainsKey(id) ?
-                                        new BitmapLayer(id, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height) :
-                                        new BitmapLayer(id, this.CanvasDevice, item.Width, item.Height);
-                                    bitmapLayer3.Load(item2);
+                                    if (item.Bitmaps.ContainsKey(id))
+                                        _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height);
+                                    else
+                                        _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
                                     break;
                                 case "Group":
-                                    GroupLayer groupLayer = new GroupLayer(id, this.CanvasDevice, item.Width, item.Height);
-                                    groupLayer.Load(item2);
+                                    _ = new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                    break;
+                                case "Curve":
+                                    _ = new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
                                     break;
                                 default:
                                     break;

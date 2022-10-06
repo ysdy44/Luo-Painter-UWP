@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
+using System.Xml.Linq;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 
@@ -10,15 +11,15 @@ namespace Luo_Painter.Layers.Models
     {
 
         public LayerType Type => LayerType.Group;
-
         public ICanvasImage this[BitmapType type] => null;
 
 
         //@Construct
-        public GroupLayer(ICanvasResourceCreator resourceCreator, int width, int height) : this(null, resourceCreator, width, height) { }
-        public GroupLayer(string id, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, resourceCreator, width, height)
-        {
-        }
+        public GroupLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(null, null, resourceCreator, width, height) { }
+        public GroupLayer(string id, XElement element, ICanvasResourceCreator resourceCreator, int width, int height) : base(id, element, resourceCreator, width, height) { }
+
+        public XElement Save() => base.Save(this.Type);
+
 
         public ICanvasImage Render(ICanvasImage background) => base.Children.Render(background);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Children.Render(background, matrix, interpolationMode);
@@ -45,6 +46,7 @@ namespace Luo_Painter.Layers.Models
             }
             return false;
         }
+
 
         protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
 

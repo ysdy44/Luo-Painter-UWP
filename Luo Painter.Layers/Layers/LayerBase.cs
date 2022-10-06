@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
-using Windows.UI.Xaml;
+using System.Xml.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IRender
+    public abstract partial class LayerBase : IRender, IDisposable
     {
 
         public float ConvertValueToOne(float value) => value / Math.Max(this.Width, this.Height);
@@ -28,7 +28,7 @@ namespace Luo_Painter.Layers
         public readonly int Width; // 250
         public readonly int Height; // 250
 
-        public LayerBase(string id, ICanvasResourceCreator resourceCreator, int width, int height)
+        public LayerBase(string id, XElement element, ICanvasResourceCreator resourceCreator, int width, int height)
         {
             if (id is null)
             {
@@ -37,6 +37,12 @@ namespace Luo_Painter.Layers
 
             this.Id = id;
             LayerDictionary.Instance.Push(id, this as ILayer);
+
+            if (element is null is false)
+            {
+                this.Load(element);
+            }
+
 
             this.Center = new Vector2((float)width / 2, (float)height / 2);
             this.Width = width;
@@ -56,6 +62,10 @@ namespace Luo_Painter.Layers
             }
         }
 
+        public virtual void Dispose()
+        {
+            this.ThumbnailRenderTarget.Dispose();
+        }
 
         //@Notify 
         /// <summary> Multicast event for property change notifications. </summary>
