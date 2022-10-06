@@ -160,6 +160,7 @@
     <Compile Include="Models\BitmapLayer.Region.cs" />
     <Compile Include="Models\BitmapLayer.PixelBounds.cs" />
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
+    <Compile Include="Models\BitmapLayer.Render.cs" />
     <Compile Include="Models\BitmapLayer.Setup.cs" />
     <Compile Include="Models\CurveLayer.Anchor.cs" />
     <Compile Include="Models\CurveLayer.cs" />
