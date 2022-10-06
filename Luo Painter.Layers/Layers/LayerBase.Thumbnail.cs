@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.IO;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -16,7 +17,7 @@ namespace Luo_Painter.Layers
         Oversize,
     }
 
-    public abstract partial class LayerBase : IRender
+    public abstract partial class LayerBase : IRender, IDisposable
     {
 
         public ImageSource Thumbnail => this.ThumbnailWriteableBitmap;

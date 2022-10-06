@@ -26,11 +26,13 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private XElement Save(ILayer layer) => layer.Save(layer.Type);
         [MainPageToDrawPage(NavigationMode.Back)]
         public async Task SaveAsync(string path, bool isGoBack)
         {
-            XDocument docLayers = new XDocument(new XElement("Root", this.ObservableCollection.Select(this.Save)));
+            XDocument docLayers = new XDocument(new XElement("Root",
+                from l
+                in this.ObservableCollection
+                select l.Save())); 
             XDocument docProject = new XDocument(new XElement("Root",
                 new XElement("Width", this.Transformer.Width),
                 new XElement("Height", this.Transformer.Height),

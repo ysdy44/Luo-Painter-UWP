@@ -1,9 +1,10 @@
 ﻿using Luo_Painter.Historys;
+using System;
 using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public sealed class LayerDictionary : Dictionary<string, ILayer>
+    public sealed class LayerDictionary : Dictionary<string, ILayer>, IDisposable
     {
         //@Static
         public static readonly LayerDictionary Instance = new LayerDictionary();
@@ -38,5 +39,12 @@ namespace Luo_Painter.Layers
             return layer;
         }
 
+        public void Dispose()
+        {
+            foreach (KeyValuePair<string, ILayer> item in this)
+            {
+                item.Value.Dispose();
+            }
+        }
     }
 }

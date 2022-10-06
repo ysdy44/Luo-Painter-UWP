@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IRender
+    public abstract partial class LayerBase : IRender, IDisposable
     {
 
         public virtual bool History(HistoryType type, object parameter)

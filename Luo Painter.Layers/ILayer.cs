@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Historys;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
@@ -10,7 +11,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Layers
 {
-    public interface ILayer : ILayerRender, IRender, IDrag, ISetup, INotifyPropertyChanged, ICommand
+    public interface ILayer : ILayerRender, IRender, IDrag, ISetup, INotifyPropertyChanged, ICommand, IDisposable
     {
         string Id { get; }
         LayerNodes Children { get; }
@@ -20,8 +21,7 @@ namespace Luo_Painter.Layers
         ICanvasImage this[BitmapType type] { get; }
         ImageSource Thumbnail { get; }
 
-        XElement Save(object type);
-        void Load(XElement element);
+        XElement Save();
 
         bool History(HistoryType type, object parameter);
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
@@ -15,7 +16,7 @@ namespace Luo_Painter.Layers
         Transparent,
     }
 
-    public abstract partial class LayerBase : IRender
+    public abstract partial class LayerBase : IRender, IDisposable
     {
 
         public string Name

@@ -1,10 +1,11 @@
 ﻿using Microsoft.Graphics.Canvas;
+using System;
 using System.Numerics;
 using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IRender
+    public abstract partial class LayerBase : IRender, IDisposable
     {
 
         protected abstract ILayer CloneSelf(ICanvasResourceCreator resourceCreator);

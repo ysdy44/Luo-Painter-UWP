@@ -5,10 +5,10 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IRender
+    public abstract partial class LayerBase : IRender, IDisposable
     {
 
-        public XElement Save(object type) => new XElement("Layer",
+        protected XElement Save(object type) => new XElement("Layer",
                 new XAttribute("Id", this.Id),
                 new XAttribute("Type", type),
                 new XAttribute("Name", this.Name is null ? string.Empty : this.Name),
@@ -17,7 +17,7 @@ namespace Luo_Painter.Layers
                 new XAttribute("Visibility", this.Visibility),
                 new XAttribute("IsExpand", this.IsExpand));
 
-        public void Load(XElement element)
+        private void Load(XElement element)
         {
             if (element.Attribute("Name") is XAttribute name) this.name = name.Value;
             if (element.Attribute("Opacity") is XAttribute opacity) this.opacity = (float)opacity;
