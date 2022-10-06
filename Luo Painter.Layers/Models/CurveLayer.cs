@@ -1,9 +1,11 @@
 ﻿using FanKit.Transformers;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Xml.Linq;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 
@@ -18,23 +20,8 @@ namespace Luo_Painter.Layers.Models
         public LayerType Type => LayerType.Curve;
         public ICanvasImage this[BitmapType type] => this.Source;
 
-        public IList<AnchorCollection> Anchorss;
 
-        public int Index = -1;
-        public AnchorCollection SelectedItem => (this.Index is -1) ? null : this.Anchorss[this.Index];
-        public void RemoveSelectedItem()
-        {
-            this.Anchorss.RemoveAt(this.Index);
-            this.Index = System.Math.Clamp(this.Index - 1, -1, this.Anchorss.Count);
-        }
-        public void BoxChoose(TransformerRect boxRect)
-        {
-            foreach (AnchorCollection item in this.Anchorss)
-            {
-                item.BoxChoose(boxRect);
-            }
-        }
-
+        //@Construct
         public CurveLayer(ICanvasResourceCreator resourceCreator, int width, int height) : base(null, resourceCreator, width, height)
         {
             //@DPI
@@ -46,22 +33,6 @@ namespace Luo_Painter.Layers.Models
             //@DPI
             this.SourceRenderTarget = new CanvasRenderTarget(resourceCreator, width, height, 96);
             this.Anchorss = new List<AnchorCollection>(anchors);
-        }
-
-
-        public void Invalidate()
-        {
-            using (CanvasDrawingSession ds = this.SourceRenderTarget.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                ds.Clear(Colors.Transparent);
-                foreach (AnchorCollection anchors in this.Anchorss)
-                {
-                    ds.DrawImage(anchors.Source);
-                }
-            }
         }
 
 
