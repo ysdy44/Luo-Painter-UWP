@@ -1,16 +1,24 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.Historys.Models;
+using Luo_Painter.Historys;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Projects;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System.Collections.Generic;
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
+using System.Linq;
+using System.Reflection.Metadata;
+using Windows.UI.Popups;
 
 namespace Luo_Painter
 {
@@ -90,82 +98,112 @@ namespace Luo_Painter
             this.DottedLineTransformShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
         }
 
-
-        public void Navigated(ProjectParameter item)
+        public async void AddAsync(IEnumerable<IStorageFile> items)
         {
-            switch (item.Type)
+            if (items is null) return;
+            if (items.Count() is 0) return;
+
+            Layerage[] undo = this.Nodes.Convert();
+
+            int count = 0;
+            int index = this.LayerSelectedIndex;
+            if (index > 0 && this.LayerSelectedItem is ILayer neighbor)
             {
-                case StorageItemTypes.None:
-                    BitmapLayer bitmapLayer1 = new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
-                    this.Nodes.Add(bitmapLayer1);
-                    this.ObservableCollection.Add(bitmapLayer1);
+                ILayer parent = this.ObservableCollection.GetParent(neighbor);
+                if (parent is null)
+                {
+                    int indexChild = this.Nodes.IndexOf(neighbor);
 
-                    this.LayerSelectedIndex = 0;
-                    break;
-                case StorageItemTypes.File:
-                    BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, item.Bitmap, item.Width, item.Height);
-                    this.Nodes.Add(bitmapLayer2);
-                    this.ObservableCollection.Add(bitmapLayer2);
-
-                    this.LayerSelectedIndex = 0;
-                    break;
-                case StorageItemTypes.Folder:
-                    // 2. Load Layers.xml
-                    // Layers
-                    XDocument docLayers = XDocument.Load(item.DocLayers);
-                    foreach (XElement layer in docLayers.Root.Elements("Layer"))
+                    foreach (IStorageFile item in items)
                     {
-                        if (layer.Attribute("Id") is XAttribute id2 && layer.Attribute("Type") is XAttribute type2)
+                        using (CanvasBitmap bitmap = await this.CreateBitmap(item))
                         {
-                            string id = id2.Value;
-                            if (string.IsNullOrEmpty(id)) continue;
-
-                            string type = type2.Value;
-                            if (string.IsNullOrEmpty(id)) continue;
-
-                            switch (type)
+                            if (bitmap is null)
                             {
-                                case "Bitmap":
-                                    if (item.Bitmaps.ContainsKey(id))
-                                        _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height);
-                                    else
-                                        _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
-                                    break;
-                                case "Group":
-                                    _ = new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
-                                    break;
-                                case "Curve":
-                                    _ = new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
-                                    break;
-                                default:
-                                    break;
+                                await new MessageDialog(item.Path, "File not found.").ShowAsync();
+                                continue;
                             }
+
+                            BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+
+                            this.Nodes.Insert(indexChild, add);
+                            this.ObservableCollection.InsertChild(index, add);
+                            count++;
                         }
                     }
+                }
+                else
+                {
+                    int indexChild = parent.Children.IndexOf(neighbor);
 
-
-                    // 2. Load Project.xml
-                    // Nodes 
-                    XDocument docProject = XDocument.Load(item.DocProject);
-                    if (docProject.Root.Element("Layerages") is XElement layerages)
+                    foreach (IStorageFile item in items)
                     {
-                        this.Nodes.Load(layerages);
-                    }
+                        using (CanvasBitmap bitmap = await this.CreateBitmap(item))
+                        {
+                            if (bitmap is null)
+                            {
+                                await new MessageDialog(item.Path, "File not found.").ShowAsync();
+                                continue;
+                            }
 
-                    // 4. UI
-                    foreach (ILayer item2 in this.Nodes)
+                            BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+
+                            parent.Children.Insert(indexChild, add);
+                            this.ObservableCollection.InsertChild(index, add);
+                            count++;
+                        }
+                    }
+                }
+
+                this.LayerSelectedIndex = index;
+            }
+            else
+            {
+                foreach (IStorageFile item in items)
+                {
+                    using (CanvasBitmap bitmap = await this.CreateBitmap(item))
                     {
-                        item2.Arrange(0);
-                        this.ObservableCollection.AddChild(item2);
-                    }
+                        if (bitmap is null)
+                        {
+                            await new MessageDialog(item.Path, "File not found.").ShowAsync();
+                            continue;
+                        }
 
-                    if (docProject.Root.Element("Index") is XElement index)
-                        this.LayerSelectedIndex = (int)index;
-                    else if (this.ObservableCollection.Count > 0)
-                        this.LayerSelectedIndex = 0;
-                    break;
-                default:
-                    break;
+                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+
+                        this.Nodes.Insert(0, add);
+                        this.ObservableCollection.InsertChild(0, add);
+                        count++;
+                    }
+                }
+
+                this.LayerSelectedIndex = 0;
+            }
+
+            /// History
+            Layerage[] redo = this.Nodes.Convert();
+            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.RedoButton.IsEnabled = this.History.CanRedo;
+        }
+
+        private async Task<CanvasBitmap> CreateBitmap(IRandomAccessStreamReference item)
+        {
+            if (item is null) return null;
+
+            try
+            {
+                using (IRandomAccessStreamWithContentType stream = await item.OpenReadAsync())
+                {
+                    return await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

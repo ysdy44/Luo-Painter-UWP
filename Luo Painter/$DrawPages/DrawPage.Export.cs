@@ -3,6 +3,7 @@ using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Projects;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Foundation;
@@ -32,7 +34,7 @@ namespace Luo_Painter
             XDocument docLayers = new XDocument(new XElement("Root",
                 from l
                 in this.ObservableCollection
-                select l.Save())); 
+                select l.Save()));
             XDocument docProject = new XDocument(new XElement("Root",
                 new XElement("Width", this.Transformer.Width),
                 new XElement("Height", this.Transformer.Height),
@@ -115,95 +117,85 @@ namespace Luo_Painter
             }
         }
 
-
-        public async void AddAsync(IEnumerable<IStorageFile> items)
+        public void Load(ProjectParameter item)
         {
-            if (items is null) return;
-            if (items.Count() is 0) return;
-
-            Layerage[] undo = this.Nodes.Convert();
-
-            int count = 0;
-            int index = this.LayerSelectedIndex;
-            if (index > 0 && this.LayerSelectedItem is ILayer neighbor)
+            switch (item.Type)
             {
-                ILayer parent = this.ObservableCollection.GetParent(neighbor);
-                if (parent is null)
-                {
-                    int indexChild = this.Nodes.IndexOf(neighbor);
+                case StorageItemTypes.None:
+                    BitmapLayer bitmapLayer1 = new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
+                    this.Nodes.Add(bitmapLayer1);
+                    this.ObservableCollection.Add(bitmapLayer1);
 
-                    foreach (IRandomAccessStreamReference item in items)
+                    this.LayerSelectedIndex = 0;
+                    break;
+                case StorageItemTypes.File:
+                    BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, item.Bitmap, item.Width, item.Height);
+                    this.Nodes.Add(bitmapLayer2);
+                    this.ObservableCollection.Add(bitmapLayer2);
+
+                    this.LayerSelectedIndex = 0;
+                    break;
+                case StorageItemTypes.Folder:
+                    if (string.IsNullOrEmpty(item.DocProject)) break;
+
+                    // 2. Load Layers.xml
+                    // Layers
+                    if (string.IsNullOrEmpty(item.DocLayers) is false)
                     {
-                        CanvasBitmap bitmap = await this.CreateBitmap(item);
-                        if (bitmap is null) continue;
+                        XDocument docLayers = XDocument.Load(item.DocLayers);
+                        foreach (XElement layer in docLayers.Root.Elements("Layer"))
+                        {
+                            if (layer.Attribute("Id") is XAttribute id2 && layer.Attribute("Type") is XAttribute type2)
+                            {
+                                string id = id2.Value;
+                                if (string.IsNullOrEmpty(id)) continue;
 
-                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
+                                string type = type2.Value;
+                                if (string.IsNullOrEmpty(id)) continue;
 
-                        this.Nodes.Insert(indexChild, add);
-                        this.ObservableCollection.InsertChild(index, add);
-                        count++;
+                                switch (type)
+                                {
+                                    case "Bitmap":
+                                        if (item.Bitmaps.ContainsKey(id))
+                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height);
+                                        else
+                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                        break;
+                                    case "Group":
+                                        _ = new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                        break;
+                                    case "Curve":
+                                        _ = new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    int indexChild = parent.Children.IndexOf(neighbor);
 
-                    foreach (IRandomAccessStreamReference item in items)
+                    // 2. Load Project.xml
+                    // Nodes 
+                    XDocument docProject = XDocument.Load(item.DocProject);
+                    if (docProject.Root.Element("Layerages") is XElement layerages)
                     {
-                        CanvasBitmap bitmap = await this.CreateBitmap(item);
-                        if (bitmap is null) continue;
-
-                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-
-                        parent.Children.Insert(indexChild, add);
-                        this.ObservableCollection.InsertChild(index, add);
-                        count++;
+                        this.Nodes.Load(layerages);
                     }
-                }
 
-                this.LayerSelectedIndex = index;
-            }
-            else
-            {
-                foreach (IRandomAccessStreamReference item in items)
-                {
-                    CanvasBitmap bitmap = await this.CreateBitmap(item);
-                    if (bitmap is null) continue;
+                    // 4. UI
+                    foreach (ILayer item2 in this.Nodes)
+                    {
+                        item2.Arrange(0);
+                        this.ObservableCollection.AddChild(item2);
+                    }
 
-                    BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-
-                    this.Nodes.Insert(0, add);
-                    this.ObservableCollection.InsertChild(0, add);
-                    count++;
-                }
-
-                this.LayerSelectedIndex = 0;
-            }
-
-            /// History
-            Layerage[] redo = this.Nodes.Convert();
-            int removes = this.History.Push(new ArrangeHistory(undo, redo));
-
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
-        }
-
-        private async Task<CanvasBitmap> CreateBitmap(IRandomAccessStreamReference item)
-        {
-            if (item is null) return null;
-
-            try
-            {
-                using (IRandomAccessStreamWithContentType stream = await item.OpenReadAsync())
-                {
-                    return await CanvasBitmap.LoadAsync(this.CanvasDevice, stream);
-                }
-            }
-            catch (Exception)
-            {
-                return null;
+                    if (docProject.Root.Element("Index") is XElement index)
+                        this.LayerSelectedIndex = (int)index;
+                    else if (this.ObservableCollection.Count > 0)
+                        this.LayerSelectedIndex = 0;
+                    break;
+                default:
+                    break;
             }
         }
 

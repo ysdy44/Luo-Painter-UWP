@@ -275,7 +275,7 @@ namespace Luo_Painter
                         this.ApplicationView.Title = item.Name;
                         this.ApplicationView.PersistedStateId = item.Path;
 
-                        this.Navigated(item);
+                        this.Load(item);
 
                         if (this.CanvasVirtualControl.ReadyToDraw)
                         {
