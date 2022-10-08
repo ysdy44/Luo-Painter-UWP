@@ -14,26 +14,16 @@ namespace Luo_Painter
         int MixX = -1;
         int MixY = -1;
 
-        //@Task
-        readonly object Locker = new object();
-
         private void Paint_Start()
         {
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
+
         private void Paint_Delta()
         {
             if (this.InkType == default) return;
-
-            float length = Vector2.Distance(this.StartingPosition, this.Position);
-
-            float sizePressure = System.Math.Max(1, this.InkPresenter.Size * this.Pressure);
-            float distance = this.InkPresenter.Spacing * sizePressure; // distance is spacingSizePressure
-
-            if (distance > length) return;
-            if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
             Stroke stroke = new Stroke
             {
@@ -44,17 +34,20 @@ namespace Luo_Painter
             };
 
             //@Task
-            Task.Run(() =>
-            {
-                lock (this.Locker) /// Locker for <see cref="CanvasDrawingSession"/>
-                {
-                    if (this.Paint(stroke) is false) return;
-                    this.CanvasControl.Invalidate(); // Invalidate
-                }
-            });
+            Task.Run(() => this.Paint_DeltaAsync(stroke));
 
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
+        }
+        private void Paint_DeltaAsync(Stroke stroke)
+        {
+            lock (this.Locker)
+            {
+                if (this.Paint(stroke) is false) return;
+                if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            }
         }
 
         private void Paint_Complete()
@@ -63,19 +56,20 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
 
             //@Task
-            Task.Run(() =>
+            Task.Run(this.Paint_CompleteAsync);
+        }
+        private void Paint_CompleteAsync()
+        {
+            lock (this.Locker)
             {
-                lock (this.Locker) /// Locker for <see cref="CanvasDrawingSession"/>
-                {
-                    if (this.Paint() is false) return;
-                    this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+                this.Paint();
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
-                    // History
-                    this.BitmapLayer.Flush();
+                // History
+                this.BitmapLayer.Flush();
 
-                    this.CanvasControl.Invalidate(); // Invalidate
-                }
-            });
+                this.CanvasControl.Invalidate(); // Invalidate
+            }
         }
 
 

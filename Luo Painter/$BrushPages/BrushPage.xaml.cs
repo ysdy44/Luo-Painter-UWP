@@ -45,6 +45,12 @@ namespace Luo_Painter
         InkMixer InkMixer { get; set; } = new InkMixer();
         InkPresenter InkPresenter => this.InkParameter.InkPresenter;
 
+        //@Task
+        readonly object InkLocker = new object();
+        CanvasRenderTarget InkRender { get; set; }
+
+        //@Task
+        readonly object Locker = new object();
         BitmapLayer BitmapLayer { get; set; }
 
         InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
@@ -158,14 +164,24 @@ namespace Luo_Painter
             };
             this.ClearButton.Click += (s, e) =>
             {
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                //@Task
+                if (System.Threading.Monitor.TryEnter(this.Locker))
+                {
+                    this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+                    this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
+                    this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
 
-                this.CanvasControl.Invalidate();
+                    this.CanvasControl.Invalidate();
+
+                    System.Threading.Monitor.Exit(this.Locker);
+                }
             };
             this.ImageButton.Click += async (s, e) =>
             {
+                //@Task
+                if (System.Threading.Monitor.TryEnter(this.Locker)) System.Threading.Monitor.Exit(this.Locker);
+                else return;
+
                 IRandomAccessStreamReference file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
                 if (file is null) return;
 
@@ -174,12 +190,15 @@ namespace Luo_Painter
                     using (IRandomAccessStreamWithContentType stream = await file.OpenReadAsync())
                     {
                         CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
-                        this.BitmapLayer.Draw(bitmap);
+                        lock (this.Locker)
+                        {
+                            this.BitmapLayer.Draw(bitmap);
 
-                        // History
-                        this.BitmapLayer.Flush();
+                            // History
+                            this.BitmapLayer.Flush();
 
-                        this.CanvasControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
+                        }
                     }
                 }
                 catch (Exception)
@@ -193,16 +212,26 @@ namespace Luo_Painter
             base.AllowDrop = true;
             base.Drop += async (s, e) =>
             {
-                if (e.DataView.Contains(StandardDataFormats.StorageItems))
+                //@Task
+                if (System.Threading.Monitor.TryEnter(this.Locker)) System.Threading.Monitor.Exit(this.Locker);
+                else return;
+
+                if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
+
+                foreach (IStorageItem item in await e.DataView.GetStorageItemsAsync())
                 {
-                    foreach (IStorageItem item in await e.DataView.GetStorageItemsAsync())
+                    if (item is StorageFile file)
                     {
-                        if (item is StorageFile file)
+                        using (IRandomAccessStreamWithContentType stream = await file.OpenReadAsync())
                         {
-                            using (IRandomAccessStreamWithContentType stream = await file.OpenReadAsync())
+                            CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
+                            lock (this.Locker)
                             {
-                                CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
                                 this.BitmapLayer.Draw(bitmap);
+
+                                // History
+                                this.BitmapLayer.Flush();
+
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 return;
                             }
@@ -268,9 +297,12 @@ namespace Luo_Painter
         {
             e.Handled = true;
 
-            if (base.Frame.CanGoBack)
+            lock (this.Locker)
             {
-                base.Frame.GoBack();
+                if (base.Frame.CanGoBack)
+                {
+                    base.Frame.GoBack();
+                }
             }
         }
 
