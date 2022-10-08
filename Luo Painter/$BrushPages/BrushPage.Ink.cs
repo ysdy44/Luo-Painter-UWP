@@ -15,7 +15,9 @@ namespace Luo_Painter
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
         private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
+  
         private bool BooleanConverter(bool? value) => value is true;
+        private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
 
         private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
         private Visibility Int056ToVisibility(InkType value)

@@ -87,8 +87,8 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
-        
+
+
         <SplitView.Pane>
             <Grid>
                 <Grid.RowDefinitions>
@@ -142,7 +142,8 @@
                             Width="320"                
                             Height="120"               
                             UseSharedDevice="True"                 
-                            CustomDevice="{x:Bind CanvasDevice}"               
+                            CustomDevice="{x:Bind CanvasDevice}"          
+                            Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}"
                             />
 
 
@@ -154,9 +155,6 @@
                                     x:Name="SizeSlider"
                                     SmallChange="1000" 
                                     StepFrequency="1000" 
-                                    Value="{x:Bind SizeRange.XRange.Default}" 
-                                    Minimum="{x:Bind SizeRange.XRange.Minimum}" 
-                                    Maximum="{x:Bind SizeRange.XRange.Maximum}" 
                                     Foreground="{ThemeResource SystemColorControlAccentBrush}"
                                     Style="{StaticResource AppSliderStyle}" 
                                     >
@@ -185,9 +183,6 @@
                                 <!--Opacity-->
                                 <Slider 
                                     x:Name="OpacitySlider" 
-                                    Value="100" 
-                                    Minimum="0"
-                                    Maximum="100" 
                                     Foreground="{ThemeResource SystemColorControlAccentBrush}"
                                     Style="{StaticResource AppSliderStyle}" 
                                     >
@@ -222,9 +217,6 @@
                                     x:Name="SpacingSlider"
                                     SmallChange="10000"
                                     StepFrequency="10000" 
-                                    Value="{x:Bind SpacingRange.XRange.Default}" 
-                                    Minimum="{x:Bind SpacingRange.XRange.Minimum}" 
-                                    Maximum="{x:Bind SpacingRange.XRange.Maximum}" 
                                     Style="{StaticResource AppSliderStyle}" 
                                     Visibility="{x:Bind Int0125ToVisibility(Type), Mode=OneWay}"
                                     >

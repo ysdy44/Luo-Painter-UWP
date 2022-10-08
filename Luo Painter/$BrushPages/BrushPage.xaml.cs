@@ -66,6 +66,7 @@ namespace Luo_Painter
             this.ConstructCanvas();
             this.ConstructOperator();
 
+            this.ConstructInk0();
             this.ConstructInk1();
             this.ConstructInk2();
             this.ConstructInk3();
@@ -104,48 +105,6 @@ namespace Luo_Painter
                         break;
                 }
             };
-
-            this.ToolComboBox.SelectionChanged += (s, e) =>
-            {
-                switch (this.ToolComboBox.SelectedIndex)
-                {
-                    case 0: // OptionType.PaintBrush
-                        if (this.InkPresenter.ToolType == InkType.Brush) return;
-                        this.InkPresenter.ToolType = InkType.Brush;
-                        this.Type = InkType.Brush;
-                        break;
-                    case 1: // OptionType.PaintWatercolorPen
-                        if (this.InkPresenter.ToolType == InkType.Circle) return;
-                        this.InkPresenter.ToolType = InkType.Circle;
-                        this.Type = InkType.Circle;
-                        break;
-                    case 2: // OptionType.PaintPencil
-                        if (this.InkPresenter.ToolType == InkType.Line) return;
-                        this.InkPresenter.ToolType = InkType.Line;
-                        this.Type = InkType.Line;
-                        break;
-                    case 3: // OptionType.PaintEraseBrush
-                        if (this.InkPresenter.ToolType == InkType.Erase) return;
-                        this.InkPresenter.ToolType = InkType.Erase;
-                        this.Type = InkType.Erase;
-                        break;
-                    case 4: // OptionType.PaintLiquefaction
-                        if (this.InkPresenter.ToolType == InkType.Liquefy) return;
-                        this.InkPresenter.ToolType = InkType.Liquefy;
-                        this.Type = InkType.Liquefy;
-                        break;
-                    default: // default
-                        if (this.InkPresenter.ToolType == default) return;
-                        this.InkPresenter.ToolType = default;
-                        this.Type = default;
-                        break;
-                }
-
-                this.InkType = this.InkPresenter.GetType();
-
-                this.InkCanvasControl.Invalidate();
-            };
-
 
             this.BackButton.Click += (s, e) =>
             {
@@ -260,9 +219,8 @@ namespace Luo_Painter
             {
                 this.InkParameter = item;
 
-                this.InkPresenter.ToolType = InkType.Brush;
-                this.Type = InkType.Brush;
-                this.InkType = this.InkPresenter.GetType();
+                this.ConstructInk(item.InkPresenter);
+                this.Type = item.InkPresenter.ToolType;
             }
             else
             {
