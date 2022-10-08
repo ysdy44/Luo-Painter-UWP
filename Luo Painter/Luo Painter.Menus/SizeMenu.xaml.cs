@@ -16,7 +16,7 @@ namespace Luo_Painter.Menus
             this.InitializeComponent();
             this.ListView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is BrushSize item)
+                if (e.ClickedItem is PaintSize item)
                 {
                     this.ItemClick?.Invoke(this, item.Size);//Delegate
                 }

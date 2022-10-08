@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Brushes
 {
-    public sealed class BrushSize
+    public sealed class PaintSize
     {
         public double Size { get; set; } //= 0.7f;
         public string Text { get; set; } //= "0.7";
@@ -9,7 +9,7 @@
         public double Preview { get; set; } //= 1.0764939309056;
 
         //@Static
-        public static double Convert(double size) => BrushSize.ConvertCore(size * 10);
+        public static double Convert(double size) => PaintSize.ConvertCore(size * 10);
         private static double ConvertCore(double number)
         {
             double a = (number + 100000.0) / 1020.0 - 97;
