@@ -17,14 +17,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    public struct Stroke
-    {
-        public Vector2 StartingPosition;
-        public Vector2 Position;
-        public float StartingPressure;
-        public float Pressure;
-    }
-
     public sealed partial class BrushPage : Page
     {
 

@@ -133,6 +133,7 @@
     <Compile Include="PaintBrushGroupType.cs" />
     <Compile Include="PaintTexture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stroke.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Brushes.rd.xml" />
   </ItemGroup>
   <ItemGroup>
