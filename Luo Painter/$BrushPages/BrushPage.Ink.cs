@@ -112,6 +112,28 @@ namespace Luo_Painter
             this.InkIsEnabled = true;
         }
 
+        private void InkAsync()
+        {
+            //@Task
+            if (System.Threading.Monitor.TryEnter(this.InkLocker, System.TimeSpan.FromMilliseconds(100)))
+            {
+                this.Ink();
+                System.Threading.Monitor.Exit(this.InkLocker);
+            }
+            //else // Frame dropping
+        }
+        private void Ink()
+        {
+            using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                this.Ink(ds);
+            }
+            this.InkCanvasControl.Invalidate();
+        }
+
         private void Ink(CanvasDrawingSession ds)
         {
             switch (this.InkType)

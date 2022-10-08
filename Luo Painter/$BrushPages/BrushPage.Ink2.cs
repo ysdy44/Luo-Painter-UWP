@@ -20,9 +20,10 @@ namespace Luo_Painter
                 if (isOn is false)
                 {
                     this.InkPresenter.SetMask(false);
-
                     this.InkType = this.InkPresenter.GetType();
-                    this.InkCanvasControl.Invalidate();
+
+                    if (this.ShaderCodeByteIsEnabled is false) return;
+                    lock (this.InkLocker) this.Ink();
                     return;
                 }
 
@@ -30,9 +31,10 @@ namespace Luo_Painter
                 if (this.InkPresenter.Mask is null is false)
                 {
                     this.InkPresenter.SetMask(true);
-
                     this.InkType = this.InkPresenter.GetType();
-                    this.InkCanvasControl.Invalidate();
+
+                    if (this.ShaderCodeByteIsEnabled is false) return;
+                    lock (this.InkLocker) this.Ink();
                     return;
                 }
 
@@ -51,9 +53,10 @@ namespace Luo_Painter
                             // Select Texture
                             this.MaskImage.UriSource = new System.Uri(item.Texture);
                             this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
-
                             this.InkType = this.InkPresenter.GetType();
-                            this.InkCanvasControl.Invalidate();
+
+                            if (this.ShaderCodeByteIsEnabled is false) return;
+                            lock (this.InkLocker) this.Ink();
                             return;
                         }
                         break;
@@ -89,9 +92,10 @@ namespace Luo_Painter
                             // Select Texture
                             this.MaskImage.UriSource = new System.Uri(item.Texture);
                             this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
-
                             this.InkType = this.InkPresenter.GetType();
-                            this.InkCanvasControl.Invalidate();
+
+                            if (this.ShaderCodeByteIsEnabled is false) break;
+                            lock (this.InkLocker) this.Ink();
                             return;
                         }
                         break;
@@ -104,13 +108,17 @@ namespace Luo_Painter
             {
                 if (this.InkIsEnabled is false) return;
                 this.InkPresenter.Rotate = false;
-                this.InkCanvasControl.Invalidate();
+
+                if (this.ShaderCodeByteIsEnabled is false) return;
+                lock (this.InkLocker) this.Ink();
             };
             this.RotateButton.Checked += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
                 this.InkPresenter.Rotate = true;
-                this.InkCanvasControl.Invalidate();
+
+                if (this.ShaderCodeByteIsEnabled is false) return;
+                lock (this.InkLocker) this.Ink();
             };
         }
 

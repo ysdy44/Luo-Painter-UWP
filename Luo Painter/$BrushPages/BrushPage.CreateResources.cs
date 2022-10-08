@@ -38,7 +38,7 @@ namespace Luo_Painter
             this.ShaderCodeByteIsEnabled = true;
 
             // Ink
-            this.InkCanvasControl.Invalidate();
+            lock (this.InkLocker) this.Ink();
         }
 
     }

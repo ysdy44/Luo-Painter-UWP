@@ -28,10 +28,19 @@ namespace Luo_Painter
                 this.CreateResources((int)size.X, (int)size.Y);
             };
 
+            this.InkCanvasControl.CreateResources += (sender, args) =>
+            {
+                //@DPI
+                float w = sender.Dpi.ConvertDipsToPixels(InkPresenter.Width);
+                float h = sender.Dpi.ConvertDipsToPixels(InkPresenter.Height);
+                this.InkRender = new CanvasRenderTarget(this.CanvasDevice, w, h, 96);
+            };
             this.InkCanvasControl.Draw += (sender, args) =>
             {
-                if (this.ShaderCodeByteIsEnabled is false) return;
-                this.Ink(args.DrawingSession);
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                args.DrawingSession.DrawImage(this.InkRender);
             };
 
 
