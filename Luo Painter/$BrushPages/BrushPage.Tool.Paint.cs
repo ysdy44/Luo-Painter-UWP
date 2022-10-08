@@ -32,20 +32,23 @@ namespace Luo_Painter
                 StartingPressure = this.StartingPressure,
                 Pressure = this.Pressure,
             };
+            StrokeSegment segment = new StrokeSegment(stroke, this.InkPresenter.Size, this.InkPresenter.Spacing);
+
+            if (segment.InRadius()) return;
+            if (this.InkType.HasFlag(InkType.Mask) && stroke.IsNaN()) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
             //@Task
-            Task.Run(() => this.Paint_DeltaAsync(stroke));
+            Task.Run(() => this.Paint_DeltaAsync(stroke, segment));
 
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
         }
-        private void Paint_DeltaAsync(Stroke stroke)
+        private void Paint_DeltaAsync(Stroke stroke, StrokeSegment segment)
         {
             lock (this.Locker)
             {
-                if (this.Paint(stroke) is false) return;
-                if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
-
+                this.Paint(stroke, segment);
                 this.CanvasControl.Invalidate(); // Invalidate
             }
         }

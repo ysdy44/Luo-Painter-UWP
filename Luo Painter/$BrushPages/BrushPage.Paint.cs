@@ -293,21 +293,19 @@ namespace Luo_Painter
         }
 
 
-        private bool Paint(Stroke stroke)
+        private void Paint(Stroke stroke, StrokeSegment segment)
         {
             switch (this.InkType)
             {
                 case InkType.Brush_Dry:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessShaderCodeBytes,
-                        this.ColorHdr,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Source);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorHdr, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Brush_Wet_Pattern:
                 case InkType.Brush_Wet_Opacity:
@@ -320,54 +318,46 @@ namespace Luo_Painter
                 case InkType.Brush_WetBlur_Pattern_Blur:
                 case InkType.Brush_WetMosaic_Mosaic:
                 case InkType.Brush_WetMosaic_Pattern_Mosaic:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessShaderCodeBytes,
-                        this.ColorHdr,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Temp);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorHdr, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Brush_Wet_Pattern_Mix:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessShaderCodeBytes,
-                        this.InkMixer.ColorHdr,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Temp);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.InkMixer.ColorHdr, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Brush_Dry_Mix:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardness(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessShaderCodeBytes,
-                        this.InkMixer.ColorHdr,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Source);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.InkMixer.ColorHdr, stroke, segment);
+                    }
+                    break;
 
                 case InkType.MaskBrush_Dry:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        this.ColorHdr,
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorHdr,
                         this.InkPresenter.Mask,
-                        this.InkPresenter.Rotate,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Source);
+                        this.InkPresenter.Rotate, stroke, segment);
+                    }
+                    break;
 
                 case InkType.MaskBrush_Wet_Pattern:
                 case InkType.MaskBrush_Wet_Opacity:
@@ -380,55 +370,49 @@ namespace Luo_Painter
                 case InkType.MaskBrush_WetBlur_Pattern_Blur:
                 case InkType.MaskBrush_WetMosaic_Mosaic:
                 case InkType.MaskBrush_WetMosaic_Pattern_Mosaic:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        this.ColorHdr,
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorHdr,
                         this.InkPresenter.Mask,
-                        this.InkPresenter.Rotate,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Temp);
+                        this.InkPresenter.Rotate, stroke, segment);
+                    }
+                    break;
 
                 case InkType.MaskBrush_Dry_Mix:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        this.InkMixer.ColorHdr,
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, (int)this.InkPresenter.Hardness, this.InkMixer.ColorHdr,
                         this.InkPresenter.Mask,
-                        this.InkPresenter.Rotate,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Source);
+                        this.InkPresenter.Rotate, stroke, segment);
+                    }
+                    break;
 
                 case InkType.MaskBrush_Wet_Pattern_Mix:
-                    return this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                        RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size),
-                        this.BrushEdgeHardnessWithTextureShaderCodeBytes,
-                        this.InkMixer.ColorHdr,
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, (int)this.InkPresenter.Hardness, this.InkMixer.ColorHdr,
                         this.InkPresenter.Mask,
-                        this.InkPresenter.Rotate,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        (int)this.InkPresenter.Hardness,
-                        BitmapType.Temp);
+                        this.InkPresenter.Rotate, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Circle_Dry:
-                    return this.BitmapLayer.IsometricFillCircle(
-                        this.Color,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        BitmapType.Source);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricFillCircle(ds, this.Color, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Circle_Wet_Pattern:
                 case InkType.Circle_Wet_Opacity:
@@ -441,35 +425,40 @@ namespace Luo_Painter
                 case InkType.Circle_WetBlur_Pattern_Blur:
                 case InkType.Circle_WetMosaic_Mosaic:
                 case InkType.Circle_WetMosaic_Pattern_Mosaic:
-                    return this.BitmapLayer.IsometricFillCircle(
-                        this.Color,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        BitmapType.Temp);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricFillCircle(ds, this.Color, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Circle_Dry_Mix:
-                    return this.BitmapLayer.IsometricFillCircle(
-                        this.InkMixer.Color,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        BitmapType.Source);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricFillCircle(ds, this.InkMixer.Color, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Circle_Wet_Pattern_Mix:
-                    return this.BitmapLayer.IsometricFillCircle(
-                        this.InkMixer.Color,
-                        stroke.StartingPosition, stroke.Position,
-                        stroke.StartingPressure, stroke.Pressure,
-                        this.InkPresenter.Size,
-                        this.InkPresenter.Spacing,
-                        BitmapType.Temp);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricFillCircle(ds, this.InkMixer.Color, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Line_Dry:
-                    this.BitmapLayer.DrawLine(stroke.StartingPosition, stroke.Position, this.Color, this.InkPresenter.Size * stroke.Pressure, BitmapType.Source);
-                    return true;
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.DrawLine(stroke.StartingPosition, stroke.Position, this.Color, this.InkPresenter.Size * stroke.Pressure * 2, StrokeSegment.CanvasStrokeStyle);
+                    }
+                    break;
 
                 case InkType.Line_Wet_Pattern:
                 case InkType.Line_Wet_Opacity:
@@ -482,23 +471,51 @@ namespace Luo_Painter
                 case InkType.Line_WetBlur_Pattern_Blur:
                 case InkType.Line_WetMosaic_Mosaic:
                 case InkType.Line_WetMosaic_Pattern_Mosaic:
-                    this.BitmapLayer.DrawLine(stroke.StartingPosition, stroke.Position, this.Color, this.InkPresenter.Size * stroke.Pressure, BitmapType.Temp);
-                    return true;
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.DrawLine(stroke.StartingPosition, stroke.Position, this.Color, this.InkPresenter.Size * stroke.Pressure * 2, StrokeSegment.CanvasStrokeStyle);
+                    }
+                    break;
 
                 case InkType.Line_Dry_Mix:
-                    this.BitmapLayer.DrawLine(stroke.StartingPosition, stroke.Position, this.InkMixer.Color, this.InkPresenter.Size * stroke.Pressure, BitmapType.Source);
-                    return true;
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.DrawLine(stroke.StartingPosition, stroke.Position, this.InkMixer.Color, this.InkPresenter.Size * stroke.Pressure * 2, StrokeSegment.CanvasStrokeStyle);
+                    }
+                    break;
 
                 case InkType.Line_Wet_Pattern_Mix:
-                    this.BitmapLayer.DrawLine(stroke.StartingPosition, stroke.Position, this.InkMixer.Color, this.InkPresenter.Size * stroke.Pressure, BitmapType.Temp);
-                    return true;
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.DrawLine(stroke.StartingPosition, stroke.Position, this.InkMixer.Color, this.InkPresenter.Size * stroke.Pressure * 2, StrokeSegment.CanvasStrokeStyle);
+                    }
+                    break;
 
                 case InkType.Erase_Dry:
-                    return this.BitmapLayer.IsometricErasingDry(stroke.StartingPosition, stroke.Position, stroke.StartingPressure, stroke.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Source))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.Blend = CanvasBlend.Copy;
+                        segment.IsometricFillCircle(ds, Colors.Transparent, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Erase_WetComposite_Opacity:
                 case InkType.Erase_WetComposite_Pattern_Opacity:
-                    return this.BitmapLayer.IsometricErasingWet(stroke.StartingPosition, stroke.Position, stroke.StartingPressure, stroke.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        segment.IsometricFillCircle(ds, Colors.White, stroke, segment);
+                    }
+                    break;
 
                 case InkType.Liquefy:
                     this.BitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
@@ -513,10 +530,10 @@ namespace Luo_Painter
                             ["pressure"] = stroke.Pressure,
                         }
                     }, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size));
-                    return true;
+                    break;
 
                 default:
-                    return false;
+                    break;
             }
         }
 
