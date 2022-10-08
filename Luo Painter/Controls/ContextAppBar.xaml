@@ -6,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
     mc:Ignorable="d"
     d:DesignWidth="400"
     d:DesignHeight="50"
@@ -28,7 +30,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Slider">
                         <Grid Margin="{TemplateBinding Padding}">
-
                             <Grid.Resources>
                                 <Style TargetType="Thumb" x:Key="SliderThumbStyle">
                                     <Setter Property="BorderThickness" Value="0" />
@@ -52,13 +53,12 @@
                                     <VisualState x:Name="Normal" />
 
                                     <VisualState x:Name="Pressed">
-
                                         <Storyboard>
                                             <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalTrackRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPressed}" />
+                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPressed}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalTrackRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPressed}" />
+                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPressed}" />
                                             </ObjectAnimationUsingKeyFrames>-->
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalThumb" Storyboard.TargetProperty="Background">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundPressed}" />
@@ -79,7 +79,6 @@
                                     </VisualState>
 
                                     <VisualState x:Name="Disabled">
-
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderHeaderForegroundDisabled}" />
@@ -121,13 +120,12 @@
                                     </VisualState>
 
                                     <VisualState x:Name="PointerOver">
-
                                         <Storyboard>
                                             <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalTrackRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPointerOver}" />
+                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalTrackRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPointerOver}" />
+                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>-->
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalThumb" Storyboard.TargetProperty="Background">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundPointerOver}" />
@@ -148,10 +146,10 @@
                                     </VisualState>
 
                                 </VisualStateGroup>
+
                                 <VisualStateGroup x:Name="FocusEngagementStates">
                                     <VisualState x:Name="FocusDisengaged" />
                                     <VisualState x:Name="FocusEngagedHorizontal">
-
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="(Control.IsTemplateFocusTarget)">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
@@ -162,7 +160,6 @@
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="FocusEngagedVertical">
-
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="(Control.IsTemplateFocusTarget)">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
@@ -172,7 +169,6 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-
                                 </VisualStateGroup>
 
                             </VisualStateManager.VisualStateGroups>
@@ -182,19 +178,21 @@
                                 <ColumnDefinition Width="6" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter x:Name="HeaderContentPresenter"
-                                              Grid.Column="2"
-                                              Content="{TemplateBinding Header}"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                              FontWeight="{ThemeResource SliderHeaderThemeFontWeight}"
-                                              Foreground="{ThemeResource SliderHeaderForeground}"
-                                              TextWrapping="Wrap"
-                                              Visibility="Collapsed"
-                                              x:DeferLoadStrategy="Lazy"/>
-                            <Grid x:Name="SliderContainer"
-                                              Grid.Column="0"
-                                              Background="{ThemeResource SliderContainerBackground}"
-                                              Control.IsTemplateFocusTarget="True">
+                            <ContentPresenter 
+                                x:Name="HeaderContentPresenter"
+                                Grid.Column="2"
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                FontWeight="{ThemeResource SliderHeaderThemeFontWeight}"
+                                Foreground="{ThemeResource SliderHeaderForeground}"
+                                TextWrapping="Wrap"
+                                Visibility="Collapsed"
+                                x:DeferLoadStrategy="Lazy"/>
+                            <Grid 
+                                x:Name="SliderContainer"
+                                Grid.Column="0"
+                                Background="{ThemeResource SliderContainerBackground}"
+                                Control.IsTemplateFocusTarget="True">
                                 <Grid x:Name="HorizontalTemplate" MinHeight="{ThemeResource SliderHorizontalHeight}">
 
                                     <Grid.ColumnDefinitions>
@@ -203,49 +201,54 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Grid.RowDefinitions>
+                                    <!--<Grid.RowDefinitions>
                                         <RowDefinition Height="{ThemeResource SliderPreContentMargin}" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="{ThemeResource SliderPostContentMargin}" />
-                                    </Grid.RowDefinitions>
-                                    <Rectangle x:Name="HorizontalTrackRect"
-                                              Fill="{TemplateBinding Background}"
-                                              StrokeThickness="1"
-                                              Height="22"
-                                              Grid.Row="1"
-                                              Grid.ColumnSpan="3" />
-                                    <Rectangle x:Name="HorizontalDecreaseRect" Fill="{TemplateBinding Foreground}" Grid.Row="1" />
-                                    <TickBar x:Name="TopTickBar"
-                                              Visibility="Collapsed"
-                                              Fill="{ThemeResource SliderTickBarFill}"
-                                              Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                              VerticalAlignment="Bottom"
-                                              Margin="0,0,0,0"
-                                              Grid.ColumnSpan="3" />
-                                    <TickBar x:Name="HorizontalInlineTickBar"
-                                              Visibility="Collapsed"
-                                              Fill="{ThemeResource SliderInlineTickBarFill}"
-                                              Height="22"
-                                             Grid.Row="1"
-                                             Grid.ColumnSpan="3" />
-                                    <TickBar x:Name="BottomTickBar"
-                                             Visibility="Collapsed"
-                                              Fill="{ThemeResource SliderTickBarFill}"
-                                              Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                              VerticalAlignment="Top"
-                                             Margin="0,0,0,0"
-                                              Grid.Row="2"
-                                              Grid.ColumnSpan="3" />
-                                    <Thumb x:Name="HorizontalThumb"
-                                           Style="{StaticResource SliderThumbStyle}"
-                                           DataContext="{TemplateBinding Value}"
-                                           Height="24"
-                                           Width="8"
-                                           Grid.Row="0"
-                                           Grid.RowSpan="3"
-                                           Grid.Column="1"
-                                           FocusVisualMargin="-14,-6,-14,-6"
-                                           AutomationProperties.AccessibilityView="Raw" >
+                                    </Grid.RowDefinitions>-->
+                                    <Rectangle
+                                        x:Name="HorizontalTrackRect"
+                                        Fill="{TemplateBinding Background}"
+                                        StrokeThickness="1"
+                                        Height="28"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="3" />
+                                    <Rectangle x:Name="HorizontalDecreaseRect" Height="28" Fill="{TemplateBinding Foreground}" Grid.Row="1" />
+                                    <TickBar 
+                                        x:Name="TopTickBar"
+                                        Visibility="Collapsed"
+                                        Fill="{ThemeResource SliderTickBarFill}"
+                                        Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
+                                        VerticalAlignment="Bottom"
+                                        Margin="0,0,0,0"
+                                        Grid.ColumnSpan="3" />
+                                    <TickBar
+                                        x:Name="HorizontalInlineTickBar"                          
+                                        Visibility="Collapsed"                            
+                                        Fill="{ThemeResource SliderInlineTickBarFill}"                            
+                                        Height="28"                                
+                                        Grid.Row="1"                                  
+                                        Grid.ColumnSpan="3" />
+                                    <TickBar
+                                        x:Name="BottomTickBar"
+                                        Visibility="Collapsed"
+                                        Fill="{ThemeResource SliderTickBarFill}"
+                                        Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
+                                        VerticalAlignment="Top"
+                                        Margin="0,0,0,0"
+                                        Grid.Row="2"
+                                        Grid.ColumnSpan="3" />
+                                    <Thumb 
+                                        x:Name="HorizontalThumb"
+                                        Style="{StaticResource SliderThumbStyle}"
+                                        DataContext="{TemplateBinding Value}"
+                                        Height="30"
+                                        Width="8"
+                                        Grid.Row="0"
+                                        Grid.RowSpan="3"
+                                        Grid.Column="1"
+                                        FocusVisualMargin="-14,-6,-14,-6"
+                                        AutomationProperties.AccessibilityView="Raw" >
 
                                         <!--ToolTip-->
                                         <ToolTipService.ToolTip>
@@ -275,57 +278,61 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
+                                    <!--<Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{ThemeResource SliderPreContentMargin}" />
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="{ThemeResource SliderPostContentMargin}" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle x:Name="VerticalTrackRect"
-                                              Fill="{TemplateBinding Background}"
-                                              Width="22"
-                                              Grid.Column="1"
-                                              Grid.RowSpan="3" />
-                                    <Rectangle x:Name="VerticalDecreaseRect"
-                                              Fill="{TemplateBinding Foreground}"
-                                              Grid.Column="1"
-                                              Grid.Row="2" />
-                                    <TickBar x:Name="LeftTickBar"
-                                              Visibility="Collapsed"
-                                              Fill="{ThemeResource SliderTickBarFill}"
-                                              Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                              HorizontalAlignment="Right"
-                                              Margin="0,0,0,0"
-                                              Grid.RowSpan="3" />
-                                    <TickBar x:Name="VerticalInlineTickBar"
-                                              Visibility="Collapsed"
-                                              Fill="{ThemeResource SliderInlineTickBarFill}"
-                                              Width="22"
-                                              Grid.Column="1"
-                                              Grid.RowSpan="3" />
-                                    <TickBar x:Name="RightTickBar"
-                                              Visibility="Collapsed"
-                                              Fill="{ThemeResource SliderTickBarFill}"
-                                              Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                              HorizontalAlignment="Left"
-                                              Margin="0,0,0,0"
-                                              Grid.Column="2"
-                                              Grid.RowSpan="3" />
-                                    <Thumb x:Name="VerticalThumb"
-                                              Style="{StaticResource SliderThumbStyle}"
-                                              DataContext="{TemplateBinding Value}"
-                                              Width="24"
-                                              Height="8"
-                                              Grid.Row="1"
-                                              Grid.Column="0"
-                                              Grid.ColumnSpan="3"
-                                              FocusVisualMargin="-6,-14,-6,-14"
-                                              AutomationProperties.AccessibilityView="Raw" />
+                                    </Grid.ColumnDefinitions>-->
+                                    <Rectangle 
+                                        x:Name="VerticalTrackRect"
+                                        Fill="{TemplateBinding Background}"
+                                        Width="28"
+                                        Grid.Column="1"
+                                        Grid.RowSpan="3" />
+                                    <Rectangle 
+                                        x:Name="VerticalDecreaseRect"
+                                        Fill="{TemplateBinding Foreground}"
+                                        Width="28"
+                                        Grid.Column="1"
+                                        Grid.Row="2" />
+                                    <TickBar
+                                        x:Name="LeftTickBar"
+                                        Visibility="Collapsed"
+                                        Fill="{ThemeResource SliderTickBarFill}"
+                                        Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,0,0,0"
+                                        Grid.RowSpan="3" />
+                                    <TickBar 
+                                        x:Name="VerticalInlineTickBar"
+                                        Visibility="Collapsed"
+                                        Fill="{ThemeResource SliderInlineTickBarFill}"
+                                        Width="28"
+                                        Grid.Column="1"
+                                        Grid.RowSpan="3" />
+                                    <TickBar
+                                        x:Name="RightTickBar"
+                                        Visibility="Collapsed"
+                                        Fill="{ThemeResource SliderTickBarFill}"
+                                        Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
+                                        HorizontalAlignment="Left"
+                                        Margin="0,0,0,0"
+                                        Grid.Column="2"
+                                        Grid.RowSpan="3" />
+                                    <Thumb
+                                        x:Name="VerticalThumb"
+                                        Style="{StaticResource SliderThumbStyle}"
+                                        DataContext="{TemplateBinding Value}"
+                                        Width="30"
+                                        Height="8"
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        FocusVisualMargin="-6,-14,-6,-14"
+                                        AutomationProperties.AccessibilityView="Raw" />
                                 </Grid>
-
                             </Grid>
-
                         </Grid>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -392,14 +399,14 @@
                         <Setter Target="StarPanel.Orientation" Value="Vertical"/>
                         <Setter Target="StarPointsSlider.Width" Value="Auto"/>
                         <Setter Target="StarInnerRadiusSlider.Width" Value="Auto"/>
-                        
+
                         <Setter Target="CogPanel1.Orientation" Value="Vertical"/>
                         <Setter Target="CogPanel2.Orientation" Value="Vertical"/>
                         <Setter Target="CogCountSlider.Width" Value="Auto"/>
                         <Setter Target="CogInnerRadiusSlider.Width" Value="Auto"/>
                         <Setter Target="CogToothSlider.Width" Value="Auto"/>
                         <Setter Target="CogNotchSlider.Width" Value="Auto"/>
-                        
+
                         <Setter Target="CookiePanel.Orientation" Value="Vertical"/>
                         <Setter Target="CookieInnerRadiusSlider.Width" Value="Auto"/>
                         <Setter Target="CookieSweepAngleSlider.Width" Value="Auto"/>
@@ -542,7 +549,7 @@
         <!--SwitchPresenter-->
         <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter1" Visibility="Collapsed">
             <luo_painter:OptionCase Value="Marquee">
-                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
                     <luo_painter:ElementItem Type="New"/>
                     <luo_painter:ElementItem Type="Union"/>
                     <luo_painter:ElementItem Type="Exclude"/>
@@ -550,7 +557,7 @@
                 </ListBox>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="Selection">
-                <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
                     <luo_painter:ElementItem Type="Add"/>
                     <luo_painter:ElementItem Type="Subtract"/>
                 </ListBox>
@@ -561,7 +568,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <!--Size-->
                     <Slider
                         x:Name="SizeSlider"
@@ -589,10 +596,18 @@
                         </Control.BorderBrush>
                     </Slider>
 
+                    <TextBlock x:Name="SizeTextBlock" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                        Size
+                    </TextBlock>
+
+                    <TextBlock x:Name="OpacityTextBlock" Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                        Opacity
+                    </TextBlock>
+
                 </Grid>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="Brush">
-                <ListBox x:Name="BrushComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                <ListBox x:Name="BrushComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
                     <TextBlock>Color</TextBlock>
                     <TextBlock>LinearGradient</TextBlock>
                     <TextBlock>RadialGradient</TextBlock>
@@ -600,14 +615,14 @@
                 </ListBox>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="Transparency">
-                <ListBox x:Name="TransparencyComboBox" SelectedIndex="0" Margin="32,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                <ListBox x:Name="TransparencyComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
                     <TextBlock>LinearGradient</TextBlock>
                     <TextBlock>RadialGradient</TextBlock>
                     <TextBlock>EllipticalGradient</TextBlock>
                 </ListBox>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="Pen">
-                <Grid Margin="32,0">
+                <Grid Margin="12,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
@@ -616,7 +631,7 @@
                         <TextBlock>Curve</TextBlock>
                         <TextBlock>Line</TextBlock>
                     </ListBox>
-                    <Button x:Name="PenCloseButton" Grid.Column="1" Style="{StaticResource AppBorderButtonStyle}" >
+                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" Width="70" Height="40" VerticalAlignment="Center" BorderThickness="1" >
                         Close
                     </Button>
                 </Grid>
@@ -748,42 +763,18 @@
 
         <!--SwitchPresenter-->
         <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter3" IsHitTestVisible="False" Visibility="Collapsed" Padding="6,2" Height="50" VerticalAlignment="Top" VerticalContentAlignment="Center">
-            <luo_painter:OptionCase Value="Feather">
-                <luo_painter:OptionItemIcon Type="TextFrame"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Grow">
-                <luo_painter:OptionItemIcon Type="Grow"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Shrink">
-                <luo_painter:OptionItemIcon Type="Shrink"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Exposure">
-                <luo_painter:OptionItemIcon Type="Exposure"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Brightness">
-                <luo_painter:OptionItemIcon Type="Brightness"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Saturation">
-                <luo_painter:OptionItemIcon Type="Saturation"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="HueRotation">
-                <luo_painter:OptionItemIcon Type="HueRotation"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Contrast">
-                <luo_painter:OptionItemIcon Type="Contrast"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Temperature">
-                <luo_painter:OptionItemIcon Type="Temperature"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="HighlightsAndShadows">
-                <luo_painter:OptionItemIcon Type="HighlightsAndShadows"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GradientMapping">
-                <luo_painter:OptionItemIcon Type="GradientMapping"/>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="RippleEffect">
-                <luo_painter:OptionItemIcon Type="RippleEffect"/>
-            </luo_painter:OptionCase>
+            <luo_painter:OptionItemIconCase Type="Feather"/>
+            <luo_painter:OptionItemIconCase Type="Grow"/>
+            <luo_painter:OptionItemIconCase Type="Shrink"/>
+            <luo_painter:OptionItemIconCase Type="Exposure"/>
+            <luo_painter:OptionItemIconCase Type="Brightness"/>
+            <luo_painter:OptionItemIconCase Type="Saturation"/>
+            <luo_painter:OptionItemIconCase Type="HueRotation"/>
+            <luo_painter:OptionItemIconCase Type="Contrast"/>
+            <luo_painter:OptionItemIconCase Type="Temperature"/>
+            <luo_painter:OptionItemIconCase Type="HighlightsAndShadows"/>
+            <luo_painter:OptionItemIconCase Type="GradientMapping"/>
+            <luo_painter:OptionItemIconCase Type="RippleEffect"/>
             <luo_painter:OptionCase Value="GeometryRectangleTransform">
                 <luo_painter:OptionItemIcon Type="GeometryRectangle"/>
             </luo_painter:OptionCase>
@@ -1182,7 +1173,7 @@
                             </Button>
                         </Slider.Header>
                     </Slider>
-                    <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="32" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                    <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="12" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
                         <FrameworkElement.Tag>
                             Pressure
                         </FrameworkElement.Tag>
@@ -1204,7 +1195,7 @@
                 </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GradientMapping">
-                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="32,4" Width="740" Height="50" HorizontalAlignment="Stretch">
+                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="12,4" Width="740" Height="50" HorizontalAlignment="Stretch">
                     <elements:GradientStopSelector.ItemStyle>
                         <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
                             <Setter Property="Width" Value="50"/>
