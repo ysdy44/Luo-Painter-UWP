@@ -119,6 +119,7 @@
     <Compile Include="%24BrushPages\BrushPage.Canvas.cs" />
     <Compile Include="%24BrushPages\BrushPage.CreateResources.cs" />
     <Compile Include="%24BrushPages\BrushPage.Ink.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Ink0.cs" />
     <Compile Include="%24BrushPages\BrushPage.Ink1.cs" />
     <Compile Include="%24BrushPages\BrushPage.Ink2.cs" />
     <Compile Include="%24BrushPages\BrushPage.Ink3.cs" />
