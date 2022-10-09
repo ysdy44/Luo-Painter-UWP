@@ -133,7 +133,7 @@
 
                 <!--Paint-->
                 <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}" >
-                    <StackPanel Padding="6,0" >
+                    <StackPanel Padding="6,0,6,6" >
 
                         <!--Ink-->
                         <canvas:CanvasControl               
@@ -147,7 +147,7 @@
                             />
 
 
-                        <Border CornerRadius="8" Margin="0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                        <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                             <StackPanel>
 
                                 <!--Size-->
@@ -218,7 +218,7 @@
                                     SmallChange="10000"
                                     StepFrequency="10000" 
                                     Style="{StaticResource AppSliderStyle}" 
-                                    Visibility="{x:Bind Int0125ToVisibility(Type), Mode=OneWay}"
+                                    Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}"
                                     >
                                     <FrameworkElement.Tag>
                                         Spacing
@@ -254,13 +254,13 @@
 
                         <!--BlendMode-->
                         <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                               Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
                                 Blend Mode
                         </TextBlock>
 
                         <ComboBox x:Name="BlendModeComboBox" Margin="0,4" SelectedIndex="0"
                                   IsEnabled="{x:Bind BooleanConverter(BlendRadioButton.IsChecked), Mode=OneWay}"
-                                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                                  Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="effects:BlendEffectMode">
@@ -286,7 +286,7 @@
                         </ComboBox>
 
                         <Grid Height="146" ColumnSpacing="4" 
-                                  Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" >
+                                  Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
@@ -397,17 +397,17 @@
 
 
                         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                               Visibility="{x:Bind Int012ToVisibility(Type), Mode=OneWay}" />
+                               Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" />
 
 
                         <!--Hardness-->
                         <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                               Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" >
                             Hardness
                         </TextBlock>
 
                         <Grid Height="182" ColumnSpacing="4" 
-                                  Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                                  Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
@@ -446,17 +446,17 @@
 
 
                         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" />
+                               Visibility="{x:Bind MaskVisibilityConverter(Type), Mode=OneWay}" />
 
 
                         <!--Mask-->
                         <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                               Visibility="{x:Bind MaskVisibilityConverter(Type), Mode=OneWay}" >
                             Mask
                         </TextBlock>
 
                         <Grid Height="146" ColumnSpacing="4"
-                                Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" >
+                                Visibility="{x:Bind MaskVisibilityConverter(Type), Mode=OneWay}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
@@ -485,17 +485,17 @@
 
 
                         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                               Visibility="{x:Bind Int056ToVisibility(Type), Mode=OneWay}" />
+                               Visibility="{x:Bind PatternVisibilityConverter(Type), Mode=OneWay}" />
 
 
                         <!--Pattern-->
                         <TextBlock x:Name="PatternTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                               Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
+                               Visibility="{x:Bind PatternVisibilityConverter(Type), Mode=OneWay}" >
                             Pattern
                         </TextBlock>
 
                         <Grid Height="146" ColumnSpacing="4"
-                                Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" >
+                                Visibility="{x:Bind PatternVisibilityConverter(Type), Mode=OneWay}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
@@ -521,10 +521,6 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-
-
-                        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                               Visibility="{x:Bind Int0123ToVisibility(Type), Mode=OneWay}" />
 
                     </StackPanel>
                 </ScrollViewer>

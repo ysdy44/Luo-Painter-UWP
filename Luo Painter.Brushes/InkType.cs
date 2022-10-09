@@ -3,158 +3,133 @@
 namespace Luo_Painter.Brushes
 {
     [Flags]
-    public enum InkType
+    public enum InkType : uint
     {
         None = 0,
 
-        // Dry
-        Dry = 1,
-        // Wet
-        Wet = 1 << 1,
-        // Wet
-        WetBlur = 1 << 2,
-        // Wet
-        WetMosaic = 1 << 3,
-        // WetComposite
-        WetComposite = 1 << 4,
-        WetComposite_Blend = 1 << 5 | WetComposite,
-        WetComposite_Erase_Opacity = 1 << 6 | WetComposite,
-
         // Mode
-        Blend = 1 << 7,
-        Blur = 1 << 8,
-        Mosaic = 1 << 9,
-        Mix = 1 << 10,
+        Blend = 1,
+        Blur = 2,
+        Mosaic = 4,
+        Mix = 8,
 
         // Property
-        Mask = 1 << 11,
-        Pattern = 1 << 12,
-        Opacity = 1 << 13,
+        Mask = 16,
+        Pattern = 32,
+        Opacity = 64,
 
+        // UI
+        UISpacing = 128,
+        UIBlendMode = 256,
+        UIHardness = 512,
+        UIMask = 1024,
+        UIPattern = 2048,
 
-        Brush = 1 << 14,
+        Brush = 4096 | UISpacing | UIBlendMode | UIHardness | UIMask | UIPattern,
         #region Brush
 
+        Brush_Dry = Brush,
 
-        Brush_Dry = Brush | Dry,
+        Brush_Wet_Pattern = Brush | Pattern,
+        Brush_Wet_Opacity = Brush | Opacity,
+        Brush_Wet_Pattern_Opacity = Brush | Pattern | Opacity,
 
-        Brush_Wet_Pattern = Brush | Wet | Pattern,
-        Brush_Wet_Opacity = Brush | Wet | Opacity,
-        Brush_Wet_Pattern_Opacity = Brush | Wet | Pattern | Opacity,
+        Brush_WetComposite_Blend = Brush | Blend,
+        Brush_WetComposite_Pattern_Blend = Brush | Pattern | Blend,
+        Brush_WetComposite_Opacity_Blend = Brush | Opacity | Blend,
+        Brush_WetComposite_Pattern_Opacity_Blend = Brush | Pattern | Opacity | Blend,
 
-        Brush_WetComposite_Blend = Brush | WetComposite_Blend | Blend,
-        Brush_WetComposite_Pattern_Blend = Brush | WetComposite_Blend | Pattern | Blend,
-        Brush_WetComposite_Opacity_Blend = Brush | WetComposite_Blend | Opacity | Blend,
-        Brush_WetComposite_Pattern_Opacity_Blend = Brush | WetComposite_Blend | Pattern | Opacity | Blend,
+        Brush_WetBlur_Blur = Brush | Blur,
+        Brush_WetBlur_Pattern_Blur = Brush | Pattern | Blur,
 
-        Brush_WetBlur_Blur = Brush | WetBlur | Blur,
-        Brush_WetBlur_Pattern_Blur = Brush | WetBlur | Pattern | Blur,
+        Brush_WetMosaic_Mosaic = Brush | Mosaic,
+        Brush_WetMosaic_Pattern_Mosaic = Brush | Pattern | Mosaic,
 
-        Brush_WetMosaic_Mosaic = Brush | WetMosaic | Mosaic,
-        Brush_WetMosaic_Pattern_Mosaic = Brush | WetMosaic | Pattern | Mosaic,
-
-        Brush_Dry_Mix = Brush | Dry | Mix,
-        Brush_Wet_Pattern_Mix = Brush | Wet | Pattern | Mix,
-
+        Brush_Dry_Mix = Brush | Mix,
+        Brush_Wet_Pattern_Mix = Brush | Pattern | Mix,
 
         #endregion
 
-
+        MaskBrush = Mask | Brush,
         #region MaskBrush
 
+        MaskBrush_Dry = MaskBrush,
 
-        MaskBrush_Dry = Brush | Dry | Mask,
+        MaskBrush_Wet_Pattern = Mask | Brush_Wet_Pattern,
+        MaskBrush_Wet_Opacity = Mask | Brush_Wet_Opacity,
+        MaskBrush_Wet_Pattern_Opacity = Mask | Brush_Wet_Pattern_Opacity,
 
-        MaskBrush_Wet_Pattern = Brush | Wet | Mask | Pattern,
-        MaskBrush_Wet_Opacity = Brush | Wet | Mask | Opacity,
-        MaskBrush_Wet_Pattern_Opacity = Brush | Wet | Mask | Pattern | Opacity,
+        MaskBrush_WetComposite_Blend = Mask | Brush_WetComposite_Blend,
+        MaskBrush_WetComposite_Pattern_Blend = Mask | Brush_WetComposite_Pattern_Blend,
+        MaskBrush_WetComposite_Opacity_Blend = Mask | Brush_WetComposite_Opacity_Blend,
+        MaskBrush_WetComposite_Pattern_Opacity_Blend = Mask | Brush_WetComposite_Pattern_Opacity_Blend,
 
-        MaskBrush_WetComposite_Blend = Brush | WetComposite_Blend | Mask | Blend,
-        MaskBrush_WetComposite_Pattern_Blend = Brush | WetComposite_Blend | Mask | Pattern | Blend,
-        MaskBrush_WetComposite_Opacity_Blend = Brush | WetComposite_Blend | Mask | Opacity | Blend,
-        MaskBrush_WetComposite_Pattern_Opacity_Blend = Brush | WetComposite_Blend | Mask | Pattern | Opacity | Blend,
+        MaskBrush_WetBlur_Blur = Mask | Brush_WetBlur_Blur,
+        MaskBrush_WetBlur_Pattern_Blur = Mask | Brush_WetBlur_Pattern_Blur,
 
-        MaskBrush_WetBlur_Blur = Brush | WetBlur | Mask | Blur,
-        MaskBrush_WetBlur_Pattern_Blur = Brush | WetBlur | Mask | Pattern | Blur,
+        MaskBrush_WetMosaic_Mosaic = Mask | Brush_WetMosaic_Mosaic,
+        MaskBrush_WetMosaic_Pattern_Mosaic = Mask | Brush_WetMosaic_Pattern_Mosaic,
 
-        MaskBrush_WetMosaic_Mosaic = Brush | WetMosaic | Mask | Mosaic,
-        MaskBrush_WetMosaic_Pattern_Mosaic = Brush | WetMosaic | Mask | Pattern | Mosaic,
-
-        MaskBrush_Dry_Mix = Brush | Dry | Mask | Mix,
-        MaskBrush_Wet_Pattern_Mix = Brush | Wet | Mask | Pattern | Mix,
-
+        MaskBrush_Dry_Mix = Mask | Brush_Dry_Mix,
+        MaskBrush_Wet_Pattern_Mix = Mask | Brush_Wet_Pattern_Mix,
 
         #endregion
 
-
-        Circle = 1 << 15,
+        Circle = 8192 | UISpacing | UIBlendMode | UIPattern,
         #region Circle
 
+        Circle_Dry = Circle,
 
-        Circle_Dry = Circle | Dry,
+        Circle_Wet_Pattern = Circle | Pattern,
+        Circle_Wet_Opacity = Circle | Opacity,
+        Circle_Wet_Pattern_Opacity = Circle | Pattern | Opacity,
 
-        Circle_Wet_Pattern = Circle | Wet | Pattern,
-        Circle_Wet_Opacity = Circle | Wet | Opacity,
-        Circle_Wet_Pattern_Opacity = Circle | Wet | Pattern | Opacity,
+        Circle_WetComposite_Blend = Circle | Blend,
+        Circle_WetComposite_Pattern_Blend = Circle | Pattern | Blend,
+        Circle_WetComposite_Opacity_Blend = Circle | Opacity | Blend,
+        Circle_WetComposite_Pattern_Opacity_Blend = Circle | Pattern | Opacity | Blend,
 
-        Circle_WetComposite_Blend = Circle | WetComposite_Blend | Blend,
-        Circle_WetComposite_Pattern_Blend = Circle | WetComposite_Blend | Pattern | Blend,
-        Circle_WetComposite_Opacity_Blend = Circle | WetComposite_Blend | Opacity | Blend,
-        Circle_WetComposite_Pattern_Opacity_Blend = Circle | WetComposite_Blend | Pattern | Opacity | Blend,
+        Circle_WetBlur_Blur = Circle | Blur,
+        Circle_WetBlur_Pattern_Blur = Circle | Pattern | Blur,
 
-        Circle_WetBlur_Blur = Circle | WetBlur | Blur,
-        Circle_WetBlur_Pattern_Blur = Circle | WetBlur | Pattern | Blur,
+        Circle_WetMosaic_Mosaic = Circle | Mosaic,
+        Circle_WetMosaic_Pattern_Mosaic = Circle | Pattern | Mosaic,
 
-        Circle_WetMosaic_Mosaic = Circle | WetMosaic | Mosaic,
-        Circle_WetMosaic_Pattern_Mosaic = Circle | WetMosaic | Pattern | Mosaic,
-
-        Circle_Dry_Mix = Circle | Dry | Mix,
-        Circle_Wet_Pattern_Mix = Circle | Wet | Pattern | Mix,
-
+        Circle_Dry_Mix = Circle | Mix,
+        Circle_Wet_Pattern_Mix = Circle | Pattern | Mix,
 
         #endregion
 
-
-        Line = 1 << 16,
+        Line = 16384 | UIBlendMode | UIPattern,
         #region Line
 
+        Line_Dry = Line,
 
-        Line_Dry = Line | Dry,
+        Line_Wet_Pattern = Line | Pattern,
+        Line_Wet_Opacity = Line | Opacity,
+        Line_Wet_Pattern_Opacity = Line | Pattern | Opacity,
 
-        Line_Wet_Pattern = Line | Wet | Pattern,
-        Line_Wet_Opacity = Line | Wet | Opacity,
-        Line_Wet_Pattern_Opacity = Line | Wet | Pattern | Opacity,
+        Line_WetComposite_Blend = Line | Blend,
+        Line_WetComposite_Pattern_Blend = Line | Pattern | Blend,
+        Line_WetComposite_Opacity_Blend = Line | Opacity | Blend,
+        Line_WetComposite_Pattern_Opacity_Blend = Line | Pattern | Opacity | Blend,
 
-        Line_WetComposite_Blend = Line | WetComposite_Blend | Blend,
-        Line_WetComposite_Pattern_Blend = Line | WetComposite_Blend | Pattern | Blend,
-        Line_WetComposite_Opacity_Blend = Line | WetComposite_Blend | Opacity | Blend,
-        Line_WetComposite_Pattern_Opacity_Blend = Line | WetComposite_Blend | Pattern | Opacity | Blend,
+        Line_WetBlur_Blur = Line | Blur,
+        Line_WetBlur_Pattern_Blur = Line | Pattern | Blur,
 
-        Line_WetBlur_Blur = Line | WetBlur | Blur,
-        Line_WetBlur_Pattern_Blur = Line | WetBlur | Pattern | Blur,
+        Line_WetMosaic_Mosaic = Line | Mosaic,
+        Line_WetMosaic_Pattern_Mosaic = Line | Pattern | Mosaic,
 
-        Line_WetMosaic_Mosaic = Line | WetMosaic | Mosaic,
-        Line_WetMosaic_Pattern_Mosaic = Line | WetMosaic | Pattern | Mosaic,
-
-        Line_Dry_Mix = Line | Dry | Mix,
-        Line_Wet_Pattern_Mix = Line | Wet | Pattern | Mix,
-
+        Line_Dry_Mix = Line | Mix,
+        Line_Wet_Pattern_Mix = Line | Pattern | Mix,
 
         #endregion
 
+        Erase = 32768 | UISpacing | UIHardness,
 
-        Erase = 1 << 17,
-        #region Erase
+        Erase_Dry = Erase,
+        Erase_WetComposite_Opacity = Erase | Opacity,
 
-        Erase_Dry = Erase | Dry,
-
-        Erase_WetComposite_Opacity = Erase | WetComposite_Erase_Opacity | Opacity,
-        Erase_WetComposite_Pattern_Opacity = Erase | WetComposite_Erase_Opacity | Pattern | Opacity,
-
-
-        #endregion
-
-
-        Liquefy = 1 << 18 | Dry,
+        Liquefy = 65536,
     }
 }

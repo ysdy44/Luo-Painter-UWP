@@ -181,9 +181,8 @@
                     }
                 case InkType.Erase:
                     if (this.Opacity == 0f) return InkType.None;
-                    if (this.AllowPattern) return InkType.Erase_WetComposite_Pattern_Opacity;
-                    if (this.Opacity == 1f) return InkType.Erase_Dry;
-                    return InkType.Erase_WetComposite_Opacity;
+                    else if (this.Opacity == 1f) return InkType.Erase_Dry;
+                    else return InkType.Erase_WetComposite_Opacity;
                 case InkType.Liquefy:
                     return InkType.Liquefy;
                 default:

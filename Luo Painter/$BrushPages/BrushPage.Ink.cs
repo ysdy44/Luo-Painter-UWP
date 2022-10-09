@@ -20,38 +20,12 @@ namespace Luo_Painter
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
 
         private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int056ToVisibility(InkType value)
-        {
-            switch (value)
-            {
-                case InkType.Brush: return Visibility.Visible;
-                default: return Visibility.Collapsed;
-            }
-        }
-        private Visibility Int012ToVisibility(InkType value)
-        {
-            switch (value)
-            {
-                case InkType.Brush: case InkType.Circle: case InkType.Line: return Visibility.Visible;
-                default: return Visibility.Collapsed;
-            }
-        }
-        private Visibility Int0125ToVisibility(InkType value)
-        {
-            switch (value)
-            {
-                case InkType.Brush: case InkType.Circle: return Visibility.Visible;
-                default: return Visibility.Collapsed;
-            }
-        }
-        private Visibility Int0123ToVisibility(InkType value)
-        {
-            switch (value)
-            {
-                case InkType.Brush: case InkType.Circle: case InkType.Line: case InkType.Erase: return Visibility.Visible;
-                default: return Visibility.Collapsed;
-            }
-        }
+        private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility MaskVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMask) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility PatternVisibilityConverter(InkType value) => value.HasFlag(InkType.UIPattern) ? Visibility.Visible : Visibility.Collapsed;
+    
 
         bool InkIsEnabled = true;
 
