@@ -217,7 +217,7 @@ namespace Luo_Painter
                         }
                         else
                         {
-                            return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.InkPresenter.GetWet(this.InkType, this.BitmapLayer[BitmapType.Temp]));
+                            return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp]);
                         }
                 }
             }

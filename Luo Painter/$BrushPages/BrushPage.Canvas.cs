@@ -50,7 +50,7 @@ namespace Luo_Painter
                 //@DPI 
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                this.Paint(args.DrawingSession);
+                this.InkPresenter.Preview(args.DrawingSession, this.InkType, this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp]);
             };
         }
 
