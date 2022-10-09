@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
+using Windows.Devices.Power;
 using Windows.Graphics.Effects;
 
 namespace Luo_Painter.Brushes
@@ -12,26 +13,26 @@ namespace Luo_Painter.Brushes
         {
             switch (type)
             {
-                case InkType.Brush_Dry:
-                case InkType.Brush_Dry_Mix:
-                case InkType.MaskBrush_Dry:
-                case InkType.MaskBrush_Dry_Mix:
-                case InkType.Circle_Dry:
-                case InkType.Circle_Dry_Mix:
-                case InkType.Line_Dry:
-                case InkType.Line_Dry_Mix:
+                case InkType.Brush:
+                case InkType.Brush_Mix:
+                case InkType.MaskBrush:
+                case InkType.MaskBrush_Mix:
+                case InkType.Circle:
+                case InkType.Circle_Mix:
+                case InkType.Line:
+                case InkType.Line_Mix:
                     ds.DrawImage(image);
                     ds.DrawImage(wet);
                     break;
 
-                case InkType.Brush_Wet_Pattern:
-                case InkType.Brush_Wet_Pattern_Mix:
-                case InkType.MaskBrush_Wet_Pattern:
-                case InkType.MaskBrush_Wet_Pattern_Mix:
-                case InkType.Circle_Wet_Pattern:
-                case InkType.Circle_Wet_Pattern_Mix:
-                case InkType.Line_Wet_Pattern:
-                case InkType.Line_Wet_Pattern_Mix:
+                case InkType.Brush_Pattern:
+                case InkType.Brush_Pattern_Mix:
+                case InkType.MaskBrush_Pattern:
+                case InkType.MaskBrush_Pattern_Mix:
+                case InkType.Circle_Pattern:
+                case InkType.Circle_Pattern_Mix:
+                case InkType.Line_Pattern:
+                case InkType.Line_Pattern_Mix:
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
                     {
                         ds.DrawImage(image);
@@ -39,10 +40,10 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_Wet_Opacity:
-                case InkType.MaskBrush_Wet_Opacity:
-                case InkType.Circle_Wet_Opacity:
-                case InkType.Line_Wet_Opacity:
+                case InkType.Brush_Opacity:
+                case InkType.MaskBrush_Opacity:
+                case InkType.Circle_Opacity:
+                case InkType.Line_Opacity:
                     using (OpacityEffect opacity = this.GetOpacity(wet))
                     {
                         ds.DrawImage(image);
@@ -50,14 +51,14 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_Wet_Pattern_Opacity:
-                case InkType.MaskBrush_Wet_Pattern_Opacity:
-                case InkType.Circle_Wet_Pattern_Opacity:
-                case InkType.Line_Wet_Pattern_Opacity:
-                case InkType.Brush_WetComposite_Pattern_Opacity_Blend:
-                case InkType.MaskBrush_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Circle_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Line_WetComposite_Pattern_Opacity_Blend:
+                case InkType.Brush_Pattern_Opacity:
+                case InkType.MaskBrush_Pattern_Opacity:
+                case InkType.Circle_Pattern_Opacity:
+                case InkType.Line_Pattern_Opacity:
+                case InkType.Brush_Pattern_Opacity_Blend:
+                case InkType.MaskBrush_Pattern_Opacity_Blend:
+                case InkType.Circle_Pattern_Opacity_Blend:
+                case InkType.Line_Pattern_Opacity_Blend:
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
                     using (OpacityEffect opacity = this.GetOpacity(pattern))
                     using (BlendEffect blend = this.GetBlend(image, opacity))
@@ -66,30 +67,30 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_WetComposite_Blend:
-                case InkType.MaskBrush_WetComposite_Blend:
-                case InkType.Circle_WetComposite_Blend:
-                case InkType.Line_WetComposite_Blend:
+                case InkType.Brush_Blend:
+                case InkType.MaskBrush_Blend:
+                case InkType.Circle_Blend:
+                case InkType.Line_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
                     {
                         ds.DrawImage(blend);
                     }
                     break;
 
-                case InkType.Brush_WetComposite_Pattern_Blend:
-                case InkType.MaskBrush_WetComposite_Pattern_Blend:
-                case InkType.Circle_WetComposite_Pattern_Blend:
-                case InkType.Line_WetComposite_Pattern_Blend:
+                case InkType.Brush_Pattern_Blend:
+                case InkType.MaskBrush_Pattern_Blend:
+                case InkType.Circle_Pattern_Blend:
+                case InkType.Line_Pattern_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
                     {
                         ds.DrawImage(blend);
                     }
                     break;
 
-                case InkType.Brush_WetComposite_Opacity_Blend:
-                case InkType.MaskBrush_WetComposite_Opacity_Blend:
-                case InkType.Circle_WetComposite_Opacity_Blend:
-                case InkType.Line_WetComposite_Opacity_Blend:
+                case InkType.Brush_Opacity_Blend:
+                case InkType.MaskBrush_Opacity_Blend:
+                case InkType.Circle_Opacity_Blend:
+                case InkType.Line_Opacity_Blend:
                     using (OpacityEffect opacity = this.GetOpacity(wet))
                     using (BlendEffect blend = this.GetBlend(image, opacity))
                     {
@@ -97,10 +98,10 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_WetBlur_Blur:
-                case InkType.MaskBrush_WetBlur_Blur:
-                case InkType.Circle_WetBlur_Blur:
-                case InkType.Line_WetBlur_Blur:
+                case InkType.Brush_Blur:
+                case InkType.MaskBrush_Blur:
+                case InkType.Circle_Blur:
+                case InkType.Line_Blur:
                     using (AlphaMaskEffect blur = this.GetBlur(image, wet))
                     {
                         ds.DrawImage(image);
@@ -108,10 +109,10 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_WetBlur_Pattern_Blur:
-                case InkType.MaskBrush_WetBlur_Pattern_Blur:
-                case InkType.Circle_WetBlur_Pattern_Blur:
-                case InkType.Line_WetBlur_Pattern_Blur:
+                case InkType.Brush_Pattern_Blur:
+                case InkType.MaskBrush_Pattern_Blur:
+                case InkType.Circle_Pattern_Blur:
+                case InkType.Line_Pattern_Blur:
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
                     using (AlphaMaskEffect blur = this.GetBlur(image, pattern))
                     {
@@ -120,10 +121,10 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_WetMosaic_Mosaic:
-                case InkType.MaskBrush_WetMosaic_Mosaic:
-                case InkType.Circle_WetMosaic_Mosaic:
-                case InkType.Line_WetMosaic_Mosaic:
+                case InkType.Brush_Mosaic:
+                case InkType.MaskBrush_Mosaic:
+                case InkType.Circle_Mosaic:
+                case InkType.Line_Mosaic:
                     using (AlphaMaskEffect mosaic = this.GetMosaic(image, wet))
                     {
                         ds.DrawImage(image);
@@ -131,10 +132,10 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_WetMosaic_Pattern_Mosaic:
-                case InkType.MaskBrush_WetMosaic_Pattern_Mosaic:
-                case InkType.Circle_WetMosaic_Pattern_Mosaic:
-                case InkType.Line_WetMosaic_Pattern_Mosaic:
+                case InkType.Brush_Pattern_Mosaic:
+                case InkType.MaskBrush_Pattern_Mosaic:
+                case InkType.Circle_Pattern_Mosaic:
+                case InkType.Line_Pattern_Mosaic:
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
                     using (AlphaMaskEffect mosaic = this.GetMosaic(image, pattern))
                     {
@@ -143,8 +144,8 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Erase_Dry:
-                case InkType.Erase_WetComposite_Opacity:
+                case InkType.Erase:
+                case InkType.Erase_Opacity:
                     using (ArithmeticCompositeEffect erase = this.GetErase(image, wet))
                     {
                         ds.DrawImage(erase);
@@ -164,46 +165,46 @@ namespace Luo_Painter.Brushes
         {
             switch (type)
             {
-                case InkType.Brush_Dry:
-                case InkType.Brush_Dry_Mix:
-                case InkType.MaskBrush_Dry:
-                case InkType.MaskBrush_Dry_Mix:
-                case InkType.Circle_Dry:
-                case InkType.Circle_Dry_Mix:
-                case InkType.Line_Dry:
-                case InkType.Line_Dry_Mix:
+                case InkType.Brush:
+                case InkType.Brush_Mix:
+                case InkType.MaskBrush:
+                case InkType.MaskBrush_Mix:
+                case InkType.Circle:
+                case InkType.Circle_Mix:
+                case InkType.Line:
+                case InkType.Line_Mix:
                     return InkPresenter.GetComposite(image, wet);
 
-                case InkType.Brush_Wet_Pattern:
-                case InkType.Brush_Wet_Pattern_Mix:
-                case InkType.MaskBrush_Wet_Pattern:
-                case InkType.MaskBrush_Wet_Pattern_Mix:
-                case InkType.Circle_Wet_Pattern:
-                case InkType.Circle_Wet_Pattern_Mix:
-                case InkType.Line_Wet_Pattern:
-                case InkType.Line_Wet_Pattern_Mix:
+                case InkType.Brush_Pattern:
+                case InkType.Brush_Pattern_Mix:
+                case InkType.MaskBrush_Pattern:
+                case InkType.MaskBrush_Pattern_Mix:
+                case InkType.Circle_Pattern:
+                case InkType.Circle_Pattern_Mix:
+                case InkType.Line_Pattern:
+                case InkType.Line_Pattern_Mix:
                     {
                         AlphaMaskEffect pattern = this.GetPattern(wet);
                         return InkPresenter.GetComposite(image, pattern);
                     }
 
-                case InkType.Brush_Wet_Opacity:
-                case InkType.MaskBrush_Wet_Opacity:
-                case InkType.Circle_Wet_Opacity:
-                case InkType.Line_Wet_Opacity:
+                case InkType.Brush_Opacity:
+                case InkType.MaskBrush_Opacity:
+                case InkType.Circle_Opacity:
+                case InkType.Line_Opacity:
                     {
                         OpacityEffect opacity = this.GetOpacity(wet);
                         return InkPresenter.GetComposite(image, opacity);
                     }
 
-                case InkType.Brush_Wet_Pattern_Opacity:
-                case InkType.MaskBrush_Wet_Pattern_Opacity:
-                case InkType.Circle_Wet_Pattern_Opacity:
-                case InkType.Line_Wet_Pattern_Opacity:
-                case InkType.Brush_WetComposite_Pattern_Opacity_Blend:
-                case InkType.MaskBrush_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Circle_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Line_WetComposite_Pattern_Opacity_Blend:
+                case InkType.Brush_Pattern_Opacity:
+                case InkType.MaskBrush_Pattern_Opacity:
+                case InkType.Circle_Pattern_Opacity:
+                case InkType.Line_Pattern_Opacity:
+                case InkType.Brush_Pattern_Opacity_Blend:
+                case InkType.MaskBrush_Pattern_Opacity_Blend:
+                case InkType.Circle_Pattern_Opacity_Blend:
+                case InkType.Line_Pattern_Opacity_Blend:
                     {
                         AlphaMaskEffect pattern = this.GetPattern(wet);
                         OpacityEffect opacity = this.GetOpacity(pattern);
@@ -211,66 +212,66 @@ namespace Luo_Painter.Brushes
                         return blend;
                     }
 
-                case InkType.Brush_WetComposite_Blend:
-                case InkType.MaskBrush_WetComposite_Blend:
-                case InkType.Circle_WetComposite_Blend:
-                case InkType.Line_WetComposite_Blend:
+                case InkType.Brush_Blend:
+                case InkType.MaskBrush_Blend:
+                case InkType.Circle_Blend:
+                case InkType.Line_Blend:
                     {
                         BlendEffect blend = this.GetBlend(image, wet);
                         return blend;
                     }
 
-                case InkType.Brush_WetComposite_Pattern_Blend:
-                case InkType.MaskBrush_WetComposite_Pattern_Blend:
-                case InkType.Circle_WetComposite_Pattern_Blend:
-                case InkType.Line_WetComposite_Pattern_Blend:
+                case InkType.Brush_Pattern_Blend:
+                case InkType.MaskBrush_Pattern_Blend:
+                case InkType.Circle_Pattern_Blend:
+                case InkType.Line_Pattern_Blend:
                     {
                         BlendEffect blend = this.GetBlend(image, wet);
                         return blend;
                     }
 
-                case InkType.Brush_WetComposite_Opacity_Blend:
-                case InkType.MaskBrush_WetComposite_Opacity_Blend:
-                case InkType.Circle_WetComposite_Opacity_Blend:
-                case InkType.Line_WetComposite_Opacity_Blend:
+                case InkType.Brush_Opacity_Blend:
+                case InkType.MaskBrush_Opacity_Blend:
+                case InkType.Circle_Opacity_Blend:
+                case InkType.Line_Opacity_Blend:
                     {
                         OpacityEffect opacity = this.GetOpacity(wet);
                         BlendEffect blend = this.GetBlend(image, opacity);
                         return blend;
                     }
 
-                case InkType.Brush_WetBlur_Blur:
-                case InkType.MaskBrush_WetBlur_Blur:
-                case InkType.Circle_WetBlur_Blur:
-                case InkType.Line_WetBlur_Blur:
+                case InkType.Brush_Blur:
+                case InkType.MaskBrush_Blur:
+                case InkType.Circle_Blur:
+                case InkType.Line_Blur:
                     {
                         AlphaMaskEffect blur = this.GetBlur(image, wet);
                         return InkPresenter.GetComposite(image, blur);
                     }
 
-                case InkType.Brush_WetBlur_Pattern_Blur:
-                case InkType.MaskBrush_WetBlur_Pattern_Blur:
-                case InkType.Circle_WetBlur_Pattern_Blur:
-                case InkType.Line_WetBlur_Pattern_Blur:
+                case InkType.Brush_Pattern_Blur:
+                case InkType.MaskBrush_Pattern_Blur:
+                case InkType.Circle_Pattern_Blur:
+                case InkType.Line_Pattern_Blur:
                     {
                         AlphaMaskEffect pattern = this.GetPattern(wet);
                         AlphaMaskEffect blur = this.GetBlur(image, pattern);
                         return InkPresenter.GetComposite(image, blur);
                     }
 
-                case InkType.Brush_WetMosaic_Mosaic:
-                case InkType.MaskBrush_WetMosaic_Mosaic:
-                case InkType.Circle_WetMosaic_Mosaic:
-                case InkType.Line_WetMosaic_Mosaic:
+                case InkType.Brush_Mosaic:
+                case InkType.MaskBrush_Mosaic:
+                case InkType.Circle_Mosaic:
+                case InkType.Line_Mosaic:
                     {
                         AlphaMaskEffect mosaic = this.GetMosaic(image, wet);
                         return InkPresenter.GetComposite(image, mosaic);
                     }
 
-                case InkType.Brush_WetMosaic_Pattern_Mosaic:
-                case InkType.MaskBrush_WetMosaic_Pattern_Mosaic:
-                case InkType.Circle_WetMosaic_Pattern_Mosaic:
-                case InkType.Line_WetMosaic_Pattern_Mosaic:
+                case InkType.Brush_Pattern_Mosaic:
+                case InkType.MaskBrush_Pattern_Mosaic:
+                case InkType.Circle_Pattern_Mosaic:
+                case InkType.Line_Pattern_Mosaic:
                     {
                         AlphaMaskEffect pattern = this.GetPattern(wet);
                         AlphaMaskEffect mosaic = this.GetMosaic(image, pattern);
@@ -278,7 +279,7 @@ namespace Luo_Painter.Brushes
                     }
 
                 case InkType.Erase:
-                case InkType.Erase_WetComposite_Opacity:
+                case InkType.Erase_Opacity:
                     {
                         ArithmeticCompositeEffect erase = this.GetErase(image, wet);
                         return erase;

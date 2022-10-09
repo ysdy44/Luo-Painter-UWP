@@ -102,20 +102,20 @@ namespace Luo_Painter
         {
             switch (this.InkType)
             {
-                case InkType.Brush_Dry:
-                case InkType.Brush_Wet_Pattern:
-                case InkType.Brush_Wet_Opacity:
-                case InkType.Brush_Wet_Pattern_Opacity:
-                case InkType.Brush_WetComposite_Blend:
-                case InkType.Brush_WetComposite_Pattern_Blend:
-                case InkType.Brush_WetComposite_Opacity_Blend:
-                case InkType.Brush_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Brush_WetBlur_Blur:
-                case InkType.Brush_WetBlur_Pattern_Blur:
-                case InkType.Brush_WetMosaic_Mosaic:
-                case InkType.Brush_WetMosaic_Pattern_Mosaic:
-                case InkType.Brush_Dry_Mix:
-                case InkType.Brush_Wet_Pattern_Mix:
+                case InkType.Brush:
+                case InkType.Brush_Pattern:
+                case InkType.Brush_Opacity:
+                case InkType.Brush_Pattern_Opacity:
+                case InkType.Brush_Blend:
+                case InkType.Brush_Pattern_Blend:
+                case InkType.Brush_Opacity_Blend:
+                case InkType.Brush_Pattern_Opacity_Blend:
+                case InkType.Brush_Blur:
+                case InkType.Brush_Pattern_Blur:
+                case InkType.Brush_Mosaic:
+                case InkType.Brush_Pattern_Mosaic:
+                case InkType.Brush_Mix:
+                case InkType.Brush_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         //@DPI 
@@ -126,20 +126,20 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.MaskBrush_Dry:
-                case InkType.MaskBrush_Wet_Pattern:
-                case InkType.MaskBrush_Wet_Opacity:
-                case InkType.MaskBrush_Wet_Pattern_Opacity:
-                case InkType.MaskBrush_WetComposite_Blend:
-                case InkType.MaskBrush_WetComposite_Pattern_Blend:
-                case InkType.MaskBrush_WetComposite_Opacity_Blend:
-                case InkType.MaskBrush_WetComposite_Pattern_Opacity_Blend:
-                case InkType.MaskBrush_WetBlur_Blur:
-                case InkType.MaskBrush_WetBlur_Pattern_Blur:
-                case InkType.MaskBrush_WetMosaic_Mosaic:
-                case InkType.MaskBrush_WetMosaic_Pattern_Mosaic:
-                case InkType.MaskBrush_Dry_Mix:
-                case InkType.MaskBrush_Wet_Pattern_Mix:
+                case InkType.MaskBrush:
+                case InkType.MaskBrush_Pattern:
+                case InkType.MaskBrush_Opacity:
+                case InkType.MaskBrush_Pattern_Opacity:
+                case InkType.MaskBrush_Blend:
+                case InkType.MaskBrush_Pattern_Blend:
+                case InkType.MaskBrush_Opacity_Blend:
+                case InkType.MaskBrush_Pattern_Opacity_Blend:
+                case InkType.MaskBrush_Blur:
+                case InkType.MaskBrush_Pattern_Blur:
+                case InkType.MaskBrush_Mosaic:
+                case InkType.MaskBrush_Pattern_Mosaic:
+                case InkType.MaskBrush_Mix:
+                case InkType.MaskBrush_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         //@DPI
@@ -150,20 +150,20 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.Circle_Dry:
-                case InkType.Circle_Wet_Pattern:
-                case InkType.Circle_Wet_Opacity:
-                case InkType.Circle_Wet_Pattern_Opacity:
-                case InkType.Circle_WetComposite_Blend:
-                case InkType.Circle_WetComposite_Pattern_Blend:
-                case InkType.Circle_WetComposite_Opacity_Blend:
-                case InkType.Circle_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Circle_WetBlur_Blur:
-                case InkType.Circle_WetBlur_Pattern_Blur:
-                case InkType.Circle_WetMosaic_Mosaic:
-                case InkType.Circle_WetMosaic_Pattern_Mosaic:
-                case InkType.Circle_Dry_Mix:
-                case InkType.Circle_Wet_Pattern_Mix:
+                case InkType.Circle:
+                case InkType.Circle_Pattern:
+                case InkType.Circle_Opacity:
+                case InkType.Circle_Pattern_Opacity:
+                case InkType.Circle_Blend:
+                case InkType.Circle_Pattern_Blend:
+                case InkType.Circle_Opacity_Blend:
+                case InkType.Circle_Pattern_Opacity_Blend:
+                case InkType.Circle_Blur:
+                case InkType.Circle_Pattern_Blur:
+                case InkType.Circle_Mosaic:
+                case InkType.Circle_Pattern_Mosaic:
+                case InkType.Circle_Mix:
+                case InkType.Circle_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
@@ -172,20 +172,20 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.Line_Dry:
-                case InkType.Line_Wet_Pattern:
-                case InkType.Line_Wet_Opacity:
-                case InkType.Line_Wet_Pattern_Opacity:
-                case InkType.Line_WetComposite_Blend:
-                case InkType.Line_WetComposite_Pattern_Blend:
-                case InkType.Line_WetComposite_Opacity_Blend:
-                case InkType.Line_WetComposite_Pattern_Opacity_Blend:
-                case InkType.Line_WetBlur_Blur:
-                case InkType.Line_WetBlur_Pattern_Blur:
-                case InkType.Line_WetMosaic_Mosaic:
-                case InkType.Line_WetMosaic_Pattern_Mosaic:
-                case InkType.Line_Dry_Mix:
-                case InkType.Line_Wet_Pattern_Mix:
+                case InkType.Line:
+                case InkType.Line_Pattern:
+                case InkType.Line_Opacity:
+                case InkType.Line_Pattern_Opacity:
+                case InkType.Line_Blend:
+                case InkType.Line_Pattern_Blend:
+                case InkType.Line_Opacity_Blend:
+                case InkType.Line_Pattern_Opacity_Blend:
+                case InkType.Line_Blur:
+                case InkType.Line_Pattern_Blur:
+                case InkType.Line_Mosaic:
+                case InkType.Line_Pattern_Mosaic:
+                case InkType.Line_Mix:
+                case InkType.Line_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
@@ -194,8 +194,8 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.Erase_Dry:
-                case InkType.Erase_WetComposite_Opacity:
+                case InkType.Erase:
+                case InkType.Erase_Opacity:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
