@@ -24,6 +24,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -88,10 +89,14 @@ namespace Luo_Painter
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
 
+        Color Color => this.ColorMenu.Color;
+        Vector4 ColorHdr => this.ColorMenu.ColorHdr;
+
         Vector2 StartingPosition;
         Vector2 Position;
         Vector2 StartingPoint;
         Vector2 Point;
+        float StartingPressure;
         float Pressure;
 
         Transformer StartingBoundsTransformer;
