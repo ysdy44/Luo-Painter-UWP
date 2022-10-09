@@ -52,8 +52,7 @@ namespace Luo_Painter.Brushes
 
             Vector2 position = this.RenderSize.Open;
             float x = this.RenderSize.Open.X + strokeWidth * 10;
-
-            ds.Clear(Colors.Transparent);
+            float xLength = this.RenderSize.End.X;
 
             do
             {
@@ -70,24 +69,19 @@ namespace Luo_Painter.Brushes
 
                 // 4. Foreach
                 x += strokeWidth * 10;
-            } while (x < this.RenderSize.End.X);
+            } while (x < xLength);
 
             ds.DrawLine(position, this.RenderSize.End, color, strokeWidth, this.CanvasStrokeStyle);
         }
 
 
-        public void IsometricFillCircle(
-            CanvasDrawingSession ds,
-            Color color,
-            bool ignoreSpacing
-            )
+        public void IsometricFillCircle(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
         {
             float size = this.Size / 24 + 1;
             float spacing = ignoreSpacing ? 0.25f : this.Spacing;
 
             float x = this.RenderSize.Open.X;
-
-            ds.Clear(Colors.Transparent);
+            float xLength = this.RenderSize.End.X;
 
             ds.FillCircle(this.RenderSize.Open, size * 0.001f, color);
             ds.FillCircle(this.RenderSize.End, size * 0.001f, color);
@@ -108,19 +102,14 @@ namespace Luo_Painter.Brushes
 
                 // 4. Foreach
                 x += sizePressure * spacing;
-            } while (x < this.RenderSize.End.X);
+            } while (x < xLength);
         }
 
 
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardness(
-            CanvasDrawingSession ds,
-            byte[] shaderCode,
-            Vector4 colorHdr,
-            float scaleForDPI
-            )
+        public void IsometricDrawShaderBrushEdgeHardness(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, float scaleForDPI)
         {
             float size = this.Size;
             float spacing = this.Spacing;
@@ -128,11 +117,6 @@ namespace Luo_Painter.Brushes
 
             float x = this.RenderSize.Open.X * scaleForDPI;
             float xLength = this.RenderSize.End.X * scaleForDPI;
-
-            //@DPI 
-            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-            ds.Clear(Colors.Transparent);
 
             ds.DrawImage(new PixelShaderEffect(shaderCode)
             {
@@ -190,12 +174,7 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(
-            CanvasDrawingSession ds,
-            byte[] shaderCode,
-            Vector4 colorHdr,
-            float scaleForDPI
-            )
+        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, float scaleForDPI)
         {
             float size = this.Size;
             float spacing = this.Spacing;
@@ -204,11 +183,6 @@ namespace Luo_Painter.Brushes
             Vector2 position = this.RenderSize.Open * scaleForDPI;
             float x = this.RenderSize.Open.X * scaleForDPI;
             float xLength = this.RenderSize.End.X * scaleForDPI;
-
-            //@DPI 
-            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-            ds.Clear(Colors.Transparent);
 
             do
             {
@@ -241,7 +215,7 @@ namespace Luo_Painter.Brushes
 
                 // 4. Foreach
                 x += sizePressure * spacing;
-            } while (x <xLength);
+            } while (x < xLength);
         }
 
     }

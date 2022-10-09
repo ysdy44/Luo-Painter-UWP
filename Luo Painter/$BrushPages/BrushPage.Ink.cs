@@ -15,7 +15,7 @@ namespace Luo_Painter
         private string RoundConverter(double value) => $"{value:0}";
         private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
         private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
-  
+
         private bool BooleanConverter(bool? value) => value is true;
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
 
@@ -126,18 +126,6 @@ namespace Luo_Painter
         }
         private void Ink()
         {
-            using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
-            {
-                //@DPI 
-                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-
-                this.Ink(ds);
-            }
-            this.InkCanvasControl.Invalidate();
-        }
-
-        private void Ink(CanvasDrawingSession ds)
-        {
             switch (this.InkType)
             {
                 case InkType.Brush_Dry:
@@ -152,8 +140,14 @@ namespace Luo_Painter
                 case InkType.Brush_Wet_Pattern_Mix:
                 case InkType.Brush_WetBlur_Blur:
                 case InkType.Brush_WetBlur_Pattern_Blur:
-                    //@DPI
-                    this.InkPresenter.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
+                    using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
+                    {
+                        //@DPI 
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
+                    }
+                    this.InkCanvasControl.Invalidate();
                     break;
                 case InkType.MaskBrush_Dry:
                 case InkType.MaskBrush_Wet_Pattern:
@@ -167,8 +161,14 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Wet_Pattern_Mix:
                 case InkType.MaskBrush_WetBlur_Blur:
                 case InkType.MaskBrush_WetBlur_Pattern_Blur:
-                    //@DPI
-                    this.InkPresenter.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
+                    using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
+                    {
+                        //@DPI
+                        ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
+                    }
+                    this.InkCanvasControl.Invalidate();
                     break;
                 case InkType.Line_Dry:
                 case InkType.Line_Wet_Pattern:
@@ -182,13 +182,28 @@ namespace Luo_Painter
                 case InkType.Line_Wet_Pattern_Mix:
                 case InkType.Line_WetBlur_Blur:
                 case InkType.Line_WetBlur_Pattern_Blur:
-                    this.InkPresenter.DrawLine(ds, this.Color);
+                    using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
+                    {
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.DrawLine(ds, this.Color);
+                    }
+                    this.InkCanvasControl.Invalidate();
                     break;
                 case InkType.Liquefy:
-                    this.InkPresenter.IsometricFillCircle(ds, this.Color, true);
+                    using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
+                    {
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.IsometricFillCircle(ds, this.Color, true);
+                    }
+                    this.InkCanvasControl.Invalidate();
                     break;
                 default:
-                    this.InkPresenter.IsometricFillCircle(ds, this.Color, false);
+                    using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
+                    {
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.IsometricFillCircle(ds, this.Color, false);
+                    }
+                    this.InkCanvasControl.Invalidate();
                     break;
             }
         }
