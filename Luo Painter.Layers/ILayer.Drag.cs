@@ -1,6 +1,10 @@
-﻿namespace Luo_Painter.Layers
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Input;
+
+namespace Luo_Painter.Layers
 {
-    public interface IDrag
+    public partial interface ILayer : ILayerRender, INotifyPropertyChanged, ICommand, IDisposable
     {
         int Depth { get; set; }
 

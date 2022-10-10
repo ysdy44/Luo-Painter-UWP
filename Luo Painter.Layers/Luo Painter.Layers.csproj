@@ -129,10 +129,10 @@
     <Compile Include="Anchors\Anchor.Segment.cs" />
     <Compile Include="BitmapType.cs" />
     <Compile Include="CanvasDrawingSessionExtensions.cs" />
-    <Compile Include="IDrag.cs" />
     <Compile Include="ILayer.cs" />
-    <Compile Include="IRender.cs" />
-    <Compile Include="ISetup.cs" />
+    <Compile Include="ILayer.Drag.cs" />
+    <Compile Include="ILayer.Render.cs" />
+    <Compile Include="ILayer.Setup.cs" />
     <Compile Include="LayerManagers\ILayerManager.cs" />
     <Compile Include="LayerManagers\LayerManagerExtensions.Clipboard.cs" />
     <Compile Include="LayerManagers\LayerManagerExtensions.Drag.cs" />
