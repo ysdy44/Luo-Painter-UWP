@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Elements;
+﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
@@ -15,7 +16,9 @@ namespace Luo_Painter.TestApp
     public sealed partial class HistorianPage : Page
     {
 
+        Vector2 StartingPosition;
         Vector2 Position;
+
         BitmapLayer BitmapLayer;
         Historian<IHistory> History { get; } = new Historian<IHistory>(20);
 
@@ -116,23 +119,35 @@ namespace Luo_Painter.TestApp
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                this.StartingPosition = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                Rect rect = position.GetRect(12 * properties.Pressure);
+                Stroke stroke = new Stroke
+                {
+                    StartingPosition = this.StartingPosition,
+                    Position = this.Position,
+                    StartingPressure = 1,
+                    Pressure = 1,
+                };
+                StrokeSegment segment = new StrokeSegment(stroke, 12, 0.25f);
+                if (segment.InRadius()) return;
+
+                using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                {
+                    segment.IsometricFillCircle(ds, Colors.White, stroke, segment);
+                }
+
+                Rect rect = this.Position.GetRect(12 * properties.Pressure);
                 this.BitmapLayer.Hit(rect);
 
-                bool result = this.BitmapLayer.IsometricFillCircle(Colors.White, this.Position, position, 1, 1, 12, 0.25f, BitmapType.Source);
-                if (result is false) return;
-
-                this.Position = position;
-
                 this.CanvasControl.Invalidate(); // Invalidate
+
+                this.StartingPosition = this.Position;
             };
             this.Operator.Single_Complete += (point, properties) =>
             {

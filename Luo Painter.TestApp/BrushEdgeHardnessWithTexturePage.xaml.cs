@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Elements;
+﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
@@ -16,7 +17,9 @@ namespace Luo_Painter.TestApp
         readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
 
+        Vector2 StartingPosition;
         Vector2 Position;
+        float StartingPressure;
         float Pressure;
 
         byte[] ShaderCodeBytes;
@@ -63,34 +66,36 @@ namespace Luo_Painter.TestApp
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.Pressure = properties.Pressure;
+                this.StartingPosition = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                this.StartingPressure = properties.Pressure;
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
-                Vector2 position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                float pressure = properties.Pressure;
+                this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
+                this.Pressure = properties.Pressure;
 
-                bool result = this.BitmapLayer.IsometricDrawShaderBrushEdgeHardnessWithTexture(
-                    RectExtensions.GetRect(this.Position, position, (float)this.Brush.Size),
-                    this.ShaderCodeBytes,
-                    BitmapLayer.DodgerBlue,
-                    this.Texture,
-                    true,
-                    this.Position, position,
-                    this.Pressure, pressure,
-                    (float)this.Brush.Size,
-                    (float)this.Brush.Spacing,
-                    (int)this.Brush.Hardness,
-                    BitmapType.Source);
-                if (result is false) return;
+                Stroke stroke = new Stroke
+                {
+                    StartingPosition = this.StartingPosition,
+                    Position = this.Position,
+                    StartingPressure = this.StartingPressure,
+                    Pressure = this.Pressure,
+                };
+                StrokeSegment segment = new StrokeSegment(stroke, (float)this.Brush.Size, (float)this.Brush.Spacing);
+                if (segment.InRadius()) return;
 
-                this.Position = position;
-                this.Pressure = pressure;
+                using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, (float)this.Brush.Size)))
+                {
+                    segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.ShaderCodeBytes, (int)this.Brush.Hardness, BitmapLayer.DodgerBlue, this.Texture, true, stroke, segment);
+                }
 
                 this.CanvasControl.Invalidate(); // Invalidate
+
+                this.StartingPosition = this.Position;
+                this.StartingPressure = this.Pressure;
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
