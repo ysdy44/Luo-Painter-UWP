@@ -124,7 +124,7 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Mosaic:
                 case InkType.Circle_Mosaic:
                 case InkType.Line_Mosaic:
-                    using (AlphaMaskEffect mosaic = this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
+                    using (ScaleEffect mosaic = this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
                     {
                         this.BitmapLayer.Draw(mosaic);
                     }
@@ -134,7 +134,7 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Pattern_Mosaic:
                 case InkType.Circle_Pattern_Mosaic:
                 case InkType.Line_Pattern_Mosaic:
-                    using (AlphaMaskEffect mosaic = this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
+                    using (ScaleEffect mosaic = this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
                     using (AlphaMaskEffect pattern = this.InkPresenter.GetPattern(mosaic))
                     {
                         this.BitmapLayer.Draw(pattern);
