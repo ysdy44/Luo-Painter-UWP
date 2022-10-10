@@ -10,7 +10,7 @@ using Windows.Storage.Streams;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 
-namespace Luo_Painter.Layers.Models
+namespace Luo_Painter.Layers
 {
     [Flags]
     public enum RegionType : uint
@@ -21,7 +21,7 @@ namespace Luo_Painter.Layers.Models
         XYRemainder = 3, // 0011
     }
 
-    public sealed partial class BitmapLayer : LayerBase, ILayer
+    public abstract partial class LayerBase : IDisposable
     {
 
         /// <summary>
@@ -32,6 +32,11 @@ namespace Luo_Painter.Layers.Models
         public const int Unit = 100;
 
         public readonly RegionType RegionType; // XYRemainder
+
+        public readonly int Width; // 250
+        public readonly int Height; // 250
+        public readonly Vector2 Center; // (125, 125)
+        public readonly PixelBounds Bounds; // 0, 0, 250, 250
 
         readonly int XDivisor; // 2
         readonly int YDivisor; // 2
@@ -53,10 +58,10 @@ namespace Luo_Painter.Layers.Models
         public int GetX(int hitIndex) => hitIndex % this.XLength; // 2
         public int GetY(int hitIndex) => hitIndex / this.XLength; // 2
 
-        public int GetLeft(int x) => x * BitmapLayer.Unit; // 200
-        public int GetTop(int y) => y * BitmapLayer.Unit; // 200
-        public int GetWidth(int x) => x == this.XDivisor ? this.XRemainder : BitmapLayer.Unit; // 500
-        public int GetHeight(int y) => y == this.YDivisor ? this.YRemainder : BitmapLayer.Unit; // 500
+        public int GetLeft(int x) => x * LayerBase.Unit; // 200
+        public int GetTop(int y) => y * LayerBase.Unit; // 200
+        public int GetWidth(int x) => x == this.XDivisor ? this.XRemainder : LayerBase.Unit; // 500
+        public int GetHeight(int y) => y == this.YDivisor ? this.YRemainder : LayerBase.Unit; // 500
 
         public Rect GetRect(int x, int y) => new Rect(this.GetLeft(x), this.GetTop(y), this.GetWidth(x), this.GetHeight(y));
         public Rect GetRect(int hitIndex) => this.GetRect(this.GetX(hitIndex), this.GetY(hitIndex));
@@ -69,7 +74,7 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        
+
         public void Hit(FanKit.Transformers.Transformer transformer) => this.Hit((int)transformer.MinX, (int)transformer.MinY, (int)transformer.MaxX, (int)transformer.MaxY);
         public void Hit(FanKit.Transformers.TransformerBorder border) => this.Hit((int)border.Left, (int)border.Top, (int)border.Right, (int)border.Bottom);
         public void Hit(Rect rect) => this.Hit((int)rect.Left, (int)rect.Top, (int)rect.Right, (int)rect.Bottom);
@@ -80,10 +85,10 @@ namespace Luo_Painter.Layers.Models
             if (right < 0) return;
             if (bottom < 0) return;
 
-            left = Math.Max(0, left / BitmapLayer.Unit);
-            top = Math.Max(0, top / BitmapLayer.Unit);
-            right = Math.Min(this.XLength, right / BitmapLayer.Unit + 1);
-            bottom = Math.Min(this.YLength, bottom / BitmapLayer.Unit + 1);
+            left = Math.Max(0, left / LayerBase.Unit);
+            top = Math.Max(0, top / LayerBase.Unit);
+            right = Math.Min(this.XLength, right / LayerBase.Unit + 1);
+            bottom = Math.Min(this.YLength, bottom / LayerBase.Unit + 1);
             for (int x = left; x < right; x++)
             {
                 for (int y = top; y < bottom; y++)
@@ -103,7 +108,7 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        private void SetPixelBytes(IDictionary<int, IBuffer> colors)
+        public void SetPixelBytes(CanvasBitmap SourceRenderTarget, IDictionary<int, IBuffer> colors)
         {
             foreach (var item in colors)
             {
@@ -111,7 +116,7 @@ namespace Luo_Painter.Layers.Models
                 int hitIndex = item.Key;
                 int x = this.GetX(hitIndex);
                 int y = this.GetY(hitIndex);
-                this.SourceRenderTarget.SetPixelBytes(bytes, this.GetLeft(x), this.GetTop(y), this.GetWidth(x), this.GetHeight(y));
+                SourceRenderTarget.SetPixelBytes(bytes, this.GetLeft(x), this.GetTop(y), this.GetWidth(x), this.GetHeight(y));
             }
         }
 

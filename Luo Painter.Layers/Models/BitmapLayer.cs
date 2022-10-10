@@ -7,7 +7,7 @@ using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Xml.Linq;
-using Windows.Foundation;
+using System.Collections.Generic;
 using Windows.Storage.Streams;
 
 namespace Luo_Painter.Layers.Models
@@ -43,6 +43,11 @@ namespace Luo_Painter.Layers.Models
             this.SourceRenderTarget.GetPixelBytes(this.Buffer);
             return this.Buffer;
         }
+
+
+        public Color[] GetInterpolationColorsBySource() => this.GetInterpolationColors(this.SourceRenderTarget);
+        public void SetPixelBytes(IDictionary<int, IBuffer> colors) => base.SetPixelBytes(SourceRenderTarget, colors);
+        public PixelBounds CreatePixelBounds(PixelBounds interpolationBounds, Color[] interpolationColors) => base.CreatePixelBounds(SourceRenderTarget, interpolationBounds, interpolationColors);
 
 
         //@Construct
@@ -128,38 +133,6 @@ namespace Luo_Painter.Layers.Models
 
             this.Pixels = new byte[width * height * 4];
             this.Buffer = this.Pixels.AsBuffer();
-
-
-            this.XDivisor = width / BitmapLayer.Unit;
-            this.YDivisor = height / BitmapLayer.Unit;
-            this.XRemainder = width % BitmapLayer.Unit;
-            this.YRemainder = height % BitmapLayer.Unit;
-
-
-            this.XLength = this.XDivisor;
-            this.YLength = this.YDivisor;
-            if (this.XRemainder is 0 is false)
-            {
-                this.RegionType |= RegionType.XRemainder;
-                this.XLength += 1;
-            }
-            if (this.YRemainder is 0 is false)
-            {
-                this.RegionType |= RegionType.YRemainder;
-                this.YLength += 1;
-            }
-
-
-            this.Hits = new bool[this.XLength * this.YLength];
-
-            this.Bounds = new PixelBounds
-            {
-                Left = 0,
-                Top = 0,
-                Right = width,
-                Bottom = height,
-            };
-            this.Interpolation = new CanvasRenderTarget(resourceCreator, this.XLength, this.YLength, 96);
         }
 
         public XElement Save() => base.Save(this.Type);
@@ -185,12 +158,10 @@ namespace Luo_Painter.Layers.Models
         public override void Dispose()
         {
             base.Dispose();
-     
+
             this.OriginRenderTarget.Dispose();
             this.SourceRenderTarget.Dispose();
             this.TempRenderTarget.Dispose();
-
-            this.Interpolation.Dispose();
         }
     }
 }

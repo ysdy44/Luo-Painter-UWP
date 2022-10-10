@@ -1,37 +1,26 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System.Linq;
+using System;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.Graphics.Effects;
 using Windows.UI;
 
-namespace Luo_Painter.Layers.Models
+namespace Luo_Painter.Layers
 {
-    public sealed partial class BitmapLayer : LayerBase, ILayer
+    public abstract partial class LayerBase : IDisposable
     {
 
-        public readonly PixelBounds Bounds; // 0, 0, 250, 250
         readonly CanvasRenderTarget Interpolation;
 
         public ScaleEffect GetInterpolationScaled() => new ScaleEffect
         {
-            Scale = new Vector2(BitmapLayer.Unit),
+            Scale = new Vector2(LayerBase.Unit),
             InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
             Source = this.Interpolation
         };
 
 
-        public Color[] GetInterpolationColorsBySource() => this.GetInterpolationColors(this.SourceRenderTarget);
-        public Color[] GetInterpolationColorsByDifference() => this.GetInterpolationColors(new LuminanceToAlphaEffect
-        {
-            Source = new BlendEffect
-            {
-                Mode = BlendEffectMode.Difference,
-                Foreground = this.SourceRenderTarget,
-                Background = this.OriginRenderTarget
-            }
-        });
         public Color[] GetInterpolationColors(IGraphicsEffectSource source)
         {
             using (CanvasDrawingSession ds = this.Interpolation.CreateDrawingSession())
@@ -48,11 +37,11 @@ namespace Luo_Painter.Layers.Models
                         {
                             ds.DrawImage(new ScaleEffect
                             {
-                                Scale = new Vector2(1f / BitmapLayer.Unit),
+                                Scale = new Vector2(1f / LayerBase.Unit),
                                 InterpolationMode = CanvasImageInterpolation.Anisotropic,
                                 Source = new CropEffect
                                 {
-                                    SourceRectangle = new Rect(x * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit),
+                                    SourceRectangle = new Rect(x * LayerBase.Unit, y * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit),
                                     Source = source
                                 }
                             });
@@ -68,11 +57,11 @@ namespace Luo_Painter.Layers.Models
                         {
                             ds.DrawImage(new ScaleEffect
                             {
-                                Scale = new Vector2(1f / BitmapLayer.Unit, 1f / this.YRemainder),
+                                Scale = new Vector2(1f / LayerBase.Unit, 1f / this.YRemainder),
                                 InterpolationMode = CanvasImageInterpolation.Anisotropic,
                                 Source = new CropEffect
                                 {
-                                    SourceRectangle = new Rect(x * BitmapLayer.Unit, this.YDivisor * BitmapLayer.Unit, BitmapLayer.Unit, this.YRemainder),
+                                    SourceRectangle = new Rect(x * LayerBase.Unit, this.YDivisor * LayerBase.Unit, LayerBase.Unit, this.YRemainder),
                                     Source = source
                                 }
                             });
@@ -88,11 +77,11 @@ namespace Luo_Painter.Layers.Models
                         {
                             ds.DrawImage(new ScaleEffect
                             {
-                                Scale = new Vector2(1f / this.XRemainder, 1f / BitmapLayer.Unit),
+                                Scale = new Vector2(1f / this.XRemainder, 1f / LayerBase.Unit),
                                 InterpolationMode = CanvasImageInterpolation.Anisotropic,
                                 Source = new CropEffect
                                 {
-                                    SourceRectangle = new Rect(this.XDivisor * BitmapLayer.Unit, y * BitmapLayer.Unit, this.XRemainder, BitmapLayer.Unit),
+                                    SourceRectangle = new Rect(this.XDivisor * LayerBase.Unit, y * LayerBase.Unit, this.XRemainder, LayerBase.Unit),
                                     Source = source
                                 }
                             });
@@ -110,7 +99,7 @@ namespace Luo_Painter.Layers.Models
                             InterpolationMode = CanvasImageInterpolation.Anisotropic,
                             Source = new CropEffect
                             {
-                                SourceRectangle = new Rect(this.XDivisor * BitmapLayer.Unit, this.YDivisor * BitmapLayer.Unit, this.XRemainder, this.YRemainder),
+                                SourceRectangle = new Rect(this.XDivisor * LayerBase.Unit, this.YDivisor * LayerBase.Unit, this.XRemainder, this.YRemainder),
                                 Source = source
                             }
                         });
@@ -121,7 +110,7 @@ namespace Luo_Painter.Layers.Models
 
                 ds.DrawImage(new ScaleEffect
                 {
-                    Scale = new Vector2(1f / BitmapLayer.Unit),
+                    Scale = new Vector2(1f / LayerBase.Unit),
                     InterpolationMode = CanvasImageInterpolation.Anisotropic,
                     Source = new BorderEffect
                     {
@@ -167,7 +156,7 @@ namespace Luo_Painter.Layers.Models
         }
         public PixelBounds CreateInterpolationBoundsScaled(Color[] interpolationColors)
         {
-            return PixelBounds.CreateFromBytes(interpolationColors, this.XLength, this.YLength).Scale(BitmapLayer.Unit, this.Width, this.Height);
+            return PixelBounds.CreateFromBytes(interpolationColors, this.XLength, this.YLength).Scale(LayerBase.Unit, this.Width, this.Height);
         }
         public PixelBounds CreateInterpolationBounds() => new PixelBounds
         {
@@ -178,18 +167,18 @@ namespace Luo_Painter.Layers.Models
         };
 
 
-        public PixelBounds CreatePixelBounds(PixelBounds interpolationBounds, Color[] interpolationColors)
+        public PixelBounds CreatePixelBounds(CanvasBitmap SourceRenderTarget, PixelBounds interpolationBounds, Color[] interpolationColors)
         {
             // Left
             bool hasMaxLeft = false;
             int indexLeft = interpolationBounds.Left;
-            int maxLeft = BitmapLayer.Unit;
+            int maxLeft = LayerBase.Unit;
             for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
             {
                 byte a = interpolationColors[indexLeft + y * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                int left = PixelBounds.CreateLeftFromBitmap(this.SourceRenderTarget, indexLeft * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                int left = PixelBounds.CreateLeftFromBitmap(SourceRenderTarget, indexLeft * LayerBase.Unit, y * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                 if (left is int.MaxValue) continue;
 
                 if (maxLeft > left)
@@ -202,13 +191,13 @@ namespace Luo_Painter.Layers.Models
             if (hasMaxLeft is false)
             {
                 indexLeft = interpolationBounds.Left + 1;
-                maxLeft = BitmapLayer.Unit;
+                maxLeft = LayerBase.Unit;
                 for (int y = interpolationBounds.Top; y < interpolationBounds.Bottom; y++)
                 {
                     byte a = interpolationColors[indexLeft + y * this.XLength].A;
                     if (a is byte.MinValue) continue;
 
-                    int left = PixelBounds.CreateLeftFromBitmap(this.SourceRenderTarget, indexLeft * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    int left = PixelBounds.CreateLeftFromBitmap(SourceRenderTarget, indexLeft * LayerBase.Unit, y * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                     if (left is int.MaxValue) continue;
 
                     if (maxLeft > left)
@@ -221,14 +210,14 @@ namespace Luo_Painter.Layers.Models
 
             // Top
             int indexTop = interpolationBounds.Top;
-            int maxTop = BitmapLayer.Unit;
+            int maxTop = LayerBase.Unit;
             bool hasMaxTop = false;
             for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
             {
                 byte a = interpolationColors[x + indexTop * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                int top = PixelBounds.CreateTopFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexTop * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                int top = PixelBounds.CreateTopFromBitmap(SourceRenderTarget, x * LayerBase.Unit, indexTop * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                 if (top is int.MaxValue) continue;
 
                 if (maxTop > top)
@@ -241,13 +230,13 @@ namespace Luo_Painter.Layers.Models
             if (hasMaxTop is false)
             {
                 indexTop = interpolationBounds.Top + 1;
-                maxTop = BitmapLayer.Unit;
+                maxTop = LayerBase.Unit;
                 for (int x = interpolationBounds.Left; x < interpolationBounds.Right; x++)
                 {
                     byte a = interpolationColors[x + indexTop * this.XLength].A;
                     if (a is byte.MinValue) continue;
 
-                    int top = PixelBounds.CreateTopFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexTop * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    int top = PixelBounds.CreateTopFromBitmap(SourceRenderTarget, x * LayerBase.Unit, indexTop * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                     if (top is int.MaxValue) continue;
 
                     if (maxTop > top)
@@ -267,7 +256,7 @@ namespace Luo_Painter.Layers.Models
                 byte a = interpolationColors[indexRight + y * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                int right = PixelBounds.CreateRightFromBitmap(this.SourceRenderTarget, indexRight * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                int right = PixelBounds.CreateRightFromBitmap(SourceRenderTarget, indexRight * LayerBase.Unit, y * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                 if (right is int.MinValue) continue;
 
                 if (minRight < right)
@@ -286,7 +275,7 @@ namespace Luo_Painter.Layers.Models
                     byte a = interpolationColors[indexRight + y * this.XLength].A;
                     if (a is byte.MinValue) continue;
 
-                    int right = PixelBounds.CreateRightFromBitmap(this.SourceRenderTarget, indexRight * BitmapLayer.Unit, y * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    int right = PixelBounds.CreateRightFromBitmap(SourceRenderTarget, indexRight * LayerBase.Unit, y * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                     if (right is int.MinValue) continue;
 
                     if (minRight < right)
@@ -306,7 +295,7 @@ namespace Luo_Painter.Layers.Models
                 byte a = interpolationColors[x + indexBottom * this.XLength].A;
                 if (a is byte.MinValue) continue;
 
-                int bottom = PixelBounds.CreateBottomFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexBottom * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                int bottom = PixelBounds.CreateBottomFromBitmap(SourceRenderTarget, x * LayerBase.Unit, indexBottom * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                 if (bottom is int.MinValue) continue;
 
                 if (minBottom < bottom)
@@ -325,7 +314,7 @@ namespace Luo_Painter.Layers.Models
                     byte a = interpolationColors[x + indexBottom * this.XLength].A;
                     if (a is byte.MinValue) continue;
 
-                    int bottom = PixelBounds.CreateBottomFromBitmap(this.SourceRenderTarget, x * BitmapLayer.Unit, indexBottom * BitmapLayer.Unit, BitmapLayer.Unit, BitmapLayer.Unit, this.Width, this.Height);
+                    int bottom = PixelBounds.CreateBottomFromBitmap(SourceRenderTarget, x * LayerBase.Unit, indexBottom * LayerBase.Unit, LayerBase.Unit, LayerBase.Unit, this.Width, this.Height);
                     if (bottom is int.MinValue) continue;
 
                     if (minBottom < bottom)
@@ -337,10 +326,10 @@ namespace Luo_Painter.Layers.Models
 
             return new PixelBounds
             {
-                Left = indexLeft * BitmapLayer.Unit + maxLeft,
-                Top = indexTop * BitmapLayer.Unit + maxTop,
-                Right = System.Math.Min(this.Width, indexRight * BitmapLayer.Unit + minRight),
-                Bottom = System.Math.Min(this.Height, indexBottom * BitmapLayer.Unit + minBottom)
+                Left = indexLeft * LayerBase.Unit + maxLeft,
+                Top = indexTop * LayerBase.Unit + maxTop,
+                Right = System.Math.Min(this.Width, indexRight * LayerBase.Unit + minRight),
+                Bottom = System.Math.Min(this.Height, indexBottom * LayerBase.Unit + minBottom)
             };
         }
 

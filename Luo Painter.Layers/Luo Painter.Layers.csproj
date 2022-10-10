@@ -144,6 +144,8 @@
     <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.Export.cs" />
     <Compile Include="Layers\LayerBase.History.cs" />
+    <Compile Include="Layers\LayerBase.Interpolation.cs" />
+    <Compile Include="Layers\LayerBase.Region.cs" />
     <Compile Include="Layers\LayerBase.Render.cs" />
     <Compile Include="Layers\LayerBase.Setup.cs" />
     <Compile Include="Layers\LayerBase.Thumbnail.cs" />
@@ -156,8 +158,6 @@
     <Compile Include="Models\BitmapLayer.FloodSelect.cs" />
     <Compile Include="Models\BitmapLayer.History.cs" />
     <Compile Include="Models\BitmapLayer.Paint.cs" />
-    <Compile Include="Models\BitmapLayer.Region.cs" />
-    <Compile Include="Models\BitmapLayer.PixelBounds.cs" />
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
     <Compile Include="Models\BitmapLayer.Render.cs" />
     <Compile Include="Models\BitmapLayer.Setup.cs" />
