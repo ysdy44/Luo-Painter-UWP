@@ -19,6 +19,6 @@ namespace Luo_Painter.Layers
         BlendEffectMode? StartingBlendMode { get; }
         void CacheBlendMode();
 
-        void CopyWith(IRender layerBase);
+        void CopyWith(LayerBase layerBase);
     }
 }

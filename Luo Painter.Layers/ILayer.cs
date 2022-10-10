@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Layers
 {
-    public interface ILayer : ILayerRender, IRender, IDrag, ISetup, INotifyPropertyChanged, ICommand, IDisposable
+    public interface ILayer : ILayerRender, IDrag, ISetup, IRender, INotifyPropertyChanged, ICommand, IDisposable
     {
         string Id { get; }
         LayerNodes Children { get; }

@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IRender, IDisposable
+    public abstract partial class LayerBase : IDisposable
     {
 
         protected XElement Save(object type) => new XElement("Layer",
