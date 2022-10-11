@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter
 {
@@ -25,16 +26,32 @@ namespace Luo_Painter
                 this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
                 this.OpacitySlider.Minimum = 0d;
                 this.SpacingSlider.Minimum = this.SpacingRange.XRange.Minimum;
+                this.FlowSlider.Minimum = 0d;
 
                 // 2.Value
                 this.SizeSlider.Value = this.SizeRange.ConvertYToX(presenter.Size);
                 this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
                 this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(presenter.Spacing / 100);
+                this.FlowSlider.Value = System.Math.Clamp(presenter.Flow * 100d, 0d, 100d);
 
                 // 3.Maximum
                 this.SizeSlider.Maximum = this.SizeRange.XRange.Maximum;
                 this.OpacitySlider.Maximum = 100d;
                 this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
+                this.FlowSlider.Maximum = 100d;
+
+
+                switch (presenter.Shape)
+                {
+                    case Windows.UI.Input.Inking.PenTipShape.Circle:
+                        this.ShapeListBox.SelectedIndex = presenter.IsStroke ? 1 : 0;
+                        break;
+                    case Windows.UI.Input.Inking.PenTipShape.Rectangle:
+                        this.ShapeListBox.SelectedIndex = presenter.IsStroke ? 3 : 2;
+                        break;
+                    default:
+                        break;
+                }
 
 
                 this.NoneRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.None;
@@ -52,12 +69,12 @@ namespace Luo_Painter
 
 
                 this.MaskButton.IsOn = presenter.AllowMask;
-                if (string.IsNullOrEmpty(presenter.MaskTexture) is false) this.MaskImage.UriSource = new System.Uri(presenter.MaskTexture);
+                this.MaskImage.UriSource = string.IsNullOrEmpty(presenter.MaskTexture) ? null : new System.Uri(presenter.MaskTexture);
                 this.RotateButton.IsChecked = presenter.Rotate;
 
 
                 this.PatternButton.IsOn = presenter.AllowPattern;
-                if (string.IsNullOrEmpty(presenter.PatternTexture) is false) this.PatternImage.UriSource = new System.Uri(presenter.PatternTexture);
+                this.PatternImage.UriSource = string.IsNullOrEmpty(presenter.PatternTexture) ? null : new System.Uri(presenter.PatternTexture);
                 this.StepTextBox.Text = presenter.Step.ToString();
             }
             this.InkIsEnabled = true;

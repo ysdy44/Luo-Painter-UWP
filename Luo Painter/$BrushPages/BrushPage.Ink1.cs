@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using Windows.UI.Input.Inking;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -35,6 +36,59 @@ namespace Luo_Painter
 
                 if (this.ShaderCodeByteIsEnabled is false) return;
                 System.Threading.Tasks.Task.Run(this.InkAsync);
+            };
+            this.FlowSlider.ValueChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
+                this.InkPresenter.Flow = (float)flow;
+                this.InkType = this.InkPresenter.GetType();
+
+                if (this.ShaderCodeByteIsEnabled is false) return;
+                System.Threading.Tasks.Task.Run(this.InkAsync);
+            };
+
+            this.ShapeListBox.SelectionChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+
+                switch (this.ShapeListBox.SelectedIndex)
+                {
+                    case 0:
+                        this.InkPresenter.Shape = PenTipShape.Circle;
+                        this.InkPresenter.IsStroke = false;
+                        this.InkType = this.InkPresenter.GetType();
+
+                        if (this.ShaderCodeByteIsEnabled is false) break;
+                        lock (this.InkLocker) this.Ink();
+                        break;
+                    case 1:
+                        this.InkPresenter.Shape = PenTipShape.Circle;
+                        this.InkPresenter.IsStroke = true;
+                        this.InkType = this.InkPresenter.GetType();
+
+                        if (this.ShaderCodeByteIsEnabled is false) break;
+                        lock (this.InkLocker) this.Ink();
+                        break;
+                    case 2:
+                        this.InkPresenter.Shape = PenTipShape.Rectangle;
+                        this.InkPresenter.IsStroke = false;
+                        this.InkType = this.InkPresenter.GetType();
+
+                        if (this.ShaderCodeByteIsEnabled is false) break;
+                        lock (this.InkLocker) this.Ink();
+                        break;
+                    case 3:
+                        this.InkPresenter.Shape = PenTipShape.Rectangle;
+                        this.InkPresenter.IsStroke = true;
+                        this.InkType = this.InkPresenter.GetType();
+
+                        if (this.ShaderCodeByteIsEnabled is false) break;
+                        lock (this.InkLocker) this.Ink();
+                        break;
+                    default:
+                        break;
+                }
             };
 
             this.NoneRadioButton.Checked += (s, e) =>
