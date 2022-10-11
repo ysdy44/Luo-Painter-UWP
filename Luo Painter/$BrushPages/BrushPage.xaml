@@ -147,7 +147,7 @@
                             />
 
 
-                        <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                        <Border CornerRadius="8" Margin="0,4,0,4" Height="170" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                             <StackPanel>
 
                                 <!--Size-->
@@ -212,13 +212,19 @@
                                     </Slider.Header>
                                 </Slider>
 
-                                <!--Spacing-->
+                            </StackPanel>
+                        </Border>
+
+                        <Border CornerRadius="8" Margin="0,4,0,4" Height="170" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                                Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}">
+                            <StackPanel>
+
+
                                 <Slider 
                                     x:Name="SpacingSlider"
                                     SmallChange="10000"
                                     StepFrequency="10000" 
                                     Style="{StaticResource AppSliderStyle}" 
-                                    Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}"
                                     >
                                     <FrameworkElement.Tag>
                                         Spacing
@@ -244,6 +250,51 @@
                                         </Button>
                                     </Slider.Header>
                                 </Slider>
+
+                                <!--Flow-->
+                                <Slider 
+                                    x:Name="FlowSlider" 
+                                    Style="{StaticResource AppSliderStyle}" 
+                                    Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
+                                    >
+                                    <FrameworkElement.Tag>
+                                        Flow
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                           x:Name="FlowButton"
+                                            Padding="4,0" 
+                                            MinWidth="44" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}"
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind RoundConverter(FlowSlider.Value), Mode=OneWay}" />
+                                                <Run>%</Run>
+                                            </TextBlock>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+
+                                <!--Shape-->
+                                <TextBlock x:Name="ShapeTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                           Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
+                                    Shape
+                                </TextBlock>
+                                <ListBox x:Name="ShapeListBox" Margin="0,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                         Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
+                                    <Ellipse Width="32" Height="32" Fill="White"/>
+                                    <Ellipse Width="32" Height="32" StrokeThickness="1" Stroke="White"/>
+                                    <Rectangle Width="32" Height="32" Fill="White"/>
+                                    <Rectangle Width="32" Height="32" StrokeThickness="1" Stroke="White"/>
+                                </ListBox>
 
                             </StackPanel>
                         </Border>
@@ -413,15 +464,19 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                                <Viewbox>
-                                    <Grid>
-                                        <local:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
-                                        <local:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineRadioButton.IsChecked), Mode=OneWay}"/>
-                                        <local:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticRadioButton.IsChecked), Mode=OneWay}"/>
-                                        <local:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeRadioButton.IsChecked), Mode=OneWay}"/>
-                                        <local:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticRadioButton.IsChecked), Mode=OneWay}"/>
-                                    </Grid>
-                                </Viewbox>
+                                <Grid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                                    <Grid.RenderTransformOrigin>
+                                        0.5, 1
+                                    </Grid.RenderTransformOrigin>
+                                    <Grid.RenderTransform>
+                                        <ScaleTransform ScaleX="3.65" ScaleY="3.65"/>
+                                    </Grid.RenderTransform>
+                                    <local:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
+                                    <local:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineRadioButton.IsChecked), Mode=OneWay}"/>
+                                    <local:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticRadioButton.IsChecked), Mode=OneWay}"/>
+                                    <local:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeRadioButton.IsChecked), Mode=OneWay}"/>
+                                    <local:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticRadioButton.IsChecked), Mode=OneWay}"/>
+                                </Grid>
                             </Border>
                             <Border Grid.Column="1" Padding="9,3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="4" >

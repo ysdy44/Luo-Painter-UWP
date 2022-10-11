@@ -21,6 +21,8 @@ namespace Luo_Painter
 
         private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
         private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility MaskVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMask) ? Visibility.Visible : Visibility.Collapsed;
@@ -44,49 +46,6 @@ namespace Luo_Painter
 
 
         #endregion
-
-        public void ConstructInk(PaintBrush brush)
-        {
-            this.InkIsEnabled = false;
-            {
-                this.SizeSlider.Value = this.SizeRange.ConvertYToX(brush.Size);
-                this.OpacitySlider.Value = brush.Opacity * 100;
-                this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(brush.Spacing * 100);
-
-                this.NoneRadioButton.IsChecked = brush.Hardness is BrushEdgeHardness.None;
-                this.CosineRadioButton.IsChecked = brush.Hardness is BrushEdgeHardness.Cosine;
-                this.QuadraticRadioButton.IsChecked = brush.Hardness is BrushEdgeHardness.Quadratic;
-                this.CubeRadioButton.IsChecked = brush.Hardness is BrushEdgeHardness.Cube;
-                this.QuarticRadioButton.IsChecked = brush.Hardness is BrushEdgeHardness.Quartic;
-
-                if (brush.Mask is PaintTexture mask)
-                {
-                    this.MaskButton.IsOn = true;
-                    this.RotateButton.IsChecked = brush.Rotate;
-                    this.MaskImage.UriSource = new System.Uri(mask.Texture);
-                }
-                else
-                {
-                    this.MaskButton.IsOn = false;
-                    this.RotateButton.IsChecked = false;
-                }
-
-                if (brush.Pattern is PaintTexture pattern)
-                {
-                    this.PatternButton.IsOn = true;
-                    this.PatternImage.UriSource = new System.Uri(pattern.Texture);
-                    this.Step.Size = pattern.Step;
-                    this.StepTextBox.Text = this.Step.ToString();
-                }
-                else
-                {
-                    this.PatternButton.IsOn = false;
-                    this.Step.Size = 1024;
-                    this.StepTextBox.Text = 1024.ToString();
-                }
-            }
-            this.InkIsEnabled = true;
-        }
 
         private void InkAsync()
         {
