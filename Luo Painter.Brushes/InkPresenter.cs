@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System.Numerics;
+using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Brushes
 {
@@ -9,13 +9,18 @@ namespace Luo_Painter.Brushes
 
         public float Size { get; set; } = 22f;
         public float Opacity { get; set; } = 1f;
+
         public float Spacing { get; set; } = 0.25f;
+        public float Flow { get; set; } = 1f;
+
+        public PenTipShape Shape { get; set; }
+        public bool IsStroke { get; set; }
+
+        public BlendEffectMode BlendMode { get; set; } = (BlendEffectMode)(-1);
         public BrushEdgeHardness Hardness { get; set; }
 
         public bool Rotate { get; set; }
         public int Step { get; set; } = 1024;
-
-        public BlendEffectMode BlendMode { get; set; }
 
         public bool AllowMask { get; private set; }
         public string MaskTexture { get; private set; }
@@ -33,36 +38,6 @@ namespace Luo_Painter.Brushes
             this.Hardness = brush.Hardness;
             this.Rotate = brush.Rotate;
             this.Step = brush.Step;
-        }
-
-        public void SetMask(bool allowMask, CanvasBitmap mask = null)
-        {
-            this.AllowMask = allowMask;
-
-            if (mask is null) return;
-
-            if (this.Mask is null)
-                this.Mask = mask;
-            else
-            {
-                this.Mask.Dispose();
-                this.Mask = mask;
-            }
-        }
-
-        public void SetPattern(bool allowPattern, CanvasBitmap pattern = null)
-        {
-            this.AllowPattern = allowPattern;
-
-            if (pattern is null) return;
-
-            if (this.Pattern is null)
-                this.Pattern = pattern;
-            else
-            {
-                this.Pattern.Dispose();
-                this.Pattern = pattern;
-            }
         }
 
     }
