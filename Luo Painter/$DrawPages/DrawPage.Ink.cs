@@ -41,11 +41,11 @@ namespace Luo_Painter
         {
             this.BrushMenu.ItemClick += async (s, brush) =>
             {
-                if (brush.Mask is PaintTexture mask) this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
-                else this.InkPresenter.SetMask(false);
+                if (brush.Mask is PaintTexture mask) this.InkPresenter.ConstructMask(mask.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, mask.Source));
+                else this.InkPresenter.ClearMask();
 
-                if (brush.Pattern is PaintTexture pattern) this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, pattern.Source));
-                else this.InkPresenter.SetPattern(false);
+                if (brush.Pattern is PaintTexture pattern) this.InkPresenter.ConstructPattern(pattern.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, pattern.Source));
+                else this.InkPresenter.ClearPattern();
 
                 this.InkPresenter.Construct(brush);
                 this.InkType = this.InkPresenter.GetType();

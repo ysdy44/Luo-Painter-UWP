@@ -19,7 +19,7 @@ namespace Luo_Painter
                 // 1. Turn Off
                 if (isOn is false)
                 {
-                    this.InkPresenter.SetMask(false);
+                    this.InkPresenter.TurnOffMask();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -30,7 +30,7 @@ namespace Luo_Painter
                 // 2. Turn On
                 if (this.InkPresenter.Mask is null is false)
                 {
-                    this.InkPresenter.SetMask(true);
+                    this.InkPresenter.TryTurnOnMask();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -52,7 +52,7 @@ namespace Luo_Painter
                         {
                             // Select Texture
                             this.MaskImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.InkPresenter.ConstructMask(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) return;
@@ -91,7 +91,7 @@ namespace Luo_Painter
                         {
                             // Select Texture
                             this.MaskImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.SetMask(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.InkPresenter.ConstructMask(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) break;

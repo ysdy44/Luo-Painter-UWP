@@ -20,7 +20,7 @@ namespace Luo_Painter
                 // 1. Turn Off
                 if (isOn is false)
                 {
-                    this.InkPresenter.SetPattern(false);
+                    this.InkPresenter.TurnOffPattern();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -31,7 +31,7 @@ namespace Luo_Painter
                 // 2. Turn On
                 if (this.InkPresenter.Pattern is null is false)
                 {
-                    this.InkPresenter.SetPattern(true);
+                    this.InkPresenter.TurnOffPattern();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -53,7 +53,7 @@ namespace Luo_Painter
                         {
                             // Select Texture
                             this.PatternImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.InkPresenter.ConstructPattern(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) return;
@@ -92,7 +92,7 @@ namespace Luo_Painter
                         {
                             // Select Texture
                             this.PatternImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.SetPattern(true, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.InkPresenter.ConstructPattern(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) break;
