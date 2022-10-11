@@ -54,28 +54,5 @@ namespace Luo_Painter
             };
         }
 
-        private void ConstructOperator()
-        {
-            // Single
-            this.Operator.Single_Start += (point, properties) =>
-            {
-                this.StartingPosition = this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.StartingPressure = this.Pressure = properties.Pressure;
-
-                this.Paint_Start();
-            };
-            this.Operator.Single_Delta += (point, properties) =>
-            {
-                this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
-                this.Pressure = properties.Pressure;
-
-                this.Paint_Delta();
-            };
-            this.Operator.Single_Complete += (point, properties) =>
-            {
-                this.Paint_Complete();
-            };
-        }
-
     }
 }

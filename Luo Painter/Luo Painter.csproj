@@ -123,6 +123,7 @@
     <Compile Include="%24BrushPages\BrushPage.Ink1.cs" />
     <Compile Include="%24BrushPages\BrushPage.Ink2.cs" />
     <Compile Include="%24BrushPages\BrushPage.Ink3.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Operator.cs" />
     <Compile Include="%24BrushPages\BrushPage.Paint.cs" />
     <Compile Include="%24BrushPages\BrushPage.Tool.Paint.cs" />
     <Compile Include="%24BrushPages\BrushPage.xaml.cs">
