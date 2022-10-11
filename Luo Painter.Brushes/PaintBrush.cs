@@ -5,7 +5,10 @@
         public double Size { get; set; } = 12;
         public double Opacity { get; set; } = 1;
         public double Spacing { get; set; } = 0.25;
+        public double Flow { get; set; } = 1;
+      
         public BrushEdgeHardness Hardness { get; set; } = BrushEdgeHardness.None;
+
         public bool Rotate { get; set; }
         public int Step => (this.Pattern is null) ? 0 : this.Pattern.Step;
 

@@ -20,12 +20,14 @@ namespace Luo_Painter.Brushes
 
         // UI
         UISpacing = 128,
-        UIBlendMode = 256,
-        UIHardness = 512,
-        UIMask = 1024,
-        UIPattern = 2048,
+        UIFlow = 256,
+        UIShape = 512,
+        UIBlendMode = 1024,
+        UIHardness = 2048,
+        UIMask = 4096,
+        UIPattern = 8192,
 
-        Brush = 4096 | UISpacing | UIBlendMode | UIHardness | UIMask | UIPattern,
+        Brush = 16384 | UISpacing | UIFlow | UIBlendMode | UIHardness | UIMask | UIPattern,
         #region Brush
 
         Brush_Pattern = Brush | Pattern,
@@ -71,7 +73,7 @@ namespace Luo_Painter.Brushes
 
         #endregion
 
-        Circle = 8192 | UISpacing | UIBlendMode | UIPattern,
+        Circle = 32768 | UISpacing | UIShape | UIBlendMode | UIPattern,
         #region Circle
 
         Circle_Pattern = Circle | Pattern,
@@ -94,7 +96,7 @@ namespace Luo_Painter.Brushes
 
         #endregion
 
-        Line = 16384 | UIBlendMode | UIPattern,
+        Line = 65536 | UIBlendMode | UIPattern,
         #region Line
 
         Line_Pattern = Line | Pattern,
@@ -117,9 +119,9 @@ namespace Luo_Painter.Brushes
 
         #endregion
 
-        Erase = 32768 | UISpacing | UIHardness,
+        Erase = 131072 | UISpacing | UIFlow | UIHardness,
         Erase_Opacity = Erase | Opacity,
 
-        Liquefy = 65536,
+        Liquefy = 262144,
     }
 }
