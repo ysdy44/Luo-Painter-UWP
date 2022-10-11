@@ -40,7 +40,7 @@ namespace Luo_Painter
         }
 
 
-        private void Brush_Start(Vector2 position)
+        private void Brush_Start()
         {
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
@@ -79,15 +79,15 @@ namespace Luo_Painter
                 case 1:
                     this.LinearGradientBrush = new CanvasLinearGradientBrush(this.CanvasDevice, startColor, endColor)
                     {
-                        StartPoint = position,
-                        EndPoint = position,
+                        StartPoint = this.StartingPosition,
+                        EndPoint = this.Position,
                     };
                     break;
                 case 2:
                 case 3:
                     this.RadialGradientBrush = new CanvasRadialGradientBrush(this.CanvasDevice, startColor, endColor)
                     {
-                        Center = position,
+                        Center = this.StartingPosition,
                         RadiusX = 10,
                         RadiusY = 10,
                     };
@@ -99,29 +99,29 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void Brush_Delta(Vector2 position, Vector2 point)
+        private void Brush_Delta()
         {
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
-            if (Vector2.DistanceSquared(this.StartingPoint, point) < 100) return;
+            if (Vector2.DistanceSquared(this.StartingPoint, this.Point) < 100) return;
 
             switch (this.AppBar.BrushMode)
             {
                 case 0:
                     break;
                 case 1:
-                    this.LinearGradientBrush.EndPoint = position;
+                    this.LinearGradientBrush.EndPoint = this.Position;
                     this.BrushClear(this.LinearGradientBrush);
                     break;
                 case 2:
                     this.RadialGradientBrush.RadiusX =
                     this.RadialGradientBrush.RadiusY =
-                    Vector2.Distance(this.StartingPosition, position);
+                    Vector2.Distance(this.StartingPosition, this.Position);
                     this.BrushClear(this.RadialGradientBrush);
                     break;
                 case 3:
-                    this.RadialGradientBrush.RadiusX = System.Math.Abs(this.StartingPosition.X - position.X);
-                    this.RadialGradientBrush.RadiusY = System.Math.Abs(this.StartingPosition.Y - position.Y);
+                    this.RadialGradientBrush.RadiusX = System.Math.Abs(this.StartingPosition.X - this.Position.X);
+                    this.RadialGradientBrush.RadiusY = System.Math.Abs(this.StartingPosition.Y - this.Position.Y);
                     this.BrushClear(this.RadialGradientBrush);
                     break;
                 default:
@@ -131,7 +131,7 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void Brush_Complete(Vector2 position)
+        private void Brush_Complete()
         {
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
@@ -156,7 +156,7 @@ namespace Luo_Painter
                         this.Brush(new CanvasLinearGradientBrush(this.CanvasDevice, startColor, endColor)
                         {
                             StartPoint = this.StartingPosition,
-                            EndPoint = position
+                            EndPoint = this.Position
                         });
                     }
                     break;
@@ -172,7 +172,7 @@ namespace Luo_Painter
                             default: break;
                         }
 
-                        float radius = Vector2.Distance(this.Position, position);
+                        float radius = Vector2.Distance(this.Position, this.Position);
                         this.RadialGradientBrush?.Dispose();
                         this.Brush(new CanvasRadialGradientBrush(this.CanvasDevice, startColor, endColor)
                         {
@@ -198,8 +198,8 @@ namespace Luo_Painter
                         this.Brush(new CanvasRadialGradientBrush(this.CanvasDevice, startColor, endColor)
                         {
                             Center = this.StartingPosition,
-                            RadiusX = System.Math.Abs(this.StartingPosition.X - position.X),
-                            RadiusY = System.Math.Abs(this.StartingPosition.Y - position.Y)
+                            RadiusX = System.Math.Abs(this.StartingPosition.X - this.Position.X),
+                            RadiusY = System.Math.Abs(this.StartingPosition.Y - this.Position.Y)
                         });
                     }
                     break;

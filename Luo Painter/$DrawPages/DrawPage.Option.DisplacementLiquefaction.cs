@@ -50,9 +50,9 @@ namespace Luo_Painter
         }
 
 
-        private void DisplacementLiquefaction_Delta(Vector2 position, Vector2 point)
+        private void DisplacementLiquefaction_Delta()
         {
-            if (this.Position == position) return;
+            if (this.StartingPosition == this.Position) return;
 
             float radius = (float)this.AppBar.DisplacementLiquefactionSize;
             float pressure = (float)this.AppBar.DisplacementLiquefactionPressure / 100;
@@ -68,19 +68,21 @@ namespace Luo_Painter
                     ["amount"] = this.DisplacementLiquefactionAmount,
                     ["pressure"] = pressure,
                     ["radius"] = radius,
-                    ["position"] = this.Position,
-                    ["targetPosition"] = position,
+                    ["position"] = this.StartingPosition,
+                    ["targetPosition"] = this.Position,
                 }
-            }, RectExtensions.GetRect(this.Position, position, radius));
+            }, RectExtensions.GetRect(this.Position, this.Position, radius));
 
-            Rect region = point.GetRect(this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(radius * 2 * this.Transformer.Scale));
+            Rect region = this.Point.GetRect(this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(radius * 2 * this.Transformer.Scale));
             if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
             {
                 this.CanvasVirtualControl.Invalidate(region); // Invalidate
             }
+
+            this.StartingPosition = this.Position;
         }
 
-        private void DisplacementLiquefaction_Complete(Vector2 point)
+        private void DisplacementLiquefaction_Complete()
         {
             this.Displacement.RenderThumbnail();
         }

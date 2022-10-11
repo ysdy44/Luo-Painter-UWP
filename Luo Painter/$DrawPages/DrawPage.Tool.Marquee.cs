@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Luo_Painter.Layers;
 using Luo_Painter.Brushes;
 using Luo_Painter.Blends;
+using Luo_Painter.Elements;
 
 namespace Luo_Painter
 {
@@ -19,22 +20,22 @@ namespace Luo_Painter
         MarqueeToolType MarqueeToolType;
         readonly MarqueeTool MarqueeTool = new MarqueeTool();
 
-        private void Marquee_Start(Vector2 position)
+        private void Marquee_Start()
         {
             this.MarqueeToolType = this.GetMarqueeToolType(this.OptionType);
-            this.MarqueeTool.Start(position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
-        private void Marquee_Delta(Vector2 position)
+        private void Marquee_Delta()
         {
-            this.MarqueeTool.Delta(this.StartingPosition, position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            this.MarqueeTool.Delta(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
-        private void Marquee_Complete(Vector2 position)
+        private void Marquee_Complete()
         {
-            bool redraw = this.MarqueeTool.Complete(this.StartingPosition, position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
+            bool redraw = this.MarqueeTool.Complete(this.StartingPosition, this.Position, this.MarqueeToolType, this.IsCtrl, this.IsShift);
             if (redraw is false) return;
 
             using (CanvasDrawingSession ds = this.Marquee.CreateDrawingSession())

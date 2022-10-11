@@ -56,22 +56,22 @@ namespace Luo_Painter
             };
         }
 
-        private void View_Start(Vector2 point)
+        private void View_Start()
         {
-            this.Transformer.CacheMove(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
+            this.Transformer.CacheMove(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.StartingPoint));
 
             this.SetCanvasState(true);
         }
-        private void View_Delta(Vector2 point)
+        private void View_Delta()
         {
-            this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
+            this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
 
             this.CanvasControl.Invalidate(); // Invalidate
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
-        private void View_Complete(Vector2 point)
+        private void View_Complete()
         {
-            this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point));
+            this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
 
             this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
 

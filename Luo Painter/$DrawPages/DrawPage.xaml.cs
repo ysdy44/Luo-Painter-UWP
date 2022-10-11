@@ -142,16 +142,6 @@ namespace Luo_Painter
             this.ToolListView.Construct(this.OptionType);
 
 
-            this.SimulateCanvas.Start += (point) =>
-            {
-                this.StartingPosition = this.Position = this.ToPosition(point);
-                this.StartingPoint = this.Point = point;
-                this.Pressure = 0.5f;
-                this.Tool_Start(this.Position, this.Point);
-            };
-            this.SimulateCanvas.Delta += (point) => this.Tool_Delta(this.ToPosition(point), point);
-            this.SimulateCanvas.Complete += (point) => this.Tool_Complete(this.ToPosition(point), point);
-
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;

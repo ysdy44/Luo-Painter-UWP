@@ -17,16 +17,16 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private void SelectionBrush_Start(Vector2 position)
+        private void SelectionBrush_Start()
         {
         }
-        private void SelectionBrush_Delta(Vector2 position)
+        private void SelectionBrush_Delta()
         {
-            this.Marquee.Marquee(this.StartingPosition, position, 32, this.AppBar.SelectionIsSubtract);
-            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, position, 32));
+            this.Marquee.Marquee(this.StartingPosition, this.Position, 32, this.AppBar.SelectionIsSubtract);
+            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, this.Position, 32));
             this.CanvasControl.Invalidate(); // Invalidate
         }
-        private void SelectionBrush_Complete(Vector2 position)
+        private void SelectionBrush_Complete()
         {
             // History
             int removes = this.History.Push(this.Marquee.GetBitmapHistory());
@@ -38,11 +38,11 @@ namespace Luo_Painter
             this.RedoButton.IsEnabled = this.History.CanRedo;
         }
 
-        private void SelectionFlood_Complete(Vector2 position, Vector2 point)
+        private void SelectionFlood_Complete()
         {
             if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
             {
-                this.SelectionFlood(position, point, bitmapLayer, this.AppBar.SelectionIsSubtract);
+                this.SelectionFlood(this.Position, bitmapLayer, this.AppBar.SelectionIsSubtract);
             }
             else
             {
@@ -50,7 +50,7 @@ namespace Luo_Painter
             }
         }
 
-        private bool SelectionFlood(Vector2 position, Vector2 point, BitmapLayer bitmapLayer, bool isSubtract)
+        private bool SelectionFlood(Vector2 position, BitmapLayer bitmapLayer, bool isSubtract)
         {
             bool result = bitmapLayer.FloodSelect(position, Windows.UI.Colors.DodgerBlue);
 

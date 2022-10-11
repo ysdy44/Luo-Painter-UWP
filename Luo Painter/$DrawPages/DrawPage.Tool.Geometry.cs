@@ -48,19 +48,21 @@ namespace Luo_Painter
         }
 
 
-        private void GeometryTransform_Delta(Vector2 position, Vector2 point)
+        private void GeometryTransform_Delta()
         {
+            if (this.BitmapLayer is null) return;
+
             if (this.IsBoundsMove)
             {
-                this.BoundsTransformer = this.StartingBoundsTransformer + (position - this.StartingPosition);
+                this.BoundsTransformer = this.StartingBoundsTransformer + (this.Position - this.StartingPosition);
             }
             else if (this.BoundsMode == default)
             {
-                this.BoundsTransformer = new Transformer(this.StartingPosition, position, this.IsCtrl, this.IsShift);
+                this.BoundsTransformer = new Transformer(this.StartingPosition, this.Position, this.IsCtrl, this.IsShift);
             }
             else
             {
-                this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, position, this.StartingBoundsTransformer, this.IsShift, this.IsCtrl);
+                this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsShift, this.IsCtrl);
             }
 
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
@@ -74,7 +76,7 @@ namespace Luo_Painter
         }
 
 
-        private void Geometry_Start(Vector2 position, Vector2 point)
+        private void Geometry_Start()
         {
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
@@ -86,13 +88,13 @@ namespace Luo_Painter
             if (this.OptionType.HasPreview())
             {
                 // GeometryTransform_Start
-                this.Transform_Start(point);
+                this.Transform_Start();
                 return;
             }
 
             this.IsBoundsMove = false;
             this.BoundsMode = default;
-            this.BoundsTransformer = new Transformer(this.StartingPosition, position, this.IsCtrl, this.IsShift);
+            this.BoundsTransformer = new Transformer(this.StartingPosition, this.Position, this.IsCtrl, this.IsShift);
 
             this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 

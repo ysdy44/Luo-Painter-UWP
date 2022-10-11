@@ -16,6 +16,9 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        Vector2 StartingPositionWithoutRadian;
+        Vector2 PositionWithoutRadian;
+
         TransformerMode CropMode;
         bool IsCropMove;
 
@@ -71,31 +74,31 @@ namespace Luo_Painter
         }
 
 
-        /// <summary> <see cref="Transform_Start(Vector2)"/> </summary>
-        private void CropCanvas_Start(Vector2 point)
+        /// <summary> <see cref="Transform_Start()"/> </summary>
+        private void CropCanvas_Start()
         {
-            this.StartingPosition = this.ToPositionWithoutRadian(point);
+            this.StartingPositionWithoutRadian = this.ToPositionWithoutRadian(this.Point);
 
-            this.CropMode = FanKit.Transformers.Transformer.ContainsNodeMode(point, this.CropTransformer, this.GetMatrixWithoutRadian(this.CanvasVirtualControl.Dpi), true);
+            this.CropMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.CropTransformer, this.GetMatrixWithoutRadian(this.CanvasVirtualControl.Dpi), true);
             this.IsCropMove = this.CropMode == TransformerMode.None;
             this.StartingCropTransformer = this.CropTransformer;
         }
 
-        /// <summary> <see cref="Transform_Delta(Vector2)"/> </summary>
-        private void CropCanvas_Delta(Vector2 point)
+        /// <summary> <see cref="Transform_Delta()"/> </summary>
+        private void CropCanvas_Delta()
         {
-            Vector2 position = this.ToPositionWithoutRadian(point);
+            this.PositionWithoutRadian = this.ToPositionWithoutRadian(this.Point);
 
             this.CropTransformer =
                 this.IsCropMove ?
-                this.StartingCropTransformer + (position - this.StartingPosition) :
-                FanKit.Transformers.Transformer.Controller(this.CropMode, this.StartingPosition, position, this.StartingCropTransformer);
+                this.StartingCropTransformer + (this.PositionWithoutRadian - this.StartingPositionWithoutRadian) :
+                FanKit.Transformers.Transformer.Controller(this.CropMode, this.StartingPositionWithoutRadian, this.PositionWithoutRadian, this.StartingCropTransformer);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
-        /// <summary> <see cref="Transform_Complete(Vector2)"/> </summary>
-        private void CropCanvas_Complete(Vector2 point)
+        /// <summary> <see cref="Transform_Complete()"/> </summary>
+        private void CropCanvas_Complete()
         {
         }
 

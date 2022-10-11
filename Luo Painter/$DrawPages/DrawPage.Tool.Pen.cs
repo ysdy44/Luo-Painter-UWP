@@ -48,7 +48,7 @@ namespace Luo_Painter
             };
         }
 
-        private void Pen_Start(Vector2 position)
+        private void Pen_Start()
         {
             if (this.LayerSelectedItem is null)
             {
@@ -74,7 +74,7 @@ namespace Luo_Painter
                     IsSmooth = this.AppBar.PenIsSmooth
                 });
 
-                anchors.ClosePoint = position;
+                anchors.ClosePoint = this.StartingPosition;
                 anchors.CloseIsSmooth = this.AppBar.PenIsSmooth;
                 anchors.Segment(this.CanvasControl, false);
 
@@ -94,7 +94,7 @@ namespace Luo_Painter
             };
 
             add.Color = this.ColorMenu.Color;
-            add.StrokeWidth = (float)this.AppBar.SizeConverter(this.AppBar.SizeValue);
+            add.StrokeWidth = this.InkPresenter.Size;
 
             add.ClosePoint = this.Position;
             add.CloseIsSmooth = this.AppBar.PenIsSmooth;
@@ -106,14 +106,14 @@ namespace Luo_Painter
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
-        private void Pen_Delta(Vector2 position)
+        private void Pen_Delta()
         {
             if (this.CurveLayer is null) return;
 
             AnchorCollection anchors = this.CurveLayer.SelectedItem;
             if (anchors is null) return;
 
-            anchors.ClosePoint = position;
+            anchors.ClosePoint = this.Position;
             anchors.CloseIsSmooth = this.AppBar.PenIsSmooth;
             anchors.Segment(this.CanvasControl, false);
             anchors.Invalidate();
@@ -121,7 +121,7 @@ namespace Luo_Painter
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
-        private void Pen_Complete(Vector2 position)
+        private void Pen_Complete()
         {
         }
 

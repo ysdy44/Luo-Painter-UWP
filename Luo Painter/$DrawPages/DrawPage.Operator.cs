@@ -47,7 +47,7 @@ namespace Luo_Painter
                     }
                 }
 
-                this.Tool_Start(this.StartingPosition, this.StartingPoint, this.StartingPressure);
+                this.Tool_Start();
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
@@ -65,7 +65,7 @@ namespace Luo_Painter
 
                 if (this.ReferenceImage is null)
                 {
-                    this.Tool_Delta(this.Position, this.Point, this.Pressure);
+                    this.Tool_Delta();
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace Luo_Painter
 
                 if (this.ReferenceImage is null)
                 {
-                    this.Tool_Complete(this.Position, this.Point, this.Pressure);
+                    this.Tool_Complete();
                 }
                 else
                 {
@@ -102,16 +102,16 @@ namespace Luo_Painter
             this.Operator.Right_Start += (point) =>
             {
                 this.StartingPoint = this.Point = point;
-                this.View_Start(this.Point);
+                this.View_Start();
             };
             this.Operator.Right_Delta += (point) =>
             {
                 this.Point = point;
-                this.View_Delta(this.Point);
+                this.View_Delta();
             };
             this.Operator.Right_Complete += (point) =>
             {
-                this.View_Complete(this.Point);
+                this.View_Complete();
             };
 
 
@@ -160,18 +160,18 @@ namespace Luo_Painter
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
                 this.StartingPressure = this.Pressure = 1f;
-                this.Tool_Start(this.StartingPosition, this.StartingPoint, this.StartingPressure);
+                this.Tool_Start();
             };
             this.SimulateCanvas.Delta += (point) =>
             {
                 this.Position = this.ToPosition(point);
                 this.Point = point;
                 //this.Pressure = 1f;
-                this.Tool_Delta(this.Position, this.Point, this.Pressure);
+                this.Tool_Delta();
             };
             this.SimulateCanvas.Complete += (point) =>
             {
-                this.Tool_Complete(this.Position, this.Point, this.Pressure);
+                this.Tool_Complete();
             };
         }
 

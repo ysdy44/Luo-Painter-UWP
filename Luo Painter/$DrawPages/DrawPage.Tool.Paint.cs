@@ -32,35 +32,36 @@ namespace Luo_Painter
                 return;
             }
 
-            if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.Position);
+            if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void Paint_Delta(Vector2 position, Vector2 point, float pressure)
+        private void Paint_Delta()
         {
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            StrokeSegment segment = new StrokeSegment(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
             if (segment.InRadius()) return;
             if (this.InkType.HasFlag(InkType.Mask) && segment.IsNaN()) return; // Mask without NaN
-            if (this.InkType.HasFlag(InkType.Mix)) this.Mix(position, this.InkPresenter.Opacity);
+            if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
-            Rect rect = position.GetRect(this.InkPresenter.Size);
+            Rect rect = this.Position.GetRect(this.InkPresenter.Size);
             this.BitmapLayer.Hit(rect);
             this.Paint(segment);
 
-            Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
+            Rect region = RectExtensions.GetRect(this.StartingPoint, this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
             {
                 this.CanvasVirtualControl.Invalidate(region); // Invalidate
             }
 
-            this.Position = position;
-            this.Point = point;
-            this.Pressure = pressure;
+
+            this.StartingPoint = this.Point;
+            this.StartingPosition = this.Position;
+            this.StartingPressure = this.Pressure;
         }
 
         private void Paint_Complete()
