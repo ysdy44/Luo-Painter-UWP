@@ -129,6 +129,7 @@
     <Compile Include="%24BrushPages\BrushPage.xaml.cs">
       <DependentUpon>BrushPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
     <Compile Include="%24DrawPages\DrawPage.CreateResources.cs" />

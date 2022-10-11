@@ -112,7 +112,8 @@ namespace Luo_Painter
             this.InitializeComponent();
             this.ConstructCanvas();
             this.ConstructOperator();
-
+            this.ConstructSimulate();
+            
             this.ConstructLayers();
             this.ConstructLayer();
 
