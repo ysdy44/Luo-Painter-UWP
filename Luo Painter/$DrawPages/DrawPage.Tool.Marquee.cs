@@ -19,10 +19,6 @@ namespace Luo_Painter
         MarqueeToolType MarqueeToolType;
         readonly MarqueeTool MarqueeTool = new MarqueeTool();
 
-        private void ConstructMarquee()
-        {
-        }
-
         private void Marquee_Start(Vector2 position)
         {
             this.MarqueeToolType = this.GetMarqueeToolType(this.OptionType);
@@ -56,46 +52,6 @@ namespace Luo_Painter
 
             this.CanvasControl.Invalidate(); // Invalidate
             this.MarqueeToolType = MarqueeToolType.None;
-        }
-
-        private bool SelectionFlood(Vector2 position, Vector2 point, BitmapLayer bitmapLayer, bool isSubtract)
-        {
-            bool result = bitmapLayer.FloodSelect(position, Windows.UI.Colors.DodgerBlue);
-
-            if (result is false)
-            {
-                this.Tip(TipType.NoPixel);
-                return false;
-            }
-
-            ICanvasImage floodSelect = bitmapLayer[BitmapType.Temp];
-            Color[] interpolationColors = this.Marquee.GetInterpolationColors(floodSelect);
-            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-            switch (mode)
-            {
-                case PixelBoundsMode.Transarent:
-                    this.Tip(TipType.NoPixelForMarquee);
-                    return false;
-                case PixelBoundsMode.Solid:
-                    this.EditMenu.Execute(isSubtract ? OptionType.Deselect : OptionType.All);
-                    return true;
-                default:
-                    // History
-                    int removes = this.History.Push
-                    (
-                        isSubtract ?
-                        this.Marquee.Clear(bitmapLayer, interpolationColors, BitmapType.Temp) :
-                        this.Marquee.Add(bitmapLayer, interpolationColors, BitmapType.Temp)
-                    );
-
-                    this.Marquee.Flush();
-                    this.Marquee.RenderThumbnail();
-
-                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                    return true;
-            }
         }
 
         private MarqueeToolType GetMarqueeToolType(OptionType type)

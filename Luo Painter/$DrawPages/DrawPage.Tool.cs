@@ -54,6 +54,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.SelectionBrush:
+                    this.SelectionBrush_Start(position);
                     break;
 
                 case OptionType.PaintBrush:
@@ -125,9 +126,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.SelectionBrush:
-                    this.Marquee.Marquee(this.Position, position, 32, this.AppBar.SelectionIsSubtract);
-                    this.Marquee.Hit(RectExtensions.GetRect(this.Position, position, 32));
-                    this.CanvasControl.Invalidate(); // Invalidate
+                    this.SelectionBrush_Delta(position);
                     break;
 
                 case OptionType.PaintBrush:
@@ -196,26 +195,10 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.SelectionFlood:
-                    if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
-                    {
-                        this.SelectionFlood(position, point, bitmapLayer, this.AppBar.SelectionIsSubtract);
-                    }
-                    else
-                    {
-                        this.Tip(TipType.NoLayer);
-                    }
+                    this.SelectionFlood_Complete(position, point);
                     break;
                 case OptionType.SelectionBrush:
-                    {
-                        // History
-                        int removes = this.History.Push(this.Marquee.GetBitmapHistory());
-                        this.Marquee.Flush();
-                        this.Marquee.RenderThumbnail();
-                        this.CanvasControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
+                    this.SelectionBrush_Complete(position);
                     break;
 
                 case OptionType.PaintBrush:
@@ -223,7 +206,6 @@ namespace Luo_Painter
                 case OptionType.PaintPencil:
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
-                    this.Paint_Delta(position, point, pressure);
                     this.Paint_Complete();
                     break;
 
