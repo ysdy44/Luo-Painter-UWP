@@ -76,20 +76,13 @@ namespace Luo_Painter.TestApp
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 this.Pressure = properties.Pressure;
 
-                Stroke stroke = new Stroke
-                {
-                    StartingPosition = this.StartingPosition,
-                    Position = this.Position,
-                    StartingPressure = this.StartingPressure,
-                    Pressure = this.Pressure,
-                };
-                StrokeSegment segment = new StrokeSegment(stroke, (float)this.Brush.Size, (float)this.Brush.Spacing);
+                StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, (float)this.Brush.Size, (float)this.Brush.Spacing);
                 if (segment.InRadius()) return;
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
-                using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, (float)this.Brush.Size)))
+                using (ds.CreateLayer(1f, segment.GetRect(this.Brush.Size)))
                 {
-                    segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.ShaderCodeBytes, (int)this.Brush.Hardness, BitmapLayer.DodgerBlue, this.Texture, true, stroke, segment);
+                    segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.ShaderCodeBytes, BitmapLayer.DodgerBlue, this.Texture, true, (int)this.Brush.Hardness, (float)this.Brush.Flow);
                 }
 
                 this.CanvasControl.Invalidate(); // Invalidate

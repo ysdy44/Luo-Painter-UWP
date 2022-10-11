@@ -42,22 +42,15 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            Stroke stroke = new Stroke
-            {
-                StartingPosition = this.Position,
-                Position = position,
-                StartingPressure = this.Pressure,
-                Pressure = pressure,
-            };
-            StrokeSegment segment = new StrokeSegment(stroke, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            StrokeSegment segment = new StrokeSegment(this.Position, position, this.Pressure, pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
             if (segment.InRadius()) return;
-            if (this.InkType.HasFlag(InkType.Mask) && stroke.IsNaN()) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Mask) && segment.IsNaN()) return; // Mask without NaN
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(position, this.InkPresenter.Opacity);
 
             Rect rect = position.GetRect(this.InkPresenter.Size);
             this.BitmapLayer.Hit(rect);
-            this.Paint(stroke, segment);
+            this.Paint(segment);
 
             Rect region = RectExtensions.GetRect(this.Point, point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             if (this.CanvasVirtualControl.Size.TryIntersect(ref region))

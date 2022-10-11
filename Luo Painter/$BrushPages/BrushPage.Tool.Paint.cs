@@ -16,53 +16,58 @@ namespace Luo_Painter
 
         private void Paint_Start()
         {
+            if (this.InkType == default) return;
+
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
+            if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
-            this.CanvasControl.Invalidate(); // Invalidate
+            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+
+            //@Task
+            Task.Run(() => this.Paint_PaintAsync(segment));
         }
-
         private void Paint_Delta()
         {
             if (this.InkType == default) return;
 
-            Stroke stroke = new Stroke
-            {
-                StartingPosition = this.StartingPosition,
-                Position = this.Position,
-                StartingPressure = this.StartingPressure,
-                Pressure = this.Pressure,
-            };
-            StrokeSegment segment = new StrokeSegment(stroke, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
             if (segment.InRadius()) return;
-            if (this.InkType.HasFlag(InkType.Mask) && stroke.IsNaN()) return; // Mask without NaN
+            if (segment.IsNaN())
+            {
+                if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
+                if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
+            }
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
             //@Task
-            Task.Run(() => this.Paint_DeltaAsync(stroke, segment));
+            Task.Run(() => this.Paint_PaintAsync(segment));
 
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
         }
-        private void Paint_DeltaAsync(Stroke stroke, StrokeSegment segment)
-        {
-            lock (this.Locker)
-            {
-                this.Paint(stroke, segment);
-                this.CanvasControl.Invalidate(); // Invalidate
-            }
-        }
-
         private void Paint_Complete()
         {
             if (this.InkType == default) return;
-            if (this.BitmapLayer is null) return;
 
             //@Task
-            Task.Run(this.Paint_CompleteAsync);
+            Task.Run(this.Paint_HistoryAsync);
         }
-        private void Paint_CompleteAsync()
+
+
+        private void Paint_PaintAsync(StrokeSegment segment)
         {
+            //@Task
+            lock (this.Locker)
+            {
+                this.Paint(segment);
+                this.CanvasControl.Invalidate(); // Invalidate
+            }
+        }
+        private void Paint_HistoryAsync()
+        {
+            //@Task
             lock (this.Locker)
             {
                 this.Paint();
@@ -74,7 +79,6 @@ namespace Luo_Painter
                 this.CanvasControl.Invalidate(); // Invalidate
             }
         }
-
 
         private bool CacheMix(Vector2 position)
         {

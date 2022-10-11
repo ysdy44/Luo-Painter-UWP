@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
+using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
@@ -158,7 +159,7 @@ namespace Luo_Painter
         }
 
 
-        private void Paint(Stroke stroke, StrokeSegment segment)
+        private void Paint(StrokeSegment segment)
         {
             if (this.InkType is InkType.Liquefy)
             {
@@ -169,11 +170,11 @@ namespace Luo_Painter
                     Properties =
                     {
                         ["radius"] = this.BitmapLayer.ConvertValueToOne(this.InkPresenter.Size),
-                        ["position"] = this.BitmapLayer .ConvertValueToOne(stroke.StartingPosition),
-                        ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(stroke.Position),
-                        ["pressure"] = stroke.Pressure,
+                        ["position"] = this.BitmapLayer .ConvertValueToOne(segment.StartingPosition),
+                        ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(segment.Position),
+                        ["pressure"] = segment.Pressure,
                     }
-                }, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size));
+                }, segment.GetRect(this.InkPresenter.Size));
                 return;
             }
 
@@ -196,17 +197,17 @@ namespace Luo_Painter
                     case InkType.Brush_Pattern_Blur:
                     case InkType.Brush_Mosaic:
                     case InkType.Brush_Pattern_Mosaic:
-                        using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorHdr, stroke, segment);
+                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
                         }
                         break;
 
                     case InkType.Brush_Pattern_Mix:
                     case InkType.Brush_Mix:
-                        using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, this.InkMixer.ColorHdr, stroke, segment);
+                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.InkMixer.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
                         }
                         break;
 
@@ -222,21 +223,20 @@ namespace Luo_Painter
                     case InkType.MaskBrush_Pattern_Blur:
                     case InkType.MaskBrush_Mosaic:
                     case InkType.MaskBrush_Pattern_Mosaic:
-                        using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, (int)this.InkPresenter.Hardness, this.ColorHdr,
-                            this.InkPresenter.Mask,
-                            this.InkPresenter.Rotate, stroke, segment);
+                            segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds,
+                                this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr,
+                                this.InkPresenter.Mask, this.InkPresenter.Rotate,
+                                (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
                         }
                         break;
 
                     case InkType.MaskBrush_Mix:
                     case InkType.MaskBrush_Pattern_Mix:
-                        using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, (int)this.InkPresenter.Hardness, this.InkMixer.ColorHdr,
-                            this.InkPresenter.Mask,
-                            this.InkPresenter.Rotate, stroke, segment);
+                            segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkMixer.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
                         }
                         break;
 
@@ -252,12 +252,12 @@ namespace Luo_Painter
                     case InkType.Circle_Pattern_Blur:
                     case InkType.Circle_Mosaic:
                     case InkType.Circle_Pattern_Mosaic:
-                        segment.IsometricFillCircle(ds, this.Color, stroke, segment);
+                        segment.IsometricFillCircle(ds, this.Color, this.InkPresenter.Shape, this.InkPresenter.IsStroke);
                         break;
 
                     case InkType.Circle_Mix:
                     case InkType.Circle_Pattern_Mix:
-                        segment.IsometricFillCircle(ds, this.InkMixer.Color, stroke, segment);
+                        segment.IsometricFillCircle(ds, this.InkMixer.Color, this.InkPresenter.Shape, this.InkPresenter.IsStroke);
                         break;
 
                     case InkType.Line:
@@ -272,19 +272,19 @@ namespace Luo_Painter
                     case InkType.Line_Pattern_Blur:
                     case InkType.Line_Mosaic:
                     case InkType.Line_Pattern_Mosaic:
-                        ds.DrawLine(stroke.StartingPosition, stroke.Position, this.Color, this.InkPresenter.Size * stroke.Pressure * 2, StrokeSegment.CanvasStrokeStyle);
+                        segment.DrawLine(ds, this.Color);
                         break;
 
                     case InkType.Line_Mix:
                     case InkType.Line_Pattern_Mix:
-                        ds.DrawLine(stroke.StartingPosition, stroke.Position, this.InkMixer.Color, this.InkPresenter.Size * stroke.Pressure * 2, StrokeSegment.CanvasStrokeStyle);
+                        segment.DrawLine(ds, this.InkMixer.Color);
                         break;
 
                     case InkType.Erase:
                     case InkType.Erase_Opacity:
-                        using (ds.CreateLayer(1f, RectExtensions.GetRect(stroke.StartingPosition, stroke.Position, this.InkPresenter.Size)))
+                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, (int)this.InkPresenter.Hardness, Vector4.One, stroke, segment);
+                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
                         }
                         break;
 

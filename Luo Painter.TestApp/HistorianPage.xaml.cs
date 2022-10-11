@@ -127,19 +127,12 @@ namespace Luo_Painter.TestApp
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                Stroke stroke = new Stroke
-                {
-                    StartingPosition = this.StartingPosition,
-                    Position = this.Position,
-                    StartingPressure = 1,
-                    Pressure = 1,
-                };
-                StrokeSegment segment = new StrokeSegment(stroke, 12, 0.25f);
+                StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, 1, 1, 12, 0.25f);
                 if (segment.InRadius()) return;
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    segment.IsometricFillCircle(ds, Colors.White, stroke, segment);
+                    segment.IsometricFillCircle(ds, Colors.White);
                 }
 
                 Rect rect = this.Position.GetRect(12 * properties.Pressure);
