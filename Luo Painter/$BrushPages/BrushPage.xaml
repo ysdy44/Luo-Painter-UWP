@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
+    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
@@ -23,7 +23,7 @@
         <!--Size-->
         <elements:SizePickerExtension x:Name="Step"/>
         <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <brushes:InkCanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
     </FrameworkElement.Resources>
 
 

@@ -13,9 +13,7 @@ namespace Luo_Painter
             {
                 this.StartingPosition = this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed)
-                    this.StartingPressure = this.Pressure = 1;
-                else if (properties.IsEraser || properties.IsBarrelButtonPressed)
+                if (properties.IsEraser || properties.IsBarrelButtonPressed)
                     this.StartingPressure = this.Pressure = 1;
                 else
                     this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
@@ -26,9 +24,7 @@ namespace Luo_Painter
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed)
-                    this.Pressure = 1;
-                else if (properties.IsEraser || properties.IsBarrelButtonPressed)
+                if (properties.IsEraser || properties.IsBarrelButtonPressed)
                     this.Pressure = 1;
                 else
                     this.Pressure = properties.Pressure * properties.Pressure;
