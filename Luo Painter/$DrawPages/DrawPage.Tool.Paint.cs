@@ -5,7 +5,7 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
-using Windows.Foundation;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -19,6 +19,8 @@ namespace Luo_Painter
 
         private void Paint_Start()
         {
+            if (this.InkType == default) return;
+
             if (this.LayerSelectedItem is null)
             {
                 this.Tip(TipType.NoLayer);
@@ -33,10 +35,18 @@ namespace Luo_Painter
             }
 
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
+            if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
+            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+     
+            //@Task
+            if (true)
+                this.Paint_PaintAsync(stroke, segment);
+            else
+                Task.Run(() => this.Paint_PaintAsync(stroke, segment));
         }
-
         private void Paint_Delta()
         {
             if (this.InkType == default) return;
@@ -44,44 +54,71 @@ namespace Luo_Painter
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
-            if (segment.InRadius()) return;
-            if (this.InkType.HasFlag(InkType.Mask) && segment.IsNaN()) return; // Mask without NaN
+            if (segment.InRadius) return;
+            if (segment.IsNaN)
+            {
+                if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
+                if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
+            }
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
-            Rect rect = this.Position.GetRect(this.InkPresenter.Size);
-            this.BitmapLayer.Hit(rect);
-            this.Paint(segment);
+            Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
+          
+            //@Task
+            if (true)
+                this.Paint_PaintAsync(stroke, segment);
+            else
+                Task.Run(() => this.Paint_PaintAsync(stroke, segment));
 
-            Rect region = RectExtensions.GetRect(this.StartingPoint, this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
-            if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
-            {
-                this.CanvasVirtualControl.Invalidate(region); // Invalidate
-            }
-
-
-            this.StartingPoint = this.Point;
             this.StartingPosition = this.Position;
+            this.StartingPoint = this.Point;
             this.StartingPressure = this.Pressure;
         }
-
         private void Paint_Complete()
         {
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            this.Paint();
-            this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            //@Task
+            if (true)
+                this.Paint_HistoryAsync();
+            else
+                Task.Run(this.Paint_HistoryAsync);
+        }
 
-            // History
-            int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
-            this.BitmapLayer.Flush();
-            this.BitmapLayer.RenderThumbnail();
+        private void Paint_PaintAsync(Stroke stroke, StrokeSegment segment)
+        {
+            //@Task
+            lock (this.Locker)
+            {
+                this.BitmapLayer.Hit(segment.Bounds);
+                this.Paint(segment);
 
-            this.BitmapLayer = null;
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                if (stroke.HasIntersect)
+                {
+                    this.CanvasVirtualControl.Invalidate(stroke.Intersect); // Invalidate
+                }
+            }
+        }
+        private void Paint_HistoryAsync()
+        {
+            //@Task
+            lock (this.Locker)
+            {
+                this.Paint();
+                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
+                // History
+                int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                this.BitmapLayer.Flush();
+                this.BitmapLayer.RenderThumbnail();
+
+                this.BitmapLayer = null;
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                this.UndoButton.IsEnabled = this.History.CanUndo;
+                this.RedoButton.IsEnabled = this.History.CanRedo;
+            }
         }
 
         private bool CacheMix(Vector2 position)
@@ -147,7 +184,6 @@ namespace Luo_Painter
             // 2. Blend TargetColor with Color
             return this.InkMixer.Mix(target, opacity);
         }
-
         private bool MixAll(Vector2 position, float opacity)
         {
             foreach (ILayer item in this.ObservableCollection)

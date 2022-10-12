@@ -128,7 +128,7 @@ namespace Luo_Painter.TestApp
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
                 StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, 1, 1, 12, 0.25f);
-                if (segment.InRadius()) return;
+                if (segment.InRadius) return;
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {

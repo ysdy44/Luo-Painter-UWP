@@ -23,9 +23,12 @@ namespace Luo_Painter
             if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
-
+        
             //@Task
-            Task.Run(() => this.Paint_PaintAsync(segment));
+            if (false)
+                this.Paint_PaintAsync(segment);
+            else
+                Task.Run(() => this.Paint_PaintAsync(segment));
         }
         private void Paint_Delta()
         {
@@ -33,8 +36,8 @@ namespace Luo_Painter
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
 
-            if (segment.InRadius()) return;
-            if (segment.IsNaN())
+            if (segment.InRadius) return;
+            if (segment.IsNaN)
             {
                 if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
                 if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
@@ -42,7 +45,10 @@ namespace Luo_Painter
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
             //@Task
-            Task.Run(() => this.Paint_PaintAsync(segment));
+            if (false)
+                this.Paint_PaintAsync(segment);
+            else
+                Task.Run(() => this.Paint_PaintAsync(segment));
 
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
@@ -52,7 +58,10 @@ namespace Luo_Painter
             if (this.InkType == default) return;
 
             //@Task
-            Task.Run(this.Paint_HistoryAsync);
+            if (false)
+                this.Paint_HistoryAsync();
+            else
+                Task.Run(this.Paint_HistoryAsync);
         }
 
 

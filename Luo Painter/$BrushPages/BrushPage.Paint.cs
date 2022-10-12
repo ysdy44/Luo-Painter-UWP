@@ -173,7 +173,7 @@ namespace Luo_Painter
                         ["targetPosition"] = this.BitmapLayer.ConvertValueToOne(segment.Position),
                         ["pressure"] = segment.Pressure,
                     }
-                }, segment.GetRect(this.InkPresenter.Size));
+                }, segment.Bounds);
                 return;
             }
 
@@ -196,17 +196,31 @@ namespace Luo_Painter
                     case InkType.Brush_Pattern_Blur:
                     case InkType.Brush_Mosaic:
                     case InkType.Brush_Pattern_Mosaic:
-                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
+                        if (segment.StartingSize < 5)
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            segment.DrawLine(ds, this.Color);
+                        }
+                        else
+                        {
+                            using (ds.CreateLayer(1f, segment.Bounds))
+                            {
+                                segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            }
                         }
                         break;
 
                     case InkType.Brush_Pattern_Mix:
                     case InkType.Brush_Mix:
-                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
+                        if (segment.StartingSize < 5)
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.InkMixer.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            segment.DrawLine(ds, this.InkMixer.Color);
+                        }
+                        else
+                        {
+                            using (ds.CreateLayer(1f, segment.Bounds))
+                            {
+                                segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.InkMixer.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            }
                         }
                         break;
 
@@ -222,20 +236,31 @@ namespace Luo_Painter
                     case InkType.MaskBrush_Pattern_Blur:
                     case InkType.MaskBrush_Mosaic:
                     case InkType.MaskBrush_Pattern_Mosaic:
-                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
+                        if (segment.StartingSize < 5)
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds,
-                                this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr,
-                                this.InkPresenter.Mask, this.InkPresenter.Rotate,
-                                (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            segment.DrawLine(ds, this.Color);
+                        }
+                        else
+                        {
+                            using (ds.CreateLayer(1f, segment.Bounds))
+                            {
+                                segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            }
                         }
                         break;
 
                     case InkType.MaskBrush_Mix:
                     case InkType.MaskBrush_Pattern_Mix:
-                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
+                        if (segment.StartingSize < 5)
                         {
-                            segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkMixer.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            segment.DrawLine(ds, this.InkMixer.Color);
+                        }
+                        else
+                        {
+                            using (ds.CreateLayer(1f, segment.Bounds))
+                            {
+                                segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkMixer.ColorHdr, this.InkPresenter.Mask, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
+                            }
                         }
                         break;
 
@@ -281,7 +306,7 @@ namespace Luo_Painter
 
                     case InkType.Erase:
                     case InkType.Erase_Opacity:
-                        using (ds.CreateLayer(1f, segment.GetRect(this.InkPresenter.Size)))
+                        using (ds.CreateLayer(1f, segment.Bounds))
                         {
                             segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow);
                         }

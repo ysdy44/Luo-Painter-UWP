@@ -77,10 +77,10 @@ namespace Luo_Painter.TestApp
                 this.Pressure = properties.Pressure;
 
                 StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, (float)this.Brush.Size, (float)this.Brush.Spacing);
-                if (segment.InRadius()) return;
+                if (segment.InRadius) return;
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
-                using (ds.CreateLayer(1f, segment.GetRect(this.Brush.Size)))
+                using (ds.CreateLayer(1f, segment.Bounds))
                 {
                     segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.ShaderCodeBytes, BitmapLayer.DodgerBlue, this.Texture, true, (int)this.Brush.Hardness, (float)this.Brush.Flow);
                 }

@@ -127,7 +127,6 @@ namespace Luo_Painter.Brushes
         /// </summary>
         public void IsometricDrawShaderBrushEdgeHardnessWithTexture(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f)
         {
-            Vector2 normalization = this.Normalize();
             ds.DrawImage(new PixelShaderEffect(shaderCode)
             {
                 Source1 = texture,
@@ -135,7 +134,7 @@ namespace Luo_Painter.Brushes
                 {
                     ["hardness"] = hardness,
                     ["rotate"] = rotate,
-                    ["normalization"] = normalization,
+                    ["normalization"] = this.Normalize,
                     ["pressure"] = flow,
                     ["radius"] = this.StartingSize,
                     ["targetPosition"] = this.StartingPosition,
@@ -161,7 +160,7 @@ namespace Luo_Painter.Brushes
                     {
                         ["hardness"] = hardness,
                         ["rotate"] = rotate,
-                        ["normalization"] = normalization,
+                        ["normalization"] = this.Normalize,
                         ["pressure"] = flow,
                         ["radius"] = sizePressureIsometric,
                         ["targetPosition"] = positionIsometric,
