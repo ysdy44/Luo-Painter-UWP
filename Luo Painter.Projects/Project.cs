@@ -5,7 +5,7 @@ using Windows.Storage;
 
 namespace Luo_Painter.Projects
 {
-    public abstract class Project : INotifyPropertyChanged
+    public abstract partial class Project : INotifyPropertyChanged
     {
         public StorageItemTypes Type { get; }
 

@@ -33,6 +33,10 @@ namespace Luo_Painter.Projects
         {
             base.Insert(1, new ProjectFile(zipFolder));
         }
+        public void Insert(Project project)
+        {
+            base.Insert(1, project);
+        }
 
         public void Enable()
         {
