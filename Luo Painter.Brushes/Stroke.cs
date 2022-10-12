@@ -1,31 +1,31 @@
 ﻿using System.Numerics;
+using Windows.Foundation;
 
 namespace Luo_Painter.Brushes
 {
     public struct Stroke
     {
-        public Vector2 Position;
-        public Vector2 StartingPosition;
+        public readonly bool HasIntersect;
+        public readonly Rect Intersect;
 
-        public float Pressure;
-        public float StartingPressure;
-
-        public float Distance() => Vector2.Distance(this.StartingPosition, this.Position);
-
-        public Vector2 Normalize()
+        public Stroke(Vector2 startingPoint, Vector2 point, Size screenSize, float size = 22f)
         {
-            Vector2 vector = this.Position - this.StartingPosition;
+            double boundsLeft = System.Math.Min(startingPoint.X, point.X) - size;
+            double boundsTop = System.Math.Min(startingPoint.Y, point.Y) - size;
+            double boundsRight = boundsLeft + System.Math.Abs(startingPoint.X - point.X) + size + size;
+            double boundsBottom = boundsTop + System.Math.Abs(startingPoint.Y - point.Y) + size + size;
 
-            return Vector2.Normalize(vector);
-        }
+            this.HasIntersect = false;
+            if (boundsLeft > screenSize.Width - 1) return;
+            if (boundsTop > screenSize.Height - 1) return;
+            if (boundsRight < 0) return;
+            if (boundsBottom < 0) return;
 
-        public bool IsNaN()
-        {
-            Vector2 vector = this.Position - this.StartingPosition;
-
-            if (double.IsNaN(vector.X)) return true;
-            else if (double.IsNaN(vector.Y)) return true;
-            else return false;
+            this.HasIntersect = true;
+            this.Intersect.X = System.Math.Max(0, boundsLeft);
+            this.Intersect.Y = System.Math.Max(0, boundsTop);
+            this.Intersect.Width = System.Math.Min(screenSize.Width - 1, boundsRight) - boundsLeft;
+            this.Intersect.Height = System.Math.Min(screenSize.Height - 1, boundsBottom) - boundsTop;
         }
     }
 }
