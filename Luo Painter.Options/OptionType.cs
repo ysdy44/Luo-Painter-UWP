@@ -3,8 +3,20 @@
 namespace Luo_Painter.Options
 {
     /// <summary>
-    /// Root4___Category12_________Item4___Flag12                                <para/>
-    /// 0000____0000_0000_0000____0000____0000_0000_0000
+    /// None: <para/>
+    /// 0b_00000000_00000000_00000000_00000000 <para/>
+    /// 
+    /// Root: <para/>
+    /// 0b_11111111_00000000_00000000_00000000 <para/>
+    /// 
+    /// Category: <para/>
+    /// 0b_00000000_11111111_00000000_00000000 <para/>
+    /// 
+    /// Item: <para/>
+    /// 0b_00000000_00000000_11111111_00000000 <para/>
+    /// 
+    /// Flag: <para/>
+    /// 0b_00000000_00000000_00000000_11111111 <para/>
     /// </summary>
     [Flags]
     public enum OptionType : uint
@@ -19,125 +31,70 @@ namespace Luo_Painter.Options
         AllowDrag = 8,
         HasPreview = 16,
         HasDifference = 32,
-        TempOverlay = 64,
-        HasState = 128,
+        WithState = 64,
+        WithTransform = 128,
 
         // Root
-        App = 1 << 27,
-        Edit = 2 << 27,
-        Effect = 4 << 27,
-        Tool = 8 << 27,
+        File = 1 << 24,
+        Edit = 2 << 24,
+        Menu = 4 << 24,
+        Setup = 8 << 24,
+        Layer = 16 << 24,
+        Select = 32 << 24,
+        Effect = 64 << 24,
+        Tool = (uint)128 << 24,
 
+        #region File
 
-        // App
-        File = App | 1 << 15,
-        Menu = App | 2 << 15,
+        Close = File | 1 << 8 | IsItemClickEnabled,
+        Save = File | 2 << 8 | IsItemClickEnabled,
 
-        #region App
+        Export = File | 3 << 8 | IsItemClickEnabled,
+        ExportAll = File | 4 << 8 | IsItemClickEnabled,
+        ExportCurrent = File | 5 << 8 | IsItemClickEnabled,
 
+        Undo = File | 6 << 8 | IsItemClickEnabled,
+        Redo = File | 7 << 8 | IsItemClickEnabled,
 
-        // File
-        Close = File | 1 << 8,
-        Save = File | 2 << 8,
-
-        Export = File | 3 << 8,
-        ExportAll = File | 4 << 8,
-        ExportCurrent = File | 5 << 8,
-
-        Undo = File | 6 << 8,
-        Redo = File | 7 << 8,
-
-        FullScreen = File | 8 << 8,
-        UnFullScreen = File | 9 << 8,
-
-
-        // Menu
-        ExportMenu = Menu | 1 << 8,
-
-        ToolMenu = Menu | 2 << 8,
-        HistoryMenu = Menu | 3 << 8,
-        ColorMenu = Menu | 4 << 8,
-
-        EditMenu = Menu | 5 << 8,
-        AdjustmentMenu = Menu | 6 << 8,
-        OtherMenu = Menu | 7 << 8,
-
-        PaintMenu = Menu | 8 << 8,
-        BrushMenu = Menu | 9 << 8,
-        SizeMenu = Menu | 10 << 8,
-
-        LayerMenu = Menu | 11 << 8,
-        AddMenu = Menu | 12 << 8,
-        AddMenuWithRename = Menu | 13 << 8,
-
+        FullScreen = File | 8 << 8 | IsItemClickEnabled,
+        UnFullScreen = File | 9 << 8 | IsItemClickEnabled,
 
         #endregion
 
-
-        // Edit
-        Layering = Edit | 1 << 15,
-        Editing = Edit | 2 << 15,
-        Grouping = Edit | 4 << 15,
-        Select = Edit | 8 << 15,
-        Combine = Edit | 16 << 15,
-        Setup = Edit | 32 << 15,
-
         #region Edit
 
+        Cut = Edit | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Copy = Edit | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Paste = Edit | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        // Layering
-        Remove = Layering | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        AddLayer = Layering | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        AddImageLayer = Layering | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        AddCurveLayer = Layering | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        Clear = Edit | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        CutLayer = Layering | 5 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        CopyLayer = Layering | 6 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        PasteLayer = Layering | 7 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        #endregion
 
+        #region Menu
 
-        // Editing
-        Cut = Editing | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Duplicate = Editing | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Copy = Editing | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Paste = Editing | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        ExportMenu = Menu | 1 << 8 | IsItemClickEnabled,
 
-        Clear = Editing | 5 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        ToolMenu = Menu | 2 << 8 | IsItemClickEnabled,
+        HistoryMenu = Menu | 3 << 8 | IsItemClickEnabled,
+        ColorMenu = Menu | 4 << 8 | IsItemClickEnabled,
 
-        Extract = Editing | 6 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Merge = Editing | 7 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Flatten = Editing | 8 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        EditMenu = Menu | 5 << 8 | IsItemClickEnabled,
+        AdjustmentMenu = Menu | 6 << 8 | IsItemClickEnabled,
+        OtherMenu = Menu | 7 << 8 | IsItemClickEnabled,
 
+        PaintMenu = Menu | 8 << 8 | IsItemClickEnabled,
+        BrushMenu = Menu | 9 << 8 | IsItemClickEnabled,
+        SizeMenu = Menu | 10 << 8 | IsItemClickEnabled,
 
-        // Grouping
-        Group = Grouping | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Ungroup = Grouping | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        LayerMenu = Menu | 11 << 8 | IsItemClickEnabled,
+        AddMenu = Menu | 12 << 8 | IsItemClickEnabled,
+        AddMenuWithRename = Menu | 13 << 8,
 
-        Release = Grouping | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
+        #endregion
 
+        #region Setup
 
-        // Select
-        All = Select | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Deselect = Select | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        MarqueeInvert = Select | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Pixel = Select | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-
-        Feather = Select | 5 << 8 | HasState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        MarqueeTransform = 6 << 8 | Select | HasState | HasDifference | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        Grow = Select | 7 << 8 | HasState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        Shrink = Select | 8 << 8 | HasState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-
-
-        // Combine
-        Union = Combine | 1 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Exclude = Combine | 2 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Xor = Combine | 3 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-        Intersect = Combine | 4 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-
-        ExpandStroke = Combine | 5 << 8 | HasState | ExistIcon | IsItemClickEnabled,
-
-
-        // Setup
         CropCanvas = Setup | 1 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         Stretch = Setup | 2 << 8 | ExistIcon | IsItemClickEnabled,
@@ -149,27 +106,86 @@ namespace Luo_Painter.Options
         RightTurn = Setup | 6 << 8 | ExistIcon | IsItemClickEnabled,
         OverTurn = Setup | 7 << 8 | ExistIcon | IsItemClickEnabled,
 
+        #endregion
+
+        #region Layer
+
+        // Category
+        Add = Layer | 1 << 16,
+        Clipboard = Layer | 2 << 16,
+        Layering = Layer | 4 << 16,
+        Grouping = Layer | 8 << 16,
+        Combine = Layer | 16 << 16,
+
+        // Add
+        AddLayer = Add | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AddImageLayer = Add | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AddCurveLayer = Add | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Clipboard
+        CutLayer = Clipboard | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        CopyLayer = Clipboard | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        PasteLayer = Clipboard | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Layering
+        Remove = Layering | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Duplicate = Layering | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        Extract = Layering | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Merge = Layering | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Flatten = Layering | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Grouping
+        Group = Grouping | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Ungroup = Grouping | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        Release = Grouping | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Combine
+        Union = Combine | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Exclude = Combine | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Xor = Combine | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Intersect = Combine | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        ExpandStroke = Layer | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
+        #region Select
 
-        // Effect
-        Other = Effect | 1 << 15,
-        Adjustment = Effect | 2 << 15,
-        Effect1 = Effect | 4 << 15,
-        Effect2 = Effect | 8 << 15,
-        Effect3 = Effect | 16 << 15,
+        // Category
+        Selecting = Select | 1 << 16,
+        Marquees = Select | 2 << 16,
+
+        // Selecting
+        All = Selecting | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Deselect = Selecting | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        MarqueeInvert = Selecting | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Pixel = Selecting | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Marquees
+        Feather = Marquees | 5 << 8 | WithState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        MarqueeTransform = 6 << 8 | Marquees | WithTransform | WithState | HasDifference | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        Grow = Marquees | 7 << 8 | WithState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        Shrink = Marquees | 8 << 8 | WithState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+
+        #endregion
 
         #region Effect
 
+        // Category
+        Other = Effect | 1 << 16,
+        Adjustment = Effect | 2 << 16,
+        Effect1 = Effect | 4 << 16,
+        Effect2 = Effect | 8 << 16,
+        Effect3 = Effect | 16 << 16,
 
         // Other
         Transform = Other | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         DisplacementLiquefaction = Other | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         GradientMapping = Other | 3 << 8 | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
         RippleEffect = Other | 4 << 8 | HasPreview | AllowDrag | ExistIcon | HasDifference | IsItemClickEnabled,
-        Fill = Other | 5 << 8 | TempOverlay | HasPreview | ExistIcon | IsItemClickEnabled,
-
+        Fill = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -182,7 +198,6 @@ namespace Luo_Painter.Options
         Temperature = Adjustment | 8 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
-
         // Effect1
         GaussianBlur = Effect1 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         DirectionalBlur = Effect1 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -193,7 +208,6 @@ namespace Luo_Painter.Options
         Border = Effect1 | 7 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Emboss = Effect1 | 8 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Lighting = Effect1 | 9 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-
 
         // Effect2
         LuminanceToAlpha = Effect2 | 1 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -206,28 +220,24 @@ namespace Luo_Painter.Options
         Vignette = Effect2 | 8 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         GammaTransfer = Effect2 | 9 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
-
         // Effect3
         Glass = Effect3 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         PinchPunch = Effect3 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Morphology = Effect3 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
-
         #endregion
-
-
-        // Tool
-        Marquee = Tool | 1 << 15,
-        Selection = Tool | 2 << 15,
-        Paint = Tool | 4 << 15,
-        Vector = Tool | 8 << 15,
-        Curve = Tool | 16 << 15,
-        Text = Tool | 32 << 15,
-        Geometry = Tool | 64 << 15,
-        Pattern = Tool | 128 << 15,
 
         #region Tool
 
+        // Category
+        Marquee = Tool | 1 << 16,
+        Selection = Tool | 2 << 16,
+        Paint = Tool | 4 << 16,
+        Vector = Tool | 8 << 16,
+        Curve = Tool | 16 << 16,
+        Text = Tool | 32 << 16,
+        Geometry = Tool | 64 << 16,
+        Pattern = Tool | 128 << 16,
 
         // Marquee
         MarqueeRectangular = Marquee | 1 << 8 | ExistIcon | IsItemClickEnabled,
@@ -235,11 +245,9 @@ namespace Luo_Painter.Options
         MarqueePolygon = Marquee | 3 << 8 | ExistIcon | IsItemClickEnabled,
         MarqueeFreeHand = Marquee | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
-
         // Selection
         SelectionFlood = Selection | 1 << 8 | ExistIcon | IsItemClickEnabled,
         SelectionBrush = Selection | 2 << 8 | ExistIcon | IsItemClickEnabled,
-
 
         // Paint
         PaintBrush = Paint | 1 << 8 | ExistIcon | IsItemClickEnabled,
@@ -247,7 +255,6 @@ namespace Luo_Painter.Options
         PaintPencil = Paint | 3 << 8 | ExistIcon | IsItemClickEnabled,
         PaintEraseBrush = Paint | 4 << 8 | ExistIcon | IsItemClickEnabled,
         PaintLiquefaction = Paint | 5 << 8 | ExistIcon | IsItemClickEnabled,
-
 
         // Vector
         Cursor = Vector | 1 << 8 | ExistIcon | IsItemClickEnabled,
@@ -259,16 +266,13 @@ namespace Luo_Painter.Options
 
         Image = Vector | 6 << 8 | ExistIcon | IsItemClickEnabled,
 
-
         // Curve
         Node = Curve | 1 << 8 | ExistIcon | IsItemClickEnabled,
         Pen = Curve | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
-
         // Text
         TextArtistic = Text | 1 << 8 | ExistIcon | IsItemClickEnabled,
         TextFrame = Text | 2 << 8 | ExistIcon | IsItemClickEnabled,
-
 
         // Geometry
         // Geometry0
@@ -291,36 +295,33 @@ namespace Luo_Painter.Options
         GeometryCapsule = Geometry | 13 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryHeart = Geometry | 14 << 8 | ExistIcon | IsItemClickEnabled,
 
-
         // Pattern
         PatternGrid = Pattern | 1 << 8 | ExistIcon | IsItemClickEnabled,
         PatternDiagonal = Pattern | 2 << 8 | ExistIcon | IsItemClickEnabled,
         PatternSpotted = Pattern | 3 << 8 | ExistIcon | IsItemClickEnabled,
 
-
         #endregion
-
 
         // GeometryTransform
         // Geometry0
-        GeometryRectangleTransform = GeometryRectangle | HasPreview | AllowDrag,
-        GeometryEllipseTransform = GeometryEllipse | HasPreview | AllowDrag,
+        GeometryRectangleTransform = GeometryRectangle | WithTransform | HasPreview | AllowDrag,
+        GeometryEllipseTransform = GeometryEllipse | WithTransform | HasPreview | AllowDrag,
         // Geometry1
-        GeometryRoundRectTransform = GeometryRoundRect | HasPreview | AllowDrag,
-        GeometryTriangleTransform = GeometryTriangle | HasPreview | AllowDrag,
-        GeometryDiamondTransform = GeometryDiamond | HasPreview | AllowDrag,
+        GeometryRoundRectTransform = GeometryRoundRect | WithTransform | HasPreview | AllowDrag,
+        GeometryTriangleTransform = GeometryTriangle | WithTransform | HasPreview | AllowDrag,
+        GeometryDiamondTransform = GeometryDiamond | WithTransform | HasPreview | AllowDrag,
         // Geometry2
-        GeometryPentagonTransform = GeometryPentagon | HasPreview | AllowDrag,
-        GeometryStarTransform = GeometryStar | HasPreview | AllowDrag,
-        GeometryCogTransform = GeometryCog | HasPreview | AllowDrag,
+        GeometryPentagonTransform = GeometryPentagon | WithTransform | HasPreview | AllowDrag,
+        GeometryStarTransform = GeometryStar | WithTransform | HasPreview | AllowDrag,
+        GeometryCogTransform = GeometryCog | WithTransform | HasPreview | AllowDrag,
         // Geometry3
-        GeometryDountTransform = GeometryDount | HasPreview | AllowDrag,
-        GeometryPieTransform = GeometryPie | HasPreview | AllowDrag,
-        GeometryCookieTransform = GeometryCookie | HasPreview | AllowDrag,
+        GeometryDountTransform = GeometryDount | WithTransform | HasPreview | AllowDrag,
+        GeometryPieTransform = GeometryPie | WithTransform | HasPreview | AllowDrag,
+        GeometryCookieTransform = GeometryCookie | WithTransform | HasPreview | AllowDrag,
         // Geometry4
-        GeometryArrowTransform = GeometryArrow | HasPreview | AllowDrag,
-        GeometryCapsuleTransform = GeometryCapsule | HasPreview | AllowDrag,
-        GeometryHeartTransform = GeometryHeart | HasPreview | AllowDrag,
+        GeometryArrowTransform = GeometryArrow | WithTransform | HasPreview | AllowDrag,
+        GeometryCapsuleTransform = GeometryCapsule | WithTransform | HasPreview | AllowDrag,
+        GeometryHeartTransform = GeometryHeart | WithTransform | HasPreview | AllowDrag,
 
     }
 }

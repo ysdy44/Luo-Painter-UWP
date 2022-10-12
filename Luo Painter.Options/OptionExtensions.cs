@@ -13,14 +13,12 @@ namespace Luo_Painter.Options
         public static bool AllowDrag(this OptionType type) => type.HasFlag(OptionType.AllowDrag);
         public static bool HasPreview(this OptionType type) => type.HasFlag(OptionType.HasPreview);
         public static bool HasDifference(this OptionType type) => type.HasFlag(OptionType.HasDifference);
-        public static bool TempOverlay(this OptionType type) => type.HasFlag(OptionType.TempOverlay);
-        public static bool HasState(this OptionType type) => type.HasFlag(OptionType.HasState);
+        public static bool WithState(this OptionType type) => type.HasFlag(OptionType.WithState);
+        public static bool WithTransform(this OptionType type) => type.HasFlag(OptionType.WithTransform);
         public static void GoToState(this Control control, bool isEnabled) => VisualStateManager.GoToState(control, isEnabled ? "Normal" : "Disabled", true);
 
-        public static bool IsFile(this OptionType type) => type.HasFlag(OptionType.File);
-        public static bool IsEdit(this OptionType type) => type.HasFlag(OptionType.Edit);
         public static bool IsEffect(this OptionType type) => type.HasFlag(OptionType.Effect);
-        public static bool IsTool(this OptionType type) => type.HasFlag(OptionType.Tool);
+        public static bool IsEdit(this OptionType type) => type.HasFlag(OptionType.Marquees);
 
         public static bool IsMarquee(this OptionType type) => type.HasFlag(OptionType.Marquee);
         public static bool IsSelection(this OptionType type) => type.HasFlag(OptionType.Selection);
