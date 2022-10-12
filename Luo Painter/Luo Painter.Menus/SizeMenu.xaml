@@ -20,7 +20,6 @@
     <ListView
         x:Name="ListView"
         IsItemClickEnabled="True"
-        SelectionMode="None"
         FooterTemplate="{StaticResource AppListViewBaseFooter}"                
         >
 

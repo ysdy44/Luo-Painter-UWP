@@ -22,47 +22,26 @@
         <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <elements:Expander.TopAppBar>
-        <Grid Padding="6,0" ColumnSpacing="4" RowSpacing="4" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <luo_painter:EditButton Type="Cut" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton Type="Copy" Grid.Column="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton x:Name="PasteItem" Type="Paste" Grid.Column="2" IsEnabled="False" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton x:Name="RemoveItem" Type="Clear" Grid.Column="3" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-            <luo_painter:EditButton Type="All" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton Type="Deselect" Grid.Column="1" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton Type="MarqueeInvert" Grid.Column="2" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton Type="Pixel" Grid.Column="3" Grid.Row="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        </Grid>
-    </elements:Expander.TopAppBar>
-
     <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
         <StackPanel Spacing="2" Padding="6,4">
 
-            <!--Editing-->
-            <TextBlock x:Name="EditingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Editing
-            </TextBlock>
-            <luo_painter:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Merge" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <!--Edit-->
+            <luo_painter:EditItem Type="Cut" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Copy" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem x:Name="PasteItem" Type="Paste" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem x:Name="RemoveItem" Type="Clear" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-            <!--Select-->
-            <TextBlock x:Name="SelectTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Select
-            </TextBlock>
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+            
+            <!--Selection-->
+            <luo_painter:EditItem Type="All" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Deselect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="MarqueeInvert" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Pixel" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+            
+            <!--Marquee-->
             <luo_painter:EditItem Type="Feather" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="Grow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />

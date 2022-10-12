@@ -29,26 +29,28 @@
         <StackPanel Spacing="2" Padding="6,4">
 
             <!--Opacity-->
-            <elements:ThumbSlider x:Name="OpacitySliderCore" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
-                <FrameworkElement.Tag>
-                    Opacity
-                </FrameworkElement.Tag>
-                <Slider.Header>
-                    <Button                  
-                        Padding="4,0" MinWidth="44" Height="28"                 
-                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <Button.Flyout>
-                            <Flyout>
+            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                <elements:ThumbSlider x:Name="OpacitySliderCore" Value="100" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
+                    <FrameworkElement.Tag>
+                        Opacity
+                    </FrameworkElement.Tag>
+                    <Slider.Header>
+                        <Button 
+                            Padding="4,0" MinWidth="44" Height="28"
+                            BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                            <Button.Flyout>
+                                <Flyout>
 
-                            </Flyout>
-                        </Button.Flyout>
-                        <TextBlock>                     
-                            <Run Text="{x:Bind RoundConverter(OpacitySliderCore.Value), Mode=OneWay}" />
-                            <Run>%</Run>
-                        </TextBlock>
-                    </Button>
-                </Slider.Header>
-            </elements:ThumbSlider>
+                                </Flyout>
+                            </Button.Flyout>
+                            <TextBlock>                        
+                                <Run Text="{x:Bind RoundConverter(OpacitySliderCore.Value), Mode=OneWay}" />                          
+                                <Run>%</Run>
+                            </TextBlock>
+                        </Button>
+                    </Slider.Header>
+                </elements:ThumbSlider>
+            </Border>
 
             <!--BlendMode-->
             <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
@@ -116,9 +118,9 @@
             <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                 Tag Type
             </TextBlock>
-            <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
-
-            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+            <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
+            </Border>
 
             <!--Add-->
             <TextBlock x:Name="AddTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >

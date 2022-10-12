@@ -22,41 +22,36 @@
         <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <elements:Expander.TopAppBar>
-        <Grid Padding="6,0" ColumnSpacing="4" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <luo_painter:EditButton x:Name="CutItem" Type="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton x:Name="CopyItem" Type="CopyLayer" Grid.Column="1" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton x:Name="PasteItem" Type="PasteLayer" Grid.Column="2" IsEnabled="False" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditButton x:Name="RemoveItem" Type="Remove" Grid.Column="3" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        </Grid>
-    </elements:Expander.TopAppBar>
-
     <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
         <StackPanel Spacing="2" Padding="6,4">
 
+            <!--Clipboard-->
+            <luo_painter:EditItem x:Name="CutItem" Type="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem x:Name="CopyItem" Type="CopyLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem x:Name="PasteItem" Type="PasteLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem x:Name="RemoveItem" Type="Remove" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+       
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+
+            <!--Layering-->
+            <luo_painter:EditItem Type="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Extract" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Merge" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+
             <!--Grouping-->
-            <TextBlock x:Name="GroupingTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Grouping
-            </TextBlock>
             <luo_painter:EditItem Type="Group" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="Release" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <!--<luo_painter:EditItem Type="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />-->
 
             <!--Combine-->
-            <TextBlock x:Name="CombineTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Combine
-            </TextBlock>
-            <luo_painter:EditItem Type="Union" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <!--<luo_painter:EditItem Type="Union" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="Xor" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:EditItem Type="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />-->
 
         </StackPanel>
     </ScrollViewer>

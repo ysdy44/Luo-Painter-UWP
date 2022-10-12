@@ -26,22 +26,23 @@
         <StackPanel Spacing="2" Padding="6,4">
 
             <!--Setup-->
-            <TextBlock x:Name="SetupTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Setup
-            </TextBlock>
             <luo_painter:EditItem Type="CropCanvas" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+          
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+         
             <luo_painter:EditItem Type="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+         
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+         
             <luo_painter:EditItem Type="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:EditItem Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+        
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
             <!--Option-->
-            <TextBlock x:Name="OptionTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Option
-            </TextBlock>
             <luo_painter:OptionItem Type="Transform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItem Type="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
