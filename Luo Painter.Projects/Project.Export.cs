@@ -1,8 +1,6 @@
-﻿using Luo_Painter.Layers;
-using Luo_Painter.Projects;
-using Microsoft.Graphics.Canvas;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -11,17 +9,16 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.Projects
 {
-    public sealed partial class MainPage : Page
+    public abstract partial class Project : INotifyPropertyChanged
     {
 
-        private async Task<ProjectParameter> SaveAsync(StorageFolder item, BitmapSize size)
+        public async Task<ProjectParameter> SaveAsync(StorageFolder item, BitmapSize size)
         {
             // Save Project.xml
-            using (IRandomAccessStream stream = await item.CreateStreamAsync("Project.xml"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 new XDocument(new XElement("Root",
                     new XElement("Width", size.Width),
@@ -29,34 +26,43 @@ namespace Luo_Painter
                     )).Save(stream.AsStream());
             }
 
-            return new ProjectParameter(item.Path, item.Name, size);
+            return new ProjectParameter
+            {
+                Type = ProjectParameterType.None,
+
+                Path = this.Path,
+                Name = this.Name,
+                DisplayName = this.DisplayName,
+
+                Width = (int)size.Width,
+                Height = (int)size.Height,
+            };
         }
 
-        private async Task<ProjectParameter> SaveAsync(StorageFolder item, CanvasBitmap bitmap, StorageItemThumbnail thumbnail)
+        public async Task<ProjectParameter> SaveAsync(StorageFolder item, BitmapSize size, IBuffer bytes, StorageItemThumbnail thumbnail)
         {
             // 1. ?
+            string id = "0";
 
             // 2. Save Bitmaps 
-            BitmapSize size = bitmap.SizeInPixels;
-            string id = 0.ToString();
-            IBuffer bytes = bitmap.GetPixelBytes().AsBuffer();
+            string type = "Bitmap";
 
             // Write Buffer
             StorageFile file2 = await item.CreateFileAsync(id, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteBufferAsync(file2, bytes);
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream stream = await item.CreateStreamAsync("Layers.xml"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 XDocument docLayers = new XDocument(new XElement("Root", new XElement[]
                 {
-                    new XElement("Layer", new XAttribute("Id", id), new XAttribute("Type", LayerType.Bitmap))
+                    new XElement("Layer", new XAttribute("Id", id), new XAttribute("Type", type))
                 }));
                 docLayers.Save(stream.AsStream());
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream stream = await item.CreateStreamAsync("Project.xml"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 XDocument docProject = new XDocument(new XElement("Root",
                 new XElement("Width", size.Width),
@@ -70,20 +76,31 @@ namespace Luo_Painter
             }
 
             // 5. Save Thumbnail.png
-            using (IRandomAccessStream fileStream = await item.CreateStreamAsync("Thumbnail.png"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
-                IInputStream source = thumbnail;
-                IOutputStream destination = fileStream;
-                await RandomAccessStream.CopyAsync(source, destination);
+                await RandomAccessStream.CopyAsync(thumbnail, stream);
             }
 
-            return new ProjectParameter(item.Path, item.Name, size.Width, size.Height, bytes);
+            return new ProjectParameter
+            {
+                Type = ProjectParameterType.Image,
+
+                Path = this.Path,
+                Name = this.Name,
+                DisplayName = this.DisplayName,
+
+                Width = (int)size.Width,
+                Height = (int)size.Height,
+
+                Bitmap = bytes
+            };
         }
 
-        private async Task<ProjectParameter> SaveAsync(Project project)
+        public async Task<ProjectParameter> LoadAsync()
         {
-            StorageFolder item = await FileUtil.GetFolderFromPathAsync(project.Path);
-            if (item is null) return null;
+            StorageFolder item;
+            try { item = await StorageFolder.GetFolderFromPathAsync(this.Path); }
+            catch (Exception) { return null; }
 
             string docProject = null;
             string docLayers = null;
@@ -131,7 +148,21 @@ namespace Luo_Painter
                                 }
                             }
 
-                            return new ProjectParameter(project.Path, project.Name, width, height, docProject, docLayers, bitmaps);
+                            return new ProjectParameter
+                            {
+                                Type = ProjectParameterType.File,
+
+                                Path = this.Path,
+                                Name = this.Name,
+                                DisplayName = this.DisplayName,
+
+                                Width = width,
+                                Height = height,
+
+                                DocProject = docProject,
+                                DocLayers = docLayers,
+                                Bitmaps = bitmaps,
+                            };
                         }
                     }
                 }

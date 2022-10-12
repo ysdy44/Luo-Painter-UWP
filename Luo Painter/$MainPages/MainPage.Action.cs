@@ -4,7 +4,7 @@ using Luo_Painter.Projects.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
@@ -44,30 +44,35 @@ namespace Luo_Painter
     {
 
         [MainPageToDrawPage(NavigationMode.Forward)]
-        private async void Action(ProjectAction action, Project project = null)
+        private async void Action(ProjectAction action, object obj = null)
         {
             switch (action)
             {
                 case ProjectAction.File:
                     {
-                        if (project is null) break;
-
-                        ProjectParameter parameter = await this.SaveAsync(project);
-                        if (parameter is null)
+                        if (obj is Project project)
                         {
-                            await new MessageDialog("Folder not found.").ShowAsync();
-                            break;
-                        }
+                            ProjectParameter parameter = await project.LoadAsync();
+                            if (parameter is null)
+                            {
+                                await new MessageDialog("Folder not found.").ShowAsync();
+                                break;
+                            }
 
-                        base.Frame.Navigate(typeof(DrawPage), parameter);
+                            base.Frame.Navigate(typeof(DrawPage), parameter);
+                        }
                     }
                     break;
                 case ProjectAction.Folder:
-                    if (project is null) break;
-                    this.Paths.Add(new Metadata(project.Path, project.Name));
+                    {
+                        if (obj is Project project)
+                        {
+                            this.Paths.Add(new Metadata(project.Path, project.Name));
 
-                    this.Load();
-                    this.UpdateBack();
+                            this.Load();
+                            this.UpdateBack();
+                        }
+                    }
                     break;
 
                 case ProjectAction.Add:
@@ -80,9 +85,10 @@ namespace Luo_Painter
                                 BitmapSize size = this.SizePicker.Size;
 
                                 StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
-                                ProjectParameter parameter = await this.SaveAsync(item, size);
+                                ProjectFile project = new ProjectFile(item);
+                                ProjectParameter parameter = await project.SaveAsync(item, size);
 
-                                this.ObservableCollection.Insert(item);
+                                this.ObservableCollection.Insert(project);
                                 base.Frame.Navigate(typeof(DrawPage), parameter);
                                 break;
                             default:
@@ -92,30 +98,36 @@ namespace Luo_Painter
                     break;
                 case ProjectAction.Image:
                     {
-                        StorageFile file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                        StorageFile file = (StorageFile)obj;
+                        if (file is null) file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
                         if (file is null) break;
 
-                        using (StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView))
-                        using (IRandomAccessStream streamBitmap = await file.OpenAsync(FileAccessMode.ReadWrite))
+                        using (IRandomAccessStream streamBitmap = await file.OpenAsync(FileAccessMode.Read))
                         using (Microsoft.Graphics.Canvas.CanvasBitmap bitmap = await Microsoft.Graphics.Canvas.CanvasBitmap.LoadAsync(Microsoft.Graphics.Canvas.CanvasDevice.GetSharedDevice(), streamBitmap))
+                        using (StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView))
                         {
                             StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
-                            ProjectParameter parameter = await this.SaveAsync(item, bitmap, thumbnail);
+                            ProjectFile project = new ProjectFile(item);
+                            ProjectParameter parameter = await project.SaveAsync(item, bitmap.SizeInPixels, bitmap.GetPixelBytes().AsBuffer(), thumbnail);
 
-                            this.ObservableCollection.Insert(item);
+                            this.ObservableCollection.Insert(project);
                             base.Frame.Navigate(typeof(DrawPage), parameter);
                         }
                     }
                     break;
 
                 case ProjectAction.DupliateShow:
-                    this.ObservableCollection.Enable(StorageItemTypes.File);
-                    this.ListView.IsItemClickEnabled = false;
-                    this.AppBarListView.IsItemClickEnabled = false;
-                    this.DupliateDocker.IsShow = true;
+                    {
+                        this.ObservableCollection.Enable(StorageItemTypes.File);
+                        this.ListView.IsItemClickEnabled = false;
+                        this.AppBarListView.IsItemClickEnabled = false;
+                        this.DupliateDocker.IsShow = true;
 
-                    if (project is null) break;
-                    this.ListView.SelectedItem = project;
+                        if (obj is Project project)
+                        {
+                            this.ListView.SelectedItem = project;
+                        }
+                    }
                     break;
                 case ProjectAction.DupliateHide:
                     this.ObservableCollection.Enable();
@@ -124,13 +136,17 @@ namespace Luo_Painter
                     this.DupliateDocker.IsShow = false;
                     break;
                 case ProjectAction.DeleteShow:
-                    this.ObservableCollection.Enable(StorageItemTypes.File | StorageItemTypes.Folder);
-                    this.ListView.IsItemClickEnabled = false;
-                    this.AppBarListView.IsItemClickEnabled = false;
-                    this.DeleteDocker.IsShow = true;
+                    {
+                        this.ObservableCollection.Enable(StorageItemTypes.File | StorageItemTypes.Folder);
+                        this.ListView.IsItemClickEnabled = false;
+                        this.AppBarListView.IsItemClickEnabled = false;
+                        this.DeleteDocker.IsShow = true;
 
-                    if (project is null) break;
-                    this.ListView.SelectedItem = project;
+                        if (obj is Project project)
+                        {
+                            this.ListView.SelectedItem = project;
+                        }
+                    }
                     break;
                 case ProjectAction.DeleteHide:
                     this.ObservableCollection.Enable();
@@ -139,13 +155,17 @@ namespace Luo_Painter
                     this.DeleteDocker.IsShow = false;
                     break;
                 case ProjectAction.SelectShow:
-                    this.ObservableCollection.Enable(StorageItemTypes.File);
-                    this.ListView.IsItemClickEnabled = false;
-                    this.AppBarListView.IsItemClickEnabled = false;
-                    this.SelectDocker.IsShow = true;
+                    {
+                        this.ObservableCollection.Enable(StorageItemTypes.File);
+                        this.ListView.IsItemClickEnabled = false;
+                        this.AppBarListView.IsItemClickEnabled = false;
+                        this.SelectDocker.IsShow = true;
 
-                    if (project is null) break;
-                    this.ListView.SelectedItem = project;
+                        if (obj is Project project)
+                        {
+                            this.ListView.SelectedItem = project;
+                        }
+                    }
                     break;
                 case ProjectAction.SelectHide:
                     this.ObservableCollection.Enable();
@@ -189,45 +209,49 @@ namespace Luo_Painter
                     break;
                 case ProjectAction.Rename:
                     {
-                        if (project is null) break;
-                        this.RenameTextBox.Text = project.DisplayName;
-                        this.RenameTextBox.SelectAll();
-                        this.RenameTextBox.Focus(FocusState.Keyboard);
-
-                        ContentDialogResult result = await this.RenameDialog.ShowInstance();
-                        switch (result)
+                        if (obj is Project project)
                         {
-                            case ContentDialogResult.Primary:
-                                string name = this.RenameTextBox.Text;
-                                if (string.IsNullOrEmpty(name)) break;
+                            this.RenameTextBox.Text = project.DisplayName;
+                            this.RenameTextBox.SelectAll();
+                            this.RenameTextBox.Focus(FocusState.Keyboard);
 
-                                switch (project.Type)
-                                {
-                                    case StorageItemTypes.File:
-                                        if (project is ProjectFile projectFile)
-                                        {
-                                            await projectFile.RenameAsync(name);
-                                        }
-                                        break;
-                                    case StorageItemTypes.Folder:
-                                        if (project is ProjectFolder projectFolder)
-                                        {
-                                            await projectFolder.RenameAsync(name);
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            default:
-                                break;
+                            ContentDialogResult result = await this.RenameDialog.ShowInstance();
+                            switch (result)
+                            {
+                                case ContentDialogResult.Primary:
+                                    string name = this.RenameTextBox.Text;
+                                    if (string.IsNullOrEmpty(name)) break;
+
+                                    switch (project.Type)
+                                    {
+                                        case StorageItemTypes.File:
+                                            if (project is ProjectFile projectFile)
+                                            {
+                                                await projectFile.RenameAsync(name);
+                                            }
+                                            break;
+                                        case StorageItemTypes.Folder:
+                                            if (project is ProjectFolder projectFolder)
+                                            {
+                                                await projectFolder.RenameAsync(name);
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                     break;
                 case ProjectAction.Local:
                     {
-                        if (project is null) break;
-                        await Launcher.LaunchFolderPathAsync(project.Path);
+                        if (obj is Project project)
+                        {
+                            await Launcher.LaunchFolderPathAsync(project.Path);
+                        }
                     }
                     break;
                 default:
