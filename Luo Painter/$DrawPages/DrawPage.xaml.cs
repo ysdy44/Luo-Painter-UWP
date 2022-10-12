@@ -73,6 +73,8 @@ namespace Luo_Painter
         GradientMesh GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
 
+        //@Task
+        readonly object Locker = new object();
         BitmapLayer Mesh { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
@@ -89,9 +91,6 @@ namespace Luo_Painter
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
 
-        Color Color => this.ColorMenu.Color;
-        Vector4 ColorHdr => this.ColorMenu.ColorHdr;
-
         Vector2 StartingPosition;
         Vector2 Position;
         Vector2 StartingPoint;
@@ -99,11 +98,14 @@ namespace Luo_Painter
         float StartingPressure;
         float Pressure;
 
+        Color Color => this.ColorMenu.Color;
+        Vector4 ColorHdr => this.ColorMenu.ColorHdr;
+
         Transformer StartingBoundsTransformer;
         Transformer BoundsTransformer;
         TransformerMode BoundsMode;
-        Matrix3x2 BoundsMatrix;
         bool IsBoundsMove;
+        Matrix3x2 BoundsMatrix;
 
 
         //@Construct
@@ -113,7 +115,7 @@ namespace Luo_Painter
             this.ConstructCanvas();
             this.ConstructOperator();
             this.ConstructSimulate();
-            
+
             this.ConstructLayers();
             this.ConstructLayer();
 
@@ -129,7 +131,7 @@ namespace Luo_Painter
             this.ConstructVector();
 
             this.ConstructPen();
-            
+
 
             this.Command.Click += (s, type) => this.Click(type);
 
@@ -140,7 +142,6 @@ namespace Luo_Painter
             this.OtherMenu.ItemClick += (s, type) => this.Click(type);
             this.ToolListView.ItemClick += (s, type) => this.Click(type);
             this.ToolListView.Construct(this.OptionType);
-
 
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
@@ -207,10 +208,9 @@ namespace Luo_Painter
             base.AllowDrop = true;
             base.Drop += async (s, e) =>
             {
-                if (e.DataView.Contains(StandardDataFormats.StorageItems))
-                {
-                    this.AddAsync(from file in await e.DataView.GetStorageItemsAsync() where file is IStorageFile select file as IStorageFile);
-                }
+                if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
+
+                this.AddAsync(from file in await e.DataView.GetStorageItemsAsync() where file is IStorageFile select file as IStorageFile);
             };
             base.DragOver += (s, e) =>
             {
@@ -242,7 +242,7 @@ namespace Luo_Painter
                 manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
-        [MainPageToDrawPage(NavigationMode.New)]
+        [MainPageToDrawPage(NavigationMode.New | NavigationMode.Back)]
         /// <summary> The current page becomes the active page. </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -268,7 +268,7 @@ namespace Luo_Painter
 
                         this.ViewTool.Construct(this.Transformer);
 
-                        this.ApplicationView.Title = item.Name;
+                        this.ApplicationView.Title = item.DisplayName;
                         this.ApplicationView.PersistedStateId = item.Path;
 
                         this.Load(item);

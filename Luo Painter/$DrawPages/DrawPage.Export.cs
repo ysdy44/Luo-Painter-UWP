@@ -70,13 +70,13 @@ namespace Luo_Painter
             }
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream stream = await item.CreateStreamAsync("Layers.xml"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 docLayers.Save(stream.AsStream());
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream stream = await item.CreateStreamAsync("Project.xml"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 docProject.Save(stream.AsStream());
             }
@@ -86,7 +86,7 @@ namespace Luo_Painter
             float scaleY = 256f / this.Transformer.Height;
             float scale = System.Math.Min(scaleX, scaleY);
 
-            using (IRandomAccessStream stream = await item.CreateStreamAsync("Thumbnail.png"))
+            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             using (ScaleEffect image = new ScaleEffect
             {
                 InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
@@ -121,21 +121,21 @@ namespace Luo_Painter
         {
             switch (item.Type)
             {
-                case StorageItemTypes.None:
+                case ProjectParameterType.None:
                     BitmapLayer bitmapLayer1 = new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
                     this.Nodes.Add(bitmapLayer1);
                     this.ObservableCollection.Add(bitmapLayer1);
 
                     this.LayerSelectedIndex = 0;
                     break;
-                case StorageItemTypes.File:
+                case ProjectParameterType.Image:
                     BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, item.Bitmap, item.Width, item.Height);
                     this.Nodes.Add(bitmapLayer2);
                     this.ObservableCollection.Add(bitmapLayer2);
 
                     this.LayerSelectedIndex = 0;
                     break;
-                case StorageItemTypes.Folder:
+                case ProjectParameterType.File:
                     if (string.IsNullOrEmpty(item.DocProject)) break;
 
                     // 2. Load Layers.xml
