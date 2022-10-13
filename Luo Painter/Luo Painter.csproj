@@ -177,6 +177,9 @@
     <Compile Include="Controls\SimulateCanvas.xaml.cs">
       <DependentUpon>SimulateCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SizePicker.xaml.cs">
+      <DependentUpon>SizePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StretchDialog.xaml.cs">
       <DependentUpon>StretchDialog.xaml</DependentUpon>
     </Compile>
@@ -325,6 +328,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SimulateCanvas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SizePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

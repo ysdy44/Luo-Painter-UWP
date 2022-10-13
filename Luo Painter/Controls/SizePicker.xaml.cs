@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Luo_Painter.Elements;
 using Windows.Graphics.Imaging;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.Controls
 {
     /// <summary>
     /// Represents a control for selecting a size.

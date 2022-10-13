@@ -159,9 +159,6 @@
     <Compile Include="Sheet.xaml.cs">
       <DependentUpon>Sheet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SizePicker.xaml.cs">
-      <DependentUpon>SizePicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SizePickerExtension.cs" />
     <Compile Include="Spliter.xaml.cs">
       <DependentUpon>Spliter.xaml</DependentUpon>
@@ -366,10 +363,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Sheet.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SizePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

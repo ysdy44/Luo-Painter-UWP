@@ -4,7 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:transformers="using:FanKit.Transformers" xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:controls="using:Luo_Painter.Controls"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
@@ -32,14 +33,14 @@
             </ListBoxItem>
         </ListBox>
 
-        <elements:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
-            <elements:SizePicker.WidthText>
+        <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
+            <controls:SizePicker.WidthText>
                 Width
-            </elements:SizePicker.WidthText>
-            <elements:SizePicker.HeightText>
+            </controls:SizePicker.WidthText>
+            <controls:SizePicker.HeightText>
                 Height
-            </elements:SizePicker.HeightText>
-        </elements:SizePicker>
+            </controls:SizePicker.HeightText>
+        </controls:SizePicker>
 
         <TextBlock x:Name="InterpolationTextBlock" Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                    Visibility="{x:Bind BooleanToVisibilityConverter(StretchItem.IsSelected), Mode=OneWay}"
@@ -71,13 +72,14 @@
             <x:String>HighQualityCubic</x:String>
         </ListView>
 
-        <Border x:Name="Border"
-                CornerRadius="4"
-                BorderThickness="1"
-                BorderBrush="{ThemeResource AppStroke}"
-                Background="{ThemeResource SystemAltLowColor}"
-                Visibility="{x:Bind BooleanToVisibilityConverter(AnchorItem.IsSelected), Mode=OneWay}"
-                >
+        <Border 
+            x:Name="Border"
+            CornerRadius="4"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource AppStroke}"
+            Background="{ThemeResource SystemAltLowColor}"
+            Visibility="{x:Bind BooleanToVisibilityConverter(AnchorItem.IsSelected), Mode=OneWay}"
+            >
             <Border
                 Width="160" 
                 Height="160"

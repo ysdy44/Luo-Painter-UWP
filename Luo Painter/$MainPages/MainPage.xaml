@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter"
+    xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:models="using:Luo_Painter.Projects.Models"
     NavigationCacheMode="Required"
@@ -138,9 +139,11 @@
                     <VisualState.Setters>
                         <Setter Target="DupliateDocker.HorizontalAlignment" Value="Stretch"/>
                         <Setter Target="DeleteDocker.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="SelectDocker.HorizontalAlignment" Value="Stretch"/>
                         <Setter Target="MoveDocker.HorizontalAlignment" Value="Stretch"/>
                         <Setter Target="DupliateDocker.Orientation" Value="Vertical"/>
                         <Setter Target="DeleteDocker.Orientation" Value="Vertical"/>
+                        <Setter Target="SelectDocker.Orientation" Value="Vertical"/>
                         <Setter Target="MoveDocker.Orientation" Value="Vertical"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -151,9 +154,6 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="DupliateDocker.Orientation" Value="Vertical"/>
-                        <Setter Target="DeleteDocker.Orientation" Value="Vertical"/>
-                        <Setter Target="MoveDocker.Orientation" Value="Vertical"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -374,6 +374,13 @@
             Visibility="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}"
             >
 
+            <!--Transitions-->
+            <UIElement.Transitions>
+                <TransitionCollection>
+                    <PaneThemeTransition/>
+                </TransitionCollection>
+            </UIElement.Transitions>
+
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Width" Value="48"/>
@@ -454,6 +461,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock x:Name="TitleTextBlock" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}">
+                <!--Transitions-->
                 <UIElement.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
@@ -469,6 +477,7 @@
                         Open document webpage
                     </ToolTip>
                 </ToolTipService.ToolTip>
+                <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
@@ -484,6 +493,7 @@
                         Open the settings page
                     </ToolTip>
                 </ToolTipService.ToolTip>
+                <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
@@ -659,14 +669,14 @@
             <ContentDialog.Title>
                 Create New
             </ContentDialog.Title>
-            <elements:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
-                <elements:SizePicker.WidthText>
+            <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
+                <controls:SizePicker.WidthText>
                     Width
-                </elements:SizePicker.WidthText>
-                <elements:SizePicker.HeightText>
+                </controls:SizePicker.WidthText>
+                <controls:SizePicker.HeightText>
                     Height
-                </elements:SizePicker.HeightText>
-            </elements:SizePicker>
+                </controls:SizePicker.HeightText>
+            </controls:SizePicker>
         </ContentDialog>
         <ContentDialog x:Name="NewDialog" Style="{StaticResource AppContentDialogStyle}">
             <ContentDialog.PrimaryButtonText>
