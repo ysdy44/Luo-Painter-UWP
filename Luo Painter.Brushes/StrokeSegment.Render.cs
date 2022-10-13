@@ -16,30 +16,31 @@ namespace Luo_Painter.Brushes
             EndCap = CanvasCapStyle.Round,
         };
 
-        public void DrawLine(CanvasDrawingSession ds, Color color)
+        public void DrawLine(CanvasDrawingSession ds, Color color, bool ignoreSizePressure = false)
         {
-            ds.DrawLine(this.StartingPosition, this.Position, color, this.StartingSize * 2, StrokeSegment.CanvasStrokeStyle);
+            ds.DrawLine(this.StartingPosition, this.Position, color, ignoreSizePressure ? this.Size : this.StartingSize * 2, StrokeSegment.CanvasStrokeStyle);
         }
 
-        public void IsometricFillCircle(CanvasDrawingSession ds, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false)
+        public void IsometricFillCircle(CanvasDrawingSession ds, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
         {
             switch (shape)
             {
                 case PenTipShape.Circle:
                     {
                         if (isStroke)
-                            ds.DrawCircle(this.StartingPosition, this.StartingSize, color);
+                            ds.DrawCircle(this.StartingPosition, ignoreSizePressure ? this.Size : this.StartingSize, color);
                         else
-                            ds.FillCircle(this.StartingPosition, this.StartingSize, color);
+                            ds.FillCircle(this.StartingPosition, ignoreSizePressure ? this.Size : this.StartingSize, color);
 
                         float distance = this.StartingDistance;
                         while (distance < this.Distance)
                         {
                             float smooth = distance / this.Distance;
 
-                            float sizePressureIsometric = this.Size * (smooth * this.StartingPressure + (1 - smooth) * this.Pressure);
+                            float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
                             Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
 
+                            float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                             distance += this.Spacing * sizePressureIsometric;
 
                             if (isStroke)
@@ -51,19 +52,21 @@ namespace Luo_Painter.Brushes
                     break;
                 case PenTipShape.Rectangle:
                     {
+                        float sizePressure = ignoreSizePressure ? this.Size : this.StartingSize;
                         if (isStroke)
-                            ds.DrawRectangle(this.StartingPosition.X - this.StartingSize, this.StartingPosition.Y - this.StartingSize, this.StartingSize + this.StartingSize, this.StartingSize + this.StartingSize, color);
+                            ds.DrawRectangle(this.StartingPosition.X - sizePressure, this.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
                         else
-                            ds.FillRectangle(this.StartingPosition.X - this.StartingSize, this.StartingPosition.Y - this.StartingSize, this.StartingSize + this.StartingSize, this.StartingSize + this.StartingSize, color);
+                            ds.FillRectangle(this.StartingPosition.X - sizePressure, this.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
 
                         float distance = this.StartingDistance;
                         while (distance < this.Distance)
                         {
                             float smooth = distance / this.Distance;
 
-                            float sizePressureIsometric = this.Size * (smooth * this.StartingPressure + (1 - smooth) * this.Pressure);
+                            float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
                             Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
 
+                            float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                             distance += this.Spacing * sizePressureIsometric;
 
                             if (isStroke)
@@ -82,15 +85,15 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardness(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f)
+        public void IsometricDrawShaderBrushEdgeHardness(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
             ds.DrawImage(new PixelShaderEffect(shaderCode)
             {
                 Properties =
                 {
                     ["hardness"] = hardness,
-                    ["pressure"] = flow,
-                    ["radius"] = this.StartingSize,
+                    ["pressure"] = ignoreFlowPressure ? flow : flow * this.StartingPressure,
+                    ["radius"] =  ignoreSizePressure ? this.Size : this.StartingSize,
                     ["targetPosition"] = this.StartingPosition,
                     ["color"] = colorHdr
                 }
@@ -102,9 +105,9 @@ namespace Luo_Painter.Brushes
                 float smooth = distance / this.Distance;
 
                 float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
-                float sizePressureIsometric = this.Size * pressureIsometric;
                 Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
 
+                float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                 distance += this.Spacing * sizePressureIsometric;
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
@@ -112,7 +115,7 @@ namespace Luo_Painter.Brushes
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = flow,
+                        ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
                         ["radius"] = sizePressureIsometric,
                         ["targetPosition"] = positionIsometric,
                         ["color"] = colorHdr
@@ -125,7 +128,7 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f)
+        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
             ds.DrawImage(new PixelShaderEffect(shaderCode)
             {
@@ -135,8 +138,8 @@ namespace Luo_Painter.Brushes
                     ["hardness"] = hardness,
                     ["rotate"] = rotate,
                     ["normalization"] = this.Normalize,
-                    ["pressure"] = flow,
-                    ["radius"] = this.StartingSize,
+                    ["pressure"] = ignoreFlowPressure ? flow : flow * this.StartingPressure,
+                    ["radius"] =  ignoreSizePressure ? this.Size : this.StartingSize,
                     ["targetPosition"] = this.StartingPosition,
                     ["color"] = colorHdr
                 }
@@ -148,9 +151,9 @@ namespace Luo_Painter.Brushes
                 float smooth = distance / this.Distance;
 
                 float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
-                float sizePressureIsometric = this.Size * pressureIsometric;
                 Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
 
+                float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                 distance += this.Spacing * sizePressureIsometric;
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
@@ -161,7 +164,7 @@ namespace Luo_Painter.Brushes
                         ["hardness"] = hardness,
                         ["rotate"] = rotate,
                         ["normalization"] = this.Normalize,
-                        ["pressure"] = flow,
+                        ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
                         ["radius"] = sizePressureIsometric,
                         ["targetPosition"] = positionIsometric,
                         ["color"] = colorHdr
