@@ -138,7 +138,7 @@
                         <!--Ink-->
                         <canvas:CanvasControl               
                             x:Name="InkCanvasControl"       
-                            Margin="0,14,0,0" 
+                            Margin="-6,14,-6,0" 
                             Width="320"                
                             Height="120"               
                             UseSharedDevice="True"                 
@@ -300,7 +300,8 @@
                         </Border>
 
 
-                        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+                        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
+                                   Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" />
 
 
                         <!--BlendMode-->
@@ -576,6 +577,42 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
+
+
+                        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" />
+
+
+                        <!--IgnorePressure-->
+                        <TextBlock x:Name="IgnorePressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                            Ignore Pressure
+                        </TextBlock>
+
+                        <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                            <Grid ColumnSpacing="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="146"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="SizeTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                    Size
+                                </TextBlock>
+                                <ToggleSwitch x:Name="IgnoreSizePressureButton" Grid.Column="1" />
+                            </Grid>
+                        </Border>
+                        
+                        <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                                Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}" >
+                            <Grid ColumnSpacing="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="146"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="FlowTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                    Flow
+                                </TextBlock>
+                                <ToggleSwitch x:Name="IgnoreFlowPressureButton" Grid.Column="1" />
+                            </Grid>
+                        </Border>
 
                     </StackPanel>
                 </ScrollViewer>

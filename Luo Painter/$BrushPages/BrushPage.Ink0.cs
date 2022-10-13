@@ -22,6 +22,7 @@ namespace Luo_Painter
                     default: break;
                 }
 
+
                 // 1.Minimum
                 this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
                 this.OpacitySlider.Minimum = 0d;
@@ -40,6 +41,9 @@ namespace Luo_Painter
                 this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
                 this.FlowSlider.Maximum = 100d;
 
+
+                this.IgnoreSizePressureButton.IsOn = presenter.IgnoreSizePressure;
+                this.IgnoreFlowPressureButton.IsOn = presenter.IgnoreFlowPressure;
 
                 switch (presenter.Shape)
                 {
@@ -68,14 +72,14 @@ namespace Luo_Painter
                 this.BlendModeComboBox.SelectedIndex = presenter.BlendMode.IsDefined() ? (int)presenter.BlendMode : 0;
 
 
+                this.RotateButton.IsChecked = presenter.Rotate;
+                this.StepTextBox.Text = presenter.Step.ToString();
+
                 this.MaskButton.IsOn = presenter.AllowMask;
                 this.MaskImage.UriSource = string.IsNullOrEmpty(presenter.MaskTexture) ? null : new System.Uri(presenter.MaskTexture);
-                this.RotateButton.IsChecked = presenter.Rotate;
-
 
                 this.PatternButton.IsOn = presenter.AllowPattern;
                 this.PatternImage.UriSource = string.IsNullOrEmpty(presenter.PatternTexture) ? null : new System.Uri(presenter.PatternTexture);
-                this.StepTextBox.Text = presenter.Step.ToString();
             }
             this.InkIsEnabled = true;
         }
