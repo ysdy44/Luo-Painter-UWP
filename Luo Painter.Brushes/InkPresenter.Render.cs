@@ -133,7 +133,6 @@ namespace Luo_Painter.Brushes
         {
             float size = this.Size / 24 + 1;
             float spacing = this.Spacing;
-            float flow = this.IgnoreFlowPressure ? 1 : this.Flow;
             int hardness = (int)this.Hardness;
 
             float open = this.IgnoreSizePressure ? (size + 10) : 10;
@@ -142,35 +141,38 @@ namespace Luo_Painter.Brushes
             float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
             float x = open + startingSizePressure * spacing;
 
-            ds.DrawImage(new PixelShaderEffect(shaderCode)
+            if (this.IgnoreFlowPressure)
             {
-                Properties =
+                ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
-                    ["hardness"] = hardness,
-                    ["pressure"] = flow,
-                    ["radius"] = startingSizePressure * scaleForDPI,
-                    ["targetPosition"] = new Vector2(open, InkPresenter.HeightHalf) * scaleForDPI,
-                    ["color"] = colorHdr
-                }
-            });
-            ds.DrawImage(new PixelShaderEffect(shaderCode)
-            {
-                Properties =
+                    Properties =
+                    {
+                        ["hardness"] = hardness,
+                        ["pressure"] = this.Flow,
+                        ["radius"] = startingSizePressure * scaleForDPI,
+                        ["targetPosition"] = new Vector2(open, InkPresenter.HeightHalf) * scaleForDPI,
+                        ["color"] = colorHdr
+                    }
+                });
+                ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
-                    ["hardness"] = hardness,
-                    ["pressure"] = flow,
-                    ["radius"] = startingSizePressure * scaleForDPI,
-                    ["targetPosition"] = new Vector2(end, InkPresenter.HeightHalf) * scaleForDPI,
-                    ["color"] = colorHdr
-                }
-            });
+                    Properties =
+                    {
+                        ["hardness"] = hardness,
+                        ["pressure"] = this.Flow,
+                        ["radius"] = startingSizePressure * scaleForDPI,
+                        ["targetPosition"] = new Vector2(end, InkPresenter.HeightHalf) * scaleForDPI,
+                        ["color"] = colorHdr
+                    }
+                });
+            }
 
             do
             {
                 // 1. Get Radian
                 double radian = this.Radian((x - open) / (end - open));
                 float offsetY = 20 * (float)this.OffsetY(radian);
-                float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
+                float pressure = (float)this.Pressure(radian);
 
                 // 2. Get Position
                 Vector2 position = new Vector2(x, InkPresenter.Height / 2 + offsetY);
@@ -182,7 +184,7 @@ namespace Luo_Painter.Brushes
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = flow,
+                        ["pressure"] = this.IgnoreFlowPressure ? this.Flow : this.Flow * pressure,
                         ["radius"] = sizePressure * scaleForDPI,
                         ["targetPosition"] = position * scaleForDPI,
                         ["color"] = colorHdr
@@ -202,7 +204,6 @@ namespace Luo_Painter.Brushes
         {
             float size = this.Size / 24 + 1;
             float spacing = this.Spacing;
-            float flow = this.IgnoreFlowPressure ? 1 : this.Flow;
             int hardness = (int)this.Hardness;
 
             float open = this.IgnoreSizePressure ? (size + 10) : 10;
@@ -217,7 +218,7 @@ namespace Luo_Painter.Brushes
                 // 1. Get Radian
                 double radian = this.Radian((x - open) / (end - open));
                 float offsetY = 20 * (float)this.OffsetY(radian);
-                float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
+                float pressure = (float)this.Pressure(radian);
 
                 // 2. Get Position
                 Vector2 targetPosition = new Vector2(x, InkPresenter.Height / 2 + offsetY);
@@ -233,7 +234,7 @@ namespace Luo_Painter.Brushes
                         ["hardness"] = hardness,
                         ["rotate"] = this.Rotate,
                         ["normalization"] = normalization,
-                        ["pressure"] = flow,
+                        ["pressure"] = this.IgnoreFlowPressure ? this.Flow : this.Flow * pressure,
                         ["radius"] = sizePressure * scaleForDPI,
                         ["targetPosition"] = position * scaleForDPI,
                         ["color"] = colorHdr
