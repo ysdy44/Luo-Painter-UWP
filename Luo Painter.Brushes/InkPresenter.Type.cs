@@ -3,25 +3,6 @@
     public sealed partial class InkPresenter
     {
 
-        /// <summary>
-        /// <see cref=" InkType.None"/>
-        /// <see cref=" InkType.Brush"/>
-        /// <see cref=" InkType.Circle"/>
-        /// <see cref=" InkType.Line"/>
-        /// <see cref=" InkType.Erase"/>
-        /// <see cref=" InkType.Liquefy"/>
-        /// </summary>
-        public InkType ToolType { get; set; }
-
-        /// <summary>
-        /// <see cref=" InkType.None"/>
-        /// <see cref=" InkType.Blend"/>
-        /// <see cref=" InkType.Mix"/>
-        /// <see cref=" InkType.Blur"/>
-        /// <see cref=" InkType.Mosaic"/>
-        /// </summary>
-        public InkType Mode { get; set; }
-
         public new InkType GetType()
         {
             switch (this.ToolType)
