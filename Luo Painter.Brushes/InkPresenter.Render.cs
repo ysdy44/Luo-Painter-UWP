@@ -2,78 +2,35 @@
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using System.Numerics;
-using Windows.Graphics.Imaging;
+using System.Runtime.CompilerServices;
 using Windows.UI;
 using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Brushes
 {
-    internal struct InkRenderSize
-    {
-        public readonly int Width;
-        public readonly int Height;
-        public readonly Vector2 Open;
-        public readonly Vector2 End;
-        public InkRenderSize(BitmapSize size) : this((int)size.Width, (int)size.Height) { }
-        public InkRenderSize(int width, int height)
-        {
-            this.Width = width;
-            this.Height = height;
-            this.Open = new Vector2(10, height / 2);
-            this.End = new Vector2(width - 10, height / 2);
-        }
-    }
-
     public sealed partial class InkPresenter
     {
 
         //@Const
         public const int Width = 320;
         public const int Height = 120;
+        public const int HeightHalf = 60;
 
-        private readonly InkRenderSize RenderSize = new InkRenderSize(InkPresenter.Width, InkPresenter.Height);
         private readonly CanvasStrokeStyle CanvasStrokeStyle = new CanvasStrokeStyle
         {
             StartCap = CanvasCapStyle.Round,
             EndCap = CanvasCapStyle.Round,
         };
 
-
         // 0 ~ Π
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double Radian(double value) => System.Math.Clamp(value, 0, 1) * FanKit.Math.Pi;
         // Sin 0 ~ Π ︵
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double Pressure(double radian) => System.Math.Clamp(System.Math.Sin(radian), 0, 1);
         // Sin 0 ~ 2Π ~
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double OffsetY(double radian) => (float)System.Math.Clamp(System.Math.Sin(radian + radian), -1, 1);
-
-
-        public void DrawLine(CanvasDrawingSession ds, Color color)
-        {
-            float strokeWidth = this.Size / 24 + 1;
-
-            Vector2 position = this.RenderSize.Open;
-            float x = this.RenderSize.Open.X + strokeWidth * 10;
-            float xLength = this.RenderSize.End.X;
-
-            do
-            {
-                // 1. Get Radian
-                double radian = this.Radian(x / this.RenderSize.Width);
-                float offsetY = 20 * (float)this.OffsetY(radian);
-
-                // 2. Get Position
-                Vector2 targetPosition = new Vector2(x, this.RenderSize.Height / 2 + offsetY);
-
-                // 3. Draw
-                ds.DrawLine(position, targetPosition, color, strokeWidth, this.CanvasStrokeStyle);
-                position = targetPosition;
-
-                // 4. Foreach
-                x += strokeWidth * 10;
-            } while (x < xLength);
-
-            ds.DrawLine(position, this.RenderSize.End, color, strokeWidth, this.CanvasStrokeStyle);
-        }
 
 
         public void IsometricFillCircle(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
@@ -81,34 +38,36 @@ namespace Luo_Painter.Brushes
             float size = this.Size / 24 + 1;
             float spacing = ignoreSpacing ? 0.25f : this.Spacing;
 
-            float x = this.RenderSize.Open.X;
-            float xLength = this.RenderSize.End.X;
+            float open = this.IgnoreSizePressure ? (size + 10) : 10;
+            float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
 
-            float startingSize = size * 0.001f;
+            float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
+            float x = open + startingSizePressure * spacing;
+
             switch (this.Shape)
             {
                 case PenTipShape.Circle:
                     if (this.IsStroke)
                     {
-                        ds.DrawCircle(this.RenderSize.Open, startingSize, color);
-                        ds.DrawCircle(this.RenderSize.End, startingSize, color);
+                        ds.DrawCircle(open, InkPresenter.HeightHalf, startingSizePressure, color);
+                        ds.DrawCircle(end, InkPresenter.HeightHalf, startingSizePressure, color);
                     }
                     else
                     {
-                        ds.FillCircle(this.RenderSize.Open, startingSize, color);
-                        ds.FillCircle(this.RenderSize.End, startingSize, color);
+                        ds.FillCircle(open, InkPresenter.HeightHalf, startingSizePressure, color);
+                        ds.FillCircle(end, InkPresenter.HeightHalf, startingSizePressure, color);
                     }
                     break;
                 case PenTipShape.Rectangle:
                     if (this.IsStroke)
                     {
-                        ds.DrawRectangle(this.RenderSize.Open.X - startingSize, this.RenderSize.Open.Y - startingSize, startingSize + startingSize, startingSize + startingSize, color);
-                        ds.DrawRectangle(this.RenderSize.End.X - startingSize, this.RenderSize.End.Y - startingSize, startingSize + startingSize, startingSize + startingSize, color);
+                        ds.DrawRectangle(open - startingSizePressure, InkPresenter.HeightHalf - startingSizePressure, startingSizePressure + startingSizePressure, startingSizePressure + startingSizePressure, color);
+                        ds.DrawRectangle(end - startingSizePressure, InkPresenter.HeightHalf - startingSizePressure, startingSizePressure + startingSizePressure, startingSizePressure + startingSizePressure, color);
                     }
                     else
                     {
-                        ds.FillRectangle(this.RenderSize.Open.X - startingSize, this.RenderSize.Open.Y - startingSize, startingSize + startingSize, startingSize + startingSize, color);
-                        ds.FillRectangle(this.RenderSize.End.X - startingSize, this.RenderSize.End.Y - startingSize, startingSize + startingSize, startingSize + startingSize, color);
+                        ds.FillRectangle(open - startingSizePressure, InkPresenter.HeightHalf - startingSizePressure, startingSizePressure + startingSizePressure, startingSizePressure + startingSizePressure, color);
+                        ds.FillRectangle(end - startingSizePressure, InkPresenter.HeightHalf - startingSizePressure, startingSizePressure + startingSizePressure, startingSizePressure + startingSizePressure, color);
                     }
                     break;
                 default:
@@ -121,15 +80,15 @@ namespace Luo_Painter.Brushes
                     do
                     {
                         // 1. Get Radian
-                        double radian = this.Radian(x / this.RenderSize.Width);
+                        double radian = this.Radian((x - open) / (end - open));
                         float offsetY = 20 * (float)this.OffsetY(radian);
-                        float pressure = (float)this.Pressure(radian);
+                        float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
 
                         // 2. Get Position
-                        Vector2 position = new Vector2(x, this.RenderSize.Height / 2 + offsetY);
+                        Vector2 position = new Vector2(x, InkPresenter.Height / 2 + offsetY);
 
                         // 3. Draw
-                        float sizePressure = size * pressure * pressure + 1;
+                        float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
                         if (this.IsStroke)
                             ds.DrawCircle(position, sizePressure, color);
                         else
@@ -137,21 +96,21 @@ namespace Luo_Painter.Brushes
 
                         // 4. Foreach
                         x += sizePressure * spacing;
-                    } while (x < xLength);
+                    } while (x < end);
                     break;
                 case PenTipShape.Rectangle:
                     do
                     {
                         // 1. Get Radian
-                        double radian = this.Radian(x / this.RenderSize.Width);
+                        double radian = this.Radian(x / InkPresenter.Width);
                         float offsetY = 20 * (float)this.OffsetY(radian);
-                        float pressure = (float)this.Pressure(radian);
+                        float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
 
                         // 2. Get Position
-                        Vector2 position = new Vector2(x, this.RenderSize.Height / 2 + offsetY);
+                        Vector2 position = new Vector2(x, InkPresenter.Height / 2 + offsetY);
 
                         // 3. Draw
-                        float sizePressure = size * pressure * pressure + 1;
+                        float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
                         if (this.IsStroke)
                             ds.DrawRectangle(position.X - sizePressure, position.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
                         else
@@ -159,7 +118,7 @@ namespace Luo_Painter.Brushes
 
                         // 4. Foreach
                         x += sizePressure * spacing;
-                    } while (x < xLength);
+                    } while (x < end);
                     break;
                 default:
                     break;
@@ -172,22 +131,25 @@ namespace Luo_Painter.Brushes
         /// </summary>
         public void IsometricDrawShaderBrushEdgeHardness(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, float scaleForDPI)
         {
-            float size = this.Size;
+            float size = this.Size / 24 + 1;
             float spacing = this.Spacing;
+            float flow = this.IgnoreFlowPressure ? 1 : this.Flow;
             int hardness = (int)this.Hardness;
 
-            float x = this.RenderSize.Open.X * scaleForDPI;
-            float xLength = this.RenderSize.End.X * scaleForDPI;
+            float open = this.IgnoreSizePressure ? (size + 10) : 10;
+            float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
 
-            float startingSize = size * 0.001f;
+            float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
+            float x = open + startingSizePressure * spacing;
+
             ds.DrawImage(new PixelShaderEffect(shaderCode)
             {
                 Properties =
                 {
                     ["hardness"] = hardness,
-                    ["pressure"] = this.Flow,
-                    ["radius"] = startingSize,
-                    ["targetPosition"] = this.RenderSize.Open * scaleForDPI,
+                    ["pressure"] = flow,
+                    ["radius"] = startingSizePressure * scaleForDPI,
+                    ["targetPosition"] = new Vector2(open, InkPresenter.HeightHalf) * scaleForDPI,
                     ["color"] = colorHdr
                 }
             });
@@ -196,9 +158,9 @@ namespace Luo_Painter.Brushes
                 Properties =
                 {
                     ["hardness"] = hardness,
-                    ["pressure"] = this.Flow,
-                    ["radius"] = startingSize,
-                    ["targetPosition"] = this.RenderSize.End * scaleForDPI,
+                    ["pressure"] = flow,
+                    ["radius"] = startingSizePressure * scaleForDPI,
+                    ["targetPosition"] = new Vector2(end, InkPresenter.HeightHalf) * scaleForDPI,
                     ["color"] = colorHdr
                 }
             });
@@ -206,30 +168,30 @@ namespace Luo_Painter.Brushes
             do
             {
                 // 1. Get Radian
-                double radian = this.Radian(x / (this.RenderSize.Width * scaleForDPI));
-                float offsetY = 20 * (float)this.OffsetY(radian) * scaleForDPI;
-                float pressure = (float)this.Pressure(radian);
+                double radian = this.Radian((x - open) / (end - open));
+                float offsetY = 20 * (float)this.OffsetY(radian);
+                float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
 
                 // 2. Get Position
-                Vector2 position = new Vector2(x, this.RenderSize.Height * scaleForDPI / 2 + offsetY);
+                Vector2 position = new Vector2(x, InkPresenter.Height / 2 + offsetY);
 
                 // 3. Draw
-                float sizePressure = size * pressure * pressure / scaleForDPI / scaleForDPI + scaleForDPI;
+                float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = this.Flow,
-                        ["radius"] = sizePressure,
-                        ["targetPosition"] = position,
+                        ["pressure"] = flow,
+                        ["radius"] = sizePressure * scaleForDPI,
+                        ["targetPosition"] = position * scaleForDPI,
                         ["color"] = colorHdr
                     }
                 });
 
                 // 4. Foreach
                 x += sizePressure * spacing;
-            } while (x < xLength);
+            } while (x < end);
         }
 
 
@@ -238,27 +200,31 @@ namespace Luo_Painter.Brushes
         /// </summary>
         public void IsometricDrawShaderBrushEdgeHardnessWithTexture(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, float scaleForDPI)
         {
-            float size = this.Size;
+            float size = this.Size / 24 + 1;
             float spacing = this.Spacing;
+            float flow = this.IgnoreFlowPressure ? 1 : this.Flow;
             int hardness = (int)this.Hardness;
 
-            Vector2 position = this.RenderSize.Open * scaleForDPI;
-            float x = this.RenderSize.Open.X * scaleForDPI;
-            float xLength = this.RenderSize.End.X * scaleForDPI;
+            float open = this.IgnoreSizePressure ? (size + 10) : 10;
+            float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
+
+            Vector2 position = new Vector2(open, InkPresenter.HeightHalf);
+            float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
+            float x = open + startingSizePressure * spacing;
 
             do
             {
                 // 1. Get Radian
-                double radian = this.Radian(x / (this.RenderSize.Width * scaleForDPI));
-                float offsetY = 20 * (float)this.OffsetY(radian) * scaleForDPI;
-                float pressure = (float)this.Pressure(radian);
+                double radian = this.Radian((x - open) / (end - open));
+                float offsetY = 20 * (float)this.OffsetY(radian);
+                float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
 
                 // 2. Get Position
-                Vector2 targetPosition = new Vector2(x, this.RenderSize.Height * scaleForDPI / 2 + offsetY);
+                Vector2 targetPosition = new Vector2(x, InkPresenter.Height / 2 + offsetY);
                 Vector2 normalization = Vector2.Normalize(targetPosition - position);
 
                 // 3. Draw
-                float sizePressure = size * pressure * pressure / scaleForDPI / scaleForDPI + scaleForDPI;
+                float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = this.Mask,
@@ -267,9 +233,9 @@ namespace Luo_Painter.Brushes
                         ["hardness"] = hardness,
                         ["rotate"] = this.Rotate,
                         ["normalization"] = normalization,
-                        ["pressure"] = this.Flow,
-                        ["radius"] = sizePressure,
-                        ["targetPosition"] = targetPosition,
+                        ["pressure"] = flow,
+                        ["radius"] = sizePressure * scaleForDPI,
+                        ["targetPosition"] = position * scaleForDPI,
                         ["color"] = colorHdr
                     }
                 });
@@ -277,7 +243,40 @@ namespace Luo_Painter.Brushes
 
                 // 4. Foreach
                 x += sizePressure * spacing;
-            } while (x < xLength);
+            } while (x < end);
+        }
+
+
+        public void DrawLine(CanvasDrawingSession ds, Color color)
+        {
+            float strokeWidth = this.Size / 24 + 1;
+            float spacing = this.Spacing;
+
+            float open = strokeWidth + 10;
+            float end = InkPresenter.Width - strokeWidth - 10;
+
+            Vector2 position = new Vector2(open, InkPresenter.HeightHalf);
+            float startingSizePressure = strokeWidth + 1;
+            float x = open + startingSizePressure * spacing;
+
+            do
+            {
+                // 1. Get Radian
+                double radian = this.Radian((x - open) / (end - open));
+                float offsetY = 20 * (float)this.OffsetY(radian);
+
+                // 2. Get Position
+                Vector2 targetPosition = new Vector2(x, InkPresenter.Height / 2 + offsetY);
+
+                // 3. Draw
+                ds.DrawLine(position, targetPosition, color, strokeWidth, this.CanvasStrokeStyle);
+                position = targetPosition;
+
+                // 4. Foreach
+                x += strokeWidth * spacing * 12;
+            } while (x < end);
+
+            ds.DrawLine(position.X, position.Y, end, InkPresenter.HeightHalf, color, strokeWidth, this.CanvasStrokeStyle);
         }
 
     }
