@@ -34,7 +34,18 @@ namespace Luo_Painter
             };
             this.InkCanvasControl.Draw += (sender, args) =>
             {
-                args.DrawingSession.DrawImage(this.InkRender);
+                switch (this.InkType)
+                {
+                    case InkType.Blur:
+                        args.DrawingSession.DrawImage(InkPresenter.GetBlur(this.InkRender, this.InkPresenter.Flow * 4));
+                        break;
+                    case InkType.Mosaic:
+                        args.DrawingSession.DrawImage(InkPresenter.GetMosaic(this.InkRender, this.InkPresenter.Size / 10));
+                        break;
+                    default:
+                        args.DrawingSession.DrawImage(this.InkRender);
+                        break;
+                }
             };
 
 

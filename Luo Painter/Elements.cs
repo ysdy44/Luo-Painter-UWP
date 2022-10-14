@@ -211,6 +211,8 @@ namespace Luo_Painter
         public OptionType Key { set; get; }
     }
 
+    internal sealed class InkList : List<InkType> { }
+
     internal sealed class BlendList : List<BlendEffectMode> { }
     internal sealed class BlendGroupingList : List<BlendEffectMode> { }
     internal sealed class BlendIcon : TIcon<BlendEffectMode>

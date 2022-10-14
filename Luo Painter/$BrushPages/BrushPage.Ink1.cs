@@ -11,82 +11,19 @@ namespace Luo_Painter
 
         public void ConstructInk1()
         {
-            this.ToolComboBox.SelectionChanged += (s, e) =>
+            this.ComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                switch (this.ToolComboBox.SelectedIndex)
+                if (this.ComboBox.SelectedItem is InkType type)
                 {
-                    case 0: // OptionType.PaintBrush
-                        {
-                            if (this.InkPresenter.ToolType == InkType.Brush) return;
-                            this.InkPresenter.ToolType = InkType.Brush;
+                    if (this.InkPresenter.ToolType == type) return;
+                    this.InkPresenter.ToolType = type;
 
-                            this.Type = InkType.Brush;
-                            this.InkType = this.InkPresenter.GetType();
+                    this.Type = type;
+                    this.InkType = this.InkPresenter.GetType();
 
-                            if (this.ShaderCodeByteIsEnabled is false) return;
-                            System.Threading.Tasks.Task.Run(this.InkAsync);
-                        }
-                        break;
-                    case 1: // OptionType.PaintWatercolorPen
-                        {
-                            if (this.InkPresenter.ToolType == InkType.Circle) return;
-                            this.InkPresenter.ToolType = InkType.Circle;
-
-                            this.Type = InkType.Circle;
-                            this.InkType = this.InkPresenter.GetType();
-
-                            if (this.ShaderCodeByteIsEnabled is false) return;
-                            System.Threading.Tasks.Task.Run(this.InkAsync);
-                        }
-                        break;
-                    case 2: // OptionType.PaintPencil
-                        {
-                            if (this.InkPresenter.ToolType == InkType.Line) return;
-                            this.InkPresenter.ToolType = InkType.Line;
-
-                            this.Type = InkType.Line;
-                            this.InkType = this.InkPresenter.GetType();
-
-                            if (this.ShaderCodeByteIsEnabled is false) return;
-                            System.Threading.Tasks.Task.Run(this.InkAsync);
-                        }
-                        break;
-                    case 3: // OptionType.PaintEraseBrush
-                        {
-                            if (this.InkPresenter.ToolType == InkType.Erase) return;
-                            this.InkPresenter.ToolType = InkType.Erase;
-
-                            this.Type = InkType.Erase;
-                            this.InkType = this.InkPresenter.GetType();
-
-                            if (this.ShaderCodeByteIsEnabled is false) return;
-                            System.Threading.Tasks.Task.Run(this.InkAsync);
-                        }
-                        break;
-                    case 4: // OptionType.PaintLiquefaction
-                        {
-                            if (this.InkPresenter.ToolType == InkType.Liquefy) return;
-                            this.InkPresenter.ToolType = InkType.Liquefy;
-                            this.Type = InkType.Liquefy;
-                            this.InkType = this.InkPresenter.GetType();
-
-                            if (this.ShaderCodeByteIsEnabled is false) return;
-                            System.Threading.Tasks.Task.Run(this.InkAsync);
-                        }
-                        break;
-                    default: // default
-                        {
-                            if (this.InkPresenter.ToolType == default) return;
-                            this.InkPresenter.ToolType = default;
-
-                            this.Type = default;
-                            this.InkType = this.InkPresenter.GetType();
-
-                            if (this.ShaderCodeByteIsEnabled is false) return;
-                            System.Threading.Tasks.Task.Run(this.InkAsync);
-                        }
-                        break;
+                    if (this.ShaderCodeByteIsEnabled is false) return;
+                    System.Threading.Tasks.Task.Run(this.InkAsync);
                 }
             };
 
@@ -122,7 +59,24 @@ namespace Luo_Painter
                 if (this.InkIsEnabled is false) return;
                 double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.Flow = (float)flow;
-                this.InkType = this.InkPresenter.GetType();
+
+                if (this.ShaderCodeByteIsEnabled is false) return;
+                System.Threading.Tasks.Task.Run(this.InkAsync);
+            };
+
+
+            this.IgnoreSizePressureButton.Toggled += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                this.InkPresenter.IgnoreSizePressure = this.IgnoreSizePressureButton.IsOn;
+
+                if (this.ShaderCodeByteIsEnabled is false) return;
+                System.Threading.Tasks.Task.Run(this.InkAsync);
+            };
+            this.IgnoreFlowPressureButton.Toggled += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                this.InkPresenter.IgnoreFlowPressure = this.IgnoreFlowPressureButton.IsOn;
 
                 if (this.ShaderCodeByteIsEnabled is false) return;
                 System.Threading.Tasks.Task.Run(this.InkAsync);
@@ -137,7 +91,6 @@ namespace Luo_Painter
                     case 0:
                         this.InkPresenter.Shape = PenTipShape.Circle;
                         this.InkPresenter.IsStroke = false;
-                        this.InkType = this.InkPresenter.GetType();
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
@@ -145,7 +98,6 @@ namespace Luo_Painter
                     case 1:
                         this.InkPresenter.Shape = PenTipShape.Circle;
                         this.InkPresenter.IsStroke = true;
-                        this.InkType = this.InkPresenter.GetType();
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
@@ -153,7 +105,6 @@ namespace Luo_Painter
                     case 2:
                         this.InkPresenter.Shape = PenTipShape.Rectangle;
                         this.InkPresenter.IsStroke = false;
-                        this.InkType = this.InkPresenter.GetType();
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
@@ -161,7 +112,6 @@ namespace Luo_Painter
                     case 3:
                         this.InkPresenter.Shape = PenTipShape.Rectangle;
                         this.InkPresenter.IsStroke = true;
-                        this.InkType = this.InkPresenter.GetType();
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
@@ -170,6 +120,7 @@ namespace Luo_Painter
                         break;
                 }
             };
+
 
             this.NoneRadioButton.Checked += (s, e) =>
             {
@@ -212,32 +163,10 @@ namespace Luo_Painter
                 lock (this.InkLocker) this.Ink();
             };
 
-            this.BlendRadioButton.Checked += (s, e) =>
+            this.BasisRadioButton.Checked += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-
-                switch (this.BlendModeComboBox.SelectedIndex)
-                {
-                    case 0:
-                        this.InkPresenter.Mode = InkType.None;
-                        this.InkType = this.InkPresenter.GetType();
-
-                        if (this.ShaderCodeByteIsEnabled is false) break;
-                        lock (this.InkLocker) this.Ink();
-                        break;
-                    default:
-                        this.InkPresenter.Mode = InkType.Blend;
-                        this.InkType = this.InkPresenter.GetType();
-
-                        if (this.ShaderCodeByteIsEnabled is false) break;
-                        lock (this.InkLocker) this.Ink();
-                        break;
-                }
-            };
-            this.BlurRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Mode = InkType.Blur;
+                this.InkPresenter.Mode = InkType.None;
                 this.InkType = this.InkPresenter.GetType();
 
                 if (this.ShaderCodeByteIsEnabled is false) return;
@@ -252,10 +181,11 @@ namespace Luo_Painter
                 if (this.ShaderCodeByteIsEnabled is false) return;
                 lock (this.InkLocker) this.Ink();
             };
-            this.MosaicRadioButton.Checked += (s, e) =>
+            this.BlendRadioButton.Checked += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Mode = InkType.Mosaic;
+
+                this.InkPresenter.Mode = InkType.Blend;
                 this.InkType = this.InkPresenter.GetType();
 
                 if (this.ShaderCodeByteIsEnabled is false) return;
@@ -266,20 +196,9 @@ namespace Luo_Painter
             {
                 if (this.InkIsEnabled is false) return;
 
-                if (this.BlendModeComboBox.SelectedItem is int item)
+                if (this.BlendModeComboBox.SelectedItem is BlendEffectMode item)
                 {
-                    BlendEffectMode blendMode = (BlendEffectMode)item;
-                    if (blendMode.IsDefined())
-                    {
-                        this.InkPresenter.Mode = InkType.Blend;
-                        this.InkPresenter.BlendMode = blendMode;
-                    }
-                    else
-                    {
-                        this.InkPresenter.Mode = InkType.None;
-                    }
-
-                    this.InkType = this.InkPresenter.GetType();
+                    this.InkPresenter.BlendMode = item;
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
                     lock (this.InkLocker) this.Ink();

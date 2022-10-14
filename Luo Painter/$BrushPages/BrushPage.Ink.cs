@@ -16,15 +16,8 @@ namespace Luo_Painter
         {
             this.InkIsEnabled = false;
             {
-                switch (presenter.ToolType)
-                {
-                    case InkType.Brush: this.ToolComboBox.SelectedIndex = 0; break;
-                    case InkType.Circle: this.ToolComboBox.SelectedIndex = 1; break;
-                    case InkType.Line: this.ToolComboBox.SelectedIndex = 2; break;
-                    case InkType.Erase: this.ToolComboBox.SelectedIndex = 3; break;
-                    case InkType.Liquefy: this.ToolComboBox.SelectedIndex = 4; break;
-                    default: break;
-                }
+                this.ComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.ToolType);
+
 
                 // 1.Minimum
                 this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
@@ -35,7 +28,7 @@ namespace Luo_Painter
                 // 2.Value
                 this.SizeSlider.Value = this.SizeRange.ConvertYToX(presenter.Size);
                 this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
-                this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(presenter.Spacing / 100);
+                this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(presenter.Spacing * 100);
                 this.FlowSlider.Value = System.Math.Clamp(presenter.Flow * 100d, 0d, 100d);
 
                 // 3.Maximum
@@ -44,6 +37,9 @@ namespace Luo_Painter
                 this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
                 this.FlowSlider.Maximum = 100d;
 
+
+                this.IgnoreSizePressureButton.IsOn = presenter.IgnoreSizePressure;
+                this.IgnoreFlowPressureButton.IsOn = presenter.IgnoreFlowPressure;
 
                 switch (presenter.Shape)
                 {
@@ -64,22 +60,21 @@ namespace Luo_Painter
                 this.CubeRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Cube;
                 this.QuarticRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Quartic;
 
-                this.BlendRadioButton.IsChecked = presenter.Mode is InkType.None || presenter.Mode is InkType.Blend;
-                this.BlurRadioButton.IsChecked = presenter.Mode is InkType.Blur;
+                this.BasisRadioButton.IsChecked = presenter.Mode is InkType.None;
                 this.MixRadioButton.IsChecked = presenter.Mode is InkType.Mix;
-                this.MosaicRadioButton.IsChecked = presenter.Mode is InkType.Mosaic;
+                this.BlendRadioButton.IsChecked = presenter.Mode is InkType.Blend;
 
-                this.BlendModeComboBox.SelectedIndex = presenter.BlendMode.IsDefined() ? (int)presenter.BlendMode : 0;
+                this.BlendModeComboBox.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);
 
+
+                this.RotateButton.IsChecked = presenter.Rotate;
+                this.StepTextBox.Text = presenter.Step.ToString();
 
                 this.MaskButton.IsOn = presenter.AllowMask;
                 this.MaskImage.UriSource = string.IsNullOrEmpty(presenter.MaskTexture) ? null : new System.Uri(presenter.MaskTexture);
-                this.RotateButton.IsChecked = presenter.Rotate;
-
 
                 this.PatternButton.IsOn = presenter.AllowPattern;
                 this.PatternImage.UriSource = string.IsNullOrEmpty(presenter.PatternTexture) ? null : new System.Uri(presenter.PatternTexture);
-                this.StepTextBox.Text = presenter.Step.ToString();
             }
             this.InkIsEnabled = true;
         }
@@ -106,12 +101,11 @@ namespace Luo_Painter
                 case InkType.Brush_Pattern_Blend:
                 case InkType.Brush_Opacity_Blend:
                 case InkType.Brush_Pattern_Opacity_Blend:
-                case InkType.Brush_Blur:
-                case InkType.Brush_Pattern_Blur:
-                case InkType.Brush_Mosaic:
-                case InkType.Brush_Pattern_Mosaic:
                 case InkType.Brush_Mix:
                 case InkType.Brush_Pattern_Mix:
+                case InkType.Blur:
+                case InkType.Erase:
+                case InkType.Erase_Opacity:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         //@DPI 
@@ -130,10 +124,6 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Pattern_Blend:
                 case InkType.MaskBrush_Opacity_Blend:
                 case InkType.MaskBrush_Pattern_Opacity_Blend:
-                case InkType.MaskBrush_Blur:
-                case InkType.MaskBrush_Pattern_Blur:
-                case InkType.MaskBrush_Mosaic:
-                case InkType.MaskBrush_Pattern_Mosaic:
                 case InkType.MaskBrush_Mix:
                 case InkType.MaskBrush_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
@@ -154,10 +144,6 @@ namespace Luo_Painter
                 case InkType.Circle_Pattern_Blend:
                 case InkType.Circle_Opacity_Blend:
                 case InkType.Circle_Pattern_Opacity_Blend:
-                case InkType.Circle_Blur:
-                case InkType.Circle_Pattern_Blur:
-                case InkType.Circle_Mosaic:
-                case InkType.Circle_Pattern_Mosaic:
                 case InkType.Circle_Mix:
                 case InkType.Circle_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
@@ -176,26 +162,13 @@ namespace Luo_Painter
                 case InkType.Line_Pattern_Blend:
                 case InkType.Line_Opacity_Blend:
                 case InkType.Line_Pattern_Opacity_Blend:
-                case InkType.Line_Blur:
-                case InkType.Line_Pattern_Blur:
-                case InkType.Line_Mosaic:
-                case InkType.Line_Pattern_Mosaic:
                 case InkType.Line_Mix:
                 case InkType.Line_Pattern_Mix:
+                case InkType.Mosaic:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
                         this.InkPresenter.DrawLine(ds, this.Color);
-                    }
-                    this.InkCanvasControl.Invalidate();
-                    break;
-
-                case InkType.Erase:
-                case InkType.Erase_Opacity:
-                    using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
-                    {
-                        ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricFillCircle(ds, this.Color, false);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
