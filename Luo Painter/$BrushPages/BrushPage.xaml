@@ -107,7 +107,7 @@
                         <ItemsControl.ItemsSource>
                             <local:InkList x:Name="InkCollection">
                                 <brushes:InkType>Brush</brushes:InkType>
-                                <brushes:InkType>Circle</brushes:InkType>
+                                <brushes:InkType>Shape</brushes:InkType>
                                 <brushes:InkType>Line</brushes:InkType>
                                 <brushes:InkType>Blur</brushes:InkType>
                                 <brushes:InkType>Mosaic</brushes:InkType>
