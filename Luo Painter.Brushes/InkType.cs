@@ -7,18 +7,15 @@ namespace Luo_Painter.Brushes
     {
         None = 0,
 
-        // Mode
-        Blend = 1,
-        Blur = 2,
-        Mosaic = 4,
-        Mix = 8,
-
         // Property
-        Mask = 16,
-        Pattern = 32,
-        Opacity = 64,
+        Blend = 1,
+        Mix = 2,
+        Mask = 4,
+        Pattern = 8,
+        Opacity = 16,
 
         // UI
+        UIOpacity = 64,
         UISpacing = 128,
         UIFlow = 256,
         UIShape = 512,
@@ -27,7 +24,7 @@ namespace Luo_Painter.Brushes
         UIMask = 4096,
         UIPattern = 8192,
 
-        Brush = 16384 | UISpacing | UIFlow | UIBlendMode | UIHardness | UIMask | UIPattern,
+        Brush = 16384 | UIOpacity | UISpacing | UIFlow | UIBlendMode | UIHardness | UIMask | UIPattern,
         #region Brush
 
         Brush_Pattern = Brush | Pattern,
@@ -38,12 +35,6 @@ namespace Luo_Painter.Brushes
         Brush_Pattern_Blend = Brush | Pattern | Blend,
         Brush_Opacity_Blend = Brush | Opacity | Blend,
         Brush_Pattern_Opacity_Blend = Brush | Pattern | Opacity | Blend,
-
-        Brush_Blur = Brush | Blur,
-        Brush_Pattern_Blur = Brush | Pattern | Blur,
-
-        Brush_Mosaic = Brush | Mosaic,
-        Brush_Pattern_Mosaic = Brush | Pattern | Mosaic,
 
         Brush_Mix = Brush | Mix,
         Brush_Pattern_Mix = Brush | Pattern | Mix,
@@ -62,18 +53,12 @@ namespace Luo_Painter.Brushes
         MaskBrush_Opacity_Blend = Mask | Brush_Opacity_Blend,
         MaskBrush_Pattern_Opacity_Blend = Mask | Brush_Pattern_Opacity_Blend,
 
-        MaskBrush_Blur = Mask | Brush_Blur,
-        MaskBrush_Pattern_Blur = Mask | Brush_Pattern_Blur,
-
-        MaskBrush_Mosaic = Mask | Brush_Mosaic,
-        MaskBrush_Pattern_Mosaic = Mask | Brush_Pattern_Mosaic,
-
         MaskBrush_Mix = Mask | Brush_Mix,
         MaskBrush_Pattern_Mix = Mask | Brush_Pattern_Mix,
 
         #endregion
 
-        Circle = 32768 | UISpacing | UIShape | UIBlendMode | UIPattern,
+        Circle = 32768 | UIOpacity | UISpacing | UIShape | UIBlendMode | UIPattern,
         #region Circle
 
         Circle_Pattern = Circle | Pattern,
@@ -85,18 +70,12 @@ namespace Luo_Painter.Brushes
         Circle_Opacity_Blend = Circle | Opacity | Blend,
         Circle_Pattern_Opacity_Blend = Circle | Pattern | Opacity | Blend,
 
-        Circle_Blur = Circle | Blur,
-        Circle_Pattern_Blur = Circle | Pattern | Blur,
-
-        Circle_Mosaic = Circle | Mosaic,
-        Circle_Pattern_Mosaic = Circle | Pattern | Mosaic,
-
         Circle_Mix = Circle | Mix,
         Circle_Pattern_Mix = Circle | Pattern | Mix,
 
         #endregion
 
-        Line = 65536 | UIBlendMode | UIPattern,
+        Line = 65536 | UIOpacity | UIBlendMode | UIPattern,
         #region Line
 
         Line_Pattern = Line | Pattern,
@@ -108,20 +87,19 @@ namespace Luo_Painter.Brushes
         Line_Opacity_Blend = Line | Opacity | Blend,
         Line_Pattern_Opacity_Blend = Line | Pattern | Opacity | Blend,
 
-        Line_Blur = Line | Blur,
-        Line_Pattern_Blur = Line | Pattern | Blur,
-
-        Line_Mosaic = Line | Mosaic,
-        Line_Pattern_Mosaic = Line | Pattern | Mosaic,
-
         Line_Mix = Line | Mix,
         Line_Pattern_Mix = Line | Pattern | Mix,
 
         #endregion
 
-        Erase = 131072 | UISpacing | UIFlow | UIHardness,
+        Blur = 131072 | UISpacing | UIFlow | UIHardness,
+
+        Mosaic = 262144 | UISpacing | UIHardness,
+
+        Erase = 524288 | UIOpacity | UISpacing | UIFlow | UIHardness,
         Erase_Opacity = Erase | Opacity,
 
-        Liquefy = 262144,
+        Liquefy = 1048576,
+
     }
 }
