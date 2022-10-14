@@ -16,8 +16,8 @@ namespace Luo_Painter
                 if (this.InkIsEnabled is false) return;
                 if (this.ComboBox.SelectedItem is InkType type)
                 {
-                    if (this.InkPresenter.ToolType == type) return;
-                    this.InkPresenter.ToolType = type;
+                    if (this.InkPresenter.Type == type) return;
+                    this.InkPresenter.Type = type;
 
                     this.Type = type;
                     this.InkType = this.InkPresenter.GetType();

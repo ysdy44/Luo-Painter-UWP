@@ -239,7 +239,7 @@ namespace Luo_Painter
                 this.InkParameter = item;
 
                 this.ConstructInk(item.InkPresenter);
-                this.Type = item.InkPresenter.ToolType;
+                this.Type = item.InkPresenter.Type;
             }
             else
             {

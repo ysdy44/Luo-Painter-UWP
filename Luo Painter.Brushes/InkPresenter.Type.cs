@@ -5,7 +5,7 @@
 
         public new InkType GetType()
         {
-            switch (this.ToolType)
+            switch (this.Type)
             {
                 case InkType.Brush:
                     if (this.AllowMask)

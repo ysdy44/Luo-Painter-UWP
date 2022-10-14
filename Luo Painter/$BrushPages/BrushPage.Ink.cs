@@ -16,7 +16,7 @@ namespace Luo_Painter
         {
             this.InkIsEnabled = false;
             {
-                this.ComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.ToolType);
+                this.ComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.Type);
 
 
                 // 1.Minimum

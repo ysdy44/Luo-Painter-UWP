@@ -17,7 +17,7 @@ namespace Luo_Painter.Brushes
         /// <see cref=" InkType.Erase"/>
         /// <see cref=" InkType.Liquefy"/>
         /// </summary>
-        public InkType ToolType { get; set; } // GetType
+        public InkType Type { get; set; } // GetType
 
         /// <summary>
         /// <see cref=" InkType.None"/>

@@ -30,8 +30,8 @@ namespace Luo_Painter
                 default: toolType = default; break;
             }
 
-            if (this.InkPresenter.ToolType == toolType) return;
-            this.InkPresenter.ToolType = toolType;
+            if (this.InkPresenter.Type == toolType) return;
+            this.InkPresenter.Type = toolType;
 
             this.InkType = this.InkPresenter.GetType();
         }
