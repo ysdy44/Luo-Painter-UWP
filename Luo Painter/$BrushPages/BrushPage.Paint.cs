@@ -20,8 +20,8 @@ namespace Luo_Painter
                 case InkType.Brush_Mix:
                 case InkType.MaskBrush:
                 case InkType.MaskBrush_Mix:
-                case InkType.Circle:
-                case InkType.Circle_Mix:
+                case InkType.Shape:
+                case InkType.Shape_Mix:
                 case InkType.Line:
                 case InkType.Line_Mix:
                     this.BitmapLayer.Draw(this.BitmapLayer[BitmapType.Temp]);
@@ -33,9 +33,9 @@ namespace Luo_Painter
                 case InkType.MaskBrush_Pattern:
                 case InkType.MaskBrush_Pattern_Opacity:
                 case InkType.MaskBrush_Pattern_Mix:
-                case InkType.Circle_Pattern:
-                case InkType.Circle_Pattern_Opacity:
-                case InkType.Circle_Pattern_Mix:
+                case InkType.Shape_Pattern:
+                case InkType.Shape_Pattern_Opacity:
+                case InkType.Shape_Pattern_Mix:
                 case InkType.Line_Pattern:
                 case InkType.Line_Pattern_Opacity:
                 case InkType.Line_Pattern_Mix:
@@ -48,7 +48,7 @@ namespace Luo_Painter
 
                 case InkType.Brush_Opacity:
                 case InkType.MaskBrush_Opacity:
-                case InkType.Circle_Opacity:
+                case InkType.Shape_Opacity:
                 case InkType.Line_Opacity:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
                     {
@@ -58,7 +58,7 @@ namespace Luo_Painter
 
                 case InkType.Brush_Blend:
                 case InkType.MaskBrush_Blend:
-                case InkType.Circle_Blend:
+                case InkType.Shape_Blend:
                 case InkType.Line_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
                     {
@@ -68,7 +68,7 @@ namespace Luo_Painter
 
                 case InkType.Brush_Pattern_Blend:
                 case InkType.MaskBrush_Pattern_Blend:
-                case InkType.Circle_Pattern_Blend:
+                case InkType.Shape_Pattern_Blend:
                 case InkType.Line_Pattern_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
                     using (AlphaMaskEffect pattern = this.InkPresenter.GetPattern(blend))
@@ -79,7 +79,7 @@ namespace Luo_Painter
 
                 case InkType.Brush_Opacity_Blend:
                 case InkType.MaskBrush_Opacity_Blend:
-                case InkType.Circle_Opacity_Blend:
+                case InkType.Shape_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
                     {
@@ -89,7 +89,7 @@ namespace Luo_Painter
 
                 case InkType.Brush_Pattern_Opacity_Blend:
                 case InkType.MaskBrush_Pattern_Opacity_Blend:
-                case InkType.Circle_Pattern_Opacity_Blend:
+                case InkType.Shape_Pattern_Opacity_Blend:
                 case InkType.Line_Pattern_Opacity_Blend:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], opacity))
@@ -207,20 +207,20 @@ namespace Luo_Painter
                         }
                         break;
 
-                    case InkType.Circle:
-                    case InkType.Circle_Pattern:
-                    case InkType.Circle_Opacity:
-                    case InkType.Circle_Pattern_Opacity:
-                    case InkType.Circle_Blend:
-                    case InkType.Circle_Pattern_Blend:
-                    case InkType.Circle_Opacity_Blend:
-                    case InkType.Circle_Pattern_Opacity_Blend:
-                        segment.IsometricFillCircle(ds, this.Color, this.InkPresenter.Shape, this.InkPresenter.IsStroke);
+                    case InkType.Shape:
+                    case InkType.Shape_Pattern:
+                    case InkType.Shape_Opacity:
+                    case InkType.Shape_Pattern_Opacity:
+                    case InkType.Shape_Blend:
+                    case InkType.Shape_Pattern_Blend:
+                    case InkType.Shape_Opacity_Blend:
+                    case InkType.Shape_Pattern_Opacity_Blend:
+                        segment.IsometricShape(ds, this.Color, this.InkPresenter.Shape, this.InkPresenter.IsStroke);
                         break;
 
-                    case InkType.Circle_Mix:
-                    case InkType.Circle_Pattern_Mix:
-                        segment.IsometricFillCircle(ds, this.InkMixer.Color, this.InkPresenter.Shape, this.InkPresenter.IsStroke);
+                    case InkType.Shape_Mix:
+                    case InkType.Shape_Pattern_Mix:
+                        segment.IsometricShape(ds, this.InkMixer.Color, this.InkPresenter.Shape, this.InkPresenter.IsStroke);
                         break;
 
                     case InkType.Line:

@@ -132,7 +132,7 @@ namespace Luo_Painter.TestApp
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    segment.IsometricFillCircle(ds, Colors.White);
+                    segment.IsometricShape(ds, Colors.White);
                 }
 
                 Rect rect = this.Position.GetRect(12 * properties.Pressure);

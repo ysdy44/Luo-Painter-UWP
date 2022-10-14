@@ -58,20 +58,20 @@ namespace Luo_Painter.Brushes
 
         #endregion
 
-        Circle = 32768 | UIOpacity | UISpacing | UIShape | UIBlendMode | UIPattern,
-        #region Circle
+        Shape = 32768 | UIOpacity | UISpacing | UIShape | UIBlendMode | UIPattern,
+        #region Shape
 
-        Circle_Pattern = Circle | Pattern,
-        Circle_Opacity = Circle | Opacity,
-        Circle_Pattern_Opacity = Circle | Pattern | Opacity,
+        Shape_Pattern = Shape | Pattern,
+        Shape_Opacity = Shape | Opacity,
+        Shape_Pattern_Opacity = Shape | Pattern | Opacity,
 
-        Circle_Blend = Circle | Blend,
-        Circle_Pattern_Blend = Circle | Pattern | Blend,
-        Circle_Opacity_Blend = Circle | Opacity | Blend,
-        Circle_Pattern_Opacity_Blend = Circle | Pattern | Opacity | Blend,
+        Shape_Blend = Shape | Blend,
+        Shape_Pattern_Blend = Shape | Pattern | Blend,
+        Shape_Opacity_Blend = Shape | Opacity | Blend,
+        Shape_Pattern_Opacity_Blend = Shape | Pattern | Opacity | Blend,
 
-        Circle_Mix = Circle | Mix,
-        Circle_Pattern_Mix = Circle | Pattern | Mix,
+        Shape_Mix = Shape | Mix,
+        Shape_Pattern_Mix = Shape | Pattern | Mix,
 
         #endregion
 

@@ -136,20 +136,20 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.Circle:
-                case InkType.Circle_Pattern:
-                case InkType.Circle_Opacity:
-                case InkType.Circle_Pattern_Opacity:
-                case InkType.Circle_Blend:
-                case InkType.Circle_Pattern_Blend:
-                case InkType.Circle_Opacity_Blend:
-                case InkType.Circle_Pattern_Opacity_Blend:
-                case InkType.Circle_Mix:
-                case InkType.Circle_Pattern_Mix:
+                case InkType.Shape:
+                case InkType.Shape_Pattern:
+                case InkType.Shape_Opacity:
+                case InkType.Shape_Pattern_Opacity:
+                case InkType.Shape_Blend:
+                case InkType.Shape_Pattern_Blend:
+                case InkType.Shape_Opacity_Blend:
+                case InkType.Shape_Pattern_Opacity_Blend:
+                case InkType.Shape_Mix:
+                case InkType.Shape_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricFillCircle(ds, this.Color, false);
+                        this.InkPresenter.IsometricShape(ds, this.Color, false);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -177,7 +177,7 @@ namespace Luo_Painter
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricFillCircle(ds, this.Color, true);
+                        this.InkPresenter.IsometricShape(ds, this.Color, true);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;

@@ -33,7 +33,7 @@ namespace Luo_Painter.Brushes
         private double OffsetY(double radian) => (float)System.Math.Clamp(System.Math.Sin(radian + radian), -1, 1);
 
 
-        public void IsometricFillCircle(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
+        public void IsometricShape(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
         {
             float size = this.Size / 24 + 1;
             float spacing = ignoreSpacing ? 0.25f : this.Spacing;

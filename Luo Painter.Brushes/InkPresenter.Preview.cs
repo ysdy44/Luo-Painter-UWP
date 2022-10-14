@@ -17,8 +17,8 @@ namespace Luo_Painter.Brushes
                 case InkType.Brush_Mix:
                 case InkType.MaskBrush:
                 case InkType.MaskBrush_Mix:
-                case InkType.Circle:
-                case InkType.Circle_Mix:
+                case InkType.Shape:
+                case InkType.Shape_Mix:
                 case InkType.Line:
                 case InkType.Line_Mix:
                     ds.DrawImage(image);
@@ -29,8 +29,8 @@ namespace Luo_Painter.Brushes
                 case InkType.Brush_Pattern_Mix:
                 case InkType.MaskBrush_Pattern:
                 case InkType.MaskBrush_Pattern_Mix:
-                case InkType.Circle_Pattern:
-                case InkType.Circle_Pattern_Mix:
+                case InkType.Shape_Pattern:
+                case InkType.Shape_Pattern_Mix:
                 case InkType.Line_Pattern:
                 case InkType.Line_Pattern_Mix:
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
@@ -42,7 +42,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Opacity:
                 case InkType.MaskBrush_Opacity:
-                case InkType.Circle_Opacity:
+                case InkType.Shape_Opacity:
                 case InkType.Line_Opacity:
                     using (OpacityEffect opacity = this.GetOpacity(wet))
                     {
@@ -53,11 +53,11 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Pattern_Opacity:
                 case InkType.MaskBrush_Pattern_Opacity:
-                case InkType.Circle_Pattern_Opacity:
+                case InkType.Shape_Pattern_Opacity:
                 case InkType.Line_Pattern_Opacity:
                 case InkType.Brush_Pattern_Opacity_Blend:
                 case InkType.MaskBrush_Pattern_Opacity_Blend:
-                case InkType.Circle_Pattern_Opacity_Blend:
+                case InkType.Shape_Pattern_Opacity_Blend:
                 case InkType.Line_Pattern_Opacity_Blend:
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
                     using (OpacityEffect opacity = this.GetOpacity(pattern))
@@ -69,7 +69,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Blend:
                 case InkType.MaskBrush_Blend:
-                case InkType.Circle_Blend:
+                case InkType.Shape_Blend:
                 case InkType.Line_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
                     {
@@ -79,7 +79,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Pattern_Blend:
                 case InkType.MaskBrush_Pattern_Blend:
-                case InkType.Circle_Pattern_Blend:
+                case InkType.Shape_Pattern_Blend:
                 case InkType.Line_Pattern_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
                     {
@@ -89,7 +89,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Opacity_Blend:
                 case InkType.MaskBrush_Opacity_Blend:
-                case InkType.Circle_Opacity_Blend:
+                case InkType.Shape_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     using (OpacityEffect opacity = this.GetOpacity(wet))
                     using (BlendEffect blend = this.GetBlend(image, opacity))
@@ -139,8 +139,8 @@ namespace Luo_Painter.Brushes
                 case InkType.Brush_Mix:
                 case InkType.MaskBrush:
                 case InkType.MaskBrush_Mix:
-                case InkType.Circle:
-                case InkType.Circle_Mix:
+                case InkType.Shape:
+                case InkType.Shape_Mix:
                 case InkType.Line:
                 case InkType.Line_Mix:
                     return InkPresenter.GetComposite(image, wet);
@@ -149,8 +149,8 @@ namespace Luo_Painter.Brushes
                 case InkType.Brush_Pattern_Mix:
                 case InkType.MaskBrush_Pattern:
                 case InkType.MaskBrush_Pattern_Mix:
-                case InkType.Circle_Pattern:
-                case InkType.Circle_Pattern_Mix:
+                case InkType.Shape_Pattern:
+                case InkType.Shape_Pattern_Mix:
                 case InkType.Line_Pattern:
                 case InkType.Line_Pattern_Mix:
                     {
@@ -160,7 +160,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Opacity:
                 case InkType.MaskBrush_Opacity:
-                case InkType.Circle_Opacity:
+                case InkType.Shape_Opacity:
                 case InkType.Line_Opacity:
                     {
                         OpacityEffect opacity = this.GetOpacity(wet);
@@ -169,11 +169,11 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Pattern_Opacity:
                 case InkType.MaskBrush_Pattern_Opacity:
-                case InkType.Circle_Pattern_Opacity:
+                case InkType.Shape_Pattern_Opacity:
                 case InkType.Line_Pattern_Opacity:
                 case InkType.Brush_Pattern_Opacity_Blend:
                 case InkType.MaskBrush_Pattern_Opacity_Blend:
-                case InkType.Circle_Pattern_Opacity_Blend:
+                case InkType.Shape_Pattern_Opacity_Blend:
                 case InkType.Line_Pattern_Opacity_Blend:
                     {
                         AlphaMaskEffect pattern = this.GetPattern(wet);
@@ -184,7 +184,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Blend:
                 case InkType.MaskBrush_Blend:
-                case InkType.Circle_Blend:
+                case InkType.Shape_Blend:
                 case InkType.Line_Blend:
                     {
                         BlendEffect blend = this.GetBlend(image, wet);
@@ -193,7 +193,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Pattern_Blend:
                 case InkType.MaskBrush_Pattern_Blend:
-                case InkType.Circle_Pattern_Blend:
+                case InkType.Shape_Pattern_Blend:
                 case InkType.Line_Pattern_Blend:
                     {
                         BlendEffect blend = this.GetBlend(image, wet);
@@ -202,7 +202,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.Brush_Opacity_Blend:
                 case InkType.MaskBrush_Opacity_Blend:
-                case InkType.Circle_Opacity_Blend:
+                case InkType.Shape_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     {
                         OpacityEffect opacity = this.GetOpacity(wet);
