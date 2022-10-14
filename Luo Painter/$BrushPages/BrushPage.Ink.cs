@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Brushes;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
@@ -11,41 +12,77 @@ namespace Luo_Painter
     public sealed partial class BrushPage : Page
     {
 
-        //@Converter
-        private string RoundConverter(double value) => $"{value:0}";
-        private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
-        private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
-
-        private bool BooleanConverter(bool? value) => value is true;
-        private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
-
-        private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility MaskVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMask) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility PatternVisibilityConverter(InkType value) => value.HasFlag(InkType.UIPattern) ? Visibility.Visible : Visibility.Collapsed;
-
-
-        bool InkIsEnabled = true;
-
-
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the type for <see cref="BrushPage"/>. </summary>
-        public InkType Type
+        public void ConstructInk(InkPresenter presenter)
         {
-            get => (InkType)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
+            this.InkIsEnabled = false;
+            {
+                switch (presenter.ToolType)
+                {
+                    case InkType.Brush: this.ToolComboBox.SelectedIndex = 0; break;
+                    case InkType.Circle: this.ToolComboBox.SelectedIndex = 1; break;
+                    case InkType.Line: this.ToolComboBox.SelectedIndex = 2; break;
+                    case InkType.Erase: this.ToolComboBox.SelectedIndex = 3; break;
+                    case InkType.Liquefy: this.ToolComboBox.SelectedIndex = 4; break;
+                    default: break;
+                }
+
+                // 1.Minimum
+                this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
+                this.OpacitySlider.Minimum = 0d;
+                this.SpacingSlider.Minimum = this.SpacingRange.XRange.Minimum;
+                this.FlowSlider.Minimum = 0d;
+
+                // 2.Value
+                this.SizeSlider.Value = this.SizeRange.ConvertYToX(presenter.Size);
+                this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
+                this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(presenter.Spacing / 100);
+                this.FlowSlider.Value = System.Math.Clamp(presenter.Flow * 100d, 0d, 100d);
+
+                // 3.Maximum
+                this.SizeSlider.Maximum = this.SizeRange.XRange.Maximum;
+                this.OpacitySlider.Maximum = 100d;
+                this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
+                this.FlowSlider.Maximum = 100d;
+
+
+                switch (presenter.Shape)
+                {
+                    case Windows.UI.Input.Inking.PenTipShape.Circle:
+                        this.ShapeListBox.SelectedIndex = presenter.IsStroke ? 1 : 0;
+                        break;
+                    case Windows.UI.Input.Inking.PenTipShape.Rectangle:
+                        this.ShapeListBox.SelectedIndex = presenter.IsStroke ? 3 : 2;
+                        break;
+                    default:
+                        break;
+                }
+
+
+                this.NoneRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.None;
+                this.CosineRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Cosine;
+                this.QuadraticRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Quadratic;
+                this.CubeRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Cube;
+                this.QuarticRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Quartic;
+
+                this.BlendRadioButton.IsChecked = presenter.Mode is InkType.None || presenter.Mode is InkType.Blend;
+                this.BlurRadioButton.IsChecked = presenter.Mode is InkType.Blur;
+                this.MixRadioButton.IsChecked = presenter.Mode is InkType.Mix;
+                this.MosaicRadioButton.IsChecked = presenter.Mode is InkType.Mosaic;
+
+                this.BlendModeComboBox.SelectedIndex = presenter.BlendMode.IsDefined() ? (int)presenter.BlendMode : 0;
+
+
+                this.MaskButton.IsOn = presenter.AllowMask;
+                this.MaskImage.UriSource = string.IsNullOrEmpty(presenter.MaskTexture) ? null : new System.Uri(presenter.MaskTexture);
+                this.RotateButton.IsChecked = presenter.Rotate;
+
+
+                this.PatternButton.IsOn = presenter.AllowPattern;
+                this.PatternImage.UriSource = string.IsNullOrEmpty(presenter.PatternTexture) ? null : new System.Uri(presenter.PatternTexture);
+                this.StepTextBox.Text = presenter.Step.ToString();
+            }
+            this.InkIsEnabled = true;
         }
-        /// <summary> Identifies the <see cref = "BrushPage.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(BrushPage), new PropertyMetadata(default(InkType)));
-
-
-        #endregion
 
         private void InkAsync()
         {

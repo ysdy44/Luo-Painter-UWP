@@ -3,7 +3,7 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Diagnostics.Tracing;
+using System.Collections.Generic;
 using System.Numerics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -21,6 +21,22 @@ namespace Luo_Painter
     {
 
         //@Converter
+        private string RoundConverter(double value) => $"{value:0}";
+        private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
+        private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
+
+        private bool BooleanConverter(bool? value) => value is true;
+        private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
+
+        private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility MaskVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMask) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility PatternVisibilityConverter(InkType value) => value.HasFlag(InkType.UIPattern) ? Visibility.Visible : Visibility.Collapsed;
+
         private Symbol StarSymbolConverter(bool value) => value ? Symbol.SolidStar : Symbol.OutlineStar;
         private Symbol PinSymbolConverter(SplitViewDisplayMode value)
         {
@@ -47,15 +63,33 @@ namespace Luo_Painter
 
         InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
 
-
         Vector2 StartingPosition;
         Vector2 Position;
         float StartingPressure;
         float Pressure;
-        Color Color = Colors.White;
-        Vector4 ColorHdr = Vector4.One;
+
+        bool IsDrak;
+        Color Color => this.IsDrak ? Colors.White : Colors.Black;
+        Vector4 ColorHdr => this.IsDrak ? Vector4.One : Vector4.UnitW;
 
         IInkParameter InkParameter;
+
+        bool InkIsEnabled = true;
+
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="BrushPage"/>. </summary>
+        public InkType Type
+        {
+            get => (InkType)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "BrushPage.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(BrushPage), new PropertyMetadata(default(InkType)));
+
+
+        #endregion
 
 
         //@Construct
@@ -66,27 +100,12 @@ namespace Luo_Painter
             this.ConstructCanvas();
             this.ConstructOperator();
 
-            this.ConstructInk0();
             this.ConstructInk1();
             this.ConstructInk2();
             this.ConstructInk3();
 
-            base.ActualThemeChanged += (s, e) =>
-            {
-                switch (base.ActualTheme)
-                {
-                    case ElementTheme.Light:
-                        this.Color = Colors.Black;
-                        this.ColorHdr = new Vector4(0, 0, 0, 1);
-                        break;
-                    case ElementTheme.Dark:
-                        this.Color = Colors.White;
-                        this.ColorHdr = Vector4.One;
-                        break;
-                    default:
-                        break;
-                }
-            };
+            this.IsDrak = base.ActualTheme is ElementTheme.Dark;
+            base.ActualThemeChanged += (s, e) => this.IsDrak = base.ActualTheme is ElementTheme.Dark;
 
             this.CloseButton.Click += (s, e) => this.SplitView.IsPaneOpen = false;
             this.ShowButton.Click += (s, e) => this.SplitView.IsPaneOpen = !this.SplitView.IsPaneOpen;
