@@ -98,10 +98,7 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_Blur:
-                case InkType.MaskBrush_Blur:
-                case InkType.Circle_Blur:
-                case InkType.Line_Blur:
+                case InkType.Blur:
                     using (AlphaMaskEffect blur = this.GetBlur(image, wet))
                     {
                         ds.DrawImage(image);
@@ -109,35 +106,8 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_Pattern_Blur:
-                case InkType.MaskBrush_Pattern_Blur:
-                case InkType.Circle_Pattern_Blur:
-                case InkType.Line_Pattern_Blur:
-                    using (AlphaMaskEffect pattern = this.GetPattern(wet))
-                    using (AlphaMaskEffect blur = this.GetBlur(image, pattern))
-                    {
-                        ds.DrawImage(image);
-                        ds.DrawImage(blur);
-                    }
-                    break;
-
-                case InkType.Brush_Mosaic:
-                case InkType.MaskBrush_Mosaic:
-                case InkType.Circle_Mosaic:
-                case InkType.Line_Mosaic:
+                case InkType.Mosaic:
                     using (ScaleEffect mosaic = this.GetMosaic(image, wet))
-                    {
-                        ds.DrawImage(image);
-                        ds.DrawImage(mosaic);
-                    }
-                    break;
-
-                case InkType.Brush_Pattern_Mosaic:
-                case InkType.MaskBrush_Pattern_Mosaic:
-                case InkType.Circle_Pattern_Mosaic:
-                case InkType.Line_Pattern_Mosaic:
-                    using (AlphaMaskEffect pattern = this.GetPattern(wet))
-                    using (ScaleEffect mosaic = this.GetMosaic(image, pattern))
                     {
                         ds.DrawImage(image);
                         ds.DrawImage(mosaic);
@@ -240,41 +210,15 @@ namespace Luo_Painter.Brushes
                         return blend;
                     }
 
-                case InkType.Brush_Blur:
-                case InkType.MaskBrush_Blur:
-                case InkType.Circle_Blur:
-                case InkType.Line_Blur:
+                case InkType.Blur:
                     {
                         AlphaMaskEffect blur = this.GetBlur(image, wet);
                         return InkPresenter.GetComposite(image, blur);
                     }
 
-                case InkType.Brush_Pattern_Blur:
-                case InkType.MaskBrush_Pattern_Blur:
-                case InkType.Circle_Pattern_Blur:
-                case InkType.Line_Pattern_Blur:
-                    {
-                        AlphaMaskEffect pattern = this.GetPattern(wet);
-                        AlphaMaskEffect blur = this.GetBlur(image, pattern);
-                        return InkPresenter.GetComposite(image, blur);
-                    }
-
-                case InkType.Brush_Mosaic:
-                case InkType.MaskBrush_Mosaic:
-                case InkType.Circle_Mosaic:
-                case InkType.Line_Mosaic:
+                case InkType.Mosaic:
                     {
                         ScaleEffect mosaic = this.GetMosaic(image, wet);
-                        return InkPresenter.GetComposite(image, mosaic);
-                    }
-
-                case InkType.Brush_Pattern_Mosaic:
-                case InkType.MaskBrush_Pattern_Mosaic:
-                case InkType.Circle_Pattern_Mosaic:
-                case InkType.Line_Pattern_Mosaic:
-                    {
-                        AlphaMaskEffect pattern = this.GetPattern(wet);
-                        ScaleEffect mosaic = this.GetMosaic(image, pattern);
                         return InkPresenter.GetComposite(image, mosaic);
                     }
 
@@ -308,7 +252,7 @@ namespace Luo_Painter.Brushes
 
 
         public ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
-        public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, this.Size * this.Opacity);
+        public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, 30 * this.Flow);
         public ScaleEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
         public AlphaMaskEffect GetPattern(IGraphicsEffectSource image) => InkPresenter.GetPattern(image, this.Pattern, new Vector2
         {
@@ -360,6 +304,12 @@ namespace Luo_Painter.Brushes
             Source1 = image,
             Source2 = alphaMask,
         };
+        public static GaussianBlurEffect GetBlur(IGraphicsEffectSource image, float blurAmount) => new GaussianBlurEffect
+        {
+            BorderMode = EffectBorderMode.Hard,
+            BlurAmount = blurAmount,
+            Source = image
+        };
         public static AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float blurAmount) => new AlphaMaskEffect
         {
             AlphaMask = alphaMask,
@@ -367,6 +317,17 @@ namespace Luo_Painter.Brushes
             {
                 BorderMode = EffectBorderMode.Hard,
                 BlurAmount = blurAmount,
+                Source = image
+            }
+        };
+        public static ScaleEffect GetMosaic(IGraphicsEffectSource image, float size) => new ScaleEffect
+        {
+            InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+            Scale = new Vector2(size / 4),
+            Source = new ScaleEffect
+            {
+                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                Scale = new Vector2(4 / size),
                 Source = image
             }
         };

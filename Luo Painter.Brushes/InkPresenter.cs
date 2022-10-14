@@ -12,6 +12,8 @@ namespace Luo_Painter.Brushes
         /// <see cref=" InkType.Brush"/>
         /// <see cref=" InkType.Circle"/>
         /// <see cref=" InkType.Line"/>
+        /// <see cref=" InkType.Blur"/>
+        /// <see cref=" InkType.Mosaic"/>
         /// <see cref=" InkType.Erase"/>
         /// <see cref=" InkType.Liquefy"/>
         /// </summary>
@@ -21,8 +23,6 @@ namespace Luo_Painter.Brushes
         /// <see cref=" InkType.None"/>
         /// <see cref=" InkType.Blend"/>
         /// <see cref=" InkType.Mix"/>
-        /// <see cref=" InkType.Blur"/>
-        /// <see cref=" InkType.Mosaic"/>
         /// </summary>
         public InkType Mode { get; set; } // GetType
 
@@ -41,7 +41,7 @@ namespace Luo_Painter.Brushes
         public bool IsStroke { get; set; }
 
 
-        public BlendEffectMode BlendMode { get; set; } = (BlendEffectMode)(-1);
+        public BlendEffectMode BlendMode { get; set; }
         public BrushEdgeHardness Hardness { get; set; }
 
 
