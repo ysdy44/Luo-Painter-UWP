@@ -31,7 +31,7 @@ namespace Luo_Painter.TestApp
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
         readonly Historian<IHistory> History = new Historian<IHistory>(20);
 
-        public LayerNodes Nodes { get; }
+        public LayerNodes Nodes => this.LayerManager;
         public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
         public IList<string> ClipboardLayers { get; } = new List<string>();
 
@@ -46,32 +46,28 @@ namespace Luo_Painter.TestApp
             this.ConstructLayer();
             this.ConstructHistory();
 
-
-            this.Nodes = new LayerNodes
+            this.LayerManager.Add(new GroupLayer(this.CanvasDevice, 128, 128)
             {
-                new GroupLayer(this.CanvasDevice, 128, 128)
+                Children =
                 {
-                    Children =
+                    new GroupLayer(this.CanvasDevice, 128, 128)
                     {
-                        new GroupLayer(this.CanvasDevice, 128, 128)
+                        Children =
                         {
-                            Children =
-                            {
-                                new BitmapLayer(this.CanvasDevice, 128, 128),
-                                new BitmapLayer(this.CanvasDevice, 128, 128)
-                            }
-                        },
-                        new GroupLayer(this.CanvasDevice, 128, 128)
-                        {
-                            Children =
-                            {
-                                new BitmapLayer(this.CanvasDevice, 128, 128),
-                                new BitmapLayer(this.CanvasDevice, 128, 128)
-                             }
+                            new BitmapLayer(this.CanvasDevice, 128, 128),
+                            new BitmapLayer(this.CanvasDevice, 128, 128)
                         }
+                    },
+                    new GroupLayer(this.CanvasDevice, 128, 128)
+                    {
+                        Children =
+                        {
+                            new BitmapLayer(this.CanvasDevice, 128, 128),
+                            new BitmapLayer(this.CanvasDevice, 128, 128)
+                         }
                     }
                 }
-            };
+            });
 
 
             this.Push(this.Nodes);

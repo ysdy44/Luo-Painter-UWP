@@ -5,33 +5,33 @@ using System.Linq;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerManagerExtensions
+    public sealed partial class LayerRootNodes : LayerNodes
     {
 
         public ArrangeHistory Clear(ILayerManager self, ILayer add)
         {
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
-            self.Nodes.Clear();
-            self.Nodes.Add(add);
+            base.Clear();
+            base.Add(add);
             self.ObservableCollection.Clear();
             self.ObservableCollection.Add(add);
             self.LayerSelectedIndex = 0;
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return new ArrangeHistory(undo, redo);
         }
         public ArrangeHistory Setup(ILayerManager self, IEnumerable<ILayer> adds)
         {
             int index = self.LayerSelectedIndex;
 
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
-            self.Nodes.Clear();
+            base.Clear();
             foreach (ILayer item in adds)
             {
-                self.Nodes.Add(item);
+                base.Add(item);
             }
 
             self.ObservableCollection.Clear();
@@ -44,13 +44,13 @@ namespace Luo_Painter.Layers
             self.LayerSelectedIndex = index;
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return (new ArrangeHistory(undo, redo));
         }
 
         public ArrangeHistory Add(ILayerManager self, ILayer add)
         {
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
             int index = self.LayerSelectedIndex;
             if (index > 0 && self.LayerSelectedItem is ILayer neighbor)
@@ -58,8 +58,8 @@ namespace Luo_Painter.Layers
                 ILayer parent = self.ObservableCollection.GetParent(neighbor);
                 if (parent is null)
                 {
-                    int indexChild = self.Nodes.IndexOf(neighbor);
-                    self.Nodes.Insert(indexChild, add);
+                    int indexChild = base.IndexOf(neighbor);
+                    base.Insert(indexChild, add);
                 }
                 else
                 {
@@ -80,23 +80,23 @@ namespace Luo_Painter.Layers
                 add.IsExist = true;
                 add.Exist(true);
 
-                self.Nodes.Insert(0, add);
+                base.Insert(0, add);
                 self.ObservableCollection.InsertChild(0, add);
                 self.LayerSelectedIndex = 0;
             }
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return new ArrangeHistory(undo, redo);
         }
 
         public ArrangeHistory Remove(ILayerManager self, ILayer layer, bool resetSelectedIndex)
         {
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
             // Run away from Home
             ILayer parent = self.ObservableCollection.GetParent(layer);
-            if (parent is null) self.Nodes.Remove(layer);
+            if (parent is null) base.Remove(layer);
             else
             {
                 parent.Children.Remove(layer);
@@ -115,19 +115,19 @@ namespace Luo_Painter.Layers
             }
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return new ArrangeHistory(undo, redo);
         }
 
         public ArrangeHistory Remove(ILayerManager self, IEnumerable<object> layers)
         {
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
             foreach (ILayer layer in layers.Cast<ILayer>())
             {
                 // Run away from Home
                 ILayer parent = self.ObservableCollection.GetParent(layer);
-                if (parent is null) self.Nodes.Remove(layer);
+                if (parent is null) base.Remove(layer);
                 else
                 {
                     parent.Children.Remove(layer);
@@ -136,14 +136,14 @@ namespace Luo_Painter.Layers
             }
 
             self.ObservableCollection.Clear();
-            foreach (ILayer item in self.Nodes)
+            foreach (ILayer item in this)
             {
                 item.Arrange(0);
                 self.ObservableCollection.AddChild(item);
             }
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return new ArrangeHistory(undo, redo);
         }
 

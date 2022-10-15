@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerManagerExtensions
+    public sealed partial class LayerRootNodes : LayerNodes
     {
 
         public void DragItemsStarting(ILayerManager self, IList<object> layers)
@@ -17,7 +17,7 @@ namespace Luo_Painter.Layers
 
         public ArrangeHistory DragItemsCompleted(ILayerManager self, IReadOnlyList<object> layers)
         {
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
             foreach (ILayer item in layers)
             {
@@ -34,17 +34,17 @@ namespace Luo_Painter.Layers
                 item.ApplyIsExpand();
             }
 
-            self.Nodes.Clear();
+            base.Clear();
             foreach (ILayer item in self.ObservableCollection)
             {
                 if (item.Depth is 0)
                 {
-                    self.Nodes.Add(item);
+                    base.Add(item);
                 }
             }
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return new ArrangeHistory(undo, redo);
         }
 

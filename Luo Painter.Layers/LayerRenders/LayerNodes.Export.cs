@@ -13,7 +13,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerNodes : List<ILayer>, ILayerRender
+    public partial class LayerNodes : List<ILayer>, ILayerRender
     {
 
         public IEnumerable<XElement> Save() =>

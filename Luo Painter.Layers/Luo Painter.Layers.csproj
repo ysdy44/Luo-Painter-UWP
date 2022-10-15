@@ -134,12 +134,11 @@
     <Compile Include="ILayer.Render.cs" />
     <Compile Include="ILayer.Setup.cs" />
     <Compile Include="LayerManagers\ILayerManager.cs" />
-    <Compile Include="LayerManagers\LayerManagerExtensions.Clipboard.cs" />
-    <Compile Include="LayerManagers\LayerManagerExtensions.Drag.cs" />
-    <Compile Include="LayerManagers\LayerManagerExtensions.Grouping.cs" />
-    <Compile Include="LayerManagers\LayerManagerExtensions.Layering.cs" />
+    <Compile Include="LayerManagers\LayerRootNodes.Clipboard.cs" />
+    <Compile Include="LayerManagers\LayerRootNodes.Drag.cs" />
+    <Compile Include="LayerManagers\LayerRootNodes.Grouping.cs" />
+    <Compile Include="LayerManagers\LayerRootNodes.Layering.cs" />
     <Compile Include="LayerRenders\ILayerRender.cs" />
-    <Compile Include="LayerRenders\LayerRenderExtensions.cs" />
     <Compile Include="Layers\LayerBase.cs" />
     <Compile Include="Layers\LayerBase.Drag.cs" />
     <Compile Include="Layers\LayerBase.Export.cs" />

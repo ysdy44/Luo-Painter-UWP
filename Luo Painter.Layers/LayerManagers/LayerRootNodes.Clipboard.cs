@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerManagerExtensions
+    public sealed partial class LayerRootNodes : LayerNodes 
     {
-
+        
         public ArrangeHistory Cut(ILayerManager self, ILayer layer)
         {
             this.Copy(self, layer);
@@ -43,7 +43,7 @@ namespace Luo_Painter.Layers
 
         public ArrangeHistory Paste(ILayerManager self, ICanvasResourceCreator resourceCreator, int width, int height, IEnumerable<string> ids)
         {
-            Layerage[] undo = self.Nodes.Convert();
+            Layerage[] undo = base.Convert();
 
             int index = self.LayerSelectedIndex;
             if (index > 0 && self.LayerSelectedItem is ILayer neighbor)
@@ -58,7 +58,7 @@ namespace Luo_Painter.Layers
                         ILayer add = layer.Crop(resourceCreator, width, height);
                         add.Arrange(parent.Depth + 1);
 
-                        self.Nodes.Insert(index, add);
+                        base.Insert(index, add);
                         self.ObservableCollection.InsertChild(index, add);
                     }
                 }
@@ -89,14 +89,14 @@ namespace Luo_Painter.Layers
                     ILayer add = layer.Crop(resourceCreator, width, height);
                     add.Arrange(0);
 
-                    self.Nodes.Insert(0, add);
+                    base.Insert(0, add);
                     self.ObservableCollection.InsertChild(0, add);
                 }
                 self.LayerSelectedIndex = 0;
             }
 
             /// History
-            Layerage[] redo = self.Nodes.Convert();
+            Layerage[] redo = base.Convert();
             return new ArrangeHistory(undo, redo);
         }
 

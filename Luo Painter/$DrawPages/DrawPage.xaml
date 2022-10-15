@@ -25,8 +25,6 @@
         <transformers:CanvasTransformer x:Name="Transformer" />
         <!--Extension-->
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
-        <layers:LayerManagerExtensions x:Name="LayerManager"/>
-        <layers:LayerRenderExtensions x:Name="LayerRender"/>
         <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <!--Command-->

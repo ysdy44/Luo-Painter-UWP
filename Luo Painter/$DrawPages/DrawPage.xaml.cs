@@ -59,7 +59,8 @@ namespace Luo_Painter
         public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         Historian<IHistory> History { get; } = new Historian<IHistory>();
 
-        public LayerNodes Nodes { get; } = new LayerNodes();
+        public LayerRootNodes LayerManager = new LayerRootNodes();
+        public LayerNodes Nodes => this.LayerManager;
         public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
         public IList<string> ClipboardLayers { get; } = new List<string>();
 

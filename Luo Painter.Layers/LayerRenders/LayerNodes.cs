@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerNodes : List<ILayer>, ILayerRender
+    public partial class LayerNodes : List<ILayer>, ILayerRender
     {
         public Layerage[] Convert() => (base.Count is 0) ? null : this.Select(this.Convert).ToArray();
         private Layerage Convert(ILayer layer) => new Layerage
