@@ -23,6 +23,32 @@ namespace Luo_Painter.Layers.Models
             Source = (base.Id == id) ? mezzanine : this.SourceRenderTarget,
         });
 
+        public void Merge(ILayer neighbor)
+        {
+            if (neighbor.Opacity == 0.0) return;
+            else if (neighbor.Opacity == 1.0)
+            {
+                ICanvasImage image = neighbor[BitmapType.Source];
+                if (base.Opacity == 0.0)
+                    this.DrawCopy(image);
+                else
+                    this.DrawCopy(this.Render(image, this.OriginRenderTarget));
+            }
+            else
+            {
+                using (ICanvasImage image = new OpacityEffect
+                {
+                    Source = neighbor[BitmapType.Source],
+                    Opacity = neighbor.Opacity
+                })
+                {
+                    if (base.Opacity == 0.0)
+                        this.DrawCopy(image);
+                    else
+                        this.DrawCopy(this.Render(image, this.OriginRenderTarget));
+                }
+            }
+        }
         public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage)
         {
             if (base.Opacity == 0.0) return null;

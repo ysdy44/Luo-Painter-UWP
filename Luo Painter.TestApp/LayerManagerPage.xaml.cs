@@ -308,27 +308,25 @@ namespace Luo_Painter.TestApp
                         case LayerType.Bitmap:
                             if (layer is BitmapLayer bitmapLayer)
                             {
-                                if (this.ObservableCollection.GetNeighbor(layer) is ILayer neighbor)
+                                if (this.ObservableCollection.GetNeighbor(bitmapLayer) is ILayer neighbor)
                                 {
-                                    if (neighbor.Merge(bitmapLayer, bitmapLayer[BitmapType.Origin]) is ICanvasImage source)
+                                    /// History
+                                    bitmapLayer.Merge(neighbor);
+                                    int removes = this.History.Push(new CompositeHistory(new IHistory[]
                                     {
-                                        /// History
-                                        bitmapLayer.DrawCopy(source);
-                                        int removes1 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
-                                        bitmapLayer.Flush();
-                                        bitmapLayer.RenderThumbnail();
+                                        bitmapLayer.GetBitmapResetHistory(),
+                                        this.LayerManager.Remove(this, neighbor)
+                                    }));
+                                    bitmapLayer.Flush();
+                                    bitmapLayer.RenderThumbnail();
 
-                                        /// History
-                                        int removes2 = this.History.Push(this.LayerManager.Remove(this, neighbor));
-
-                                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                                    }
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
                                 }
                             }
                             break;
                         default:
-                            return;
+                            break;
                     }
                 }
             };
@@ -336,7 +334,7 @@ namespace Luo_Painter.TestApp
             {
                 using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
                 {
-                    ICanvasImage image = this.Nodes.Merge(null, commandList);
+                    ICanvasImage image = this.Nodes.Render(commandList);
                     ILayer add = new BitmapLayer(this.CanvasDevice, image, 128, 128);
 
                     /// History

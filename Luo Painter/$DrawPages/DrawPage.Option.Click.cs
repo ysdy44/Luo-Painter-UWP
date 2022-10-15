@@ -555,30 +555,31 @@ namespace Luo_Painter
                                 case LayerType.Bitmap:
                                     if (layer is BitmapLayer bitmapLayer)
                                     {
-                                        if (this.ObservableCollection.GetNeighbor(layer) is ILayer neighbor)
+                                        if (this.ObservableCollection.GetNeighbor(bitmapLayer) is ILayer neighbor)
                                         {
-                                            if (neighbor.Merge(bitmapLayer, bitmapLayer[BitmapType.Origin]) is ICanvasImage source)
-                                            {
-                                                /// History
-                                                bitmapLayer.DrawCopy(source);
-                                                int removes1 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
-                                                bitmapLayer.Flush();
-                                                bitmapLayer.RenderThumbnail();
+                                            /// History
+                                            bitmapLayer.Merge(neighbor);
+                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                                            {                                
+                                                bitmapLayer.GetBitmapResetHistory(),                               
+                                                this.LayerManager.Remove(this, neighbor)
+                                            }));
+                                            bitmapLayer.Flush();
+                                            bitmapLayer.RenderThumbnail();
 
-                                                /// History
-                                                int removes2 = this.History.Push(this.LayerManager.Remove(this, neighbor));
-
-                                                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                                this.UndoButton.IsEnabled = this.History.CanUndo;
-                                                this.RedoButton.IsEnabled = this.History.CanRedo;
-                                            }
+                                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                                            this.RedoButton.IsEnabled = this.History.CanRedo;
                                         }
                                     }
                                     break;
                                 default:
+                                    this.Tip(TipType.NotBitmapLayer);
                                     break;
                             }
+                        }
+                        else
+                        {
+                            this.Tip(TipType.NoLayer);
                         }
                     }
                     break;
@@ -586,7 +587,7 @@ namespace Luo_Painter
                     {
                         using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
                         {
-                            ICanvasImage image = this.Nodes.Merge(null, commandList);
+                            ICanvasImage image = this.Nodes.Render(commandList);
                             ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
 
                             /// History
