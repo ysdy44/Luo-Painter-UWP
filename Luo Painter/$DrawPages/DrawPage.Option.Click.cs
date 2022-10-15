@@ -8,13 +8,17 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -88,43 +92,192 @@ namespace Luo_Painter
                     break;
                 case OptionType.Export:
                     {
-                        IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                        if (this.Nodes.Count() is 0)
+                        {
+                            this.Tip(TipType.NoLayer);
+                            break;
+                        }
+
+                        StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
                         if (file is null) break;
                         this.Tip(TipType.Saving);
 
+                        float dpi = this.ExportMenu.DPI;
+                        Rect rect = new Rect
+                        {
+                            Width = dpi.ConvertPixelsToDips(this.Transformer.Width),
+                            Height = dpi.ConvertPixelsToDips(this.Transformer.Height)
+                        };
+
                         // Export
-                        bool result = await this.LayerRender.Export(this.Nodes, file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
-                        if (result)
-                            this.Tip(TipType.SaveSuccess);
-                        else
+                        bool result;
+
+                        using (ICanvasImage background = (this.ExportMenu.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
+                        {
+                            Color = Colors.White
+                        } : (ICanvasImage)new CanvasCommandList(this.CanvasDevice))
+                        {
+                            ICanvasImage image = this.Nodes.Render(background);
+
+                            try
+                            {
+                                using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                                {
+                                    await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, stream, this.ExportMenu.FileFormat, 1);
+                                }
+                                result = true;
+                            }
+                            catch (Exception)
+                            {
+                                result = false;
+                            }
+                        }
+
+                        if (result is false)
+                        {
                             this.Tip(TipType.SaveFailed);
+                            break;
+                        }
+
+                        this.Tip(TipType.SaveSuccess);
+
+                        try
+                        {
+                            await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
+                            {
+                                ItemsToSelect = { file }
+                            });
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                     break;
                 case OptionType.ExportAll:
                     {
+                        if (this.Nodes.Count() is 0)
+                        {
+                            this.Tip(TipType.NoLayer);
+                            break;
+                        }
+
                         IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
                         if (folder is null) break;
                         this.Tip(TipType.Saving);
 
+                        float dpi = this.ExportMenu.DPI;
+                        Rect rect = new Rect
+                        {
+                            Width = dpi.ConvertPixelsToDips(this.Transformer.Width),
+                            Height = dpi.ConvertPixelsToDips(this.Transformer.Height)
+                        };
+
                         // Export
-                        int result = await this.LayerRender.ExportAll(this.Nodes, folder, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileChoices, this.ExportMenu.FileFormat, 1);
-                        this.Tip(TipType.SaveSuccess);
+                        bool result;
+                        int index = 0;
+                        int count = 0;
+                        FolderLauncherOptions options = new FolderLauncherOptions();
+
+                        using (ICanvasImage background = (this.ExportMenu.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
+                        {
+                            Color = Colors.White
+                        } : (ICanvasImage)new CanvasCommandList(this.CanvasDevice))
+                        {
+                            foreach (ILayerRender item in this.Nodes)
+                            {
+                                string name = $"{this.ApplicationView.Title} {index}{this.ExportMenu.FileChoices}";
+                                StorageFile file = await folder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting);
+                                index++;
+
+                                if (file is null) continue;
+                                ICanvasImage image = item.Render(background);
+
+                                try
+                                {
+                                    using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                                    {
+                                        await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, accessStream, this.ExportMenu.FileFormat, 1);
+                                    }
+                                    result = true;
+                                    count++;
+                                }
+                                catch (Exception)
+                                {
+                                    result = false;
+                                }
+
+                                if (result)
+                                {
+                                    this.Tip(TipType.SaveSuccess);
+                                    options.ItemsToSelect.Add(file);
+                                }
+                                else
+                                    this.Tip(TipType.SaveFailed);
+                            }
+                        }
+
+                        if (options.ItemsToSelect.Count is 0) break;
+
+                        await Launcher.LaunchFolderAsync(folder, options);
                     }
                     break;
                 case OptionType.ExportCurrent:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
-                            IStorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                            StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
                             if (file is null) break;
                             this.Tip(TipType.Saving);
 
+                            float dpi = this.ExportMenu.DPI;
+                            Rect rect = new Rect
+                            {
+                                Width = dpi.ConvertPixelsToDips(this.Transformer.Width),
+                                Height = dpi.ConvertPixelsToDips(this.Transformer.Height)
+                            };
+
                             // Export
-                            bool result = await this.LayerRender.Export(layer, file, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ExportMenu.DPI, this.ExportMenu.FileFormat, 1);
-                            if (result)
-                                this.Tip(TipType.SaveSuccess);
-                            else
+                            bool result;
+
+                            using (ICanvasImage background = (this.ExportMenu.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
+                            {
+                                Color = Colors.White
+                            } : (ICanvasImage)new CanvasCommandList(this.CanvasDevice))
+                            {
+                                ICanvasImage image = layer.Render(background);
+
+                                try
+                                {
+                                    using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                                    {
+                                        await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, accessStream, this.ExportMenu.FileFormat, 1);
+                                    }
+                                    result = true;
+                                }
+                                catch (Exception)
+                                {
+                                    result = false;
+                                }
+                            }
+
+                            if (result is false)
+                            {
                                 this.Tip(TipType.SaveFailed);
+                                break;
+                            }
+
+                            this.Tip(TipType.SaveSuccess);
+
+                            try
+                            {
+                                await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
+                                {
+                                    ItemsToSelect = { file }
+                                });
+                            }
+                            catch (Exception)
+                            {
+                            }
                         }
                         else this.Tip(TipType.NoLayer);
                     }
