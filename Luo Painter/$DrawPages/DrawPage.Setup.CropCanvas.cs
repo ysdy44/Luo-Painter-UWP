@@ -1,6 +1,7 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
@@ -143,10 +144,11 @@ namespace Luo_Painter
                 this.CreateResources(w, h);
                 this.CreateMarqueeResources(w, h);
 
-                int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray(), new SetupSizes
+                /// History
+                int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
-                    UndoParameter = new BitmapSize { Width = width, Height = height },
-                    RedoParameter = new BitmapSize { Width = w2, Height = h2 }
+                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
+                    new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
                 }));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -165,18 +167,12 @@ namespace Luo_Painter
                     this.CreateResources(w, h);
                     this.CreateMarqueeResources(w, h);
                 }
-                int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray(), new SetupSizes
+
+                /// History
+                int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
-                    UndoParameter = new BitmapSize
-                    {
-                        Width = width,
-                        Height = height
-                    },
-                    RedoParameter = new BitmapSize
-                    {
-                        Width = w2,
-                        Height = h2
-                    }
+                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
+                    new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
                 }));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
