@@ -11,7 +11,7 @@ namespace Luo_Painter.Layers
         public ArrangeHistory Cut(ILayerManager self, ILayer layer)
         {
             this.Copy(self, layer);
-            return this.Remove(self, layer);
+            return this.Remove(self, layer, true);
         }
 
         public ArrangeHistory Cut(ILayerManager self, IEnumerable<object> layers)

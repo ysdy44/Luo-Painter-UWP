@@ -127,7 +127,7 @@ namespace Luo_Painter.TestApp
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             /// History
-                            int removes = this.History.Push(this.LayerManager.Remove(this, layer));
+                            int removes = this.History.Push(this.LayerManager.Remove(this, layer, true));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -315,7 +315,7 @@ namespace Luo_Painter.TestApp
                                     int removes = this.History.Push(new CompositeHistory(new IHistory[]
                                     {
                                         bitmapLayer.GetBitmapResetHistory(),
-                                        this.LayerManager.Remove(this, neighbor)
+                                        this.LayerManager.Remove(this, neighbor, false)
                                     }));
                                     bitmapLayer.Flush();
                                     bitmapLayer.RenderThumbnail();

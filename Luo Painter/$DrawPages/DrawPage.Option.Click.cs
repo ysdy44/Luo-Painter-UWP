@@ -258,7 +258,7 @@ namespace Luo_Painter
                                 if (this.LayerSelectedItem is ILayer layer)
                                 {
                                     /// History
-                                    int removes = this.History.Push(this.LayerManager.Remove(this, layer));
+                                    int removes = this.History.Push(this.LayerManager.Remove(this, layer, true));
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -560,9 +560,9 @@ namespace Luo_Painter
                                             /// History
                                             bitmapLayer.Merge(neighbor);
                                             int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                            {                                
-                                                bitmapLayer.GetBitmapResetHistory(),                               
-                                                this.LayerManager.Remove(this, neighbor)
+                                            {
+                                                bitmapLayer.GetBitmapResetHistory(),
+                                                this.LayerManager.Remove(this, neighbor, false)
                                             }));
                                             bitmapLayer.Flush();
                                             bitmapLayer.RenderThumbnail();

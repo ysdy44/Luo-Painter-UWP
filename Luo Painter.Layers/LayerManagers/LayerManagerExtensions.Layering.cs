@@ -22,7 +22,7 @@ namespace Luo_Painter.Layers
             Layerage[] redo = self.Nodes.Convert();
             return new ArrangeHistory(undo, redo);
         }
-        public ArrangeHistory Setup(ILayerManager self, IEnumerable<ILayer> adds, SetupSizes sizes)
+        public ArrangeHistory Setup(ILayerManager self, IEnumerable<ILayer> adds, SetupSizes sizes = null)
         {
             int index = self.LayerSelectedIndex;
 
@@ -45,7 +45,7 @@ namespace Luo_Painter.Layers
 
             /// History
             Layerage[] redo = self.Nodes.Convert();
-            return (new ArrangeHistory(undo, redo, sizes));
+            return (new ArrangeHistory(undo, redo));
         }
 
         public ArrangeHistory Add(ILayerManager self, ILayer add)
@@ -90,7 +90,7 @@ namespace Luo_Painter.Layers
             return new ArrangeHistory(undo, redo);
         }
 
-        public ArrangeHistory Remove(ILayerManager self, ILayer layer)
+        public ArrangeHistory Remove(ILayerManager self, ILayer layer, bool resetSelectedIndex)
         {
             Layerage[] undo = self.Nodes.Convert();
 
@@ -103,11 +103,16 @@ namespace Luo_Painter.Layers
                 parent.RaiseCanExecuteChanged();
             }
 
-            int index = self.LayerSelectedIndex;
+            if (resetSelectedIndex)
+            {
+                int index = self.LayerSelectedIndex;
+                self.ObservableCollection.RemoveChild(layer);
+                self.LayerSelectedIndex = self.ObservableCollection.GetSelectedIndex(index, layer.Depth);
+            }
+            else
             {
                 self.ObservableCollection.RemoveChild(layer);
             }
-            self.LayerSelectedIndex = self.ObservableCollection.GetSelectedIndex(index, layer.Depth);
 
             /// History
             Layerage[] redo = self.Nodes.Convert();
