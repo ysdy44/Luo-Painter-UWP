@@ -49,17 +49,6 @@ namespace Luo_Painter.Layers.Models
                 }
             }
         }
-        public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage)
-        {
-            if (base.Opacity == 0.0) return null;
-            else if (base.Opacity == 1.0) return previousRender.Render(previousImage, this.SourceRenderTarget);
-            return previousRender.Render(previousImage, new OpacityEffect
-            {
-                Opacity = base.Opacity,
-                Source = this.SourceRenderTarget
-            });
-        }
-
 
         public void Draw(ICanvasImage image, BitmapType type = BitmapType.Source)
         {

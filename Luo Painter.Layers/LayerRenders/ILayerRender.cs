@@ -10,6 +10,5 @@ namespace Luo_Painter.Layers
         ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine);
 
         ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage);
-        ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage);
     }
 }

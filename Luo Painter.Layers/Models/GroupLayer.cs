@@ -25,18 +25,6 @@ namespace Luo_Painter.Layers.Models
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Children.Render(background, matrix, interpolationMode);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Children.Render(background, matrix, interpolationMode, id, mezzanine);
 
-        public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage)
-        {
-            if (base.Children.Count is 0) return null;
-
-            if (base.Opacity == 0.0) return null;
-            else if (base.Opacity == 1.0) return previousRender.Render(previousImage, this.Render(new ColorSourceEffect { Color = Colors.Transparent }));
-            return previousRender.Render(previousImage, new OpacityEffect
-            {
-                Opacity = base.Opacity,
-                Source = this.Render(new ColorSourceEffect { Color = Colors.Transparent })
-            });
-        }
 
         public bool FillContainsPoint(Vector2 point)
         {

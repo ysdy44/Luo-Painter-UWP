@@ -69,7 +69,6 @@ namespace Luo_Painter.Layers
                 currentImage
             }
         };
-        public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage) => this.Render(previousImage);
 
     }
 }

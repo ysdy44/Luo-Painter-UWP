@@ -80,17 +80,6 @@ namespace Luo_Painter.Layers.Models
             Source = (base.Id == id) ? mezzanine : this.Source,
         });
 
-        public ICanvasImage Merge(ILayerRender previousRender, ICanvasImage previousImage)
-        {
-            if (base.Opacity == 0.0) return null;
-            else if (base.Opacity == 1.0) return previousRender.Render(previousImage, this.Source);
-            return previousRender.Render(previousImage, new OpacityEffect
-            {
-                Opacity = base.Opacity,
-                Source = this.Source
-            });
-        }
-
 
         public bool FillContainsPoint(Vector2 point)
         {
