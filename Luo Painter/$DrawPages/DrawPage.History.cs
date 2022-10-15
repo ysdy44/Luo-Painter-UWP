@@ -13,22 +13,35 @@ namespace Luo_Painter
         {
             switch (history.Mode)
             {
+                case HistoryMode.Composite:
+                    if (history is CompositeHistory compositeHistory)
+                    {
+                        foreach (IHistory item in compositeHistory.Histories)
+                        {
+                            this.Undo(item);
+                        }
+                        return true;
+                    }
+                    return false;
+                case HistoryMode.Setup:
+                    if (history is SetupHistory setupHistory)
+                    {
+                        int w = (int)setupHistory.UndoParameter.Width;
+                        int h = (int)setupHistory.UndoParameter.Height;
+
+                        this.Transformer.Width = w;
+                        this.Transformer.Height = h;
+                        this.Transformer.Fit();
+
+                        this.CreateResources(w, h);
+                        this.CreateMarqueeResources(w, h);
+                        return true;
+                    }
+                    return false;
                 case HistoryMode.Arrange:
                     if (history is ArrangeHistory arrangeHistory)
                     {
-                        if (arrangeHistory.Sizes is SetupSizes size)
-                        {
-                            int w = (int)size.UndoParameter.Width;
-                            int h = (int)size.UndoParameter.Height;
-
-                            this.Transformer.Width = w;
-                            this.Transformer.Height = h;
-                            this.Transformer.Fit();
-
-                            this.CreateResources(w, h);
-                            this.CreateMarqueeResources(w, h);
-                        }
-
+                        this.Nodes.Clear();
                         this.Nodes.Load(arrangeHistory.UndoParameter);
 
                         this.ObservableCollection.Clear();
@@ -85,22 +98,34 @@ namespace Luo_Painter
         {
             switch (history.Mode)
             {
+                case HistoryMode.Composite:
+                    if (history is CompositeHistory compositeHistory)
+                    {
+                        foreach (IHistory item in compositeHistory.Histories)
+                        {
+                            this.Redo(item);
+                        }
+                        return true;
+                    }
+                    return false;
+                case HistoryMode.Setup:
+                    if (history is SetupHistory setupHistory)
+                    {
+                        int w = (int)setupHistory.RedoParameter.Width;
+                        int h = (int)setupHistory.RedoParameter.Height;
+
+                        this.Transformer.Width = w;
+                        this.Transformer.Height = h;
+                        this.Transformer.Fit();
+
+                        this.CreateResources(w, h);
+                        this.CreateMarqueeResources(w, h);
+                        return true;
+                    }
+                    return false;
                 case HistoryMode.Arrange:
                     if (history is ArrangeHistory arrangeHistory)
                     {
-                        if (arrangeHistory.Sizes is SetupSizes size)
-                        {
-                            int w = (int)size.RedoParameter.Width;
-                            int h = (int)size.RedoParameter.Height;
-
-                            this.Transformer.Width = w;
-                            this.Transformer.Height = h;
-                            this.Transformer.Fit();
-
-                            this.CreateResources(w, h);
-                            this.CreateMarqueeResources(w, h);
-                        }
-
                         this.Nodes.Load(arrangeHistory.RedoParameter);
 
                         this.ObservableCollection.Clear();
