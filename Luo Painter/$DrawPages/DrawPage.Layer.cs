@@ -116,16 +116,15 @@ namespace Luo_Painter
                         if (LayerDictionary.Instance.ContainsKey(id))
                         {
                             ILayer layer2 = LayerDictionary.Instance[id];
-                            if (layer2.Visibility != redo)
-                            {
-                                undoParameters.Add(id, layer2.Visibility);
-                                layer2.Visibility = redo;
-                            }
+                            if (layer2.Visibility == redo) continue;
+
+                            undoParameters.Add(id, layer2.Visibility);
+                            layer2.Visibility = redo;
                         }
                     }
 
                     // History
-                    int removes = this.History.Push(new PropertysHistory<Visibility>(HistoryType.Visibilitys, HistoryType.Visibility, undoParameters, undo, redo));
+                    int removes = this.History.Push(new PropertysHistory<Visibility>(HistoryType.Visibility, undoParameters, undo, redo));
                 }
                 else
                 {
@@ -179,7 +178,7 @@ namespace Luo_Painter
                     default:
                         {
                             // History
-                            int removes = this.History.Push(new PropertysHistory<string>(HistoryType.Names, HistoryType.Name, this.CloneNameUndoParameters(), undo, redo));
+                            int removes = this.History.Push(new PropertysHistory<string>(HistoryType.Name, this.CloneNameUndoParameters(), undo, redo));
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
                             this.RedoButton.IsEnabled = this.History.CanRedo;
@@ -225,7 +224,7 @@ namespace Luo_Painter
                     default:
                         {
                             // History
-                            int removes = this.History.Push(new PropertysHistory<BlendEffectMode?>(HistoryType.BlendModes, HistoryType.BlendMode, this.CloneBlendModeUndoParameters(), undo, redo));
+                            int removes = this.History.Push(new PropertysHistory<BlendEffectMode?>(HistoryType.BlendMode, this.CloneBlendModeUndoParameters(), undo, redo));
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
@@ -289,7 +288,7 @@ namespace Luo_Painter
                     default:
                         {
                             // History
-                            int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacitys, HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
+                            int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.UndoButton.IsEnabled = this.History.CanUndo;
@@ -299,48 +298,48 @@ namespace Luo_Painter
                 }
             };
 
-            this.AddMenu.OpacityHistory += (undo, redo) =>
-            {
-                this.OpacityUndoParameters.Clear();
+            //this.AddMenu.OpacityHistory += (undo, redo) =>
+            //{
+            //    this.OpacityUndoParameters.Clear();
 
-                foreach (object item in this.LayerSelectedItems)
-                {
-                    if (item is ILayer layer)
-                    {
-                        layer.CacheOpacity();
-                        layer.Opacity = redo;
-                        this.OpacityUndoParameters.Add(layer.Id, layer.StartingOpacity);
-                    }
-                }
+            //    foreach (object item in this.LayerSelectedItems)
+            //    {
+            //        if (item is ILayer layer)
+            //        {
+            //            layer.CacheOpacity();
+            //            layer.Opacity = redo;
+            //            this.OpacityUndoParameters.Add(layer.Id, layer.StartingOpacity);
+            //        }
+            //    }
 
-                switch (this.OpacityUndoParameters.Count)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        foreach (var item in this.OpacityUndoParameters)
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Key, item.Value, redo));
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            //    switch (this.OpacityUndoParameters.Count)
+            //    {
+            //        case 0:
+            //            break;
+            //        case 1:
+            //            foreach (var item in this.OpacityUndoParameters)
+            //            {
+            //                // History
+            //                int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Key, item.Value, redo));
+            //                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                            break;
-                        }
-                        break;
-                    default:
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacitys, HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            //                this.UndoButton.IsEnabled = this.History.CanUndo;
+            //                this.RedoButton.IsEnabled = this.History.CanRedo;
+            //                break;
+            //            }
+            //            break;
+            //        default:
+            //            {
+            //                // History
+            //                int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
+            //                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                        }
-                        break;
-                }
-            };
+            //                this.UndoButton.IsEnabled = this.History.CanUndo;
+            //                this.RedoButton.IsEnabled = this.History.CanRedo;
+            //            }
+            //            break;
+            //    }
+            //};
         }
 
     }

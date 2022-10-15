@@ -85,7 +85,12 @@ namespace Luo_Painter
                         foreach (string id in propertysHistory.Ids)
                         {
                             if (LayerDictionary.Instance.ContainsKey(id))
-                                return LayerDictionary.Instance[id].History(propertysHistory.PropertyType, propertysHistory[id]);
+                            {
+                                if (LayerDictionary.Instance[id] is ILayer layer)
+                                {
+                                    layer.History(propertysHistory.Type, propertysHistory.UndoParameter);
+                                }
+                            }
                         }
                         return true;
                     }
@@ -168,8 +173,10 @@ namespace Luo_Painter
                     {
                         foreach (string id in propertysHistory.Ids)
                         {
-                            if (LayerDictionary.Instance.ContainsKey(id))
-                                return LayerDictionary.Instance[id].History(propertysHistory.PropertyType, propertysHistory.RedoParameter);
+                            if (LayerDictionary.Instance[id] is ILayer layer)
+                            {
+                                layer.History(propertysHistory.Type, propertysHistory.RedoParameter);
+                            }
                         }
                         return true;
                     }

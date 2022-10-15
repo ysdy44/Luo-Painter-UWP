@@ -9,14 +9,8 @@
         BlendMode,
         Visibility,
 
-        Names,
-        Opacitys,
-        BlendModes,
-        Visibilitys,
-
         Bitmap,
         BitmapClear,
         BitmapReset,
-
     }
 }
