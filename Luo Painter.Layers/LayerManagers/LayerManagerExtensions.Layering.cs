@@ -22,7 +22,7 @@ namespace Luo_Painter.Layers
             Layerage[] redo = self.Nodes.Convert();
             return new ArrangeHistory(undo, redo);
         }
-        public ArrangeHistory Setup(ILayerManager self, IEnumerable<ILayer> adds, SetupSizes sizes = null)
+        public ArrangeHistory Setup(ILayerManager self, IEnumerable<ILayer> adds)
         {
             int index = self.LayerSelectedIndex;
 
