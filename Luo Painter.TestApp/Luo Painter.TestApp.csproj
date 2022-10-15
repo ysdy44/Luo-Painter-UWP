@@ -155,6 +155,9 @@
     <Compile Include="FloodSelectPage.xaml.cs">
       <DependentUpon>FloodSelectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InkStabilizerPage.xaml.cs">
+      <DependentUpon>InkStabilizerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LayerManagerPage.xaml.cs">
       <DependentUpon>LayerManagerPage.xaml</DependentUpon>
     </Compile>
@@ -357,6 +360,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FloodSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InkStabilizerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
