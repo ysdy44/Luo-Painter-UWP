@@ -31,6 +31,7 @@ namespace Luo_Painter.TestApp
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
         readonly Historian<IHistory> History = new Historian<IHistory>(20);
 
+        readonly LayerRootNodes LayerManager = new LayerRootNodes();
         public LayerNodes Nodes => this.LayerManager;
         public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
         public IList<string> ClipboardLayers { get; } = new List<string>();
