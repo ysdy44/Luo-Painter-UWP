@@ -23,7 +23,7 @@ namespace Luo_Painter
             if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
-        
+
             //@Task
             if (false)
                 this.Paint_PaintAsync(segment);
@@ -71,6 +71,12 @@ namespace Luo_Painter
             lock (this.Locker)
             {
                 this.Paint(segment);
+                using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                using (ds.CreateLayer(1f, segment.Bounds))
+                {
+                    this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                }
+
                 this.CanvasControl.Invalidate(); // Invalidate
             }
         }
@@ -79,7 +85,14 @@ namespace Luo_Painter
             //@Task
             lock (this.Locker)
             {
-                this.Paint();
+                if (this.InkType is InkType.Liquefy is false)
+                {
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                    {
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                    }
+                }
                 this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
                 // History

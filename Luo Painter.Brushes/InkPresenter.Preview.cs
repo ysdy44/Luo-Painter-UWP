@@ -11,6 +11,7 @@ namespace Luo_Painter.Brushes
 
         public void Preview(CanvasDrawingSession ds, InkType type, ICanvasImage image, ICanvasImage wet)
         {
+            ds.Blend = CanvasBlend.Copy;
             switch (type)
             {
                 case InkType.Brush:
@@ -22,6 +23,7 @@ namespace Luo_Painter.Brushes
                 case InkType.Line:
                 case InkType.Line_Mix:
                     ds.DrawImage(image);
+                    ds.Blend = CanvasBlend.SourceOver;
                     ds.DrawImage(wet);
                     break;
 
@@ -33,9 +35,10 @@ namespace Luo_Painter.Brushes
                 case InkType.Shape_Pattern_Mix:
                 case InkType.Line_Pattern:
                 case InkType.Line_Pattern_Mix:
+                    ds.DrawImage(image);
+                    ds.Blend = CanvasBlend.SourceOver;
                     using (AlphaMaskEffect pattern = this.GetPattern(wet))
                     {
-                        ds.DrawImage(image);
                         ds.DrawImage(pattern);
                     }
                     break;
@@ -44,9 +47,10 @@ namespace Luo_Painter.Brushes
                 case InkType.MaskBrush_Opacity:
                 case InkType.Shape_Opacity:
                 case InkType.Line_Opacity:
+                    ds.DrawImage(image);
+                    ds.Blend = CanvasBlend.SourceOver;
                     using (OpacityEffect opacity = this.GetOpacity(wet))
                     {
-                        ds.DrawImage(image);
                         ds.DrawImage(opacity);
                     }
                     break;
@@ -99,17 +103,19 @@ namespace Luo_Painter.Brushes
                     break;
 
                 case InkType.Blur:
+                    ds.DrawImage(image);
+                    ds.Blend = CanvasBlend.SourceOver;
                     using (AlphaMaskEffect blur = this.GetBlur(image, wet))
                     {
-                        ds.DrawImage(image);
                         ds.DrawImage(blur);
                     }
                     break;
 
                 case InkType.Mosaic:
+                    ds.DrawImage(image);
+                    ds.Blend = CanvasBlend.SourceOver;
                     using (ScaleEffect mosaic = this.GetMosaic(image, wet))
                     {
-                        ds.DrawImage(image);
                         ds.DrawImage(mosaic);
                     }
                     break;
