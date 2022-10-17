@@ -285,6 +285,9 @@
     <Compile Include="SliderToolTipPage.xaml.cs">
       <DependentUpon>SliderToolTipPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SolarSystemPage.xaml.cs">
+      <DependentUpon>SolarSystemPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SpottedPatternPage.xaml.cs">
       <DependentUpon>SpottedPatternPage.xaml</DependentUpon>
     </Compile>
@@ -538,6 +541,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SliderToolTipPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SolarSystemPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
