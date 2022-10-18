@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.InkForcePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Transformer-->
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasTransformer x:Name="Transformer" />
+    </FrameworkElement.Resources>
+
+
+    <Grid>
+        <xaml:CanvasControl x:Name="CanvasControl" />
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            <ContentControl.Content>
+                <Slider x:Name="Slider" Margin="12,4" MinWidth="220" Minimum="10" Maximum="100" Value="100" />
+            </ContentControl.Content>
+            
+            <AppBarButton x:Name="ClearButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Delete"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Clear
+                </AppBarButton.Label>
+            </AppBarButton>
+            
+        </CommandBar>
+
+    </Grid>
+
+</Page>

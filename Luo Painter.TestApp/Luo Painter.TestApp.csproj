@@ -158,6 +158,9 @@
     <Compile Include="InkBrownianPage.xaml.cs">
       <DependentUpon>InkBrownianPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InkForcePage.xaml.cs">
+      <DependentUpon>InkForcePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InkInertiaPage.xaml.cs">
       <DependentUpon>InkInertiaPage.xaml</DependentUpon>
     </Compile>
@@ -373,6 +376,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="InkBrownianPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InkForcePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
