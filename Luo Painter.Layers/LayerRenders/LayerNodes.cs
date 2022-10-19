@@ -32,6 +32,20 @@ namespace Luo_Painter.Layers
             }
             return background;
         }
+        public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine)
+        {
+            for (int i = base.Count - 1; i >= 0; i--)
+            {
+                ILayer item = base[i];
+                switch (item.Visibility)
+                {
+                    case Visibility.Visible:
+                        background = item.Render(background, id, mezzanine);
+                        break;
+                }
+            }
+            return background;
+        }
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode)
         {
             for (int i = base.Count - 1; i >= 0; i--)

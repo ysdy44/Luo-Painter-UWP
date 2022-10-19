@@ -47,7 +47,7 @@ namespace Luo_Painter.Layers.Models
                     this.Anchorss = new List<AnchorCollection>
                     (
                         from item
-                        in data.Elements("AnchorCollection") 
+                        in data.Elements("AnchorCollection")
                         select new AnchorCollection(item, resourceCreator, width, height)
                     );
                     this.Invalidate();
@@ -67,6 +67,7 @@ namespace Luo_Painter.Layers.Models
 
 
         public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.Source);
+        public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Render(background, (base.Id == id) ? mezzanine : this.Source);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Render(background, new Transform2DEffect
         {
             InterpolationMode = interpolationMode,

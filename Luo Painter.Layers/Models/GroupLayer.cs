@@ -22,6 +22,7 @@ namespace Luo_Painter.Layers.Models
 
 
         public ICanvasImage Render(ICanvasImage background) => base.Children.Render(background);
+        public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Children.Render(background, id, mezzanine);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Children.Render(background, matrix, interpolationMode);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Children.Render(background, matrix, interpolationMode, id, mezzanine);
 
