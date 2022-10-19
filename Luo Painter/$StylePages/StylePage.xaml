@@ -1,0 +1,389 @@
+﻿<Page
+    x:Class="Luo_Painter.StylePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    NavigationCacheMode="Required"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+
+
+        <!--Extension-->
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
+
+
+        <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" Background="{ThemeResource AppBackgroundMediumLight}"/>
+
+
+        <!--Body-->
+        <ScrollViewer>
+            <StackPanel Padding="14,50,14,22" Spacing="32">
+
+                <TextBlock>
+                    ListBox
+                </TextBlock>
+
+                <ListBox>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Default
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <x:String>A</x:String>
+                    <x:String>B</x:String>
+                    <x:String>C</x:String>
+                    <x:String>D</x:String>
+                </ListBox>
+
+                <ListBox Style="{StaticResource AppSegmentListBoxStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppSegmentListBoxStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <x:String>A</x:String>
+                    <x:String>B</x:String>
+                    <x:String>C</x:String>
+                    <x:String>D</x:String>
+                </ListBox>
+
+                <TextBlock>
+                    ListBox
+                </TextBlock>
+
+                <ListView Style="{StaticResource AppListBoxListViewStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppListBoxListViewStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <x:String>A</x:String>
+                    <x:String>B</x:String>
+                    <x:String>C</x:String>
+                    <x:String>D</x:String>
+                </ListView>
+
+                <ListView Style="{StaticResource AppListViewStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppListViewStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <x:String>A</x:String>
+                    <x:String>B</x:String>
+                    <x:String>C</x:String>
+                    <x:String>D</x:String>
+                </ListView>
+
+                <TextBlock>
+                    ContentDialog
+                </TextBlock>
+
+                <Button x:Name="ShowDialogButton">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppContentDialogStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    Show Dialog
+                </Button>
+
+                <TextBlock>
+                    ScrollViewer
+                </TextBlock>
+
+                <ScrollViewer Style="{StaticResource AppNoneScrollViewerStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppNoneScrollViewerStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <StackPanel Spacing="100" Orientation="Horizontal">
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer Style="{StaticResource AppHorizontalScrollViewerStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppHorizontalScrollViewerStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <StackPanel Spacing="100" Orientation="Horizontal">
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer MaxHeight="200" Background="DodgerBlue" Style="{StaticResource AppVerticalScrollViewerStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppVerticalScrollViewerStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <StackPanel Spacing="100" Orientation="Vertical">
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <TextBlock>
+                    Border
+                </TextBlock>
+
+                <Border Style="{StaticResource AppRoundedBorderStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppRoundedBorderStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>A</TextBlock>
+                        <TextBlock>B</TextBlock>
+                        <TextBlock>C</TextBlock>
+                        <TextBlock>D</TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock>
+                    ComboBox
+                </TextBlock>
+
+                <ComboBox>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Default
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <TextBlock>A</TextBlock>
+                    <TextBlock>B</TextBlock>
+                    <TextBlock>C</TextBlock>
+                    <TextBlock>D</TextBlock>
+                </ComboBox>
+
+                <TextBlock>
+                    TextBox
+                </TextBlock>
+
+                <TextBox>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppToolTipStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </TextBox>
+
+                <TextBlock>
+                    Rectangle
+                </TextBlock>
+
+                <Rectangle Style="{StaticResource AppRectangleStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppRectangleStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Rectangle>
+
+                <TextBlock>
+                    Button
+                </TextBlock>
+
+                <Button Style="{StaticResource AppButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppButtonStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    ABCD
+                </Button>
+
+                <Button Style="{StaticResource AppTextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppTextBlockButtonStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    ABCD
+                </Button>
+
+                <Button Style="{StaticResource AppBorderButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppBorderButtonStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    ABCD
+                </Button>
+
+                <Button>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Default
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    ABCD
+                </Button>
+
+                <Button Style="{StaticResource AppAccentBorderButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppAccentBorderButtonStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    ABCD
+                </Button>
+
+                <TextBlock>
+                    ToggleButton
+                </TextBlock>
+
+                <ToggleButton>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Default
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    ABCD
+                </ToggleButton>
+
+                <TextBlock>
+                    Line
+                </TextBlock>
+
+                <Line>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Default
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Line>
+
+                <TextBlock>
+                    Slider
+                </TextBlock>
+
+                <Slider Style="{StaticResource AppDefaultSliderStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppDefaultSliderStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Slider>
+                <Slider Style="{StaticResource AppInkSliderStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppInkSliderStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Slider>
+                <Slider Style="{StaticResource AppSliderStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppSliderStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                </Slider>
+
+                <TextBlock>
+                    Flyout
+                </TextBlock>
+
+                <Button>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            AppFlyoutPresenterStyle
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <Button.Flyout>
+                        <Flyout FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                            <TextBlock>
+                                ABCD
+                            </TextBlock>
+                        </Flyout>
+                    </Button.Flyout>
+                    Show Flyout
+                </Button>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        
+        <!--Head-->
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="TitleTextBlock" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}">
+                <!--Transitions-->
+                <UIElement.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
+                    </TransitionCollection>               
+                </UIElement.Transitions>
+                Luo Styler
+            </TextBlock>
+
+            <Button x:Name="BackButton" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="BackButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
+                        Go Back
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <SymbolIcon Symbol="Back"/>
+            </Button>
+            
+        </Grid>
+
+
+        <!--Dialog-->
+        <ContentDialog x:Name="ContentDialog" Style="{StaticResource AppContentDialogStyle}">
+            <ContentDialog.Title>
+                ABCD
+            </ContentDialog.Title>
+            <ContentDialog.Content>
+                ABCD
+            </ContentDialog.Content>
+            <ContentDialog.PrimaryButtonText>
+                OK
+            </ContentDialog.PrimaryButtonText>
+            <ContentDialog.SecondaryButtonText>
+                Cancel
+            </ContentDialog.SecondaryButtonText>
+        </ContentDialog>
+        
+        
+    </Grid>
+</Page>
