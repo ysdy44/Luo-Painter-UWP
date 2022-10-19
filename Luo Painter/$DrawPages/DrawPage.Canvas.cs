@@ -186,7 +186,7 @@ namespace Luo_Painter
 
                         // Mesh
                         // Layer
-                        if (this.OptionType.IsEdit() || this.BitmapLayer is null)
+                        if (this.OptionType.IsMarquees() || this.BitmapLayer is null)
                             ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                         else
                             ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));

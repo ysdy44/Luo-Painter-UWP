@@ -73,7 +73,7 @@ namespace Luo_Painter
         {
             this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
 
-            this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
+            this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
 
             this.ViewTool.Construct(this.Transformer);
         }

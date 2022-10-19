@@ -58,7 +58,7 @@ namespace Luo_Painter
                     {
                         this.PrimaryGeometryTransform();
                     }
-                    else if (this.OptionType.IsEdit())
+                    else if (this.OptionType.IsMarquees())
                     {
                         Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);

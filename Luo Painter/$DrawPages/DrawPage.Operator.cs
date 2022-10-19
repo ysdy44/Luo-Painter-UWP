@@ -84,7 +84,7 @@ namespace Luo_Painter
                     this.ToolListView.IsShow = this.StartingToolShow;
                     this.LayerListView.IsShow = this.StartingLayerShow;
                 }
-                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
+                this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
 
                 if (this.ReferenceImage is null)
                 {
@@ -131,7 +131,7 @@ namespace Luo_Painter
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.SetCanvasState(this.OptionType.IsEdit() || this.OptionType.IsEffect());
+                this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
 
                 this.ViewTool.Construct(this.Transformer);
             };
