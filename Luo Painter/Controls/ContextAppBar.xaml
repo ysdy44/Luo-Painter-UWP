@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:transformers="using:FanKit.Transformers"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
     HorizontalAlignment="Stretch"
@@ -16,327 +17,50 @@
     <FrameworkElement.Resources>
         <!--Range-->
         <luo_painter:SizeRange x:Name="SizeRange"/>
-        <!--Style-->
-        <Style TargetType="Slider">
-            <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
-            <Setter Property="Foreground" Value="{ThemeResource SliderTrackValueFill}" />
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-            <Setter Property="ManipulationMode" Value="None" />
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-            <Setter Property="FocusVisualMargin" Value="-7,0,-7,0" />
-            <Setter Property="IsFocusEngagementEnabled" Value="True" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Slider">
-                        <Grid Margin="{TemplateBinding Padding}">
-                            <Grid.Resources>
-                                <Style TargetType="Thumb" x:Key="SliderThumbStyle">
-                                    <Setter Property="BorderThickness" Value="0" />
-                                    <Setter Property="Background" Value="{ThemeResource SliderThumbBackground}" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="Thumb">
-                                                <Border                                                
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    CornerRadius="2" />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Grid.Resources>
+        <luo_painter:ScaleRange x:Name="ScaleRange"/>
+        <!--Radian-->
+        <Storyboard x:Name="RadianStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="RadianSlider" EnableDependentAnimation="True">
+                <SplineDoubleKeyFrame Value="0" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--Scale-->
+        <Storyboard x:Name="ScaleStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="ScaleSlider" EnableDependentAnimation="True">
+                <SplineDoubleKeyFrame Value="23" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--Flyout-->
+        <Flyout x:Name="ViewFlyout">
+            <StackPanel Spacing="4">
 
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
+                <Button x:Name="RadianClearButton" CornerRadius="4" Height="38" BorderThickness="1" >
+                    <StackPanel Spacing="12" Orientation="Horizontal">
+                        <luo_painter:ElementIcon Type="ResetRadian"/>
+                        <TextBlock x:Name="ScaleClearTextBlock" VerticalAlignment="Center" >         
+                            Reset the radian of rotation
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
 
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalTrackRect" Storyboard.TargetProperty="Fill">
-                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalTrackRect" Storyboard.TargetProperty="Fill">
-                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>-->
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalThumb" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalThumb" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderContainerBackgroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalDecreaseRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackValueFillPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalDecreaseRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackValueFillPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
+                <Button x:Name="ScaleClearButton" CornerRadius="4" Height="38" BorderThickness="1" >
+                    <StackPanel Spacing="12" Orientation="Horizontal">
+                        <luo_painter:ElementIcon Type="ResetScale"/>
+                        <TextBlock x:Name="RadianClearTextBlock" VerticalAlignment="Center" >
+                            Reset scale
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
 
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderHeaderForegroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalDecreaseRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackValueFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalTrackRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalDecreaseRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackValueFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalTrackRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalThumb" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalThumb" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TopTickBar" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTickBarFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BottomTickBar" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTickBarFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LeftTickBar" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTickBarFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RightTickBar" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTickBarFillDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderContainerBackgroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalTrackRect" Storyboard.TargetProperty="Fill">
-                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalTrackRect" Storyboard.TargetProperty="Fill">
-                                          <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackFillPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>-->
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalThumb" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalThumb" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderThumbBackgroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderContainerBackgroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalDecreaseRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackValueFillPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalDecreaseRect" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SliderTrackValueFillPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                </VisualStateGroup>
-
-                                <VisualStateGroup x:Name="FocusEngagementStates">
-                                    <VisualState x:Name="FocusDisengaged" />
-                                    <VisualState x:Name="FocusEngagedHorizontal">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="(Control.IsTemplateFocusTarget)">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalThumb" Storyboard.TargetProperty="(Control.IsTemplateFocusTarget)">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="FocusEngagedVertical">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SliderContainer" Storyboard.TargetProperty="(Control.IsTemplateFocusTarget)">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalThumb" Storyboard.TargetProperty="(Control.IsTemplateFocusTarget)">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="True" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-
-                            </VisualStateManager.VisualStateGroups>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="6" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <ContentPresenter 
-                                x:Name="HeaderContentPresenter"
-                                Grid.Column="2"
-                                Content="{TemplateBinding Header}"
-                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                FontWeight="{ThemeResource SliderHeaderThemeFontWeight}"
-                                Foreground="{ThemeResource SliderHeaderForeground}"
-                                TextWrapping="Wrap"
-                                Visibility="Collapsed"
-                                x:DeferLoadStrategy="Lazy"/>
-                            <Grid 
-                                x:Name="SliderContainer"
-                                Grid.Column="0"
-                                Background="{ThemeResource SliderContainerBackground}"
-                                Control.IsTemplateFocusTarget="True">
-                                <Grid x:Name="HorizontalTemplate" MinHeight="{ThemeResource SliderHorizontalHeight}">
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <!--<Grid.RowDefinitions>
-                                        <RowDefinition Height="{ThemeResource SliderPreContentMargin}" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="{ThemeResource SliderPostContentMargin}" />
-                                    </Grid.RowDefinitions>-->
-                                    <Rectangle
-                                        x:Name="HorizontalTrackRect"
-                                        Fill="{TemplateBinding Background}"
-                                        StrokeThickness="1"
-                                        Height="28"
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="3" />
-                                    <Rectangle x:Name="HorizontalDecreaseRect" Height="28" Fill="{TemplateBinding Foreground}" Grid.Row="1" />
-                                    <TickBar 
-                                        x:Name="TopTickBar"
-                                        Visibility="Collapsed"
-                                        Fill="{ThemeResource SliderTickBarFill}"
-                                        Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                        VerticalAlignment="Bottom"
-                                        Margin="0,0,0,0"
-                                        Grid.ColumnSpan="3" />
-                                    <TickBar
-                                        x:Name="HorizontalInlineTickBar"                          
-                                        Visibility="Collapsed"                            
-                                        Fill="{ThemeResource SliderInlineTickBarFill}"                            
-                                        Height="28"                                
-                                        Grid.Row="1"                                  
-                                        Grid.ColumnSpan="3" />
-                                    <TickBar
-                                        x:Name="BottomTickBar"
-                                        Visibility="Collapsed"
-                                        Fill="{ThemeResource SliderTickBarFill}"
-                                        Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                        VerticalAlignment="Top"
-                                        Margin="0,0,0,0"
-                                        Grid.Row="2"
-                                        Grid.ColumnSpan="3" />
-                                    <Thumb 
-                                        x:Name="HorizontalThumb"
-                                        Style="{StaticResource SliderThumbStyle}"
-                                        DataContext="{TemplateBinding Value}"
-                                        Height="30"
-                                        Width="8"
-                                        Grid.Row="0"
-                                        Grid.RowSpan="3"
-                                        Grid.Column="1"
-                                        FocusVisualMargin="-14,-6,-14,-6"
-                                        AutomationProperties.AccessibilityView="Raw" >
-
-                                        <!--ToolTip-->
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip RequestedTheme="Dark" Width="124" Height="130" Placement="Top" Padding="0" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
-                                                <Grid CornerRadius="4" Padding="2" Background="{ThemeResource SystemColorControlAccentBrush}">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
-                                                    <FontIcon Glyph="&#xEC14;" FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding BorderBrush}">
-                                                        <!--Preview-->
-                                                    </FontIcon>
-                                                    <ContentControl Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Tag}">
-                                                        <!--Value-->
-                                                    </ContentControl>
-                                                </Grid>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-
-                                    </Thumb>
-                                </Grid>
-                                <Grid x:Name="VerticalTemplate" MinWidth="{ThemeResource SliderVerticalWidth}" Visibility="Collapsed">
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <!--<Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="{ThemeResource SliderPreContentMargin}" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="{ThemeResource SliderPostContentMargin}" />
-                                    </Grid.ColumnDefinitions>-->
-                                    <Rectangle 
-                                        x:Name="VerticalTrackRect"
-                                        Fill="{TemplateBinding Background}"
-                                        Width="28"
-                                        Grid.Column="1"
-                                        Grid.RowSpan="3" />
-                                    <Rectangle 
-                                        x:Name="VerticalDecreaseRect"
-                                        Fill="{TemplateBinding Foreground}"
-                                        Width="28"
-                                        Grid.Column="1"
-                                        Grid.Row="2" />
-                                    <TickBar
-                                        x:Name="LeftTickBar"
-                                        Visibility="Collapsed"
-                                        Fill="{ThemeResource SliderTickBarFill}"
-                                        Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                        HorizontalAlignment="Right"
-                                        Margin="0,0,0,0"
-                                        Grid.RowSpan="3" />
-                                    <TickBar 
-                                        x:Name="VerticalInlineTickBar"
-                                        Visibility="Collapsed"
-                                        Fill="{ThemeResource SliderInlineTickBarFill}"
-                                        Width="28"
-                                        Grid.Column="1"
-                                        Grid.RowSpan="3" />
-                                    <TickBar
-                                        x:Name="RightTickBar"
-                                        Visibility="Collapsed"
-                                        Fill="{ThemeResource SliderTickBarFill}"
-                                        Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                        HorizontalAlignment="Left"
-                                        Margin="0,0,0,0"
-                                        Grid.Column="2"
-                                        Grid.RowSpan="3" />
-                                    <Thumb
-                                        x:Name="VerticalThumb"
-                                        Style="{StaticResource SliderThumbStyle}"
-                                        DataContext="{TemplateBinding Value}"
-                                        Width="30"
-                                        Height="8"
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="3"
-                                        FocusVisualMargin="-6,-14,-6,-14"
-                                        AutomationProperties.AccessibilityView="Raw" />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                <transformers:RemoteControl 
+                    x:Name="RemoteControlCore"
+                    BorderThickness="1"               
+                    BorderBrush="{ThemeResource AppStroke}"               
+                    Background="{ThemeResource SystemAltLowColor}"             
+                    Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"              
+                    />
+            </StackPanel>
+        </Flyout>
     </FrameworkElement.Resources>
 
     <Grid
@@ -396,6 +120,12 @@
                         <Setter Target="BlurSlider.Width" Value="Auto"/>
 
                         <!--Tool-->
+                        <Setter Target="SizeSlider.Width" Value="Auto"/>
+                        <Setter Target="OpacitySlider.Width" Value="Auto"/>
+
+                        <Setter Target="RadianSlider.Width" Value="Auto"/>
+                        <Setter Target="ScaleSlider.Width" Value="Auto"/>
+
                         <Setter Target="StarPanel.Orientation" Value="Vertical"/>
                         <Setter Target="StarPointsSlider.Width" Value="Auto"/>
                         <Setter Target="StarInnerRadiusSlider.Width" Value="Auto"/>
@@ -494,8 +224,6 @@
                     <VisualState.Setters>
                         <Setter Target="Transform.X" Value="0"/>
                         <Setter Target="Transform.Y" Value="0"/>
-
-                        <Setter Target="SwitchPresenter1.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -504,12 +232,7 @@
                     <VisualState.Setters>
                         <Setter Target="Transform.X" Value="0"/>
                         <Setter Target="Transform.Y" Value="0"/>
-
-                        <Setter Target="PrimaryButton.Visibility" Value="Visible"/>
-                        <Setter Target="SecondaryButton.Visibility" Value="Visible"/>
-
-                        <Setter Target="SwitchPresenter2.Visibility" Value="Visible"/>
-                        <Setter Target="SwitchPresenter4.Visibility" Value="Visible"/>
+                        <Setter Target="DragStackPanel.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -520,11 +243,7 @@
                         <Setter Target="Transform.Y" Value="0"/>
 
                         <Setter Target="Thumb.Visibility" Value="Visible"/>
-
                         <Setter Target="DragStackPanel.Visibility" Value="Visible"/>
-
-                        <Setter Target="SwitchPresenter3.Visibility" Value="Visible"/>
-                        <Setter Target="SwitchPresenter4.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -545,98 +264,6 @@
             BorderBrush="{ThemeResource AppStroke}" 
             Background="{ThemeResource AppAcrylicElementBrush}" 
             />
-
-        <!--SwitchPresenter-->
-        <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter1" Visibility="Collapsed">
-            <luo_painter:OptionCase Value="Marquee">
-                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <luo_painter:ElementItem Type="New"/>
-                    <luo_painter:ElementItem Type="Union"/>
-                    <luo_painter:ElementItem Type="Exclude"/>
-                    <luo_painter:ElementItem Type="Simultaneously"/>
-                </ListBox>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Selection">
-                <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <luo_painter:ElementItem Type="Add"/>
-                    <luo_painter:ElementItem Type="Subtract"/>
-                </ListBox>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Paint">
-                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!--Size-->
-                    <Slider
-                        x:Name="SizeSlider"
-                        Width="300"                
-                        SmallChange="1000"                              
-                        StepFrequency="1000"                                 
-                        FontSize="{x:Bind FontSizeConverter(SizeSlider.Value), Mode=OneWay}"             
-                        Tag="{x:Bind SizeToStringConverter(SizeSlider.Value), Mode=OneWay}"             
-                        >
-                        <Control.BorderBrush>
-                            <SolidColorBrush Color="White" Opacity="{x:Bind OpacityConverter(OpacitySlider.Value), Mode=OneWay}"/>
-                        </Control.BorderBrush>
-                    </Slider>
-
-                    <!--Opacity-->
-                    <Slider                 
-                        x:Name="OpacitySlider"      
-                        Grid.Column="1"
-                        Width="300"                 
-                        FontSize="{x:Bind FontSizeConverter(SizeSlider.Value), Mode=OneWay}"                   
-                        Tag="{x:Bind OpacityToStringConverter(OpacitySlider.Value), Mode=OneWay}"         
-                        >
-                        <Control.BorderBrush>
-                            <SolidColorBrush Color="White" Opacity="{x:Bind OpacityConverter(OpacitySlider.Value), Mode=OneWay}"/>
-                        </Control.BorderBrush>
-                    </Slider>
-
-                    <TextBlock x:Name="SizeTextBlock" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                        Size
-                    </TextBlock>
-
-                    <TextBlock x:Name="OpacityTextBlock" Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                        Opacity
-                    </TextBlock>
-
-                </Grid>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Brush">
-                <ListBox x:Name="BrushComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <TextBlock>Color</TextBlock>
-                    <TextBlock>LinearGradient</TextBlock>
-                    <TextBlock>RadialGradient</TextBlock>
-                    <TextBlock>EllipticalGradient</TextBlock>
-                </ListBox>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Transparency">
-                <ListBox x:Name="TransparencyComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <TextBlock>LinearGradient</TextBlock>
-                    <TextBlock>RadialGradient</TextBlock>
-                    <TextBlock>EllipticalGradient</TextBlock>
-                </ListBox>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Pen">
-                <Grid Margin="12,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <ListBox x:Name="PenComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                        <TextBlock>Curve</TextBlock>
-                        <TextBlock>Line</TextBlock>
-                    </ListBox>
-                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" Width="70" Height="40" VerticalAlignment="Center" BorderThickness="1" >
-                        Close
-                    </Button>
-                </Grid>
-            </luo_painter:OptionCase>
-        </luo_painter:OptionSwitchPresenter>
 
         <!--Thumb-->
         <Thumb x:Name="Thumb" Visibility="Collapsed" Height="50" VerticalAlignment="Top" >
@@ -705,13 +332,24 @@
             </Thumb.Template>
         </Thumb>
 
+
         <!--SwitchPresenter-->
-        <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter2" Visibility="Collapsed" Margin="74,0" Height="50" VerticalAlignment="Top" >
+        <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter" MinHeight="50" >
+
+
             <luo_painter:OptionCase Value="CropCanvas">
-                <Border Style="{StaticResource AppRoundedBorderStyle}" >
-                    <Slider x:Name="CropCanvasSlider" 
-                            Minimum="-180" Maximum="180" Value="0" TickFrequency="12" TickPlacement="Outside"                                  
-                            Background="{StaticResource SystemControlDisabledBaseLowBrush}" Foreground="Transparent" VerticalAlignment="Center">
+                <Border Margin="10,0,160,0" Style="{StaticResource AppRoundedBorderStyle}" >
+                    <Slider 
+                        x:Name="CropCanvasSlider" 
+                        Minimum="-180" 
+                        Maximum="180" 
+                        Value="0" 
+                        TickFrequency="12" 
+                        TickPlacement="Outside"                        
+                        Background="{StaticResource SystemControlDisabledBaseLowBrush}" 
+                        Foreground="Transparent" 
+                        VerticalAlignment="Center"
+                        >
                         <FrameworkElement.Resources>
                             <StaticResource x:Key="SliderThumbBackground" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
 
@@ -727,97 +365,1259 @@
                 </Border>
             </luo_painter:OptionCase>
 
-            <luo_painter:OptionCase Value="LuminanceToAlpha">
-                <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <ListBoxItem>Normal</ListBoxItem>
-                    <ListBoxItem>White Paper</ListBoxItem>
-                    <ListBoxItem>Black Paper</ListBoxItem>
-                </ListBox>
+
+            <luo_painter:OptionCase Value="Feather">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Feather" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Feather
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="FeatherButton"
+                                Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Grow">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Grow" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Grow
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="GrowButton" 
+                                Content="{x:Bind GrowSlider.Value, Mode=OneWay}"
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Shrink">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Shrink" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Shrink
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="ShrinkButton" 
+                                Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+
+
             <luo_painter:OptionCase Value="Transform">
-                <ListBox x:Name="TransformComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <ListBoxItem>Move</ListBoxItem>
-                    <ListBoxItem>Transform</ListBoxItem>
-                    <ListBoxItem>Free Transform</ListBoxItem>
-                </ListBox>
+                <ComboBox x:Name="TransformComboBox" Margin="10,8,160,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <ComboBoxItem>Move</ComboBoxItem>
+                    <ComboBoxItem>Transform</ComboBoxItem>
+                    <ComboBoxItem>Free Transform</ComboBoxItem>
+                </ComboBox>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="DisplacementLiquefaction">
-                <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                    <ListBoxItem>Push</ListBoxItem>
-                    <ListBoxItem>Pinch</ListBoxItem>
-                    <ListBoxItem>Expand</ListBoxItem>
-                    <ListBoxItem>Twirl Left</ListBoxItem>
-                    <ListBoxItem>Twirl Right</ListBoxItem>
-                    <ListBoxItem>Reset</ListBoxItem>
+                <StackPanel>
+                    <ComboBox x:Name="DisplacementLiquefactionModeComboBox" Margin="10,8,160,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <ComboBoxItem>Push</ComboBoxItem>
+                        <ComboBoxItem>Pinch</ComboBoxItem>
+                        <ComboBoxItem>Expand</ComboBoxItem>
+                        <ComboBoxItem>Twirl Left</ComboBoxItem>
+                        <ComboBoxItem>Twirl Right</ComboBoxItem>
+                        <ComboBoxItem>Reset</ComboBoxItem>
+                    </ComboBox>
+                    <StackPanel x:Name="DisplacementLiquefactionPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Slider x:Name="DisplacementLiquefactionSizeSlider" Width="260" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Size
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="DisplacementLiquefactionSizeButton" 
+                                    Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}"           
+                             
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"                             
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}"
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="12" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Pressure
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="DisplacementLiquefactionPressureButton"                            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"                               
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock><Run Text="{x:Bind DisplacementLiquefactionPressureSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="GradientMapping">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GradientMapping" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="26,4" Width="740" Height="50" HorizontalAlignment="Stretch">
+                        <elements:GradientStopSelector.ItemStyle>
+                            <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                                <Setter Property="Width" Value="50"/>
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="Padding" Value="3"/>
+                            </Style>
+                        </elements:GradientStopSelector.ItemStyle>
+                        <elements:GradientStopSelector.ItemTemplate>
+                            <DataTemplate x:DataType="GradientStop">
+                                <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                            <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                    <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+                            </DataTemplate>
+                        </elements:GradientStopSelector.ItemTemplate>
+                    </elements:GradientStopSelectorWithUI>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="RippleEffect">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="RippleEffect" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
+                        <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Frequency
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="FrequencyButton" 
+                                    Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1"
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Phase
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button 
+                                    x:Name="PhaseButton"
+                                    Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"                                                
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"                            
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Amplitude
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="AmplitudeButton"
+                                    Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"                           
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"                              
+                                    BorderThickness="1"
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+            </luo_painter:OptionCase>
+
+
+            <luo_painter:OptionCase Value="Exposure">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Exposure" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Exposure
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="ExposureButton" 
+                                Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Brightness">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Brightness" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Brightness
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="BrightnessButton" 
+                                Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1"
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Saturation">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Saturation" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Gray" Offset="0"/>
+                                <GradientStop Color="#00A5FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Saturation
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="SaturationButton" 
+                                Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="HueRotation">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="HueRotation" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#FFCE3B" Offset="0"/>
+                                <GradientStop Color="#72C075" Offset="0.125"/>
+                                <GradientStop Color="#46A7F6" Offset="0.25"/>
+                                <GradientStop Color="#784BB0" Offset="0.375"/>
+                                <GradientStop Color="#A336B5" Offset="0.5"/>
+                                <GradientStop Color="#EB2E6E" Offset="0.625"/>
+                                <GradientStop Color="#EC5449" Offset="0.75"/>
+                                <GradientStop Color="#FFA827" Offset="0.875"/>
+                                <GradientStop Color="#FFCE3B" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            HueRotation
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="HueRotationButton" 
+                                Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Contrast">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Contrast" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#888888" Offset="0"/>
+
+                                <GradientStop Color="#6D6D6D" Offset="0.4"/>
+                                <GradientStop Color="#909090" Offset="0.5"/>
+
+                                <GradientStop Color="#353535" Offset="0.6"/>
+                                <GradientStop Color="#C9C9C9" Offset="0.7"/>
+
+                                <GradientStop Color="#000000" Offset="0.8"/>
+                                <GradientStop Color="#FFFFFF" Offset="1"/>
+
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Contrast
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="ContrastButton" 
+                                Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Temperature">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="Temperature" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
+                        <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#3EADF5" Offset="0"/>
+                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                                    <GradientStop Color="#F99652" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <FrameworkElement.Tag>
+                                Temperature
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="TemperatureButton" 
+                                    Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}"
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#9680C9" Offset="0"/>
+                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                                    <GradientStop Color="#80763E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <FrameworkElement.Tag>
+                                Tint
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button 
+                                    x:Name="TintButton" 
+                                    Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1"
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="HighlightsAndShadows">
+                <StackPanel>
+                    <luo_painter:OptionItem Type="HighlightsAndShadows" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
+                        <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
+                            <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <Slider.Background>
+                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="Gray" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Slider.Background>
+                                <FrameworkElement.Tag>
+                                    Shadows
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button
+                                        x:Name="ShadowsButton"
+                                        Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
+                                        Padding="4,0"
+                                        MinWidth="70"
+                                        Height="28"
+                                        BorderThickness="1" 
+                                        BorderBrush="{ThemeResource AppStroke}" 
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                            <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <Slider.Background>
+                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="Gray" Offset="0"/>
+                                        <GradientStop Color="White" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Slider.Background>
+                                <FrameworkElement.Tag>
+                                    Highlights
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button
+                                        x:Name="HighlightsButton"
+                                        Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
+                                        Padding="4,0" 
+                                        MinWidth="70"
+                                        Height="28"
+                                        BorderThickness="1" 
+                                        BorderBrush="{ThemeResource AppStroke}" 
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                        </StackPanel>
+                        <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
+                            <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <FrameworkElement.Tag>
+                                    Clarity
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button 
+                                        x:Name="ClarityButton" 
+                                        Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
+                                        Padding="4,0" 
+                                        MinWidth="70" 
+                                        Height="28"
+                                        BorderThickness="1" 
+                                        BorderBrush="{ThemeResource AppStroke}"
+                                        Background="{ThemeResource SystemAltLowColor}"
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                            <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
+                                <FrameworkElement.Tag>
+                                    Blur
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button 
+                                        x:Name="BlurButton" 
+                                        Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
+                                        Padding="4,0" 
+                                        MinWidth="70" 
+                                        Height="28"
+                                        BorderThickness="1" 
+                                        BorderBrush="{ThemeResource AppStroke}"
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </luo_painter:OptionCase>
+
+
+            <luo_painter:OptionCase Value="LuminanceToAlpha">
+                <ComboBox x:Name="LuminanceToAlphaComboBox" Margin="10,8,160,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <ComboBoxItem>Normal</ComboBoxItem>
+                    <ComboBoxItem>White Paper</ComboBoxItem>
+                    <ComboBoxItem>Black Paper</ComboBoxItem>
+                </ComboBox>
+            </luo_painter:OptionCase>
+
+
+            <luo_painter:OptionCase Value="Marquee">
+                <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                    <luo_painter:ElementItem Type="New"/>
+                    <luo_painter:ElementItem Type="Union"/>
+                    <luo_painter:ElementItem Type="Exclude"/>
+                    <luo_painter:ElementItem Type="Simultaneously"/>
                 </ListBox>
             </luo_painter:OptionCase>
-        </luo_painter:OptionSwitchPresenter>
+            <luo_painter:OptionCase Value="Selection">
+                <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                    <luo_painter:ElementItem Type="Add"/>
+                    <luo_painter:ElementItem Type="Subtract"/>
+                </ListBox>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Paint">
+                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
 
-        <!--Button-->
-        <Button x:Name="PrimaryButton" Visibility="Collapsed" Width="70" Height="40" Margin="2,6" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
-            <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
-        </Button>
-        <Button x:Name="SecondaryButton" Visibility="Collapsed" Width="70" Height="40" Margin="2,6" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
-            <SymbolIcon Symbol="{x:Bind FlowDirectionToSymbolConverter(FlowDirection), Mode=OneWay}"/>
-        </Button>
+                    <!--Size-->
+                    <Slider
+                        x:Name="SizeSlider"
+                        Width="300"                
+                        SmallChange="1000"                              
+                        StepFrequency="1000"                                 
+                        FontSize="{x:Bind FontSizeConverter(SizeSlider.Value), Mode=OneWay}"             
+                        Tag="{x:Bind SizeToStringConverter(SizeSlider.Value), Mode=OneWay}"        
+                        Style="{StaticResource AppInkSliderStyle}"
+                        >
+                        <Control.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="{x:Bind OpacityConverter(OpacitySlider.Value), Mode=OneWay}"/>
+                        </Control.BorderBrush>
+                        <Slider.Header>
+                            Size
+                        </Slider.Header>
+                    </Slider>
 
-        <!--SwitchPresenter-->
-        <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter3" IsHitTestVisible="False" Visibility="Collapsed" Padding="6,2" Height="50" VerticalAlignment="Top" VerticalContentAlignment="Center">
-            <luo_painter:OptionItemIconCase Type="Feather"/>
-            <luo_painter:OptionItemIconCase Type="Grow"/>
-            <luo_painter:OptionItemIconCase Type="Shrink"/>
-            <luo_painter:OptionItemIconCase Type="Exposure"/>
-            <luo_painter:OptionItemIconCase Type="Brightness"/>
-            <luo_painter:OptionItemIconCase Type="Saturation"/>
-            <luo_painter:OptionItemIconCase Type="HueRotation"/>
-            <luo_painter:OptionItemIconCase Type="Contrast"/>
-            <luo_painter:OptionItemIconCase Type="Temperature"/>
-            <luo_painter:OptionItemIconCase Type="HighlightsAndShadows"/>
-            <luo_painter:OptionItemIconCase Type="GradientMapping"/>
-            <luo_painter:OptionItemIconCase Type="RippleEffect"/>
+                    <!--Opacity-->
+                    <Slider                 
+                        x:Name="OpacitySlider"      
+                        Grid.Column="2"
+                        Width="300"                 
+                        FontSize="{x:Bind FontSizeConverter(SizeSlider.Value), Mode=OneWay}"                   
+                        Tag="{x:Bind OpacityToStringConverter(OpacitySlider.Value), Mode=OneWay}"        
+                        Style="{StaticResource AppInkSliderStyle}" 
+                        >
+                        <Control.BorderBrush>
+                            <SolidColorBrush Color="White" Opacity="{x:Bind OpacityConverter(OpacitySlider.Value), Mode=OneWay}"/>
+                        </Control.BorderBrush>
+                        <Slider.Header>
+                            Opacity
+                        </Slider.Header>
+                    </Slider>
+
+                </Grid>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="View">
+                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Radian-->
+                    <Slider
+                        x:Name="RadianSlider"
+                        Width="300"                
+                        Value="0" 
+                        Minimum="-180" 
+                        Maximum="180" 
+                        Style="{StaticResource AppDefaultSliderStyle}"     
+                        >
+                        <Slider.Header>
+                            Radian
+                        </Slider.Header>
+                    </Slider>
+
+                    <!--Scale-->
+                    <Slider                 
+                        x:Name="ScaleSlider"      
+                        Grid.Column="1"
+                        Width="300"                 
+                        Style="{StaticResource AppDefaultSliderStyle}"    
+                        >
+                        <Slider.Header>
+                            Scale
+                        </Slider.Header>
+                    </Slider>
+                </Grid>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Brush">
+                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="BrushComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                        <ComboBoxItem>Color</ComboBoxItem>
+                        <ComboBoxItem>LinearGradient</ComboBoxItem>
+                        <ComboBoxItem>RadialGradient</ComboBoxItem>
+                        <ComboBoxItem>EllipticalGradient</ComboBoxItem>
+                    </ComboBox>
+                    <ToggleButton x:Name="BrushOpaqueButton" Grid.Column="1" >
+                        Opaque
+                    </ToggleButton>
+                    <ToggleButton x:Name="BrushReverseButton" Grid.Column="2" >
+                        Reverse
+                    </ToggleButton>
+                </Grid>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Transparency">
+                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="TransparencyComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                        <ComboBoxItem>LinearGradient</ComboBoxItem>
+                        <ComboBoxItem>RadialGradient</ComboBoxItem>
+                        <ComboBoxItem>EllipticalGradient</ComboBoxItem>
+                    </ComboBox>
+                    <ToggleButton x:Name="TransparencyReverseButton" Grid.Column="1" >
+                        Reverse
+                    </ToggleButton>
+                </Grid>
+            </luo_painter:OptionCase>
+            <luo_painter:OptionCase Value="Pen">
+                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="PenComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                        <ComboBoxItem>Curve</ComboBoxItem>
+                        <ComboBoxItem>Line</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" BorderThickness="1" >
+                        Close
+                    </Button>
+                </Grid>
+            </luo_painter:OptionCase>
+
+
             <luo_painter:OptionCase Value="GeometryRectangleTransform">
-                <luo_painter:OptionItemIcon Type="GeometryRectangle"/>
+                <luo_painter:OptionItem Type="GeometryRectangle" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryEllipseTransform">
-                <luo_painter:OptionItemIcon Type="GeometryEllipse"/>
+                <luo_painter:OptionItem Type="GeometryEllipse" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryRoundRectTransform">
-                <luo_painter:OptionItemIcon Type="GeometryRoundRect"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryRoundRect" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Corner
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="RoundRectCornerButton" 
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock><Run Text="{x:Bind RoundRectCornerSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryTriangleTransform">
-                <luo_painter:OptionItemIcon Type="GeometryTriangle"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryTriangle" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Center Point
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="TriangleCenterButton" 
+                                Padding="4,0"
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock><Run Text="{x:Bind TriangleCenterSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryDiamondTransform">
-                <luo_painter:OptionItemIcon Type="GeometryDiamond"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryDiamond" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Mid Point
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="DiamondMidButton" 
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock><Run Text="{x:Bind DiamondMidSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryPentagonTransform">
-                <luo_painter:OptionItemIcon Type="GeometryPentagon"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryPentagon" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Points
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="PentagonPointsButton" 
+                                Content="{x:Bind PentagonPointsSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryStarTransform">
-                <luo_painter:OptionItemIcon Type="GeometryStar"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryStar" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="StarPanel" Orientation="Horizontal" >
+                        <Slider x:Name="StarPointsSlider" Width="260" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Points
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button 
+                                    x:Name="StarPointsButton"
+                                    Content="{x:Bind StarPointsSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="StarInnerRadiusSlider" Width="260" Value="40" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Inner Radius
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="StarInnerRadiusButton" 
+                                    Content="{x:Bind StarInnerRadiusSlider.Value, Mode=OneWay}"                             
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"                                
+                                    BorderThickness="1"
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}"
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryDountTransform">
-                <luo_painter:OptionItemIcon Type="GeometryDount"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryDount" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Hole Radius
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="DountHoleRadiusButton" 
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1"
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock><Run Text="{x:Bind DountHoleRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryCogTransform">
-                <luo_painter:OptionItemIcon Type="GeometryCog"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryCog" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="CogPanel" >
+                        <StackPanel x:Name="CogPanel1" Orientation="Horizontal" >
+                            <Slider x:Name="CogCountSlider" Width="260" Value="8" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
+                                <FrameworkElement.Tag>
+                                    Count
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button 
+                                        x:Name="CogCountButton" 
+                                        Content="{x:Bind CogCountSlider.Value, Mode=OneWay}"            
+                                        Padding="4,0" 
+                                        MinWidth="70" 
+                                        Height="28"
+                                        BorderThickness="1"
+                                        BorderBrush="{ThemeResource AppStroke}"
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                            <Slider x:Name="CogInnerRadiusSlider" Width="260" Value="70" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <FrameworkElement.Tag>
+                                    Inner Radius
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button 
+                                        x:Name="CogInnerRadiusButton" 
+                                        Padding="4,0" 
+                                        MinWidth="70"
+                                        Height="28"
+                                        BorderThickness="1"
+                                        BorderBrush="{ThemeResource AppStroke}" 
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                        <TextBlock><Run Text="{x:Bind CogInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                        </StackPanel>
+                        <StackPanel x:Name="CogPanel2" Orientation="Horizontal" >
+                            <Slider x:Name="CogToothSlider" Width="260" Value="30" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <FrameworkElement.Tag>
+                                    Tooth
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button 
+                                        x:Name="CogToothButton" 
+                                        Padding="4,0" 
+                                        MinWidth="70" 
+                                        Height="28"
+                                        BorderThickness="1"
+                                        BorderBrush="{ThemeResource AppStroke}" 
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                        <TextBlock><Run Text="{x:Bind CogToothSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                            <Slider x:Name="CogNotchSlider" Width="260" Value="60" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                <FrameworkElement.Tag>
+                                    Notch
+                                </FrameworkElement.Tag>
+                                <Slider.Header>
+                                    <Button 
+                                        x:Name="CogNotchButton" 
+                                        Padding="4,0" 
+                                        MinWidth="70" 
+                                        Height="28"
+                                        BorderThickness="1" 
+                                        BorderBrush="{ThemeResource AppStroke}"
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        >
+                                        <Button.Flyout>
+                                            <Flyout>
+
+                                            </Flyout>
+                                        </Button.Flyout>
+                                        <TextBlock><Run Text="{x:Bind CogNotchSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                    </Button>
+                                </Slider.Header>
+                            </Slider>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryPieTransform">
-                <luo_painter:OptionItemIcon Type="GeometryPie"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryPie" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Sweep Angle
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="PieSweepAngleButton" 
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock><Run Text="{x:Bind PieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryCookieTransform">
-                <luo_painter:OptionItemIcon Type="GeometryCookie"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryCookie" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="CookiePanel" Orientation="Horizontal" >
+                        <Slider x:Name="CookieInnerRadiusSlider" Width="260" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Inner Radius
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="CookieInnerRadiusButton"                               
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock><Run Text="{x:Bind CookieInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <Slider x:Name="CookieSweepAngleSlider" Width="260" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Sweep Angle
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button 
+                                    x:Name="CookieSweepAngleButton" 
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock><Run Text="{x:Bind CookieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                    </StackPanel>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryArrowTransform">
-                <luo_painter:OptionItemIcon Type="GeometryArrow"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryArrow" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <StackPanel>
+                        <Slider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <FrameworkElement.Tag>
+                                Width
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button 
+                                    x:Name="ArrowWidthButton" 
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}" 
+                                    Background="{ThemeResource SystemAltLowColor}" 
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <TextBlock><Run Text="{x:Bind ArrowWidthSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="50" Padding="8,0" >
+                            <TextBlock x:Name="ArrowLeftTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                Left Tail
+                            </TextBlock>
+                            <ComboBox x:Name="ArrowLeftTailComboBox" SelectedIndex="0" >
+                                <ComboBoxItem>None</ComboBoxItem>
+                                <ComboBoxItem>Arrow</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock x:Name="ArrowRightTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                Right Tail
+                            </TextBlock>
+                            <ComboBox x:Name="ArrowRightTailComboBox" SelectedIndex="1" >
+                                <ComboBoxItem>None</ComboBoxItem>
+                                <ComboBoxItem>Arrow</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryCapsuleTransform">
-                <luo_painter:OptionItemIcon Type="GeometryCapsule"/>
+                <luo_painter:OptionItem Type="GeometryCapsule" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
             </luo_painter:OptionCase>
             <luo_painter:OptionCase Value="GeometryHeartTransform">
-                <luo_painter:OptionItemIcon Type="GeometryHeart"/>
+                <StackPanel>
+                    <luo_painter:OptionItem Type="GeometryHeart" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
+                    <Slider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                        <FrameworkElement.Tag>
+                            Spread
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                x:Name="HeartSpreadButton" 
+                                Content="{x:Bind HeartSpreadSlider.Value, Mode=OneWay}"       
+                                Padding="4,0"
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </StackPanel>
             </luo_painter:OptionCase>
+
+
         </luo_painter:OptionSwitchPresenter>
+
 
         <!--Button-->
         <StackPanel x:Name="DragStackPanel" Visibility="Collapsed" Spacing="6" Orientation="Horizontal" Margin="6,0" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" >
@@ -829,791 +1629,7 @@
             </Button>
         </StackPanel>
 
-        <!--SwitchPresenter-->
-        <luo_painter:OptionSwitchPresenter x:Name="SwitchPresenter4" Visibility="Collapsed" Margin="0,50,0,0" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource SystemControlBackgroundAltMediumLowBrush}">
-            <luo_painter:OptionCase Value="Feather">
-                <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Feather
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="FeatherButton" Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Grow">
-                <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Grow
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="GrowButton" Content="{x:Bind GrowSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Shrink">
-                <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Shrink
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="ShrinkButton" Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Exposure">
-                <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="Black" Offset="0"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <FrameworkElement.Tag>
-                        Exposure
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="ExposureButton" Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Brightness">
-                <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="Black" Offset="0"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <FrameworkElement.Tag>
-                        Brightness
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="BrightnessButton" Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Saturation">
-                <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="Gray" Offset="0"/>
-                            <GradientStop Color="#00A5FF" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <FrameworkElement.Tag>
-                        Saturation
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="SaturationButton" Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="HueRotation">
-                <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="#FFCE3B" Offset="0"/>
-                            <GradientStop Color="#72C075" Offset="0.125"/>
-                            <GradientStop Color="#46A7F6" Offset="0.25"/>
-                            <GradientStop Color="#784BB0" Offset="0.375"/>
-                            <GradientStop Color="#A336B5" Offset="0.5"/>
-                            <GradientStop Color="#EB2E6E" Offset="0.625"/>
-                            <GradientStop Color="#EC5449" Offset="0.75"/>
-                            <GradientStop Color="#FFA827" Offset="0.875"/>
-                            <GradientStop Color="#FFCE3B" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <FrameworkElement.Tag>
-                        HueRotation
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="HueRotationButton" Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Contrast">
-                <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <Slider.Background>
-                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="#888888" Offset="0"/>
-
-                            <GradientStop Color="#6D6D6D" Offset="0.4"/>
-                            <GradientStop Color="#909090" Offset="0.5"/>
-
-                            <GradientStop Color="#353535" Offset="0.6"/>
-                            <GradientStop Color="#C9C9C9" Offset="0.7"/>
-
-                            <GradientStop Color="#000000" Offset="0.8"/>
-                            <GradientStop Color="#FFFFFF" Offset="1"/>
-
-                        </LinearGradientBrush>
-                    </Slider.Background>
-                    <FrameworkElement.Tag>
-                        Contrast
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="ContrastButton" Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="Temperature">
-                <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
-                    <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="#3EADF5" Offset="0"/>
-                                <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                                <GradientStop Color="#F99652" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Temperature
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="TemperatureButton" Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
-                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="#9680C9" Offset="0"/>
-                                <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                                <GradientStop Color="#80763E" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Tint
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="TintButton" Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="HighlightsAndShadows">
-                <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
-                    <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
-                        <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="Black" Offset="0"/>
-                                    <GradientStop Color="Gray" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Shadows
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="ShadowsButton" Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="Gray" Offset="0"/>
-                                    <GradientStop Color="White" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Highlights
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="HighlightsButton" Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-                    <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
-                        <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Clarity
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="ClarityButton" Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Blur
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="BlurButton" Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="DisplacementLiquefaction">
-                <StackPanel x:Name="DisplacementLiquefactionPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <Slider x:Name="DisplacementLiquefactionSizeSlider" Width="260" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Size
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="DisplacementLiquefactionSizeButton" Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="DisplacementLiquefactionPressureSlider" Width="260" Value="12" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Pressure
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="DisplacementLiquefactionPressureButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind DisplacementLiquefactionPressureSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                </TextBlock>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GradientMapping">
-                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="12,4" Width="740" Height="50" HorizontalAlignment="Stretch">
-                    <elements:GradientStopSelector.ItemStyle>
-                        <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                            <Setter Property="Width" Value="50"/>
-                            <Setter Property="Height" Value="50"/>
-                            <Setter Property="Padding" Value="3"/>
-                        </Style>
-                    </elements:GradientStopSelector.ItemStyle>
-                    <elements:GradientStopSelector.ItemTemplate>
-                        <DataTemplate x:DataType="GradientStop">
-                            <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip>
-                                        <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Border>
-                        </DataTemplate>
-                    </elements:GradientStopSelector.ItemTemplate>
-                </elements:GradientStopSelectorWithUI>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="RippleEffect">
-                <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
-                    <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Frequency
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="FrequencyButton" Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Phase
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="PhaseButton" Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Amplitude
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="AmplitudeButton" Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryRoundRectTransform">
-                <Slider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Corner
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="RoundRectCornerButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                            <TextBlock>
-                                <Run Text="{x:Bind RoundRectCornerSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                            </TextBlock>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryTriangleTransform">
-                <Slider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Center Point
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="TriangleCenterButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                            <TextBlock>
-                                <Run Text="{x:Bind TriangleCenterSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                            </TextBlock>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryDiamondTransform">
-                <Slider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Mid Point
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="DiamondMidButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                            <TextBlock>
-                                <Run Text="{x:Bind DiamondMidSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                            </TextBlock>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryPentagonTransform">
-                <Slider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Points
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="PentagonPointsButton" Content="{x:Bind PentagonPointsSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryStarTransform">
-                <StackPanel x:Name="StarPanel" Orientation="Horizontal" >
-                    <Slider x:Name="StarPointsSlider" Width="260" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Points
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="StarPointsButton" Content="{x:Bind StarPointsSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" MinWidth="70" Height="28"
-                                    BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="StarInnerRadiusSlider" Width="260" Value="40" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Inner Radius
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="StarInnerRadiusButton" Content="{x:Bind StarInnerRadiusSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryCogTransform">
-                <StackPanel x:Name="CogPanel" >
-                    <StackPanel x:Name="CogPanel1" Orientation="Horizontal" >
-                        <Slider x:Name="CogCountSlider" Width="260" Value="8" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Count
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="CogCountButton" Content="{x:Bind CogCountSlider.Value, Mode=OneWay}"            
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="CogInnerRadiusSlider" Width="260" Value="70" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Inner Radius
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="CogInnerRadiusButton" 
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind CogInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-                    <StackPanel x:Name="CogPanel2" Orientation="Horizontal" >
-                        <Slider x:Name="CogToothSlider" Width="260" Value="30" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Tooth
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="CogToothButton" 
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind CogToothSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                        <Slider x:Name="CogNotchSlider" Width="260" Value="60" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                            <FrameworkElement.Tag>
-                                Notch
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button x:Name="CogNotchButton" 
-                                        Padding="4,0" MinWidth="70" Height="28"
-                                        BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind CogNotchSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-                    </StackPanel>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryDountTransform">
-                <Slider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Hole Radius
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="DountHoleRadiusButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                            <TextBlock>
-                                <Run Text="{x:Bind DountHoleRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                            </TextBlock>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryPieTransform">
-                <Slider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Sweep Angle
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="PieSweepAngleButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                            <TextBlock>
-                                <Run Text="{x:Bind PieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run>
-                            </TextBlock>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryCookieTransform">
-                <StackPanel x:Name="CookiePanel" Orientation="Horizontal" >
-                    <Slider x:Name="CookieInnerRadiusSlider" Width="260" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Inner Radius
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="CookieInnerRadiusButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind CookieInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                </TextBlock>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <Slider x:Name="CookieSweepAngleSlider" Width="260" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Sweep Angle
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="CookieSweepAngleButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind CookieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run>
-                                </TextBlock>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryArrowTransform">
-                <StackPanel>
-                    <Slider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                        <FrameworkElement.Tag>
-                            Width
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button x:Name="ArrowWidthButton" 
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind ArrowWidthSlider.Value, Mode=OneWay}"/><Run>%</Run>
-                                </TextBlock>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                    <StackPanel Orientation="Horizontal" Spacing="4" Height="50" Padding="8,0" >
-                        <TextBlock x:Name="ArrowLeftTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                            Left Tail
-                        </TextBlock>
-                        <ListBox x:Name="ArrowLeftTailComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                            <ListBoxItem>None</ListBoxItem>
-                            <ListBoxItem>Arrow</ListBoxItem>
-                        </ListBox>
-                        <TextBlock x:Name="ArrowRightTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                            Right Tail
-                        </TextBlock>
-                        <ListBox x:Name="ArrowRightTailComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                            <ListBoxItem>None</ListBoxItem>
-                            <ListBoxItem>Arrow</ListBoxItem>
-                        </ListBox>
-                    </StackPanel>
-                </StackPanel>
-            </luo_painter:OptionCase>
-            <luo_painter:OptionCase Value="GeometryHeartTransform">
-                <Slider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                    <FrameworkElement.Tag>
-                        Spread
-                    </FrameworkElement.Tag>
-                    <Slider.Header>
-                        <Button x:Name="HeartSpreadButton" Content="{x:Bind HeartSpreadSlider.Value, Mode=OneWay}"       
-                                Padding="4,0" MinWidth="70" Height="28"
-                                BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                            <Button.Flyout>
-                                <Flyout>
-
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </Slider.Header>
-                </Slider>
-            </luo_painter:OptionCase>
-
-        </luo_painter:OptionSwitchPresenter>
+        <TextBlock x:Name="TextBlock" Style="{StaticResource BodyTextBlockStyle}" IsHitTestVisible="False"/>
 
     </Grid>
 </UserControl>

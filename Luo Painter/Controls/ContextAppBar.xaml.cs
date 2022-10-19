@@ -6,7 +6,9 @@ using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
+using System;
 using System.Numerics;
+using System.ServiceModel.Channels;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,12 +30,15 @@ namespace Luo_Painter.Controls
         public event System.Action GeometryInvalidate;
         public event System.Action CanvasControlInvalidate;
         public event System.Action CanvasVirtualControlInvalidate;
-        public event RoutedEventHandler PrimaryButtonClick;
-        public event RoutedEventHandler SecondaryButtonClick;
+        public event RoutedEventHandler PrimaryButtonClick { add => this.DragPrimaryButton.Click += value; remove => this.DragPrimaryButton.Click -= value; }
+        public event RoutedEventHandler SecondaryButtonClick { add => this.DragSecondaryButton.Click += value; remove => this.DragSecondaryButton.Click -= value; }
+        public event EventHandler<float> RadianValueChanged;
+        public event EventHandler<float> ScaleValueChanged;
         public event RangeBaseValueChangedEventHandler SizeValueChanged { add => this.SizeSlider.ValueChanged += value; remove => this.SizeSlider.ValueChanged -= value; }
         public event RangeBaseValueChangedEventHandler OpacityValueChanged { add => this.OpacitySlider.ValueChanged += value; remove => this.OpacitySlider.ValueChanged -= value; }
         public event RangeBaseValueChangedEventHandler CropCanvasValueChanged { add => this.CropCanvasSlider.ValueChanged += value; remove => this.CropCanvasSlider.ValueChanged -= value; }
         public event RoutedEventHandler PenCloseButtonClick { add => this.PenCloseButton.Click += value; remove => this.PenCloseButton.Click -= value; }
+
 
         //@Converter
         public double SizeConverter(double value) => this.SizeRange.ConvertXToY(value);
@@ -43,8 +48,10 @@ namespace Luo_Painter.Controls
         private string OpacityToStringConverter(double value) => $"{(int)value} %";
         private Symbol FlowDirectionToSymbolConverter(FlowDirection value) => value is FlowDirection.LeftToRight ? Symbol.Back : Symbol.Forward;
 
+
         //@Content
         public Rippler Rippler = Rippler.Zero;
+        public RemoteControl RemoteControl => this.RemoteControlCore;
         public GradientStopSelectorWithUI Selector => this.GradientMappingSelector;
         public int TransformMode => this.TransformComboBox.SelectedIndex;
         public int DisplacementLiquefactionMode => this.DisplacementLiquefactionModeComboBox.SelectedIndex;
@@ -78,19 +85,18 @@ namespace Luo_Painter.Controls
             }
         }
         public bool PenIsSmooth => this.PenComboBox.SelectedIndex is 0;
+        public bool IsBrushOpaque => this.BrushOpaqueButton.IsChecked is true;
+        public bool IsBrushReverse => this.BrushReverseButton.IsChecked is true;
+        public bool IsTransparencyReverse => this.TransparencyReverseButton.IsChecked is true;
+
 
         Point StartingPosition;
+        bool ViewIsEnabled;
+
 
         public ContextAppBar()
         {
             this.InitializeComponent();
-
-            this.PrimaryButton.Click += (s, e) => this.PrimaryButtonClick?.Invoke(s, e);
-            this.SecondaryButton.Click += (s, e) => this.SecondaryButtonClick?.Invoke(s, e);
-
-            this.DragPrimaryButton.Click += (s, e) => this.PrimaryButtonClick?.Invoke(s, e);
-            this.DragSecondaryButton.Click += (s, e) => this.SecondaryButtonClick?.Invoke(s, e);
-
 
             this.Thumb.DragStarted += (s, e) => this.StartingPosition = new Point(this.Transform.X, this.Transform.Y);
             this.Thumb.DragDelta += (s, e) =>
@@ -99,7 +105,7 @@ namespace Luo_Painter.Controls
                 {
                     this.StartingPosition.Y += e.VerticalChange;
 
-                    this.Transform.Y = System.Math.Clamp(this.StartingPosition.Y, 0, this.SwitchPresenter4.ActualHeight);
+                    this.Transform.Y = System.Math.Clamp(this.StartingPosition.Y, 50, this.SwitchPresenter.ActualHeight);
                 }
                 else
                 {
@@ -148,6 +154,24 @@ namespace Luo_Painter.Controls
 
             this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControlInvalidate?.Invoke();
 
+
+            this.RadianClearButton.Tapped += (s, e) => this.RadianStoryboard.Begin(); // Storyboard
+            this.RadianSlider.ValueChanged += (s, e) =>
+            {
+                if (this.ViewIsEnabled is false) return;
+                double radian = e.NewValue / 180 * System.Math.PI;
+                this.RadianValueChanged?.Invoke(this, (float)radian); // Delegate
+            };
+
+            this.ScaleClearButton.Tapped += (s, e) => this.ScaleStoryboard.Begin(); // Storyboard
+            this.ScaleSlider.Minimum = this.ScaleRange.XRange.Minimum;
+            this.ScaleSlider.Maximum = this.ScaleRange.XRange.Maximum;
+            this.ScaleSlider.ValueChanged += (s, e) =>
+            {
+                if (this.ViewIsEnabled is false) return;
+                double scale = this.ScaleRange.ConvertXToY(e.NewValue);
+                this.ScaleValueChanged?.Invoke(this, (float)scale); // Delegate
+            };
             this.TransformComboBox.SelectionChanged += (s, e) =>
             {
                 this.CanvasVirtualControlInvalidate?.Invoke();
@@ -174,6 +198,7 @@ namespace Luo_Painter.Controls
             this.HeartSpreadSlider.ValueChanged += (s, e) => this.GeometryInvalidate?.Invoke();
         }
 
+
         public void ConstructInk(InkPresenter presenter, bool onlyValue)
         {
             // 1.Minimum
@@ -195,33 +220,39 @@ namespace Luo_Painter.Controls
             }
         }
 
+        public void ConstructView(CanvasTransformer transformer)
+        {
+            this.ViewIsEnabled = false;
+            this.RadianSlider.Value = transformer.Radian * 180 / System.Math.PI;
+            this.ScaleSlider.Value = this.ScaleRange.ConvertYToX(transformer.Scale);
+            this.ViewIsEnabled = true;
+        }
+
         public void Construct(OptionType type)
         {
             switch (this.GetState(type))
             {
                 case ContextAppBarState.None:
-                    this.SwitchPresenter1.Value = this.SwitchPresenter2.Value = this.SwitchPresenter3.Value = this.SwitchPresenter4.Value = default;
+                    this.SwitchPresenter.Value = default;
                     VisualStateManager.GoToState(this, "Normal", false);
                     break;
                 case ContextAppBarState.Main:
-                    this.SwitchPresenter1.Value = this.GetType(type);
-                    this.SwitchPresenter2.Value = this.SwitchPresenter3.Value = this.SwitchPresenter4.Value = default;
+                    this.SwitchPresenter.Value = this.GetType(type);
                     VisualStateManager.GoToState(this, "Main", false);
                     break;
                 case ContextAppBarState.Preview:
-                    this.SwitchPresenter1.Value = this.SwitchPresenter3.Value = default;
-                    this.SwitchPresenter2.Value = this.SwitchPresenter4.Value = this.GetType(type);
+                    this.SwitchPresenter.Value = this.GetType(type);
                     VisualStateManager.GoToState(this, "Preview", false);
                     break;
                 case ContextAppBarState.DragPreview:
-                    this.SwitchPresenter1.Value = this.SwitchPresenter2.Value = default;
-                    this.SwitchPresenter3.Value = this.SwitchPresenter4.Value = this.GetType(type);
+                    this.SwitchPresenter.Value = this.GetType(type);
                     VisualStateManager.GoToState(this, "DragPreview", false);
                     break;
                 default:
                     break;
             }
         }
+
 
         private OptionType GetType(OptionType type)
         {
@@ -231,6 +262,7 @@ namespace Luo_Painter.Controls
             else if (type.IsPaint()) return OptionType.Paint;
             else return type;
         }
+
         private ContextAppBarState GetState(OptionType type)
         {
             if (type == default) return default;
@@ -240,6 +272,7 @@ namespace Luo_Painter.Controls
 
             return type.AllowDrag() ? ContextAppBarState.DragPreview : ContextAppBarState.Preview;
         }
+
 
         public CanvasGeometry CreateGeometry(ICanvasResourceCreator resourceCreator, OptionType type, ITransformerLTRB transformerLTRB)
         {
