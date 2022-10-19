@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
-    xmlns:options="using:Luo_Painter.Options"
+    xmlns:options="using:Luo_Painter.Options" xmlns:luo_painter="using:Luo_Painter"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"  
@@ -20,41 +20,41 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <local:ToolGroupingList x:Name="Collection">
-                    <local:ToolGrouping Key="Marquee">
+                <luo_painter:ToolGroupingList x:Name="Collection">
+                    <luo_painter:ToolGrouping Key="Marquee">
                         <options:OptionType>MarqueeRectangular</options:OptionType>
                         <options:OptionType>MarqueeElliptical</options:OptionType>
                         <options:OptionType>MarqueePolygon</options:OptionType>
                         <options:OptionType>MarqueeFreeHand</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Selection">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Selection">
                         <options:OptionType>SelectionFlood</options:OptionType>
                         <options:OptionType>SelectionBrush</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Paint">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
                         <options:OptionType>PaintWatercolorPen</options:OptionType>
                         <options:OptionType>PaintPencil</options:OptionType>
                         <options:OptionType>PaintEraseBrush</options:OptionType>
                         <options:OptionType>PaintLiquefaction</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Vector">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>
                         <options:OptionType>View</options:OptionType>
                         <options:OptionType>Brush</options:OptionType>
                         <options:OptionType>Transparency</options:OptionType>
                         <options:OptionType>Image</options:OptionType>
                         <options:OptionType>Crop</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Text">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Text">
                         <options:OptionType>TextArtistic</options:OptionType>
                         <options:OptionType>TextFrame</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Curve">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Curve">
                         <options:OptionType>Pen</options:OptionType>
                         <options:OptionType>Node</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Geometry">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Geometry">
                         <!--Geometry0-->
                         <options:OptionType>GeometryRectangle</options:OptionType>
                         <options:OptionType>GeometryEllipse</options:OptionType>
@@ -74,13 +74,13 @@
                         <options:OptionType>GeometryArrow</options:OptionType>
                         <options:OptionType>GeometryCapsule</options:OptionType>
                         <options:OptionType>GeometryHeart</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Pattern">
+                    </luo_painter:ToolGrouping>
+                    <luo_painter:ToolGrouping Key="Pattern">
                         <options:OptionType>PatternGrid</options:OptionType>
                         <options:OptionType>PatternDiagonal</options:OptionType>
                         <options:OptionType>PatternSpotted</options:OptionType>
-                    </local:ToolGrouping>
-                </local:ToolGroupingList>
+                    </luo_painter:ToolGrouping>
+                    </luo_painter:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -135,7 +135,7 @@
 
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="options:OptionType">
-                <local:ToolIcon Type="{x:Bind}"/>
+                <luo_painter:ToolIcon Type="{x:Bind}"/>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
 

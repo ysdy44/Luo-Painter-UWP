@@ -146,10 +146,10 @@ namespace Luo_Painter
         }
     }
 
-    internal class EditItem : OptionItem
-    {
-        public EditItem()
-        {
+    internal class OptionItemButtonWithIsEnabled : OptionItemButton
+    {        
+        public OptionItemButtonWithIsEnabled()
+        {            
             base.Loaded += (s, e) => this.ContentControl.GoToState(base.IsEnabled);
             base.IsEnabledChanged += (s, e) =>
             {
@@ -161,7 +161,7 @@ namespace Luo_Painter
         }
     }
 
-    internal class OptionItemIcon : TIcon<OptionType>
+    internal class OptionItem : TIcon<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {
@@ -176,7 +176,7 @@ namespace Luo_Painter
             }, value.ToString());
         }
     }
-    internal class OptionItem : TButton<OptionType>
+    internal class OptionItemButton : TButton<OptionType>
     {
         protected ContentControl ContentControl = new ContentControl
         {
@@ -197,7 +197,7 @@ namespace Luo_Painter
     }
 
     [ContentProperty(Name = nameof(Content))]
-    internal sealed class OptionItemIconCase : OptionItemIcon, ICase<OptionType>
+    internal sealed class OptionItemCase : OptionItem, ICase<OptionType>
     {
         public OptionType Value => base.Type;
         public void OnNavigatedFrom() { }

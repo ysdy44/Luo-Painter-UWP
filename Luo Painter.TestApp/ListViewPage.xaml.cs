@@ -2,6 +2,7 @@
 using Luo_Painter.Elements;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -11,12 +12,9 @@ namespace Luo_Painter.TestApp
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Content = new ContentControl
-            {
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
-            };
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Template = value.GetTemplate(base.Resources);
+            base.Content = value;
             ToolTipService.SetToolTip(this, new ToolTip
             {
                 Content = value,
@@ -28,12 +26,27 @@ namespace Luo_Painter.TestApp
     {
         protected override void OnTypeChanged(BlendEffectMode value)
         {
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Content = new StackPanel
             {
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource, out string title),
-                Resources = resource,
-            }, title);
+                Spacing = 12,
+                Orientation = Orientation.Horizontal,
+                Children =
+                {
+                    new ContentControl
+                    {
+                        Content = value,
+                        Template = value.GetTemplate(base.Resources),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                    },
+                    new TextBlock
+                    {
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Text = value.ToString()
+                    }
+                }
+            };
         }
     }
 

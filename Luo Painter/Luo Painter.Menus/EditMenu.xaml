@@ -26,26 +26,26 @@
         <StackPanel Spacing="2" Padding="6,4">
 
             <!--Edit-->
-            <luo_painter:EditItem Type="Cut" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Copy" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem x:Name="PasteItem" Type="Paste" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem x:Name="RemoveItem" Type="Clear" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Cut" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Copy" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled x:Name="PasteItem" Type="Paste" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled x:Name="RemoveItem" Type="Clear" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
             
             <!--Selection-->
-            <luo_painter:EditItem Type="All" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Deselect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="MarqueeInvert" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Pixel" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="All" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Deselect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="MarqueeInvert" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Pixel" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
             
             <!--Marquee-->
-            <luo_painter:EditItem Type="Feather" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Grow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:EditItem Type="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Feather" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Grow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
         </StackPanel>
     </ScrollViewer>
