@@ -36,7 +36,7 @@
         <KeyboardAccelerator>
             <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
         </KeyboardAccelerator>
-        
+
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="S" CommandParameter="Save" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="Z" CommandParameter="Undo" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="Control" Key="Y" CommandParameter="Redo" Command="{x:Bind Command}" />
@@ -92,7 +92,6 @@
                         <!--Head-->
                         <Setter Target="ExportButton.Width" Value="60"/>
 
-                        <Setter Target="ToolButton.Width" Value="60"/>
                         <Setter Target="EditButton.Width" Value="60"/>
                         <Setter Target="AdjustmentButton.Width" Value="60"/>
                         <Setter Target="OtherButton.Width" Value="60"/>
@@ -246,14 +245,6 @@
             </StackPanel>
 
             <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button x:Name="ToolButton" Style="{StaticResource AppButtonStyle}" >
-                    <!--Icon-->
-                    <ContentControl x:Name="ToolIcon">
-                        <FrameworkElement.Resources>
-                            <ResourceDictionary x:Name="ToolResource"/>
-                        </FrameworkElement.Resources>
-                    </ContentControl>
-                </Button>
                 <Button x:Name="PaintButton" Style="{StaticResource AppButtonStyle}" >
                     <local:ElementIcon Type="Paint"/>
                 </Button>
@@ -318,26 +309,6 @@
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
             <menus:ExportMenu x:Name="ExportMenu"/>
-            <elements:Expander x:Name="ToolMenu" Title="Tool" MinWidth="320" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemControlAcrylicElementBrush}" >
-                <local:OptionSwitchPresenter x:Name="ToolSwitchPresenter" >
-                    <tools:ViewTool x:Name="ViewTool" />
-                    <local:OptionCase Value="Brush">
-                        <StackPanel Spacing="6">
-                            <CheckBox x:Name="BrushOpaqueCheckBox" Margin="2,0">
-                                Opaque
-                            </CheckBox>
-                            <CheckBox x:Name="BrushReverseCheckBox" Margin="2,0">
-                                Reverse
-                            </CheckBox>
-                        </StackPanel>
-                    </local:OptionCase>
-                    <local:OptionCase Value="Transparency">
-                        <CheckBox x:Name="TransparencyReverseCheckBox" Margin="2,0">
-                            Reverse
-                        </CheckBox>
-                    </local:OptionCase>
-                </local:OptionSwitchPresenter>
-            </elements:Expander>
             <menus:BrushMenu x:Name="BrushMenu" />
             <menus:SizeMenu x:Name="SizeMenu" />
             <menus:EditMenu x:Name="EditMenu" />
@@ -364,17 +335,6 @@
 
 
         <!--Dialog-->
-        <ContentDialog x:Name="SettingDislog" Style="{StaticResource AppContentDialogStyle}">
-
-            <ContentDialog.PrimaryButtonText>
-                OK
-            </ContentDialog.PrimaryButtonText>
-            <ContentDialog.SecondaryButtonText>
-                Cancel
-            </ContentDialog.SecondaryButtonText>
-
-
-        </ContentDialog>
         <controls:TextureDialog x:Name="TextureDialog" />
         <controls:StretchDialog x:Name="StretchDialog" />
 
@@ -384,17 +344,8 @@
         <controls:KeyboardShortcuts x:Name="KeyboardShortcuts" Visibility="Collapsed" />
 
 
-
         <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
         <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
-
-        <ItemsControl IsHitTestVisible="False" HorizontalAlignment="Left" x:Name="ItemsControl" Width="320" Height="320" Background="DodgerBlue" Foreground="White">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" VerticalAlignment="Bottom"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
 
     </Grid>
 </Page>

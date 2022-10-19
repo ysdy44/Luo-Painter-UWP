@@ -338,9 +338,6 @@ namespace Luo_Painter
                 case OptionType.ExportMenu:
                     this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
                     break;
-                case OptionType.ToolMenu:
-                    this.ToolMenu.Toggle(this.ToolButton, ExpanderPlacementMode.Bottom);
-                    break;
                 case OptionType.HistoryMenu:
                     this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
                     break;
@@ -1504,13 +1501,6 @@ namespace Luo_Painter
                 case OptionType.PatternDiagonal:
                 case OptionType.PatternSpotted:
                     {
-                        this.ToolMenu.Title = type.ToString();
-
-                        this.ToolResource.Source = new Uri(type.GetResource());
-                        this.ToolIcon.Template = type.GetTemplate(this.ToolResource);
-
-                        this.ToolSwitchPresenter.Value = type;
-
                         this.SetInkToolType(type);
 
                         this.BitmapLayer = null;

@@ -15,12 +15,9 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        bool IsBrushOpaque => this.BrushOpaqueCheckBox.IsChecked is true;
-
         CanvasLinearGradientBrush LinearGradientBrush;
         CanvasRadialGradientBrush RadialGradientBrush;
         Rect BrushBounds;
-
 
         private ICanvasImage GetBrushPreview()
         {
@@ -49,7 +46,7 @@ namespace Luo_Painter
                 return;
             }
 
-            this.SelectionType = this.BitmapLayer.GetDrawSelection(this.IsBrushOpaque, this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+            this.SelectionType = this.BitmapLayer.GetDrawSelection(this.AppBar.IsBrushOpaque, this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
             switch (this.SelectionType)
             {
                 case SelectionType.None:
@@ -65,7 +62,7 @@ namespace Luo_Painter
 
             Color startColor = this.ColorMenu.Color;
             Color endColor = this.ColorMenu.Color;
-            switch (this.BrushReverseCheckBox.IsChecked)
+            switch (this.AppBar.IsBrushReverse)
             {
                 case true: startColor.A = byte.MinValue; break;
                 case false: endColor.A = byte.MinValue; break;
@@ -145,7 +142,7 @@ namespace Luo_Painter
                     {
                         Color startColor = this.ColorMenu.Color;
                         Color endColor = this.ColorMenu.Color;
-                        switch (this.BrushReverseCheckBox.IsChecked)
+                        switch (this.AppBar.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
                             case false: endColor.A = byte.MinValue; break;
@@ -165,7 +162,7 @@ namespace Luo_Painter
                         Color startColor = this.ColorMenu.Color;
                         Color endColor = this.ColorMenu.Color;
 
-                        switch (this.BrushReverseCheckBox.IsChecked)
+                        switch (this.AppBar.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
                             case false: endColor.A = byte.MinValue; break;
@@ -187,7 +184,7 @@ namespace Luo_Painter
                         Color startColor = this.ColorMenu.Color;
                         Color endColor = this.ColorMenu.Color;
 
-                        switch (this.BrushReverseCheckBox.IsChecked)
+                        switch (this.AppBar.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
                             case false: endColor.A = byte.MinValue; break;

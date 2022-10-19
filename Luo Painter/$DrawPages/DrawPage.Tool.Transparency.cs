@@ -16,7 +16,7 @@ namespace Luo_Painter
 
         private Color GetStartColor()
         {
-            switch (this.TransparencyReverseCheckBox.IsChecked)
+            switch (this.AppBar.IsTransparencyReverse)
             {
                 case true: return Colors.Transparent;
                 default: return Colors.Black;
@@ -24,7 +24,7 @@ namespace Luo_Painter
         }
         private Color GetEndColor()
         {
-            switch (this.TransparencyReverseCheckBox.IsChecked)
+            switch (this.AppBar.IsTransparencyReverse)
             {
                 case true: return Colors.Black;
                 default: return Colors.Transparent;

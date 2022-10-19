@@ -56,6 +56,7 @@ namespace Luo_Painter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
+
         public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         Historian<IHistory> History { get; } = new Historian<IHistory>();
 
@@ -68,29 +69,34 @@ namespace Luo_Painter
         public object LayerSelectedItem { get => this.LayerListView.SelectedItem; set => this.LayerListView.SelectedItem = value; }
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
-        InkMixer InkMixer { get; set; } = new InkMixer();
-        public InkPresenter InkPresenter { get; } = new InkPresenter();
 
         GradientMesh GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
+        CanvasRenderTarget GrayAndWhite { get; set; }
+        BitmapLayer Mesh { get; set; }
+
 
         //@Task
         readonly object Locker = new object();
-        BitmapLayer Mesh { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
         BitmapLayer Displacement { get; set; }
         CurveLayer CurveLayer { get; set; }
 
+
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
         public InkType InkType { get; set; } = InkType.None;
+        public InkPresenter InkPresenter { get; } = new InkPresenter();
+        InkMixer InkMixer { get; set; } = new InkMixer();
+
 
         bool IsReferenceImageResizing { get; set; }
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
+
 
         Vector2 StartingPosition;
         Vector2 Position;
@@ -151,7 +157,6 @@ namespace Luo_Painter
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
 
-            this.ToolButton.Click += (s, e) => this.Click(OptionType.ToolMenu);
             this.HistoryButton.Click += (s, e) => this.Click(OptionType.HistoryMenu);
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
 
@@ -267,7 +272,7 @@ namespace Luo_Painter
                         this.Transformer.Height = item.Height;
                         this.Transformer.Fit();
 
-                        this.ViewTool.Construct(this.Transformer);
+                        this.AppBar.ConstructView(this.Transformer);
 
                         this.ApplicationView.Title = item.DisplayName;
                         this.ApplicationView.PersistedStateId = item.Path;

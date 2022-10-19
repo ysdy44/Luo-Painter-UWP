@@ -13,7 +13,7 @@ namespace Luo_Painter
 
         private void ConstructVector()
         {
-            this.ViewTool.RadianValueChanged += (s, radian) =>
+            this.AppBar.RadianValueChanged += (s, radian) =>
             {
                 this.Transformer.Radian = (float)radian;
                 this.Transformer.ReloadMatrix();
@@ -22,7 +22,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.ViewTool.ScaleValueChanged += (s, scale) =>
+            this.AppBar.ScaleValueChanged += (s, scale) =>
             {
                 this.Transformer.Scale = (float)scale;
                 this.Transformer.ReloadMatrix();
@@ -31,7 +31,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.ViewTool.RemoteControl.Moved += (s, vector) =>
+            this.AppBar.RemoteControl.Moved += (s, vector) =>
             {
                 this.Transformer.Position += vector * 20;
                 this.Transformer.ReloadMatrix();
@@ -39,15 +39,15 @@ namespace Luo_Painter
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
-            this.ViewTool.RemoteControl.ValueChangeStarted += (s, value) => this.Transformer.CacheMove(Vector2.Zero);
-            this.ViewTool.RemoteControl.ValueChangeDelta += (s, value) =>
+            this.AppBar.RemoteControl.ValueChangeStarted += (s, value) => this.Transformer.CacheMove(Vector2.Zero);
+            this.AppBar.RemoteControl.ValueChangeDelta += (s, value) =>
             {
                 this.Transformer.Move(value);
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
-            this.ViewTool.RemoteControl.ValueChangeCompleted += (s, value) =>
+            this.AppBar.RemoteControl.ValueChangeCompleted += (s, value) =>
             {
                 this.Transformer.Move(value);
 
@@ -73,9 +73,9 @@ namespace Luo_Painter
         {
             this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
 
-            this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
+            this.SetCanvasState(this.OptionType.HasPreview());
 
-            this.ViewTool.Construct(this.Transformer);
+            this.AppBar.ConstructView(this.Transformer);
         }
 
     }
