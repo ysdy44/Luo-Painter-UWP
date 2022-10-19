@@ -29,6 +29,12 @@ namespace Luo_Painter
         public DrawPageToBrushPageAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
         public override string ToString() => $"{typeof(DrawPage)} to {typeof(BrushPage)}, Parameter is {typeof(IInkParameter)}, NavigationMode is {this.NavigationMode}";
     }
+    internal sealed class DrawPageToStylePageAttribute : Attribute
+    {
+        readonly NavigationMode NavigationMode;
+        public DrawPageToStylePageAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
+        public override string ToString() => $"{typeof(DrawPage)} to {typeof(StylePage)}, NavigationMode is {this.NavigationMode}";
+    }
 
     internal sealed class SizeRange : InverseProportionRange
     {
@@ -38,77 +44,9 @@ namespace Luo_Painter
     {
         public SpacingRange() : base(25, 10, 400, 1000000) { }
     }
-
-    internal sealed class EditButton : TButton<OptionType>
+    internal sealed class ScaleRange : InverseProportionRange
     {
-        Control Icon;
-        public EditButton()
-        {
-            base.Loaded += (s, e) =>
-            {
-                if (this.Icon is null) return;
-                this.Icon.GoToState(base.IsEnabled);
-            };
-            base.IsEnabledChanged += (s, e) =>
-            {
-                if (this.Icon is null) return;
-                if (e.NewValue is bool value)
-                {
-                    this.Icon.GoToState(value);
-                }
-            };
-        }
-        protected override void OnTypeChanged(OptionType value)
-        {
-            this.Icon = new ContentControl
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
-            };
-            this.Icon.GoToState(base.IsEnabled);
-            base.Content = this.Icon;
-            base.CommandParameter = value;
-            base.HorizontalContentAlignment = HorizontalAlignment.Center;
-            base.VerticalContentAlignment = VerticalAlignment.Center;
-            ToolTipService.SetToolTip(this, new ToolTip
-            {
-                Content = value.ToString(),
-                Style = App.Current.Resources["AppToolTipStyle"] as Style
-            });
-        }
-    }
-    internal sealed class EditItem : TButton<OptionType>
-    {
-        Control Icon;
-        public EditItem()
-        {
-            base.IsEnabledChanged += (s, e) =>
-            {
-                if (this.Icon is null) return;
-                if (e.NewValue is bool value)
-                {
-                    this.Icon.GoToState(value);
-                }
-            };
-        }
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.CommandParameter = value;
-            this.Icon = new ContentControl
-            {
-                Width = 32,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
-            };
-            this.Icon.GoToState(base.IsEnabled);
-            base.Content = TIconExtensions.GetGrid(this.Icon, value.ToString());
-        }
+        public ScaleRange() : base(1, 0.1, 10, 100) { }
     }
 
     internal sealed class AdjustmentGroupingList : GroupingList<AdjustmentGrouping, OptionType, OptionType> { }
@@ -145,22 +83,22 @@ namespace Luo_Painter
             base.VerticalContentAlignment = VerticalAlignment.Center;
             base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Template = value.GetTemplate(base.Resources);
         }
     }
     internal sealed class ElementItem : TIcon<ElementType>
     {
         protected override void OnTypeChanged(ElementType value)
         {
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Content = Element.GetStackPanel(new ContentControl
             {
                 Width = 32,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
+                Template = value.GetTemplate(base.Resources),
             }, value.ToString());
         }
     }
@@ -186,23 +124,8 @@ namespace Luo_Painter
             base.VerticalContentAlignment = VerticalAlignment.Center;
             base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
-        }
-    }
-    internal sealed class ToolItem : TIcon<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
-            {
-                Width = 32,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
-            }, value.ToString());
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Template = value.GetTemplate(base.Resources);
         }
     }
     internal sealed class ToolGroupingList : List<ToolGrouping> { }
@@ -223,29 +146,18 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class OptionIcon : TIcon<OptionType>
+    internal class EditItem : OptionItem
     {
-        protected override void OnTypeChanged(OptionType value)
+        public EditItem()
         {
-            base.Content = value.ToString();
-            base.Template = value.GetTemplate(out ResourceDictionary resource);
-            base.Resources = resource;
-        }
-    }
-    internal sealed class OptionItem : TButton<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.CommandParameter = value;
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            base.Loaded += (s, e) => this.ContentControl.GoToState(base.IsEnabled);
+            base.IsEnabledChanged += (s, e) =>
             {
-                Width = 32,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
-            }, value.ToString());
+                if (e.NewValue is bool value)
+                {
+                    this.ContentControl.GoToState(value);
+                }
+            };
         }
     }
 
@@ -253,17 +165,37 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Content = TIconExtensions.GetStackPanel(new ContentControl
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Content = Element.GetGrid(new ContentControl
             {
                 Width = 32,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 Content = value,
-                Template = value.GetTemplate(out ResourceDictionary resource),
-                Resources = resource,
+                Template = value.GetTemplate(base.Resources),
             }, value.ToString());
         }
     }
+    internal class OptionItem : TButton<OptionType>
+    {
+        protected ContentControl ContentControl = new ContentControl
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+            base.CommandParameter = value;
+            base.Resources.Source = new Uri(value.GetResource());
+            this.ContentControl.Template = value.GetTemplate(base.Resources);
+            if (value.HasPreview())
+                base.Content = Element.GetGrid(this.ContentControl, value.ToString());
+            else
+                base.Content = Element.GetStackPanel(this.ContentControl, value.ToString());
+        }
+    }
+
     [ContentProperty(Name = nameof(Content))]
     internal sealed class OptionItemIconCase : OptionItemIcon, ICase<OptionType>
     {
@@ -271,7 +203,6 @@ namespace Luo_Painter
         public void OnNavigatedFrom() { }
         public void OnNavigatedTo() { }
     }
-
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : DependencyObject, ICase<OptionType>
     {
@@ -306,4 +237,71 @@ namespace Luo_Painter
         public override string ToString() => this.CommandParameter.ToString();
     }
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
+
+    internal static class Element
+    {
+
+        //@Static
+        public static Grid GetGrid(UIElement icon, string text) => new Grid
+        {
+            ColumnSpacing = 12,
+            ColumnDefinitions =
+            {
+                new ColumnDefinition
+                {
+                    Width = GridLength.Auto
+                },
+                new ColumnDefinition
+                {
+                    Width =new GridLength(1, GridUnitType.Star)
+                },
+                new ColumnDefinition
+                {
+                    Width = GridLength.Auto
+                },
+            },
+            Children =
+            {
+                icon,
+                Element.GetTextBlock(text, 1),
+                Element.GetFontIcon(2),
+            }
+        };
+
+        public static StackPanel GetStackPanel(UIElement icon, string text) => new StackPanel
+        {
+            Spacing = 12,
+            Orientation = Orientation.Horizontal,
+            Children =
+            {
+                icon,
+                Element.GetTextBlock(text)
+            }
+        };
+
+        public static FrameworkElement GetTextBlock(string text, int column = 0)
+        {
+            TextBlock textBlock = new TextBlock
+            {
+                Text = text,
+                VerticalAlignment = VerticalAlignment.Center,
+                TextTrimming = TextTrimming.CharacterEllipsis,
+            };
+            if (column != 0) Grid.SetColumn(textBlock, column);
+            return textBlock;
+        }
+
+        public static FrameworkElement GetFontIcon(int column = 0)
+        {
+            FontIcon fontIcon = new FontIcon
+            {
+                FontSize = 12,
+                FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                Glyph = "\uE00F"
+            };
+            if (column != 0) Grid.SetColumn(fontIcon, column);
+            return fontIcon;
+        }
+
+    }
 }
