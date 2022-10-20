@@ -3,7 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="GeometryDiamondIcon" TargetType="ContentControl">
-        <Polygon HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="#439EFB">
+        <Polygon HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" >
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="DodgerBlue" Offset="0.4"/>
+                    <GradientStop Color="DeepSkyBlue" Offset="0.6"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
             <Polygon.Points>
                 12,0 24,12 12,24 0,12
             </Polygon.Points>

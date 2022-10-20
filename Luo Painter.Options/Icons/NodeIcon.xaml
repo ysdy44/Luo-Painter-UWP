@@ -3,7 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="NodeIcon" TargetType="ContentControl">
-        <Polygon StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="DeepSkyBlue" HorizontalAlignment="Center">
+        <Polygon HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" >
+            <Polygon.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="DeepSkyBlue" Offset="0.4"/>
+                    <GradientStop Color="Aqua" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Polygon.Fill>
             <Polygon.Points>
                 0,24 12,2 14,12 23,16
             </Polygon.Points>

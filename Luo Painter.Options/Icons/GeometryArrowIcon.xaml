@@ -3,7 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="GeometryArrowIcon" TargetType="ContentControl">
-        <Polygon HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="#439EFB">
+        <Polygon HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" >
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="DodgerBlue" Offset="0.4"/>
+                    <GradientStop Color="DeepSkyBlue" Offset="0.6"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
             <Polygon.Points>
                 0,3 22,3 22,0 30,5.5 22,11 22,8 0,8
             </Polygon.Points>
