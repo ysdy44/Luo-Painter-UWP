@@ -10,7 +10,7 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref=" InkType.None"/>
         /// <see cref=" InkType.Brush"/>
-        /// <see cref=" InkType.Circle"/>
+        /// <see cref=" InkType.Shape"/>
         /// <see cref=" InkType.Line"/>
         /// <see cref=" InkType.Blur"/>
         /// <see cref=" InkType.Mosaic"/>
@@ -59,10 +59,23 @@ namespace Luo_Painter.Brushes
 
         public void Construct(PaintBrush brush)
         {
+            this.Type = brush.Type;
+            this.Mode = default;
+
             this.Size = (float)brush.Size;
             this.Opacity = (float)brush.Opacity;
             this.Spacing = (float)brush.Spacing;
+            this.Flow = (float)brush.Flow;
+
+            this.IgnoreSizePressure = default; 
+            this.IgnoreFlowPressure = default;
+
+            this.Shape = default; 
+            this.IsStroke = default;
+
+            this.BlendMode = default;
             this.Hardness = brush.Hardness;
+
             this.Rotate = brush.Rotate;
             this.Step = brush.Step;
         }

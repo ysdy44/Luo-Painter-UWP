@@ -2,11 +2,13 @@
 {
     public sealed class PaintBrush
     {
+        public InkType Type { get; set; } = InkType.Brush;
+
         public double Size { get; set; } = 12;
         public double Opacity { get; set; } = 1;
         public double Spacing { get; set; } = 0.25;
         public double Flow { get; set; } = 1;
-      
+
         public BrushEdgeHardness Hardness { get; set; } = BrushEdgeHardness.None;
 
         public bool Rotate { get; set; }

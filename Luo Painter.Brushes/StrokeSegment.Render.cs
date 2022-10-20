@@ -37,8 +37,8 @@ namespace Luo_Painter.Brushes
                         {
                             float smooth = distance / this.Distance;
 
-                            float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
-                            Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
+                            float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
+                            Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
 
                             float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                             distance += this.Spacing * sizePressureIsometric;
@@ -63,8 +63,8 @@ namespace Luo_Painter.Brushes
                         {
                             float smooth = distance / this.Distance;
 
-                            float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
-                            Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
+                            float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
+                            Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
 
                             float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                             distance += this.Spacing * sizePressureIsometric;
@@ -104,8 +104,8 @@ namespace Luo_Painter.Brushes
             {
                 float smooth = distance / this.Distance;
 
-                float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
-                Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
+                float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
+                Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
 
                 float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                 distance += this.Spacing * sizePressureIsometric;
@@ -150,8 +150,8 @@ namespace Luo_Painter.Brushes
             {
                 float smooth = distance / this.Distance;
 
-                float pressureIsometric = smooth * this.StartingPressure + (1 - smooth) * this.Pressure;
-                Vector2 positionIsometric = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
+                float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
+                Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
 
                 float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
                 distance += this.Spacing * sizePressureIsometric;

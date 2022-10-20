@@ -24,8 +24,8 @@ namespace Luo_Painter.Brushes
             this.HasIntersect = true;
             this.Intersect.X = System.Math.Max(0, boundsLeft);
             this.Intersect.Y = System.Math.Max(0, boundsTop);
-            this.Intersect.Width = System.Math.Min(screenSize.Width - 1, boundsRight) - boundsLeft;
-            this.Intersect.Height = System.Math.Min(screenSize.Height - 1, boundsBottom) - boundsTop;
+            this.Intersect.Width = System.Math.Min(screenSize.Width - 1, boundsRight) - this.Intersect.X;
+            this.Intersect.Height = System.Math.Min(screenSize.Height - 1, boundsBottom) - this.Intersect.Y;
         }
     }
 }
