@@ -17,10 +17,10 @@ namespace Luo_Painter
         {
             switch (this.InkType)
             {
-                case InkType.Brush:
-                case InkType.Brush_Mix:
-                case InkType.ShapeBrush:
-                case InkType.ShapeBrush_Mix:
+                case InkType.General:
+                case InkType.General_Mix:
+                case InkType.ShapeGeneral:
+                case InkType.ShapeGeneral_Mix:
                 case InkType.Tip:
                 case InkType.Tip_Mix:
                 case InkType.Line:
@@ -28,12 +28,12 @@ namespace Luo_Painter
                     this.BitmapLayer.Draw(this.BitmapLayer[BitmapType.Temp]);
                     break;
 
-                case InkType.Brush_Grain:
-                case InkType.Brush_Grain_Opacity:
-                case InkType.Brush_Grain_Mix:
-                case InkType.ShapeBrush_Grain:
-                case InkType.ShapeBrush_Grain_Opacity:
-                case InkType.ShapeBrush_Grain_Mix:
+                case InkType.General_Grain:
+                case InkType.General_Grain_Opacity:
+                case InkType.General_Grain_Mix:
+                case InkType.ShapeGeneral_Grain:
+                case InkType.ShapeGeneral_Grain_Opacity:
+                case InkType.ShapeGeneral_Grain_Mix:
                 case InkType.Tip_Grain:
                 case InkType.Tip_Grain_Opacity:
                 case InkType.Tip_Grain_Mix:
@@ -41,14 +41,14 @@ namespace Luo_Painter
                 case InkType.Line_Grain_Opacity:
                 case InkType.Line_Grain_Mix:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
-                    using (AlphaMaskEffect grain = this.InkPresenter.GetGrain(opacity))
+                    using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(opacity))
                     {
-                        this.BitmapLayer.Draw(grain);
+                        this.BitmapLayer.Draw(Grain);
                     }
                     break;
 
-                case InkType.Brush_Opacity:
-                case InkType.ShapeBrush_Opacity:
+                case InkType.General_Opacity:
+                case InkType.ShapeGeneral_Opacity:
                 case InkType.Tip_Opacity:
                 case InkType.Line_Opacity:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
@@ -57,8 +57,8 @@ namespace Luo_Painter
                     }
                     break;
 
-                case InkType.Brush_Blend:
-                case InkType.ShapeBrush_Blend:
+                case InkType.General_Blend:
+                case InkType.ShapeGeneral_Blend:
                 case InkType.Tip_Blend:
                 case InkType.Line_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
@@ -67,19 +67,19 @@ namespace Luo_Painter
                     }
                     break;
 
-                case InkType.Brush_Grain_Blend:
-                case InkType.ShapeBrush_Grain_Blend:
+                case InkType.General_Grain_Blend:
+                case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.Tip_Grain_Blend:
                 case InkType.Line_Grain_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    using (AlphaMaskEffect grain = this.InkPresenter.GetGrain(blend))
+                    using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(blend))
                     {
-                        this.BitmapLayer.DrawCopy(grain);
+                        this.BitmapLayer.DrawCopy(Grain);
                     }
                     break;
 
-                case InkType.Brush_Opacity_Blend:
-                case InkType.ShapeBrush_Opacity_Blend:
+                case InkType.General_Opacity_Blend:
+                case InkType.ShapeGeneral_Opacity_Blend:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
@@ -88,15 +88,15 @@ namespace Luo_Painter
                     }
                     break;
 
-                case InkType.Brush_Grain_Opacity_Blend:
-                case InkType.ShapeBrush_Grain_Opacity_Blend:
+                case InkType.General_Grain_Opacity_Blend:
+                case InkType.ShapeGeneral_Grain_Opacity_Blend:
                 case InkType.Tip_Grain_Opacity_Blend:
                 case InkType.Line_Grain_Opacity_Blend:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], opacity))
-                    using (AlphaMaskEffect grain = this.InkPresenter.GetGrain(blend))
+                    using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(blend))
                     {
-                        this.BitmapLayer.DrawCopy(grain);
+                        this.BitmapLayer.DrawCopy(Grain);
                     }
                     break;
 
@@ -157,14 +157,14 @@ namespace Luo_Painter
 
                 switch (this.InkType)
                 {
-                    case InkType.Brush:
-                    case InkType.Brush_Grain:
-                    case InkType.Brush_Opacity:
-                    case InkType.Brush_Grain_Opacity:
-                    case InkType.Brush_Blend:
-                    case InkType.Brush_Grain_Blend:
-                    case InkType.Brush_Opacity_Blend:
-                    case InkType.Brush_Grain_Opacity_Blend:
+                    case InkType.General:
+                    case InkType.General_Grain:
+                    case InkType.General_Opacity:
+                    case InkType.General_Grain_Opacity:
+                    case InkType.General_Blend:
+                    case InkType.General_Grain_Blend:
+                    case InkType.General_Opacity_Blend:
+                    case InkType.General_Grain_Opacity_Blend:
                     case InkType.Blur:
                         using (ds.CreateLayer(1f, segment.Bounds))
                         {
@@ -172,30 +172,30 @@ namespace Luo_Painter
                         }
                         break;
 
-                    case InkType.Brush_Grain_Mix:
-                    case InkType.Brush_Mix:
+                    case InkType.General_Grain_Mix:
+                    case InkType.General_Mix:
                         using (ds.CreateLayer(1f, segment.Bounds))
                         {
                             segment.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.InkMixer.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                         }
                         break;
 
-                    case InkType.ShapeBrush:
-                    case InkType.ShapeBrush_Grain:
-                    case InkType.ShapeBrush_Opacity:
-                    case InkType.ShapeBrush_Grain_Opacity:
-                    case InkType.ShapeBrush_Blend:
-                    case InkType.ShapeBrush_Grain_Blend:
-                    case InkType.ShapeBrush_Opacity_Blend:
-                    case InkType.ShapeBrush_Grain_Opacity_Blend:
+                    case InkType.ShapeGeneral:
+                    case InkType.ShapeGeneral_Grain:
+                    case InkType.ShapeGeneral_Opacity:
+                    case InkType.ShapeGeneral_Grain_Opacity:
+                    case InkType.ShapeGeneral_Blend:
+                    case InkType.ShapeGeneral_Grain_Blend:
+                    case InkType.ShapeGeneral_Opacity_Blend:
+                    case InkType.ShapeGeneral_Grain_Opacity_Blend:
                         using (ds.CreateLayer(1f, segment.Bounds))
                         {
                             segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                         }
                         break;
 
-                    case InkType.ShapeBrush_Mix:
-                    case InkType.ShapeBrush_Grain_Mix:
+                    case InkType.ShapeGeneral_Mix:
+                    case InkType.ShapeGeneral_Grain_Mix:
                         using (ds.CreateLayer(1f, segment.Bounds))
                         {
                             segment.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkMixer.ColorHdr, this.InkPresenter.ShapeSource, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);

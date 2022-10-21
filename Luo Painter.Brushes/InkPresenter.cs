@@ -9,7 +9,7 @@ namespace Luo_Painter.Brushes
 
         /// <summary>
         /// <see cref=" InkType.None"/>
-        /// <see cref=" InkType.Brush"/>
+        /// <see cref=" InkType.General"/>
         /// <see cref=" InkType.Tip"/>
         /// <see cref=" InkType.Line"/>
         /// <see cref=" InkType.Blur"/>

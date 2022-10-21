@@ -106,8 +106,8 @@
                     <ComboBox x:Name="ComboBox" Margin="12,2" HorizontalAlignment="Stretch" >
                         <ItemsControl.ItemsSource>
                             <local:InkList x:Name="InkCollection">
-                                <brushes:InkType>Brush</brushes:InkType>
-                                <brushes:InkType>Shape</brushes:InkType>
+                                <brushes:InkType>General</brushes:InkType>
+                                <brushes:InkType>Tip</brushes:InkType>
                                 <brushes:InkType>Line</brushes:InkType>
                                 <brushes:InkType>Blur</brushes:InkType>
                                 <brushes:InkType>Mosaic</brushes:InkType>
@@ -449,7 +449,7 @@
 
 
                         <!--Shape-->
-                        <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                        <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                                Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
                             Shape
                         </TextBlock>

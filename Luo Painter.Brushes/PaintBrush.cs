@@ -2,7 +2,7 @@
 {
     public sealed class PaintBrush
     {
-        public InkType Type { get; set; } = InkType.Brush;
+        public InkType Type { get; set; } = InkType.General;
 
         public double Size { get; set; } = 12;
         public double Opacity { get; set; } = 1;

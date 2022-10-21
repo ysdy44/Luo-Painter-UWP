@@ -93,16 +93,16 @@ namespace Luo_Painter
         {
             switch (this.InkType)
             {
-                case InkType.Brush:
-                case InkType.Brush_Grain:
-                case InkType.Brush_Opacity:
-                case InkType.Brush_Grain_Opacity:
-                case InkType.Brush_Blend:
-                case InkType.Brush_Grain_Blend:
-                case InkType.Brush_Opacity_Blend:
-                case InkType.Brush_Grain_Opacity_Blend:
-                case InkType.Brush_Mix:
-                case InkType.Brush_Grain_Mix:
+                case InkType.General:
+                case InkType.General_Grain:
+                case InkType.General_Opacity:
+                case InkType.General_Grain_Opacity:
+                case InkType.General_Blend:
+                case InkType.General_Grain_Blend:
+                case InkType.General_Opacity_Blend:
+                case InkType.General_Grain_Opacity_Blend:
+                case InkType.General_Mix:
+                case InkType.General_Grain_Mix:
                 case InkType.Blur:
                 case InkType.Erase:
                 case InkType.Erase_Opacity:
@@ -116,16 +116,16 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.ShapeBrush:
-                case InkType.ShapeBrush_Grain:
-                case InkType.ShapeBrush_Opacity:
-                case InkType.ShapeBrush_Grain_Opacity:
-                case InkType.ShapeBrush_Blend:
-                case InkType.ShapeBrush_Grain_Blend:
-                case InkType.ShapeBrush_Opacity_Blend:
-                case InkType.ShapeBrush_Grain_Opacity_Blend:
-                case InkType.ShapeBrush_Mix:
-                case InkType.ShapeBrush_Grain_Mix:
+                case InkType.ShapeGeneral:
+                case InkType.ShapeGeneral_Grain:
+                case InkType.ShapeGeneral_Opacity:
+                case InkType.ShapeGeneral_Grain_Opacity:
+                case InkType.ShapeGeneral_Blend:
+                case InkType.ShapeGeneral_Grain_Blend:
+                case InkType.ShapeGeneral_Opacity_Blend:
+                case InkType.ShapeGeneral_Grain_Opacity_Blend:
+                case InkType.ShapeGeneral_Mix:
+                case InkType.ShapeGeneral_Grain_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         //@DPI

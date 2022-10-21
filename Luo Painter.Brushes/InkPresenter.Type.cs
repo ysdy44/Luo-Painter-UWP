@@ -7,7 +7,7 @@
         {
             switch (this.Type)
             {
-                case InkType.Brush:
+                case InkType.General:
                     if (this.AllowShape)
                     {
                         switch (this.Mode)
@@ -16,28 +16,28 @@
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain_Blend;
-                                    else return InkType.ShapeBrush_Blend;
+                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Blend;
+                                    else return InkType.ShapeGeneral_Blend;
                                 }
                                 else
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain_Opacity_Blend;
-                                    else return InkType.ShapeBrush_Opacity_Blend;
+                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Opacity_Blend;
+                                    else return InkType.ShapeGeneral_Opacity_Blend;
                                 }
                             case InkType.Mix:
-                                if (this.AllowGrain) return InkType.ShapeBrush_Grain_Mix;
-                                else return InkType.ShapeBrush_Mix;
+                                if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Mix;
+                                else return InkType.ShapeGeneral_Mix;
                             default:
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain;
-                                    else return InkType.ShapeBrush;
+                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain;
+                                    else return InkType.ShapeGeneral;
                                 }
                                 else
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain_Opacity;
-                                    else return InkType.ShapeBrush_Opacity;
+                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Opacity;
+                                    else return InkType.ShapeGeneral_Opacity;
                                 }
                         }
                     }
@@ -49,28 +49,28 @@
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowGrain) return InkType.Brush_Grain_Blend;
-                                    else return InkType.Brush_Blend;
+                                    if (this.AllowGrain) return InkType.General_Grain_Blend;
+                                    else return InkType.General_Blend;
                                 }
                                 else
                                 {
-                                    if (this.AllowGrain) return InkType.Brush_Grain_Opacity_Blend;
-                                    else return InkType.Brush_Opacity_Blend;
+                                    if (this.AllowGrain) return InkType.General_Grain_Opacity_Blend;
+                                    else return InkType.General_Opacity_Blend;
                                 }
                             case InkType.Mix:
-                                if (this.AllowGrain) return InkType.Brush_Grain_Mix;
-                                else return InkType.Brush_Mix;
+                                if (this.AllowGrain) return InkType.General_Grain_Mix;
+                                else return InkType.General_Mix;
                             default:
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowGrain) return InkType.Brush_Grain;
-                                    else return InkType.Brush;
+                                    if (this.AllowGrain) return InkType.General_Grain;
+                                    else return InkType.General;
                                 }
                                 else
                                 {
-                                    if (this.AllowGrain) return InkType.Brush_Grain_Opacity;
-                                    else return InkType.Brush_Opacity;
+                                    if (this.AllowGrain) return InkType.General_Grain_Opacity;
+                                    else return InkType.General_Opacity;
                                 }
                         }
                     }

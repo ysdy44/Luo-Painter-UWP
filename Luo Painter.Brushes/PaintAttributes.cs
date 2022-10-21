@@ -13,7 +13,7 @@ namespace Luo_Painter.Brushes
 
         /// <summary>
         /// <see cref=" InkType.None"/> <para/>
-        /// <see cref=" InkType.Brush"/> <para/>
+        /// <see cref=" InkType.General"/> <para/>
         /// <see cref=" InkType.Tip"/> <para/>
         /// <see cref=" InkType.Line"/> <para/>
         /// <see cref=" InkType.Blur"/> <para/>
@@ -21,7 +21,7 @@ namespace Luo_Painter.Brushes
         /// <see cref=" InkType.Erase"/> <para/>
         /// <see cref=" InkType.Liquefy"/> <para/>
         /// </summary>
-        public InkType Type { get; set; } = InkType.Brush; /// <see cref="InkPresenter.GetType"/>
+        public InkType Type { get; set; } = InkType.General; /// <see cref="InkPresenter.GetType"/>
 
         /// <summary>
         /// <see cref=" InkType.None"/> <para/>

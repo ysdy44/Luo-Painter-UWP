@@ -24,37 +24,37 @@ namespace Luo_Painter.Brushes
         UIShape = 4096,
         UIGrain = 8192,
 
-        Brush = 16384 | UIOpacity | UISpacing | UIFlow | UIBlendMode | UIHardness | UIShape | UIGrain,
-        #region Brush
+        General = 16384 | UIOpacity | UISpacing | UIFlow | UIBlendMode | UIHardness | UIShape | UIGrain,
+        #region General
 
-        Brush_Grain = Brush | Grain,
-        Brush_Opacity = Brush | Opacity,
-        Brush_Grain_Opacity = Brush | Grain | Opacity,
+        General_Grain = General | Grain,
+        General_Opacity = General | Opacity,
+        General_Grain_Opacity = General | Grain | Opacity,
 
-        Brush_Blend = Brush | Blend,
-        Brush_Grain_Blend = Brush | Grain | Blend,
-        Brush_Opacity_Blend = Brush | Opacity | Blend,
-        Brush_Grain_Opacity_Blend = Brush | Grain | Opacity | Blend,
+        General_Blend = General | Blend,
+        General_Grain_Blend = General | Grain | Blend,
+        General_Opacity_Blend = General | Opacity | Blend,
+        General_Grain_Opacity_Blend = General | Grain | Opacity | Blend,
 
-        Brush_Mix = Brush | Mix,
-        Brush_Grain_Mix = Brush | Grain | Mix,
+        General_Mix = General | Mix,
+        General_Grain_Mix = General | Grain | Mix,
 
         #endregion
 
-        ShapeBrush = Shape | Brush,
-        #region MaskBrush
+        ShapeGeneral = Shape | General,
+        #region ShapeGeneral
 
-        ShapeBrush_Grain = Shape | Brush_Grain,
-        ShapeBrush_Opacity = Shape | Brush_Opacity,
-        ShapeBrush_Grain_Opacity = Shape | Brush_Grain_Opacity,
+        ShapeGeneral_Grain = Shape | General_Grain,
+        ShapeGeneral_Opacity = Shape | General_Opacity,
+        ShapeGeneral_Grain_Opacity = Shape | General_Grain_Opacity,
 
-        ShapeBrush_Blend = Shape | Brush_Blend,
-        ShapeBrush_Grain_Blend = Shape | Brush_Grain_Blend,
-        ShapeBrush_Opacity_Blend = Shape | Brush_Opacity_Blend,
-        ShapeBrush_Grain_Opacity_Blend = Shape | Brush_Grain_Opacity_Blend,
+        ShapeGeneral_Blend = Shape | General_Blend,
+        ShapeGeneral_Grain_Blend = Shape | General_Grain_Blend,
+        ShapeGeneral_Opacity_Blend = Shape | General_Opacity_Blend,
+        ShapeGeneral_Grain_Opacity_Blend = Shape | General_Grain_Opacity_Blend,
 
-        ShapeBrush_Mix = Shape | Brush_Mix,
-        ShapeBrush_Grain_Mix = Shape | Brush_Grain_Mix,
+        ShapeGeneral_Mix = Shape | General_Mix,
+        ShapeGeneral_Grain_Mix = Shape | General_Grain_Mix,
 
         #endregion
 
