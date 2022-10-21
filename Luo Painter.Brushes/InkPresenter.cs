@@ -4,50 +4,8 @@ using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter
+    public sealed partial class InkPresenter : PaintAttributes<float>
     {
-
-        /// <summary>
-        /// <see cref=" InkType.None"/>
-        /// <see cref=" InkType.General"/>
-        /// <see cref=" InkType.Tip"/>
-        /// <see cref=" InkType.Line"/>
-        /// <see cref=" InkType.Blur"/>
-        /// <see cref=" InkType.Mosaic"/>
-        /// <see cref=" InkType.Erase"/>
-        /// <see cref=" InkType.Liquefy"/>
-        /// </summary>
-        public InkType Type { get; set; } // GetType
-
-        /// <summary>
-        /// <see cref=" InkType.None"/>
-        /// <see cref=" InkType.Blend"/>
-        /// <see cref=" InkType.Mix"/>
-        /// </summary>
-        public InkType Mode { get; set; } // GetType
-
-
-        public float Size { get; set; } = 22f;
-        public float Opacity { get; set; } = 1f; // GetType
-
-        public float Spacing { get; set; } = 0.25f;
-        public float Flow { get; set; } = 1f;
-
-
-        public bool IgnoreSizePressure { get; set; }
-        public bool IgnoreFlowPressure { get; set; }
-
-        public PenTipShape Tip { get; set; }
-        public bool IsStroke { get; set; }
-
-
-        public BlendEffectMode BlendMode { get; set; }
-        public BrushEdgeHardness Hardness { get; set; }
-
-
-        public bool Rotate { get; set; }
-        public int Step { get; set; } = 1024;
-
         public bool AllowShape { get; private set; } // GetType
         public string ShapeTexture { get; private set; }
         public CanvasBitmap ShapeSource { get; private set; }
@@ -56,29 +14,27 @@ namespace Luo_Painter.Brushes
         public string GrainTexture { get; private set; }
         public CanvasBitmap GrainSource { get; private set; }
 
-
         public void Construct(PaintBrush brush)
         {
             this.Type = brush.Type;
-            this.Mode = default;
+            this.Mode = brush.Mode;
 
             this.Size = (float)brush.Size;
             this.Opacity = (float)brush.Opacity;
             this.Spacing = (float)brush.Spacing;
             this.Flow = (float)brush.Flow;
 
-            this.IgnoreSizePressure = default; 
-            this.IgnoreFlowPressure = default;
+            this.IgnoreSizePressure = brush.IgnoreSizePressure;
+            this.IgnoreFlowPressure = brush.IgnoreFlowPressure;
 
-            this.Tip = default; 
-            this.IsStroke = default;
+            this.Tip = brush.Tip;
+            this.IsStroke = brush.IsStroke;
 
-            this.BlendMode = default;
+            this.BlendMode = brush.BlendMode;
             this.Hardness = brush.Hardness;
 
             this.Rotate = brush.Rotate;
             this.Step = brush.Step;
         }
-
     }
 }

@@ -1,19 +1,20 @@
 ﻿namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter
+    public sealed partial class InkPresenter : PaintAttributes<float>
     {
 
         public new InkType GetType()
         {
-            switch (this.Type)
+            switch (base.Type)
             {
                 case InkType.General:
                     if (this.AllowShape)
                     {
-                        switch (this.Mode)
+                        switch (base.Mode)
                         {
                             case InkType.Blend:
-                                if (this.Opacity == 0f) return InkType.None;
+                                if (this.Flow == 0f) return InkType.None;
+                                else if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
                                     if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Blend;
@@ -28,7 +29,8 @@
                                 if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Mix;
                                 else return InkType.ShapeGeneral_Mix;
                             default:
-                                if (this.Opacity == 0f) return InkType.None;
+                                if (this.Flow == 0f) return InkType.None;
+                                else if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
                                     if (this.AllowGrain) return InkType.ShapeGeneral_Grain;
@@ -43,10 +45,11 @@
                     }
                     else
                     {
-                        switch (this.Mode)
+                        switch (base.Mode)
                         {
                             case InkType.Blend:
-                                if (this.Opacity == 0f) return InkType.None;
+                                if (this.Flow == 0f) return InkType.None;
+                                else if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
                                     if (this.AllowGrain) return InkType.General_Grain_Blend;
@@ -61,7 +64,8 @@
                                 if (this.AllowGrain) return InkType.General_Grain_Mix;
                                 else return InkType.General_Mix;
                             default:
-                                if (this.Opacity == 0f) return InkType.None;
+                                if (this.Flow == 0f) return InkType.None;
+                                else if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
                                     if (this.AllowGrain) return InkType.General_Grain;
@@ -75,7 +79,7 @@
                         }
                     }
                 case InkType.Tip:
-                    switch (this.Mode)
+                    switch (base.Mode)
                     {
                         case InkType.Blend:
                             if (this.Opacity == 0f) return InkType.None;
@@ -106,7 +110,7 @@
                             }
                     }
                 case InkType.Line:
-                    switch (this.Mode)
+                    switch (base.Mode)
                     {
                         case InkType.Blend:
                             if (this.Opacity == 0f) return InkType.None;

@@ -8,7 +8,7 @@ using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter
+    public sealed partial class InkPresenter : PaintAttributes<float>
     {
 
         //@Const

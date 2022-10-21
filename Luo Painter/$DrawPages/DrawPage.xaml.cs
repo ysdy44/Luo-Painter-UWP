@@ -88,9 +88,16 @@ namespace Luo_Painter
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
-        public InkType InkType { get; set; } = InkType.None;
-        public InkPresenter InkPresenter { get; } = new InkPresenter();
+        public InkType InkType { get; set; } = InkType.General;
         InkMixer InkMixer { get; set; } = new InkMixer();
+        public InkPresenter InkPresenter { get; } = new InkPresenter
+        {
+            Size = 22f,
+            Opacity = 1f,
+
+            Spacing = 0.25f,
+            Flow = 1f,
+        };
 
 
         bool IsReferenceImageResizing { get; set; }

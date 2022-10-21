@@ -41,7 +41,7 @@ namespace Luo_Painter.Brushes
         public bool IgnoreSizePressure { get; set; }
         public bool IgnoreFlowPressure { get; set; }
 
-        public PenTipShape Shape { get; set; }
+        public PenTipShape Tip { get; set; }
         public bool IsStroke { get; set; }
 
 
