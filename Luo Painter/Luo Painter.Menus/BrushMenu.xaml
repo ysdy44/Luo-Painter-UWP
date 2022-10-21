@@ -34,6 +34,7 @@
                     Size="12" 
                     Opacity="1" 
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/00/Render.png"
@@ -42,6 +43,7 @@
                     Size="4" 
                     Opacity="1" 
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/01/Render.png"
@@ -50,6 +52,7 @@
                     Size="21.16" 
                     Opacity="0.59"
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/02/Render.png"
@@ -58,6 +61,7 @@
                     Size="108.16" 
                     Opacity="0.18" 
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/03/Render.png"
@@ -66,6 +70,7 @@
                     Size="20.25" 
                     Opacity="0.23"
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/04/Render.png"
@@ -76,6 +81,7 @@
                     Size="210.25" 
                     Opacity="0.15" 
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/05/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/05/Render.png"
@@ -84,6 +90,7 @@
                     Size="3.24" 
                     Opacity="1" 
                     Spacing="0.25"
+                    Flow="1" 
                     Hardness="None"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/06/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/06/Render.png"
@@ -92,6 +99,7 @@
                     Size="11.56" 
                     Opacity="1" 
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/07/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Universal/07/Render.png"
@@ -100,6 +108,7 @@
                     Size="27.04" 
                     Opacity="1" 
                     Spacing="0.25"
+                    Flow="1" 
                     Hardness="Quadratic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/08/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/08/Render.png"
@@ -108,6 +117,7 @@
                     Size="75.69" 
                     Opacity="0.46"
                     Spacing="0.25" 
+                    Flow="1" 
                     Hardness="Quadratic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/09/Thumbnail.png" 
                     Render="ms-appx:///Luo Painter.Brushes/Universal/09/Render.png"
@@ -118,76 +128,81 @@
                     Size="300" 
                     Opacity="0.9" 
                     Spacing="0.8" 
+                    Flow="1" 
                     Hardness="Quartic"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/00/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="400"
                             Height="400"
                             Source="Luo Painter.Brushes/Flash/00/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Flash/00/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="500" 
                     Opacity="0.85" 
                     Spacing="0.55" 
+                    Flow="1" 
                     Hardness="None"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/01/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1400"
                             Height="1400"
                             Source="Luo Painter.Brushes/Flash/01/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Flash/01/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="428.49" 
                     Opacity="0.66" 
                     Spacing="0.6" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/02/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1100"
                             Height="1100"
                             Source="Luo Painter.Brushes/Flash/02/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Flash/02/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="306.25" 
                     Opacity="0.73" 
                     Spacing="0.8" 
+                    Flow="1" 
                     Hardness="Quartic"  
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/03/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1600"
                             Height="1600"
                             Source="Luo Painter.Brushes/Flash/03/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Flash/03/Texture.png"/>
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="1024" 
                     Opacity="0.9" 
                     Spacing="0.3" 
+                    Flow="1" 
                     Hardness="None"  
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Flash/04/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="900"
                             Height="900"
                             Source="Luo Painter.Brushes/Flash/04/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Flash/04/Texture.png"/>
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
             </luo_painter:BrushGrouping>
             <luo_painter:BrushGrouping Key="Splodge">
@@ -195,76 +210,81 @@
                     Size="120" 
                     Opacity="0.7" 
                     Spacing="0.33" 
+                    Flow="1" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="512"
                             Height="512"
                             Source="Luo Painter.Brushes/Splodge/00/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/00/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="158.76"
                     Opacity="1"
                     Spacing="0.22" 
+                    Flow="1" 
                     Hardness="Cosine"  
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/01/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="512"
                             Height="512"
                             Source="Luo Painter.Brushes/Splodge/01/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/01/Texture.png"/>
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="150" 
                     Opacity="1" 
                     Spacing="0.33" 
+                    Flow="1" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/02/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="512"
                             Height="512"
                             Source="Luo Painter.Brushes/Splodge/02/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/02/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="136.89" 
                     Opacity="0.89" 
                     Spacing="0.33" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/03/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="512"
                             Height="512"
                             Source="Luo Painter.Brushes/Splodge/03/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/03/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="86.49"
                     Opacity="0.69" 
                     Spacing="0.3" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/04/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="512"
                             Height="512"
                             Source="Luo Painter.Brushes/Splodge/04/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/04/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
 
 
@@ -272,76 +292,81 @@
                     Size="108.16" 
                     Opacity="0.79" 
                     Spacing="0.4" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/05/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/05/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="600"
                             Height="600"
                             Source="Luo Painter.Brushes/Splodge/05/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/05/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="180" 
                     Opacity="0.89" 
                     Spacing="0.33" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/06/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/06/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1400"
                             Height="1400"
                             Source="Luo Painter.Brushes/Splodge/06/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/06/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="249.64" 
                     Opacity="1" 
                     Spacing="0.66" 
+                    Flow="1" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/07/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/07/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1600"
                             Height="1600"
                             Source="Luo Painter.Brushes/Splodge/07/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/07/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="272.25" 
                     Opacity="0.56" 
                     Spacing="0.4" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/08/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/08/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1600"
                             Height="1600"
                             Source="Luo Painter.Brushes/Splodge/08/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/08/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="160" 
                     Opacity="0.84" 
                     Spacing="0.45" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/09/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Splodge/09/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1024"
                             Height="1024"
                             Source="Luo Painter.Brushes/Splodge/09/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Splodge/09/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
             </luo_painter:BrushGrouping>
             <luo_painter:BrushGrouping Key="Scratch">
@@ -349,76 +374,81 @@
                     Size="222" 
                     Opacity="0.49" 
                     Spacing="0.45" 
+                    Flow="1" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/00/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/00/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1300"
                             Height="1300"
                             Source="Luo Painter.Brushes/Scratch/00/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/00/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="233" 
                     Opacity="1" 
                     Spacing="0.33" 
+                    Flow="1" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/01/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/01/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1400"
                             Height="1400"
                             Source="Luo Painter.Brushes/Scratch/01/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/01/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="158.76" 
                     Opacity="1" 
                     Spacing="0.5" 
+                    Flow="1" 
                     Hardness="None" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/02/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/02/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1400"
                             Height="1400"
                             Source="Luo Painter.Brushes/Scratch/02/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/02/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="132.25" 
                     Opacity="0.21" 
                     Spacing="0.22" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/03/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/03/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1200"
                             Height="1200"
                             Source="Luo Painter.Brushes/Scratch/03/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/03/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="193.21" 
                     Opacity="0.21" 
                     Spacing="0.22" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/04/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/04/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1300"
                             Height="1300"
                             Source="Luo Painter.Brushes/Scratch/04/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/04/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
 
 
@@ -426,76 +456,81 @@
                     Size="225"
                     Opacity="0.8"
                     Spacing="0.45" 
+                    Flow="1" 
                     Hardness="Quartic" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/05/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/05/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1400"
                             Height="1400"
                             Source="Luo Painter.Brushes/Scratch/05/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/05/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="112.36"
                     Opacity="0.8" 
                     Spacing="0.66" 
+                    Flow="1" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/06/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/06/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1400"
                             Height="1400"
                             Source="Luo Painter.Brushes/Scratch/06/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/06/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="102"
                     Opacity="1"
                     Spacing="0.66" 
+                    Flow="1" 
                     Hardness="Cube"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/07/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/07/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1600"
                             Height="1600"
                             Source="Luo Painter.Brushes/Scratch/07/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/07/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush
                     Size="121" 
                     Opacity="0.58" 
                     Spacing="0.8" 
+                    Flow="1" 
                     Hardness="Cosine" 
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/08/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/08/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1600"
                             Height="1600"
                             Source="Luo Painter.Brushes/Scratch/08/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/08/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
                 <brushes:PaintBrush 
                     Size="166.41" 
                     Opacity="0.41" 
                     Spacing="0.33" 
+                    Flow="1" 
                     Hardness="Cosine"
                     Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/09/Thumbnail.png"
                     Render="ms-appx:///Luo Painter.Brushes/Scratch/09/Render.png" >
-                    <brushes:PaintBrush.Mask>
+                    <brushes:PaintBrush.Shape>
                         <brushes:PaintTexture
                             Width="1600"
                             Height="1600"
                             Source="Luo Painter.Brushes/Scratch/09/Source.png"
                             Texture="ms-appx:///Luo Painter.Brushes/Scratch/09/Texture.png" />
-                    </brushes:PaintBrush.Mask>
+                    </brushes:PaintBrush.Shape>
                 </brushes:PaintBrush>
             </luo_painter:BrushGrouping>
         </luo_painter:BrushGroupingList>

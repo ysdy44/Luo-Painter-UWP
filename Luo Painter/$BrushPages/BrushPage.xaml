@@ -445,17 +445,17 @@
 
 
                         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                               Visibility="{x:Bind MaskVisibilityConverter(Type), Mode=OneWay}" />
+                               Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" />
 
 
-                        <!--Mask-->
+                        <!--Shape-->
                         <TextBlock x:Name="MaskTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                               Visibility="{x:Bind MaskVisibilityConverter(Type), Mode=OneWay}" >
-                            Mask
+                               Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
+                            Shape
                         </TextBlock>
 
                         <Grid Height="146" ColumnSpacing="4"
-                                Visibility="{x:Bind MaskVisibilityConverter(Type), Mode=OneWay}" >
+                                Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
@@ -463,7 +463,7 @@
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
                                 <Image>
                                     <Image.Source>
-                                        <BitmapImage x:Name="MaskImage">
+                                        <BitmapImage x:Name="ShapeImage">
                                             <!--UriSource-->
                                         </BitmapImage>
                                     </Image.Source>
@@ -471,30 +471,30 @@
                             </Border>
                             <Border Grid.Column="1" Padding="9" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="6" Padding="0,4" >
-                                    <Button x:Name="SelectMaskButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
+                                    <Button x:Name="SelectShapeButton" IsEnabled="{x:Bind ShapeButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                                         Select
                                     </Button>
-                                    <ToggleButton x:Name="RotateButton" IsEnabled="{x:Bind MaskButton.IsOn, Mode=OneWay}" >
+                                    <ToggleButton x:Name="RotateButton" IsEnabled="{x:Bind ShapeButton.IsOn, Mode=OneWay}" >
                                         Rotate
                                     </ToggleButton>
-                                    <ToggleSwitch x:Name="MaskButton" Margin="2,0"/>
+                                    <ToggleSwitch x:Name="ShapeButton" Margin="2,0"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
 
 
                         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                               Visibility="{x:Bind PatternVisibilityConverter(Type), Mode=OneWay}" />
+                               Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" />
 
 
-                        <!--Pattern-->
-                        <TextBlock x:Name="PatternTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                               Visibility="{x:Bind PatternVisibilityConverter(Type), Mode=OneWay}" >
-                            Pattern
+                        <!--Grain-->
+                        <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                               Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" >
+                            Grain
                         </TextBlock>
 
                         <Grid Height="146" ColumnSpacing="4"
-                                Visibility="{x:Bind PatternVisibilityConverter(Type), Mode=OneWay}" >
+                                Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="146"/>
                                 <ColumnDefinition Width="*"/>
@@ -502,7 +502,7 @@
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
                                 <Image>
                                     <Image.Source>
-                                        <BitmapImage x:Name="PatternImage">
+                                        <BitmapImage x:Name="GrainImage">
                                             <!--UriSource-->
                                         </BitmapImage>
                                     </Image.Source>
@@ -510,13 +510,13 @@
                             </Border>
                             <Border Grid.Column="1" Padding="9" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Spacing="6" Padding="0,4" >
-                                    <Button x:Name="SelectPatternButton" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
+                                    <Button x:Name="SelectGrainButton" IsEnabled="{x:Bind GrainButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
                                         Select
                                     </Button>
-                                    <TextBox x:Name="StepTextBox" IsEnabled="{x:Bind PatternButton.IsOn, Mode=OneWay}" >
+                                    <TextBox x:Name="StepTextBox" IsEnabled="{x:Bind GrainButton.IsOn, Mode=OneWay}" >
                                         <!--Text-->
                                     </TextBox>
-                                    <ToggleSwitch x:Name="PatternButton" Margin="2,0"/>
+                                    <ToggleSwitch x:Name="GrainButton" Margin="2,0"/>
                                 </StackPanel>
                             </Border>
                         </Grid>

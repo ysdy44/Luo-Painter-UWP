@@ -23,13 +23,13 @@
             Hardness="Cosine"
             Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Thumbnail.png"
             Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png" >
-            <brushes:PaintBrush.Mask>
+            <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture                     
                     Width="512"                       
                     Height="512"                      
                     Source="Luo Painter.Brushes/Splodge/00/Source.png"                      
                     Texture="ms-appx:///Luo Painter.Brushes/Splodge/00/Texture.png" />
-            </brushes:PaintBrush.Mask>
+            </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
     </FrameworkElement.Resources>
 

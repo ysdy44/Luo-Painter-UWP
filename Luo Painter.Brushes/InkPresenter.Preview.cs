@@ -16,8 +16,8 @@ namespace Luo_Painter.Brushes
             {
                 case InkType.Brush:
                 case InkType.Brush_Mix:
-                case InkType.MaskBrush:
-                case InkType.MaskBrush_Mix:
+                case InkType.ShapeBrush:
+                case InkType.ShapeBrush_Mix:
                 case InkType.Tip:
                 case InkType.Tip_Mix:
                 case InkType.Line:
@@ -27,24 +27,24 @@ namespace Luo_Painter.Brushes
                     ds.DrawImage(wet);
                     break;
 
-                case InkType.Brush_Pattern:
-                case InkType.Brush_Pattern_Mix:
-                case InkType.MaskBrush_Pattern:
-                case InkType.MaskBrush_Pattern_Mix:
-                case InkType.Tip_Pattern:
-                case InkType.Tip_Pattern_Mix:
-                case InkType.Line_Pattern:
-                case InkType.Line_Pattern_Mix:
+                case InkType.Brush_Grain:
+                case InkType.Brush_Grain_Mix:
+                case InkType.ShapeBrush_Grain:
+                case InkType.ShapeBrush_Grain_Mix:
+                case InkType.Tip_Grain:
+                case InkType.Tip_Grain_Mix:
+                case InkType.Line_Grain:
+                case InkType.Line_Grain_Mix:
                     ds.DrawImage(image);
                     ds.Blend = CanvasBlend.SourceOver;
-                    using (AlphaMaskEffect pattern = this.GetPattern(wet))
+                    using (AlphaMaskEffect grain = this.GetGrain(wet))
                     {
-                        ds.DrawImage(pattern);
+                        ds.DrawImage(grain);
                     }
                     break;
 
                 case InkType.Brush_Opacity:
-                case InkType.MaskBrush_Opacity:
+                case InkType.ShapeBrush_Opacity:
                 case InkType.Tip_Opacity:
                 case InkType.Line_Opacity:
                     ds.DrawImage(image);
@@ -55,16 +55,16 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_Pattern_Opacity:
-                case InkType.MaskBrush_Pattern_Opacity:
-                case InkType.Tip_Pattern_Opacity:
-                case InkType.Line_Pattern_Opacity:
-                case InkType.Brush_Pattern_Opacity_Blend:
-                case InkType.MaskBrush_Pattern_Opacity_Blend:
-                case InkType.Tip_Pattern_Opacity_Blend:
-                case InkType.Line_Pattern_Opacity_Blend:
-                    using (AlphaMaskEffect pattern = this.GetPattern(wet))
-                    using (OpacityEffect opacity = this.GetOpacity(pattern))
+                case InkType.Brush_Grain_Opacity:
+                case InkType.ShapeBrush_Grain_Opacity:
+                case InkType.Tip_Grain_Opacity:
+                case InkType.Line_Grain_Opacity:
+                case InkType.Brush_Grain_Opacity_Blend:
+                case InkType.ShapeBrush_Grain_Opacity_Blend:
+                case InkType.Tip_Grain_Opacity_Blend:
+                case InkType.Line_Grain_Opacity_Blend:
+                    using (AlphaMaskEffect grain = this.GetGrain(wet))
+                    using (OpacityEffect opacity = this.GetOpacity(grain))
                     using (BlendEffect blend = this.GetBlend(image, opacity))
                     {
                         ds.DrawImage(blend);
@@ -72,7 +72,7 @@ namespace Luo_Painter.Brushes
                     break;
 
                 case InkType.Brush_Blend:
-                case InkType.MaskBrush_Blend:
+                case InkType.ShapeBrush_Blend:
                 case InkType.Tip_Blend:
                 case InkType.Line_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
@@ -81,10 +81,10 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.Brush_Pattern_Blend:
-                case InkType.MaskBrush_Pattern_Blend:
-                case InkType.Tip_Pattern_Blend:
-                case InkType.Line_Pattern_Blend:
+                case InkType.Brush_Grain_Blend:
+                case InkType.ShapeBrush_Grain_Blend:
+                case InkType.Tip_Grain_Blend:
+                case InkType.Line_Grain_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
                     {
                         ds.DrawImage(blend);
@@ -92,7 +92,7 @@ namespace Luo_Painter.Brushes
                     break;
 
                 case InkType.Brush_Opacity_Blend:
-                case InkType.MaskBrush_Opacity_Blend:
+                case InkType.ShapeBrush_Opacity_Blend:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     using (OpacityEffect opacity = this.GetOpacity(wet))
@@ -143,29 +143,29 @@ namespace Luo_Painter.Brushes
             {
                 case InkType.Brush:
                 case InkType.Brush_Mix:
-                case InkType.MaskBrush:
-                case InkType.MaskBrush_Mix:
+                case InkType.ShapeBrush:
+                case InkType.ShapeBrush_Mix:
                 case InkType.Tip:
                 case InkType.Tip_Mix:
                 case InkType.Line:
                 case InkType.Line_Mix:
                     return InkPresenter.GetComposite(image, wet);
 
-                case InkType.Brush_Pattern:
-                case InkType.Brush_Pattern_Mix:
-                case InkType.MaskBrush_Pattern:
-                case InkType.MaskBrush_Pattern_Mix:
-                case InkType.Tip_Pattern:
-                case InkType.Tip_Pattern_Mix:
-                case InkType.Line_Pattern:
-                case InkType.Line_Pattern_Mix:
+                case InkType.Brush_Grain:
+                case InkType.Brush_Grain_Mix:
+                case InkType.ShapeBrush_Grain:
+                case InkType.ShapeBrush_Grain_Mix:
+                case InkType.Tip_Grain:
+                case InkType.Tip_Grain_Mix:
+                case InkType.Line_Grain:
+                case InkType.Line_Grain_Mix:
                     {
-                        AlphaMaskEffect pattern = this.GetPattern(wet);
-                        return InkPresenter.GetComposite(image, pattern);
+                        AlphaMaskEffect grain = this.GetGrain(wet);
+                        return InkPresenter.GetComposite(image, grain);
                     }
 
                 case InkType.Brush_Opacity:
-                case InkType.MaskBrush_Opacity:
+                case InkType.ShapeBrush_Opacity:
                 case InkType.Tip_Opacity:
                 case InkType.Line_Opacity:
                     {
@@ -173,23 +173,23 @@ namespace Luo_Painter.Brushes
                         return InkPresenter.GetComposite(image, opacity);
                     }
 
-                case InkType.Brush_Pattern_Opacity:
-                case InkType.MaskBrush_Pattern_Opacity:
-                case InkType.Tip_Pattern_Opacity:
-                case InkType.Line_Pattern_Opacity:
-                case InkType.Brush_Pattern_Opacity_Blend:
-                case InkType.MaskBrush_Pattern_Opacity_Blend:
-                case InkType.Tip_Pattern_Opacity_Blend:
-                case InkType.Line_Pattern_Opacity_Blend:
+                case InkType.Brush_Grain_Opacity:
+                case InkType.ShapeBrush_Grain_Opacity:
+                case InkType.Tip_Grain_Opacity:
+                case InkType.Line_Grain_Opacity:
+                case InkType.Brush_Grain_Opacity_Blend:
+                case InkType.ShapeBrush_Grain_Opacity_Blend:
+                case InkType.Tip_Grain_Opacity_Blend:
+                case InkType.Line_Grain_Opacity_Blend:
                     {
-                        AlphaMaskEffect pattern = this.GetPattern(wet);
-                        OpacityEffect opacity = this.GetOpacity(pattern);
+                        AlphaMaskEffect grain = this.GetGrain(wet);
+                        OpacityEffect opacity = this.GetOpacity(grain);
                         BlendEffect blend = this.GetBlend(image, opacity);
                         return blend;
                     }
 
                 case InkType.Brush_Blend:
-                case InkType.MaskBrush_Blend:
+                case InkType.ShapeBrush_Blend:
                 case InkType.Tip_Blend:
                 case InkType.Line_Blend:
                     {
@@ -197,17 +197,17 @@ namespace Luo_Painter.Brushes
                         return blend;
                     }
 
-                case InkType.Brush_Pattern_Blend:
-                case InkType.MaskBrush_Pattern_Blend:
-                case InkType.Tip_Pattern_Blend:
-                case InkType.Line_Pattern_Blend:
+                case InkType.Brush_Grain_Blend:
+                case InkType.ShapeBrush_Grain_Blend:
+                case InkType.Tip_Grain_Blend:
+                case InkType.Line_Grain_Blend:
                     {
                         BlendEffect blend = this.GetBlend(image, wet);
                         return blend;
                     }
 
                 case InkType.Brush_Opacity_Blend:
-                case InkType.MaskBrush_Opacity_Blend:
+                case InkType.ShapeBrush_Opacity_Blend:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     {
@@ -260,10 +260,10 @@ namespace Luo_Painter.Brushes
         public ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
         public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, 30 * this.Flow);
         public ScaleEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
-        public AlphaMaskEffect GetPattern(IGraphicsEffectSource image) => InkPresenter.GetPattern(image, this.Pattern, new Vector2
+        public AlphaMaskEffect GetGrain(IGraphicsEffectSource image) => InkPresenter.GetGrain(image, this.GrainSource, new Vector2
         {
-            X = this.Step / (float)this.Pattern.SizeInPixels.Width,
-            Y = this.Step / (float)this.Pattern.SizeInPixels.Height
+            X = this.Step / (float)this.GrainSource.SizeInPixels.Width,
+            Y = this.Step / (float)this.GrainSource.SizeInPixels.Height
         });
 
 
@@ -352,7 +352,7 @@ namespace Luo_Painter.Brushes
                 }
             }
         };
-        public static AlphaMaskEffect GetPattern(IGraphicsEffectSource image, IGraphicsEffectSource pattern, Vector2 scale) => new AlphaMaskEffect
+        public static AlphaMaskEffect GetGrain(IGraphicsEffectSource image, IGraphicsEffectSource grain, Vector2 scale) => new AlphaMaskEffect
         {
             AlphaMask = new BorderEffect
             {
@@ -361,7 +361,7 @@ namespace Luo_Painter.Brushes
                 Source = new ScaleEffect
                 {
                     BorderMode = EffectBorderMode.Hard,
-                    Source = pattern,
+                    Source = grain,
                     Scale = scale
                 }
             },

@@ -228,7 +228,7 @@ namespace Luo_Painter.Brushes
                 float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
-                    Source1 = this.Mask,
+                    Source1 = this.ShapeSource,
                     Properties =
                     {
                         ["hardness"] = hardness,

@@ -35,7 +35,7 @@ namespace Luo_Painter
             }
 
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
-            if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Mask without NaN
             if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
             Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
@@ -57,7 +57,7 @@ namespace Luo_Painter
             if (segment.InRadius) return;
             if (segment.IsNaN)
             {
-                if (this.InkType.HasFlag(InkType.Mask) && this.InkPresenter.Rotate) return; // Mask without NaN
+                if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Mask without NaN
                 if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
             }
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);

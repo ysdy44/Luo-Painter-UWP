@@ -34,9 +34,9 @@ namespace Luo_Painter
         private Visibility TipVisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility MaskVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMask) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility PatternVisibilityConverter(InkType value) => value.HasFlag(InkType.UIPattern) ? Visibility.Visible : Visibility.Collapsed;
-
+        private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
+       
         private Symbol StarSymbolConverter(bool value) => value ? Symbol.SolidStar : Symbol.OutlineStar;
         private Symbol PinSymbolConverter(SplitViewDisplayMode value)
         {

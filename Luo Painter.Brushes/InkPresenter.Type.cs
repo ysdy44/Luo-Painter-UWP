@@ -8,7 +8,7 @@
             switch (this.Type)
             {
                 case InkType.Brush:
-                    if (this.AllowMask)
+                    if (this.AllowShape)
                     {
                         switch (this.Mode)
                         {
@@ -16,28 +16,28 @@
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowPattern) return InkType.MaskBrush_Pattern_Blend;
-                                    else return InkType.MaskBrush_Blend;
+                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain_Blend;
+                                    else return InkType.ShapeBrush_Blend;
                                 }
                                 else
                                 {
-                                    if (this.AllowPattern) return InkType.MaskBrush_Pattern_Opacity_Blend;
-                                    else return InkType.MaskBrush_Opacity_Blend;
+                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain_Opacity_Blend;
+                                    else return InkType.ShapeBrush_Opacity_Blend;
                                 }
                             case InkType.Mix:
-                                if (this.AllowPattern) return InkType.MaskBrush_Pattern_Mix;
-                                else return InkType.MaskBrush_Mix;
+                                if (this.AllowGrain) return InkType.ShapeBrush_Grain_Mix;
+                                else return InkType.ShapeBrush_Mix;
                             default:
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowPattern) return InkType.MaskBrush_Pattern;
-                                    else return InkType.MaskBrush;
+                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain;
+                                    else return InkType.ShapeBrush;
                                 }
                                 else
                                 {
-                                    if (this.AllowPattern) return InkType.MaskBrush_Pattern_Opacity;
-                                    else return InkType.MaskBrush_Opacity;
+                                    if (this.AllowGrain) return InkType.ShapeBrush_Grain_Opacity;
+                                    else return InkType.ShapeBrush_Opacity;
                                 }
                         }
                     }
@@ -49,27 +49,27 @@
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowPattern) return InkType.Brush_Pattern_Blend;
+                                    if (this.AllowGrain) return InkType.Brush_Grain_Blend;
                                     else return InkType.Brush_Blend;
                                 }
                                 else
                                 {
-                                    if (this.AllowPattern) return InkType.Brush_Pattern_Opacity_Blend;
+                                    if (this.AllowGrain) return InkType.Brush_Grain_Opacity_Blend;
                                     else return InkType.Brush_Opacity_Blend;
                                 }
                             case InkType.Mix:
-                                if (this.AllowPattern) return InkType.Brush_Pattern_Mix;
+                                if (this.AllowGrain) return InkType.Brush_Grain_Mix;
                                 else return InkType.Brush_Mix;
                             default:
                                 if (this.Opacity == 0f) return InkType.None;
                                 else if (this.Opacity == 1f)
                                 {
-                                    if (this.AllowPattern) return InkType.Brush_Pattern;
+                                    if (this.AllowGrain) return InkType.Brush_Grain;
                                     else return InkType.Brush;
                                 }
                                 else
                                 {
-                                    if (this.AllowPattern) return InkType.Brush_Pattern_Opacity;
+                                    if (this.AllowGrain) return InkType.Brush_Grain_Opacity;
                                     else return InkType.Brush_Opacity;
                                 }
                         }
@@ -81,27 +81,27 @@
                             if (this.Opacity == 0f) return InkType.None;
                             else if (this.Opacity == 1f)
                             {
-                                if (this.AllowPattern) return InkType.Tip_Pattern_Blend;
+                                if (this.AllowGrain) return InkType.Tip_Grain_Blend;
                                 else return InkType.Tip_Blend;
                             }
                             else
                             {
-                                if (this.AllowPattern) return InkType.Tip_Pattern_Opacity_Blend;
+                                if (this.AllowGrain) return InkType.Tip_Grain_Opacity_Blend;
                                 else return InkType.Tip_Opacity_Blend;
                             }
                         case InkType.Mix:
-                            if (this.AllowPattern) return InkType.Tip_Pattern_Mix;
+                            if (this.AllowGrain) return InkType.Tip_Grain_Mix;
                             else return InkType.Tip_Mix;
                         default:
                             if (this.Opacity == 0f) return InkType.None;
                             else if (this.Opacity == 1f)
                             {
-                                if (this.AllowPattern) return InkType.Tip_Pattern;
+                                if (this.AllowGrain) return InkType.Tip_Grain;
                                 else return InkType.Tip;
                             }
                             else
                             {
-                                if (this.AllowPattern) return InkType.Tip_Pattern_Opacity;
+                                if (this.AllowGrain) return InkType.Tip_Grain_Opacity;
                                 else return InkType.Tip_Opacity;
                             }
                     }
@@ -112,28 +112,28 @@
                             if (this.Opacity == 0f) return InkType.None;
                             else if (this.Opacity == 1f)
                             {
-                                if (this.AllowPattern) return InkType.Line_Pattern_Blend;
+                                if (this.AllowGrain) return InkType.Line_Grain_Blend;
                                 else return InkType.Line_Blend;
                             }
                             else
                             {
-                                if (this.AllowPattern) return InkType.Line_Pattern_Opacity_Blend;
+                                if (this.AllowGrain) return InkType.Line_Grain_Opacity_Blend;
                                 else return InkType.Line_Opacity_Blend;
                             }
                         case InkType.Blur:
                         case InkType.Mix:
-                            if (this.AllowPattern) return InkType.Line_Pattern_Mix;
+                            if (this.AllowGrain) return InkType.Line_Grain_Mix;
                             else return InkType.Line_Mix;
                         default:
                             if (this.Opacity == 0f) return InkType.None;
                             else if (this.Opacity == 1f)
                             {
-                                if (this.AllowPattern) return InkType.Line_Pattern;
+                                if (this.AllowGrain) return InkType.Line_Grain;
                                 else return InkType.Line;
                             }
                             else
                             {
-                                if (this.AllowPattern) return InkType.Line_Pattern_Opacity;
+                                if (this.AllowGrain) return InkType.Line_Grain_Opacity;
                                 else return InkType.Line_Opacity;
                             }
                     }

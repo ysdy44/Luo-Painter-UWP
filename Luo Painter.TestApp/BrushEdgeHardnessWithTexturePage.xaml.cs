@@ -58,7 +58,7 @@ namespace Luo_Painter.TestApp
         private async Task CreateResourcesAsync(ICanvasResourceCreator resourceCreator)
         {
             this.ShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
-            this.Texture = await CanvasBitmap.LoadAsync(resourceCreator, this.Brush.Mask.Source, 96);
+            this.Texture = await CanvasBitmap.LoadAsync(resourceCreator, this.Brush.Shape.Source, 96);
         }
 
         private void ConstructOperator()

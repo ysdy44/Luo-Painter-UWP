@@ -5,54 +5,54 @@ namespace Luo_Painter.Brushes
     public sealed partial class InkPresenter
     {
 
-        public void ConstructMask(string textureMask, CanvasBitmap mask)
+        public void ConstructShape(string texture, CanvasBitmap source)
         {
-            this.AllowMask = true;
-            this.MaskTexture = textureMask;
-            this.Mask?.Dispose();
-            this.Mask = mask;
+            this.AllowShape = true;
+            this.ShapeTexture = texture;
+            this.ShapeSource?.Dispose();
+            this.ShapeSource = source;
         }
-        public void ClearMask()
+        public void ClearShape()
         {
-            this.AllowMask = false;
-            this.MaskTexture = null;
-            this.Mask?.Dispose();
-            this.Mask = null;
+            this.AllowShape = false;
+            this.ShapeTexture = null;
+            this.ShapeSource?.Dispose();
+            this.ShapeSource = null;
         }
 
-        public void TurnOffMask() => this.AllowMask = false;
-        public bool TryTurnOnMask()
+        public void TurnOffShape() => this.AllowShape = false;
+        public bool TryTurnOnShape()
         {
-            if (this.AllowMask) return false;
-            if (this.MaskTexture is null) return false;
-            if (this.Mask is null) return false;
-            this.AllowMask = true;
+            if (this.AllowShape) return false;
+            if (this.ShapeTexture is null) return false;
+            if (this.ShapeSource is null) return false;
+            this.AllowShape = true;
             return true;
         }
 
 
-        public void ConstructPattern(string texturePattern, CanvasBitmap pattern)
+        public void ConstructGrain(string texture, CanvasBitmap source)
         {
-            this.AllowPattern = true;
-            this.PatternTexture = texturePattern;
-            this.Pattern?.Dispose();
-            this.Pattern = pattern;
+            this.AllowGrain = true;
+            this.GrainTexture = texture;
+            this.GrainSource?.Dispose();
+            this.GrainSource = source;
         }
-        public void ClearPattern()
+        public void ClearGrain()
         {
-            this.AllowPattern = false;
-            this.PatternTexture = null;
-            this.Pattern?.Dispose();
-            this.Pattern = null;
+            this.AllowGrain = false;
+            this.GrainTexture = null;
+            this.GrainSource?.Dispose();
+            this.GrainSource = null;
         }
-
-        public void TurnOffPattern() => this.AllowPattern = false;
-        public bool TryTurnOnPattern()
+        
+        public void TurnOffGrain() => this.AllowGrain = false;
+        public bool TryTurnOnGrain()
         {
-            if (this.AllowPattern) return false;
-            if (this.PatternTexture is null) return false;
-            if (this.Pattern is null) return false;
-            this.AllowPattern = true;
+            if (this.AllowGrain) return false;
+            if (this.GrainTexture is null) return false;
+            if (this.GrainSource is null) return false;
+            this.AllowGrain = true;
             return true;
         }
 

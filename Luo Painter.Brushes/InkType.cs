@@ -10,8 +10,8 @@ namespace Luo_Painter.Brushes
         // Property
         Blend = 1,
         Mix = 2,
-        Mask = 4,
-        Pattern = 8,
+        Shape = 4,
+        Grain = 8,
         Opacity = 16,
 
         // UI
@@ -21,74 +21,74 @@ namespace Luo_Painter.Brushes
         UITip = 512,
         UIBlendMode = 1024,
         UIHardness = 2048,
-        UIMask = 4096,
-        UIPattern = 8192,
+        UIShape = 4096,
+        UIGrain = 8192,
 
-        Brush = 16384 | UIOpacity | UISpacing | UIFlow | UIBlendMode | UIHardness | UIMask | UIPattern,
+        Brush = 16384 | UIOpacity | UISpacing | UIFlow | UIBlendMode | UIHardness | UIShape | UIGrain,
         #region Brush
 
-        Brush_Pattern = Brush | Pattern,
+        Brush_Grain = Brush | Grain,
         Brush_Opacity = Brush | Opacity,
-        Brush_Pattern_Opacity = Brush | Pattern | Opacity,
+        Brush_Grain_Opacity = Brush | Grain | Opacity,
 
         Brush_Blend = Brush | Blend,
-        Brush_Pattern_Blend = Brush | Pattern | Blend,
+        Brush_Grain_Blend = Brush | Grain | Blend,
         Brush_Opacity_Blend = Brush | Opacity | Blend,
-        Brush_Pattern_Opacity_Blend = Brush | Pattern | Opacity | Blend,
+        Brush_Grain_Opacity_Blend = Brush | Grain | Opacity | Blend,
 
         Brush_Mix = Brush | Mix,
-        Brush_Pattern_Mix = Brush | Pattern | Mix,
+        Brush_Grain_Mix = Brush | Grain | Mix,
 
         #endregion
 
-        MaskBrush = Mask | Brush,
+        ShapeBrush = Shape | Brush,
         #region MaskBrush
 
-        MaskBrush_Pattern = Mask | Brush_Pattern,
-        MaskBrush_Opacity = Mask | Brush_Opacity,
-        MaskBrush_Pattern_Opacity = Mask | Brush_Pattern_Opacity,
+        ShapeBrush_Grain = Shape | Brush_Grain,
+        ShapeBrush_Opacity = Shape | Brush_Opacity,
+        ShapeBrush_Grain_Opacity = Shape | Brush_Grain_Opacity,
 
-        MaskBrush_Blend = Mask | Brush_Blend,
-        MaskBrush_Pattern_Blend = Mask | Brush_Pattern_Blend,
-        MaskBrush_Opacity_Blend = Mask | Brush_Opacity_Blend,
-        MaskBrush_Pattern_Opacity_Blend = Mask | Brush_Pattern_Opacity_Blend,
+        ShapeBrush_Blend = Shape | Brush_Blend,
+        ShapeBrush_Grain_Blend = Shape | Brush_Grain_Blend,
+        ShapeBrush_Opacity_Blend = Shape | Brush_Opacity_Blend,
+        ShapeBrush_Grain_Opacity_Blend = Shape | Brush_Grain_Opacity_Blend,
 
-        MaskBrush_Mix = Mask | Brush_Mix,
-        MaskBrush_Pattern_Mix = Mask | Brush_Pattern_Mix,
+        ShapeBrush_Mix = Shape | Brush_Mix,
+        ShapeBrush_Grain_Mix = Shape | Brush_Grain_Mix,
 
         #endregion
 
-        Tip = 32768 | UIOpacity | UISpacing | UITip | UIBlendMode | UIPattern,
+        Tip = 32768 | UIOpacity | UISpacing | UITip | UIBlendMode | UIGrain,
         #region Tip
 
-        Tip_Pattern = Tip | Pattern,
+        Tip_Grain = Tip | Grain,
         Tip_Opacity = Tip | Opacity,
-        Tip_Pattern_Opacity = Tip | Pattern | Opacity,
+        Tip_Grain_Opacity = Tip | Grain | Opacity,
 
         Tip_Blend = Tip | Blend,
-        Tip_Pattern_Blend = Tip | Pattern | Blend,
+        Tip_Grain_Blend = Tip | Grain | Blend,
         Tip_Opacity_Blend = Tip | Opacity | Blend,
-        Tip_Pattern_Opacity_Blend = Tip | Pattern | Opacity | Blend,
+        Tip_Grain_Opacity_Blend = Tip | Grain | Opacity | Blend,
 
         Tip_Mix = Tip | Mix,
-        Tip_Pattern_Mix = Tip | Pattern | Mix,
+        Tip_Grain_Mix = Tip | Grain | Mix,
 
         #endregion
 
-        Line = 65536 | UIOpacity | UIBlendMode | UIPattern,
+        Line = 65536 | UIOpacity | UIBlendMode | UIGrain,
         #region Line
 
-        Line_Pattern = Line | Pattern,
+        Line_Grain = Line | Grain,
         Line_Opacity = Line | Opacity,
-        Line_Pattern_Opacity = Line | Pattern | Opacity,
+        Line_Grain_Opacity = Line | Grain | Opacity,
 
         Line_Blend = Line | Blend,
-        Line_Pattern_Blend = Line | Pattern | Blend,
+        Line_Grain_Blend = Line | Grain | Blend,
         Line_Opacity_Blend = Line | Opacity | Blend,
-        Line_Pattern_Opacity_Blend = Line | Pattern | Opacity | Blend,
+        Line_Grain_Opacity_Blend = Line | Grain | Opacity | Blend,
 
         Line_Mix = Line | Mix,
-        Line_Pattern_Mix = Line | Pattern | Mix,
+        Line_Grain_Mix = Line | Grain | Mix,
 
         #endregion
 

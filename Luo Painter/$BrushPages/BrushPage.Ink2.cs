@@ -11,15 +11,15 @@ namespace Luo_Painter
 
         public void ConstructInk2()
         {
-            this.MaskButton.Toggled += async (s, e) =>
+            this.ShapeButton.Toggled += async (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                bool isOn = this.MaskButton.IsOn;
+                bool isOn = this.ShapeButton.IsOn;
 
                 // 1. Turn Off
                 if (isOn is false)
                 {
-                    this.InkPresenter.TurnOffMask();
+                    this.InkPresenter.TurnOffShape();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -28,9 +28,9 @@ namespace Luo_Painter
                 }
 
                 // 2. Turn On
-                if (this.InkPresenter.Mask is null is false)
+                if (this.InkPresenter.ShapeSource is null is false)
                 {
-                    this.InkPresenter.TryTurnOnMask();
+                    this.InkPresenter.TryTurnOnShape();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -39,7 +39,7 @@ namespace Luo_Painter
                 }
 
                 // 3. Show Dialog
-                this.TextureDialog.Construct(this.MaskImage.UriSource?.ToString());
+                this.TextureDialog.Construct(this.ShapeImage.UriSource?.ToString());
 
                 this.ScrollViewer.IsHitTestVisible = false;
                 ContentDialogResult result = await this.TextureDialog.ShowInstance();
@@ -51,8 +51,8 @@ namespace Luo_Painter
                         if (this.TextureDialog.SelectedItem is PaintTexture item)
                         {
                             // Select Texture
-                            this.MaskImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructMask(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.ShapeImage.UriSource = new System.Uri(item.Texture);
+                            this.InkPresenter.ConstructShape(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) return;
@@ -65,20 +65,20 @@ namespace Luo_Painter
                 }
 
                 // 4. Hides Dialog
-                if (this.MaskButton.IsOn is false) return;
+                if (this.ShapeButton.IsOn is false) return;
                 else
                 {
                     this.InkIsEnabled = false;
-                    this.MaskButton.IsOn = false;
+                    this.ShapeButton.IsOn = false;
                     this.InkIsEnabled = true;
                     return;
                 }
             };
 
-            this.SelectMaskButton.Click += async (s, e) =>
+            this.SelectShapeButton.Click += async (s, e) =>
             {
                 // Show Dialog
-                this.TextureDialog.Construct(this.MaskImage.UriSource?.ToString());
+                this.TextureDialog.Construct(this.ShapeImage.UriSource?.ToString());
 
                 this.ScrollViewer.IsHitTestVisible = false;
                 ContentDialogResult result = await this.TextureDialog.ShowInstance();
@@ -90,8 +90,8 @@ namespace Luo_Painter
                         if (this.TextureDialog.SelectedItem is PaintTexture item)
                         {
                             // Select Texture
-                            this.MaskImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructMask(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.ShapeImage.UriSource = new System.Uri(item.Texture);
+                            this.InkPresenter.ConstructShape(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) break;

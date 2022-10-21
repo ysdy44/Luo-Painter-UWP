@@ -12,15 +12,15 @@ namespace Luo_Painter
 
         public void ConstructInk3()
         {
-            this.PatternButton.Toggled += async (s, e) =>
+            this.GrainButton.Toggled += async (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                bool isOn = this.PatternButton.IsOn;
+                bool isOn = this.GrainButton.IsOn;
 
                 // 1. Turn Off
                 if (isOn is false)
                 {
-                    this.InkPresenter.TurnOffPattern();
+                    this.InkPresenter.TurnOffGrain();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -29,9 +29,9 @@ namespace Luo_Painter
                 }
 
                 // 2. Turn On
-                if (this.InkPresenter.Pattern is null is false)
+                if (this.InkPresenter.GrainSource is null is false)
                 {
-                    this.InkPresenter.TurnOffPattern();
+                    this.InkPresenter.TurnOffGrain();
                     this.InkType = this.InkPresenter.GetType();
 
                     if (this.ShaderCodeByteIsEnabled is false) return;
@@ -40,7 +40,7 @@ namespace Luo_Painter
                 }
 
                 // 3. Show Dialog
-                this.TextureDialog.Construct(this.PatternImage.UriSource?.ToString());
+                this.TextureDialog.Construct(this.GrainImage.UriSource?.ToString());
 
                 this.ScrollViewer.IsHitTestVisible = false;
                 ContentDialogResult result = await this.TextureDialog.ShowInstance();
@@ -52,8 +52,8 @@ namespace Luo_Painter
                         if (this.TextureDialog.SelectedItem is PaintTexture item)
                         {
                             // Select Texture
-                            this.PatternImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructPattern(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.GrainImage.UriSource = new System.Uri(item.Texture);
+                            this.InkPresenter.ConstructGrain(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) return;
@@ -66,20 +66,20 @@ namespace Luo_Painter
                 }
 
                 // 4. Hides Dialog
-                if (this.PatternButton.IsOn is false) return;
+                if (this.GrainButton.IsOn is false) return;
                 else
                 {
                     this.InkIsEnabled = false;
-                    this.PatternButton.IsOn = false;
+                    this.GrainButton.IsOn = false;
                     this.InkIsEnabled = true;
                     return;
                 }
             };
 
-            this.SelectPatternButton.Click += async (s, e) =>
+            this.SelectGrainButton.Click += async (s, e) =>
             {
                 // Show Dialog
-                this.TextureDialog.Construct(this.PatternImage.UriSource?.ToString());
+                this.TextureDialog.Construct(this.GrainImage.UriSource?.ToString());
 
                 this.ScrollViewer.IsHitTestVisible = false;
                 ContentDialogResult result = await this.TextureDialog.ShowInstance();
@@ -91,8 +91,8 @@ namespace Luo_Painter
                         if (this.TextureDialog.SelectedItem is PaintTexture item)
                         {
                             // Select Texture
-                            this.PatternImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructPattern(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.GrainImage.UriSource = new System.Uri(item.Texture);
+                            this.InkPresenter.ConstructGrain(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
 
                             if (this.ShaderCodeByteIsEnabled is false) break;
@@ -109,7 +109,7 @@ namespace Luo_Painter
             this.StepTextBox.KeyDown += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                if (SizePickerExtension.IsEnter(e.Key)) this.PatternButton.Focus(FocusState.Programmatic);
+                if (SizePickerExtension.IsEnter(e.Key)) this.GrainButton.Focus(FocusState.Programmatic);
             };
             this.StepTextBox.LostFocus += (s, e) =>
             {
