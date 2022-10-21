@@ -41,13 +41,13 @@ namespace Luo_Painter
                 this.IgnoreSizePressureButton.IsOn = presenter.IgnoreSizePressure;
                 this.IgnoreFlowPressureButton.IsOn = presenter.IgnoreFlowPressure;
 
-                switch (presenter.Shape)
+                switch (presenter.Tip)
                 {
                     case Windows.UI.Input.Inking.PenTipShape.Circle:
-                        this.ShapeListBox.SelectedIndex = presenter.IsStroke ? 1 : 0;
+                        this.TipListBox.SelectedIndex = presenter.IsStroke ? 1 : 0;
                         break;
                     case Windows.UI.Input.Inking.PenTipShape.Rectangle:
-                        this.ShapeListBox.SelectedIndex = presenter.IsStroke ? 3 : 2;
+                        this.TipListBox.SelectedIndex = presenter.IsStroke ? 3 : 2;
                         break;
                     default:
                         break;
@@ -136,20 +136,20 @@ namespace Luo_Painter
                     this.InkCanvasControl.Invalidate();
                     break;
 
-                case InkType.Shape:
-                case InkType.Shape_Pattern:
-                case InkType.Shape_Opacity:
-                case InkType.Shape_Pattern_Opacity:
-                case InkType.Shape_Blend:
-                case InkType.Shape_Pattern_Blend:
-                case InkType.Shape_Opacity_Blend:
-                case InkType.Shape_Pattern_Opacity_Blend:
-                case InkType.Shape_Mix:
-                case InkType.Shape_Pattern_Mix:
+                case InkType.Tip:
+                case InkType.Tip_Pattern:
+                case InkType.Tip_Opacity:
+                case InkType.Tip_Pattern_Opacity:
+                case InkType.Tip_Blend:
+                case InkType.Tip_Pattern_Blend:
+                case InkType.Tip_Opacity_Blend:
+                case InkType.Tip_Pattern_Opacity_Blend:
+                case InkType.Tip_Mix:
+                case InkType.Tip_Pattern_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricShape(ds, this.Color, false);
+                        this.InkPresenter.IsometricTip(ds, this.Color, false);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -177,7 +177,7 @@ namespace Luo_Painter
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricShape(ds, this.Color, true);
+                        this.InkPresenter.IsometricTip(ds, this.Color, true);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;

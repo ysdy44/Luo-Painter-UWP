@@ -14,7 +14,7 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref=" InkType.None"/> <para/>
         /// <see cref=" InkType.Brush"/> <para/>
-        /// <see cref=" InkType.Shape"/> <para/>
+        /// <see cref=" InkType.Tip"/> <para/>
         /// <see cref=" InkType.Line"/> <para/>
         /// <see cref=" InkType.Blur"/> <para/>
         /// <see cref=" InkType.Mosaic"/> <para/>

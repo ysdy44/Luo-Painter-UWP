@@ -74,35 +74,35 @@
                                 }
                         }
                     }
-                case InkType.Shape:
+                case InkType.Tip:
                     switch (this.Mode)
                     {
                         case InkType.Blend:
                             if (this.Opacity == 0f) return InkType.None;
                             else if (this.Opacity == 1f)
                             {
-                                if (this.AllowPattern) return InkType.Shape_Pattern_Blend;
-                                else return InkType.Shape_Blend;
+                                if (this.AllowPattern) return InkType.Tip_Pattern_Blend;
+                                else return InkType.Tip_Blend;
                             }
                             else
                             {
-                                if (this.AllowPattern) return InkType.Shape_Pattern_Opacity_Blend;
-                                else return InkType.Shape_Opacity_Blend;
+                                if (this.AllowPattern) return InkType.Tip_Pattern_Opacity_Blend;
+                                else return InkType.Tip_Opacity_Blend;
                             }
                         case InkType.Mix:
-                            if (this.AllowPattern) return InkType.Shape_Pattern_Mix;
-                            else return InkType.Shape_Mix;
+                            if (this.AllowPattern) return InkType.Tip_Pattern_Mix;
+                            else return InkType.Tip_Mix;
                         default:
                             if (this.Opacity == 0f) return InkType.None;
                             else if (this.Opacity == 1f)
                             {
-                                if (this.AllowPattern) return InkType.Shape_Pattern;
-                                else return InkType.Shape;
+                                if (this.AllowPattern) return InkType.Tip_Pattern;
+                                else return InkType.Tip;
                             }
                             else
                             {
-                                if (this.AllowPattern) return InkType.Shape_Pattern_Opacity;
-                                else return InkType.Shape_Opacity;
+                                if (this.AllowPattern) return InkType.Tip_Pattern_Opacity;
+                                else return InkType.Tip_Opacity;
                             }
                     }
                 case InkType.Line:

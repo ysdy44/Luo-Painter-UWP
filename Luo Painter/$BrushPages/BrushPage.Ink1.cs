@@ -82,35 +82,35 @@ namespace Luo_Painter
                 System.Threading.Tasks.Task.Run(this.InkAsync);
             };
 
-            this.ShapeListBox.SelectionChanged += (s, e) =>
+            this.TipListBox.SelectionChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
 
-                switch (this.ShapeListBox.SelectedIndex)
+                switch (this.TipListBox.SelectedIndex)
                 {
                     case 0:
-                        this.InkPresenter.Shape = PenTipShape.Circle;
+                        this.InkPresenter.Tip = PenTipShape.Circle;
                         this.InkPresenter.IsStroke = false;
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
                         break;
                     case 1:
-                        this.InkPresenter.Shape = PenTipShape.Circle;
+                        this.InkPresenter.Tip = PenTipShape.Circle;
                         this.InkPresenter.IsStroke = true;
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
                         break;
                     case 2:
-                        this.InkPresenter.Shape = PenTipShape.Rectangle;
+                        this.InkPresenter.Tip = PenTipShape.Rectangle;
                         this.InkPresenter.IsStroke = false;
 
                         if (this.ShaderCodeByteIsEnabled is false) break;
                         lock (this.InkLocker) this.Ink();
                         break;
                     case 3:
-                        this.InkPresenter.Shape = PenTipShape.Rectangle;
+                        this.InkPresenter.Tip = PenTipShape.Rectangle;
                         this.InkPresenter.IsStroke = true;
 
                         if (this.ShaderCodeByteIsEnabled is false) break;

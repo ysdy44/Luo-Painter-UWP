@@ -288,17 +288,17 @@
 
 
                         <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" />
+                                   Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" />
 
 
-                        <!--Shape-->
-                        <TextBlock x:Name="ShapeTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
-                            Shape
+                        <!--Tip-->
+                        <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                   Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" >
+                            Tip
                         </TextBlock>
 
-                        <ListBox x:Name="ShapeListBox" Margin="0,4" Style="{StaticResource AppSegmentListBoxStyle}"
-                                     Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                        <ListBox x:Name="TipListBox" Margin="0,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                     Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
                             <Ellipse Width="32" Height="32" Fill="White"/>
                             <Ellipse Width="32" Height="32" StrokeThickness="1" Stroke="White"/>
                             <Rectangle Width="32" Height="32" Fill="White"/>

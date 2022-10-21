@@ -10,7 +10,7 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref=" InkType.None"/>
         /// <see cref=" InkType.Brush"/>
-        /// <see cref=" InkType.Shape"/>
+        /// <see cref=" InkType.Tip"/>
         /// <see cref=" InkType.Line"/>
         /// <see cref=" InkType.Blur"/>
         /// <see cref=" InkType.Mosaic"/>
@@ -37,7 +37,7 @@ namespace Luo_Painter.Brushes
         public bool IgnoreSizePressure { get; set; }
         public bool IgnoreFlowPressure { get; set; }
 
-        public PenTipShape Shape { get; set; }
+        public PenTipShape Tip { get; set; }
         public bool IsStroke { get; set; }
 
 
@@ -70,7 +70,7 @@ namespace Luo_Painter.Brushes
             this.IgnoreSizePressure = default; 
             this.IgnoreFlowPressure = default;
 
-            this.Shape = default; 
+            this.Tip = default; 
             this.IsStroke = default;
 
             this.BlendMode = default;

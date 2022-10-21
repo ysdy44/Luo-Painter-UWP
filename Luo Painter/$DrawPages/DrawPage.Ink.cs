@@ -23,7 +23,7 @@ namespace Luo_Painter
             switch (type)
             {
                 case OptionType.PaintBrush: toolType = InkType.Brush; break;
-                case OptionType.PaintWatercolorPen: toolType = InkType.Shape; break;
+                case OptionType.PaintWatercolorPen: toolType = InkType.Tip; break;
                 case OptionType.PaintPencil: toolType = InkType.Line; break;
                 case OptionType.PaintEraseBrush: toolType = InkType.Erase; break;
                 case OptionType.PaintLiquefaction: toolType = InkType.Liquefy; break;

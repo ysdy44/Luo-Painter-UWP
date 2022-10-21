@@ -21,7 +21,7 @@ namespace Luo_Painter.Brushes
             ds.DrawLine(this.StartingPosition, this.Position, color, ignoreSizePressure ? this.Size : this.StartingSize * 2, StrokeSegment.CanvasStrokeStyle);
         }
 
-        public void IsometricShape(CanvasDrawingSession ds, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
+        public void IsometricTip(CanvasDrawingSession ds, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
         {
             switch (shape)
             {

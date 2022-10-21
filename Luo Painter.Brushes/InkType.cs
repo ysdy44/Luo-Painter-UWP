@@ -18,7 +18,7 @@ namespace Luo_Painter.Brushes
         UIOpacity = 64,
         UISpacing = 128,
         UIFlow = 256,
-        UIShape = 512,
+        UITip = 512,
         UIBlendMode = 1024,
         UIHardness = 2048,
         UIMask = 4096,
@@ -58,20 +58,20 @@ namespace Luo_Painter.Brushes
 
         #endregion
 
-        Shape = 32768 | UIOpacity | UISpacing | UIShape | UIBlendMode | UIPattern,
-        #region Shape
+        Tip = 32768 | UIOpacity | UISpacing | UITip | UIBlendMode | UIPattern,
+        #region Tip
 
-        Shape_Pattern = Shape | Pattern,
-        Shape_Opacity = Shape | Opacity,
-        Shape_Pattern_Opacity = Shape | Pattern | Opacity,
+        Tip_Pattern = Tip | Pattern,
+        Tip_Opacity = Tip | Opacity,
+        Tip_Pattern_Opacity = Tip | Pattern | Opacity,
 
-        Shape_Blend = Shape | Blend,
-        Shape_Pattern_Blend = Shape | Pattern | Blend,
-        Shape_Opacity_Blend = Shape | Opacity | Blend,
-        Shape_Pattern_Opacity_Blend = Shape | Pattern | Opacity | Blend,
+        Tip_Blend = Tip | Blend,
+        Tip_Pattern_Blend = Tip | Pattern | Blend,
+        Tip_Opacity_Blend = Tip | Opacity | Blend,
+        Tip_Pattern_Opacity_Blend = Tip | Pattern | Opacity | Blend,
 
-        Shape_Mix = Shape | Mix,
-        Shape_Pattern_Mix = Shape | Pattern | Mix,
+        Tip_Mix = Tip | Mix,
+        Tip_Pattern_Mix = Tip | Pattern | Mix,
 
         #endregion
 

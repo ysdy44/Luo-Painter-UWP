@@ -33,7 +33,7 @@ namespace Luo_Painter.Brushes
         private double OffsetY(double radian) => (float)System.Math.Clamp(System.Math.Sin(radian + radian), -1, 1);
 
 
-        public void IsometricShape(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
+        public void IsometricTip(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
         {
             float size = this.Size / 24 + 1;
             float spacing = ignoreSpacing ? 0.25f : this.Spacing;
@@ -44,7 +44,7 @@ namespace Luo_Painter.Brushes
             float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
             float x = open + startingSizePressure * spacing;
 
-            switch (this.Shape)
+            switch (this.Tip)
             {
                 case PenTipShape.Circle:
                     if (this.IsStroke)
@@ -74,7 +74,7 @@ namespace Luo_Painter.Brushes
                     break;
             }
 
-            switch (this.Shape)
+            switch (this.Tip)
             {
                 case PenTipShape.Circle:
                     do
