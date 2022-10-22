@@ -1,19 +1,15 @@
-﻿<elements:Spliter
-    xmlns:elements="using:Luo_Painter.Elements"
+﻿<UserControl
     x:Class="Luo_Painter.Controls.ToolListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter.Controls"
-    xmlns:options="using:Luo_Painter.Options" xmlns:luo_painter="using:Luo_Painter"
+    xmlns:luo_painter="using:Luo_Painter"
+    xmlns:options="using:Luo_Painter.Options"
     mc:Ignorable="d"
-    d:DesignHeight="50"
-    d:DesignWidth="50"  
-    Margin="0,49,0,0" 
-    Placement="Left"
-    BorderBrush="{ThemeResource AppStroke}" 
-    Background="{ThemeResource SystemControlAcrylicElementBrush}"
+    d:DesignWidth="400"  
+    d:DesignHeight="400"
+    Margin="0,50,0,0"
     >
 
     <FrameworkElement.Resources>
@@ -33,10 +29,6 @@
                     </luo_painter:ToolGrouping>
                     <luo_painter:ToolGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
-                        <options:OptionType>PaintWatercolorPen</options:OptionType>
-                        <options:OptionType>PaintPencil</options:OptionType>
-                        <options:OptionType>PaintEraseBrush</options:OptionType>
-                        <options:OptionType>PaintLiquefaction</options:OptionType>
                     </luo_painter:ToolGrouping>
                     <luo_painter:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>
@@ -80,18 +72,20 @@
                         <options:OptionType>PatternDiagonal</options:OptionType>
                         <options:OptionType>PatternSpotted</options:OptionType>
                     </luo_painter:ToolGrouping>
-                    </luo_painter:ToolGroupingList>
+                </luo_painter:ToolGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
 
-    <ListView x:Name="ListView" 
-              IsItemClickEnabled="True" 
-              SelectionMode="Single" 
-              
-              ScrollViewer.VerticalScrollBarVisibility="Hidden"
-              ItemsSource="{x:Bind CollectionViewSource.View}" 
-              >
+    <ListView
+        x:Name="ListView"            
+        IsItemClickEnabled="True"            
+        SelectionMode="Single" 
+                       
+        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+        ItemsSource="{x:Bind CollectionViewSource.View}" 
+        FooterTemplate="{StaticResource AppListViewBaseFooter}"        
+        >
 
         <ItemsControl.ItemContainerTransitions>
             <TransitionCollection>
@@ -151,7 +145,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewHeaderItem">
-                                    <Rectangle Height="2" Fill="{ThemeResource AppStroke}" />
+                                    <Rectangle Height="1" Fill="{ThemeResource AppStroke}" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -160,6 +154,23 @@
             </GroupStyle>
         </ItemsControl.GroupStyle>
 
+        <ListViewBase.Header>
+            <Border Height="50" Background="{ThemeResource AppBackgroundLight}" >
+                <TextBlock 
+                    Margin="16,0"
+                    IsHitTestVisible="false" 
+                    FontWeight="Medium" 
+                    TextTrimming="CharacterEllipsis" 
+                    FontSize="20" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Center" 
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                     >
+                    Tools
+                </TextBlock>
+            </Border>
+        </ListViewBase.Header>
+
     </ListView>
 
-</elements:Spliter>
+</UserControl>

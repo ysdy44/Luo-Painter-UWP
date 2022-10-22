@@ -1,11 +1,11 @@
-﻿using Luo_Painter.Elements;
-using Luo_Painter.Options;
+﻿using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ToolListView : Spliter
+    public sealed partial class ToolListView : UserControl
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick;
