@@ -14,9 +14,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        int MixX = -1;
-        int MixY = -1;
-
         private void Paint_Start()
         {
             if (this.InkType == default) return;

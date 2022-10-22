@@ -87,16 +87,6 @@ namespace Luo_Painter
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
-        public InkType InkType { get; set; } = InkType.General;
-        InkMixer InkMixer { get; set; } = new InkMixer();
-        public InkPresenter InkPresenter { get; } = new InkPresenter
-        {
-            Size = 22f,
-            Opacity = 1f,
-
-            Spacing = 0.25f,
-            Flow = 1f,
-        };
 
 
         bool IsReferenceImageResizing { get; set; }
@@ -111,9 +101,6 @@ namespace Luo_Painter
         float StartingPressure;
         float Pressure;
 
-        Color Color => this.ColorMenu.Color;
-        Vector4 ColorHdr => this.ColorMenu.ColorHdr;
-
         Transformer StartingBoundsTransformer;
         Transformer BoundsTransformer;
         TransformerMode BoundsMode;
@@ -121,10 +108,42 @@ namespace Luo_Painter
         Matrix3x2 BoundsMatrix;
 
 
+        #region IInkParameter
+
+        public InkType InkType { get; set; } = InkType.General;
+        public InkPresenter InkPresenter { get; } = new InkPresenter
+        {
+            Size = 22f,
+            Opacity = 1f,
+
+            Spacing = 0.25f,
+            Flow = 1f,
+        };
+
+        int MixX = -1;
+        int MixY = -1;
+        InkMixer InkMixer = new InkMixer();
+
+        public Color Color => this.ColorMenu.Color;
+        public Vector4 ColorHdr => this.ColorMenu.ColorHdr;
+
+        public object TextureSelectedItem => this.TextureDialog.SelectedItem;
+        public void ConstructTexture(string texture) => this.TextureDialog.Construct(texture);
+        public Task<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowInstance();
+
+        public void Construct(IInkParameter item)
+        {
+        }
+
+        #endregion
+
+
         //@Construct
         public DrawPage()
         {
             this.InitializeComponent();
+            this.Construct(this);
+
             this.ConstructCanvas();
             this.ConstructOperator();
             this.ConstructSimulate();

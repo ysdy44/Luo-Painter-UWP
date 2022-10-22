@@ -1,10 +1,12 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -17,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    public sealed partial class BrushPage : Page
+    public sealed partial class BrushPage : Page, IInkParameter
     {
 
         //@Converter
@@ -36,7 +38,7 @@ namespace Luo_Painter
         private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
-       
+
         private Symbol StarSymbolConverter(bool value) => value ? Symbol.SolidStar : Symbol.OutlineStar;
         private Symbol PinSymbolConverter(SplitViewDisplayMode value)
         {
@@ -47,11 +49,7 @@ namespace Luo_Painter
             }
         }
 
-
-        CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
-
-        InkMixer InkMixer { get; set; } = new InkMixer();
-        InkPresenter InkPresenter => this.InkParameter.InkPresenter;
+        public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 
         //@Task
         readonly object InkLocker = new object();
@@ -61,18 +59,10 @@ namespace Luo_Painter
         readonly object Locker = new object();
         BitmapLayer BitmapLayer { get; set; }
 
-        InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
-
         Vector2 StartingPosition;
         Vector2 Position;
         float StartingPressure;
         float Pressure;
-
-        bool IsDrak;
-        Color Color => this.IsDrak ? Colors.White : Colors.Black;
-        Vector4 ColorHdr => this.IsDrak ? Vector4.One : Vector4.UnitW;
-
-        IInkParameter InkParameter;
 
         bool InkIsEnabled = true;
 
@@ -91,6 +81,33 @@ namespace Luo_Painter
 
         #endregion
 
+        #region IInkParameter
+
+        public InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
+        public InkPresenter InkPresenter => this.InkParameter.InkPresenter;
+
+        int MixX = -1;
+        int MixY = -1;
+        InkMixer InkMixer = new InkMixer();
+
+        bool IsDrak;
+        public Color Color => this.IsDrak ? Colors.White : Colors.Black;
+        public Vector4 ColorHdr => this.IsDrak ? Vector4.One : Vector4.UnitW;
+
+        public object TextureSelectedItem => this.TextureDialog.SelectedItem;
+        public void ConstructTexture(string texture) => this.TextureDialog.Construct(texture);
+        public Task<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowInstance();
+
+        IInkParameter InkParameter;
+        public void Construct(IInkParameter item)
+        {
+            this.InkParameter = item;
+
+            this.ConstructInk(item.InkPresenter);
+            this.Type = item.InkPresenter.Type;
+        }
+
+        #endregion
 
         //@Construct
         [DrawPageToBrushPage(NavigationMode.Back)]
@@ -236,10 +253,7 @@ namespace Luo_Painter
         {
             if (e.Parameter is IInkParameter item)
             {
-                this.InkParameter = item;
-
-                this.ConstructInk(item.InkPresenter);
-                this.Type = item.InkPresenter.Type;
+                this.Construct(item);
             }
             else
             {
