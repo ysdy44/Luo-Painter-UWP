@@ -116,18 +116,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="%24BrushPages\BrushPage.Canvas.cs" />
-    <Compile Include="%24BrushPages\BrushPage.CreateResources.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Ink.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Ink1.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Ink2.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Ink3.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Operator.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Paint.cs" />
-    <Compile Include="%24BrushPages\BrushPage.Tool.Paint.cs" />
-    <Compile Include="%24BrushPages\BrushPage.xaml.cs">
-      <DependentUpon>BrushPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
@@ -184,6 +172,23 @@
     </Compile>
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PaintScrollViewer.Canvas.cs" />
+    <Compile Include="Controls\PaintScrollViewer.CreateResources.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Ink.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Ink1.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Ink2.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Ink3.cs" />
+    <Compile Include="Controls\PaintScrollViewer.xaml.cs">
+      <DependentUpon>PaintScrollViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PaletteMenu.Canvas.cs" />
+    <Compile Include="Controls\PaletteMenu.CreateResources.cs" />
+    <Compile Include="Controls\PaletteMenu.Operator.cs" />
+    <Compile Include="Controls\PaletteMenu.Paint.cs" />
+    <Compile Include="Controls\PaletteMenu.Tool.Paint.cs" />
+    <Compile Include="Controls\PaletteMenu.xaml.cs">
+      <DependentUpon>PaletteMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SimulateCanvas.xaml.cs">
       <DependentUpon>SimulateCanvas.xaml</DependentUpon>
@@ -302,10 +307,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="%24BrushPages\BrushPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="%24DrawPages\DrawPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -339,6 +340,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LayerListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PaintScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PaletteMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

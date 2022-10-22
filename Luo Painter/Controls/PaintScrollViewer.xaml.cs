@@ -104,6 +104,7 @@ namespace Luo_Painter.Controls
 
     }
 
+    /*
     public sealed partial class PaletteMenu : Expander, IInkParameter
     {
 
@@ -257,6 +258,7 @@ namespace Luo_Painter.Controls
                     this.ClearButton,
                 }
             };
-        }
+        }  
     }
+    */
 }
