@@ -8,16 +8,16 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushMenu : UserControl
+    public sealed partial class BrushListView : UserControl
     {
         //@Delegate
         public event EventHandler<PaintBrush> ItemClick;
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
 
         //@Construct
-        public BrushMenu()
+        public BrushListView()
         {
             this.InitializeComponent();
             this.ListView.ItemClick += (s, e) =>

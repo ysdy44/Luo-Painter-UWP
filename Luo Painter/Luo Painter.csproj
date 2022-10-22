@@ -167,8 +167,14 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BrushMenu.xaml.cs">
+      <DependentUpon>BrushMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ContextAppBar.xaml.cs">
       <DependentUpon>ContextAppBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HistoryMenu.xaml.cs">
+      <DependentUpon>HistoryMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\KeyboardShortcuts.xaml.cs">
       <DependentUpon>KeyboardShortcuts.xaml</DependentUpon>
@@ -178,6 +184,9 @@
     </Compile>
     <Compile Include="Controls\SimulateCanvas.xaml.cs">
       <DependentUpon>SimulateCanvas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SizeMenu.xaml.cs">
+      <DependentUpon>SizeMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
@@ -205,9 +214,6 @@
     <Compile Include="Luo Painter.Menus\AdjustmentMenu.xaml.cs">
       <DependentUpon>AdjustmentMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Luo Painter.Menus\BrushMenu.xaml.cs">
-      <DependentUpon>BrushMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Luo Painter.Menus\ColorMenu.xaml.cs">
       <DependentUpon>ColorMenu.xaml</DependentUpon>
     </Compile>
@@ -217,17 +223,11 @@
     <Compile Include="Luo Painter.Menus\ExportMenu.xaml.cs">
       <DependentUpon>ExportMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Luo Painter.Menus\HistoryMenu.xaml.cs">
-      <DependentUpon>HistoryMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Luo Painter.Menus\LayerMenu.xaml.cs">
       <DependentUpon>LayerMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Luo Painter.Menus\OtherMenu.xaml.cs">
       <DependentUpon>OtherMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Luo Painter.Menus\SizeMenu.xaml.cs">
-      <DependentUpon>SizeMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Luo Painter.Tools\ViewTool.xaml.cs">
       <DependentUpon>ViewTool.xaml</DependentUpon>
@@ -321,7 +321,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\BrushMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ContextAppBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\HistoryMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -334,6 +342,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SimulateCanvas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SizeMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -365,10 +377,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Luo Painter.Menus\BrushMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Luo Painter.Menus\ColorMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -381,19 +389,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Luo Painter.Menus\HistoryMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Luo Painter.Menus\LayerMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Luo Painter.Menus\OtherMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Luo Painter.Menus\SizeMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
