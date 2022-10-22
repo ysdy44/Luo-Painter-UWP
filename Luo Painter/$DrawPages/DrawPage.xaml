@@ -119,6 +119,7 @@
 
                     <!--Tool-->
                     <controls:ToolListView x:Name="ToolListView" Visibility="{x:Bind ToolItem.IsSelected, Mode=OneWay}"/>
+                    <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="{x:Bind PaintItem.IsSelected, Mode=OneWay}"/>
                     <controls:BrushListView x:Name="BrushMenu" Visibility="{x:Bind BrushItem.IsSelected, Mode=OneWay}"/>
                     <controls:SizeListView x:Name="SizeMenu" Visibility="{x:Bind SizeItem.IsSelected, Mode=OneWay}"/>
                     <controls:HistoryListView x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="{x:Bind HistoryItem.IsSelected, Mode=OneWay}"/>
@@ -223,6 +224,9 @@
                     <Button x:Name="FullScreenButton" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
                         <SymbolIcon Symbol="FullScreen" />
                     </Button>
+                    <Button x:Name="PaletteButton" Style="{StaticResource AppButtonStyle}" >
+                        <FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>
+                    </Button>
                     <Button                               
                         x:Name="ColorButton"                               
                         BorderThickness="0,0,0,2"                                
@@ -268,6 +272,7 @@
             <controls:OtherMenu x:Name="OtherMenu" />
             <controls:LayerMenu x:Name="LayerMenu"/>
             <controls:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
+            <controls:PaletteMenu x:Name="PaletteMenu" />
         </elements:ExpanderLightDismissOverlay>
 
 
