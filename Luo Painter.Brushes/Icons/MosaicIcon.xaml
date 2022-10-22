@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="MosaicIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center" >
+            <PathIcon.Data>
+                <GeometryGroup>
+                    <RectangleGeometry Rect="0,12.2,9.4,9.4"/>
+
+                    <RectangleGeometry Rect="4.7,5,5.3,5.3"/>
+                    <RectangleGeometry Rect="11.2,11.6,5.3,5.3"/>
+                    <RectangleGeometry Rect="11.9,5.3,4.4,4.4"/>
+
+                    <RectangleGeometry Rect="13.3,0.3,3.4,3.4"/>
+                    <RectangleGeometry Rect="17.9,4.7,3.4,3.4"/>
+                    <RectangleGeometry Rect="18.8,0,2.8,2.8"/>
+                </GeometryGroup>
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>

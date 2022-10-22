@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="GeneralIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center" >
+            <PathIcon.Data>
+                M21.223,7.638c-0.301,16.172 -21.223,10.564 -21.223,10.564c-0,0 6.499,-3.762 6.792,-7.216c0.3,-2.565 3.467,-8.094 9.763,-7.641l4.669,4.245l-0.001,0.048Zm1.53,-1.332l-5.232,-4.62l2.208,-1.686l4.466,3.719l-1.442,2.587Z
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>

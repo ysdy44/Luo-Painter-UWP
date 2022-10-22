@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="BlurIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center" >
+            <PathIcon.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="17.81612,0.0256691">
+                        <LineSegment Point="4.88169,6.845625"/>
+                        <ArcSegment IsLargeArc="True" Size="6.912,6.912" Point="13.83441,14.0954"/>
+                        <LineSegment Point="13.83441,14.0954"/>
+                    </PathFigure>
+                </PathGeometry>
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>
