@@ -4,12 +4,12 @@
 
     <ControlTemplate x:Key="InvertIcon" TargetType="ContentControl">
         <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="{ThemeResource AppStroke}" >
-            <Ellipse.Fill>
+            <Shape.Fill>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                     <GradientStop Color="#222222" Offset="0"/>
                     <GradientStop Color="Black" Offset="1"/>
                 </LinearGradientBrush>
-            </Ellipse.Fill>
+            </Shape.Fill>
         </Ellipse>
     </ControlTemplate>
 

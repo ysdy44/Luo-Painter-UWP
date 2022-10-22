@@ -4,13 +4,13 @@
 
     <ControlTemplate x:Key="TemperatureIcon" TargetType="ContentControl">
         <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="{ThemeResource AppStroke}">
-            <Ellipse.Fill>
+            <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                     <GradientStop Color="#3EADF5" Offset="0"/>
                     <GradientStop Color="#FFFFFF" Offset="0.5"/>
                     <GradientStop Color="#F99652" Offset="1"/>
                 </LinearGradientBrush>
-            </Ellipse.Fill>
+            </Shape.Fill>
         </Ellipse>
     </ControlTemplate>
 

@@ -5,22 +5,22 @@
     <ControlTemplate x:Key="ColorMatrixIcon" TargetType="ContentControl">
         <Grid>
             <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="{ThemeResource AppStroke}">
-                <Ellipse.Fill>
+                <Shape.Fill>
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="#00FFFF" Offset="0.2"/>
                         <GradientStop Color="#FF00FF" Offset="0.5"/>
                         <GradientStop Color="#FFFF00" Offset="0.8"/>
                     </LinearGradientBrush>
-                </Ellipse.Fill>
+                </Shape.Fill>
             </Ellipse>
             <Ellipse Width="22" Height="22" Opacity="0.5">
-                <Ellipse.Fill>
+                <Shape.Fill>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#00FFFF" Offset="0.2"/>
                         <GradientStop Color="#FF00FF" Offset="0.5"/>
                         <GradientStop Color="#FFFF00" Offset="0.8"/>
                     </LinearGradientBrush>
-                </Ellipse.Fill>
+                </Shape.Fill>
             </Ellipse>
         </Grid>
     </ControlTemplate>

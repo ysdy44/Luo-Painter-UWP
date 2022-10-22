@@ -5,20 +5,20 @@
     <ControlTemplate x:Key="HighlightsAndShadowsIcon" TargetType="ContentControl">
         <Grid>
             <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="{ThemeResource AppStroke}">
-                <Ellipse.Fill>
+                <Shape.Fill>
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="White" Offset="0.4"/>
                         <GradientStop Color="Black" Offset="0.5"/>
                     </LinearGradientBrush>
-                </Ellipse.Fill>
+                </Shape.Fill>
             </Ellipse>
             <Ellipse Width="14" Height="14">
-                <Ellipse.Fill>
+                <Shape.Fill>
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                         <GradientStop Color="Black" Offset="0.4"/>
                         <GradientStop Color="White" Offset="0.5"/>
                     </LinearGradientBrush>
-                </Ellipse.Fill>
+                </Shape.Fill>
             </Ellipse>
         </Grid>
     </ControlTemplate>
