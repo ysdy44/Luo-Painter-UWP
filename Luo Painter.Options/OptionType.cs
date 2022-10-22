@@ -87,7 +87,7 @@ namespace Luo_Painter.Options
 
         PaintMenu = Menu | 9 << 8 | IsItemClickEnabled,
         BrushMenu = Menu | 10 << 8 | IsItemClickEnabled,
-        SizeMenu = Menu | 1 << 8 | IsItemClickEnabled,
+        SizeMenu = Menu | 111 << 8 | IsItemClickEnabled,
 
         LayerMenu = Menu | 12 << 8 | IsItemClickEnabled,
         AddMenu = Menu | 13 << 8 | IsItemClickEnabled,

@@ -32,40 +32,30 @@ namespace Luo_Painter
         {
             switch (type)
             {
-                //case OptionType.None:
-                //    break;
-                //case OptionType.IsItemClickEnabled:
-                //    break;
-                //case OptionType.ExistIcon:
-                //    break;
-                //case OptionType.ExistThumbnail:
-                //    break;
-                //case OptionType.AllowDrag:
-                //    break;
-                //case OptionType.HasPreview:
-                //    break;
-                //case OptionType.HasDifference:
-                //    break;
-                //case OptionType.TempOverlay:
-                //    break;
-                //case OptionType.HasState:
-                //    break;
+                // None
+                case OptionType.None: break;
 
+                // Flag
+                case OptionType.IsItemClickEnabled: break;
+                case OptionType.ExistIcon: break;
+                case OptionType.ExistThumbnail: break;
+                case OptionType.AllowDrag: break;
+                case OptionType.HasPreview: break;
+                case OptionType.HasDifference: break;
+                case OptionType.WithState: break;
+                case OptionType.WithTransform: break;
 
-                //case OptionType.App:
-                //    break;
-                //case OptionType.Edit:
-                //    break;
-                //case OptionType.Effect:
-                //    break;
-                //case OptionType.Tool:
-                //    break;
+                // Root
+                case OptionType.File: break;
+                case OptionType.Edit: break;
+                case OptionType.Menu: break;
+                case OptionType.Setup: break;
+                case OptionType.Layer: break;
+                case OptionType.Select: break;
+                case OptionType.Effect: break;
+                case OptionType.Tool: break;
 
-
-                //case OptionType.File:
-                //    break;
-                //case OptionType.Menu:
-                //    break;
+                #region File
 
                 case OptionType.Close:
                     if (this.IsFullScreen)
@@ -89,6 +79,7 @@ namespace Luo_Painter
                     await this.SaveAsync(this.ApplicationView.PersistedStateId, false);
                     base.IsEnabled = true;
                     break;
+
                 case OptionType.Export:
                     {
                         if (this.Nodes.Count() is 0)
@@ -281,6 +272,7 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
+
                 case OptionType.Undo:
                     {
                         if (this.History.CanUndo is false) break;
@@ -311,6 +303,7 @@ namespace Luo_Painter
                         this.Tip(TipType.Redo);
                     }
                     break;
+
                 case OptionType.FullScreen:
                     if (this.ExpanderLightDismissOverlay.Hide()) break;
 
@@ -318,11 +311,13 @@ namespace Luo_Painter
                     {
                         this.IsFullScreen = false;
                         this.SetFullScreenState(false);
+                        this.ApplicationView.ExitFullScreenMode();
                     }
                     else
                     {
                         this.IsFullScreen = true;
                         this.SetFullScreenState(true);
+                        this.ApplicationView.TryEnterFullScreenMode();
                     }
 
                     this.FullScreenKey.IsEnabled = false;
@@ -332,205 +327,13 @@ namespace Luo_Painter
                 case OptionType.UnFullScreen:
                     this.IsFullScreen = false;
                     this.SetFullScreenState(false);
+                    this.ApplicationView.ExitFullScreenMode();
                     break;
 
-                case OptionType.ExportMenu:
-                    this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.ColorMenu:
-                    this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.EditMenu:
-                    this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.AdjustmentMenu:
-                    this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.OtherMenu:
-                    this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.LayerMenu:
-                    this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.AddMenuWithRename:
-                    switch (this.AddMenu.State)
-                    {
-                        case ExpanderState.Collapsed:
-                            if (this.LayerListView.Width > 0)
-                                this.AddMenu.ShowAt(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
-                            else
-                                this.AddMenu.ShowAt(this.LayerListView, ExpanderPlacementMode.Left);
-                            this.AddMenu.Rename();
-                            break;
-                        default:
-                            this.AddMenu.Rename();
-                            break;
-                    }
-                    break;
+                #endregion
 
-                //case OptionType.Layering:
-                //    break;
-                //case OptionType.Editing:
-                //    break;
-                //case OptionType.Grouping:
-                //    break;
-                //case OptionType.Select:
-                //    break;
-                //case OptionType.Combine:
-                //    break;
-                //case OptionType.Setup:
-                //    break;
+                #region Edit
 
-                case OptionType.Remove:
-                    {
-                        var items = this.LayerSelectedItems;
-                        switch (items.Count)
-                        {
-                            case 0:
-                                break;
-                            case 1:
-                                if (this.LayerSelectedItem is ILayer layer)
-                                {
-                                    /// History
-                                    int removes = this.History.Push(this.LayerManager.Remove(this, layer, true));
-
-                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                                }
-                                break;
-                            default:
-                                {
-                                    /// History
-                                    int removes = this.History.Push(this.LayerManager.Remove(this, items));
-
-                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                                }
-                                break;
-                        }
-                    }
-                    break;
-                case OptionType.AddLayer:
-                    {
-                        ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-
-                        /// History
-                        int removes = this.History.Push(this.LayerManager.Add(this, add));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case OptionType.AddImageLayer:
-                    this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop));
-                    break;
-                case OptionType.AddCurveLayer:
-                    {
-                        ILayer add = new CurveLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
-
-                        /// History
-                        int removes = this.History.Push(this.LayerManager.Add(this, add));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case OptionType.CutLayer:
-                    {
-                        var items = this.LayerSelectedItems;
-                        switch (items.Count)
-                        {
-                            case 0:
-                                break;
-                            case 1:
-                                if (this.LayerSelectedItem is ILayer layer)
-                                {
-                                    /// History
-                                    int removes = this.History.Push(this.LayerManager.Cut(this, layer));
-
-                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
-                                }
-                                break;
-                            default:
-                                {
-                                    /// History
-                                    int removes = this.History.Push(this.LayerManager.Cut(this, items));
-
-                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
-                                }
-                                break;
-                        }
-                    }
-                    break;
-                case OptionType.CopyLayer:
-                    {
-                        /// History
-                        var items = this.LayerSelectedItems;
-                        switch (items.Count)
-                        {
-                            case 0:
-                                break;
-                            case 1:
-                                if (this.LayerSelectedItem is ILayer layer)
-                                    this.LayerManager.Copy(this, layer);
-                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
-                                break;
-                            default:
-                                this.LayerManager.Copy(this, items);
-                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
-                                break;
-                        }
-                    }
-                    break;
-                case OptionType.PasteLayer:
-                    {
-                        switch (this.ClipboardLayers.Count)
-                        {
-                            case 0:
-                                break;
-                            case 1:
-                                string id = this.ClipboardLayers.Single();
-                                if (LayerDictionary.Instance.ContainsKey(id))
-                                {
-                                    /// History
-                                    int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id));
-
-                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                                }
-                                break;
-                            default:
-                                {
-                                    /// History
-                                    int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ClipboardLayers));
-
-                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
-                                }
-                                break;
-                        }
-                    }
-                    break;
                 case OptionType.Cut: // Copy + Clear
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
@@ -567,10 +370,6 @@ namespace Luo_Painter
                         }
                         else this.Tip(TipType.NoLayer);
                     }
-                    break;
-                case OptionType.Duplicate: // CopyLayer + PasteLayer
-                    this.Click(OptionType.CopyLayer);
-                    this.Click(OptionType.PasteLayer);
                     break;
                 case OptionType.Copy:
                     {
@@ -615,6 +414,7 @@ namespace Luo_Painter
                         this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
                     break;
+
                 case OptionType.Clear:
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
@@ -646,6 +446,467 @@ namespace Luo_Painter
                         }
                     }
                     break;
+
+                #endregion
+
+                #region Menu
+
+                case OptionType.ExportMenu:
+                    this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
+                    break;
+
+                case OptionType.ToolMenu:
+                    this.ToolComboBox.SelectedIndex = 0;
+                    break;
+                case OptionType.HistoryMenu:
+                    this.ToolComboBox.SelectedIndex = 5;
+                    break;
+                case OptionType.ColorMenu:
+                    this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.PaletteMenu:
+                    this.PaletteMenu.Toggle(this.PaletteButton, ExpanderPlacementMode.Bottom);
+                    break;
+
+                case OptionType.EditMenu:
+                    this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.AdjustmentMenu:
+                    this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.OtherMenu:
+                    this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
+                    break;
+
+                case OptionType.PaintMenu:
+                    this.ToolComboBox.SelectedIndex = 1;
+                    break;
+                case OptionType.BrushMenu:
+                    this.ToolComboBox.SelectedIndex = 2;
+                    break;
+                case OptionType.SizeMenu:
+                    this.ToolComboBox.SelectedIndex = 3;
+                    break;
+
+                case OptionType.LayerMenu:
+                    this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
+                    break;
+                case OptionType.AddMenu:
+                    this.AddMenu.Show();
+                    break;
+                case OptionType.AddMenuWithRename:
+                    this.AddMenu.Show();
+                    this.AddMenu.Rename();
+                    break;
+
+                #endregion
+
+                #region Setup
+
+                case OptionType.CropCanvas:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        int width2 = this.Transformer.Width;
+                        int height2 = this.Transformer.Height;
+
+                        this.SetCropCanvas(width2, height2);
+
+                        this.BitmapLayer = null;
+                        this.OptionType = OptionType.CropCanvas;
+                        this.AppBar.Construct(OptionType.CropCanvas);
+                        this.SetCanvasState(true);
+                    }
+                    break;
+
+                case OptionType.Stretch:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
+                        ContentDialogResult result = await this.StretchDialog.ShowInstance();
+
+                        switch (result)
+                        {
+                            case ContentDialogResult.Primary:
+                                int width2 = this.Transformer.Width;
+                                int height2 = this.Transformer.Height;
+
+                                uint width = (uint)width2;
+                                uint height = (uint)height2;
+
+                                uint w2 = this.StretchDialog.Size.Width;
+                                uint h2 = this.StretchDialog.Size.Height;
+                                if (w2 == width && h2 == height) break;
+
+                                int w = (int)w2;
+                                int h = (int)h2;
+
+                                switch (this.StretchDialog.SelectedIndex)
+                                {
+                                    case 0:
+                                        {
+                                            CanvasImageInterpolation interpolation = this.StretchDialog.Interpolation;
+                                            {
+                                                this.Transformer.Width = w;
+                                                this.Transformer.Height = h;
+                                                this.Transformer.Fit();
+
+                                                this.CreateResources(w, h);
+                                                this.CreateMarqueeResources(w, h);
+                                            }
+                                            // History
+                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                                            {
+                                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
+                                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
+                                            }));
+
+                                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                                        }
+                                        break;
+                                    case 1:
+                                        {
+                                            IndicatorMode indicator = this.StretchDialog.Indicator;
+
+                                            Vector2 vect = this.Transformer.GetIndicatorVector(indicator);
+                                            {
+                                                this.Transformer.Width = w;
+                                                this.Transformer.Height = h;
+                                                this.Transformer.Fit();
+
+                                                this.CreateResources(w, h);
+                                                this.CreateMarqueeResources(w, h);
+                                            }
+                                            Vector2 vect2 = this.Transformer.GetIndicatorVector(indicator);
+
+                                            Vector2 offset = vect2 - vect;
+                                            // History
+                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                                            {
+                                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
+                                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
+                                            }));
+
+                                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                            this.UndoButton.IsEnabled = this.History.CanUndo;
+                                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+
+                case OptionType.FlipHorizontal:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        this.Transformer.Fit();
+
+                        // History
+                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray()));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.FlipVertical:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        this.Transformer.Fit();
+
+                        // History
+                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray()));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+
+                case OptionType.LeftTurn:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        int width2 = this.Transformer.Width;
+                        int height2 = this.Transformer.Height;
+
+                        uint width = (uint)width2;
+                        uint height = (uint)height2;
+                        {
+                            int w = height2;
+                            int h = width2;
+
+                            this.Transformer.Width = w;
+                            this.Transformer.Height = h;
+                            this.Transformer.Fit();
+
+                            this.CreateResources(w, h);
+                            this.CreateMarqueeResources(w, h);
+                        }
+
+                        // History
+                        if (width2 == height2)
+                        {
+                            int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()));
+                        }
+                        else
+                        {
+                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                            {
+                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()),
+                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
+                            }));
+                        }
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.RightTurn:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        int width2 = this.Transformer.Width;
+                        int height2 = this.Transformer.Height;
+
+                        uint width = (uint)width2;
+                        uint height = (uint)height2;
+                        {
+                            int w = height2;
+                            int h = width2;
+
+                            this.Transformer.Width = w;
+                            this.Transformer.Height = h;
+                            this.Transformer.Fit();
+
+                            this.CreateResources(w, h);
+                            this.CreateMarqueeResources(w, h);
+                        }
+
+                        // History
+                        if (width2 == height2)
+                        {
+                            int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()));
+                        }
+                        else
+                        {
+                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                            {
+                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()),
+                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
+                            }));
+                        }
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.OverTurn:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        this.Transformer.Fit();
+
+                        // History
+                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray()));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+
+                #endregion
+
+                #region Layer
+
+                // Category
+                case OptionType.Add: break;
+                case OptionType.Clipboard: break;
+                case OptionType.Layering: break;
+                case OptionType.Grouping: break;
+                case OptionType.Combine: break;
+
+                // Add
+                case OptionType.AddLayer:
+                    {
+                        ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+
+                        // History
+                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+                case OptionType.AddImageLayer:
+                    this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop));
+                    break;
+                case OptionType.AddCurveLayer:
+                    {
+                        ILayer add = new CurveLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
+
+                        // History
+                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.UndoButton.IsEnabled = this.History.CanUndo;
+                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                    }
+                    break;
+
+                // Clipboard
+                case OptionType.CutLayer:
+                    {
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
+                                {
+                                    // History
+                                    int removes = this.History.Push(this.LayerManager.Cut(this, layer));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                }
+                                break;
+                            default:
+                                {
+                                    // History
+                                    int removes = this.History.Push(this.LayerManager.Cut(this, items));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.CopyLayer:
+                    {
+                        // History
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
+                                    this.LayerManager.Copy(this, layer);
+                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                break;
+                            default:
+                                this.LayerManager.Copy(this, items);
+                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.PasteLayer:
+                    {
+                        switch (this.ClipboardLayers.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                string id = this.ClipboardLayers.Single();
+                                if (LayerDictionary.Instance.ContainsKey(id))
+                                {
+                                    // History
+                                    int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                            default:
+                                {
+                                    // History
+                                    int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ClipboardLayers));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                        }
+                    }
+                    break;
+
+                // Layering
+                case OptionType.Remove:
+                    {
+                        var items = this.LayerSelectedItems;
+                        switch (items.Count)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                if (this.LayerSelectedItem is ILayer layer)
+                                {
+                                    // History
+                                    int removes = this.History.Push(this.LayerManager.Remove(this, layer, true));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                            default:
+                                {
+                                    // History
+                                    int removes = this.History.Push(this.LayerManager.Remove(this, items));
+
+                                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                    this.UndoButton.IsEnabled = this.History.CanUndo;
+                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.Duplicate: // CopyLayer + PasteLayer
+                    this.Click(OptionType.CopyLayer);
+                    this.Click(OptionType.PasteLayer);
+                    break;
+
                 case OptionType.Extract:
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
@@ -691,7 +952,7 @@ namespace Luo_Painter
                                     {
                                         if (this.ObservableCollection.GetNeighbor(bitmapLayer) is ILayer neighbor)
                                         {
-                                            /// History
+                                            // History
                                             bitmapLayer.Merge(neighbor);
                                             int removes = this.History.Push(new CompositeHistory(new IHistory[]
                                             {
@@ -724,7 +985,7 @@ namespace Luo_Painter
                             ICanvasImage image = this.Nodes.Render(commandList);
                             ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
 
-                            /// History
+                            // History
                             int removes = this.History.Push(this.LayerManager.Clear(this, add));
                         }
 
@@ -735,6 +996,7 @@ namespace Luo_Painter
                     }
                     break;
 
+                // Grouping
                 case OptionType.Group:
                     {
                         var items = this.LayerSelectedItems;
@@ -747,7 +1009,7 @@ namespace Luo_Painter
                                 {
                                     ILayer add = new GroupLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
-                                    /// History
+                                    // History
                                     int removes = this.History.Push(this.LayerManager.Group(this, add, layer));
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -760,7 +1022,7 @@ namespace Luo_Painter
                                 {
                                     ILayer add = new GroupLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
-                                    /// History
+                                    // History
                                     int removes = this.History.Push(this.LayerManager.Group(this, add, items));
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -778,7 +1040,7 @@ namespace Luo_Painter
                         {
                             if (layer.Children.Count is 0) break;
 
-                            /// History
+                            // History
                             int removes = this.History.Push(this.LayerManager.Ungroup(this, layer));
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -788,6 +1050,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
+
                 case OptionType.Release:
                     {
                         var items = this.LayerSelectedItems;
@@ -800,7 +1063,7 @@ namespace Luo_Painter
                                 {
                                     if (this.LayerManager.Release(this, layer) is IHistory history)
                                     {
-                                        /// History
+                                        // History
                                         int removes = this.History.Push(history);
 
                                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -812,7 +1075,7 @@ namespace Luo_Painter
                                 break;
                             default:
                                 {
-                                    /// History
+                                    // History
                                     int removes = this.History.Push(this.LayerManager.Release(this, items));
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -825,6 +1088,23 @@ namespace Luo_Painter
                     }
                     break;
 
+                // Combine
+                case OptionType.Union: break;
+                case OptionType.Exclude: break;
+                case OptionType.Xor: break;
+                case OptionType.Intersect: break;
+
+                case OptionType.ExpandStroke: break;
+
+                #endregion
+
+                #region Select
+
+                // Category
+                case OptionType.Selecting: break;
+                case OptionType.Marquees: break;
+
+                // Selecting
                 case OptionType.All:
                     {
                         // History
@@ -874,6 +1154,8 @@ namespace Luo_Painter
                         }
                     }
                     break;
+
+                // Marquees
                 case OptionType.Feather:
                     {
                         this.ExpanderLightDismissOverlay.Hide();
@@ -959,251 +1241,18 @@ namespace Luo_Painter
                     }
                     break;
 
-                case OptionType.Union:
-                    break;
-                case OptionType.Exclude:
-                    break;
-                case OptionType.Xor:
-                    break;
-                case OptionType.Intersect:
-                    break;
-                case OptionType.ExpandStroke:
-                    break;
+                #endregion
 
-                case OptionType.CropCanvas:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                #region Effect
 
-                        int width2 = this.Transformer.Width;
-                        int height2 = this.Transformer.Height;
+                // Category
+                case OptionType.Other: break;
+                case OptionType.Adjustment: break;
+                case OptionType.Effect1: break;
+                case OptionType.Effect2: break;
+                case OptionType.Effect3: break;
 
-                        this.SetCropCanvas(width2, height2);
-
-                        this.BitmapLayer = null;
-                        this.OptionType = OptionType.CropCanvas;
-                        this.AppBar.Construct(OptionType.CropCanvas);
-                        this.SetCanvasState(true);
-                    }
-                    break;
-                case OptionType.Stretch:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
-                        ContentDialogResult result = await this.StretchDialog.ShowInstance();
-
-                        switch (result)
-                        {
-                            case ContentDialogResult.Primary:
-                                int width2 = this.Transformer.Width;
-                                int height2 = this.Transformer.Height;
-
-                                uint width = (uint)width2;
-                                uint height = (uint)height2;
-
-                                uint w2 = this.StretchDialog.Size.Width;
-                                uint h2 = this.StretchDialog.Size.Height;
-                                if (w2 == width && h2 == height) break;
-
-                                int w = (int)w2;
-                                int h = (int)h2;
-
-                                switch (this.StretchDialog.SelectedIndex)
-                                {
-                                    case 0:
-                                        {
-                                            CanvasImageInterpolation interpolation = this.StretchDialog.Interpolation;
-                                            {
-                                                this.Transformer.Width = w;
-                                                this.Transformer.Height = h;
-                                                this.Transformer.Fit();
-
-                                                this.CreateResources(w, h);
-                                                this.CreateMarqueeResources(w, h);
-                                            }
-                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                            {
-                                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
-                                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
-                                            }));
-
-                                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                                        }
-                                        break;
-                                    case 1:
-                                        {
-                                            IndicatorMode indicator = this.StretchDialog.Indicator;
-
-                                            Vector2 vect = this.Transformer.GetIndicatorVector(indicator);
-                                            {
-                                                this.Transformer.Width = w;
-                                                this.Transformer.Height = h;
-                                                this.Transformer.Fit();
-
-                                                this.CreateResources(w, h);
-                                                this.CreateMarqueeResources(w, h);
-                                            }
-                                            Vector2 vect2 = this.Transformer.GetIndicatorVector(indicator);
-
-                                            Vector2 offset = vect2 - vect;
-                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                            {
-                                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
-                                            }));
-
-                                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                                            this.RedoButton.IsEnabled = this.History.CanRedo;
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                case OptionType.FlipHorizontal:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.Transformer.Fit();
-
-                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray()));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case OptionType.FlipVertical:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.Transformer.Fit();
-
-                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray()));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case OptionType.LeftTurn:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        int width2 = this.Transformer.Width;
-                        int height2 = this.Transformer.Height;
-
-                        uint width = (uint)width2;
-                        uint height = (uint)height2;
-                        {
-                            int w = height2;
-                            int h = width2;
-
-                            this.Transformer.Width = w;
-                            this.Transformer.Height = h;
-                            this.Transformer.Fit();
-
-                            this.CreateResources(w, h);
-                            this.CreateMarqueeResources(w, h);
-                        }
-
-                        if (width2 == height2)
-                        {
-                            int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()));
-                        }
-                        else
-                        {
-                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                            {
-                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()),
-                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
-                            }));
-                        }
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case OptionType.RightTurn:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        int width2 = this.Transformer.Width;
-                        int height2 = this.Transformer.Height;
-
-                        uint width = (uint)width2;
-                        uint height = (uint)height2;
-                        {
-                            int w = height2;
-                            int h = width2;
-
-                            this.Transformer.Width = w;
-                            this.Transformer.Height = h;
-                            this.Transformer.Fit();
-
-                            this.CreateResources(w, h);
-                            this.CreateMarqueeResources(w, h);
-                        }
-
-                        if (width2 == height2)
-                        {
-                            int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()));
-                        }
-                        else
-                        {
-                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                            {
-                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()),
-                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
-                            }));
-                        }
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-                case OptionType.OverTurn:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.Transformer.Fit();
-
-                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray()));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                    }
-                    break;
-
-                //case OptionType.Other:
-                //    break;
-                //case OptionType.Adjustment:
-                //    break;
-                //case OptionType.Effect1:
-                //    break;
-                //case OptionType.Effect2:
-                //    break;
-                //case OptionType.Effect3:
-                //    break;
-
+                // Other
                 case OptionType.Transform:
                     {
                         this.ExpanderLightDismissOverlay.Hide();
@@ -1340,8 +1389,35 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
+                //case OptionType.RippleEffect: break;
+                case OptionType.Fill: break;
+
+                // Adjustment
+                case OptionType.Gray:
+                case OptionType.Invert:
+                    {
+                        this.ExpanderLightDismissOverlay.Hide();
+
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
+                            {
+                                SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+                                if (state is SelectionType.None)
+                                {
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    break;
+                                }
+
+                                this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
+                                break;
+                            }
+                            else this.Tip(TipType.NotBitmapLayer);
+                        }
+                        else this.Tip(TipType.NoLayer);
+                    }
+                    break;
                 case OptionType.RippleEffect:
-                case OptionType.Fill:
                 case OptionType.Exposure:
                 case OptionType.Brightness:
                 case OptionType.Saturation:
@@ -1349,6 +1425,19 @@ namespace Luo_Painter
                 case OptionType.Contrast:
                 case OptionType.Temperature:
                 case OptionType.HighlightsAndShadows:
+
+                // Effect1
+                //case OptionType.GaussianBlur: break;
+                //case OptionType.DirectionalBlur: break;
+                //case OptionType.Sharpen: break;
+                //case OptionType.Shadow: break;
+                //case OptionType.ChromaKey: break;
+                //case OptionType.EdgeDetection: break;
+                //case OptionType.Border: break;
+                //case OptionType.Emboss: break;
+                //case OptionType.Lighting: break;
+
+                // Effect2
                 case OptionType.LuminanceToAlpha:
                     {
                         this.ExpanderLightDismissOverlay.Hide();
@@ -1376,127 +1465,127 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
-                case OptionType.Gray:
-                case OptionType.Invert:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                case OptionType.Fog: break;
+                case OptionType.Sepia: break;
+                case OptionType.Posterize: break;
+                case OptionType.Colouring: break;
+                case OptionType.Tint: break;
+                case OptionType.DiscreteTransfer: break;
+                case OptionType.Vignette: break;
+                case OptionType.GammaTransfer: break;
 
-                        if (this.LayerSelectedItem is ILayer layer)
-                        {
-                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
-                            {
-                                SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
-                                if (state is SelectionType.None)
-                                {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
-                                    break;
-                                }
+                // Effect3
+                case OptionType.Glass: break;
+                case OptionType.PinchPunch: break;
+                case OptionType.Morphology: break;
 
-                                this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
-                                break;
-                            }
-                            else this.Tip(TipType.NotBitmapLayer);
-                        }
-                        else this.Tip(TipType.NoLayer);
-                    }
-                    break;
-                case OptionType.GaussianBlur:
-                case OptionType.DirectionalBlur:
-                case OptionType.Sharpen:
-                case OptionType.Shadow:
-                case OptionType.ChromaKey:
-                case OptionType.EdgeDetection:
-                case OptionType.Border:
-                case OptionType.Emboss:
-                case OptionType.Lighting:
-                case OptionType.Fog:
-                case OptionType.Sepia:
-                case OptionType.Posterize:
-                case OptionType.Colouring:
-                case OptionType.Tint:
-                case OptionType.DiscreteTransfer:
-                case OptionType.Vignette:
-                case OptionType.GammaTransfer:
-                case OptionType.Glass:
-                case OptionType.PinchPunch:
-                case OptionType.Morphology:
-                    break;
+                #endregion
 
-                //case OptionType.Marquee:
-                //    break;
-                //case OptionType.Selection:
-                //    break;
-                //case OptionType.Paint:
-                //    break;
-                //case OptionType.Vector:
-                //    break;
-                //case OptionType.Curve:
-                //    break;
-                //case OptionType.Text:
-                //    break;
-                //case OptionType.Geometry:
-                //    break;
-                //case OptionType.Pattern:
-                //    break;
+                #region Tool
 
+                // Category
+                case OptionType.Marquee:
+                case OptionType.Selection:
+                case OptionType.Paint:
+                case OptionType.Vector:
+                case OptionType.Curve:
+                case OptionType.Text:
+                case OptionType.Geometry:
+                case OptionType.Pattern:
+
+                // Marquee
                 case OptionType.MarqueeRectangular:
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
                 case OptionType.MarqueeFreeHand:
 
+                // Selection
                 case OptionType.SelectionFlood:
                 case OptionType.SelectionBrush:
 
+                // Paint
                 case OptionType.PaintBrush:
                 case OptionType.PaintWatercolorPen:
                 case OptionType.PaintPencil:
                 case OptionType.PaintEraseBrush:
                 case OptionType.PaintLiquefaction:
 
+                // Vector
                 case OptionType.Cursor:
                 case OptionType.View:
                 case OptionType.Crop:
+
                 case OptionType.Brush:
                 case OptionType.Transparency:
+
                 case OptionType.Image:
 
+                // Curve
                 case OptionType.Node:
                 case OptionType.Pen:
 
+                // Text
                 case OptionType.TextArtistic:
                 case OptionType.TextFrame:
 
+                // Geometry
+                // Geometry
                 case OptionType.GeometryRectangle:
                 case OptionType.GeometryEllipse:
+                // Geometry
                 case OptionType.GeometryRoundRect:
                 case OptionType.GeometryTriangle:
                 case OptionType.GeometryDiamond:
+                // Geometry
                 case OptionType.GeometryPentagon:
                 case OptionType.GeometryStar:
                 case OptionType.GeometryCog:
+                // Geometry
                 case OptionType.GeometryDount:
                 case OptionType.GeometryPie:
                 case OptionType.GeometryCookie:
+                // Geometry
                 case OptionType.GeometryArrow:
                 case OptionType.GeometryCapsule:
                 case OptionType.GeometryHeart:
 
+                // Pattern
                 case OptionType.PatternGrid:
                 case OptionType.PatternDiagonal:
                 case OptionType.PatternSpotted:
                     {
-                        this.SetInkToolType(type);
-
                         this.BitmapLayer = null;
                         this.OptionType = type;
                         this.AppBar.Construct(type);
                         this.SetCanvasState(default);
                     }
                     break;
-                default:
-                    break;
+
+                #endregion
+
+                // GeometryTransform
+                // Geometry
+                case OptionType.GeometryRectangleTransform: break;
+                case OptionType.GeometryEllipseTransform: break;
+                // Geometry
+                case OptionType.GeometryRoundRectTransform: break;
+                case OptionType.GeometryTriangleTransform: break;
+                case OptionType.GeometryDiamondTransform: break;
+                // Geometry
+                case OptionType.GeometryPentagonTransform: break;
+                case OptionType.GeometryStarTransform: break;
+                case OptionType.GeometryCogTransform: break;
+                // Geometry
+                case OptionType.GeometryDountTransform: break;
+                case OptionType.GeometryPieTransform: break;
+                case OptionType.GeometryCookieTransform: break;
+                // Geometry
+                case OptionType.GeometryArrowTransform: break;
+                case OptionType.GeometryCapsuleTransform: break;
+                case OptionType.GeometryHeartTransform: break;
+                default: break;
             }
         }
-
     }
+
 }
