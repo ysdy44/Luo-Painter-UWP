@@ -163,21 +163,13 @@ namespace Luo_Painter
 
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
+            this.LayerButton.Click += (s, e) => this.Click(OptionType.LayerMenu);
 
-            this.HistoryButton.Click += (s, e) => this.Click(OptionType.HistoryMenu);
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
 
             this.EditButton.Click += (s, e) => this.Click(OptionType.EditMenu);
             this.AdjustmentButton.Click += (s, e) => this.Click(OptionType.AdjustmentMenu);
             this.OtherButton.Click += (s, e) => this.Click(OptionType.OtherMenu);
-
-            this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
-            this.BrushButton.Click += (s, e) => this.Click(OptionType.BrushMenu);
-            this.SizeButton.Click += (s, e) => this.Click(OptionType.SizeMenu);
-
-            this.LayerListView.Add += (s, e) => this.Click(OptionType.AddMenu);
-            this.LayerListView.Remove += (s, e) => this.Click(OptionType.Remove);
-            this.LayerListView.Opening += (s, e) => this.Click(OptionType.LayerMenu);
 
 
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);

@@ -82,66 +82,6 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
 
-                <!--Phone-->
-                <VisualState x:Name="Phone">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-
-                        <!--Head-->
-                        <Setter Target="ExportButton.Width" Value="60"/>
-
-                        <Setter Target="EditButton.Width" Value="60"/>
-                        <Setter Target="AdjustmentButton.Width" Value="60"/>
-                        <Setter Target="OtherButton.Width" Value="60"/>
-                        <Setter Target="PaintButton.Width" Value="60"/>
-                        <Setter Target="BrushButton.Width" Value="60"/>
-                        <Setter Target="SizeButton.Width" Value="60"/>
-                        <Setter Target="HistoryButton.Width" Value="60"/>
-                        <Setter Target="ColorButton.Width" Value="60"/>
-
-                        <!--Expander-->
-                        <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
-                        <Setter Target="ExportMenu.Height" Value="Auto"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--Pad-->
-                <VisualState x:Name="Pad">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <!--Expander-->
-                        <Setter Target="ExpanderLightDismissOverlay.FullScreen" Value="True"/>
-                        <Setter Target="ExpanderLightDismissOverlay.Half" Value="True"/>
-                        <Setter Target="ExportMenu.Height" Value="Auto"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--PC-->
-                <VisualState x:Name="PC">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--Hub-->
-                <VisualState x:Name="Hub">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1200"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-
-
-            </VisualStateGroup>
-            <VisualStateGroup>
-
                 <!--Normal-->
                 <VisualState x:Name="UnFullScreen">
                     <VisualState.Setters>
@@ -189,132 +129,209 @@
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource AppBackgroundColorDark}"/>
 
 
-        <!--Canvas-->
-        <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Background="{ThemeResource AppBackgroundDark}" >
-            <elements:AlignmentGridWithLines x:Name="AlignmentGrid" IsHitTestVisible="False" />
-            <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" IsHitTestVisible="False" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-            <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-            <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-        </Canvas>
-
-
         <!--Head-->
         <Button x:Name="UnFullScreenButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AppButtonStyle}">
             <SymbolIcon Symbol="BackToWindow"/>
         </Button>
-        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
 
-            <UIElement.RenderTransformOrigin>
-                0.5,0.5
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform x:Name="HeadTransform" Y="0"/>
-            </UIElement.RenderTransform>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <Button x:Name="ExportButton" Padding="0" Foreground="Black" Background="#FFC003" Style="{StaticResource AppButtonStyle}">
-                <SymbolIcon Symbol="NewWindow"/>
-            </Button>
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button x:Name="HomeButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <SymbolIcon Symbol="Home"/>
-                </Button>
-                <Button x:Name="SaveButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <SymbolIcon Symbol="Save"/>
-                </Button>
-                <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <SymbolIcon Symbol="Undo"/>
-                </Button>
-                <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <SymbolIcon Symbol="Redo"/>
-                </Button>
-                <Button x:Name="KeyButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <SymbolIcon Symbol="Keyboard"/>
-                </Button>
-                <Button x:Name="FullScreenButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
-                    <SymbolIcon Symbol="FullScreen"/>
-                </Button>
-            </StackPanel>
-
-            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button x:Name="PaintButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="Paint"/>
-                </Button>
-                <Button x:Name="BrushButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="Brush"/>
-                </Button>
-                <Button x:Name="SizeButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="Size"/>
-                </Button>
-                <Button x:Name="HistoryButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="History"/>
-                </Button>
-            </StackPanel>
-
-            <Button x:Name="ColorButton" Grid.Column="4" Padding="0" Style="{StaticResource AppTextBlockButtonStyle}" 
-                            ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
-                            ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
-                            ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
-                            >
-                <UIElement.ManipulationMode>
-                    TranslateX, TranslateY
-                </UIElement.ManipulationMode>
+        <!--Body-->
+        <SplitView 
+            x:Name="RightSplitView"
+            PanePlacement="Right"
+            OpenPaneLength="280"
+            IsPaneOpen="True"
+            DisplayMode="Inline"
+            PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
+            >
+            <SplitView.Pane>
+                <!--Tool-->
                 <Grid>
-                    <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
-                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
-                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
+
+                    <controls:ToolListView x:Name="ToolListView" Visibility="{x:Bind ToolItem.IsSelected, Mode=OneWay}"/>
+                    <menus:BrushMenu x:Name="BrushMenu" Visibility="{x:Bind BrushItem.IsSelected, Mode=OneWay}"/>
+                    <menus:SizeMenu x:Name="SizeMenu" Visibility="{x:Bind SizeItem.IsSelected, Mode=OneWay}"/>
+                    <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="{x:Bind HistoryItem.IsSelected, Mode=OneWay}"/>
+
+                    <Border Height="50" VerticalAlignment="Top" Background="{ThemeResource AppBackgroundMediumLight}">
+                        <ListBox x:Name="ToolComboBox" Grid.Column="4" SelectedIndex="0" Margin="2,0" HorizontalAlignment="Center" Style="{StaticResource AppSegmentListBoxStyle}">
+                            <ListBoxItem x:Name="ToolItem" MinWidth="32" Width="68">
+                                <SymbolIcon Symbol="ViewAll"/>
+                            </ListBoxItem>
+                            <!--<ListBoxItem x:Name="PaintItem" MinWidth="32" Width="68">
+                                <local:ElementIcon Type="Paint"/>
+                            </ListBoxItem>-->
+                            <ListBoxItem x:Name="BrushItem" MinWidth="32" Width="68">
+                                <local:ElementIcon Type="Brush"/>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="SizeItem" MinWidth="32" Width="68">
+                                <local:ElementIcon Type="Size"/>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="HistoryItem">
+                                <local:ElementIcon Type="History"/>
+                            </ListBoxItem>
+                        </ListBox>
+                    </Border>
                 </Grid>
-            </Button>
+            </SplitView.Pane>
+            <Grid>
+                <SplitView 
+                    x:Name="LeftSplitView"
+                    Margin="0,50,0,0"
+                    PanePlacement="Left"      
+                    OpenPaneLength="280"    
+                    IsPaneOpen="True"    
+                    DisplayMode="Inline"  
+                    PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"   
+                    >
+                    <SplitView.Pane>
+                        <!--Layer-->
+                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
+                    </SplitView.Pane>
+                    <Grid>
 
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="Edit"/>
-                </Button>
-                <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="Adjustment"/>
-                </Button>
-                <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
-                    <local:ElementIcon Type="Other"/>
-                </Button>
-            </StackPanel>
+                        <!--Canvas-->
+                        <Canvas x:Name="Canvas" Grid.Column="1" Margin="0,50,0,0" FlowDirection="LeftToRight" Background="{ThemeResource AppBackgroundDark}" >
+                            <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" />
+                            <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" IsHitTestVisible="False" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                            <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                            <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                        </Canvas>
 
-        </Grid>
+                        <!--Foot-->
+                        <controls:ContextAppBar x:Name="AppBar" Grid.Column="1" />
 
+                        <!--Simulate-->
+                        <controls:SimulateCanvas x:Name="SimulateCanvas" Grid.Column="1" Margin="0,50,0,0" />
 
-        <!--Foot-->
-        <controls:ContextAppBar x:Name="AppBar" />
+                    </Grid>
+                </SplitView>
 
+                <!--Head-->
+                <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
 
-        <!--Tool-->
-        <controls:ToolListView x:Name="ToolListView" />
+                    <UIElement.RenderTransformOrigin>
+                        0.5,0.5
+                    </UIElement.RenderTransformOrigin>
+                    <UIElement.RenderTransform>
+                        <TranslateTransform x:Name="HeadTransform" Y="0"/>
+                    </UIElement.RenderTransform>
 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-        <!--Layer-->
-        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" >
+                        <Button x:Name="ExportButton" Style="{StaticResource AppTextBlockButtonStyle}">
+                            <Border BorderThickness="0,0,0,2" BorderBrush="DodgerBlue" >
+                                <SymbolIcon Symbol="NewWindow"/>
+                            </Border>
+                        </Button>
+                        <Button x:Name="LayerButton" Style="{StaticResource AppTextBlockButtonStyle}">
+                            <Border BorderThickness="0,0,0,2" BorderBrush="DodgerBlue" >
+                                <FontIcon Glyph="&#xF5EE;" FontFamily="Segoe MDL2 Assets"/>
+                            </Border>
+                        </Button>
+                    </StackPanel>
 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Button x:Name="HomeButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                            <SymbolIcon Symbol="Home"/>
+                        </Button>
+                        <Button x:Name="UndoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                            <SymbolIcon Symbol="Undo"/>
+                        </Button>
+                        <Button x:Name="RedoButton" IsEnabled="False" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                            <SymbolIcon Symbol="Redo"/>
+                        </Button>
+                        <Button MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Name="SaveButton">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Save" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                        </MenuFlyoutItem.Icon>
+                                        <MenuFlyoutItem.Text>
+                                            Save
+                                        </MenuFlyoutItem.Text>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem x:Name="KeyButton">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Keyboard" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                        </MenuFlyoutItem.Icon>
+                                        <MenuFlyoutItem.Text>
+                                            Keyboard Shortcuts
+                                        </MenuFlyoutItem.Text>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem x:Name="FullScreenButton">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="FullScreen" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                        </MenuFlyoutItem.Icon>
+                                        <MenuFlyoutItem.Text>
+                                            Full Screen
+                                        </MenuFlyoutItem.Text>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem x:Name="HidePanelButton">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="ClosePane" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                        </MenuFlyoutItem.Icon>
+                                        <MenuFlyoutItem.Text>
+                                            Show Canvas Only
+                                        </MenuFlyoutItem.Text>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                            <SymbolIcon Symbol="More"/>
+                        </Button>
+                    </StackPanel>
 
-        <!--Simulate-->
-        <controls:SimulateCanvas x:Name="SimulateCanvas" />
+                    <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Center" >
+                        <Button
+                            x:Name="ColorButton"                          
+                            Style="{StaticResource AppTextBlockButtonStyle}"                                 
+                            ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"                                
+                            ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"                                 
+                            ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"                                 
+                            >
+                            <UIElement.ManipulationMode>
+                                TranslateX, TranslateY
+                            </UIElement.ManipulationMode>
+                            <Grid>
+                                <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                                <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
+                                <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
+                            <local:ElementIcon Type="Edit"/>
+                        </Button>
+                        <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
+                            <local:ElementIcon Type="Adjustment"/>
+                        </Button>
+                        <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
+                            <local:ElementIcon Type="Other"/>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+
+            </Grid>
+        </SplitView>
 
 
         <!--Expander-->
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
             <menus:ExportMenu x:Name="ExportMenu"/>
-            <menus:BrushMenu x:Name="BrushMenu" />
-            <menus:SizeMenu x:Name="SizeMenu" />
             <menus:EditMenu x:Name="EditMenu" />
             <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
             <menus:OtherMenu x:Name="OtherMenu" />
-            <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" />
             <menus:AddMenu x:Name="AddMenu"/>
             <menus:LayerMenu x:Name="LayerMenu"/>
             <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />

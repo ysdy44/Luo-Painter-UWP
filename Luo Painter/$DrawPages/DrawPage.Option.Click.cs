@@ -338,9 +338,6 @@ namespace Luo_Painter
                 case OptionType.ExportMenu:
                     this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
                     break;
-                case OptionType.HistoryMenu:
-                    this.HistoryMenu.Toggle(this.HistoryButton, ExpanderPlacementMode.Bottom);
-                    break;
                 case OptionType.ColorMenu:
                     this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
                     break;
@@ -353,20 +350,8 @@ namespace Luo_Painter
                 case OptionType.OtherMenu:
                     this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
                     break;
-                case OptionType.PaintMenu:
-                    base.Frame.Navigate(typeof(BrushPage), (IInkParameter)this);
-                    break;
-                case OptionType.BrushMenu:
-                    this.BrushMenu.Toggle(this.BrushButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.SizeMenu:
-                    this.SizeMenu.Toggle(this.SizeButton, ExpanderPlacementMode.Bottom);
-                    break;
                 case OptionType.LayerMenu:
-                    this.LayerMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
-                    break;
-                case OptionType.AddMenu:
-                    this.AddMenu.Toggle(this.LayerListView.PlacementTarget, ExpanderPlacementMode.Left);
+                    this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
                     break;
                 case OptionType.AddMenuWithRename:
                     switch (this.AddMenu.State)
