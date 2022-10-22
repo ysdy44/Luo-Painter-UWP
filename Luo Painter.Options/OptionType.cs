@@ -77,19 +77,21 @@ namespace Luo_Painter.Options
 
         ToolMenu = Menu | 2 << 8 | IsItemClickEnabled,
         HistoryMenu = Menu | 3 << 8 | IsItemClickEnabled,
+
         ColorMenu = Menu | 4 << 8 | IsItemClickEnabled,
+        PaletteMenu = Menu | 5 << 8 | IsItemClickEnabled,
 
-        EditMenu = Menu | 5 << 8 | IsItemClickEnabled,
-        AdjustmentMenu = Menu | 6 << 8 | IsItemClickEnabled,
-        OtherMenu = Menu | 7 << 8 | IsItemClickEnabled,
+        EditMenu = Menu | 6 << 8 | IsItemClickEnabled,
+        AdjustmentMenu = Menu | 7 << 8 | IsItemClickEnabled,
+        OtherMenu = Menu | 8 << 8 | IsItemClickEnabled,
 
-        PaintMenu = Menu | 8 << 8 | IsItemClickEnabled,
-        BrushMenu = Menu | 9 << 8 | IsItemClickEnabled,
-        SizeMenu = Menu | 10 << 8 | IsItemClickEnabled,
+        PaintMenu = Menu | 9 << 8 | IsItemClickEnabled,
+        BrushMenu = Menu | 10 << 8 | IsItemClickEnabled,
+        SizeMenu = Menu | 1 << 8 | IsItemClickEnabled,
 
-        LayerMenu = Menu | 11 << 8 | IsItemClickEnabled,
-        AddMenu = Menu | 12 << 8 | IsItemClickEnabled,
-        AddMenuWithRename = Menu | 13 << 8,
+        LayerMenu = Menu | 12 << 8 | IsItemClickEnabled,
+        AddMenu = Menu | 13 << 8 | IsItemClickEnabled,
+        AddMenuWithRename = Menu | 14 << 8,
 
         #endregion
 

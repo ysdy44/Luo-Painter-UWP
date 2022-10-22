@@ -122,7 +122,7 @@ namespace Luo_Painter
 
         int MixX = -1;
         int MixY = -1;
-        InkMixer InkMixer = new InkMixer();
+        readonly InkMixer InkMixer = new InkMixer();
 
         public Color Color => this.ColorMenu.Color;
         public Vector4 ColorHdr => this.ColorMenu.ColorHdr;
@@ -133,6 +133,8 @@ namespace Luo_Painter
 
         public void Construct(IInkParameter item)
         {
+            this.PaintScrollViewer.Construct(item);
+            this.PaletteMenu.Construct(item);
         }
 
         #endregion
@@ -184,7 +186,8 @@ namespace Luo_Painter
             this.LayerButton.Click += (s, e) => this.Click(OptionType.LayerMenu);
 
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
-
+            this.PaletteButton.Click += (s, e) => this.Click(OptionType.PaletteMenu);
+            
             this.EditButton.Click += (s, e) => this.Click(OptionType.EditMenu);
             this.AdjustmentButton.Click += (s, e) => this.Click(OptionType.AdjustmentMenu);
             this.OtherButton.Click += (s, e) => this.Click(OptionType.OtherMenu);
