@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
     public sealed partial class AdjustmentMenu : Expander
     {

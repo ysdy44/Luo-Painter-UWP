@@ -4,7 +4,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
     public enum ExportMode
     {

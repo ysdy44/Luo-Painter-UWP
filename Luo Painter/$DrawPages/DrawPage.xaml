@@ -8,8 +8,6 @@
     xmlns:local="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:layers="using:Luo_Painter.Layers"
-    xmlns:menus="using:Luo_Painter.Menus"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     NavigationCacheMode="Required"
     IsEnabled="False"
@@ -264,12 +262,12 @@
         <!--Expander-->
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-            <menus:ExportMenu x:Name="ExportMenu"/>
-            <menus:EditMenu x:Name="EditMenu" />
-            <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
-            <menus:OtherMenu x:Name="OtherMenu" />
-            <menus:LayerMenu x:Name="LayerMenu"/>
-            <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
+            <controls:ExportMenu x:Name="ExportMenu"/>
+            <controls:EditMenu x:Name="EditMenu" />
+            <controls:AdjustmentMenu x:Name="AdjustmentMenu" />
+            <controls:OtherMenu x:Name="OtherMenu" />
+            <controls:LayerMenu x:Name="LayerMenu"/>
+            <controls:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
         </elements:ExpanderLightDismissOverlay>
 
 

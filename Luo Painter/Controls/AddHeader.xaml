@@ -7,7 +7,7 @@
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:blends="using:Luo_Painter.Blends"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:local="using:Luo_Painter.Menus"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     d:DesignHeight="400"

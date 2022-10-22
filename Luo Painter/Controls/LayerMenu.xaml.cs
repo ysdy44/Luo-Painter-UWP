@@ -8,7 +8,7 @@ using Windows.Foundation;
 using System;
 using System.Collections.Generic;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
     public sealed partial class LayerMenu : Expander
     {

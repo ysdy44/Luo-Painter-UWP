@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
     public sealed partial class EditMenu : Expander
     {

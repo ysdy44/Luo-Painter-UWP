@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
     internal class ColorCommand : RelayCommand<Color> { }
 

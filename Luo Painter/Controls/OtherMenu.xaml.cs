@@ -3,7 +3,7 @@ using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Resources;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
     public sealed partial class OtherMenu : Expander
     {
