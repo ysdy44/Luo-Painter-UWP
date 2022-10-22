@@ -7,10 +7,11 @@ using System;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Menus
 {
-    public sealed partial class AddMenu : Expander
+    public sealed partial class AddMenu : UserControl
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick
@@ -26,6 +27,9 @@ namespace Luo_Painter.Menus
         private string RoundConverter(double value) => $"{value:0}";
 
         public ThumbSlider OpacitySlider => this.OpacitySliderCore;
+        public ExpanderState State { get; private set; }
+        public void ShowAt(FrameworkElement placementTarget, ExpanderPlacementMode placement) => this.PropertyFlyout.ShowAt(placementTarget);
+        public void Show() => this.PropertyFlyout.ShowAt(this);
 
         string StartingName;
         BlendEffectMode? StartingBlendMode;
@@ -36,6 +40,10 @@ namespace Luo_Painter.Menus
         public AddMenu()
         {
             this.InitializeComponent();
+            this.PropertyFlyout.Closed += (s, e) => this.State = default;
+            this.PropertyFlyout.Opened += (s, e) => this.State = ExpanderState.Flyout;
+
+
             this.NameTextBox.GotFocus += (s, e) =>
             {
                 this.StartingName = this.NameTextBox.Text;
