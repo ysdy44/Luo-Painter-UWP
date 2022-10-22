@@ -23,10 +23,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        bool StartingToolShow;
-        bool StartingLayerShow;
-        private bool AntiMistouch => true;
-
         private void ConstructCanvas()
         {
             this.Canvas.SizeChanged += (s, e) =>

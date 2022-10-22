@@ -83,14 +83,10 @@ namespace Luo_Painter
         {
             if (isFullScreen)
             {
-                this.ToolListView.IsShow = false;
-                this.LayerListView.IsShow = false;
                 VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
             }
             else
             {
-                this.ToolListView.IsShow = true;
-                this.LayerListView.IsShow = true;
                 VisualStateManager.GoToState(this, nameof(UnFullScreen), useTransitions: true);
             }
         }

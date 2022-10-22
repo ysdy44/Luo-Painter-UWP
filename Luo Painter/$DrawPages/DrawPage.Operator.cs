@@ -16,11 +16,6 @@ namespace Luo_Painter
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                if (this.AntiMistouch)
-                {
-                    this.StartingToolShow = this.ToolListView.IsShow;//&& this.ToolListView.Width > 70;
-                    this.StartingLayerShow = this.LayerListView.IsShow;//&& this.LayerListView.Width > 70;
-                }
                 this.SetCanvasState(true);
 
                 this.StartingPosition = this.Position = this.ToPosition(point);
@@ -51,14 +46,6 @@ namespace Luo_Painter
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
-                if (this.AntiMistouch)
-                {
-                    if (this.StartingToolShow && this.ToolListView.IsShow && point.X > 0 && point.X < this.ToolListView.Width)
-                        this.ToolListView.IsShow = false;
-                    if (this.StartingLayerShow && this.LayerListView.IsShow && point.X < base.ActualWidth && point.X > base.ActualWidth - this.LayerListView.Width)
-                        this.LayerListView.IsShow = false;
-                }
-
                 this.Position = this.ToPosition(point);
                 this.Point = point;
                 this.Pressure = properties.Pressure * properties.Pressure;
@@ -79,11 +66,6 @@ namespace Luo_Painter
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                if (this.AntiMistouch)
-                {
-                    this.ToolListView.IsShow = this.StartingToolShow;
-                    this.LayerListView.IsShow = this.StartingLayerShow;
-                }
                 this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
 
                 if (this.ReferenceImage is null)
