@@ -10,60 +10,23 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Menus
 {
-    internal sealed class BrushListView : ListView
-    {
-
-        #region DependencyProperty
-
-
-        /// <summary> Gets or set the command for <see cref="BrushListView"/>. </summary>
-        public BrushCommand Command
-        {
-            get => (BrushCommand)base.GetValue(CommandProperty);
-            set => base.SetValue(CommandProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "BrushListView.Command" /> dependency property. </summary>
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(nameof(Command), typeof(BrushCommand), typeof(BrushListView), new PropertyMetadata(null));
-
-
-        #endregion
-
-        //@Static
-        static readonly IList<BrushListView> Children = new List<BrushListView>();
-
-        //@Construct
-        ~BrushListView() => BrushListView.Children.Remove(this);
-        public BrushListView()
-        {
-            BrushListView.Children.Add(this);
-            base.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is PaintBrush item)
-                {
-                    this.Command.Execute(item); // Delegate
-                    foreach (BrushListView child in BrushListView.Children)
-                    {
-                        if (child == this) continue;
-                        child.SelectedIndex = -1;
-                    }
-                }
-            };
-        }
-    }
-
-    public sealed partial class BrushMenu : Expander
+    public sealed partial class BrushMenu : UserControl
     {
         //@Delegate
-        public event EventHandler<PaintBrush> ItemClick
-        {
-            remove => this.Command.Click -= value;
-            add => this.Command.Click += value;
-        }
+        public event EventHandler<PaintBrush> ItemClick;
+        public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
 
         //@Construct
         public BrushMenu()
         {
             this.InitializeComponent();
+            this.ListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is PaintBrush item)
+                {
+                    this.ItemClick?.Invoke(this, item);//Delegate
+                }
+            };
         }
 
         //@Strings
