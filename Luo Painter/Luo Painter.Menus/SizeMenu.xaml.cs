@@ -1,11 +1,11 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using System;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Menus
 {
-    public sealed partial class SizeMenu : Expander
+    public sealed partial class SizeMenu : UserControl
     {
         //@Delegate
         public event EventHandler<double> ItemClick;

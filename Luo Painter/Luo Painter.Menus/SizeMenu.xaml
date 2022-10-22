@@ -1,21 +1,15 @@
-﻿<elements:Expander
+﻿<UserControl
     x:Class="Luo_Painter.Menus.SizeMenu"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:brushes="using:Luo_Painter.Brushes"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    BorderBrush="{ThemeResource AppStroke}" 
-    Background="{ThemeResource SystemControlAcrylicElementBrush}"
+    Margin="0,50,0,0"
     >
-
-    <elements:Expander.Title>
-        Size
-    </elements:Expander.Title>
 
     <ListView
         x:Name="ListView"
@@ -25,14 +19,13 @@
 
         <ItemsControl.ItemContainerStyle>
             <Style TargetType="ListViewItem">
-                <Setter Property="Width" Value="62"/>
-                <Setter Property="Height" Value="70"/>
+                <Setter Property="Width" Value="69"/>
+                <Setter Property="Height" Value="74"/>
                 <Setter Property="MinWidth" Value="40"/>
                 <Setter Property="Padding" Value="1,2,1,0"/>
                 <Setter Property="Margin" Value="1,0,0,1"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
             </Style>
         </ItemsControl.ItemContainerStyle>
 
@@ -60,6 +53,23 @@
                 </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
+
+        <ListViewBase.Header>
+            <Border Height="44" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" >
+                <TextBlock 
+                    Margin="16,0"
+                    IsHitTestVisible="false" 
+                    FontWeight="Medium" 
+                    TextTrimming="CharacterEllipsis" 
+                    FontSize="20" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Center" 
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                     >
+                    Size
+                </TextBlock>
+            </Border>
+        </ListViewBase.Header>
 
         <brushes:PaintSize Size="0.7" Text= "0.7" Number="7" Preview="1.07649393090564"/>
         <brushes:PaintSize Size="0.8" Text= "0.8" Number="8" Preview="1.88088235294118"/>
@@ -113,4 +123,4 @@
         <brushes:PaintSize Size="5000" Text= "5000" Number="50000" Preview="48.3481196078431"/>
 
     </ListView>
-</elements:Expander>
+</UserControl>
