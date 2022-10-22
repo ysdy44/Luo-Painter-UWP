@@ -1,4 +1,8 @@
 ﻿using Microsoft.Graphics.Canvas;
+using System.Numerics;
+using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter.Brushes
@@ -9,7 +13,17 @@ namespace Luo_Painter.Brushes
     public interface IInkParameter
     {
         CanvasDevice CanvasDevice { get; }
-        InkPresenter InkPresenter { get; }
+
         InkType InkType { get; set; }
+        InkPresenter InkPresenter { get; }
+
+        Color Color { get; }
+        Vector4 ColorHdr { get; }
+
+        object TextureSelectedItem { get; }
+        void ConstructTexture(string texture);
+        Task<ContentDialogResult> ShowTextureAsync();
+
+        void Construct(IInkParameter item);
     }
 }
