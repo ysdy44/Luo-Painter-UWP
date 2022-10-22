@@ -122,9 +122,9 @@
 
                     <!--Tool-->
                     <controls:ToolListView x:Name="ToolListView" Visibility="{x:Bind ToolItem.IsSelected, Mode=OneWay}"/>
-                    <menus:BrushMenu x:Name="BrushMenu" Visibility="{x:Bind BrushItem.IsSelected, Mode=OneWay}"/>
-                    <menus:SizeMenu x:Name="SizeMenu" Visibility="{x:Bind SizeItem.IsSelected, Mode=OneWay}"/>
-                    <menus:HistoryMenu x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="{x:Bind HistoryItem.IsSelected, Mode=OneWay}"/>
+                    <controls:BrushListView x:Name="BrushMenu" Visibility="{x:Bind BrushItem.IsSelected, Mode=OneWay}"/>
+                    <controls:SizeListView x:Name="SizeMenu" Visibility="{x:Bind SizeItem.IsSelected, Mode=OneWay}"/>
+                    <controls:HistoryListView x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="{x:Bind HistoryItem.IsSelected, Mode=OneWay}"/>
 
                     <!--Head-->
                     <Border Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
