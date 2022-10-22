@@ -1,7 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Options;
 using Luo_Painter.Layers.Models;
-using Luo_Painter.Tools;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
 using Windows.Foundation;

@@ -10,7 +10,6 @@
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:layers="using:Luo_Painter.Layers"
     xmlns:menus="using:Luo_Painter.Menus"
-    xmlns:tools="using:Luo_Painter.Tools"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     NavigationCacheMode="Required"
     IsEnabled="False"
