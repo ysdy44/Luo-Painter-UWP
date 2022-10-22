@@ -28,7 +28,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        [DrawPageToBrushPage(NavigationMode.Forward)]
         public async void Click(OptionType type)
         {
             switch (type)
