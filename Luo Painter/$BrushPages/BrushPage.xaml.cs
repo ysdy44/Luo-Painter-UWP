@@ -3,6 +3,7 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -15,11 +16,12 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace Luo_Painter
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushPage : Page, IInkParameter
+    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
         //@Converter
@@ -39,44 +41,25 @@ namespace Luo_Painter
         private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
 
-        private Symbol StarSymbolConverter(bool value) => value ? Symbol.SolidStar : Symbol.OutlineStar;
-        private Symbol PinSymbolConverter(SplitViewDisplayMode value)
-        {
-            switch (value)
-            {
-                case SplitViewDisplayMode.Overlay: return Symbol.Pin;
-                default: return Symbol.UnPin;
-            }
-        }
-
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 
         //@Task
         readonly object InkLocker = new object();
         CanvasRenderTarget InkRender { get; set; }
 
-        //@Task
-        readonly object Locker = new object();
-        BitmapLayer BitmapLayer { get; set; }
-
-        Vector2 StartingPosition;
-        Vector2 Position;
-        float StartingPressure;
-        float Pressure;
-
         bool InkIsEnabled = true;
 
         #region DependencyProperty
 
 
-        /// <summary> Gets or set the type for <see cref="BrushPage"/>. </summary>
+        /// <summary> Gets or set the type for <see cref="PaintScrollViewer"/>. </summary>
         public InkType Type
         {
             get => (InkType)base.GetValue(TypeProperty);
             set => base.SetValue(TypeProperty, value);
         }
-        /// <summary> Identifies the <see cref = "BrushPage.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(BrushPage), new PropertyMetadata(default(InkType)));
+        /// <summary> Identifies the <see cref = "PaintScrollViewer.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(InkType), typeof(PaintScrollViewer), new PropertyMetadata(default(InkType)));
 
 
         #endregion
@@ -86,17 +69,13 @@ namespace Luo_Painter
         public InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
         public InkPresenter InkPresenter => this.InkParameter.InkPresenter;
 
-        int MixX = -1;
-        int MixY = -1;
-        InkMixer InkMixer = new InkMixer();
-
         bool IsDrak;
         public Color Color => this.IsDrak ? Colors.White : Colors.Black;
         public Vector4 ColorHdr => this.IsDrak ? Vector4.One : Vector4.UnitW;
 
-        public object TextureSelectedItem => this.TextureDialog.SelectedItem;
-        public void ConstructTexture(string texture) => this.TextureDialog.Construct(texture);
-        public Task<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowInstance();
+        public object TextureSelectedItem => this.InkParameter.TextureSelectedItem;
+        public void ConstructTexture(string texture) => this.InkParameter.ConstructTexture(texture);
+        public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
 
         IInkParameter InkParameter;
         public void Construct(IInkParameter item)
@@ -110,11 +89,10 @@ namespace Luo_Painter
         #endregion
 
         //@Construct
-        public BrushPage()
+        public PaintScrollViewer()
         {
             this.InitializeComponent();
             this.ConstructCanvas();
-            this.ConstructOperator();
 
             this.ConstructInk1();
             this.ConstructInk2();
@@ -122,32 +100,54 @@ namespace Luo_Painter
 
             this.IsDrak = base.ActualTheme is ElementTheme.Dark;
             base.ActualThemeChanged += (s, e) => this.IsDrak = base.ActualTheme is ElementTheme.Dark;
+        }
 
-            this.CloseButton.Click += (s, e) => this.SplitView.IsPaneOpen = false;
-            this.ShowButton.Click += (s, e) => this.SplitView.IsPaneOpen = !this.SplitView.IsPaneOpen;
-            this.PinButton.Click += (s, e) =>
-            {
-                switch (this.SplitView.DisplayMode)
-                {
-                    case SplitViewDisplayMode.Overlay:
-                        this.SplitView.DisplayMode = SplitViewDisplayMode.Inline;
-                        break;
-                    case SplitViewDisplayMode.Inline:
-                        this.SplitView.DisplayMode = SplitViewDisplayMode.Overlay;
-                        this.SplitView.IsPaneOpen = false;
-                        break;
-                    default:
-                        break;
-                }
-            };
+    }
 
-            this.BackButton.Click += (s, e) =>
-            {
-                if (base.Frame.CanGoBack)
-                {
-                    base.Frame.GoBack();
-                }
-            };
+    public sealed partial class PaletteMenu : Expander, IInkParameter
+    {
+
+        public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
+
+        //@Task
+        readonly object Locker = new object();
+        BitmapLayer BitmapLayer { get; set; }
+
+        Vector2 StartingPosition;
+        Vector2 Position;
+        float StartingPressure;
+        float Pressure;
+
+        #region IInkParameter
+
+        public InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
+        public InkPresenter InkPresenter => this.InkParameter.InkPresenter;
+
+        readonly InkMixer InkMixer = new InkMixer();
+        public Color Color => this.InkParameter.Color;
+        public Vector4 ColorHdr => this.InkParameter.ColorHdr;
+
+        public object TextureSelectedItem => this.InkParameter.TextureSelectedItem;
+        public void ConstructTexture(string texture) => this.InkParameter.ConstructTexture(texture);
+        public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
+
+        IInkParameter InkParameter;
+        public void Construct(IInkParameter item)
+        {
+            this.InkParameter = item;
+
+            this.CanvasControl.CustomDevice = this.CanvasDevice;
+        }
+
+        #endregion
+
+        //@Construct
+        public PaletteMenu()
+        {
+            this.InitializeComponent();
+            this.ConstructCanvas();
+            this.ConstructOperator();
+
             this.ClearButton.Click += (s, e) =>
             {
                 //@Task
@@ -192,99 +192,71 @@ namespace Luo_Painter
                     return;
                 }
             };
+        }
 
+    }
 
-            // Drag and Drop 
-            base.AllowDrop = true;
-            base.Drop += async (s, e) =>
+    public sealed partial class PaletteMenu : Expander, IInkParameter
+    {
+        readonly InkCanvasOperator Operator = new InkCanvasOperator();
+        readonly Button ClearButton = new Button
+        {
+            Style = App.Current.Resources["AppButtonStyle"] as Style,
+            Content = new SymbolIcon
             {
-                //@Task
-                if (System.Threading.Monitor.TryEnter(this.Locker)) System.Threading.Monitor.Exit(this.Locker);
-                else return;
+                Symbol = Symbol.Delete
+            }
+        };
+        readonly Button ImageButton = new Button
+        {
+            Style = App.Current.Resources["AppButtonStyle"] as Style,
+            Content = new SymbolIcon
+            {
+                Symbol = Symbol.Pictures
+            }
+        };
+        readonly CanvasControl CanvasControl = new CanvasControl
+        {
+            ClearColor = Colors.White,
+            UseSharedDevice = true,
+        };
 
-                if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
+        public void InitializeComponent()
+        {
+            base.Height = 416;
+            base.BorderBrush = App.Current.Resources["AppStroke"] as Brush;
+            base.Background = App.Current.Resources["SystemControlAcrylicElementBrush"] as Brush;
 
-                foreach (IStorageItem item in await e.DataView.GetStorageItemsAsync())
+            base.Title = "Palette";
+
+            base.Content = this.CanvasControl;
+            this.Operator.DestinationControl = this.CanvasControl;
+
+            Grid.SetColumn(this.ImageButton, 1);
+            Grid.SetColumn(this.ClearButton, 2);
+            base.BottomAppBar = new Grid
+            {
+                ColumnDefinitions =
                 {
-                    if (item is StorageFile file)
+                    new ColumnDefinition
                     {
-                        using (IRandomAccessStreamWithContentType stream = await file.OpenReadAsync())
-                        {
-                            CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(this.CanvasControl, stream);
-                            lock (this.Locker)
-                            {
-                                this.BitmapLayer.Draw(bitmap);
-
-                                // History
-                                this.BitmapLayer.Flush();
-
-                                this.CanvasControl.Invalidate(); // Invalidate
-                                return;
-                            }
-                        }
-                    }
+                        Width =new GridLength(1, GridUnitType.Star)
+                    },
+                    new ColumnDefinition
+                    {
+                        Width = GridLength.Auto
+                    },
+                    new ColumnDefinition
+                    {
+                        Width = GridLength.Auto
+                    },
+                },
+                Children =
+                {
+                    this.ImageButton,
+                    this.ClearButton,
                 }
             };
-            base.DragOver += (s, e) =>
-            {
-                e.AcceptedOperation = DataPackageOperation.Copy;
-                //e.DragUIOverride.Caption = 
-                e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
-            };
         }
-
-        //@BackRequested
-        /// <summary> The current page no longer becomes an active page. </summary>
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.InkParameter = null;
-            this.IsEnabled = false;
-
-            if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
-            {
-                manager.BackRequested -= this.BackRequested;
-                manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            }
-        }
-        /// <summary> The current page becomes the active page. </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (e.Parameter is IInkParameter item)
-            {
-                this.Construct(item);
-            }
-            else
-            {
-                this.InkParameter = null;
-
-                if (base.Frame.CanGoBack)
-                {
-                    base.Frame.GoBack();
-                }
-
-                throw new NullReferenceException($"{nameof(this.InkParameter)} is null.");
-            }
-
-            this.IsEnabled = true;
-
-            if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
-            {
-                manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-                manager.BackRequested += this.BackRequested;
-            }
-        }
-        private void BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            e.Handled = true;
-
-            lock (this.Locker)
-            {
-                if (base.Frame.CanGoBack)
-                {
-                    base.Frame.GoBack();
-                }
-            }
-        }
-
     }
 }

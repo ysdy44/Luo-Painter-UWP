@@ -1,15 +1,18 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushPage : Page
+    public sealed partial class PaletteMenu : Expander, IInkParameter
     {
+
+        int MixX = -1;
+        int MixY = -1;
 
         private void Paint_Start()
         {

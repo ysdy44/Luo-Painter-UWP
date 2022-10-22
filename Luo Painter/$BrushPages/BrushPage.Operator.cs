@@ -1,9 +1,9 @@
-﻿using Luo_Painter.Elements;
-using Windows.UI.Xaml.Controls;
+﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 
-namespace Luo_Painter
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushPage : Page
+    public sealed partial class PaletteMenu : Expander, IInkParameter
     {
 
         private void ConstructOperator()

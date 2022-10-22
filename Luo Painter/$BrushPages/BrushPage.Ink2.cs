@@ -1,12 +1,11 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
 using System;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushPage : Page
+    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
         public void ConstructInk2()
@@ -39,16 +38,16 @@ namespace Luo_Painter
                 }
 
                 // 3. Show Dialog
-                this.TextureDialog.Construct(this.ShapeImage.UriSource?.ToString());
+                this.ConstructTexture(this.ShapeImage.UriSource?.ToString());
 
-                this.ScrollViewer.IsHitTestVisible = false;
-                ContentDialogResult result = await this.TextureDialog.ShowInstance();
-                this.ScrollViewer.IsHitTestVisible = true;
+                base.IsHitTestVisible = false;
+                ContentDialogResult result = await this.ShowTextureAsync();
+                base.IsHitTestVisible = true;
 
                 switch (result)
                 {
                     case ContentDialogResult.Primary:
-                        if (this.TextureDialog.SelectedItem is PaintTexture item)
+                        if (this.TextureSelectedItem is PaintTexture item)
                         {
                             // Select Texture
                             this.ShapeImage.UriSource = new System.Uri(item.Texture);
@@ -78,16 +77,16 @@ namespace Luo_Painter
             this.SelectShapeButton.Click += async (s, e) =>
             {
                 // Show Dialog
-                this.TextureDialog.Construct(this.ShapeImage.UriSource?.ToString());
+                this.ConstructTexture(this.ShapeImage.UriSource?.ToString());
 
-                this.ScrollViewer.IsHitTestVisible = false;
-                ContentDialogResult result = await this.TextureDialog.ShowInstance();
-                this.ScrollViewer.IsHitTestVisible = true;
+                base.IsHitTestVisible = false;
+                ContentDialogResult result = await this.ShowTextureAsync();
+                base.IsHitTestVisible = true;
 
                 switch (result)
                 {
                     case ContentDialogResult.Primary:
-                        if (this.TextureDialog.SelectedItem is PaintTexture item)
+                        if (this.TextureSelectedItem is PaintTexture item)
                         {
                             // Select Texture
                             this.ShapeImage.UriSource = new System.Uri(item.Texture);

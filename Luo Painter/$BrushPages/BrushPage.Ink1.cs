@@ -1,12 +1,11 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
+﻿using Luo_Painter.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI.Input.Inking;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushPage : Page
+    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
         public void ConstructInk1()

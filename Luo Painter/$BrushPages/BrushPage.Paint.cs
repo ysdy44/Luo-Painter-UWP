@@ -5,11 +5,10 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.Controls
 {
-    public sealed partial class BrushPage : Page
+    public sealed partial class PaletteMenu : Expander, IInkParameter
     {
 
         private void Paint(StrokeSegment segment)
