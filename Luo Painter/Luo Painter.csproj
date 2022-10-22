@@ -167,6 +167,9 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AddHeader.xaml.cs">
+      <DependentUpon>AddHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BrushMenu.xaml.cs">
       <DependentUpon>BrushMenu.xaml</DependentUpon>
     </Compile>
@@ -208,9 +211,6 @@
     <Compile Include="FileUtils\FileUtil.Folder.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
-    <Compile Include="Luo Painter.Menus\AddMenu.xaml.cs">
-      <DependentUpon>AddMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Luo Painter.Menus\AdjustmentMenu.xaml.cs">
       <DependentUpon>AdjustmentMenu.xaml</DependentUpon>
     </Compile>
@@ -321,6 +321,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\AddHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\BrushMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -366,10 +370,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ToolListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Luo Painter.Menus\AddMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

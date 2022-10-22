@@ -9,9 +9,9 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Menus
+namespace Luo_Painter.Controls
 {
-    public sealed partial class AddMenu : UserControl
+    public sealed partial class AddHeader : UserControl
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick
@@ -37,7 +37,7 @@ namespace Luo_Painter.Menus
         bool IsEnable;
 
         //@Construct
-        public AddMenu()
+        public AddHeader()
         {
             this.InitializeComponent();
             this.PropertyFlyout.Closed += (s, e) => this.State = default;

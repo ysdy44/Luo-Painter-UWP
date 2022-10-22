@@ -161,7 +161,11 @@
                     <Grid>
 
                         <!--Layer-->
-                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
+                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" >
+                            <controls:LayerListView.Header>
+                                <controls:AddHeader x:Name="AddMenu"/>
+                            </controls:LayerListView.Header>
+                        </controls:LayerListView>
 
                         <!--Head-->
                         <ScrollViewer Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppHorizontalScrollViewerStyle}">
@@ -222,15 +226,15 @@
                     <Button x:Name="FullScreenButton" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
                         <SymbolIcon Symbol="FullScreen" />
                     </Button>
-                    <Button
-                                    x:Name="ColorButton"
-                                    BorderThickness="0,0,0,2"
-                                    BorderBrush="DodgerBlue" 
-                                    Style="{StaticResource AppButtonStyle}"
-                                    ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
-                                    ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"                        
-                                    ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"                         
-                                    >
+                    <Button                               
+                        x:Name="ColorButton"                               
+                        BorderThickness="0,0,0,2"                                
+                        BorderBrush="DodgerBlue"
+                        Style="{StaticResource AppButtonStyle}"
+                        ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
+                        ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
+                        ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
+                        >
                         <UIElement.ManipulationMode>
                             TranslateX, TranslateY
                         </UIElement.ManipulationMode>
@@ -265,7 +269,6 @@
             <menus:EditMenu x:Name="EditMenu" />
             <menus:AdjustmentMenu x:Name="AdjustmentMenu" />
             <menus:OtherMenu x:Name="OtherMenu" />
-            <menus:AddMenu x:Name="AddMenu"/>
             <menus:LayerMenu x:Name="LayerMenu"/>
             <menus:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
         </elements:ExpanderLightDismissOverlay>
