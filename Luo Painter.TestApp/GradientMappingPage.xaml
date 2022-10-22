@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter.TestApp"
-    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml" xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -14,7 +14,8 @@
     <FrameworkElement.Resources>
         <!--Flyout-->
         <Flyout x:Name="ColorFlyout" Placement="Top">
-            <ColorPicker x:Name="ColorPicker"
+            <ColorPicker 
+                x:Name="ColorPicker"
                 ColorSpectrumShape="Ring"
                 IsMoreButtonVisible="False"
                 IsColorSliderVisible="False"
@@ -72,9 +73,9 @@
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                             <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                <Rectangle.Fill>
+                                <Shape.Fill>
                                     <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                </Rectangle.Fill>
+                                </Shape.Fill>
                             </Rectangle>
                         </Border>
                     </DataTemplate>

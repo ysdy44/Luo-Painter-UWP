@@ -30,10 +30,6 @@
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
-                        <options:OptionType>PaintWatercolorPen</options:OptionType>
-                        <options:OptionType>PaintPencil</options:OptionType>
-                        <options:OptionType>PaintEraseBrush</options:OptionType>
-                        <options:OptionType>PaintLiquefaction</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>

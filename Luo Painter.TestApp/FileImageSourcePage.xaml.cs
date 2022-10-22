@@ -51,13 +51,13 @@ namespace Luo_Painter.TestApp
                 this.File = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting);
             }
 
-            using (IRandomAccessStream accessStream = await this.File.OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await this.File.OpenAsync(FileAccessMode.ReadWrite))
             {
                 await CanvasImage.SaveAsync(image, new Rect
                 {
                     Width = base.ActualWidth,
                     Height = base.ActualHeight,
-                }, this.DPI, this.CanvasDevice, accessStream, CanvasBitmapFileFormat.Png);
+                }, this.DPI, this.CanvasDevice, stream, CanvasBitmapFileFormat.Png);
             }
         }
     }

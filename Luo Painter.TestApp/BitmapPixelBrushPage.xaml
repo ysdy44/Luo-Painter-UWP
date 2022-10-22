@@ -45,11 +45,10 @@
                 </TextBlock>
                 <xaml:CanvasControl x:Name="TempCanvasControl" Height="100"/>
 
-                <Ellipse Width="45" Height="45" 
-                         StrokeThickness="1" Stroke="White">
-                    <Ellipse.Fill>
+                <Ellipse Width="45" Height="45" StrokeThickness="1" Stroke="White">
+                    <Shape.Fill>
                         <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
-                    </Ellipse.Fill>
+                    </Shape.Fill>
                 </Ellipse>
 
             </StackPanel>
@@ -63,11 +62,17 @@
                 </UIElement.KeyboardAccelerators>
                 <AppBarButton.Flyout>
                     <Flyout>
-                        <Slider x:Name="StepSlider"
-                                Value="10" Minimum="1" Maximum="100" StepFrequency="1"
-                                Header="{x:Bind StepSlider.Value, Mode=OneWay}"
-                                Orientation="Vertical" Height="222" HorizontalAlignment="Center"
-                                />
+                        <Slider 
+                            x:Name="StepSlider"
+                            Value="10" 
+                            Minimum="1" 
+                            Maximum="100" 
+                            StepFrequency="1"                               
+                            Header="{x:Bind StepSlider.Value, Mode=OneWay}"                              
+                            Orientation="Vertical" 
+                            Height="222" 
+                            HorizontalAlignment="Center"                             
+                            />
                     </Flyout>
                 </AppBarButton.Flyout>
                 <AppBarButton.Icon>
@@ -84,16 +89,18 @@
                 </UIElement.KeyboardAccelerators>
                 <AppBarButton.Flyout>
                     <Flyout>
-                        <ColorPicker x:Name="ColorPicker"
-                                     Color="DodgerBlue"
-                                     ColorSpectrumShape="Ring"
-                                     IsMoreButtonVisible="False"
-                                     IsColorSliderVisible="True"
-                                     IsColorChannelTextInputVisible="False"
-                                     IsHexInputVisible="False"
-                                     IsAlphaEnabled="False"
-                                     IsAlphaSliderVisible="True"
-                                     IsAlphaTextInputVisible="False" />
+                        <ColorPicker 
+                            x:Name="ColorPicker"                                 
+                            Color="DodgerBlue"                                   
+                            ColorSpectrumShape="Ring"                                   
+                            IsMoreButtonVisible="False"                                  
+                            IsColorSliderVisible="True"                                  
+                            IsColorChannelTextInputVisible="False"                                  
+                            IsHexInputVisible="False"                                 
+                            IsAlphaEnabled="False"                                  
+                            IsAlphaSliderVisible="True"                                
+                            IsAlphaTextInputVisible="False" 
+                            />
                     </Flyout>
                 </AppBarButton.Flyout>
                 <AppBarButton.Icon>
