@@ -15,12 +15,9 @@ namespace Luo_Painter.Controls
 {
     internal class LayerCommand : RelayCommand<ILayer> { }
 
-    public sealed partial class LayerListView : Spliter
+    public sealed partial class LayerListView : UserControl
     {
         //@Delegate
-        public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
-        public event RoutedEventHandler Remove { remove => this.RemoveButton.Click -= value; add => this.RemoveButton.Click += value; }
-        public event RoutedEventHandler Opening { remove => this.Button.Click -= value; add => this.Button.Click += value; }
         public event EventHandler<ILayer> SelectedItemChanged;
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
         public event DragItemsStartingEventHandler DragItemsStarting { remove => this.ListView.DragItemsStarting -= value; add => this.ListView.DragItemsStarting += value; }
@@ -36,7 +33,8 @@ namespace Luo_Painter.Controls
 
         long SelectedItemToken;
 
-        public FrameworkElement PlacementTarget => this.Grid;
+        public FrameworkElement PlacementTarget => this;
+        public object Header { get => this.ListView.Header; set => this.ListView.Header = value; }
         public int SelectedIndex { get => this.ListView.SelectedIndex; set => this.ListView.SelectedIndex = value; }
         public object SelectedItem { get => this.ListView.SelectedItem; set => this.ListView.SelectedItem = value; }
         public IList<object> SelectedItems => this.ListView.SelectedItems;
@@ -68,12 +66,10 @@ namespace Luo_Painter.Controls
         {
             if (obj is ILayer value)
             {
-                this.RemoveButton.IsEnabled = true;
                 this.SelectedItemChanged?.Invoke(this, value);//Delegate
             }
             else
             {
-                this.RemoveButton.IsEnabled = false;
                 this.SelectedItemChanged?.Invoke(this, null);//Delegate
             }
         }
