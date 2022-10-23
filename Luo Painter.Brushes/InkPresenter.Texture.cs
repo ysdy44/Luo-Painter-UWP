@@ -8,14 +8,14 @@ namespace Luo_Painter.Brushes
         public void ConstructShape(string path, CanvasBitmap source)
         {
             this.AllowShape = true;
-            this.ShapePath = path;
+            this.Shape = path;
             this.ShapeSource?.Dispose();
             this.ShapeSource = source;
         }
         public void ClearShape()
         {
             this.AllowShape = false;
-            this.ShapePath = null;
+            this.Shape = null;
             this.ShapeSource?.Dispose();
             this.ShapeSource = null;
         }
@@ -24,7 +24,7 @@ namespace Luo_Painter.Brushes
         public bool TryTurnOnShape()
         {
             if (this.AllowShape) return false;
-            if (this.ShapePath is null) return false;
+            if (this.Shape is null) return false;
             if (this.ShapeSource is null) return false;
             this.AllowShape = true;
             return true;
@@ -34,14 +34,14 @@ namespace Luo_Painter.Brushes
         public void ConstructGrain(string path, CanvasBitmap source)
         {
             this.AllowGrain = true;
-            this.GrainPath = path;
+            this.Grain = path;
             this.GrainSource?.Dispose();
             this.GrainSource = source;
         }
         public void ClearGrain()
         {
             this.AllowGrain = false;
-            this.GrainPath = null;
+            this.Grain = null;
             this.GrainSource?.Dispose();
             this.GrainSource = null;
         }
@@ -50,7 +50,7 @@ namespace Luo_Painter.Brushes
         public bool TryTurnOnGrain()
         {
             if (this.AllowGrain) return false;
-            if (this.GrainPath is null) return false;
+            if (this.Grain is null) return false;
             if (this.GrainSource is null) return false;
             this.AllowGrain = true;
             return true;
