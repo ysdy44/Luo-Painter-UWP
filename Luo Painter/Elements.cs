@@ -129,6 +129,21 @@ namespace Luo_Painter
     }
 
     internal sealed class InkList : List<InkType> { }
+    internal sealed class InkItem : TIcon<InkType>
+    {
+        protected override void OnTypeChanged(InkType value)
+        {
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Content = Element.GetStackPanel(new ContentControl
+            {
+                Width = 32,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Content = value,
+                Template = value.GetTemplate(base.Resources),
+            }, value.ToString());
+        }
+    }
 
     internal sealed class BlendList : List<BlendEffectMode> { }
     internal sealed class BlendGroupingList : List<BlendEffectMode> { }

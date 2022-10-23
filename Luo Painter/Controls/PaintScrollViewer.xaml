@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"  
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
@@ -16,8 +16,8 @@
 
     <FrameworkElement.Resources>
         <!--Range-->
-        <local:SizeRange x:Name="SizeRange"/>
-        <local:SpacingRange x:Name="SpacingRange"/>
+        <luo_painter:SizeRange x:Name="SizeRange"/>
+        <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Size-->
         <elements:SizePickerExtension x:Name="Step"/>
     </FrameworkElement.Resources>
@@ -50,8 +50,13 @@
                 </TextBlock>
                 <!--Type-->
                 <ComboBox x:Name="ComboBox" Grid.Column="1" Margin="4,0" HorizontalAlignment="Stretch" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="brushes:InkType">
+                            <luo_painter:InkItem Type="{x:Bind}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsSource>
-                        <local:InkList x:Name="InkCollection">
+                        <luo_painter:InkList x:Name="InkCollection">
                             <brushes:InkType>General</brushes:InkType>
                             <brushes:InkType>Tip</brushes:InkType>
                             <brushes:InkType>Line</brushes:InkType>
@@ -59,7 +64,7 @@
                             <brushes:InkType>Mosaic</brushes:InkType>
                             <brushes:InkType>Erase</brushes:InkType>
                             <brushes:InkType>Liquefy</brushes:InkType>
-                        </local:InkList>
+                        </luo_painter:InkList>
                     </ItemsControl.ItemsSource>
                 </ComboBox>
             </Grid>
@@ -303,7 +308,7 @@
                                       IsEnabled="{x:Bind BooleanConverter(BlendRadioButton.IsChecked), Mode=OneWay}">
 
                                 <ItemsControl.ItemsSource>
-                                    <local:BlendList x:Name="BlendCollection">
+                                    <luo_painter:BlendList x:Name="BlendCollection">
                                         <!--Darken-->
                                         <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
                                         <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
@@ -316,7 +321,7 @@
                                         <!--Difference-->
                                         <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
                                         <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                                    </local:BlendList>
+                                    </luo_painter:BlendList>
                                 </ItemsControl.ItemsSource>
 
                             </ComboBox>
@@ -349,11 +354,11 @@
                             <Grid.RenderTransform>
                                 <ScaleTransform ScaleX="3.65" ScaleY="3.65"/>
                             </Grid.RenderTransform>
-                            <local:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
-                            <local:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineRadioButton.IsChecked), Mode=OneWay}"/>
-                            <local:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticRadioButton.IsChecked), Mode=OneWay}"/>
-                            <local:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeRadioButton.IsChecked), Mode=OneWay}"/>
-                            <local:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticRadioButton.IsChecked), Mode=OneWay}"/>
+                            <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
+                            <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineRadioButton.IsChecked), Mode=OneWay}"/>
+                            <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticRadioButton.IsChecked), Mode=OneWay}"/>
+                            <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeRadioButton.IsChecked), Mode=OneWay}"/>
+                            <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticRadioButton.IsChecked), Mode=OneWay}"/>
                         </Grid>
                     </Border>
                     <Border Grid.Column="1" Padding="9,3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
