@@ -20,8 +20,8 @@ namespace Luo_Painter.Brushes
         Color Color { get; }
         Vector4 ColorHdr { get; }
 
-        object TextureSelectedItem { get; }
-        void ConstructTexture(string texture);
+        string TextureSelectedItem { get; }
+        void ConstructTexture(string path);
         Task<ContentDialogResult> ShowTextureAsync();
 
         void Construct(IInkParameter item);

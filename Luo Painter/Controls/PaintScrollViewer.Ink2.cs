@@ -43,15 +43,14 @@ namespace Luo_Painter.Controls
                 switch (result)
                 {
                     case ContentDialogResult.Primary:
-                        if (this.TextureSelectedItem is PaintTexture item)
-                        {
-                            // Select Texture
-                            this.ShapeImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructShape(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
-                            this.InkType = this.InkPresenter.GetType();
-                            this.TryInk();
-                            return;
-                        }
+                        string path = this.TextureSelectedItem;
+                        if (string.IsNullOrEmpty(path)) break;
+
+                        // Select Texture
+                        this.ShapeImage.UriSource = new System.Uri($@"ms-appx:///Luo Painter.Brushes/Textures/{path}/Texture.png");
+                        this.InkPresenter.ConstructShape(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{path}/Source.png"));
+                        this.InkType = this.InkPresenter.GetType();
+                        this.TryInk();
                         break;
                     default:
                         break;
@@ -80,15 +79,14 @@ namespace Luo_Painter.Controls
                 switch (result)
                 {
                     case ContentDialogResult.Primary:
-                        if (this.TextureSelectedItem is PaintTexture item)
-                        {
-                            // Select Texture
-                            this.ShapeImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructShape(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
-                            this.InkType = this.InkPresenter.GetType();
-                            this.TryInk();
-                            return;
-                        }
+                        string path = this.TextureSelectedItem;
+                        if (string.IsNullOrEmpty(path)) break;
+
+                        // Select Texture
+                        this.ShapeImage.UriSource = new System.Uri($@"ms-appx:///Luo Painter.Brushes/Textures/{path}/Texture.png");
+                        this.InkPresenter.ConstructShape(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{path}/Source.png"));
+                        this.InkType = this.InkPresenter.GetType();
+                        this.TryInk();
                         break;
                     default:
                         break;

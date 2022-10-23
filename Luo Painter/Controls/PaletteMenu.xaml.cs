@@ -36,8 +36,8 @@ namespace Luo_Painter.Controls
         public Color Color => this.InkParameter.Color;
         public Vector4 ColorHdr => this.InkParameter.ColorHdr;
 
-        public object TextureSelectedItem => this.InkParameter.TextureSelectedItem;
-        public void ConstructTexture(string texture) => this.InkParameter.ConstructTexture(texture);
+        public string TextureSelectedItem => this.InkParameter.TextureSelectedItem;
+        public void ConstructTexture(string path) => this.InkParameter.ConstructTexture(path);
         public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
 
         IInkParameter InkParameter;

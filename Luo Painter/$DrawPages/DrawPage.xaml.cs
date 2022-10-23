@@ -127,8 +127,8 @@ namespace Luo_Painter
         public Color Color => this.ColorMenu.Color;
         public Vector4 ColorHdr => this.ColorMenu.ColorHdr;
 
-        public object TextureSelectedItem => this.TextureDialog.SelectedItem;
-        public void ConstructTexture(string texture) => this.TextureDialog.Construct(texture);
+        public string TextureSelectedItem => this.TextureDialog.SelectedItem;
+        public void ConstructTexture(string path) => this.TextureDialog.Construct(path);
         public Task<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowInstance();
 
         public void Construct(IInkParameter item)
@@ -187,7 +187,7 @@ namespace Luo_Painter
 
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
             this.PaletteButton.Click += (s, e) => this.Click(OptionType.PaletteMenu);
-            
+
             this.EditButton.Click += (s, e) => this.Click(OptionType.EditMenu);
             this.AdjustmentButton.Click += (s, e) => this.Click(OptionType.AdjustmentMenu);
             this.OtherButton.Click += (s, e) => this.Click(OptionType.OtherMenu);
