@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
-    xmlns:brushes="using:Luo_Painter.Brushes"
+    xmlns:local="using:Luo_Painter.Controls"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
@@ -14,8 +14,8 @@
 
     <ListView          
         x:Name="ListView"
-        IsItemClickEnabled="True"                
-        FooterTemplate="{StaticResource AppListViewBaseFooter}"                          
+        IsItemClickEnabled="True" 
+        FooterTemplate="{StaticResource AppListViewBaseFooter}"        
         >
 
         <ItemsControl.ItemContainerStyle>
@@ -38,7 +38,7 @@
         </ItemsControl.ItemContainerTransitions>
 
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="brushes:PaintBrush">
+            <DataTemplate x:DataType="local:PaintBrush">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
@@ -48,6 +48,7 @@
                     <BitmapIcon UriSource="{x:Bind Thumbnail}"/>
                     <TextBlock Text="{x:Bind Subtitle}" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     <BitmapIcon Grid.Column="2" UriSource="{x:Bind Render}"/>
+                    <luo_painter:InkIcon Grid.Column="2" Margin="12,4" Type="{x:Bind Type}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                 </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
@@ -68,7 +69,7 @@
                     VerticalAlignment="Center" 
                     Style="{StaticResource SubheaderTextBlockStyle}"
                      >
-                    Brushes
+                Brushes
                 </TextBlock>
                 <Button x:Name="AddButton" Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
                     <SymbolIcon Symbol="Add"/>
@@ -76,501 +77,51 @@
             </Grid>
         </ListViewBase.Header>
 
-        <brushes:PaintBrush
-            Type="Shape"
-            Size="12" 
-            Opacity="1" 
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="None" 
-            Path="Universal/00"
-            />
-        <brushes:PaintBrush
-            Type="Shape"
-            Size="4" 
-            Opacity="1" 
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="Quartic" 
-            Path="Universal/01"
-            />
-        <brushes:PaintBrush 
-            Type="Shape"
-            Size="21.16" 
-            Opacity="0.59"
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="Quartic" 
-            Path="Universal/02"
-            />
-        <brushes:PaintBrush 
-            Size="108.16" 
-            Opacity="0.18" 
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Universal/03"
-            />
-        <brushes:PaintBrush 
-            Size="20.25" 
-            Opacity="0.23"
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="None" 
-            Path="Universal/04"
-            />
+        <!--Universal-->
+        <local:PaintBrush Type="Tip" Size="12" Opacity="1" Spacing="0.25" Flow="1" Hardness="None" Path="Universal/00" />
+        <local:PaintBrush Type="Tip" Size="4" Opacity="1" Spacing="0.25" Flow="1" Hardness="Quartic" Path="Universal/01" />
+        <local:PaintBrush Type="Tip" Size="21.16" Opacity="0.59" Spacing="0.25" Flow="1" Hardness="Quartic" Path="Universal/02" />
+        <local:PaintBrush Type="General" Size="108.16" Opacity="0.18" Spacing="0.25" Flow="1" Hardness="Cosine" Path="Universal/03" />
+        <local:PaintBrush Type="General" Size="20.25" Opacity="0.23" Spacing="0.25" Flow="1" Hardness="None" Path="Universal/04" />
 
+        <local:PaintBrush Type="General" Size="210.25" Opacity="0.15" Spacing="0.25" Flow="1" Hardness="Cosine" Path="Universal/05" />
+        <local:PaintBrush Type="General" Size="3.24" Opacity="1" Spacing="0.25" Flow="1" Hardness="None" Path="Universal/06" />
+        <local:PaintBrush Type="General" Size="11.56" Opacity="1" Spacing="0.25" Flow="1" Hardness="Cosine" Path="Universal/07" />
+        <local:PaintBrush Type="General" Size="27.04" Opacity="1" Spacing="0.25" Flow="1" Hardness="Quadratic" Path="Universal/08" />
+        <local:PaintBrush Type="General" Size="75.69" Opacity="0.46" Spacing="0.25" Flow="1" Hardness="Quadratic" Path="Universal/09" />
 
-        <brushes:PaintBrush 
-            Size="210.25" 
-            Opacity="0.15" 
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Universal/05"
-            />
-        <brushes:PaintBrush 
-            Size="3.24" 
-            Opacity="1" 
-            Spacing="0.25"
-            Flow="1" 
-            Hardness="None"
-            Path="Universal/06" 
-            />
-        <brushes:PaintBrush 
-            Size="11.56" 
-            Opacity="1" 
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="Cosine"
-            Path="Universal/07"
-            />
-        <brushes:PaintBrush 
-            Size="27.04" 
-            Opacity="1" 
-            Spacing="0.25"
-            Flow="1" 
-            Hardness="Quadratic" 
-            Path="Universal/08" 
-            />
-        <brushes:PaintBrush 
-            Size="75.69" 
-            Opacity="0.46"
-            Spacing="0.25" 
-            Flow="1" 
-            Hardness="Quadratic" 
-            Path="Universal/09" 
-            />
+        <!--Flash-->
+        <local:PaintBrush Type="General" Size="300" Opacity="0.9" Spacing="0.8" Flow="1" Hardness="Quartic" Path="Flash/00" Shape="Flash/00" />
+        <local:PaintBrush Type="General" Size="500" Opacity="0.85" Spacing="0.55" Flow="1" Hardness="None" Path="Flash/01" Shape="Flash/01" />
+        <local:PaintBrush Type="General" Size="428.49" Opacity="0.66" Spacing="0.6" Flow="1" Hardness="Cosine" Path="Flash/02" Shape="Flash/02" />
+        <local:PaintBrush Type="General" Size="306.25" Opacity="0.73" Spacing="0.8" Flow="1" Hardness="Quartic" Path="Flash/03" Shape="Flash/03" />
+        <local:PaintBrush Type="General" Size="1024" Opacity="0.9" Spacing="0.3" Flow="1" Hardness="None" Path="Flash/04" Shape="Flash/04" />
 
+        <!--Splodge-->
+        <local:PaintBrush Type="General" Size="120" Opacity="0.7" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Splodge/00" Shape="Splodge/00" />
+        <local:PaintBrush Type="General" Size="158.76" Opacity="1" Spacing="0.22" Flow="1" Hardness="Cosine" Path="Splodge/01" Shape="Splodge/01" />
+        <local:PaintBrush Type="General" Size="150" Opacity="1" Spacing="0.33" Flow="1" Hardness="None" Path="Splodge/02" Shape="Splodge/02" />
+        <local:PaintBrush Type="General" Size="136.89" Opacity="0.89" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Splodge/03" Shape="Splodge/03" />
+        <local:PaintBrush Type="General" Size="86.49" Opacity="0.69" Spacing="0.3" Flow="1" Hardness="Cosine" Path="Splodge/04" Shape="Splodge/04" />
 
-        <brushes:PaintBrush
-            Size="300" 
-            Opacity="0.9" 
-            Spacing="0.8" 
-            Flow="1" 
-            Hardness="Quartic"
-            Path="Flash/00"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="400"
-                    Height="400"
-                    Path="Flash/00"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="500" 
-            Opacity="0.85" 
-            Spacing="0.55" 
-            Flow="1" 
-            Hardness="None"
-            Path="Flash/01"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Flash/01"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="428.49" 
-            Opacity="0.66" 
-            Spacing="0.6" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Flash/02"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1100"
-                    Height="1100"
-                    Path="Flash/02"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="306.25" 
-            Opacity="0.73" 
-            Spacing="0.8" 
-            Flow="1" 
-            Hardness="Quartic"  
-            Path="Flash/03"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Flash/03"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="1024" 
-            Opacity="0.9" 
-            Spacing="0.3" 
-            Flow="1" 
-            Hardness="None"  
-            Path="Flash/04"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="900"
-                    Height="900"
-                    Path="Flash/04"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
+        <local:PaintBrush Type="General" Size="108.16" Opacity="0.79" Spacing="0.4" Flow="1" Hardness="Cosine" Path="Splodge/05" Shape="Splodge/05" />
+        <local:PaintBrush Type="General" Size="180" Opacity="0.89" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Splodge/06" Shape="Splodge/06" />
+        <local:PaintBrush Type="General" Size="249.64" Opacity="1" Spacing="0.66" Flow="1" Hardness="None" Path="Splodge/07" Shape="Splodge/07" />
+        <local:PaintBrush Type="General" Size="272.25" Opacity="0.56" Spacing="0.4" Flow="1" Hardness="Cosine" Path="Splodge/08" Shape="Splodge/08" />
+        <local:PaintBrush Type="General" Size="160" Opacity="0.84" Spacing="0.45" Flow="1" Hardness="Cosine" Path="Splodge/09" Shape="Splodge/09" />
 
+        <!--Scratch-->
+        <local:PaintBrush Type="General" Size="222" Opacity="0.49" Spacing="0.45" Flow="1" Hardness="Quartic" Path="Scratch/00" Shape="Scratch/00" />
+        <local:PaintBrush Type="General" Size="233" Opacity="1" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Scratch/01" Shape="Scratch/01" />
+        <local:PaintBrush Type="General" Size="158.76" Opacity="1" Spacing="0.5" Flow="1" Hardness="None" Path="Scratch/02" Shape="Scratch/02" />
+        <local:PaintBrush Type="General" Size="132.25" Opacity="0.21" Spacing="0.22" Flow="1" Hardness="Cosine" Path="Scratch/03" Shape="Scratch/03" />
+        <local:PaintBrush Type="General" Size="193.21" Opacity="0.21" Spacing="0.22" Flow="1" Hardness="Cosine" Path="Scratch/04" Shape="Scratch/04" />
 
-        <brushes:PaintBrush 
-            Size="120" 
-            Opacity="0.7" 
-            Spacing="0.33" 
-            Flow="1" 
-            Hardness="Cosine"
-            Path="Splodge/00"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/00"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="158.76"
-            Opacity="1"
-            Spacing="0.22" 
-            Flow="1" 
-            Hardness="Cosine"  
-            Path="Splodge/01"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/01"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="150" 
-            Opacity="1" 
-            Spacing="0.33" 
-            Flow="1" 
-            Hardness="None" 
-            Path="Splodge/02"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/02"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="136.89" 
-            Opacity="0.89" 
-            Spacing="0.33" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Splodge/03"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/03"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="86.49"
-            Opacity="0.69" 
-            Spacing="0.3" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Splodge/04"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/04"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-
-
-        <brushes:PaintBrush
-            Size="108.16" 
-            Opacity="0.79" 
-            Spacing="0.4" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Splodge/05"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="600"
-                    Height="600"
-                    Path="Splodge/05"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="180" 
-            Opacity="0.89" 
-            Spacing="0.33" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Splodge/06"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Splodge/06"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="249.64" 
-            Opacity="1" 
-            Spacing="0.66" 
-            Flow="1" 
-            Hardness="None" 
-            Path="Splodge/07"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Splodge/07"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="272.25" 
-            Opacity="0.56" 
-            Spacing="0.4" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Splodge/08"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Splodge/08"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="160" 
-            Opacity="0.84" 
-            Spacing="0.45" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Splodge/09"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1024"
-                    Height="1024"
-                    Path="Splodge/09"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-
-
-        <brushes:PaintBrush
-            Size="222" 
-            Opacity="0.49" 
-            Spacing="0.45" 
-            Flow="1" 
-            Hardness="Quartic" 
-            Path="Scratch/00"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1300"
-                    Height="1300"
-                    Path="Scratch/00"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="233" 
-            Opacity="1" 
-            Spacing="0.33" 
-            Flow="1" 
-            Hardness="Cosine"
-            Path="Scratch/01"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/01"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="158.76" 
-            Opacity="1" 
-            Spacing="0.5" 
-            Flow="1" 
-            Hardness="None" 
-            Path="Scratch/02"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/02"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="132.25" 
-            Opacity="0.21" 
-            Spacing="0.22" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Scratch/03"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1200"
-                    Height="1200"
-                    Path="Scratch/03"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="193.21" 
-            Opacity="0.21" 
-            Spacing="0.22" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Scratch/04"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1300"
-                    Height="1300"
-                    Path="Scratch/04"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-
-
-        <brushes:PaintBrush
-            Size="225"
-            Opacity="0.8"
-            Spacing="0.45" 
-            Flow="1" 
-            Hardness="Quartic" 
-            Path="Scratch/05"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/05"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="112.36"
-            Opacity="0.8" 
-            Spacing="0.66" 
-            Flow="1" 
-            Hardness="Cosine"
-            Path="Scratch/06"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/06"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="102"
-            Opacity="1"
-            Spacing="0.66" 
-            Flow="1" 
-            Hardness="Cube"
-            Path="Scratch/07"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Scratch/07"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush
-            Size="121" 
-            Opacity="0.58" 
-            Spacing="0.8" 
-            Flow="1" 
-            Hardness="Cosine" 
-            Path="Scratch/08"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Scratch/08"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
-        <brushes:PaintBrush 
-            Size="166.41" 
-            Opacity="0.41" 
-            Spacing="0.33" 
-            Flow="1" 
-            Hardness="Cosine"
-            Path="Scratch/09"
-            >
-            <brushes:PaintBrush.Shape>
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Scratch/09"
-                    />
-            </brushes:PaintBrush.Shape>
-        </brushes:PaintBrush>
+        <local:PaintBrush Type="General" Size="225" Opacity="0.8" Spacing="0.45" Flow="1" Hardness="Quartic" Path="Scratch/05" Shape="Scratch/05" />
+        <local:PaintBrush Type="General" Size="112.36" Opacity="0.8" Spacing="0.66" Flow="1" Hardness="Cosine" Path="Scratch/06" Shape="Scratch/06" />
+        <local:PaintBrush Type="General" Size="102" Opacity="1" Spacing="0.66" Flow="1" Hardness="Cube" Path="Scratch/07" Shape="Scratch/07" />
+        <local:PaintBrush Type="General" Size="121" Opacity="0.58" Spacing="0.8" Flow="1" Hardness="Cosine" Path="Scratch/08" Shape="Scratch/08" />
+        <local:PaintBrush Type="General" Size="166.41" Opacity="0.41" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Scratch/09" Shape="Scratch/09" />
 
     </ListView>
 </UserControl>

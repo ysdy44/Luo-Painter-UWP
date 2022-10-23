@@ -1,19 +1,25 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
-using Luo_Painter.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
+    internal sealed class PaintBrush : PaintAttributes<double>
+    {
+        public string Path { get; set; } // = "Flash/00";
+        public string Render => $"ms-appx:///Luo Painter.Brushes/Thumbnails/{this.Path}/Render.png";
+        public string Thumbnail => $"ms-appx:///Luo Painter.Brushes/Thumbnails/{this.Path}/Thumbnail.png";
+
+        public string Title { get; set; }
+        public string Subtitle => ((int)this.Size).ToString();
+    }
+
     public sealed partial class BrushListView : UserControl
     {
         //@Delegate
-        public event EventHandler<PaintBrush> ItemClick;
+        public event EventHandler<PaintAttributes<double>> ItemClick;
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
 
         //@Construct

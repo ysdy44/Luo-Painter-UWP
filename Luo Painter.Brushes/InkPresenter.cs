@@ -14,7 +14,7 @@ namespace Luo_Painter.Brushes
         public string GrainPath { get; private set; }
         public CanvasBitmap GrainSource { get; private set; }
 
-        public void Construct(PaintBrush brush)
+        public void Construct(PaintAttributes<double> brush)
         {
             this.Type = brush.Type;
             this.Mode = brush.Mode;
@@ -35,6 +35,9 @@ namespace Luo_Painter.Brushes
 
             this.Rotate = brush.Rotate;
             this.Step = brush.Step;
+
+            this.Shape = brush.Shape;
+            this.Grain = brush.Grain;
         }
     }
 }

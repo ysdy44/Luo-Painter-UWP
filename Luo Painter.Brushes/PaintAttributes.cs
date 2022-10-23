@@ -52,5 +52,8 @@ namespace Luo_Painter.Brushes
         public bool Rotate { get; set; }
         public int Step { get; set; } = 1024;
 
+        public string Shape { get; set; }
+        public string Grain { get; set; }
+
     }
 }

@@ -41,10 +41,10 @@ namespace Luo_Painter
         {
             this.BrushMenu.ItemClick += async (s, brush) =>
             {
-                if (brush.Shape is PaintTexture shape) this.InkPresenter.ConstructShape(shape.Path, await CanvasBitmap.LoadAsync(this.CanvasDevice, shape.Source));
+                if (string.IsNullOrEmpty(brush.Shape) is false) this.InkPresenter.ConstructShape(brush.Shape, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{brush.Shape}/Source.png"));
                 else this.InkPresenter.ClearShape();
 
-                if (brush.Grain is PaintTexture grain) this.InkPresenter.ConstructGrain(grain.Path, await CanvasBitmap.LoadAsync(this.CanvasDevice, grain.Source));
+                if (string.IsNullOrEmpty(brush.Grain) is false) this.InkPresenter.ConstructGrain(brush.Grain, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{brush.Grain}/Source.png"));
                 else this.InkPresenter.ClearGrain();
 
                 this.InkPresenter.Construct(brush);
