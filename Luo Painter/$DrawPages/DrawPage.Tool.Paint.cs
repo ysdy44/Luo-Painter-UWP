@@ -16,6 +16,7 @@ namespace Luo_Painter
 
         private void Paint_Start()
         {
+            if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
 
             if (this.LayerSelectedItem is null)
@@ -32,12 +33,12 @@ namespace Luo_Painter
             }
 
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
-            if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Shape without NaN
             if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
             Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
-     
+
             //@Task
             if (true)
                 this.Paint_PaintAsync(stroke, segment);
@@ -46,6 +47,7 @@ namespace Luo_Painter
         }
         private void Paint_Delta()
         {
+            if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
@@ -54,13 +56,13 @@ namespace Luo_Painter
             if (segment.InRadius) return;
             if (segment.IsNaN)
             {
-                if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Mask without NaN
+                if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Shape without NaN
                 if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
             }
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
 
             Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
-          
+
             //@Task
             if (true)
                 this.Paint_PaintAsync(stroke, segment);
@@ -73,6 +75,7 @@ namespace Luo_Painter
         }
         private void Paint_Complete()
         {
+            if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 

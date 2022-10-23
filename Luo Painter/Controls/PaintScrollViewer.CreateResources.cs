@@ -9,8 +9,6 @@ namespace Luo_Painter.Controls
     public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
-        bool ShaderCodeByteIsEnabled;
-
         byte[] BrushEdgeHardnessShaderCodeBytes;
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
@@ -23,8 +21,6 @@ namespace Luo_Painter.Controls
 
             this.InkRender = new CanvasRenderTarget(sender, InkPresenter.Width, InkPresenter.Height);
             this.Ink();
-
-            this.ShaderCodeByteIsEnabled = true;
         }
 
     }

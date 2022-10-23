@@ -18,7 +18,7 @@ namespace Luo_Painter.Controls
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                if (this.ShaderCodeByteIsEnabled is false) return;
+                if (this.CanvasControl.ReadyToDraw is false) return;
                 Vector2 size = this.CanvasControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
                 this.CreateResources((int)size.X, (int)size.Y);
             };

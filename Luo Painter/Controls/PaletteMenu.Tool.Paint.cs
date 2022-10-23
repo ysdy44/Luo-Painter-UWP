@@ -16,10 +16,11 @@ namespace Luo_Painter.Controls
 
         private void Paint_Start()
         {
+            if (this.CanvasControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
 
             if (this.InkType.HasFlag(InkType.Mix)) this.CacheMix(this.StartingPosition);
-            if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Mask without NaN
+            if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Shape without NaN
             if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
@@ -32,6 +33,7 @@ namespace Luo_Painter.Controls
         }
         private void Paint_Delta()
         {
+            if (this.CanvasControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
@@ -39,7 +41,7 @@ namespace Luo_Painter.Controls
             if (segment.InRadius) return;
             if (segment.IsNaN)
             {
-                if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Mask without NaN
+                if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Shape without NaN
                 if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
             }
             if (this.InkType.HasFlag(InkType.Mix)) this.Mix(this.Position, this.InkPresenter.Opacity);
@@ -55,6 +57,7 @@ namespace Luo_Painter.Controls
         }
         private void Paint_Complete()
         {
+            if (this.CanvasControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
 
             //@Task

@@ -9,8 +9,6 @@ namespace Luo_Painter.Controls
     public sealed partial class PaletteMenu : Expander, IInkParameter
     {
 
-        bool ShaderCodeByteIsEnabled;
-
         byte[] LiquefactionShaderCodeBytes;
 
         byte[] BrushEdgeHardnessShaderCodeBytes;
@@ -35,8 +33,6 @@ namespace Luo_Painter.Controls
             // Brush
             this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
             this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
-
-            this.ShaderCodeByteIsEnabled = true;
         }
 
     }
