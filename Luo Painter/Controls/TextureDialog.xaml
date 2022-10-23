@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:local="using:Luo_Painter.Controls"
     mc:Ignorable="d"
     FullSizeDesired="False" 
@@ -42,7 +41,7 @@
         </ItemsControl.ItemContainerStyle>
 
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="brushes:PaintTexture">
+            <DataTemplate x:DataType="local:PaintTexture">
                 <Image Source="{x:Bind Texture}">
                     <ToolTipService.ToolTip>
                         <ToolTip>
@@ -60,146 +59,37 @@
         <ItemsControl.ItemsSource>
             <!--Collection-->
             <local:PaintTextureList x:Name="Collection">
-                <brushes:PaintTexture
-                    Width="400"
-                    Height="400"
-                    Path="Flash/00"
-                    />
-                <brushes:PaintTexture 
-                    Width="1400"
-                    Height="1400"
-                    Path="Flash/01"
-                    />
-                <brushes:PaintTexture 
-                    Width="1100"
-                    Height="1100"
-                    Path="Flash/02"
-                    />
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Flash/03"
-                    />
-                <brushes:PaintTexture
-                    Width="900"
-                    Height="900"
-                    Path="Flash/04"
-                    />
+                <local:PaintTexture Width="400" Height="400" Path="Flash/00" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Flash/01" />
+                <local:PaintTexture Width="1100" Height="1100" Path="Flash/02" />
+                <local:PaintTexture Width="1600"    Height="1600" Path="Flash/03" />
+                <local:PaintTexture Width="900" Height="900" Path="Flash/04" />
 
+                <local:PaintTexture Width="512" Height="512" Path="Splodge/00" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge/01" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge/02" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge/03" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge/04" />
 
+                <local:PaintTexture Width="600" Height="600" Path="Splodge/05" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Splodge/06" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Splodge/07" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Splodge/08" />
+                <local:PaintTexture Width="1024" Height="1024" Path="Splodge/09" />
 
+                <local:PaintTexture Width="1300" Height="1300" Path="Scratch/00" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/01" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/02" />
+                <local:PaintTexture Width="1200" Height="1200" Path="Scratch/03" />
+                <local:PaintTexture Width="1300" Height="1300" Path="Scratch/04" />
 
-                <brushes:PaintTexture 
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/00"
-                    />
-                <brushes:PaintTexture 
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/01"
-                    />
-                <brushes:PaintTexture 
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/02"
-                    />
-                <brushes:PaintTexture
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/03"
-                    />
-                <brushes:PaintTexture 
-                    Width="512"
-                    Height="512"
-                    Path="Splodge/04"
-                    />
-
-
-                <brushes:PaintTexture
-                    Width="600"
-                    Height="600"
-                    Path="Splodge/05"
-                    />
-                <brushes:PaintTexture 
-                    Width="1400"
-                    Height="1400"
-                    Path="Splodge/06"
-                    />
-                <brushes:PaintTexture 
-                    Width="1600"
-                    Height="1600"
-                    Path="Splodge/07"
-                    />
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Splodge/08"
-                    />
-                <brushes:PaintTexture
-                    Width="1024"
-                    Height="1024"
-                    Path="Splodge/09"
-                    />
-
-
-
-
-                <brushes:PaintTexture
-                    Width="1300"
-                    Height="1300"
-                    Path="Scratch/00"
-                    />
-                <brushes:PaintTexture 
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/01"
-                    />
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/02"
-                    />
-                <brushes:PaintTexture
-                    Width="1200"
-                    Height="1200"
-                    Path="Scratch/03"
-                    />
-                <brushes:PaintTexture 
-                    Width="1300"
-                    Height="1300"
-                    Path="Scratch/04"
-                    />
-
-
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/05"
-                    />
-                <brushes:PaintTexture
-                    Width="1400"
-                    Height="1400"
-                    Path="Scratch/06"
-                    />
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Scratch/07"
-                    />
-                <brushes:PaintTexture
-                    Width="1600"
-                    Height="1600"
-                    Path="Scratch/08"
-                    />
-                <brushes:PaintTexture 
-                    Width="1600"
-                    Height="1600"
-                    Path="Scratch/09"
-                    />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/05" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/06" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Scratch/07" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Scratch/08" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Scratch/09" />
             </local:PaintTextureList>
         </ItemsControl.ItemsSource>
 
     </GridView>
-
 </ContentDialog>
