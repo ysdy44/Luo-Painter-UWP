@@ -41,10 +41,10 @@ namespace Luo_Painter
         {
             this.BrushMenu.ItemClick += async (s, brush) =>
             {
-                if (brush.Shape is PaintTexture shape) this.InkPresenter.ConstructShape(shape.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, shape.Source));
+                if (brush.Shape is PaintTexture shape) this.InkPresenter.ConstructShape(shape.Path, await CanvasBitmap.LoadAsync(this.CanvasDevice, shape.Source));
                 else this.InkPresenter.ClearShape();
 
-                if (brush.Grain is PaintTexture grain) this.InkPresenter.ConstructGrain(grain.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, grain.Source));
+                if (brush.Grain is PaintTexture grain) this.InkPresenter.ConstructGrain(grain.Path, await CanvasBitmap.LoadAsync(this.CanvasDevice, grain.Source));
                 else this.InkPresenter.ClearGrain();
 
                 this.InkPresenter.Construct(brush);
@@ -53,6 +53,9 @@ namespace Luo_Painter
                 this.InkIsEnabled = false;
                 this.AppBar.ConstructInk(this.InkPresenter, true);
                 this.InkIsEnabled = true;
+
+                this.PaintScrollViewer.ConstructInk(this.InkPresenter);
+                this.PaintScrollViewer.TryInk();
             };
 
             this.SizeMenu.ItemClick += (s, size) =>
@@ -62,6 +65,9 @@ namespace Luo_Painter
                 this.InkIsEnabled = false;
                 this.AppBar.ConstructInk(this.InkPresenter, true);
                 this.InkIsEnabled = true;
+
+                this.PaintScrollViewer.ConstructInk(this.InkPresenter);
+                this.PaintScrollViewer.TryInk();
             };
         }
 

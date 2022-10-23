@@ -7,11 +7,11 @@ namespace Luo_Painter.Brushes
     public sealed partial class InkPresenter : PaintAttributes<float>
     {
         public bool AllowShape { get; private set; } // GetType
-        public string ShapeTexture { get; private set; }
+        public string ShapePath { get; private set; }
         public CanvasBitmap ShapeSource { get; private set; }
 
         public bool AllowGrain { get; private set; }
-        public string GrainTexture { get; private set; }
+        public string GrainPath { get; private set; }
         public CanvasBitmap GrainSource { get; private set; }
 
         public void Construct(PaintBrush brush)

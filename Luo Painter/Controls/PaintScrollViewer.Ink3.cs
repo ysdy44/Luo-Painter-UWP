@@ -49,7 +49,7 @@ namespace Luo_Painter.Controls
                         {
                             // Select Texture
                             this.GrainImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructGrain(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.InkPresenter.ConstructGrain(item.Path, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
                             this.TryInk();
                             return;
@@ -86,7 +86,7 @@ namespace Luo_Painter.Controls
                         {
                             // Select Texture
                             this.GrainImage.UriSource = new System.Uri(item.Texture);
-                            this.InkPresenter.ConstructGrain(item.Texture, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
+                            this.InkPresenter.ConstructGrain(item.Path, await CanvasBitmap.LoadAsync(this.CanvasDevice, item.Source));
                             this.InkType = this.InkPresenter.GetType();
                             this.TryInk();
                             return;
