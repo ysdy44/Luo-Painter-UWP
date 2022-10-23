@@ -6,7 +6,7 @@ using Windows.Graphics.Effects;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter : InkAttributes<float>
+    public sealed partial class InkPresenter : InkAttributes
     {
 
         public void Preview(CanvasDrawingSession ds, InkType type, ICanvasImage image, ICanvasImage wet)

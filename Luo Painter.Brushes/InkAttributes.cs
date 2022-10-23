@@ -6,9 +6,7 @@ namespace Luo_Painter.Brushes
     /// <summary>
     /// <see cref="InkDrawingAttributes"/>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class InkAttributes<T>
-        where T : struct
+    public partial class InkAttributes
     {
 
         /// <summary>
@@ -31,11 +29,11 @@ namespace Luo_Painter.Brushes
         public InkType Mode { get; set; } = InkType.None; /// <see cref="InkPresenter.GetType"/>
 
 
-        public T Size { get; set; }
-        public T Opacity { get; set; } /// <see cref="InkPresenter.GetType"/>
+        public float Size { get; set; }
+        public float Opacity { get; set; } /// <see cref="InkPresenter.GetType"/>
 
-        public T Spacing { get; set; }
-        public T Flow { get; set; }
+        public float Spacing { get; set; }
+        public float Flow { get; set; }
 
 
         public bool IgnoreSizePressure { get; set; }
@@ -54,6 +52,33 @@ namespace Luo_Painter.Brushes
 
         public string Shape { get; set; }
         public string Grain { get; set; }
+
+
+        public void CopyWith(InkAttributes attributes)
+        {
+            this.Type = attributes.Type;
+            this.Mode = attributes.Mode;
+
+            this.Size = attributes.Size;
+            this.Opacity = attributes.Opacity;
+            this.Spacing = attributes.Spacing;
+            this.Flow = attributes.Flow;
+
+            this.IgnoreSizePressure = attributes.IgnoreSizePressure;
+            this.IgnoreFlowPressure = attributes.IgnoreFlowPressure;
+
+            this.Tip = attributes.Tip;
+            this.IsStroke = attributes.IsStroke;
+
+            this.BlendMode = attributes.BlendMode;
+            this.Hardness = attributes.Hardness;
+
+            this.Rotate = attributes.Rotate;
+            this.Step = attributes.Step;
+
+            this.Shape = attributes.Shape;
+            this.Grain = attributes.Grain;
+        }
 
     }
 }

@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    internal sealed class PaintBrush : InkAttributes<float>
+    internal sealed class PaintBrush : InkAttributes
     {
         public double Size2 { get => base.Size; set => base.Size = (float)value; }
         public double Opacity2 { get => base.Opacity; set => base.Opacity = (float)value; }
@@ -26,7 +26,7 @@ namespace Luo_Painter.Controls
     public sealed partial class BrushListView : UserControl
     {
         //@Delegate
-        public event EventHandler<InkAttributes<float>> ItemClick;
+        public event EventHandler<InkAttributes> ItemClick;
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
 
         //@Construct
