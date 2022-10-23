@@ -219,33 +219,6 @@
 
 
                 <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                           Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" />
-
-
-                <!--Tip-->
-                <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" >
-                    Tip
-                </TextBlock>
-
-                <ListBox x:Name="TipListBox" Margin="0,4" Style="{StaticResource AppSegmentListBoxStyle}"
-                     Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
-                    <ListBoxItem Padding="8,4" MinWidth="50" Width="66">
-                        <Ellipse Width="32" Height="32" Fill="White"/>
-                    </ListBoxItem>
-                    <ListBoxItem Padding="8,4" MinWidth="50" Width="66">
-                        <Ellipse Width="32" Height="32" StrokeThickness="1" Stroke="White"/>
-                    </ListBoxItem>
-                    <ListBoxItem Padding="8,4" MinWidth="50" Width="66">
-                        <Rectangle Width="32" Height="32" Fill="White"/>
-                    </ListBoxItem>
-                    <ListBoxItem Padding="8,4" MinWidth="50" Width="66">
-                        <Rectangle Width="32" Height="32" StrokeThickness="1" Stroke="White"/>
-                    </ListBoxItem>
-                </ListBox>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
                            Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" />
 
 
@@ -380,6 +353,39 @@
                             </RadioButton>
                         </StackPanel>
                     </Border>
+                </Grid>
+
+
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
+                           Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" />
+
+
+                <!--Tip-->
+                <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                           Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" >
+                    Tip Shape
+                </TextBlock>
+
+                <Grid Height="146" ColumnSpacing="4"
+                      Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="146"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
+                        <Border Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="White" 
+                                CornerRadius="{x:Bind CornerRadiusConverter(TipListBox.SelectedIndex), Mode=OneWay}" >
+                            <Border.Background>
+                                <SolidColorBrush Color="{x:Bind ColorConverter(TipListBox.SelectedIndex), Mode=OneWay}"/>
+                            </Border.Background>
+                        </Border>
+                    </Border>
+                    <ListBox x:Name="TipListBox" Grid.Column="1" Style="{StaticResource AppGrid2x2ListBoxStyle}">
+                        <FontIcon Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                        <FontIcon Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                        <FontIcon Glyph="&#xE002;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                        <FontIcon Glyph="&#xE003;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                    </ListBox>
                 </Grid>
 
 
