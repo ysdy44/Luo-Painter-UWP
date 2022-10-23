@@ -12,7 +12,7 @@ namespace Luo_Painter.Brushes
         public bool AllowGrain { get; private set; }
         public CanvasBitmap GrainSource { get; private set; }
 
-        public void Construct(InkAttributes<double> brush)
+        public void Construct(InkAttributes<float> brush)
         {
             this.Type = brush.Type;
             this.Mode = brush.Mode;

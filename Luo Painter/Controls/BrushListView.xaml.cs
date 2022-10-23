@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -6,11 +7,17 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    internal sealed class PaintBrush : InkAttributes<double>
+    internal sealed class PaintBrush : InkAttributes<float>
     {
+        public double Size2 { get => base.Size; set => base.Size = (float)value; }
+        public double Opacity2 { get => base.Opacity; set => base.Opacity = (float)value; }
+
+        public double Spacing2 { get => base.Spacing; set => base.Spacing = (float)value; }
+        public double Flow2 { get => base.Flow; set => base.Flow = (float)value; }
+
         public string Path { get; set; } // = "Flash/00";
-        public string Render => $"ms-appx:///Luo Painter.Brushes/Thumbnails/{this.Path}/Render.png";
-        public string Thumbnail => $"ms-appx:///Luo Painter.Brushes/Thumbnails/{this.Path}/Thumbnail.png";
+        public string Render => this.Path.GetThumbnailRender();
+        public string Thumbnail => this.Path.GetThumbnail();
 
         public string Title { get; set; }
         public string Subtitle => ((int)this.Size).ToString();
@@ -19,7 +26,7 @@ namespace Luo_Painter.Controls
     public sealed partial class BrushListView : UserControl
     {
         //@Delegate
-        public event EventHandler<InkAttributes<double>> ItemClick;
+        public event EventHandler<InkAttributes<float>> ItemClick;
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
 
         //@Construct

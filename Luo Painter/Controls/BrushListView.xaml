@@ -78,50 +78,50 @@
         </ListViewBase.Header>
 
         <!--Universal-->
-        <local:PaintBrush Type="Tip" Size="12" Opacity="1" Spacing="0.25" Flow="1" Hardness="None" Path="Universal/00" />
-        <local:PaintBrush Type="Tip" Size="4" Opacity="1" Spacing="0.25" Flow="1" Hardness="Quartic" Path="Universal/01" />
-        <local:PaintBrush Type="Tip" Size="21.16" Opacity="0.59" Spacing="0.25" Flow="1" Hardness="Quartic" Path="Universal/02" />
-        <local:PaintBrush Type="General" Size="108.16" Opacity="0.18" Spacing="0.25" Flow="1" Hardness="Cosine" Path="Universal/03" />
-        <local:PaintBrush Type="General" Size="20.25" Opacity="0.23" Spacing="0.25" Flow="1" Hardness="None" Path="Universal/04" />
+        <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="None" Path="Universal/00" />
+        <local:PaintBrush Type="Tip" Size2="4" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Quartic" Path="Universal/01" />
+        <local:PaintBrush Type="Tip" Size2="21.16" Opacity2="0.59" Spacing2="0.25" Flow2="1" Hardness="Quartic" Path="Universal/02" />
+        <local:PaintBrush Type="General" Size2="108.16" Opacity2="0.18" Spacing2="0.25" Flow2="1" Hardness="Cosine" Path="Universal/03" />
+        <local:PaintBrush Type="General" Size2="20.25" Opacity2="0.23" Spacing2="0.25" Flow2="1" Hardness="None" Path="Universal/04" />
 
-        <local:PaintBrush Type="General" Size="210.25" Opacity="0.15" Spacing="0.25" Flow="1" Hardness="Cosine" Path="Universal/05" />
-        <local:PaintBrush Type="General" Size="3.24" Opacity="1" Spacing="0.25" Flow="1" Hardness="None" Path="Universal/06" />
-        <local:PaintBrush Type="General" Size="11.56" Opacity="1" Spacing="0.25" Flow="1" Hardness="Cosine" Path="Universal/07" />
-        <local:PaintBrush Type="General" Size="27.04" Opacity="1" Spacing="0.25" Flow="1" Hardness="Quadratic" Path="Universal/08" />
-        <local:PaintBrush Type="General" Size="75.69" Opacity="0.46" Spacing="0.25" Flow="1" Hardness="Quadratic" Path="Universal/09" />
+        <local:PaintBrush Type="General" Size2="210.25" Opacity2="0.15" Spacing2="0.25" Flow2="1" Hardness="Cosine" Path="Universal/05" />
+        <local:PaintBrush Type="General" Size2="3.24" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="None" Path="Universal/06" />
+        <local:PaintBrush Type="General" Size2="11.56" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Cosine" Path="Universal/07" />
+        <local:PaintBrush Type="General" Size2="27.04" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Quadratic" Path="Universal/08" />
+        <local:PaintBrush Type="General" Size2="75.69" Opacity2="0.46" Spacing2="0.25" Flow2="1" Hardness="Quadratic" Path="Universal/09" />
 
         <!--Flash-->
-        <local:PaintBrush Type="General" Size="300" Opacity="0.9" Spacing="0.8" Flow="1" Hardness="Quartic" Path="Flash/00" Shape="Flash/00" />
-        <local:PaintBrush Type="General" Size="500" Opacity="0.85" Spacing="0.55" Flow="1" Hardness="None" Path="Flash/01" Shape="Flash/01" />
-        <local:PaintBrush Type="General" Size="428.49" Opacity="0.66" Spacing="0.6" Flow="1" Hardness="Cosine" Path="Flash/02" Shape="Flash/02" />
-        <local:PaintBrush Type="General" Size="306.25" Opacity="0.73" Spacing="0.8" Flow="1" Hardness="Quartic" Path="Flash/03" Shape="Flash/03" />
-        <local:PaintBrush Type="General" Size="1024" Opacity="0.9" Spacing="0.3" Flow="1" Hardness="None" Path="Flash/04" Shape="Flash/04" />
+        <local:PaintBrush Type="General" Size2="300" Opacity2="0.9" Spacing2="0.8" Flow2="1" Hardness="Quartic" Path="Flash/00" Shape="Flash/00" />
+        <local:PaintBrush Type="General" Size2="500" Opacity2="0.85" Spacing2="0.55" Flow2="1" Hardness="None" Path="Flash/01" Shape="Flash/01" />
+        <local:PaintBrush Type="General" Size2="428.49" Opacity2="0.66" Spacing2="0.6" Flow2="1" Hardness="Cosine" Path="Flash/02" Shape="Flash/02" />
+        <local:PaintBrush Type="General" Size2="306.25" Opacity2="0.73" Spacing2="0.8" Flow2="1" Hardness="Quartic" Path="Flash/03" Shape="Flash/03" />
+        <local:PaintBrush Type="General" Size2="1024" Opacity2="0.9" Spacing2="0.3" Flow2="1" Hardness="None" Path="Flash/04" Shape="Flash/04" />
 
         <!--Splodge-->
-        <local:PaintBrush Type="General" Size="120" Opacity="0.7" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Splodge/00" Shape="Splodge/00" />
-        <local:PaintBrush Type="General" Size="158.76" Opacity="1" Spacing="0.22" Flow="1" Hardness="Cosine" Path="Splodge/01" Shape="Splodge/01" />
-        <local:PaintBrush Type="General" Size="150" Opacity="1" Spacing="0.33" Flow="1" Hardness="None" Path="Splodge/02" Shape="Splodge/02" />
-        <local:PaintBrush Type="General" Size="136.89" Opacity="0.89" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Splodge/03" Shape="Splodge/03" />
-        <local:PaintBrush Type="General" Size="86.49" Opacity="0.69" Spacing="0.3" Flow="1" Hardness="Cosine" Path="Splodge/04" Shape="Splodge/04" />
+        <local:PaintBrush Type="General" Size2="120" Opacity2="0.7" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Splodge/00" Shape="Splodge/00" />
+        <local:PaintBrush Type="General" Size2="158.76" Opacity2="1" Spacing2="0.22" Flow2="1" Hardness="Cosine" Path="Splodge/01" Shape="Splodge/01" />
+        <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="0.33" Flow2="1" Hardness="None" Path="Splodge/02" Shape="Splodge/02" />
+        <local:PaintBrush Type="General" Size2="136.89" Opacity2="0.89" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Splodge/03" Shape="Splodge/03" />
+        <local:PaintBrush Type="General" Size2="86.49" Opacity2="0.69" Spacing2="0.3" Flow2="1" Hardness="Cosine" Path="Splodge/04" Shape="Splodge/04" />
 
-        <local:PaintBrush Type="General" Size="108.16" Opacity="0.79" Spacing="0.4" Flow="1" Hardness="Cosine" Path="Splodge/05" Shape="Splodge/05" />
-        <local:PaintBrush Type="General" Size="180" Opacity="0.89" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Splodge/06" Shape="Splodge/06" />
-        <local:PaintBrush Type="General" Size="249.64" Opacity="1" Spacing="0.66" Flow="1" Hardness="None" Path="Splodge/07" Shape="Splodge/07" />
-        <local:PaintBrush Type="General" Size="272.25" Opacity="0.56" Spacing="0.4" Flow="1" Hardness="Cosine" Path="Splodge/08" Shape="Splodge/08" />
-        <local:PaintBrush Type="General" Size="160" Opacity="0.84" Spacing="0.45" Flow="1" Hardness="Cosine" Path="Splodge/09" Shape="Splodge/09" />
+        <local:PaintBrush Type="General" Size2="108.16" Opacity2="0.79" Spacing2="0.4" Flow2="1" Hardness="Cosine" Path="Splodge/05" Shape="Splodge/05" />
+        <local:PaintBrush Type="General" Size2="180" Opacity2="0.89" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Splodge/06" Shape="Splodge/06" />
+        <local:PaintBrush Type="General" Size2="249.64" Opacity2="1" Spacing2="0.66" Flow2="1" Hardness="None" Path="Splodge/07" Shape="Splodge/07" />
+        <local:PaintBrush Type="General" Size2="272.25" Opacity2="0.56" Spacing2="0.4" Flow2="1" Hardness="Cosine" Path="Splodge/08" Shape="Splodge/08" />
+        <local:PaintBrush Type="General" Size2="160" Opacity2="0.84" Spacing2="0.45" Flow2="1" Hardness="Cosine" Path="Splodge/09" Shape="Splodge/09" />
 
         <!--Scratch-->
-        <local:PaintBrush Type="General" Size="222" Opacity="0.49" Spacing="0.45" Flow="1" Hardness="Quartic" Path="Scratch/00" Shape="Scratch/00" />
-        <local:PaintBrush Type="General" Size="233" Opacity="1" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Scratch/01" Shape="Scratch/01" />
-        <local:PaintBrush Type="General" Size="158.76" Opacity="1" Spacing="0.5" Flow="1" Hardness="None" Path="Scratch/02" Shape="Scratch/02" />
-        <local:PaintBrush Type="General" Size="132.25" Opacity="0.21" Spacing="0.22" Flow="1" Hardness="Cosine" Path="Scratch/03" Shape="Scratch/03" />
-        <local:PaintBrush Type="General" Size="193.21" Opacity="0.21" Spacing="0.22" Flow="1" Hardness="Cosine" Path="Scratch/04" Shape="Scratch/04" />
+        <local:PaintBrush Type="General" Size2="222" Opacity2="0.49" Spacing2="0.45" Flow2="1" Hardness="Quartic" Path="Scratch/00" Shape="Scratch/00" />
+        <local:PaintBrush Type="General" Size2="233" Opacity2="1" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Scratch/01" Shape="Scratch/01" />
+        <local:PaintBrush Type="General" Size2="158.76" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="None" Path="Scratch/02" Shape="Scratch/02" />
+        <local:PaintBrush Type="General" Size2="132.25" Opacity2="0.21" Spacing2="0.22" Flow2="1" Hardness="Cosine" Path="Scratch/03" Shape="Scratch/03" />
+        <local:PaintBrush Type="General" Size2="193.21" Opacity2="0.21" Spacing2="0.22" Flow2="1" Hardness="Cosine" Path="Scratch/04" Shape="Scratch/04" />
 
-        <local:PaintBrush Type="General" Size="225" Opacity="0.8" Spacing="0.45" Flow="1" Hardness="Quartic" Path="Scratch/05" Shape="Scratch/05" />
-        <local:PaintBrush Type="General" Size="112.36" Opacity="0.8" Spacing="0.66" Flow="1" Hardness="Cosine" Path="Scratch/06" Shape="Scratch/06" />
-        <local:PaintBrush Type="General" Size="102" Opacity="1" Spacing="0.66" Flow="1" Hardness="Cube" Path="Scratch/07" Shape="Scratch/07" />
-        <local:PaintBrush Type="General" Size="121" Opacity="0.58" Spacing="0.8" Flow="1" Hardness="Cosine" Path="Scratch/08" Shape="Scratch/08" />
-        <local:PaintBrush Type="General" Size="166.41" Opacity="0.41" Spacing="0.33" Flow="1" Hardness="Cosine" Path="Scratch/09" Shape="Scratch/09" />
+        <local:PaintBrush Type="General" Size2="225" Opacity2="0.8" Spacing2="0.45" Flow2="1" Hardness="Quartic" Path="Scratch/05" Shape="Scratch/05" />
+        <local:PaintBrush Type="General" Size2="112.36" Opacity2="0.8" Spacing2="0.66" Flow2="1" Hardness="Cosine" Path="Scratch/06" Shape="Scratch/06" />
+        <local:PaintBrush Type="General" Size2="102" Opacity2="1" Spacing2="0.66" Flow2="1" Hardness="Cube" Path="Scratch/07" Shape="Scratch/07" />
+        <local:PaintBrush Type="General" Size2="121" Opacity2="0.58" Spacing2="0.8" Flow2="1" Hardness="Cosine" Path="Scratch/08" Shape="Scratch/08" />
+        <local:PaintBrush Type="General" Size2="166.41" Opacity2="0.41" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Scratch/09" Shape="Scratch/09" />
 
     </ListView>
 </UserControl>
