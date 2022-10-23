@@ -124,8 +124,7 @@
     <Compile Include="InkCanvasOperator.cs" />
     <Compile Include="InkExtensions.cs" />
     <Compile Include="InkPresenter.Texture.cs" />
-    <Compile Include="PaintAttributes.cs" />
-    <Compile Include="PaintSize.cs" />
+    <Compile Include="InkAttributes.cs" />
     <Compile Include="IInkParameter.cs" />
     <Compile Include="InkMixer.cs" />
     <Compile Include="InkPresenter.cs" />
@@ -133,9 +132,6 @@
     <Compile Include="InkPresenter.Type.cs" />
     <Compile Include="InkPresenter.Render.cs" />
     <Compile Include="InkType.cs" />
-    <Compile Include="PaintBrush.cs" />
-    <Compile Include="PaintBrushGroupType.cs" />
-    <Compile Include="PaintTexture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stroke.cs" />
     <Compile Include="StrokeSegment.cs" />
