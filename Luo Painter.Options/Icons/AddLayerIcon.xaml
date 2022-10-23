@@ -3,26 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="AddLayerIcon" TargetType="ContentControl">
-        <FontIcon x:Name="FontIcon" FontSize="24" FontFamily="Segoe MDL2 Assets" Glyph="&#xF164;" >
-
-            <!--VisualState-->
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="VisualStateGroup">
-
-                    <!--Normal-->
-                    <VisualState x:Name="Normal"/>
-
-                    <!--Disabled-->
-                    <VisualState x:Name="Disabled">
-                        <VisualState.Setters>
-                            <Setter Target="FontIcon.Opacity" Value="0.5"/>
-                        </VisualState.Setters>
-                    </VisualState>
-
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
-
-        </FontIcon>
+        <PathIcon HorizontalAlignment="Center" >
+            <PathIcon.Data>
+                M22.276,4.455C22.276,1.996 20.28,0 17.821,0L4.455,0C1.996,0 0,1.996 0,4.455L0,17.821C0,20.28 1.996,22.276 4.455,22.276L17.821,22.276C20.28,22.276 22.276,20.28 22.276,17.821L22.276,4.455ZM12.271,10.006L12.271,5.099L10.006,5.099L10.006,10.006L5.099,10.006L5.099,12.271L10.006,12.271L10.006,17.178L12.271,17.178L12.271,12.271L17.178,12.271L17.178,10.006L12.271,10.006Z
+            </PathIcon.Data>
+        </PathIcon>
     </ControlTemplate>
 
 </ResourceDictionary>
