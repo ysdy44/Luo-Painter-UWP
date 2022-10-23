@@ -96,12 +96,12 @@ namespace Luo_Painter.Controls
                     case InkType.Tip_Grain_Blend:
                     case InkType.Tip_Opacity_Blend:
                     case InkType.Tip_Grain_Opacity_Blend:
-                        segment.IsometricTip(ds, this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
+                        segment.IsometricTip(ds, this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke, this.InkPresenter.IgnoreSizePressure);
                         break;
 
                     case InkType.Tip_Mix:
                     case InkType.Tip_Grain_Mix:
-                        segment.IsometricTip(ds, this.InkMixer.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
+                        segment.IsometricTip(ds, this.InkMixer.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke, this.InkPresenter.IgnoreSizePressure);
                         break;
 
                     case InkType.Line:

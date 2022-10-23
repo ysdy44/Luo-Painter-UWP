@@ -76,7 +76,7 @@ namespace Luo_Painter.Controls
             this.InkIsEnabled = true;
         }
 
-        private void InkAsync()
+        public void InkAsync()
         {
             //@Task
             if (System.Threading.Monitor.TryEnter(this.InkLocker, System.TimeSpan.FromMilliseconds(100)))

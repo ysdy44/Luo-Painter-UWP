@@ -70,16 +70,16 @@
             </Grid>
 
             <!--Ink-->
-            <Viewbox Grid.Row="1" HorizontalAlignment="Center">
-                <canvas:CanvasControl               
+            <canvas:CanvasControl               
                 x:Name="InkCanvasControl"       
+                Grid.Row="1" 
+                HorizontalAlignment="Center"
                 Width="320"                
                 Height="120"               
                 UseSharedDevice="True"                 
                 CustomDevice="{x:Bind CanvasDevice}"          
                 Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}"
                 />
-            </Viewbox>
 
             <!--Body-->
             <StackPanel Grid.Row="2" Padding="4,0" >
