@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Brushes
 {
-    public sealed class PaintBrush : PaintAttributes<double>
+    public sealed class PaintBrush : InkAttributes<double>
     {
         public string Path { get; set; } // = "Flash/00";
         public string Render => $"ms-appx:///Luo Painter.Brushes/Thumbnails/{this.Path}/Render.png";

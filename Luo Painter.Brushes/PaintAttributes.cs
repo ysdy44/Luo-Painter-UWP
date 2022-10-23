@@ -7,7 +7,7 @@ namespace Luo_Painter.Brushes
     /// <see cref="InkDrawingAttributes"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PaintAttributes<T>
+    public class InkAttributes<T>
         where T : struct
     {
 

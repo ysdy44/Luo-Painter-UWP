@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter : PaintAttributes<float>
+    public sealed partial class InkPresenter : InkAttributes<float>
     {
 
         public new InkType GetType()

@@ -4,7 +4,7 @@ using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter : PaintAttributes<float>
+    public sealed partial class InkPresenter : InkAttributes<float>
     {
         public bool AllowShape { get; private set; } // GetType
         public CanvasBitmap ShapeSource { get; private set; }
@@ -12,7 +12,7 @@ namespace Luo_Painter.Brushes
         public bool AllowGrain { get; private set; }
         public CanvasBitmap GrainSource { get; private set; }
 
-        public void Construct(PaintAttributes<double> brush)
+        public void Construct(InkAttributes<double> brush)
         {
             this.Type = brush.Type;
             this.Mode = brush.Mode;
