@@ -36,7 +36,7 @@ namespace Luo_Painter.Controls
                 }
 
                 // 3. Show Dialog
-                this.ConstructTexture(this.GrainImage.UriSource?.ToString());
+                this.ConstructTexture(this.InkPresenter.Grain);
 
                 base.IsHitTestVisible = false;
                 ContentDialogResult result = await this.ShowTextureAsync();
@@ -49,11 +49,11 @@ namespace Luo_Painter.Controls
                         if (string.IsNullOrEmpty(path)) break;
 
                         // Select Texture
-                        this.GrainImage.UriSource = new System.Uri($@"ms-appx:///Luo Painter.Brushes/Textures/{path}/Texture.png");
-                        this.InkPresenter.ConstructShape(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{path}/Source.png"));
+                        this.GrainImage.UriSource = new System.Uri(path.GetTexture());
+                        this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
                         this.InkType = this.InkPresenter.GetType();
                         this.TryInk();
-                        break;
+                        return;
                     default:
                         break;
                 }
@@ -72,7 +72,7 @@ namespace Luo_Painter.Controls
             this.SelectGrainButton.Click += async (s, e) =>
             {
                 // Show Dialog
-                this.ConstructTexture(this.GrainImage.UriSource?.ToString());
+                this.ConstructTexture(this.InkPresenter.Grain);
 
                 base.IsHitTestVisible = false;
                 ContentDialogResult result = await this.ShowTextureAsync();
@@ -85,11 +85,11 @@ namespace Luo_Painter.Controls
                         if (string.IsNullOrEmpty(path)) break;
 
                         // Select Texture
-                        this.GrainImage.UriSource = new System.Uri($@"ms-appx:///Luo Painter.Brushes/Textures/{path}/Texture.png");
-                        this.InkPresenter.ConstructShape(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{path}/Source.png"));
+                        this.GrainImage.UriSource = new System.Uri(path.GetTexture());
+                        this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
                         this.InkType = this.InkPresenter.GetType();
                         this.TryInk();
-                        break;
+                        return;
                     default:
                         break;
                 }

@@ -65,20 +65,10 @@ namespace Luo_Painter.Controls
                 this.StepTextBox.Text = presenter.Step.ToString();
 
                 this.ShapeButton.IsOn = presenter.AllowShape;
-                this.ShapeImage.UriSource = 
-                    string.IsNullOrEmpty(presenter.ShapePath) ? 
-                    null : new System.Uri(new PaintTexture
-                    {
-                        Path = presenter.ShapePath
-                    }.Texture);
+                this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
 
                 this.GrainButton.IsOn = presenter.AllowGrain;
-                this.GrainImage.UriSource =
-                    string.IsNullOrEmpty(presenter.GrainPath) ?
-                    null : new System.Uri(new PaintTexture
-                    {              
-                        Path = presenter.GrainPath         
-                    }.Texture);
+                this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
             }
             this.InkIsEnabled = true;
         }

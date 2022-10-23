@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Luo_Painter.Brushes;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -6,8 +7,7 @@ namespace Luo_Painter.Controls
     internal sealed class PaintTexture
     {
         public string Path { get; set; } // = "Flash/00";
-        public string Source => $@"Luo Painter.Brushes/Textures/{this.Path}/Source.png";
-        public string Texture => $@"ms-appx:///Luo Painter.Brushes/Textures/{this.Path}/Texture.png";
+        public string Texture => this.Path.GetTexture();
 
         public int Width { get; set; }
         public int Height { get; set; }
