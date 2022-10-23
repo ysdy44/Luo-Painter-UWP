@@ -4,7 +4,16 @@
     xmlns:elements="using:Luo_Painter.Elements"
     >
 
+    
+    <!--Button-->
+    <Style TargetType="Button">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="2"/>
+        <Setter Property="Width" Value="44"/>
+        <Setter Property="Height" Value="44"/>
+    </Style>
 
+    
     <!--ListBox-->
     <Style TargetType="ListBox">
         <Setter Property="Height" Value="42"/>
@@ -158,6 +167,49 @@
                         </Setter.Value>
                     </Setter>
                 </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    <!--ListBox-->
+    <Style x:Key="AppGrid2x2ListBoxStyle" TargetType="ListBox">
+        <Setter Property="SelectedIndex" Value="1"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <elements:Grid2x2Panel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="FontWeight" Value="Medium"/>
+                    <Setter Property="MinWidth" Value="40"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="Padding" Value="4" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerTransitions">
+            <Setter.Value>
+                <TransitionCollection>
+
+                </TransitionCollection>
             </Setter.Value>
         </Setter>
     </Style>
