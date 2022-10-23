@@ -9,7 +9,20 @@ namespace Luo_Painter.Controls
     public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
-        public void InkAsync()
+        public void TryInkAsync()
+        {
+            if (this.InkCanvasControl.ReadyToDraw is false) return;
+
+            System.Threading.Tasks.Task.Run(this.InkAsync);
+        }
+        public void TryInk()
+        {
+            if (this.InkCanvasControl.ReadyToDraw is false) return;
+
+            lock (this.InkLocker) this.Ink();
+        }
+
+        private void InkAsync()
         {
             //@Task
             if (System.Threading.Monitor.TryEnter(this.InkLocker, System.TimeSpan.FromMilliseconds(100)))
@@ -19,6 +32,7 @@ namespace Luo_Painter.Controls
             }
             //else // Frame dropping
         }
+
         private void Ink()
         {
             switch (this.InkType)
