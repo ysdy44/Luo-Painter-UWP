@@ -62,13 +62,6 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class BrushGroupingList : List<BrushGrouping> { }
-    internal class BrushGrouping : List<PaintBrush>, IList<PaintBrush>, IGrouping<PaintBrushGroupType, PaintBrush>
-    {
-        public PaintBrushGroupType Key { set; get; }
-    }
-    internal class BrushCommand : RelayCommand<PaintBrush> { }
-
     internal sealed class ElementIcon : TIcon<ElementType>
     {
         protected override void OnTypeChanged(ElementType value)
@@ -129,6 +122,18 @@ namespace Luo_Painter
     }
 
     internal sealed class InkList : List<InkType> { }
+    internal sealed class InkIcon : TIcon<InkType>
+    {
+        protected override void OnTypeChanged(InkType value)
+        {
+            base.Width = 32;
+            base.VerticalContentAlignment = VerticalAlignment.Center;
+            base.HorizontalContentAlignment = HorizontalAlignment.Center;
+            base.Content = value;
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Template = value.GetTemplate(base.Resources);
+        }
+    }
     internal sealed class InkItem : TIcon<InkType>
     {
         protected override void OnTypeChanged(InkType value)
@@ -156,9 +161,9 @@ namespace Luo_Painter
     }
 
     internal class OptionItemButtonWithIsEnabled : OptionItemButton
-    {        
+    {
         public OptionItemButtonWithIsEnabled()
-        {            
+        {
             base.Loaded += (s, e) => this.ContentControl.GoToState(base.IsEnabled);
             base.IsEnabledChanged += (s, e) =>
             {
@@ -175,7 +180,7 @@ namespace Luo_Painter
         protected override void OnTypeChanged(OptionType value)
         {
             base.Resources.Source = new Uri(value.GetResource());
-            base.Content = Element.GetGrid(new ContentControl
+            base.Content = Element.GetStackPanel(new ContentControl
             {
                 Width = 32,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -198,10 +203,16 @@ namespace Luo_Painter
             base.CommandParameter = value;
             base.Resources.Source = new Uri(value.GetResource());
             this.ContentControl.Template = value.GetTemplate(base.Resources);
+
             if (value.HasPreview())
+            {
                 base.Content = Element.GetGrid(this.ContentControl, value.ToString());
+            }
             else
+            {
+                this.ContentControl.Width = 32;
                 base.Content = Element.GetStackPanel(this.ContentControl, value.ToString());
+            }
         }
     }
 
