@@ -148,6 +148,7 @@
     <Compile Include="GradientStops.cs" />
     <Compile Include="GradientStopSelector.cs" />
     <Compile Include="GradientStopSelectorWithUI.cs" />
+    <Compile Include="Grid2x2Panel.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="InverseProportionRange.cs" />
