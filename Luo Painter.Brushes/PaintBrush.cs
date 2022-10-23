@@ -2,8 +2,10 @@
 {
     public sealed class PaintBrush : PaintAttributes<double>
     {
-        public string Render { get; set; }
-        public string Thumbnail { get; set; }
+        public string Path { get; set; } // = "Flash/00";
+        public string Render => $"ms-appx:///Luo Painter.Brushes/{this.Path}/Render.png";
+        public string Thumbnail => $"ms-appx:///Luo Painter.Brushes/{this.Path}/Thumbnail.png";
+
         public PaintTexture Shape { get; set; }
         public PaintTexture Grain { get; set; }
 

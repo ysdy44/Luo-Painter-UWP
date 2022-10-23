@@ -63,32 +63,27 @@
                 <brushes:PaintTexture
                     Width="400"
                     Height="400"
-                    Source="Luo Painter.Brushes/Flash/00/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/00/Texture.png"
+                    Path="Flash/00"
                     />
                 <brushes:PaintTexture 
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Flash/01/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/01/Texture.png"
+                    Path="Flash/01"
                     />
                 <brushes:PaintTexture 
                     Width="1100"
                     Height="1100"
-                    Source="Luo Painter.Brushes/Flash/02/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/02/Texture.png"
+                    Path="Flash/02"
                     />
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Flash/03/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/03/Texture.png"
+                    Path="Flash/03"
                     />
                 <brushes:PaintTexture
                     Width="900"
                     Height="900"
-                    Source="Luo Painter.Brushes/Flash/04/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/04/Texture.png"
+                    Path="Flash/04"
                     />
 
 
@@ -97,64 +92,54 @@
                 <brushes:PaintTexture 
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/00/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/00/Texture.png"
+                    Path="Splodge/00"
                     />
                 <brushes:PaintTexture 
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/01/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/01/Texture.png"
+                    Path="Splodge/01"
                     />
                 <brushes:PaintTexture 
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/02/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/02/Texture.png"
+                    Path="Splodge/02"
                     />
                 <brushes:PaintTexture
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/03/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/03/Texture.png"
+                    Path="Splodge/03"
                     />
                 <brushes:PaintTexture 
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/04/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/04/Texture.png"
+                    Path="Splodge/04"
                     />
 
 
                 <brushes:PaintTexture
                     Width="600"
                     Height="600"
-                    Source="Luo Painter.Brushes/Splodge/05/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/05/Texture.png"
+                    Path="Splodge/05"
                     />
                 <brushes:PaintTexture 
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Splodge/06/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/06/Texture.png"
+                    Path="Splodge/06"
                     />
                 <brushes:PaintTexture 
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Splodge/07/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/07/Texture.png"
+                    Path="Splodge/07"
                     />
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Splodge/08/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/08/Texture.png"
+                    Path="Splodge/08"
                     />
                 <brushes:PaintTexture
                     Width="1024"
                     Height="1024"
-                    Source="Luo Painter.Brushes/Splodge/09/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/09/Texture.png"
+                    Path="Splodge/09"
                     />
 
 
@@ -163,64 +148,54 @@
                 <brushes:PaintTexture
                     Width="1300"
                     Height="1300"
-                    Source="Luo Painter.Brushes/Scratch/00/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/00/Texture.png"
+                    Path="Scratch/00"
                     />
                 <brushes:PaintTexture 
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/01/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/01/Texture.png"
+                    Path="Scratch/01"
                     />
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/02/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/02/Texture.png"
+                    Path="Scratch/02"
                     />
                 <brushes:PaintTexture
                     Width="1200"
                     Height="1200"
-                    Source="Luo Painter.Brushes/Scratch/03/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/03/Texture.png"
+                    Path="Scratch/03"
                     />
                 <brushes:PaintTexture 
                     Width="1300"
                     Height="1300"
-                    Source="Luo Painter.Brushes/Scratch/04/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/04/Texture.png"
+                    Path="Scratch/04"
                     />
 
 
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/05/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/05/Texture.png"
+                    Path="Scratch/05"
                     />
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/06/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/06/Texture.png"
+                    Path="Scratch/06"
                     />
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Scratch/07/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/07/Texture.png"
+                    Path="Scratch/07"
                     />
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Scratch/08/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/08/Texture.png"
+                    Path="Scratch/08"
                     />
                 <brushes:PaintTexture 
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Scratch/09/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/09/Texture.png"
+                    Path="Scratch/09"
                     />
             </local:PaintTextureList>
         </ItemsControl.ItemsSource>

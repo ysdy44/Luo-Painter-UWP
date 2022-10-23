@@ -83,8 +83,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="None" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/00/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/00/Render.png"
+            Path="Universal/00"
             />
         <brushes:PaintBrush
             Type="Shape"
@@ -93,8 +92,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="Quartic" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/01/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/01/Render.png"
+            Path="Universal/01"
             />
         <brushes:PaintBrush 
             Type="Shape"
@@ -103,8 +101,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="Quartic" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/02/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/02/Render.png"
+            Path="Universal/02"
             />
         <brushes:PaintBrush 
             Size="108.16" 
@@ -112,8 +109,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/03/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/03/Render.png"
+            Path="Universal/03"
             />
         <brushes:PaintBrush 
             Size="20.25" 
@@ -121,8 +117,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="None" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/04/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/04/Render.png"
+            Path="Universal/04"
             />
 
 
@@ -132,8 +127,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/05/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/05/Render.png"
+            Path="Universal/05"
             />
         <brushes:PaintBrush 
             Size="3.24" 
@@ -141,8 +135,7 @@
             Spacing="0.25"
             Flow="1" 
             Hardness="None"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/06/Thumbnail.png" 
-            Render="ms-appx:///Luo Painter.Brushes/Universal/06/Render.png"
+            Path="Universal/06" 
             />
         <brushes:PaintBrush 
             Size="11.56" 
@@ -150,8 +143,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="Cosine"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/07/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Universal/07/Render.png"
+            Path="Universal/07"
             />
         <brushes:PaintBrush 
             Size="27.04" 
@@ -159,8 +151,7 @@
             Spacing="0.25"
             Flow="1" 
             Hardness="Quadratic" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/08/Thumbnail.png" 
-            Render="ms-appx:///Luo Painter.Brushes/Universal/08/Render.png"
+            Path="Universal/08" 
             />
         <brushes:PaintBrush 
             Size="75.69" 
@@ -168,8 +159,7 @@
             Spacing="0.25" 
             Flow="1" 
             Hardness="Quadratic" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Universal/09/Thumbnail.png" 
-            Render="ms-appx:///Luo Painter.Brushes/Universal/09/Render.png"
+            Path="Universal/09" 
             />
 
 
@@ -179,14 +169,14 @@
             Spacing="0.8" 
             Flow="1" 
             Hardness="Quartic"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/00/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Flash/00/Render.png" >
+            Path="Flash/00"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="400"
                     Height="400"
-                    Source="Luo Painter.Brushes/Flash/00/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/00/Texture.png" />
+                    Path="Flash/00"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -195,14 +185,14 @@
             Spacing="0.55" 
             Flow="1" 
             Hardness="None"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/01/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Flash/01/Render.png" >
+            Path="Flash/01"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Flash/01/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/01/Texture.png" />
+                    Path="Flash/01"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -211,14 +201,14 @@
             Spacing="0.6" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/02/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Flash/02/Render.png" >
+            Path="Flash/02"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1100"
                     Height="1100"
-                    Source="Luo Painter.Brushes/Flash/02/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/02/Texture.png" />
+                    Path="Flash/02"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -227,14 +217,14 @@
             Spacing="0.8" 
             Flow="1" 
             Hardness="Quartic"  
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/03/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Flash/03/Render.png" >
+            Path="Flash/03"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Flash/03/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/03/Texture.png"/>
+                    Path="Flash/03"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -243,14 +233,14 @@
             Spacing="0.3" 
             Flow="1" 
             Hardness="None"  
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Flash/04/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Flash/04/Render.png" >
+            Path="Flash/04"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="900"
                     Height="900"
-                    Source="Luo Painter.Brushes/Flash/04/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Flash/04/Texture.png"/>
+                    Path="Flash/04"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
 
@@ -261,14 +251,14 @@
             Spacing="0.33" 
             Flow="1" 
             Hardness="Cosine"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/00/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/00/Render.png" >
+            Path="Splodge/00"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/00/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/00/Texture.png" />
+                    Path="Splodge/00"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -277,14 +267,14 @@
             Spacing="0.22" 
             Flow="1" 
             Hardness="Cosine"  
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/01/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/01/Render.png" >
+            Path="Splodge/01"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/01/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/01/Texture.png"/>
+                    Path="Splodge/01"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -293,14 +283,14 @@
             Spacing="0.33" 
             Flow="1" 
             Hardness="None" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/02/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/02/Render.png" >
+            Path="Splodge/02"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/02/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/02/Texture.png" />
+                    Path="Splodge/02"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -309,14 +299,14 @@
             Spacing="0.33" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/03/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/03/Render.png" >
+            Path="Splodge/03"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/03/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/03/Texture.png" />
+                    Path="Splodge/03"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -325,14 +315,14 @@
             Spacing="0.3" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/04/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/04/Render.png" >
+            Path="Splodge/04"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="512"
                     Height="512"
-                    Source="Luo Painter.Brushes/Splodge/04/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/04/Texture.png" />
+                    Path="Splodge/04"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
 
@@ -343,14 +333,14 @@
             Spacing="0.4" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/05/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/05/Render.png" >
+            Path="Splodge/05"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="600"
                     Height="600"
-                    Source="Luo Painter.Brushes/Splodge/05/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/05/Texture.png" />
+                    Path="Splodge/05"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -359,14 +349,14 @@
             Spacing="0.33" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/06/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/06/Render.png" >
+            Path="Splodge/06"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Splodge/06/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/06/Texture.png" />
+                    Path="Splodge/06"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -375,14 +365,14 @@
             Spacing="0.66" 
             Flow="1" 
             Hardness="None" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/07/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/07/Render.png" >
+            Path="Splodge/07"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Splodge/07/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/07/Texture.png" />
+                    Path="Splodge/07"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -391,14 +381,14 @@
             Spacing="0.4" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/08/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/08/Render.png" >
+            Path="Splodge/08"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Splodge/08/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/08/Texture.png" />
+                    Path="Splodge/08"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -407,14 +397,14 @@
             Spacing="0.45" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Splodge/09/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Splodge/09/Render.png" >
+            Path="Splodge/09"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1024"
                     Height="1024"
-                    Source="Luo Painter.Brushes/Splodge/09/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Splodge/09/Texture.png" />
+                    Path="Splodge/09"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
 
@@ -425,14 +415,14 @@
             Spacing="0.45" 
             Flow="1" 
             Hardness="Quartic" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/00/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/00/Render.png" >
+            Path="Scratch/00"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1300"
                     Height="1300"
-                    Source="Luo Painter.Brushes/Scratch/00/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/00/Texture.png" />
+                    Path="Scratch/00"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -441,14 +431,14 @@
             Spacing="0.33" 
             Flow="1" 
             Hardness="Cosine"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/01/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/01/Render.png" >
+            Path="Scratch/01"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/01/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/01/Texture.png" />
+                    Path="Scratch/01"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -457,14 +447,14 @@
             Spacing="0.5" 
             Flow="1" 
             Hardness="None" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/02/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/02/Render.png" >
+            Path="Scratch/02"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/02/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/02/Texture.png" />
+                    Path="Scratch/02"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -473,14 +463,14 @@
             Spacing="0.22" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/03/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/03/Render.png" >
+            Path="Scratch/03"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1200"
                     Height="1200"
-                    Source="Luo Painter.Brushes/Scratch/03/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/03/Texture.png" />
+                    Path="Scratch/03"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -489,14 +479,14 @@
             Spacing="0.22" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/04/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/04/Render.png" >
+            Path="Scratch/04"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1300"
                     Height="1300"
-                    Source="Luo Painter.Brushes/Scratch/04/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/04/Texture.png" />
+                    Path="Scratch/04"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
 
@@ -507,14 +497,14 @@
             Spacing="0.45" 
             Flow="1" 
             Hardness="Quartic" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/05/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/05/Render.png" >
+            Path="Scratch/05"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/05/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/05/Texture.png" />
+                    Path="Scratch/05"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -523,14 +513,14 @@
             Spacing="0.66" 
             Flow="1" 
             Hardness="Cosine"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/06/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/06/Render.png" >
+            Path="Scratch/06"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1400"
                     Height="1400"
-                    Source="Luo Painter.Brushes/Scratch/06/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/06/Texture.png" />
+                    Path="Scratch/06"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -539,14 +529,14 @@
             Spacing="0.66" 
             Flow="1" 
             Hardness="Cube"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/07/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/07/Render.png" >
+            Path="Scratch/07"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Scratch/07/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/07/Texture.png" />
+                    Path="Scratch/07"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush
@@ -555,14 +545,14 @@
             Spacing="0.8" 
             Flow="1" 
             Hardness="Cosine" 
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/08/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/08/Render.png" >
+            Path="Scratch/08"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Scratch/08/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/08/Texture.png" />
+                    Path="Scratch/08"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
         <brushes:PaintBrush 
@@ -571,14 +561,14 @@
             Spacing="0.33" 
             Flow="1" 
             Hardness="Cosine"
-            Thumbnail="ms-appx:///Luo Painter.Brushes/Scratch/09/Thumbnail.png"
-            Render="ms-appx:///Luo Painter.Brushes/Scratch/09/Render.png" >
+            Path="Scratch/09"
+            >
             <brushes:PaintBrush.Shape>
                 <brushes:PaintTexture
                     Width="1600"
                     Height="1600"
-                    Source="Luo Painter.Brushes/Scratch/09/Source.png"
-                    Texture="ms-appx:///Luo Painter.Brushes/Scratch/09/Texture.png" />
+                    Path="Scratch/09"
+                    />
             </brushes:PaintBrush.Shape>
         </brushes:PaintBrush>
 
