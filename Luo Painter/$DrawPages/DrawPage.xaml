@@ -140,7 +140,7 @@
                                 <local:ElementIcon Type="Size"/>
                             </ListBoxItem>
                             <ListBoxItem x:Name="HistoryItem" Width="70">
-                                <local:ElementIcon Type="History"/>
+                                <FontIcon Glyph="&#xF738;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
                             </ListBoxItem>
                         </ListBox>
                     </Border>

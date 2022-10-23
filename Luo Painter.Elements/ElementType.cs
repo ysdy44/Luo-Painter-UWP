@@ -2,9 +2,6 @@
 {
     public enum ElementType
     {
-        // None
-        AddLayer,
-
         Paint,
         Brush,
         Size,
@@ -12,8 +9,6 @@
         Edit,
         Layer,
         Adjustment,
-        Other,
-        History,
 
         Snap,
         SnapToTick,
