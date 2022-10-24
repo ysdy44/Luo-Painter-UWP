@@ -5,15 +5,6 @@
     >
 
     
-    <!--Button-->
-    <Style TargetType="Button">
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="CornerRadius" Value="2"/>
-        <Setter Property="Width" Value="44"/>
-        <Setter Property="Height" Value="44"/>
-    </Style>
-
-    
     <!--ListBox-->
     <Style TargetType="ListBox">
         <Setter Property="Height" Value="42"/>
@@ -417,12 +408,10 @@
 
     <!--Border-->
     <Style x:Key="AppRoundedBorderStyle" TargetType="Border">
-        <Setter Property="Margin" Value="1,0"/>
-        <Setter Property="Height" Value="38"/>
         <Setter Property="CornerRadius" Value="4"/>
-        <Setter Property="BorderThickness" Value="0.5,0.5,0.5,1.5"/>
-        <Setter Property="BorderBrush" Value="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
-        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
+        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
     </Style>
 
 
@@ -444,7 +433,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="10,6,0,6" />
-        <Setter Property="Height" Value="38" />
+        <Setter Property="MinHeight" Value="38" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
         <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
