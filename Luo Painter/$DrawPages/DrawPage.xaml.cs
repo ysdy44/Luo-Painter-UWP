@@ -206,17 +206,6 @@ namespace Luo_Painter
             this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
 
 
-            this.ExportMenu.ExportClick += (s, e) =>
-            {
-                switch (this.ExportMenu.Mode)
-                {
-                    case ExportMode.None: this.Click(OptionType.Export); break;
-                    case ExportMode.All: this.Click(OptionType.ExportAll); break;
-                    case ExportMode.Current: this.Click(OptionType.ExportCurrent); break;
-                    default: break;
-                }
-            };
-
             this.ColorMenu.ColorChanged += (s, e) =>
             {
                 switch (this.OptionType)

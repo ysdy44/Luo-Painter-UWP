@@ -1,6 +1,7 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
+using Luo_Painter.Controls;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
@@ -81,18 +82,18 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Export:
+                    if (this.Nodes.Count() is 0)
                     {
-                        if (this.Nodes.Count() is 0)
-                        {
-                            this.Tip(TipType.NoLayer);
-                            break;
-                        }
+                        this.Tip(TipType.NoLayer);
+                        break;
+                    }
 
-                        StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                    {
+                        StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                         if (file is null) break;
                         this.Tip(TipType.Saving);
 
-                        float dpi = this.ExportMenu.DPI;
+                        float dpi = this.ExportDialog.DPI;
                         Rect rect = new Rect
                         {
                             Width = dpi.ConvertPixelsToDips(this.Transformer.Width),
@@ -102,7 +103,7 @@ namespace Luo_Painter
                         // Export
                         bool result;
 
-                        using (ICanvasImage background = (this.ExportMenu.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
+                        using (ICanvasImage background = (this.ExportDialog.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
                         {
                             Color = Colors.White
                         } : (ICanvasImage)new CanvasCommandList(this.CanvasDevice))
@@ -113,7 +114,7 @@ namespace Luo_Painter
                             {
                                 using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite))
                                 {
-                                    await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, stream, this.ExportMenu.FileFormat, 1);
+                                    await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, stream, this.ExportDialog.FileFormat, 1);
                                 }
                                 result = true;
                             }
@@ -131,31 +132,34 @@ namespace Luo_Painter
 
                         this.Tip(TipType.SaveSuccess);
 
-                        try
+                        if (this.ExportDialog.IsOpenFileExplorer)
                         {
-                            await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
+                            try
                             {
-                                ItemsToSelect = { file }
-                            });
-                        }
-                        catch (Exception)
-                        {
+                                await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
+                                {
+                                    ItemsToSelect = { file }
+                                });
+                            }
+                            catch (Exception)
+                            {
+                            }
                         }
                     }
                     break;
                 case OptionType.ExportAll:
+                    if (this.Nodes.Count() is 0)
                     {
-                        if (this.Nodes.Count() is 0)
-                        {
-                            this.Tip(TipType.NoLayer);
-                            break;
-                        }
+                        this.Tip(TipType.NoLayer);
+                        break;
+                    }
 
+                    {
                         IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
                         if (folder is null) break;
                         this.Tip(TipType.Saving);
 
-                        float dpi = this.ExportMenu.DPI;
+                        float dpi = this.ExportDialog.DPI;
                         Rect rect = new Rect
                         {
                             Width = dpi.ConvertPixelsToDips(this.Transformer.Width),
@@ -168,14 +172,14 @@ namespace Luo_Painter
                         int count = 0;
                         FolderLauncherOptions options = new FolderLauncherOptions();
 
-                        using (ICanvasImage background = (this.ExportMenu.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
+                        using (ICanvasImage background = (this.ExportDialog.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
                         {
                             Color = Colors.White
                         } : (ICanvasImage)new CanvasCommandList(this.CanvasDevice))
                         {
                             foreach (ILayerRender item in this.Nodes)
                             {
-                                string name = $"{this.ApplicationView.Title} {index}{this.ExportMenu.FileChoices}";
+                                string name = $"{this.ApplicationView.Title} {index}{this.ExportDialog.FileChoices}";
                                 StorageFile file = await folder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting);
                                 index++;
 
@@ -186,7 +190,7 @@ namespace Luo_Painter
                                 {
                                     using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                                     {
-                                        await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, accessStream, this.ExportMenu.FileFormat, 1);
+                                        await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, accessStream, this.ExportDialog.FileFormat, 1);
                                     }
                                     result = true;
                                     count++;
@@ -207,19 +211,21 @@ namespace Luo_Painter
                         }
 
                         if (options.ItemsToSelect.Count is 0) break;
-
-                        await Launcher.LaunchFolderAsync(folder, options);
+                        if (this.ExportDialog.IsOpenFileExplorer)
+                        {
+                            await Launcher.LaunchFolderAsync(folder, options);
+                        }
                     }
                     break;
                 case OptionType.ExportCurrent:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
-                            StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportMenu.FileChoices, this.ApplicationView.Title);
+                            StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                             if (file is null) break;
                             this.Tip(TipType.Saving);
 
-                            float dpi = this.ExportMenu.DPI;
+                            float dpi = this.ExportDialog.DPI;
                             Rect rect = new Rect
                             {
                                 Width = dpi.ConvertPixelsToDips(this.Transformer.Width),
@@ -229,7 +235,7 @@ namespace Luo_Painter
                             // Export
                             bool result;
 
-                            using (ICanvasImage background = (this.ExportMenu.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
+                            using (ICanvasImage background = (this.ExportDialog.FileFormat is CanvasBitmapFileFormat.Jpeg) ? (ICanvasImage)new ColorSourceEffect
                             {
                                 Color = Colors.White
                             } : (ICanvasImage)new CanvasCommandList(this.CanvasDevice))
@@ -240,7 +246,7 @@ namespace Luo_Painter
                                 {
                                     using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                                     {
-                                        await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, accessStream, this.ExportMenu.FileFormat, 1);
+                                        await CanvasImage.SaveAsync(image, rect, dpi, this.CanvasDevice, accessStream, this.ExportDialog.FileFormat, 1);
                                     }
                                     result = true;
                                 }
@@ -258,15 +264,18 @@ namespace Luo_Painter
 
                             this.Tip(TipType.SaveSuccess);
 
-                            try
+                            if (this.ExportDialog.IsOpenFileExplorer)
                             {
-                                await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
+                                try
                                 {
-                                    ItemsToSelect = { file }
-                                });
-                            }
-                            catch (Exception)
-                            {
+                                    await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
+                                    {
+                                        ItemsToSelect = { file }
+                                    });
+                                }
+                                catch (Exception)
+                                {
+                                }
                             }
                         }
                         else this.Tip(TipType.NoLayer);
@@ -452,7 +461,31 @@ namespace Luo_Painter
                 #region Menu
 
                 case OptionType.ExportMenu:
-                    this.ExportMenu.Toggle(this.ExportButton, ExpanderPlacementMode.Bottom);
+                    {
+                        ContentDialogResult result = await this.ExportDialog.ShowInstance();
+
+                        switch (result)
+                        {
+                            case ContentDialogResult.Primary:
+                                switch (this.ExportDialog.Mode)
+                                {
+                                    case ExportMode.None:
+                                        this.Click(OptionType.Export);
+                                        return;
+                                    case ExportMode.All:
+                                        this.Click(OptionType.ExportAll);
+                                        return;
+                                    case ExportMode.Current:
+                                        this.Click(OptionType.ExportCurrent);
+                                        return;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     break;
 
                 case OptionType.ToolMenu:

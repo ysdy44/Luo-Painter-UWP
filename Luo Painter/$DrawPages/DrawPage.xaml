@@ -266,7 +266,6 @@
         <!--Expander-->
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-            <controls:ExportMenu x:Name="ExportMenu"/>
             <controls:EditMenu x:Name="EditMenu" />
             <controls:AdjustmentMenu x:Name="AdjustmentMenu" />
             <controls:OtherMenu x:Name="OtherMenu" />
@@ -281,6 +280,7 @@
 
 
         <!--Dialog-->
+        <controls:ExportDialog x:Name="ExportDialog"/>
         <controls:TextureDialog x:Name="TextureDialog" />
         <controls:StretchDialog x:Name="StretchDialog" />
 
