@@ -91,8 +91,7 @@ namespace Luo_Painter
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                        this.RaiseHistoryCanExecuteChanged();
                         break;
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Link:
                         break;
@@ -135,8 +134,7 @@ namespace Luo_Painter
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
+                this.RaiseHistoryCanExecuteChanged();
             };
         }
 
@@ -170,8 +168,7 @@ namespace Luo_Painter
                             // History
                             int removes = this.History.Push(new PropertyHistory<string>(HistoryType.Name, item.Key, item.Value, redo));
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                             break;
                         }
                         break;
@@ -180,8 +177,7 @@ namespace Luo_Painter
                             // History
                             int removes = this.History.Push(new PropertysHistory<string>(HistoryType.Name, this.CloneNameUndoParameters(), undo, redo));
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                         break;
                 }
@@ -216,8 +212,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, item.Key, item.Value, redo));
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                             break;
                         }
                         break;
@@ -227,8 +222,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new PropertysHistory<BlendEffectMode?>(HistoryType.BlendMode, this.CloneBlendModeUndoParameters(), undo, redo));
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                         break;
                 }
@@ -280,8 +274,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Key, item.Value, redo));
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                             break;
                         }
                         break;
@@ -291,8 +284,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                         break;
                 }
@@ -323,8 +315,7 @@ namespace Luo_Painter
             //                int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Key, item.Value, redo));
             //                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-            //                this.UndoButton.IsEnabled = this.History.CanUndo;
-            //                this.RedoButton.IsEnabled = this.History.CanRedo;
+            //                this.RaiseHistoryCanExecuteChanged();
             //                break;
             //            }
             //            break;
@@ -334,8 +325,7 @@ namespace Luo_Painter
             //                int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
             //                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-            //                this.UndoButton.IsEnabled = this.History.CanUndo;
-            //                this.RedoButton.IsEnabled = this.History.CanRedo;
+            //                this.RaiseHistoryCanExecuteChanged();
             //            }
             //            break;
             //    }

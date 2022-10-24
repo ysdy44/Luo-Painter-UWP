@@ -43,8 +43,7 @@ namespace Luo_Painter
             this.BitmapLayer.Flush();
             this.BitmapLayer.RenderThumbnail();
 
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
+            this.RaiseHistoryCanExecuteChanged();
         }
 
 

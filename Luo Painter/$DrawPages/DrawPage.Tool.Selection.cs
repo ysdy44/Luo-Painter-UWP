@@ -33,8 +33,7 @@ namespace Luo_Painter
             this.Marquee.RenderThumbnail();
             this.CanvasControl.Invalidate(); // Invalidate
 
-            this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.RedoButton.IsEnabled = this.History.CanRedo;
+            this.RaiseHistoryCanExecuteChanged();
         }
 
         private void SelectionFlood_Complete()
@@ -83,8 +82,7 @@ namespace Luo_Painter
                     this.Marquee.Flush();
                     this.Marquee.RenderThumbnail();
 
-                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                    this.RaiseHistoryCanExecuteChanged();
                     return true;
             }
         }

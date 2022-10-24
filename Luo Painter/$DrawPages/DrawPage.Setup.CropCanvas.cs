@@ -153,8 +153,7 @@ namespace Luo_Painter
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
+                this.RaiseHistoryCanExecuteChanged();
             }
             else
             {
@@ -177,8 +176,7 @@ namespace Luo_Painter
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
+                this.RaiseHistoryCanExecuteChanged();
 
 
                 this.Transformer.Radian = 0f;

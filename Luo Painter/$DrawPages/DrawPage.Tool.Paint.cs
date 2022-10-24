@@ -116,8 +116,7 @@ namespace Luo_Painter
                 this.BitmapLayer = null;
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                this.UndoButton.IsEnabled = this.History.CanUndo;
-                this.RedoButton.IsEnabled = this.History.CanRedo;
+                this.RaiseHistoryCanExecuteChanged();
             }
         }
 
