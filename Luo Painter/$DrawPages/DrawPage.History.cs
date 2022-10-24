@@ -9,6 +9,15 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        public void RaiseHistoryCanExecuteChanged()
+        {
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.UndoButton2.IsEnabled = this.History.CanUndo;
+
+            this.RedoButton.IsEnabled = this.History.CanRedo;
+            this.RedoButton2.IsEnabled = this.History.CanRedo;
+        }
+
         public bool Undo(IHistory history)
         {
             switch (history.Mode)

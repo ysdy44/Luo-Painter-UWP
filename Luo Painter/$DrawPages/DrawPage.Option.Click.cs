@@ -62,18 +62,17 @@ namespace Luo_Painter
                     if (this.IsFullScreen)
                     {
                         this.Click(OptionType.UnFullScreen);
+                        return;
                     }
-                    else
-                    {
-                        base.IsEnabled = false;
 
-                        //@Debug
-                        // OptionType becomes Tool when it is Effect
-                        this.OptionType = this.ToolListView.SelectedItem;
-                        this.AppBar.Construct(this.ToolListView.SelectedItem);
+                    base.IsEnabled = false;
 
-                        await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
-                    }
+                    //@Debug
+                    // OptionType becomes Tool when it is Effect
+                    this.OptionType = this.ToolListView.SelectedItem;
+                    this.AppBar.Construct(this.ToolListView.SelectedItem);
+
+                    await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
                     break;
                 case OptionType.Save:
                     base.IsEnabled = false;
@@ -283,34 +282,32 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Undo:
-                    {
-                        if (this.History.CanUndo is false) break;
+                    if (this.History.CanUndo is false) break;
 
-                        // History
+                    // History
+                    {
                         bool result = this.History.Undo(this.Undo);
                         if (result is false) break;
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                        this.Tip(TipType.Undo);
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
+                    this.Tip(TipType.Undo);
                     break;
                 case OptionType.Redo:
-                    {
-                        if (this.History.CanRedo is false) break;
+                    if (this.History.CanRedo is false) break;
 
-                        // History
+                    // History
+                    {
                         bool result = this.History.Redo(this.Redo);
                         if (result is false) break;
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
-                        this.Tip(TipType.Redo);
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
+                    this.Tip(TipType.Redo);
                     break;
 
                 case OptionType.FullScreen:
@@ -318,16 +315,13 @@ namespace Luo_Painter
 
                     if (this.IsFullScreen)
                     {
-                        this.IsFullScreen = false;
-                        this.SetFullScreenState(false);
-                        this.ApplicationView.ExitFullScreenMode();
+                        this.Click(OptionType.UnFullScreen);
+                        return;
                     }
-                    else
-                    {
-                        this.IsFullScreen = true;
-                        this.SetFullScreenState(true);
-                        this.ApplicationView.TryEnterFullScreenMode();
-                    }
+
+                    this.IsFullScreen = true;
+                    this.SetFullScreenState(true);
+                    this.ApplicationView.TryEnterFullScreenMode();
 
                     this.FullScreenKey.IsEnabled = false;
                     await Task.Delay(200);
@@ -344,6 +338,8 @@ namespace Luo_Painter
                 #region Edit
 
                 case OptionType.Cut: // Copy + Clear
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -373,14 +369,15 @@ namespace Luo_Painter
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                             this.EditMenu.PasteIsEnabled = true;
                         }
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
                 case OptionType.Copy:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -402,6 +399,8 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Paste:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         Color[] interpolationColors = this.Clipboard.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Clipboard.GetInterpolationBoundsMode(interpolationColors);
@@ -419,12 +418,13 @@ namespace Luo_Painter
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                        this.RaiseHistoryCanExecuteChanged();
                     }
                     break;
 
                 case OptionType.Clear:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -450,8 +450,7 @@ namespace Luo_Painter
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                     }
                     break;
@@ -537,25 +536,25 @@ namespace Luo_Painter
                 #region Setup
 
                 case OptionType.CropCanvas:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         int width2 = this.Transformer.Width;
                         int height2 = this.Transformer.Height;
 
                         this.SetCropCanvas(width2, height2);
-
-                        this.BitmapLayer = null;
-                        this.OptionType = OptionType.CropCanvas;
-                        this.AppBar.Construct(OptionType.CropCanvas);
-                        this.SetCanvasState(true);
                     }
+
+                    this.BitmapLayer = null;
+                    this.OptionType = OptionType.CropCanvas;
+                    this.AppBar.Construct(OptionType.CropCanvas);
+                    this.SetCanvasState(true);
                     break;
 
                 case OptionType.Stretch:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
                         ContentDialogResult result = await this.StretchDialog.ShowInstance();
 
@@ -597,8 +596,7 @@ namespace Luo_Painter
 
                                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                                            this.RaiseHistoryCanExecuteChanged();
                                         }
                                         break;
                                     case 1:
@@ -626,8 +624,7 @@ namespace Luo_Painter
 
                                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                                            this.RaiseHistoryCanExecuteChanged();
                                         }
                                         break;
                                     default:
@@ -641,40 +638,38 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.FlipHorizontal:
+                    this.ExpanderLightDismissOverlay.Hide();
+
+                    this.Transformer.Fit();
+
+                    // History
                     {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.Transformer.Fit();
-
-                        // History
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray()));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.FlipVertical:
+                    this.ExpanderLightDismissOverlay.Hide();
+
+                    this.Transformer.Fit();
+
+                    // History
                     {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.Transformer.Fit();
-
-                        // History
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray()));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
 
                 case OptionType.LeftTurn:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         int width2 = this.Transformer.Width;
                         int height2 = this.Transformer.Height;
 
@@ -705,17 +700,16 @@ namespace Luo_Painter
                                 new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
                             }));
                         }
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.RightTurn:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         int width2 = this.Transformer.Width;
                         int height2 = this.Transformer.Height;
 
@@ -746,27 +740,25 @@ namespace Luo_Painter
                                 new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
                             }));
                         }
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.OverTurn:
+                    this.ExpanderLightDismissOverlay.Hide();
+
+                    this.Transformer.Fit();
+
+                    // History
                     {
-                        this.ExpanderLightDismissOverlay.Hide();
-
-                        this.Transformer.Fit();
-
-                        // History
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray()));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
 
                 #endregion
@@ -787,12 +779,11 @@ namespace Luo_Painter
 
                         // History
                         int removes = this.History.Push(this.LayerManager.Add(this, add));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.AddImageLayer:
                     this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop));
@@ -803,16 +794,17 @@ namespace Luo_Painter
 
                         // History
                         int removes = this.History.Push(this.LayerManager.Add(this, add));
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
 
                 // Clipboard
                 case OptionType.CutLayer:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -827,8 +819,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                     this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
                                 }
                                 break;
@@ -839,8 +830,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                     this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
                                 }
                                 break;
@@ -848,6 +838,8 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.CopyLayer:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         // History
                         var items = this.LayerSelectedItems;
@@ -868,6 +860,8 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.PasteLayer:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         switch (this.ClipboardLayers.Count)
                         {
@@ -882,8 +876,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                             default:
@@ -893,8 +886,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                         }
@@ -903,6 +895,8 @@ namespace Luo_Painter
 
                 // Layering
                 case OptionType.Remove:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -917,8 +911,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                             default:
@@ -928,19 +921,22 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                         }
                     }
                     break;
                 case OptionType.Duplicate: // CopyLayer + PasteLayer
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     this.Click(OptionType.CopyLayer);
                     this.Click(OptionType.PasteLayer);
-                    break;
+                    return;
 
                 case OptionType.Extract:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -969,12 +965,13 @@ namespace Luo_Painter
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                     }
                     break;
                 case OptionType.Merge:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -995,8 +992,7 @@ namespace Luo_Painter
                                             bitmapLayer.Flush();
                                             bitmapLayer.RenderThumbnail();
 
-                                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                                            this.RaiseHistoryCanExecuteChanged();
                                         }
                                     }
                                     break;
@@ -1012,6 +1008,8 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Flatten:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
                         {
@@ -1024,13 +1022,14 @@ namespace Luo_Painter
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                        this.RaiseHistoryCanExecuteChanged();
                     }
                     break;
 
                 // Grouping
                 case OptionType.Group:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -1047,8 +1046,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                             default:
@@ -1060,14 +1058,15 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                         }
                     }
                     break;
                 case OptionType.Ungroup:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1078,13 +1077,14 @@ namespace Luo_Painter
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                     }
                     break;
 
                 case OptionType.Release:
+                    this.ExpanderLightDismissOverlay.Hide();
+
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -1101,8 +1101,7 @@ namespace Luo_Painter
 
                                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                                        this.RedoButton.IsEnabled = this.History.CanRedo;
+                                        this.RaiseHistoryCanExecuteChanged();
                                     }
                                 }
                                 break;
@@ -1113,8 +1112,7 @@ namespace Luo_Painter
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                                    this.UndoButton.IsEnabled = this.History.CanUndo;
-                                    this.RedoButton.IsEnabled = this.History.CanRedo;
+                                    this.RaiseHistoryCanExecuteChanged();
                                 }
                                 break;
                         }
@@ -1139,39 +1137,36 @@ namespace Luo_Painter
 
                 // Selecting
                 case OptionType.All:
+                    // History
                     {
-                        // History
                         int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue));
-                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
-                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
-                        this.Marquee.ClearThumbnail(Colors.DodgerBlue);
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+                    this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
+                    this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
+                    this.Marquee.ClearThumbnail(Colors.DodgerBlue);
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.Deselect:
+                    // History
                     {
-                        // History
                         int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.Transparent));
-                        this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
-                        this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
-                        this.Marquee.ClearThumbnail(Colors.Transparent);
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+                    this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
+                    this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
+                    this.Marquee.ClearThumbnail(Colors.Transparent);
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.MarqueeInvert:
+                    // History
                     {
-                        // History
                         int removes = this.History.Push(this.Marquee.Invert(Colors.DodgerBlue));
-                        this.Marquee.Flush();
-                        this.Marquee.RenderThumbnail();
-
-                        this.UndoButton.IsEnabled = this.History.CanUndo;
-                        this.RedoButton.IsEnabled = this.History.CanRedo;
                     }
+                    this.Marquee.Flush();
+                    this.Marquee.RenderThumbnail();
+
+                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.Pixel:
                     {
@@ -1182,17 +1177,16 @@ namespace Luo_Painter
                             this.Marquee.Flush();
                             this.Marquee.RenderThumbnail();
 
-                            this.UndoButton.IsEnabled = this.History.CanUndo;
-                            this.RedoButton.IsEnabled = this.History.CanRedo;
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                     }
                     break;
 
                 // Marquees
                 case OptionType.Feather:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -1208,9 +1202,9 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.MarqueeTransform:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -1238,9 +1232,9 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Grow:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -1256,9 +1250,9 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Shrink:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
@@ -1287,9 +1281,9 @@ namespace Luo_Painter
 
                 // Other
                 case OptionType.Transform:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
@@ -1335,9 +1329,9 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.DisplacementLiquefaction:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
@@ -1394,9 +1388,9 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.GradientMapping:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
@@ -1428,9 +1422,9 @@ namespace Luo_Painter
                 // Adjustment
                 case OptionType.Gray:
                 case OptionType.Invert:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
@@ -1472,9 +1466,9 @@ namespace Luo_Painter
 
                 // Effect2
                 case OptionType.LuminanceToAlpha:
-                    {
-                        this.ExpanderLightDismissOverlay.Hide();
+                    this.ExpanderLightDismissOverlay.Hide();
 
+                    {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
                             if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
