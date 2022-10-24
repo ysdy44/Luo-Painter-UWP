@@ -657,7 +657,20 @@
             <ContentDialog.Title>
                 Rename
             </ContentDialog.Title>
-            <TextBox x:Name="RenameTextBox"/>
+            <TextBox x:Name="RenameTextBox" >
+                <TextBox.Header>
+                    <Border Width="140" Height="140" Margin="0,0,0,8" Style="{StaticResource AppRoundedBorderStyle}">
+                        <SymbolIcon x:Name="RenameIcon" Foreground="{ThemeResource AppForeground}" >
+                            <UIElement.RenderTransformOrigin>
+                                0.5, 0.5
+                            </UIElement.RenderTransformOrigin>
+                            <UIElement.RenderTransform>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                            </UIElement.RenderTransform>
+                        </SymbolIcon>
+                    </Border>
+                </TextBox.Header>
+            </TextBox>
         </ContentDialog>
         <ContentDialog x:Name="AddDialog" Style="{StaticResource AppContentDialogStyle}">
             <ContentDialog.PrimaryButtonText>
@@ -688,7 +701,20 @@
             <ContentDialog.Title>
                 New Folder
             </ContentDialog.Title>
-            <TextBox x:Name="NewTextBox"/>
+            <TextBox x:Name="NewTextBox">
+                <TextBox.Header>
+                    <Border Width="140" Height="140" Margin="0,0,0,8" Style="{StaticResource AppRoundedBorderStyle}">
+                        <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppForeground}" >
+                            <UIElement.RenderTransformOrigin>
+                                0.5, 0.5
+                            </UIElement.RenderTransformOrigin>
+                            <UIElement.RenderTransform>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                            </UIElement.RenderTransform>
+                        </SymbolIcon>
+                    </Border>
+                </TextBox.Header>
+            </TextBox>
         </ContentDialog>
 
     </Grid>
