@@ -180,7 +180,7 @@
                                 <Button x:Name="SaveButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                                     <SymbolIcon Symbol="Save"/>
                                 </Button>
-                                <Button x:Name="KeyButton" Visibility="Collapsed" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                                <Button x:Name="KeyButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                                     <SymbolIcon Symbol="Keyboard"/>
                                 </Button>
                             </StackPanel>
@@ -188,79 +188,86 @@
 
                     </Grid>
                 </SplitView.Pane>
-                <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Margin="0,50,0,0" Background="{ThemeResource AppBackgroundDark}" >
-                    <!--AlignmentGrid-->
-                    <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <!--Canvas-->
-                    <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" IsHitTestVisible="False" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-                    <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
-                    <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                    <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Grid.Row="1" Background="{ThemeResource AppBackgroundDark}" >
+                        <!--AlignmentGrid-->
+                        <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" />
 
-                    <!--Simulate-->
-                    <controls:SimulateCanvas x:Name="SimulateCanvas" />
-                </Canvas>
+                        <!--Canvas-->
+                        <canvas:CanvasVirtualControl x:Name="CanvasVirtualControl" IsHitTestVisible="False" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl" IsHitTestVisible="False" TargetElapsedTime="0:0:0.05" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                        <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+
+                        <!--Simulate-->
+                        <controls:SimulateCanvas x:Name="SimulateCanvas" />
+                    </Canvas>
+
+                    <!--Head-->
+                    <Border x:Name="HeadGrid" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
+                        <Grid MaxWidth="900" CornerRadius="6" BorderThickness="1,1,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                                <Button x:Name="ExportButton" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
+                                    <SymbolIcon Symbol="NewWindow"/>
+                                </Button>
+                                <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}" >
+                                    <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                <Button x:Name="UnFullScreenButton" Visibility="Collapsed" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
+                                    <SymbolIcon Symbol="BackToWindow" />
+                                </Button>
+                                <Button x:Name="FullScreenButton" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
+                                    <SymbolIcon Symbol="FullScreen" />
+                                </Button>
+                                <Button x:Name="PaletteButton" Style="{StaticResource AppButtonStyle}" >
+                                    <FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>
+                                </Button>
+                                <Button                               
+                                    x:Name="ColorButton"                               
+                                    BorderThickness="0,0,0,2"                                
+                                    BorderBrush="DodgerBlue"
+                                    Style="{StaticResource AppButtonStyle}"
+                                    ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
+                                    ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
+                                    ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
+                                    >
+                                    <UIElement.ManipulationMode>
+                                        TranslateX, TranslateY
+                                    </UIElement.ManipulationMode>
+                                    <Grid>
+                                        <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
+                                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
+                                        <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
+                                    <local:ElementIcon Type="Edit"/>
+                                </Button>
+                                <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
+                                    <local:ElementIcon Type="Adjustment"/>
+                                </Button>
+                                <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
+                                    <SymbolIcon Symbol="More"/>
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
             </SplitView>
         </SplitView>
-
-
-        <!--Head-->
-        <Border x:Name="HeadGrid" Margin="280,0" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
-            <Grid MaxWidth="900" CornerRadius="6" BorderThickness="1,1,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                    <Button x:Name="ExportButton" Style="{StaticResource AppButtonStyle}" >
-                        <SymbolIcon Symbol="NewWindow"/>
-                    </Button>
-                    <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}" >
-                        <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
-                    </Button>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button x:Name="UnFullScreenButton" Visibility="Collapsed" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
-                        <SymbolIcon Symbol="BackToWindow" />
-                    </Button>
-                    <Button x:Name="FullScreenButton" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
-                        <SymbolIcon Symbol="FullScreen" />
-                    </Button>
-                    <Button x:Name="PaletteButton" Style="{StaticResource AppButtonStyle}" >
-                        <FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>
-                    </Button>
-                    <Button                               
-                        x:Name="ColorButton"                               
-                        BorderThickness="0,0,0,2"                                
-                        BorderBrush="DodgerBlue"
-                        Style="{StaticResource AppButtonStyle}"
-                        ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"
-                        ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"
-                        ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"
-                        >
-                        <UIElement.ManipulationMode>
-                            TranslateX, TranslateY
-                        </UIElement.ManipulationMode>
-                        <Grid>
-                            <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
-                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
-                            <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
-                        </Grid>
-                    </Button>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
-                        <local:ElementIcon Type="Edit"/>
-                    </Button>
-                    <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
-                        <local:ElementIcon Type="Adjustment"/>
-                    </Button>
-                    <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
-                        <SymbolIcon Symbol="More"/>
-                    </Button>
-                </StackPanel>
-
-            </Grid>
-        </Border>
 
 
         <!--Expander-->
