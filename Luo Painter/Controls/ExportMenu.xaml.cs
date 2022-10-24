@@ -6,13 +6,6 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Controls
 {
-    public enum ExportMode
-    {
-        None,
-        All,
-        Current,
-    }
-
     public sealed partial class ExportMenu : Expander
     {
 
