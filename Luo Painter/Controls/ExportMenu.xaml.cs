@@ -1,22 +1,85 @@
-﻿using Luo_Painter.Elements;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.UI.Xaml;
+using Windows.UI;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ExportMenu : Expander
+    public enum ExportMode
+    {
+        None,
+        All,
+        Current,
+    }
+
+    public sealed partial class ExportDialog : ContentDialog
     {
 
-        //@Delegate
-        public event RoutedEventHandler ExportClick
+        //@Converter
+        private Color FileColorConverter(int value)
         {
-            remove => this.Button.Click -= value;
-            add => this.Button.Click += value;
+            switch (value)
+            {
+                case 0: return Colors.SeaGreen;
+                case 1: return Colors.DodgerBlue;
+                case 2: return Colors.DarkTurquoise;
+                case 3: return Colors.MediumOrchid;
+                case 4: return Colors.DeepPink;
+                default: return Colors.Green;
+            }
+        }
+        private string FileTitleConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return "JPEG";
+                case 1: return "PNG";
+                case 2: return "BMP";
+                case 3: return "GIF";
+                case 4: return "TIFF";
+                default: return "JPEG";
+            }
+        }
+        private string FileChoicesConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return ".jpeg";
+                case 1: return ".png";
+                case 2: return ".bmp";
+                case 3: return ".gif";
+                case 4: return ".tiff";
+                default: return ".jpeg";
+            }
+        }
+        private CanvasBitmapFileFormat FileFormatConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return CanvasBitmapFileFormat.Jpeg;
+                case 1: return CanvasBitmapFileFormat.Png;
+                case 2: return CanvasBitmapFileFormat.Bmp;
+                case 3: return CanvasBitmapFileFormat.Gif;
+                case 4: return CanvasBitmapFileFormat.Tiff;
+                default: return CanvasBitmapFileFormat.Jpeg;
+            }
+        }
+        private int DPIConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return 72;
+                case 1: return 96;
+                case 2: return 144;
+                case 3: return 192;
+                case 4: return 300;
+                case 5: return 400;
+                default: return 96;
+            }
         }
 
         //@Content
+        public bool IsOpenFileExplorer => this.CheckBox.IsChecked is true;
         public ExportMode Mode
         {
             get
@@ -30,65 +93,15 @@ namespace Luo_Painter.Controls
                 }
             }
         }
-        public int DPI
-        {
-            get
-            {
-                switch (this.DPIComboBox.SelectedIndex)
-                {
-                    case 0: return 72;
-                    case 1: return 96;
-                    case 2: return 144;
-                    case 3: return 192;
-                    case 4: return 300;
-                    case 5: return 400;
-                    default: return 96;
-                }
-            }
-        }
-        public CanvasBitmapFileFormat FileFormat
-        {
-            get
-            {
-                switch (this.FormatComboBox.SelectedIndex)
-                {
-                    case 0: return CanvasBitmapFileFormat.Jpeg;
-                    case 1: return CanvasBitmapFileFormat.Png;
-                    case 2: return CanvasBitmapFileFormat.Bmp;
-                    case 3: return CanvasBitmapFileFormat.Gif;
-                    case 4: return CanvasBitmapFileFormat.Tiff;
-                    default: return CanvasBitmapFileFormat.Jpeg;
-                }
-            }
-        }
-        public string FileChoices
-        {
-            get
-            {
-                switch (this.FormatComboBox.SelectedIndex)
-                {
-                    case 0: return ".jpeg";
-                    case 1: return ".png";
-                    case 2: return ".bmp";
-                    case 3: return ".gif";
-                    case 4: return ".tiff";
-                    default: return ".jpeg";
-                }
-            }
-        }
+
+        public int DPI => this.DPIConverter(this.DPIComboBox.SelectedIndex);
+        public CanvasBitmapFileFormat FileFormat => this.FileFormatConverter(this.FormatComboBox.SelectedIndex);
+        public string FileChoices => this.FileChoicesConverter(this.FormatComboBox.SelectedIndex);
 
         //@Construct
-        public ExportMenu()
+        public ExportDialog()
         {
             this.InitializeComponent();
-            this.Canvas.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                this.FlipView.Width = e.NewSize.Width;
-                this.FlipView.Height = e.NewSize.Height;
-            };
         }
 
         //@Strings
