@@ -226,8 +226,8 @@
     <Compile Include="Controls\EditMenu.xaml.cs">
       <DependentUpon>EditMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ExportMenu.xaml.cs">
-      <DependentUpon>ExportMenu.xaml</DependentUpon>
+    <Compile Include="Controls\ExportDialog.xaml.cs">
+      <DependentUpon>ExportDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LayerMenu.xaml.cs">
       <DependentUpon>LayerMenu.xaml</DependentUpon>
@@ -392,7 +392,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ExportMenu.xaml">
+    <Page Include="Controls\ExportDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
