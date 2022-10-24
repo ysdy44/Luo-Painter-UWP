@@ -489,10 +489,10 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.ToolMenu:
-                    this.ToolComboBox.SelectedIndex = 0;
+                    this.HeadComboBox.SelectedIndex = 0;
                     break;
                 case OptionType.HistoryMenu:
-                    this.ToolComboBox.SelectedIndex = 5;
+                    this.HeadComboBox.SelectedIndex = 5;
                     break;
                 case OptionType.ColorMenu:
                     this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
@@ -512,13 +512,13 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintMenu:
-                    this.ToolComboBox.SelectedIndex = 1;
+                    this.HeadComboBox.SelectedIndex = 1;
                     break;
                 case OptionType.BrushMenu:
-                    this.ToolComboBox.SelectedIndex = 2;
+                    this.HeadComboBox.SelectedIndex = 2;
                     break;
                 case OptionType.SizeMenu:
-                    this.ToolComboBox.SelectedIndex = 3;
+                    this.HeadComboBox.SelectedIndex = 3;
                     break;
 
                 case OptionType.LayerMenu:

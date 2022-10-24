@@ -125,25 +125,23 @@
                     <controls:HistoryListView x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="{x:Bind HistoryItem.IsSelected, Mode=OneWay}"/>
 
                     <!--Head-->
-                    <Border Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
-                        <ListBox x:Name="ToolComboBox" SelectedIndex="0" >
-                            <ListBoxItem x:Name="ToolItem" Width="70">
-                                <SymbolIcon Symbol="ViewAll"/>
-                            </ListBoxItem>
-                            <ListBoxItem x:Name="PaintItem" Width="70">
-                                <local:ElementIcon Type="Paint"/>
-                            </ListBoxItem>
-                            <ListBoxItem x:Name="BrushItem" Width="70">
-                                <local:ElementIcon Type="Brush"/>
-                            </ListBoxItem>
-                            <ListBoxItem x:Name="SizeItem" Width="70">
-                                <local:ElementIcon Type="Size"/>
-                            </ListBoxItem>
-                            <ListBoxItem x:Name="HistoryItem" Width="70">
-                                <FontIcon Glyph="&#xF738;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
-                            </ListBoxItem>
-                        </ListBox>
-                    </Border>
+                    <ListBox x:Name="HeadComboBox" SelectedIndex="0" Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
+                        <ListBoxItem x:Name="ToolItem" Width="70">
+                            <SymbolIcon Symbol="ViewAll"/>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="PaintItem" Width="70">
+                            <local:ElementIcon Type="Paint"/>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="BrushItem" Width="70">
+                            <local:ElementIcon Type="Brush"/>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="SizeItem" Width="70">
+                            <local:ElementIcon Type="Size"/>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="HistoryItem" Width="70">
+                            <FontIcon Glyph="&#xF738;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
+                        </ListBoxItem>
+                    </ListBox>
 
                 </Grid>
             </SplitView.Pane>
@@ -166,7 +164,7 @@
                         </controls:LayerListView>
 
                         <!--Head-->
-                        <ScrollViewer Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppHorizontalScrollViewerStyle}">
+                        <ScrollViewer x:Name="HeadScrollViewer" Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="HomeButton" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
                                     <SymbolIcon Symbol="Home"/>
