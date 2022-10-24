@@ -79,6 +79,62 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
 
+                <!--Phone
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+
+                    </VisualState.Setters>
+                </VisualState>-->
+
+                <!--Pad
+                <VisualState x:Name="Pad">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>-->
+
+                <!--PC-->
+                <VisualState x:Name="PC">
+                    <VisualState.StateTriggers>
+                        <!--<AdaptiveTrigger MinWindowWidth="900"/>-->
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RightSplitView.IsPaneOpen" Value="False"/>
+                        <Setter Target="LeftSplitView.IsPaneOpen" Value="False"/>
+
+                        <Setter Target="RightSplitView.DisplayMode" Value="Overlay"/>
+                        <Setter Target="LeftSplitView.DisplayMode" Value="Overlay"/>
+
+                        <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
+                        <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
+
+                        <Setter Target="LayerListView.Margin" Value="0"/>
+                        <Setter Target="HeadScrollViewer.Visibility" Value="Collapsed"/>
+                        <Setter Target="HeadButton.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Hub-->
+                <VisualState x:Name="Hub">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RightSplitView.IsPaneOpen" Value="True"/>
+                        <Setter Target="LeftSplitView.IsPaneOpen" Value="True"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+            <VisualStateGroup>
+
                 <!--Normal-->
                 <VisualState x:Name="UnFullScreen" />
 
@@ -110,7 +166,7 @@
             x:Name="RightSplitView"
             PanePlacement="Right"
             OpenPaneLength="280"
-            IsPaneOpen="True"
+            IsPaneOpen="True"                    
             DisplayMode="Inline"
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
@@ -205,12 +261,79 @@
                         <controls:SimulateCanvas x:Name="SimulateCanvas" />
                     </Canvas>
 
+                    <!--Split-->
+                    <Button x:Name="LeftSplitButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="0,6,6,0" HorizontalAlignment="Left" BorderThickness="0,1,1,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                        <Line X1="0" X2="0" Y1="0" Y2="36" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="{ThemeResource AppForeground}"/>
+                    </Button>
+                    <Button x:Name="RightSplitButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="6,0,0,6" HorizontalAlignment="Right" BorderThickness="1,1,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                        <Line X1="0" X2="0" Y1="0" Y2="36" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="{ThemeResource AppForeground}"/>
+                    </Button>
+
                     <!--Head-->
                     <Border x:Name="HeadGrid" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
                         <Grid MaxWidth="900" CornerRadius="6" BorderThickness="1,1,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                                <Button x:Name="ExportButton" MinWidth="44" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppTextBlockButtonStyle}">
+                                <Button x:Name="HeadButton" Visibility="Collapsed" MinWidth="44" Style="{StaticResource AppTextBlockButtonStyle}">
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+
+                                            <MenuFlyoutItem x:Name="HomeButton2">
+                                                <MenuFlyoutItem.Icon>
+                                                    <SymbolIcon Symbol="Home" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                                </MenuFlyoutItem.Icon>
+                                                <MenuFlyoutItem.Text>
+                                                    Home
+                                                </MenuFlyoutItem.Text>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutSeparator/>
+
+                                            <MenuFlyoutItem x:Name="UndoButton2">
+                                                <MenuFlyoutItem.Icon>
+                                                    <SymbolIcon Symbol="Undo" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                                </MenuFlyoutItem.Icon>
+                                                <MenuFlyoutItem.Text>
+                                                    Undo
+                                                </MenuFlyoutItem.Text>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem x:Name="RedoButton2">
+                                                <MenuFlyoutItem.Icon>
+                                                    <SymbolIcon Symbol="Redo" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                                </MenuFlyoutItem.Icon>
+                                                <MenuFlyoutItem.Text>
+                                                    Redo
+                                                </MenuFlyoutItem.Text>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutSeparator/>
+
+                                            <MenuFlyoutItem x:Name="SaveButton2">
+                                                <MenuFlyoutItem.Icon>
+                                                    <SymbolIcon Symbol="Save" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                                </MenuFlyoutItem.Icon>
+                                                <MenuFlyoutItem.Text>
+                                                    Save
+                                                </MenuFlyoutItem.Text>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutSeparator/>
+
+                                            <MenuFlyoutItem x:Name="KeyButton2">
+                                                <MenuFlyoutItem.Icon>
+                                                    <SymbolIcon Symbol="Keyboard" Foreground="{StaticResource AppBlueLinearGradientBrush}"/>
+                                                </MenuFlyoutItem.Icon>
+                                                <MenuFlyoutItem.Text>
+                                                    Key
+                                                </MenuFlyoutItem.Text>
+                                            </MenuFlyoutItem>
+
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                    <SymbolIcon Symbol="ViewAll"/>
+                                </Button>
+                                <Button x:Name="ExportButton" Style="{StaticResource AppTextBlockButtonStyle}" >
                                     <SymbolIcon Symbol="NewWindow"/>
                                 </Button>
                                 <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}" >

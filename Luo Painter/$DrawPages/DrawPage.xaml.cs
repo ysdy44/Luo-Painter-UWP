@@ -20,6 +20,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Devices.Input;
 using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.System;
@@ -194,16 +195,38 @@ namespace Luo_Painter
 
 
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
+            this.HomeButton2.Click += (s, e) => this.Click(OptionType.Close);
+
             this.SaveButton.Click += (s, e) => this.Click(OptionType.Save);
+            this.SaveButton2.Click += (s, e) => this.Click(OptionType.Save);
 
             this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
+            this.UndoButton2.Click += (s, e) => this.Click(OptionType.Undo);
+
             this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
+            this.RedoButton2.Click += (s, e) => this.Click(OptionType.Redo);
 
             this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
             this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
 
             this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
+            this.KeyButton2.Click += (s, e) => this.KeyboardShortcuts.Tip();
             this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
+
+
+            this.LeftSplitButton.Click += (s, e) => this.LeftSplitView.IsPaneOpen = true;
+            this.LeftSplitButton.PointerEntered += (s, e) =>
+            {
+                if (e.Pointer.PointerDeviceType is PointerDeviceType.Touch) return;
+                this.LeftSplitView.IsPaneOpen = true;
+            };
+
+            this.RightSplitButton.Click += (s, e) => this.RightSplitView.IsPaneOpen = true;
+            this.RightSplitButton.PointerEntered += (s, e) =>
+            {
+                if (e.Pointer.PointerDeviceType is PointerDeviceType.Touch) return;
+                this.RightSplitView.IsPaneOpen = true;
+            };
 
 
             this.ColorMenu.ColorChanged += (s, e) =>
