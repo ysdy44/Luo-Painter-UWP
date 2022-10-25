@@ -115,7 +115,10 @@ namespace Luo_Painter
         public InkType InkType { get; set; } = InkType.General;
         public InkPresenter InkPresenter { get; } = new InkPresenter
         {
-            Size = 22f,
+            Type = InkType.Tip,
+            Mode = InkType.None,
+
+            Size = 12f,
             Opacity = 1f,
 
             Spacing = 0.25f,

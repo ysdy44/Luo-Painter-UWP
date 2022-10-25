@@ -14,6 +14,7 @@
 
     <ListView          
         x:Name="ListView"
+        SelectedIndex="2"
         IsItemClickEnabled="True" 
         FooterTemplate="{StaticResource AppListViewBaseFooter}"        
         >
@@ -77,10 +78,20 @@
             </Grid>
         </ListViewBase.Header>
 
+        <!--Erase-->
+        <local:PaintBrush Type="Erase" Size2="21.16" Opacity2="0.59" Spacing2="0.25" Flow2="1" Path="Universal/02" />
+        <local:PaintBrush Type="Erase" Size2="108" Opacity2="0.18" Spacing2="0.25" Flow2="1" Hardness="Cosine" Path="Universal/03" />
+
+        <!--Tip-->
+        <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Path="Universal/00" />
+        <local:PaintBrush Type="Tip" Size2="4" Opacity2="1" Spacing2="0.25" Flow2="1" Path="Universal/01" />
+        <local:PaintBrush Type="Tip" Size2="21.16" Opacity2="0.59" Spacing2="0.25" Flow2="1" Path="Universal/02" />
+
+        
         <!--Universal-->
-        <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="None" Path="Universal/00" />
-        <local:PaintBrush Type="Tip" Size2="4" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Quartic" Path="Universal/01" />
-        <local:PaintBrush Type="Tip" Size2="21.16" Opacity2="0.59" Spacing2="0.25" Flow2="1" Hardness="Quartic" Path="Universal/02" />
+        <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="None" Path="Universal/00" />
+        <local:PaintBrush Type="General" Size2="4" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Quartic" Path="Universal/01" />
+        <local:PaintBrush Type="General" Size2="21.16" Opacity2="0.59" Spacing2="0.25" Flow2="1" Hardness="Quartic" Path="Universal/02" />
         <local:PaintBrush Type="General" Size2="108.16" Opacity2="0.18" Spacing2="0.25" Flow2="1" Hardness="Cosine" Path="Universal/03" />
         <local:PaintBrush Type="General" Size2="20.25" Opacity2="0.23" Spacing2="0.25" Flow2="1" Hardness="None" Path="Universal/04" />
 

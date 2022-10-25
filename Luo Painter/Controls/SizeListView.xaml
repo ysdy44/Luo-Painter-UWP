@@ -13,6 +13,7 @@
 
     <ListView
         x:Name="ListView"
+        SelectedIndex="16"
         IsItemClickEnabled="True"
         FooterTemplate="{StaticResource AppListViewBaseFooter}"                
         >
@@ -55,7 +56,7 @@
         </ItemsControl.ItemTemplate>
 
         <ListViewBase.Header>
-            <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+            <Border Height="44" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" >
                 <TextBlock 
                     Margin="16,0"
                     IsHitTestVisible="false" 
