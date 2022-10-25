@@ -106,7 +106,6 @@
                             IsHitTestVisible="False" 
                             VerticalAlignment="Center"                                 
                             elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}"                                 
-                            Visibility="{Binding ElementName=MarqueeTextBlock, Path=Visibility, Mode=OneWay}" 
                             >
                             <Run Text="{x:Bind Name, Mode=OneWay}"/>                                   
                             <Run>                            
@@ -161,18 +160,17 @@
         </ItemsControl.ItemTemplate>
 
         <ListViewBase.Footer>
-            <Grid Height="55" Background="{ThemeResource AppBackgroundLight}" >
+            <Grid Padding="2,0,0,0" Height="55" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="69"/>
+                    <ColumnDefinition Width="66"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="36"/>
+                    <ColumnDefinition Width="42"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     x:Name="MarqueeTextBlock" 
                     Grid.Column="1" 
                     IsHitTestVisible="False" 
                     VerticalAlignment="Center"                         
-                    Visibility="{x:Bind SelectedVisibilityConverter(Width), Mode=OneWay}"
                     >
                     Marquee
                 </TextBlock>

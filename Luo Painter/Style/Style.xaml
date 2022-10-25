@@ -383,7 +383,7 @@
         <Setter Property="BringIntoViewOnFocusChange" Value="False"/>
     </Style>
     <Style x:Name="AppHorizontalScrollViewerStyle" TargetType="ScrollViewer">
-        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="HorizontalScrollMode" Value="Enabled"/>
         <Setter Property="IsHorizontalRailEnabled" Value="False"/>

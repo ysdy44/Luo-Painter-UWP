@@ -55,7 +55,7 @@
         </ItemsControl.ItemTemplate>
 
         <ListViewBase.Header>
-            <Border Height="44" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" >
+            <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
                 <TextBlock 
                     Margin="16,0"
                     IsHitTestVisible="false" 

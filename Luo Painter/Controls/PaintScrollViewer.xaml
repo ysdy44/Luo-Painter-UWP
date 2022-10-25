@@ -22,7 +22,7 @@
         <elements:SizePickerExtension x:Name="Step"/>
     </FrameworkElement.Resources>
 
-    <ScrollViewer>
+    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -321,12 +321,12 @@
                     </Grid.ColumnDefinitions>
                     <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                         <Grid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                            <Grid.RenderTransformOrigin>
+                            <UIElement.RenderTransformOrigin>
                                 0.5, 1
-                            </Grid.RenderTransformOrigin>
-                            <Grid.RenderTransform>
+                            </UIElement.RenderTransformOrigin>
+                            <UIElement.RenderTransform>
                                 <ScaleTransform ScaleX="3.65" ScaleY="3.65"/>
-                            </Grid.RenderTransform>
+                            </UIElement.RenderTransform>
                             <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
                             <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineRadioButton.IsChecked), Mode=OneWay}"/>
                             <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticRadioButton.IsChecked), Mode=OneWay}"/>

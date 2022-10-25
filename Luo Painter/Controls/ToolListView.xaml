@@ -155,7 +155,7 @@
         </ItemsControl.GroupStyle>
 
         <ListViewBase.Header>
-            <Border Height="50" Background="{ThemeResource AppBackgroundLight}" >
+            <Border Height="50" >
                 <TextBlock 
                     Margin="16,0"
                     IsHitTestVisible="false" 
