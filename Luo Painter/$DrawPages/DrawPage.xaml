@@ -79,14 +79,40 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
 
+                <!--FullScreen-->
+                <VisualState x:Name="FullScreen">
+                    <VisualState.Setters>
+                        <!--Application-->
+                        <Setter Target="ApplicationView.IsAccent" Value="True"/>
+
+                        <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="UnFullScreenButton.Visibility" Value="Visible"/>
+
+                        <!--Head-->
+                        <Setter Target="LayerListView.Margin" Value="0"/>
+                        <Setter Target="HeadScrollViewer.Visibility" Value="Collapsed"/>
+                        <Setter Target="HeadButton.Visibility" Value="Visible"/>
+                        
+                        <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
+                        <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
+
+                        <!--SplitView-->
+                        <Setter Target="RightSplitView.IsPaneOpen" Value="False"/>
+                        <Setter Target="LeftSplitView.IsPaneOpen" Value="False"/>
+
+                        <Setter Target="RightSplitView.DisplayMode" Value="Overlay"/>
+                        <Setter Target="LeftSplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+                
                 <!--Phone
                 <VisualState x:Name="Phone">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-
-
+                
+                
                     </VisualState.Setters>
                 </VisualState>-->
 
@@ -101,55 +127,30 @@
 
                 <!--PC-->
                 <VisualState x:Name="PC">
-                    <VisualState.StateTriggers>
-                        <!--<AdaptiveTrigger MinWindowWidth="900"/>-->
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--Head-->
+                        <Setter Target="LayerListView.Margin" Value="0"/>
+                        <Setter Target="HeadScrollViewer.Visibility" Value="Collapsed"/>
+                        <Setter Target="HeadButton.Visibility" Value="Visible"/>
+
+                        <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
+                        <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
+                        
+                        <!--SplitView-->
                         <Setter Target="RightSplitView.IsPaneOpen" Value="False"/>
                         <Setter Target="LeftSplitView.IsPaneOpen" Value="False"/>
 
                         <Setter Target="RightSplitView.DisplayMode" Value="Overlay"/>
                         <Setter Target="LeftSplitView.DisplayMode" Value="Overlay"/>
-
-                        <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
-                        <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
-
-                        <Setter Target="LayerListView.Margin" Value="0"/>
-                        <Setter Target="HeadScrollViewer.Visibility" Value="Collapsed"/>
-                        <Setter Target="HeadButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <!--Hub-->
                 <VisualState x:Name="Hub">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1200"/>
-                    </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--SplitView-->
                         <Setter Target="RightSplitView.IsPaneOpen" Value="True"/>
                         <Setter Target="LeftSplitView.IsPaneOpen" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-            </VisualStateGroup>
-            <VisualStateGroup>
-
-                <!--Normal-->
-                <VisualState x:Name="UnFullScreen" />
-
-                <!--FullScreen-->
-                <VisualState x:Name="FullScreen">
-                    <VisualState.Setters>
-                        <Setter Target="ApplicationView.IsAccent" Value="True"/>
-
-                        <Setter Target="HeadGrid.Margin" Value="0"/>
-
-                        <Setter Target="LeftSplitView.IsPaneOpen" Value="False"/>
-                        <Setter Target="RightSplitView.IsPaneOpen" Value="False"/>
-
-                        <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
-                        <Setter Target="UnFullScreenButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -181,7 +182,7 @@
                     <controls:HistoryListView x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="{x:Bind HistoryItem.IsSelected, Mode=OneWay}"/>
 
                     <!--Head-->
-                    <ListBox x:Name="HeadComboBox" SelectedIndex="0" Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
+                    <ListBox x:Name="HeadComboBox" SelectedIndex="2" Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}">
                         <ListBoxItem x:Name="ToolItem" Width="70">
                             <SymbolIcon Symbol="ViewAll"/>
                         </ListBoxItem>
@@ -333,7 +334,7 @@
                                     </Button.Flyout>
                                     <SymbolIcon Symbol="ViewAll"/>
                                 </Button>
-                                <Button x:Name="ExportButton" Style="{StaticResource AppTextBlockButtonStyle}" >
+                                <Button x:Name="ExportButton" Foreground="Black" Background="#FFC003" Style="{StaticResource AppTextBlockButtonStyle}" >
                                     <SymbolIcon Symbol="NewWindow"/>
                                 </Button>
                                 <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}" >

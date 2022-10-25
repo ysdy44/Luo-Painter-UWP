@@ -21,6 +21,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
+using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.System;
@@ -166,6 +167,17 @@ namespace Luo_Painter
             this.ConstructVector();
 
             this.ConstructPen();
+            base.SizeChanged += (s, e) =>
+            {
+                if (this.IsFullScreen) return;
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                if (e.NewSize.Width > 1200)
+                    VisualStateManager.GoToState(this, nameof(Hub), false);
+                else
+                    VisualStateManager.GoToState(this, nameof(PC), false);
+            };
 
 
             this.Command.Click += (s, type) => this.Click(type);

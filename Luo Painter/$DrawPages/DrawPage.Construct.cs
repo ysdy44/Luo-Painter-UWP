@@ -79,19 +79,6 @@ namespace Luo_Painter
         }
 
 
-        private void SetFullScreenState(bool isFullScreen)
-        {
-            if (isFullScreen)
-            {
-                VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, nameof(UnFullScreen), useTransitions: true);
-            }
-        }
-
-
         private void SetCanvasState(bool isPaused)
         {
             // if (this.CanvasAnimatedControl.Paused == isPaused) return;

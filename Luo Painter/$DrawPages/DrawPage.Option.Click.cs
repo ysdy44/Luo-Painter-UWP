@@ -21,8 +21,8 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -319,18 +319,23 @@ namespace Luo_Painter
                         return;
                     }
 
-                    this.IsFullScreen = true;
-                    this.SetFullScreenState(true);
                     this.ApplicationView.TryEnterFullScreenMode();
+                    this.IsFullScreen = true;
+
+                    VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
 
                     this.FullScreenKey.IsEnabled = false;
                     await Task.Delay(200);
                     this.FullScreenKey.IsEnabled = true;
                     break;
                 case OptionType.UnFullScreen:
-                    this.IsFullScreen = false;
-                    this.SetFullScreenState(false);
                     this.ApplicationView.ExitFullScreenMode();
+                    this.IsFullScreen = false;
+
+                    if (base.ActualWidth > 1200)
+                        VisualStateManager.GoToState(this, nameof(Hub), false);
+                    else
+                        VisualStateManager.GoToState(this, nameof(PC), false);
                     break;
 
                 #endregion
