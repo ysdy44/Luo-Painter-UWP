@@ -10,6 +10,8 @@ namespace Luo_Painter.Layers
 
         protected abstract ILayer CloneSelf(ICanvasResourceCreator resourceCreator);
 
+        protected abstract ILayer OffsetSelf(ICanvasResourceCreator resourceCreator, Vector2 offset);
+
         protected abstract ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height);
         protected abstract ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset);
         protected abstract ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation);
@@ -24,6 +26,14 @@ namespace Luo_Painter.Layers
             ILayer layer = this.CloneSelf(resourceCreator);
             layer.CopyWith(this);
             foreach (ILayer item in this.Children) layer.Children.Add(item.Clone(resourceCreator));
+            return layer;
+        }
+
+        public ILayer Offset(ICanvasResourceCreator resourceCreator, Vector2 offset)
+        {
+            ILayer layer = this.OffsetSelf(resourceCreator, offset);
+            layer.CopyWith(this);
+            foreach (ILayer item in this.Children) layer.Children.Add(item.Offset(resourceCreator, offset));
             return layer;
         }
 

@@ -11,6 +11,8 @@ namespace Luo_Painter.Layers
     {
         ILayer Clone(ICanvasResourceCreator resourceCreator);
 
+        ILayer Offset(ICanvasResourceCreator resourceCreator, Vector2 offset);
+
         ILayer Crop(ICanvasResourceCreator resourceCreator, int width, int height);
         ILayer Crop(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset);
         ILayer Crop(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation);

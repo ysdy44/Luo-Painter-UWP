@@ -39,6 +39,8 @@ namespace Luo_Painter.Layers.Models
 
         protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new GroupLayer(resourceCreator, base.Width, base.Height);
 
+        protected override ILayer OffsetSelf(ICanvasResourceCreator resourceCreator, Vector2 offset) => new GroupLayer(resourceCreator, base.Width, base.Height);
+
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height) => new GroupLayer(resourceCreator, width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset) => new GroupLayer(resourceCreator, width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation) => new GroupLayer(resourceCreator, width, height);

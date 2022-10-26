@@ -104,6 +104,8 @@ namespace Luo_Painter.Layers.Models
 
         protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height), this.Width, this.Height);
 
+        protected override ILayer OffsetSelf(ICanvasResourceCreator resourceCreator, Vector2 offset) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height, offset), this.Width, this.Height);
+
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height), width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height, offset), width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height, matrix), width, height);
