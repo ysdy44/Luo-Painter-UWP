@@ -197,6 +197,9 @@
     <Compile Include="Controls\SizeListView.xaml.cs">
       <DependentUpon>SizeListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OffsetPicker.xaml.cs">
+      <DependentUpon>OffsetPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
     </Compile>
@@ -357,6 +360,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SizeListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OffsetPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
