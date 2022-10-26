@@ -173,6 +173,9 @@
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OffsetDialog.xaml.cs">
+      <DependentUpon>OffsetDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PaintScrollViewer.Canvas.cs" />
     <Compile Include="Controls\PaintScrollViewer.CreateResources.cs" />
     <Compile Include="Controls\PaintScrollViewer.Ink0.cs" />
@@ -344,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LayerListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OffsetDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
