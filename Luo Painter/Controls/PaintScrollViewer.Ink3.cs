@@ -1,7 +1,7 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
 using System;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -99,13 +99,20 @@ namespace Luo_Painter.Controls
             this.StepTextBox.KeyDown += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                if (SizePickerExtension.IsEnter(e.Key)) this.GrainButton.Focus(FocusState.Programmatic);
+                switch (e.Key)
+                {
+                    case VirtualKey.Enter:
+                        this.GrainButton.Focus(FocusState.Programmatic);
+                        break;
+                    default:
+                        break;
+                }
             };
             this.StepTextBox.LostFocus += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
                 if (this.Step.IsMatch(this.StepTextBox) is false) return;
-                this.InkPresenter.Step = this.Step.Size;
+                this.InkPresenter.Step = this.Step.Value;
                 this.TryInk();
             };
         }

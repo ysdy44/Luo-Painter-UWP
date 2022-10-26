@@ -19,7 +19,7 @@
         <luo_painter:SizeRange x:Name="SizeRange"/>
         <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Size-->
-        <elements:SizePickerExtension x:Name="Step"/>
+        <elements:TextBoxExtension x:Name="Step" Value="1024" Minimum="16" Maximum="16384"/>
     </FrameworkElement.Resources>
 
     <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">

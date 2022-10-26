@@ -1,6 +1,4 @@
-﻿using Luo_Painter.Elements;
-using Windows.Graphics.Imaging;
-using Windows.System;
+﻿using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,6 +10,9 @@ namespace Luo_Painter.Controls
     public sealed partial class SizePicker : UserControl
     {
 
+        //@Converter
+        public  string Round2Converter(double value) => $"{value:0.00}";
+
         //@Key
         private bool IsRatio => this.ToggleButton.IsChecked is true;
 
@@ -21,9 +22,9 @@ namespace Luo_Painter.Controls
         /// <summary> HeightTextBlock's Text. </summary>
         public string HeightText { get => this.HeightTextBlock.Text; set => this.HeightTextBlock.Text = value; }
 
-        /// <summary> Minimum. Defult 16. </summary>
+        /// <summary> Minimum. Default 16. </summary>
         public int Minimum { get; set; } = 16;
-        /// <summary> Maximum. Defult 16384. </summary>
+        /// <summary> Maximum. Default 16384. </summary>
         public int Maximum { get; set; } = 16384;
 
         /// <summary> Size. </summary>
@@ -48,20 +49,27 @@ namespace Luo_Painter.Controls
             this.WidthTextBox.Text = 1024.ToString();
             this.WidthTextBox.KeyDown += (s, e) =>
             {
-                if (SizePickerExtension.IsEnter(e.Key)) this.HeightTextBox.Focus(FocusState.Programmatic);
+                switch (e.Key)
+                {
+                    case VirtualKey.Enter:
+                        this.HeightTextBox.Focus(FocusState.Programmatic);
+                        break;
+                    default:
+                        break;
+                }
             };
             this.WidthTextBox.LostFocus += (s, e) =>
             {
                 if (string.IsNullOrEmpty(this.WidthTextBox.Text))
                 {
-                    this.WidthTextBox.Text = SizePickerExtension.Round2Converter(this.CacheWidth);
+                    this.WidthTextBox.Text = this.Round2Converter(this.CacheWidth);
                     return;
                 }
 
                 bool result = double.TryParse(this.WidthTextBox.Text, out double value);
                 if (result is false)
                 {
-                    this.WidthTextBox.Text = SizePickerExtension.Round2Converter(this.CacheWidth);
+                    this.WidthTextBox.Text = this.Round2Converter(this.CacheWidth);
                     return;
                 }
 
@@ -87,7 +95,7 @@ namespace Luo_Painter.Controls
 
                     this.SizeCore.Width = (int)value;
                     this.CacheWidth = value;
-                    this.WidthTextBox.Text = SizePickerExtension.Round2Converter(value);
+                    this.WidthTextBox.Text = this.Round2Converter(value);
                 }
             };
 
@@ -107,14 +115,14 @@ namespace Luo_Painter.Controls
             {
                 if (string.IsNullOrEmpty(this.HeightTextBox.Text))
                 {
-                    this.HeightTextBox.Text = SizePickerExtension.Round2Converter(this.CacheHeight);
+                    this.HeightTextBox.Text = this.Round2Converter(this.CacheHeight);
                     return;
                 }
 
                 bool result = double.TryParse(this.HeightTextBox.Text, out double value);
                 if (result is false)
                 {
-                    this.HeightTextBox.Text = SizePickerExtension.Round2Converter(this.CacheHeight);
+                    this.HeightTextBox.Text = this.Round2Converter(this.CacheHeight);
                     return;
                 }
 
@@ -140,7 +148,7 @@ namespace Luo_Painter.Controls
 
                     this.SizeCore.Height = (int)value;
                     this.CacheHeight = value;
-                    this.HeightTextBox.Text = SizePickerExtension.Round2Converter(value);
+                    this.HeightTextBox.Text = this.Round2Converter(value);
                 }
             };
         }
@@ -163,7 +171,7 @@ namespace Luo_Painter.Controls
             {
                 this.SizeCore.Width = (int)value;
                 this.CacheWidth = value;
-                this.WidthTextBox.Text = SizePickerExtension.Round2Converter(value);
+                this.WidthTextBox.Text = this.Round2Converter(value);
             }
         }
 
@@ -185,7 +193,7 @@ namespace Luo_Painter.Controls
             {
                 this.SizeCore.Height = (int)value;
                 this.CacheHeight = value;
-                this.HeightTextBox.Text = SizePickerExtension.Round2Converter(value);
+                this.HeightTextBox.Text = this.Round2Converter(value);
             }
         }
 
