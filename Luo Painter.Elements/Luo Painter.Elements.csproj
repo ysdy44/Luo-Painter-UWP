@@ -160,7 +160,7 @@
     <Compile Include="Sheet.xaml.cs">
       <DependentUpon>Sheet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SizePickerExtension.cs" />
+    <Compile Include="TextBoxExtension.cs" />
     <Compile Include="Spliter.xaml.cs">
       <DependentUpon>Spliter.xaml</DependentUpon>
     </Compile>
