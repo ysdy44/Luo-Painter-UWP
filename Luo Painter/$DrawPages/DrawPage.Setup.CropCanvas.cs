@@ -114,20 +114,14 @@ namespace Luo_Painter
         }
         private void PrimaryCropCanvas()
         {
-            int width2 = this.Transformer.Width;
-            int height2 = this.Transformer.Height;
-
-            uint width = (uint)width2;
-            uint height = (uint)height2;
+            int width = this.Transformer.Width;
+            int height = this.Transformer.Height;
 
             float w3 = this.CropTransformer.MaxX - this.CropTransformer.MinX;
             float h3 = this.CropTransformer.MaxY - this.CropTransformer.MinY;
 
             int w = (int)w3;
             int h = (int)h3;
-
-            uint w2 = (uint)w;
-            uint h2 = (uint)h;
 
             Vector2 offset = new Vector2
             {
@@ -148,7 +142,7 @@ namespace Luo_Painter
                 int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                    new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
+                    new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                 }));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -171,7 +165,7 @@ namespace Luo_Painter
                 int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
-                    new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
+                    new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                 }));
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate

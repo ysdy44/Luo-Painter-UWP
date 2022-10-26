@@ -82,7 +82,7 @@ namespace Luo_Painter
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
-                                BitmapSize size = this.SizePicker.Size;
+                                System.Drawing.Size size = this.SizePicker.Size;
 
                                 StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
                                 ProjectFile project = new ProjectFile(item);
@@ -214,14 +214,6 @@ namespace Luo_Painter
                             this.RenameTextBox.Text = project.DisplayName;
                             this.RenameTextBox.SelectAll();
                             this.RenameTextBox.Focus(FocusState.Keyboard);
-
-                            switch (project.Type)
-                            {
-                                case StorageItemTypes.None: this.RenameIcon.Symbol = Symbol.Add; break;
-                                case StorageItemTypes.File: this.RenameIcon.Symbol = Symbol.Page; break;
-                                case StorageItemTypes.Folder: this.RenameIcon.Symbol = Symbol.Folder; break;
-                                default: break;
-                            }
 
                             ContentDialogResult result = await this.RenameDialog.ShowInstance();
                             switch (result)

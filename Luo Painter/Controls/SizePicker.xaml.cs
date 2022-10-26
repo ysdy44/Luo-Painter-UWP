@@ -27,8 +27,8 @@ namespace Luo_Painter.Controls
         public int Maximum { get; set; } = 16384;
 
         /// <summary> Size. </summary>
-        public BitmapSize Size => this.SizeCore;
-        private BitmapSize SizeCore = new BitmapSize
+        public System.Drawing.Size Size => this.SizeCore;
+        private System.Drawing.Size SizeCore = new System.Drawing.Size
         {
             Width = 1024,
             Height = 1024
@@ -69,7 +69,7 @@ namespace Luo_Painter.Controls
                 {
                     if (this.IsRatio) this.ResezingHeight(this.Minimum / this.CacheWidth * this.CacheHeight);
 
-                    this.SizeCore.Width = (uint)this.Minimum;
+                    this.SizeCore.Width = this.Minimum;
                     this.CacheWidth = this.Minimum;
                     this.WidthTextBox.Text = this.Minimum.ToString();
                 }
@@ -77,7 +77,7 @@ namespace Luo_Painter.Controls
                 {
                     if (this.IsRatio) this.ResezingHeight(this.Maximum / this.CacheWidth * this.CacheHeight);
 
-                    this.SizeCore.Width = (uint)this.Maximum;
+                    this.SizeCore.Width = this.Maximum;
                     this.CacheWidth = this.Maximum;
                     this.WidthTextBox.Text = this.Maximum.ToString();
                 }
@@ -85,7 +85,7 @@ namespace Luo_Painter.Controls
                 {
                     if (this.IsRatio) this.ResezingHeight(value / this.CacheWidth * this.CacheHeight);
 
-                    this.SizeCore.Width = (uint)value;
+                    this.SizeCore.Width = (int)value;
                     this.CacheWidth = value;
                     this.WidthTextBox.Text = SizePickerExtension.Round2Converter(value);
                 }
@@ -122,7 +122,7 @@ namespace Luo_Painter.Controls
                 {
                     if (this.IsRatio) this.ResezingWidth(this.Minimum / this.CacheHeight * this.CacheWidth);
 
-                    this.SizeCore.Height = (uint)this.Minimum;
+                    this.SizeCore.Height = this.Minimum;
                     this.CacheHeight = this.Minimum;
                     this.HeightTextBox.Text = this.Minimum.ToString();
                 }
@@ -130,7 +130,7 @@ namespace Luo_Painter.Controls
                 {
                     if (this.IsRatio) this.ResezingWidth(this.Maximum / this.CacheHeight * this.CacheWidth);
 
-                    this.SizeCore.Height = (uint)this.Maximum;
+                    this.SizeCore.Height = this.Maximum;
                     this.CacheHeight = this.Maximum;
                     this.HeightTextBox.Text = this.Maximum.ToString();
                 }
@@ -138,7 +138,7 @@ namespace Luo_Painter.Controls
                 {
                     if (this.IsRatio) this.ResezingWidth(value / this.CacheHeight * this.CacheWidth);
 
-                    this.SizeCore.Height = (uint)value;
+                    this.SizeCore.Height = (int)value;
                     this.CacheHeight = value;
                     this.HeightTextBox.Text = SizePickerExtension.Round2Converter(value);
                 }
@@ -149,19 +149,19 @@ namespace Luo_Painter.Controls
         {
             if (value < this.Minimum)
             {
-                this.SizeCore.Width = (uint)this.Minimum;
+                this.SizeCore.Width = this.Minimum;
                 this.CacheWidth = this.Minimum;
                 this.WidthTextBox.Text = this.Minimum.ToString();
             }
             else if (value > this.Maximum)
             {
-                this.SizeCore.Width = (uint)this.Maximum;
+                this.SizeCore.Width = this.Maximum;
                 this.CacheWidth = this.Maximum;
                 this.WidthTextBox.Text = this.Maximum.ToString();
             }
             else
             {
-                this.SizeCore.Width = (uint)value;
+                this.SizeCore.Width = (int)value;
                 this.CacheWidth = value;
                 this.WidthTextBox.Text = SizePickerExtension.Round2Converter(value);
             }
@@ -171,19 +171,19 @@ namespace Luo_Painter.Controls
         {
             if (value < this.Minimum)
             {
-                this.SizeCore.Height = (uint)this.Minimum;
+                this.SizeCore.Height = this.Minimum;
                 this.CacheHeight = this.Minimum;
                 this.HeightTextBox.Text = this.Minimum.ToString();
             }
             else if (value > this.Maximum)
             {
-                this.SizeCore.Height = (uint)this.Maximum;
+                this.SizeCore.Height = this.Maximum;
                 this.CacheHeight = this.Maximum;
                 this.HeightTextBox.Text = this.Maximum.ToString();
             }
             else
             {
-                this.SizeCore.Height = (uint)value;
+                this.SizeCore.Height = (int)value;
                 this.CacheHeight = value;
                 this.HeightTextBox.Text = SizePickerExtension.Round2Converter(value);
             }

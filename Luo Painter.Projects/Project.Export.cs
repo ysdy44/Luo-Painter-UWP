@@ -15,7 +15,7 @@ namespace Luo_Painter.Projects
     public abstract partial class Project : INotifyPropertyChanged
     {
 
-        public async Task<ProjectParameter> SaveAsync(StorageFolder item, BitmapSize size)
+        public async Task<ProjectParameter> SaveAsync(StorageFolder item, System.Drawing.Size size)
         {
             // Save Project.xml
             using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))

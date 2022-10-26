@@ -8,9 +8,9 @@ namespace Luo_Painter.Historys.Models
         public HistoryType Type => HistoryType.None;
         public HistoryType PropertyType => HistoryType.None;
 
-        public readonly BitmapSize UndoParameter;
-        public readonly BitmapSize RedoParameter;
-        public SetupHistory(BitmapSize undoParameter, BitmapSize redoParameter)
+        public readonly System.Drawing.Size UndoParameter;
+        public readonly System.Drawing.Size RedoParameter;
+        public SetupHistory(System.Drawing.Size undoParameter, System.Drawing.Size redoParameter)
         {
             this.UndoParameter = undoParameter;
             this.RedoParameter = redoParameter;

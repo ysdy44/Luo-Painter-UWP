@@ -544,10 +544,10 @@ namespace Luo_Painter
                     this.ExpanderLightDismissOverlay.Hide();
 
                     {
-                        int width2 = this.Transformer.Width;
-                        int height2 = this.Transformer.Height;
+                        int width = this.Transformer.Width;
+                        int height = this.Transformer.Height;
 
-                        this.SetCropCanvas(width2, height2);
+                        this.SetCropCanvas(width, height);
                     }
 
                     this.BitmapLayer = null;
@@ -566,18 +566,12 @@ namespace Luo_Painter
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
-                                int width2 = this.Transformer.Width;
-                                int height2 = this.Transformer.Height;
+                                int width = this.Transformer.Width;
+                                int height = this.Transformer.Height;
 
-                                uint width = (uint)width2;
-                                uint height = (uint)height2;
-
-                                uint w2 = this.StretchDialog.Size.Width;
-                                uint h2 = this.StretchDialog.Size.Height;
-                                if (w2 == width && h2 == height) break;
-
-                                int w = (int)w2;
-                                int h = (int)h2;
+                                int w = this.StretchDialog.Size.Width;
+                                int h = this.StretchDialog.Size.Height;
+                                if (w == width && h == height) break;
 
                                 switch (this.StretchDialog.SelectedIndex)
                                 {
@@ -596,7 +590,7 @@ namespace Luo_Painter
                                             int removes = this.History.Push(new CompositeHistory(new IHistory[]
                                             {
                                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
-                                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
+                                                new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                                             }));
 
                                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -624,7 +618,7 @@ namespace Luo_Painter
                                             int removes = this.History.Push(new CompositeHistory(new IHistory[]
                                             {
                                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = w2, Height = h2 })
+                                                new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                                             }));
 
                                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -675,25 +669,21 @@ namespace Luo_Painter
                     this.ExpanderLightDismissOverlay.Hide();
 
                     {
-                        int width2 = this.Transformer.Width;
-                        int height2 = this.Transformer.Height;
+                        int width = this.Transformer.Width;
+                        int height = this.Transformer.Height;
 
-                        uint width = (uint)width2;
-                        uint height = (uint)height2;
-                        {
-                            int w = height2;
-                            int h = width2;
+                        int w = height;
+                        int h = width;
 
-                            this.Transformer.Width = w;
-                            this.Transformer.Height = h;
-                            this.Transformer.Fit();
+                        this.Transformer.Width = w;
+                        this.Transformer.Height = h;
+                        this.Transformer.Fit();
 
-                            this.CreateResources(w, h);
-                            this.CreateMarqueeResources(w, h);
-                        }
+                        this.CreateResources(w, h);
+                        this.CreateMarqueeResources(w, h);
 
                         // History
-                        if (width2 == height2)
+                        if (width == height)
                         {
                             int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()));
                         }
@@ -702,7 +692,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new CompositeHistory(new IHistory[]
                             {
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()),
-                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
+                                new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(height, width))
                             }));
                         }
                     }
@@ -715,25 +705,21 @@ namespace Luo_Painter
                     this.ExpanderLightDismissOverlay.Hide();
 
                     {
-                        int width2 = this.Transformer.Width;
-                        int height2 = this.Transformer.Height;
+                        int width = this.Transformer.Width;
+                        int height = this.Transformer.Height;
 
-                        uint width = (uint)width2;
-                        uint height = (uint)height2;
-                        {
-                            int w = height2;
-                            int h = width2;
+                        int w = height;
+                        int h = width;
 
-                            this.Transformer.Width = w;
-                            this.Transformer.Height = h;
-                            this.Transformer.Fit();
+                        this.Transformer.Width = w;
+                        this.Transformer.Height = h;
+                        this.Transformer.Fit();
 
-                            this.CreateResources(w, h);
-                            this.CreateMarqueeResources(w, h);
-                        }
+                        this.CreateResources(w, h);
+                        this.CreateMarqueeResources(w, h);
 
                         // History
-                        if (width2 == height2)
+                        if (width == height)
                         {
                             int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()));
                         }
@@ -742,7 +728,7 @@ namespace Luo_Painter
                             int removes = this.History.Push(new CompositeHistory(new IHistory[]
                             {
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()),
-                                new SetupHistory(new BitmapSize { Width = width, Height = height }, new BitmapSize { Width = height, Height = width })
+                                new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(height, width))
                             }));
                         }
                     }

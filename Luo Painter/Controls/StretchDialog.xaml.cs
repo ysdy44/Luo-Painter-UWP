@@ -18,7 +18,7 @@ namespace Luo_Painter.Controls
 
         //@Content
         public int SelectedIndex => this.ComboBox.SelectedIndex;
-        public BitmapSize Size => this.SizePicker.Size;
+        public System.Drawing.Size Size => this.SizePicker.Size;
         public IndicatorMode Indicator => this.IndicatorControl.Mode;
         public CanvasImageInterpolation Interpolation
         {
