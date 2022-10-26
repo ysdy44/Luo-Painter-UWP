@@ -164,6 +164,9 @@
     <Compile Include="Controls\ContextAppBar.xaml.cs">
       <DependentUpon>ContextAppBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExtendDialog.xaml.cs">
+      <DependentUpon>ExtendDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HistoryListView.xaml.cs">
       <DependentUpon>HistoryListView.xaml</DependentUpon>
     </Compile>
@@ -335,6 +338,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ContextAppBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ExtendDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
