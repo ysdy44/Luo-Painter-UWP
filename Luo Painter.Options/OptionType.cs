@@ -97,16 +97,18 @@ namespace Luo_Painter.Options
 
         #region Setup
 
-        CropCanvas = Setup | 1 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        CropCanvas = Setup | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        Stretch = Setup | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        Stretch = Setup | 2 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Extend = Setup | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Offset = Setup | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        FlipHorizontal = Setup | 3 << 8 | ExistIcon | IsItemClickEnabled,
-        FlipVertical = Setup | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        FlipHorizontal = Setup | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        FlipVertical = Setup | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        LeftTurn = Setup | 5 << 8 | ExistIcon | IsItemClickEnabled,
-        RightTurn = Setup | 6 << 8 | ExistIcon | IsItemClickEnabled,
-        OverTurn = Setup | 7 << 8 | ExistIcon | IsItemClickEnabled,
+        LeftTurn = Setup | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        RightTurn = Setup | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        OverTurn = Setup | 9 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
@@ -120,9 +122,9 @@ namespace Luo_Painter.Options
         Combine = Layer | 16 << 16,
 
         // Add
-        AddLayer = Add | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        AddImageLayer = Add | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        AddCurveLayer = Add | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AddLayer = Add | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        AddImageLayer = Add | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        AddCurveLayer = Add | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Clipboard
         CutLayer = Clipboard | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
