@@ -27,19 +27,24 @@
 
             <!--Setup-->
             <luo_painter:OptionItemButtonWithIsEnabled Type="CropCanvas" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-            <luo_painter:OptionItemButtonWithIsEnabled Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-          
+
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
-         
+
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Extend" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButtonWithIsEnabled Type="Offset" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+
             <luo_painter:OptionItemButtonWithIsEnabled Type="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItemButtonWithIsEnabled Type="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-         
+
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
-         
+
             <luo_painter:OptionItemButtonWithIsEnabled Type="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItemButtonWithIsEnabled Type="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItemButtonWithIsEnabled Type="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-        
+
             <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
             <!--Option-->
@@ -47,7 +52,7 @@
             <luo_painter:OptionItemButton Type="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItemButton Type="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItemButton Type="RippleEffect" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-      
+
         </StackPanel>
     </ScrollViewer>
 </elements:Expander>

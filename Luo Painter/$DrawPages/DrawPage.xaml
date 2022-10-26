@@ -392,6 +392,10 @@
         </SplitView>
 
 
+        <!--Foot-->
+        <controls:ContextAppBar x:Name="AppBar" Grid.Column="1" />
+
+
         <!--Expander-->
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
@@ -404,14 +408,12 @@
         </elements:ExpanderLightDismissOverlay>
 
 
-        <!--Foot-->
-        <controls:ContextAppBar x:Name="AppBar" Grid.Column="1" />
-
-
         <!--Dialog-->
-        <controls:ExportDialog x:Name="ExportDialog"/>
+        <controls:ExportDialog x:Name="ExportDialog" />
         <controls:TextureDialog x:Name="TextureDialog" />
         <controls:StretchDialog x:Name="StretchDialog" />
+        <controls:ExtendDialog x:Name="ExtendDialog" />
+        <controls:OffsetDialog x:Name="OffsetDialog" />
 
 
         <!--Tip-->

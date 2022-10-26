@@ -573,62 +573,100 @@ namespace Luo_Painter
                                 int h = this.StretchDialog.Size.Height;
                                 if (w == width && h == height) break;
 
-                                switch (this.StretchDialog.SelectedIndex)
+                                CanvasImageInterpolation interpolation = this.StretchDialog.Interpolation;
                                 {
-                                    case 0:
-                                        {
-                                            CanvasImageInterpolation interpolation = this.StretchDialog.Interpolation;
-                                            {
-                                                this.Transformer.Width = w;
-                                                this.Transformer.Height = h;
-                                                this.Transformer.Fit();
+                                    this.Transformer.Width = w;
+                                    this.Transformer.Height = h;
+                                    this.Transformer.Fit();
 
-                                                this.CreateResources(w, h);
-                                                this.CreateMarqueeResources(w, h);
-                                            }
-                                            // History
-                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                            {
-                                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
-                                                new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
-                                            }));
-
-                                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                            this.RaiseHistoryCanExecuteChanged();
-                                        }
-                                        break;
-                                    case 1:
-                                        {
-                                            IndicatorMode indicator = this.StretchDialog.Indicator;
-
-                                            Vector2 vect = this.Transformer.GetIndicatorVector(indicator);
-                                            {
-                                                this.Transformer.Width = w;
-                                                this.Transformer.Height = h;
-                                                this.Transformer.Fit();
-
-                                                this.CreateResources(w, h);
-                                                this.CreateMarqueeResources(w, h);
-                                            }
-                                            Vector2 vect2 = this.Transformer.GetIndicatorVector(indicator);
-
-                                            Vector2 offset = vect2 - vect;
-                                            // History
-                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                            {
-                                                this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                                                new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
-                                            }));
-
-                                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                                            this.RaiseHistoryCanExecuteChanged();
-                                        }
-                                        break;
-                                    default:
-                                        break;
+                                    this.CreateResources(w, h);
+                                    this.CreateMarqueeResources(w, h);
                                 }
+                                // History
+                                int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                                {
+                                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
+                                    new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
+                                }));
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                this.RaiseHistoryCanExecuteChanged();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.Extend:
+                    this.ExpanderLightDismissOverlay.Hide();
+
+                    {
+                        this.ExtendDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
+                        ContentDialogResult result = await this.ExtendDialog.ShowInstance();
+
+                        switch (result)
+                        {
+                            case ContentDialogResult.Primary:
+                                int width = this.Transformer.Width;
+                                int height = this.Transformer.Height;
+
+                                int w = this.StretchDialog.Size.Width;
+                                int h = this.StretchDialog.Size.Height;
+                                if (w == width && h == height) break;
+
+                                IndicatorMode indicator = this.ExtendDialog.Indicator;
+
+                                Vector2 vect = this.Transformer.GetIndicatorVector(indicator);
+                                {
+                                    this.Transformer.Width = w;
+                                    this.Transformer.Height = h;
+                                    this.Transformer.Fit();
+
+                                    this.CreateResources(w, h);
+                                    this.CreateMarqueeResources(w, h);
+                                }
+                                Vector2 vect2 = this.Transformer.GetIndicatorVector(indicator);
+
+                                Vector2 offset = vect2 - vect;
+                                // History
+                                int removes = this.History.Push(new CompositeHistory(new IHistory[]
+                                {
+                                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
+                                    new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
+                                }));
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                this.RaiseHistoryCanExecuteChanged();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.Offset:
+                    this.ExpanderLightDismissOverlay.Hide();
+
+                    {
+                        this.OffsetDialog.Resezing(0, 0);
+                        ContentDialogResult result = await this.OffsetDialog.ShowInstance();
+
+                        switch (result)
+                        {
+                            case ContentDialogResult.Primary:
+                                int x = this.OffsetDialog.Offset.X;
+                                int y = this.OffsetDialog.Offset.Y;
+                                if (x == 0 && y == 0) break;
+
+                                Vector2 offset = new Vector2(x, y);
+
+                                // History
+                                int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Offset(this.CanvasDevice, offset)).ToArray()));
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                                this.RaiseHistoryCanExecuteChanged();
                                 break;
                             default:
                                 break;
