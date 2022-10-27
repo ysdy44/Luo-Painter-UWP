@@ -161,6 +161,9 @@
     <Compile Include="InkInertiaPage.xaml.cs">
       <DependentUpon>InkInertiaPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InkMixerPage.xaml.cs">
+      <DependentUpon>InkMixerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InkStabilizerPage.xaml.cs">
       <DependentUpon>InkStabilizerPage.xaml</DependentUpon>
     </Compile>
@@ -379,6 +382,10 @@
     <Page Include="InkInertiaPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InkMixerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InkStabilizerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
