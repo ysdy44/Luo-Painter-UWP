@@ -20,11 +20,32 @@
 
         <xaml:CanvasControl x:Name="CanvasControl"/>
 
-        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <StackPanel Margin="12,62" Padding="18,12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBarBackgroundThemeBrush}" >
+        
+            <TextBlock>
+                <Run Foreground="OrangeRed">Paint Color</Run>
+                <Run x:Name="XRun" Foreground="OrangeRed">0</Run>
+                <Run Foreground="OrangeRed">%</Run>
+            </TextBlock>
+            <Slider x:Name="XSlider" Value="0" Width="200" Foreground="OrangeRed"/>
+        
+            <TextBlock>
+                <Run Foreground="YellowGreen">Mix Color</Run>
+                <Run x:Name="YRun" Foreground="YellowGreen">100</Run>
+                <Run Foreground="YellowGreen">%</Run>
+            </TextBlock>
+            <Slider x:Name="YSlider" Value="100" Width="200" Foreground="YellowGreen"/>
+         
+            <TextBlock>
+                <Run Foreground="DodgerBlue">Persistence Color</Run>
+                <Run x:Name="ZRun" Foreground="DodgerBlue">1</Run>
+                <Run Foreground="DodgerBlue">%</Run>
+            </TextBlock>
+            <Slider x:Name="ZSlider" Value="0" Width="200" Foreground="DodgerBlue"/>
+            
+        </StackPanel>
 
-            <ContentControl.Content>
-                <Slider x:Name="Slider" Margin="12,4,2,0" Value="50" Width="200"/>
-            </ContentControl.Content>
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <AppBarButton>
                 <Button.Flyout>
