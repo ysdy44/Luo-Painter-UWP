@@ -1,78 +1,89 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
 using Windows.UI;
-using Microsoft.Graphics.Canvas.Geometry;
 using Windows.UI.Input.Inking;
 
-namespace Luo_Painter.Brushes
+namespace Luo_Painter.Layers.Models
 {
-    public partial struct StrokeSegment
+    public sealed partial class BitmapLayer : LayerBase, ILayer
     {
-        //@Static
-        public static readonly CanvasStrokeStyle CanvasStrokeStyle = new CanvasStrokeStyle
-        {
-            StartCap = CanvasCapStyle.Round,
-            EndCap = CanvasCapStyle.Round,
-        };
 
-        public void DrawLine(CanvasDrawingSession ds, Color color, bool ignoreSizePressure = false)
+        public void DrawLine(StrokeSegment segment, Color color, bool ignoreSizePressure = false)
         {
-            ds.DrawLine(this.StartingPosition, this.Position, color, ignoreSizePressure ? this.Size : this.StartingSize * 2, StrokeSegment.CanvasStrokeStyle);
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawLine(segment.StartingPosition, segment.Position, color, ignoreSizePressure ? segment.Size : segment.StartingSize * 2, BitmapLayer.CanvasStrokeStyle);
+            }
         }
 
-        public void IsometricTip(CanvasDrawingSession ds, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
+        public void IsometricTip(StrokeSegment segment, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
         {
             switch (shape)
             {
                 case PenTipShape.Circle:
                     {
-                        if (isStroke)
-                            ds.DrawCircle(this.StartingPosition, ignoreSizePressure ? this.Size : this.StartingSize, color);
-                        else
-                            ds.FillCircle(this.StartingPosition, ignoreSizePressure ? this.Size : this.StartingSize, color);
-
-                        float distance = this.StartingDistance;
-                        while (distance < this.Distance)
+                        using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
                         {
-                            float smooth = distance / this.Distance;
-
-                            float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
-                            Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
-
-                            float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
-                            distance += this.Spacing * sizePressureIsometric;
+                            //@DPI 
+                            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                             if (isStroke)
-                                ds.DrawCircle(positionIsometric, sizePressureIsometric, color);
+                                ds.DrawCircle(segment.StartingPosition, ignoreSizePressure ? segment.Size : segment.StartingSize, color);
                             else
-                                ds.FillCircle(positionIsometric, sizePressureIsometric, color);
+                                ds.FillCircle(segment.StartingPosition, ignoreSizePressure ? segment.Size : segment.StartingSize, color);
+
+                            float distance = segment.StartingDistance;
+                            while (distance < segment.Distance)
+                            {
+                                float smooth = distance / segment.Distance;
+
+                                float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
+                                Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
+
+                                float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                                distance += segment.Spacing * sizePressureIsometric;
+
+                                if (isStroke)
+                                    ds.DrawCircle(positionIsometric, sizePressureIsometric, color);
+                                else
+                                    ds.FillCircle(positionIsometric, sizePressureIsometric, color);
+                            }
                         }
                     }
                     break;
                 case PenTipShape.Rectangle:
                     {
-                        float sizePressure = ignoreSizePressure ? this.Size : this.StartingSize;
-                        if (isStroke)
-                            ds.DrawRectangle(this.StartingPosition.X - sizePressure, this.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
-                        else
-                            ds.FillRectangle(this.StartingPosition.X - sizePressure, this.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
-
-                        float distance = this.StartingDistance;
-                        while (distance < this.Distance)
+                        using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
                         {
-                            float smooth = distance / this.Distance;
+                            //@DPI 
+                            ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                            float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
-                            Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
-
-                            float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
-                            distance += this.Spacing * sizePressureIsometric;
-
+                            float sizePressure = ignoreSizePressure ? segment.Size : segment.StartingSize;
                             if (isStroke)
-                                ds.DrawRectangle(positionIsometric.X - sizePressureIsometric, positionIsometric.Y - sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, color);
+                                ds.DrawRectangle(segment.StartingPosition.X - sizePressure, segment.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
                             else
-                                ds.FillRectangle(positionIsometric.X - sizePressureIsometric, positionIsometric.Y - sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, color);
+                                ds.FillRectangle(segment.StartingPosition.X - sizePressure, segment.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
+
+                            float distance = segment.StartingDistance;
+                            while (distance < segment.Distance)
+                            {
+                                float smooth = distance / segment.Distance;
+
+                                float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
+                                Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
+
+                                float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                                distance += segment.Spacing * sizePressureIsometric;
+
+                                if (isStroke)
+                                    ds.DrawRectangle(positionIsometric.X - sizePressureIsometric, positionIsometric.Y - sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, color);
+                                else
+                                    ds.FillRectangle(positionIsometric.X - sizePressureIsometric, positionIsometric.Y - sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, sizePressureIsometric + sizePressureIsometric, color);
+                            }
                         }
                     }
                     break;
@@ -85,42 +96,49 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardness(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void IsometricDrawShaderBrushEdgeHardness(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
-            ds.DrawImage(new PixelShaderEffect(shaderCode)
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            using (ds.CreateLayer(1f, segment.Bounds))
             {
-                Properties =
-                {
-                    ["hardness"] = hardness,
-                    ["pressure"] = ignoreFlowPressure ? flow : flow * this.StartingPressure,
-                    ["radius"] =  ignoreSizePressure ? this.Size : this.StartingSize,
-                    ["targetPosition"] = this.StartingPosition,
-                    ["color"] = colorHdr
-                }
-            });
-
-            float distance = this.StartingDistance;
-            while (distance < this.Distance)
-            {
-                float smooth = distance / this.Distance;
-
-                float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
-                Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
-
-                float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
-                distance += this.Spacing * sizePressureIsometric;
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
-                        ["radius"] = sizePressureIsometric,
-                        ["targetPosition"] = positionIsometric,
+                        ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
+                        ["radius"] =  ignoreSizePressure ? segment.Size : segment.StartingSize,
+                        ["targetPosition"] = segment.StartingPosition,
                         ["color"] = colorHdr
                     }
                 });
+
+                float distance = segment.StartingDistance;
+                while (distance < segment.Distance)
+                {
+                    float smooth = distance / segment.Distance;
+
+                    float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
+                    Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
+
+                    float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                    distance += segment.Spacing * sizePressureIsometric;
+
+                    ds.DrawImage(new PixelShaderEffect(shaderCode)
+                    {
+                        Properties =
+                        {
+                            ["hardness"] = hardness,
+                            ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
+                            ["radius"] = sizePressureIsometric,
+                            ["targetPosition"] = positionIsometric,
+                            ["color"] = colorHdr
+                        }
+                    });
+                }
             }
         }
 
@@ -128,33 +146,13 @@ namespace Luo_Painter.Brushes
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(CanvasDrawingSession ds, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
-            ds.DrawImage(new PixelShaderEffect(shaderCode)
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            using (ds.CreateLayer(1f, segment.Bounds))
             {
-                Source1 = texture,
-                Properties =
-                {
-                    ["hardness"] = hardness,
-                    ["rotate"] = rotate,
-                    ["normalization"] = this.Normalize,
-                    ["pressure"] = ignoreFlowPressure ? flow : flow * this.StartingPressure,
-                    ["radius"] =  ignoreSizePressure ? this.Size : this.StartingSize,
-                    ["targetPosition"] = this.StartingPosition,
-                    ["color"] = colorHdr
-                }
-            });
-
-            float distance = this.StartingDistance;
-            while (distance < this.Distance)
-            {
-                float smooth = distance / this.Distance;
-
-                float pressureIsometric = this.Pressure * (1 - smooth) + this.StartingPressure * smooth;
-                Vector2 positionIsometric = Vector2.Lerp(this.Position, this.StartingPosition, smooth);
-
-                float sizePressureIsometric = ignoreSizePressure ? this.Size : (this.Size * pressureIsometric);
-                distance += this.Spacing * sizePressureIsometric;
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
@@ -163,13 +161,40 @@ namespace Luo_Painter.Brushes
                     {
                         ["hardness"] = hardness,
                         ["rotate"] = rotate,
-                        ["normalization"] = this.Normalize,
-                        ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
-                        ["radius"] = sizePressureIsometric,
-                        ["targetPosition"] = positionIsometric,
+                        ["normalization"] = segment.Normalize,
+                        ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
+                        ["radius"] =  ignoreSizePressure ? segment.Size : segment.StartingSize,
+                        ["targetPosition"] = segment.StartingPosition,
                         ["color"] = colorHdr
                     }
                 });
+
+                float distance = segment.StartingDistance;
+                while (distance < segment.Distance)
+                {
+                    float smooth = distance / segment.Distance;
+
+                    float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
+                    Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
+
+                    float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                    distance += segment.Spacing * sizePressureIsometric;
+
+                    ds.DrawImage(new PixelShaderEffect(shaderCode)
+                    {
+                        Source1 = texture,
+                        Properties =
+                        {
+                            ["hardness"] = hardness,
+                            ["rotate"] = rotate,
+                            ["normalization"] = segment.Normalize,
+                            ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
+                            ["radius"] = sizePressureIsometric,
+                            ["targetPosition"] = positionIsometric,
+                            ["color"] = colorHdr
+                        }
+                    });
+                }
             }
         }
 

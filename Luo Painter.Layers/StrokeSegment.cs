@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Windows.Foundation;
 
-namespace Luo_Painter.Brushes
+namespace Luo_Painter.Layers
 {
     public partial struct StrokeSegment
     {
