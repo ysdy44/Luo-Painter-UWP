@@ -136,32 +136,50 @@ namespace Luo_Painter.TestApp
             this.ConstructCanvas();
             this.ConstructOperator();
         }
-
+        
         private void ConstructInkMixer()
         {
             this.ZSlider.ValueChanged += (s, e) =>
             {
                 this.Mixer.Z = (float)(e.NewValue / 100);
                 Vector3 normalize = this.Mixer.Normalize();
-                this.XRun.Text = this.RoundConverter(normalize.X * 100);
-                this.YRun.Text = this.RoundConverter(normalize.Y * 100);
-                this.ZRun.Text = this.RoundConverter(normalize.Z * 100);
+                float x = normalize.X * 200;
+                float y = normalize.Y * 200;
+                float z = normalize.Z * 200;
+
+                this.XRectangle.Width = x;
+                Canvas.SetLeft(this.YRectangle, x);
+                this.YRectangle.Width = y;
+                Canvas.SetLeft(this.ZRectangle, x + y);
+                this.ZRectangle.Width = z;
             };
             this.YSlider.ValueChanged += (s, e) =>
             {
                 this.Mixer.Y = (float)(e.NewValue / 100);
                 Vector3 normalize = this.Mixer.Normalize();
-                this.XRun.Text = this.RoundConverter(normalize.X * 100);
-                this.YRun.Text = this.RoundConverter(normalize.Y * 100);
-                this.ZRun.Text = this.RoundConverter(normalize.Z * 100);
+                float x = normalize.X * 200;
+                float y = normalize.Y * 200;
+                float z = normalize.Z * 200;
+
+                this.XRectangle.Width = x;
+                Canvas.SetLeft(this.YRectangle, x);
+                this.YRectangle.Width = y;
+                Canvas.SetLeft(this.ZRectangle, x + y);
+                this.ZRectangle.Width = z;
             };
             this.XSlider.ValueChanged += (s, e) =>
             {
                 this.Mixer.X = (float)(e.NewValue / 100);
                 Vector3 normalize = this.Mixer.Normalize();
-                this.XRun.Text = this.RoundConverter(normalize.X * 100);
-                this.YRun.Text = this.RoundConverter(normalize.Y * 100);
-                this.ZRun.Text = this.RoundConverter(normalize.Z * 100);
+                float x = normalize.X * 200;
+                float y = normalize.Y * 200;
+                float z = normalize.Z * 200;
+
+                this.XRectangle.Width = x;
+                Canvas.SetLeft(this.YRectangle, x);
+                this.YRectangle.Width = y;
+                Canvas.SetLeft(this.ZRectangle, x + y);
+                this.ZRectangle.Width = z;
             };
 
             this.ColorPicker.ColorChanged += (s, e) =>

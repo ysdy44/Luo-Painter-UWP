@@ -23,25 +23,34 @@
         <StackPanel Margin="12,62" Padding="18,12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBarBackgroundThemeBrush}" >
         
             <TextBlock>
-                <Run Foreground="OrangeRed">Paint Color</Run>
-                <Run x:Name="XRun" Foreground="OrangeRed">0</Run>
-                <Run Foreground="OrangeRed">%</Run>
+                <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#FF143C"/>
+                <Run>Paint Color</Run>
+                <Run Text="{x:Bind RoundConverter(XSlider.Value), Mode=OneWay}"/>
+                <Run >%</Run>
             </TextBlock>
-            <Slider x:Name="XSlider" Value="0" Width="200" Foreground="OrangeRed"/>
-        
+            <Slider x:Name="XSlider" Value="0" Width="200" />
+
             <TextBlock>
-                <Run Foreground="YellowGreen">Mix Color</Run>
-                <Run x:Name="YRun" Foreground="YellowGreen">100</Run>
-                <Run Foreground="YellowGreen">%</Run>
+                <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Chartreuse"/>
+                <Run>Mix Color</Run>
+                <Run Text="{x:Bind RoundConverter(YSlider.Value), Mode=OneWay}"/>
+                <Run >%</Run>
             </TextBlock>
-            <Slider x:Name="YSlider" Value="100" Width="200" Foreground="YellowGreen"/>
-         
+            <Slider x:Name="YSlider" Value="100" Width="200" />
+
             <TextBlock>
-                <Run Foreground="DodgerBlue">Persistence Color</Run>
-                <Run x:Name="ZRun" Foreground="DodgerBlue">1</Run>
-                <Run Foreground="DodgerBlue">%</Run>
+                <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#0090FF"/>
+                <Run>Persistence Color</Run>
+                <Run Text="{x:Bind RoundConverter(ZSlider.Value), Mode=OneWay}"/>
+                <Run >%</Run>
             </TextBlock>
-            <Slider x:Name="ZSlider" Value="0" Width="200" Foreground="DodgerBlue"/>
+            <Slider x:Name="ZSlider" Value="0" Width="200" />
+
+            <Canvas Margin="0,4,0,0" Width="200" Height="26" >
+                <Rectangle x:Name="XRectangle" RadiusX="4" RadiusY="4" Width="0" Height="26" Fill="#FF143C"/>
+                <Rectangle x:Name="YRectangle" RadiusX="4" RadiusY="4" Width="200" Height="26" Fill="Chartreuse"/>
+                <Rectangle x:Name="ZRectangle" RadiusX="4" RadiusY="4" Width="0" Height="26" Fill="#0090FF"/> 
+            </Canvas>
             
         </StackPanel>
 
