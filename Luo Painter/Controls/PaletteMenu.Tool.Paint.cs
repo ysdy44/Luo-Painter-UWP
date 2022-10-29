@@ -23,13 +23,13 @@ namespace Luo_Painter.Controls
             if (this.InkType.HasFlag(InkType.Shape) && this.InkPresenter.Rotate) return; // Shape without NaN
             if (this.InkType.HasFlag(InkType.Liquefy)) return; // Liquefy without NaN
 
-            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
 
             //@Task
             if (false)
-                this.PaintSegmentAsync(segment);
+                this.PaintCapAsync(cap);
             else
-                Task.Run(() => this.PaintSegmentAsync(segment));
+                Task.Run(() => this.PaintCapAsync(cap));
         }
         private void Paint_Delta()
         {
@@ -68,6 +68,21 @@ namespace Luo_Painter.Controls
         }
 
 
+        private void PaintCapAsync(StrokeCap cap)
+        {
+            //@Task
+            lock (this.Locker)
+            {
+                this.PaintCap(cap);
+                using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                using (ds.CreateLayer(1f, cap.Bounds))
+                {
+                    this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                }
+
+                this.CanvasControl.Invalidate(); // Invalidate
+            }
+        }
         private void PaintSegmentAsync(StrokeSegment segment)
         {
             //@Task
