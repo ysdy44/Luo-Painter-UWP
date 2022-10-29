@@ -11,7 +11,7 @@ namespace Luo_Painter.Brushes
         {
             XElement element = new XElement("Brush",
                 new XAttribute("Type", this.Type),
-                new XAttribute("Name", this.Mode),
+
 
                 new XAttribute("Size", this.Size),
                 new XAttribute("Opacity", this.Opacity),
@@ -21,11 +21,17 @@ namespace Luo_Painter.Brushes
                 new XAttribute("IgnoreSizePressure", this.IgnoreSizePressure),
                 new XAttribute("IgnoreFlowPressure", this.IgnoreFlowPressure),
 
+
                 new XAttribute("Tip", this.Tip),
                 new XAttribute("IsStroke", this.IsStroke),
+                new XAttribute("Hardness", this.Hardness),
+
 
                 new XAttribute("BlendMode", this.BlendMode),
-                new XAttribute("Hardness", this.Hardness),
+                new XAttribute("Mix", this.Mix),
+                new XAttribute("Wet", this.Wet),
+                new XAttribute("Persistence", this.Persistence),
+
 
                 new XAttribute("Rotate", this.Rotate),
                 new XAttribute("Step", this.Step));
@@ -54,19 +60,15 @@ namespace Luo_Painter.Brushes
             }
             else this.Type = InkType.General;
 
-            if (element.Attribute("Mode") is XAttribute mode)
-            {
-                switch (mode.Value)
-                {
-                    case "None": this.Mode = InkType.None; break;
-                    case "Blend": this.Mode = InkType.Blend; break;
-                    case "Mix": this.Mode = InkType.Mix; break;
-                    default: this.Mode = InkType.None; break;
-                }
-            }
+
+            if (element.Attribute("Size") is XAttribute size) this.Size = (float)size;
+            if (element.Attribute("Opacity") is XAttribute opacity) this.Opacity = (float)opacity;
+            if (element.Attribute("Spacing") is XAttribute spacing) this.Spacing = (float)spacing;
+            if (element.Attribute("Flow") is XAttribute flow) this.Flow = (float)flow;
 
             if (element.Attribute("IgnoreSizePressure") is XAttribute ignoreSizePressure) this.IgnoreSizePressure = (bool)ignoreSizePressure;
             if (element.Attribute("IgnoreFlowPressure") is XAttribute ignoreFlowPressure) this.IgnoreFlowPressure = (bool)ignoreFlowPressure;
+
 
             if (element.Attribute("Tip") is XAttribute tip)
             {
@@ -79,9 +81,6 @@ namespace Luo_Painter.Brushes
             }
             if (element.Attribute("IsStroke") is XAttribute isStroke) this.IsStroke = (bool)isStroke;
 
-            if (element.Attribute("BlendMode") is XAttribute blendMode)
-                if (blendMode.Value is "None" is false)
-                    this.BlendMode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), blendMode.Value);
             if (element.Attribute("Hardness") is XAttribute hardness)
             {
                 switch (hardness.Value)
@@ -94,6 +93,17 @@ namespace Luo_Painter.Brushes
                     default: this.Hardness = BrushEdgeHardness.None; break;
                 }
             }
+
+
+            if (element.Attribute("BlendMode") is XAttribute blendMode)
+                if (string.IsNullOrEmpty(blendMode.Value))
+                    if (blendMode.Value is "None" is false)
+                        this.BlendMode = (BlendEffectMode)Enum.Parse(typeof(BlendEffectMode), blendMode.Value);
+
+            if (element.Attribute("Mix") is XAttribute mix) this.Mix = (float)mix;
+            if (element.Attribute("Wet") is XAttribute wet) this.Wet = (float)wet;
+            if (element.Attribute("Persistence") is XAttribute persistence) this.Persistence = (float)persistence;
+
 
             if (element.Attribute("Rotate") is XAttribute rotate) this.Rotate = (bool)rotate;
             if (element.Attribute("Step") is XAttribute step) this.Step = (int)step;

@@ -31,33 +31,35 @@ namespace Luo_Painter.Brushes
 
         public float Size { get; set; }
         public float Opacity { get; set; } /// <see cref="InkPresenter.GetType"/>
-
         public float Spacing { get; set; }
-        public float Flow { get; set; }
-
+        public float Flow { get; set; } /// <see cref="InkPresenter.GetType"/>
 
         public bool IgnoreSizePressure { get; set; }
         public bool IgnoreFlowPressure { get; set; }
 
+
         public PenTipShape Tip { get; set; }
         public bool IsStroke { get; set; }
-
-
-        public BlendEffectMode BlendMode { get; set; }
         public BrushEdgeHardness Hardness { get; set; }
+
+
+        public BlendEffectMode BlendMode { get; set; } = (BlendEffectMode)(-1); /// <see cref="InkPresenter.GetType"/>
+        public float Mix { get; set; } /// <see cref="InkPresenter.GetType"/>
+        public float Wet { get; set; } = 0.1f;
+        public float Persistence { get; set; }
 
 
         public bool Rotate { get; set; }
         public int Step { get; set; } = 1024;
 
-        public string Shape { get; set; }
-        public string Grain { get; set; }
+        public string Shape { get; set; }  /// <see cref="InkPresenter.GetType"/>
+        public string Grain { get; set; }  /// <see cref="InkPresenter.GetType"/>
 
 
         public void CopyWith(InkAttributes attributes)
         {
             this.Type = attributes.Type;
-            this.Mode = attributes.Mode;
+
 
             this.Size = attributes.Size;
             this.Opacity = attributes.Opacity;
@@ -67,11 +69,18 @@ namespace Luo_Painter.Brushes
             this.IgnoreSizePressure = attributes.IgnoreSizePressure;
             this.IgnoreFlowPressure = attributes.IgnoreFlowPressure;
 
+
             this.Tip = attributes.Tip;
             this.IsStroke = attributes.IsStroke;
 
+
+            this.Mix = attributes.Mix;
+            this.Wet = attributes.Wet;
+            this.Persistence = attributes.Persistence;
+
             this.BlendMode = attributes.BlendMode;
             this.Hardness = attributes.Hardness;
+
 
             this.Rotate = attributes.Rotate;
             this.Step = attributes.Step;
