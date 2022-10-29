@@ -1,4 +1,6 @@
-﻿namespace Luo_Painter.Brushes
+﻿using Microsoft.Graphics.Canvas.Effects;
+
+namespace Luo_Painter.Brushes
 {
     public sealed partial class InkPresenter : InkAttributes
     {
@@ -10,143 +12,262 @@
                 case InkType.General:
                     if (this.AllowShape)
                     {
-                        switch (base.Mode)
+                        #region ShapeGeneral
+
+                        if (this.Flow == 0f) return InkType.None;
+                        else if (this.Opacity == 0f) return InkType.None;
+                        else if (this.Opacity == 1f)
                         {
-                            case InkType.Blend:
-                                if (this.Flow == 0f) return InkType.None;
-                                else if (this.Opacity == 0f) return InkType.None;
-                                else if (this.Opacity == 1f)
+                            if (this.AllowGrain)
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Blend;
-                                    else return InkType.ShapeGeneral_Blend;
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral_Grain_Blend;
+                                    else
+                                        return InkType.ShapeGeneral_Grain_Blend_Mix;
                                 }
                                 else
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Opacity_Blend;
-                                    else return InkType.ShapeGeneral_Opacity_Blend;
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral_Grain;
+                                    else
+                                        return InkType.ShapeGeneral_Grain_Mix;
                                 }
-                            case InkType.Mix:
-                                if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Mix;
-                                else return InkType.ShapeGeneral_Mix;
-                            default:
-                                if (this.Flow == 0f) return InkType.None;
-                                else if (this.Opacity == 0f) return InkType.None;
-                                else if (this.Opacity == 1f)
+                            }
+                            else
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain;
-                                    else return InkType.ShapeGeneral;
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral_Blend;
+                                    else
+                                        return InkType.ShapeGeneral_Blend_Mix;
                                 }
                                 else
                                 {
-                                    if (this.AllowGrain) return InkType.ShapeGeneral_Grain_Opacity;
-                                    else return InkType.ShapeGeneral_Opacity;
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral;
+                                    else
+                                        return InkType.ShapeGeneral_Mix;
                                 }
+                            }
+                        }
+                        else
+                        {
+                            if (this.AllowGrain)
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral_Opacity_Grain_Blend;
+                                    else
+                                        return InkType.ShapeGeneral_Opacity_Grain_Blend_Mix;
+                                }
+                                else
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral_Opacity_Grain;
+                                    else
+                                        return InkType.ShapeGeneral_Opacity_Grain_Mix;
+                                }
+                            }
+                            else
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral_Opacity_Blend;
+                                    else
+                                        return InkType.ShapeGeneral_Opacity_Blend_Mix;
+                                }
+                                else
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.ShapeGeneral;
+                                    else
+                                        return InkType.ShapeGeneral_Opacity_Mix;
+                                }
+                            }
+                        }
+
+                        #endregion
+                    }
+                    else
+                    {
+                        #region General
+
+                        if (this.Flow == 0f) return InkType.None;
+                        else if (this.Opacity == 0f) return InkType.None;
+                        else if (this.Opacity == 1f)
+                        {
+                            if (this.AllowGrain)
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General_Grain_Blend;
+                                    else
+                                        return InkType.General_Grain_Blend_Mix;
+                                }
+                                else
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General_Grain;
+                                    else
+                                        return InkType.General_Grain_Mix;
+                                }
+                            }
+                            else
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General_Blend;
+                                    else
+                                        return InkType.General_Blend_Mix;
+                                }
+                                else
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General;
+                                    else
+                                        return InkType.General_Mix;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (this.AllowGrain)
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General_Opacity_Grain_Blend;
+                                    else
+                                        return InkType.General_Opacity_Grain_Blend_Mix;
+                                }
+                                else
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General_Opacity_Grain;
+                                    else
+                                        return InkType.General_Opacity_Grain_Mix;
+                                }
+                            }
+                            else
+                            {
+                                if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General_Opacity_Blend;
+                                    else
+                                        return InkType.General_Opacity_Blend_Mix;
+                                }
+                                else
+                                {
+                                    if (this.Mix == 0f)
+                                        return InkType.General;
+                                    else
+                                        return InkType.General_Opacity_Mix;
+                                }
+                            }
+                        }
+
+                        #endregion
+                    }
+                case InkType.Tip:
+                    #region Tip
+
+                    if (this.Flow == 0f) return InkType.None;
+                    else if (this.Opacity == 0f) return InkType.None;
+                    else if (this.Opacity == 1f)
+                    {
+                        if (this.AllowGrain)
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Tip_Grain_Blend;
+                            else
+                                return InkType.Tip_Grain;
+                        }
+                        else
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Tip_Blend;
+                            else
+                                return InkType.Tip;
                         }
                     }
                     else
                     {
-                        switch (base.Mode)
+                        if (this.AllowGrain)
                         {
-                            case InkType.Blend:
-                                if (this.Flow == 0f) return InkType.None;
-                                else if (this.Opacity == 0f) return InkType.None;
-                                else if (this.Opacity == 1f)
-                                {
-                                    if (this.AllowGrain) return InkType.General_Grain_Blend;
-                                    else return InkType.General_Blend;
-                                }
-                                else
-                                {
-                                    if (this.AllowGrain) return InkType.General_Grain_Opacity_Blend;
-                                    else return InkType.General_Opacity_Blend;
-                                }
-                            case InkType.Mix:
-                                if (this.AllowGrain) return InkType.General_Grain_Mix;
-                                else return InkType.General_Mix;
-                            default:
-                                if (this.Flow == 0f) return InkType.None;
-                                else if (this.Opacity == 0f) return InkType.None;
-                                else if (this.Opacity == 1f)
-                                {
-                                    if (this.AllowGrain) return InkType.General_Grain;
-                                    else return InkType.General;
-                                }
-                                else
-                                {
-                                    if (this.AllowGrain) return InkType.General_Grain_Opacity;
-                                    else return InkType.General_Opacity;
-                                }
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Tip_Opacity_Grain_Blend;
+                            else
+                                return InkType.Tip_Opacity_Grain;
+                        }
+                        else
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Tip_Opacity_Blend;
+                            else
+                                return InkType.Tip;
                         }
                     }
-                case InkType.Tip:
-                    switch (base.Mode)
-                    {
-                        case InkType.Blend:
-                            if (this.Opacity == 0f) return InkType.None;
-                            else if (this.Opacity == 1f)
-                            {
-                                if (this.AllowGrain) return InkType.Tip_Grain_Blend;
-                                else return InkType.Tip_Blend;
-                            }
-                            else
-                            {
-                                if (this.AllowGrain) return InkType.Tip_Grain_Opacity_Blend;
-                                else return InkType.Tip_Opacity_Blend;
-                            }
-                        case InkType.Mix:
-                            if (this.AllowGrain) return InkType.Tip_Grain_Mix;
-                            else return InkType.Tip_Mix;
-                        default:
-                            if (this.Opacity == 0f) return InkType.None;
-                            else if (this.Opacity == 1f)
-                            {
-                                if (this.AllowGrain) return InkType.Tip_Grain;
-                                else return InkType.Tip;
-                            }
-                            else
-                            {
-                                if (this.AllowGrain) return InkType.Tip_Grain_Opacity;
-                                else return InkType.Tip_Opacity;
-                            }
-                    }
+
+                #endregion
                 case InkType.Line:
-                    switch (base.Mode)
+                    #region Line
+
+                    if (this.Flow == 0f) return InkType.None;
+                    else if (this.Opacity == 0f) return InkType.None;
+                    else if (this.Opacity == 1f)
                     {
-                        case InkType.Blend:
-                            if (this.Opacity == 0f) return InkType.None;
-                            else if (this.Opacity == 1f)
-                            {
-                                if (this.AllowGrain) return InkType.Line_Grain_Blend;
-                                else return InkType.Line_Blend;
-                            }
+                        if (this.AllowGrain)
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Line_Grain_Blend;
                             else
-                            {
-                                if (this.AllowGrain) return InkType.Line_Grain_Opacity_Blend;
-                                else return InkType.Line_Opacity_Blend;
-                            }
-                        case InkType.Blur:
-                        case InkType.Mix:
-                            if (this.AllowGrain) return InkType.Line_Grain_Mix;
-                            else return InkType.Line_Mix;
-                        default:
-                            if (this.Opacity == 0f) return InkType.None;
-                            else if (this.Opacity == 1f)
-                            {
-                                if (this.AllowGrain) return InkType.Line_Grain;
-                                else return InkType.Line;
-                            }
+                                return InkType.Line_Grain;
+                        }
+                        else
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Line_Blend;
                             else
-                            {
-                                if (this.AllowGrain) return InkType.Line_Grain_Opacity;
-                                else return InkType.Line_Opacity;
-                            }
+                                return InkType.Line;
+                        }
                     }
+                    else
+                    {
+                        if (this.AllowGrain)
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Line_Opacity_Grain_Blend;
+                            else
+                                return InkType.Line_Opacity_Grain;
+                        }
+                        else
+                        {
+                            if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
+                                return InkType.Line_Opacity_Blend;
+                            else
+                                return InkType.Line;
+                        }
+                    }
+
+                #endregion
                 case InkType.Blur:
-                    return InkType.Blur;
+                    if (this.Flow == 0f) return InkType.None;
+                    else if (this.Opacity == 0f) return InkType.None;
+                    else return InkType.Blur;
                 case InkType.Mosaic:
-                    return InkType.Mosaic;
-                case InkType.Erase:
                     if (this.Opacity == 0f) return InkType.None;
+                    else return InkType.Mosaic;
+                case InkType.Erase:
+                    if (this.Flow == 0f) return InkType.None;
+                    else if (this.Opacity == 0f) return InkType.None;
                     else if (this.Opacity == 1f) return InkType.Erase;
                     else return InkType.Erase_Opacity;
                 case InkType.Liquefy:
