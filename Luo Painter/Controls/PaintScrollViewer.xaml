@@ -49,7 +49,7 @@
                     Paint
                 </TextBlock>
                 <!--Type-->
-                <ComboBox x:Name="ComboBox" Grid.Column="1" Margin="4,0" HorizontalAlignment="Stretch" >
+                <ComboBox x:Name="ComboBox" Grid.Column="1" SelectedIndex="1" Margin="4,0" HorizontalAlignment="Stretch" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="brushes:InkType">
                             <luo_painter:InkItem Type="{x:Bind}"/>
@@ -219,91 +219,6 @@
 
 
                 <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" />
-
-
-                <!--BlendMode-->
-                <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
-                    Blend Mode
-                </TextBlock>
-
-                <Grid ColumnSpacing="4" 
-                      Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="146"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Column="1" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                        <Grid>
-                            <Ellipse Fill="{ThemeResource AppForeground}" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BasisRadioButton.IsChecked), Mode=OneWay}" />
-                            <Ellipse Fill="{ThemeResource AppForeground}" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlendRadioButton.IsChecked), Mode=OneWay}" >
-                                <UIElement.RenderTransform>
-                                    <TranslateTransform X="20"/>
-                                </UIElement.RenderTransform>
-                            </Ellipse>
-                            <Ellipse Fill="{ThemeResource AppForeground}" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(BlendRadioButton.IsChecked), Mode=OneWay}" >
-                                <UIElement.RenderTransform>
-                                    <TranslateTransform X="-20"/>
-                                </UIElement.RenderTransform>
-                            </Ellipse>
-                            <Path Width="86" Height="106" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind BooleanToVisibilityConverter(MixRadioButton.IsChecked), Mode=OneWay}" >
-                                <Shape.Fill>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                        <GradientStop Offset="0" Color="Gray"/>
-                                        <GradientStop Offset="1" Color="{ThemeResource SystemBaseHighColor}"/>
-                                    </LinearGradientBrush>
-                                </Shape.Fill>
-                                <Path.Data>
-                                    <PathGeometry>
-                                        <PathFigure StartPoint="43,0">
-                                            <LineSegment Point="13,50"/>
-                                            <ArcSegment IsLargeArc="True" Size="36,36" Point="73,50"/>
-                                            <LineSegment Point="73,50"/>
-                                        </PathFigure>
-                                    </PathGeometry>
-                                </Path.Data>
-                            </Path>
-                        </Grid>
-                    </Border>
-                    <Border Padding="9,3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <StackPanel Spacing="4" >
-                            <RadioButton x:Name="BasisRadioButton" GroupName="Mode">
-                                Basis
-                            </RadioButton>
-                            <RadioButton x:Name="MixRadioButton" GroupName="Mode">
-                                Mix
-                            </RadioButton>
-                            <RadioButton x:Name="BlendRadioButton" GroupName="Mode">
-                                Blend
-                            </RadioButton>
-                            <ComboBox x:Name="BlendModeComboBox" SelectedIndex="0"
-                                      IsEnabled="{x:Bind BooleanConverter(BlendRadioButton.IsChecked), Mode=OneWay}">
-
-                                <ItemsControl.ItemsSource>
-                                    <luo_painter:BlendList x:Name="BlendCollection">
-                                        <!--Darken-->
-                                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                                        <!--Lighten-->
-                                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                                        <!--Contrast-->
-                                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                                        <!--Difference-->
-                                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                                    </luo_painter:BlendList>
-                                </ItemsControl.ItemsSource>
-
-                            </ComboBox>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
                            Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" />
 
 
@@ -465,6 +380,153 @@
                         </StackPanel>
                     </Border>
                 </Grid>
+
+
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" />
+
+                <!--BlendMode-->
+                <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
+                    Blend Mode
+                </TextBlock>
+
+                <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
+                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
+                
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="effects:BlendEffectMode">
+                            <luo_painter:BlendIcon Type="{x:Bind}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsSource>
+                        <luo_painter:BlendList x:Name="BlendCollection">
+                            <!--None-->
+                            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                            <!--Darken-->
+                            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                            <!--Lighten-->
+                            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                            <!--Contrast-->
+                            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                            <!--Difference-->
+                            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                        </luo_painter:BlendList>
+                    </ItemsControl.ItemsSource>
+                    
+                </ListView>
+
+
+                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" 
+                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" />
+
+
+                <!--MixColor-->
+                <TextBlock x:Name="MixColorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                           Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}" >
+                    Mix Color
+                </TextBlock>
+
+                <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                           Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}" >
+                    <StackPanel>
+
+                        <Slider x:Name="MixSlider" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="Gray" Offset="0"/>
+                                    <GradientStop Color="#FF143C" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <FrameworkElement.Tag>
+                                Mix
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="MixButton" 
+                                    Content="{x:Bind MixSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}"
+                                    Background="{ThemeResource SystemAltLowColor}"
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+
+                        <Slider x:Name="WetSlider" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="Gray" Offset="0"/>
+                                    <GradientStop Color="Chartreuse" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <FrameworkElement.Tag>
+                                Wet
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="WetButton" 
+                                    Content="{x:Bind WetSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}"
+                                    Background="{ThemeResource SystemAltLowColor}"
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+
+                        <Slider x:Name="PersistenceSlider" Style="{StaticResource AppSliderStyle}">
+                            <Slider.Background>
+                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="Gray" Offset="0"/>
+                                    <GradientStop Color="#0090FF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Slider.Background>
+                            <FrameworkElement.Tag>
+                                Persistence 
+                            </FrameworkElement.Tag>
+                            <Slider.Header>
+                                <Button
+                                    x:Name="PersistenceButton" 
+                                    Content="{x:Bind PersistenceSlider.Value, Mode=OneWay}"            
+                                    Padding="4,0" 
+                                    MinWidth="70" 
+                                    Height="28"
+                                    BorderThickness="1" 
+                                    BorderBrush="{ThemeResource AppStroke}"
+                                    Background="{ThemeResource SystemAltLowColor}"
+                                    >
+                                    <Button.Flyout>
+                                        <Flyout>
+
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Slider.Header>
+                        </Slider>
+
+                    </StackPanel>
+                </Border>
 
 
                 <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" />

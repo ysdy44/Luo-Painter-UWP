@@ -52,6 +52,7 @@ namespace Luo_Painter.Controls
                 if (this.InkIsEnabled is false) return;
                 double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.Flow = (float)flow;
+                this.InkType = this.InkPresenter.GetType();
                 this.TryInkAsync();
             };
 
@@ -68,6 +69,7 @@ namespace Luo_Painter.Controls
                 this.InkPresenter.IgnoreFlowPressure = this.IgnoreFlowPressureButton.IsOn;
                 this.TryInkAsync();
             };
+
 
             this.TipListBox.SelectionChanged += (s, e) =>
             {
@@ -100,7 +102,6 @@ namespace Luo_Painter.Controls
                 }
             };
 
-
             this.NoneRadioButton.Checked += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
@@ -132,36 +133,39 @@ namespace Luo_Painter.Controls
                 this.TryInk();
             };
 
-            this.BasisRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Mode = InkType.None;
-                this.InkType = this.InkPresenter.GetType();
-                this.TryInk();
-            };
-            this.MixRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Mode = InkType.Mix;
-                this.InkType = this.InkPresenter.GetType();
-                this.TryInk();
-            };
-            this.BlendRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Mode = InkType.Blend;
-                this.InkType = this.InkPresenter.GetType();
-                this.TryInk();
-            };
 
-            this.BlendModeComboBox.SelectionChanged += (s, e) =>
+            this.BlendModeListView.ItemClick += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                if (this.BlendModeComboBox.SelectedItem is BlendEffectMode item)
+                if (e.ClickedItem is BlendEffectMode item)
                 {
                     this.InkPresenter.BlendMode = item;
+                    this.InkType = this.InkPresenter.GetType();
                     this.TryInk();
                 }
+            };
+
+            this.MixSlider.ValueChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                double mix = System.Math.Clamp(e.NewValue / 100, 0, 1);
+                this.InkPresenter.Mix = (float)mix;
+                this.InkType = this.InkPresenter.GetType();
+                this.TryInkAsync();
+            };
+            this.WetSlider.ValueChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                double wet = e.NewValue;
+                this.InkPresenter.Wet = (float)wet;
+                this.TryInkAsync();
+            };
+            this.PersistenceSlider.ValueChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                double persistence = System.Math.Clamp(e.NewValue / 100, 0, 1);
+                this.InkPresenter.Persistence = (float)persistence;
+                this.TryInkAsync();
             };
         }
 
