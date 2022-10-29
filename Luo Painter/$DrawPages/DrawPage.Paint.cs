@@ -18,24 +18,22 @@ namespace Luo_Painter
                 case InkType.ShapeGeneral:
                 case InkType.ShapeGeneral_Mix:
                 case InkType.Tip:
-                case InkType.Tip_Mix:
                 case InkType.Line:
-                case InkType.Line_Mix:
                     this.BitmapLayer.Draw(this.BitmapLayer[BitmapType.Temp]);
                     break;
 
                 case InkType.General_Grain:
-                case InkType.General_Grain_Opacity:
                 case InkType.General_Grain_Mix:
+                case InkType.General_Opacity_Grain:
+                case InkType.General_Opacity_Grain_Mix:
                 case InkType.ShapeGeneral_Grain:
-                case InkType.ShapeGeneral_Grain_Opacity:
                 case InkType.ShapeGeneral_Grain_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain:
+                case InkType.ShapeGeneral_Opacity_Grain_Mix:
                 case InkType.Tip_Grain:
-                case InkType.Tip_Grain_Opacity:
-                case InkType.Tip_Grain_Mix:
+                case InkType.Tip_Opacity_Grain:
                 case InkType.Line_Grain:
-                case InkType.Line_Grain_Opacity:
-                case InkType.Line_Grain_Mix:
+                case InkType.Line_Opacity_Grain:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
                     using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(opacity))
                     {
@@ -44,7 +42,9 @@ namespace Luo_Painter
                     break;
 
                 case InkType.General_Opacity:
+                case InkType.General_Opacity_Mix:
                 case InkType.ShapeGeneral_Opacity:
+                case InkType.ShapeGeneral_Opacity_Mix:
                 case InkType.Tip_Opacity:
                 case InkType.Line_Opacity:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
@@ -54,7 +54,9 @@ namespace Luo_Painter
                     break;
 
                 case InkType.General_Blend:
+                case InkType.General_Blend_Mix:
                 case InkType.ShapeGeneral_Blend:
+                case InkType.ShapeGeneral_Blend_Mix:
                 case InkType.Tip_Blend:
                 case InkType.Line_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
@@ -64,7 +66,9 @@ namespace Luo_Painter
                     break;
 
                 case InkType.General_Grain_Blend:
+                case InkType.General_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Grain_Blend:
+                case InkType.ShapeGeneral_Grain_Blend_Mix:
                 case InkType.Tip_Grain_Blend:
                 case InkType.Line_Grain_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
@@ -75,7 +79,9 @@ namespace Luo_Painter
                     break;
 
                 case InkType.General_Opacity_Blend:
+                case InkType.General_Opacity_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Blend:
+                case InkType.ShapeGeneral_Opacity_Blend_Mix:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
@@ -84,10 +90,12 @@ namespace Luo_Painter
                     }
                     break;
 
-                case InkType.General_Grain_Opacity_Blend:
-                case InkType.ShapeGeneral_Grain_Opacity_Blend:
-                case InkType.Tip_Grain_Opacity_Blend:
-                case InkType.Line_Grain_Opacity_Blend:
+                case InkType.General_Opacity_Grain_Blend:
+                case InkType.General_Opacity_Grain_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
+                case InkType.Tip_Opacity_Grain_Blend:
+                case InkType.Line_Opacity_Grain_Blend:
                     using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
                     using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], opacity))
                     using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(blend))
@@ -134,68 +142,84 @@ namespace Luo_Painter
                 case InkType.General:
                 case InkType.General_Grain:
                 case InkType.General_Opacity:
-                case InkType.General_Grain_Opacity:
+                case InkType.General_Opacity_Grain:
                 case InkType.General_Blend:
                 case InkType.General_Grain_Blend:
                 case InkType.General_Opacity_Blend:
-                case InkType.General_Grain_Opacity_Blend:
+                case InkType.General_Opacity_Grain_Blend:
                 case InkType.Blur:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap,
+                        this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
+                        (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
-                case InkType.General_Grain_Mix:
                 case InkType.General_Mix:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap, this.BrushEdgeHardnessShaderCodeBytes, this.InkMixer.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                case InkType.General_Grain_Mix:
+                case InkType.General_Opacity_Mix:
+                case InkType.General_Opacity_Grain_Mix:
+                case InkType.General_Blend_Mix:
+                case InkType.General_Grain_Blend_Mix:
+                case InkType.General_Opacity_Blend_Mix:
+                case InkType.General_Opacity_Grain_Blend_Mix:
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap,
+                        this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
+                        this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
+                        (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.ShapeGeneral:
                 case InkType.ShapeGeneral_Grain:
                 case InkType.ShapeGeneral_Opacity:
-                case InkType.ShapeGeneral_Grain_Opacity:
+                case InkType.ShapeGeneral_Opacity_Grain:
                 case InkType.ShapeGeneral_Blend:
                 case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.ShapeGeneral_Opacity_Blend:
-                case InkType.ShapeGeneral_Grain_Opacity_Blend:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend:
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture();
                     break;
 
                 case InkType.ShapeGeneral_Mix:
                 case InkType.ShapeGeneral_Grain_Mix:
+                case InkType.ShapeGeneral_Opacity_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Mix:
+                case InkType.ShapeGeneral_Blend_Mix:
+                case InkType.ShapeGeneral_Grain_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap, this.InkPresenter.Wet);
                     break;
 
                 case InkType.Tip:
                 case InkType.Tip_Grain:
                 case InkType.Tip_Opacity:
-                case InkType.Tip_Grain_Opacity:
+                case InkType.Tip_Opacity_Grain:
                 case InkType.Tip_Blend:
                 case InkType.Tip_Grain_Blend:
                 case InkType.Tip_Opacity_Blend:
-                case InkType.Tip_Grain_Opacity_Blend:
-                    this.BitmapLayer.CapTip(cap, this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
-                    break;
-
-                case InkType.Tip_Mix:
-                case InkType.Tip_Grain_Mix:
-                    this.BitmapLayer.CapTip(cap, this.InkMixer.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
+                case InkType.Tip_Opacity_Grain_Blend:
+                    this.BitmapLayer.CapTip(cap, this.Color,
+                        this.InkPresenter.Tip, this.InkPresenter.IsStroke);
                     break;
 
                 case InkType.Line:
                 case InkType.Line_Grain:
                 case InkType.Line_Opacity:
-                case InkType.Line_Grain_Opacity:
+                case InkType.Line_Opacity_Grain:
                 case InkType.Line_Blend:
                 case InkType.Line_Grain_Blend:
                 case InkType.Line_Opacity_Blend:
-                case InkType.Line_Grain_Opacity_Blend:
+                case InkType.Line_Opacity_Grain_Blend:
                 case InkType.Mosaic:
-                    break;
-
-                case InkType.Line_Mix:
-                case InkType.Line_Grain_Mix:
                     break;
 
                 case InkType.Erase:
                 case InkType.Erase_Opacity:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap,
+                        this.BrushEdgeHardnessShaderCodeBytes, Vector4.One,
+                        (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.Liquefy:
@@ -213,72 +237,79 @@ namespace Luo_Painter
                 case InkType.General:
                 case InkType.General_Grain:
                 case InkType.General_Opacity:
-                case InkType.General_Grain_Opacity:
+                case InkType.General_Opacity_Grain:
                 case InkType.General_Blend:
                 case InkType.General_Grain_Blend:
                 case InkType.General_Opacity_Blend:
-                case InkType.General_Grain_Opacity_Blend:
+                case InkType.General_Opacity_Grain_Blend:
                 case InkType.Blur:
-                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment,
+                        this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
+                        (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.General_Grain_Mix:
                 case InkType.General_Mix:
-                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, this.BrushEdgeHardnessShaderCodeBytes, this.InkMixer.ColorHdr, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment,
+                        this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
+                        this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
+                        (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.ShapeGeneral:
                 case InkType.ShapeGeneral_Grain:
                 case InkType.ShapeGeneral_Opacity:
-                case InkType.ShapeGeneral_Grain_Opacity:
+                case InkType.ShapeGeneral_Opacity_Grain:
                 case InkType.ShapeGeneral_Blend:
                 case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.ShapeGeneral_Opacity_Blend:
-                case InkType.ShapeGeneral_Grain_Opacity_Blend:
-                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                case InkType.ShapeGeneral_Opacity_Grain_Blend:
+                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment,
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.ShapeGeneral_Mix:
                 case InkType.ShapeGeneral_Grain_Mix:
-                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.InkMixer.ColorHdr, this.InkPresenter.ShapeSource, this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment,
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.Tip:
                 case InkType.Tip_Grain:
                 case InkType.Tip_Opacity:
-                case InkType.Tip_Grain_Opacity:
+                case InkType.Tip_Opacity_Grain:
                 case InkType.Tip_Blend:
                 case InkType.Tip_Grain_Blend:
                 case InkType.Tip_Opacity_Blend:
-                case InkType.Tip_Grain_Opacity_Blend:
-                    this.BitmapLayer.SegmentTip(segment, this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
-                    break;
-
-                case InkType.Tip_Mix:
-                case InkType.Tip_Grain_Mix:
-                    this.BitmapLayer.SegmentTip(segment, this.InkMixer.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
+                case InkType.Tip_Opacity_Grain_Blend:
+                    this.BitmapLayer.SegmentTip(segment, this.Color,
+                        this.InkPresenter.Tip, this.InkPresenter.IsStroke);
                     break;
 
                 case InkType.Line:
                 case InkType.Line_Grain:
                 case InkType.Line_Opacity:
-                case InkType.Line_Grain_Opacity:
+                case InkType.Line_Opacity_Grain:
                 case InkType.Line_Blend:
                 case InkType.Line_Grain_Blend:
                 case InkType.Line_Opacity_Blend:
-                case InkType.Line_Grain_Opacity_Blend:
+                case InkType.Line_Opacity_Grain_Blend:
                 case InkType.Mosaic:
                     this.BitmapLayer.DrawLine(segment, this.Color, this.InkPresenter.IgnoreSizePressure);
                     break;
 
-                case InkType.Line_Mix:
-                case InkType.Line_Grain_Mix:
-                    this.BitmapLayer.DrawLine(segment, this.InkMixer.Color, this.InkPresenter.IgnoreSizePressure);
-                    break;
-
                 case InkType.Erase:
                 case InkType.Erase_Opacity:
-                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow, this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, this.BrushEdgeHardnessShaderCodeBytes, Vector4.One,
+                        (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.Liquefy:

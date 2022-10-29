@@ -38,15 +38,21 @@ namespace Luo_Painter.Controls
             switch (this.InkType)
             {
                 case InkType.General:
-                case InkType.General_Grain:
                 case InkType.General_Opacity:
-                case InkType.General_Grain_Opacity:
+                case InkType.General_Grain:
+                case InkType.General_Opacity_Grain:
                 case InkType.General_Blend:
-                case InkType.General_Grain_Blend:
                 case InkType.General_Opacity_Blend:
-                case InkType.General_Grain_Opacity_Blend:
+                case InkType.General_Grain_Blend:
+                case InkType.General_Opacity_Grain_Blend:
                 case InkType.General_Mix:
+                case InkType.General_Opacity_Mix:
                 case InkType.General_Grain_Mix:
+                case InkType.General_Opacity_Grain_Mix:
+                case InkType.General_Blend_Mix:
+                case InkType.General_Opacity_Blend_Mix:
+                case InkType.General_Grain_Blend_Mix:
+                case InkType.General_Opacity_Grain_Blend_Mix:
                 case InkType.Blur:
                 case InkType.Erase:
                 case InkType.Erase_Opacity:
@@ -61,15 +67,21 @@ namespace Luo_Painter.Controls
                     break;
 
                 case InkType.ShapeGeneral:
-                case InkType.ShapeGeneral_Grain:
                 case InkType.ShapeGeneral_Opacity:
-                case InkType.ShapeGeneral_Grain_Opacity:
+                case InkType.ShapeGeneral_Grain:
+                case InkType.ShapeGeneral_Opacity_Grain:
                 case InkType.ShapeGeneral_Blend:
-                case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.ShapeGeneral_Opacity_Blend:
-                case InkType.ShapeGeneral_Grain_Opacity_Blend:
+                case InkType.ShapeGeneral_Grain_Blend:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend:
                 case InkType.ShapeGeneral_Mix:
+                case InkType.ShapeGeneral_Opacity_Mix:
                 case InkType.ShapeGeneral_Grain_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Mix:
+                case InkType.ShapeGeneral_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Blend_Mix:
+                case InkType.ShapeGeneral_Grain_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         //@DPI
@@ -81,15 +93,13 @@ namespace Luo_Painter.Controls
                     break;
 
                 case InkType.Tip:
-                case InkType.Tip_Grain:
                 case InkType.Tip_Opacity:
-                case InkType.Tip_Grain_Opacity:
+                case InkType.Tip_Grain:
+                case InkType.Tip_Opacity_Grain:
                 case InkType.Tip_Blend:
-                case InkType.Tip_Grain_Blend:
                 case InkType.Tip_Opacity_Blend:
-                case InkType.Tip_Grain_Opacity_Blend:
-                case InkType.Tip_Mix:
-                case InkType.Tip_Grain_Mix:
+                case InkType.Tip_Grain_Blend:
+                case InkType.Tip_Opacity_Grain_Blend:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
@@ -99,15 +109,13 @@ namespace Luo_Painter.Controls
                     break;
 
                 case InkType.Line:
-                case InkType.Line_Grain:
                 case InkType.Line_Opacity:
-                case InkType.Line_Grain_Opacity:
+                case InkType.Line_Grain:
+                case InkType.Line_Opacity_Grain:
                 case InkType.Line_Blend:
-                case InkType.Line_Grain_Blend:
                 case InkType.Line_Opacity_Blend:
-                case InkType.Line_Grain_Opacity_Blend:
-                case InkType.Line_Mix:
-                case InkType.Line_Grain_Mix:
+                case InkType.Line_Grain_Blend:
+                case InkType.Line_Opacity_Grain_Blend:
                 case InkType.Mosaic:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
@@ -116,7 +124,6 @@ namespace Luo_Painter.Controls
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
-
                 case InkType.Liquefy:
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {

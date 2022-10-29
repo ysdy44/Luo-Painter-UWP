@@ -19,9 +19,7 @@ namespace Luo_Painter.Brushes
                 case InkType.ShapeGeneral:
                 case InkType.ShapeGeneral_Mix:
                 case InkType.Tip:
-                case InkType.Tip_Mix:
                 case InkType.Line:
-                case InkType.Line_Mix:
                     ds.DrawImage(image);
                     ds.Blend = CanvasBlend.SourceOver;
                     ds.DrawImage(wet);
@@ -32,9 +30,7 @@ namespace Luo_Painter.Brushes
                 case InkType.ShapeGeneral_Grain:
                 case InkType.ShapeGeneral_Grain_Mix:
                 case InkType.Tip_Grain:
-                case InkType.Tip_Grain_Mix:
                 case InkType.Line_Grain:
-                case InkType.Line_Grain_Mix:
                     ds.DrawImage(image);
                     ds.Blend = CanvasBlend.SourceOver;
                     using (AlphaMaskEffect grain = this.GetGrain(wet))
@@ -45,6 +41,7 @@ namespace Luo_Painter.Brushes
 
                 case InkType.General_Opacity:
                 case InkType.ShapeGeneral_Opacity:
+                case InkType.ShapeGeneral_Opacity_Mix:
                 case InkType.Tip_Opacity:
                 case InkType.Line_Opacity:
                     ds.DrawImage(image);
@@ -55,14 +52,18 @@ namespace Luo_Painter.Brushes
                     }
                     break;
 
-                case InkType.General_Grain_Opacity:
-                case InkType.ShapeGeneral_Grain_Opacity:
-                case InkType.Tip_Grain_Opacity:
-                case InkType.Line_Grain_Opacity:
-                case InkType.General_Grain_Opacity_Blend:
-                case InkType.ShapeGeneral_Grain_Opacity_Blend:
-                case InkType.Tip_Grain_Opacity_Blend:
-                case InkType.Line_Grain_Opacity_Blend:
+                case InkType.General_Opacity_Grain:
+                case InkType.General_Opacity_Grain_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain:
+                case InkType.ShapeGeneral_Opacity_Grain_Mix:
+                case InkType.Tip_Opacity_Grain:
+                case InkType.Line_Opacity_Grain:
+                case InkType.General_Opacity_Grain_Blend:
+                case InkType.General_Opacity_Grain_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
+                case InkType.Tip_Opacity_Grain_Blend:
+                case InkType.Line_Opacity_Grain_Blend:
                     using (AlphaMaskEffect grain = this.GetGrain(wet))
                     using (OpacityEffect opacity = this.GetOpacity(grain))
                     using (BlendEffect blend = this.GetBlend(image, opacity))
@@ -72,7 +73,9 @@ namespace Luo_Painter.Brushes
                     break;
 
                 case InkType.General_Blend:
+                case InkType.General_Blend_Mix:
                 case InkType.ShapeGeneral_Blend:
+                case InkType.ShapeGeneral_Blend_Mix:
                 case InkType.Tip_Blend:
                 case InkType.Line_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
@@ -82,7 +85,9 @@ namespace Luo_Painter.Brushes
                     break;
 
                 case InkType.General_Grain_Blend:
+                case InkType.General_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Grain_Blend:
+                case InkType.ShapeGeneral_Grain_Blend_Mix:
                 case InkType.Tip_Grain_Blend:
                 case InkType.Line_Grain_Blend:
                     using (BlendEffect blend = this.GetBlend(image, wet))
@@ -92,7 +97,9 @@ namespace Luo_Painter.Brushes
                     break;
 
                 case InkType.General_Opacity_Blend:
+                case InkType.General_Opacity_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Blend:
+                case InkType.ShapeGeneral_Opacity_Blend_Mix:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     using (OpacityEffect opacity = this.GetOpacity(wet))
@@ -146,9 +153,7 @@ namespace Luo_Painter.Brushes
                 case InkType.ShapeGeneral:
                 case InkType.ShapeGeneral_Mix:
                 case InkType.Tip:
-                case InkType.Tip_Mix:
                 case InkType.Line:
-                case InkType.Line_Mix:
                     return InkPresenter.GetComposite(image, wet);
 
                 case InkType.General_Grain:
@@ -156,9 +161,7 @@ namespace Luo_Painter.Brushes
                 case InkType.ShapeGeneral_Grain:
                 case InkType.ShapeGeneral_Grain_Mix:
                 case InkType.Tip_Grain:
-                case InkType.Tip_Grain_Mix:
                 case InkType.Line_Grain:
-                case InkType.Line_Grain_Mix:
                     {
                         AlphaMaskEffect grain = this.GetGrain(wet);
                         return InkPresenter.GetComposite(image, grain);
@@ -173,14 +176,18 @@ namespace Luo_Painter.Brushes
                         return InkPresenter.GetComposite(image, opacity);
                     }
 
-                case InkType.General_Grain_Opacity:
-                case InkType.ShapeGeneral_Grain_Opacity:
-                case InkType.Tip_Grain_Opacity:
-                case InkType.Line_Grain_Opacity:
-                case InkType.General_Grain_Opacity_Blend:
-                case InkType.ShapeGeneral_Grain_Opacity_Blend:
-                case InkType.Tip_Grain_Opacity_Blend:
-                case InkType.Line_Grain_Opacity_Blend:
+                case InkType.General_Opacity_Grain:
+                case InkType.General_Opacity_Grain_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain:
+                case InkType.ShapeGeneral_Opacity_Grain_Mix:
+                case InkType.Tip_Opacity_Grain:
+                case InkType.Line_Opacity_Grain:
+                case InkType.General_Opacity_Grain_Blend:
+                case InkType.General_Opacity_Grain_Blend_Mix:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend:
+                case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
+                case InkType.Tip_Opacity_Grain_Blend:
+                case InkType.Line_Opacity_Grain_Blend:
                     {
                         AlphaMaskEffect grain = this.GetGrain(wet);
                         OpacityEffect opacity = this.GetOpacity(grain);
@@ -189,7 +196,9 @@ namespace Luo_Painter.Brushes
                     }
 
                 case InkType.General_Blend:
+                case InkType.General_Blend_Mix:
                 case InkType.ShapeGeneral_Blend:
+                case InkType.ShapeGeneral_Blend_Mix:
                 case InkType.Tip_Blend:
                 case InkType.Line_Blend:
                     {
@@ -198,7 +207,9 @@ namespace Luo_Painter.Brushes
                     }
 
                 case InkType.General_Grain_Blend:
+                case InkType.General_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Grain_Blend:
+                case InkType.ShapeGeneral_Grain_Blend_Mix:
                 case InkType.Tip_Grain_Blend:
                 case InkType.Line_Grain_Blend:
                     {
@@ -207,7 +218,9 @@ namespace Luo_Painter.Brushes
                     }
 
                 case InkType.General_Opacity_Blend:
+                case InkType.General_Opacity_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Blend:
+                case InkType.ShapeGeneral_Opacity_Blend_Mix:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Line_Opacity_Blend:
                     {
