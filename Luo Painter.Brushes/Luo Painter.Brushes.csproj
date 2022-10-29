@@ -127,7 +127,6 @@
     <Compile Include="InkPresenter.Texture.cs" />
     <Compile Include="InkAttributes.cs" />
     <Compile Include="IInkParameter.cs" />
-    <Compile Include="InkMixer.cs" />
     <Compile Include="InkPresenter.cs" />
     <Compile Include="InkPresenter.Preview.cs" />
     <Compile Include="InkPresenter.Type.cs" />
