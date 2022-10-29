@@ -11,40 +11,39 @@ namespace Luo_Painter.TestApp
 {
     public sealed class InkMixer
     {
-
-        public float X { get; set; } = 0;
-        public float Y { get; set; } = 1;
-        public float Z { get; set; } = 0;
+        
+        public float Mix { get; set; } = 1;
+        public float Wet { get; set; } = 10;
+        public float Persistence { get; set; } = 0;
         public Vector3 Normalize()
         {
-            float length = this.X + this.Y + this.Z;
-            if (length == 0d) return Vector3.Zero;
-            return new Vector3(this.X, this.Y, this.Z) / length;
+            float x = 1 - this.Mix;
+            float y = this.Mix * (1 - this.Persistence);
+            float z = this.Mix * this.Persistence;
+            return new Vector3(x, y, z);
         }
 
-
-        public Vector4 XHdr { get; set; } = Vector4.Zero;
-        public Vector4 YHdr { get; private set; } = Vector4.Zero;
-        public Vector4 ZHdr { get; private set; } = Vector4.Zero;
-        public Vector4 Mix()
+        public Vector4 MixHdr { get; private set; } = Vector4.Zero;
+        public Vector4 PersistenceHdr { get; private set; } = Vector4.Zero;
+        public Vector4 GetMix(Vector4 colorHdr)
         {
-            float length = this.X + this.Y + this.Z;
-            if (length == 0d) return Vector4.Zero;
-            return (this.XHdr * this.X + this.YHdr * this.Y + this.ZHdr * this.Z) / length;
+            float x = 1 - this.Mix;
+            float y = this.Mix * (1 - this.Persistence);
+            float z = this.Mix * this.Persistence;
+            return colorHdr * x + this.MixHdr * y + this.PersistenceHdr * z;
         }
 
-
-        Vector4 WetYHdr;
-        Vector4 StartingWetYHdr;
+        Vector4 MixWetHdr;
+        Vector4 StartingMixWetHdr;
 
         Vector2 StartingMixPoint;
 
-        public void ConstructYZ(Vector2 point, CanvasBitmap bitmap)
+        public void ConstructMix(Vector2 point, CanvasBitmap bitmap)
         {
-            this.WetYHdr = Vector4.Zero;
-            this.StartingWetYHdr = Vector4.Zero;
-            this.YHdr = Vector4.Zero;
-            this.ZHdr = Vector4.Zero;
+            this.MixWetHdr = Vector4.Zero;
+            this.StartingMixWetHdr = Vector4.Zero;
+            this.MixHdr = Vector4.Zero;
+            this.PersistenceHdr = Vector4.Zero;
 
             this.StartingMixPoint = point;
 
@@ -59,28 +58,28 @@ namespace Luo_Painter.TestApp
             Color color = bitmap.GetPixelColors(x, y, 1, 1).Single();
             if (color == Colors.Transparent) return;
 
-            this.WetYHdr =
-            this.StartingWetYHdr =
-            this.YHdr =
-            this.ZHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
+            this.MixWetHdr =
+            this.StartingMixWetHdr =
+            this.MixHdr =
+            this.PersistenceHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
         }
 
-        public void MixY(Vector2 point, CanvasBitmap bitmap)
+        public void MixY(Vector2 point, float size, CanvasBitmap bitmap)
         {
             float length = Vector2.Distance(point, this.StartingMixPoint);
-            float smooth = length / 122;
+            float smooth = length / (size * this.Wet);
             if (smooth < 1)
             {
                 // 1. Mix
-                this.YHdr = Vector4.Lerp(this.StartingWetYHdr, this.WetYHdr, smooth);
+                this.MixHdr = Vector4.Lerp(this.StartingMixWetHdr, this.MixWetHdr, smooth);
                 return;
             }
 
 
             // 2. Fade
-            this.YHdr = this.WetYHdr;
-            this.StartingWetYHdr = this.WetYHdr;
-            this.WetYHdr.W = 0;
+            this.MixHdr = this.MixWetHdr;
+            this.StartingMixWetHdr = this.MixWetHdr;
+            this.MixWetHdr.W = 0;
 
             this.StartingMixPoint = point;
 
@@ -101,7 +100,7 @@ namespace Luo_Painter.TestApp
                 // 3. Recolor
                 //this.Color = this.C;
                 //this.SC = this.C;
-                this.WetYHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
+                this.MixWetHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
 
                 //this.SP = item;
             }
@@ -136,16 +135,17 @@ namespace Luo_Painter.TestApp
             this.ConstructCanvas();
             this.ConstructOperator();
         }
-        
+
         private void ConstructInkMixer()
         {
-            this.ZSlider.ValueChanged += (s, e) =>
+            this.MixSlider.ValueChanged += (s, e) =>
             {
-                this.Mixer.Z = (float)(e.NewValue / 100);
-                Vector3 normalize = this.Mixer.Normalize();
-                float x = normalize.X * 200;
-                float y = normalize.Y * 200;
-                float z = normalize.Z * 200;
+                this.Mixer.Mix = (float)(e.NewValue / 100);
+
+                Vector3 n = this.Mixer.Normalize();
+                float x = n.X * 200;
+                float y = n.Y * 200;
+                float z = n.Z * 200;
 
                 this.XRectangle.Width = x;
                 Canvas.SetLeft(this.YRectangle, x);
@@ -153,13 +153,24 @@ namespace Luo_Painter.TestApp
                 Canvas.SetLeft(this.ZRectangle, x + y);
                 this.ZRectangle.Width = z;
             };
-            this.YSlider.ValueChanged += (s, e) =>
+            this.Wetlider.ValueChanged += (s, e) =>
             {
-                this.Mixer.Y = (float)(e.NewValue / 100);
-                Vector3 normalize = this.Mixer.Normalize();
-                float x = normalize.X * 200;
-                float y = normalize.Y * 200;
-                float z = normalize.Z * 200;
+                this.Mixer.Wet = (float)e.NewValue;
+
+                this.Canvas.Height =
+                this.XRectangle.Height =
+                this.YRectangle.Height =
+                this.ZRectangle.Height =
+                this.Mixer.Wet * 10;
+            };
+            this.MixSlider.ValueChanged += (s, e) =>
+            {
+                this.Mixer.Mix = (float)(e.NewValue / 100);
+
+                Vector3 n = this.Mixer.Normalize();
+                float x = n.X * 200;
+                float y = n.Y * 200;
+                float z = n.Z * 200;
 
                 this.XRectangle.Width = x;
                 Canvas.SetLeft(this.YRectangle, x);
@@ -167,13 +178,14 @@ namespace Luo_Painter.TestApp
                 Canvas.SetLeft(this.ZRectangle, x + y);
                 this.ZRectangle.Width = z;
             };
-            this.XSlider.ValueChanged += (s, e) =>
+            this.PersistenceSlider.ValueChanged += (s, e) =>
             {
-                this.Mixer.X = (float)(e.NewValue / 100);
-                Vector3 normalize = this.Mixer.Normalize();
-                float x = normalize.X * 200;
-                float y = normalize.Y * 200;
-                float z = normalize.Z * 200;
+                this.Mixer.Persistence = (float)(e.NewValue / 100);
+
+                Vector3 n = this.Mixer.Normalize();
+                float x = n.X * 200;
+                float y = n.Y * 200;
+                float z = n.Z * 200;
 
                 this.XRectangle.Width = x;
                 Canvas.SetLeft(this.YRectangle, x);
@@ -259,14 +271,12 @@ namespace Luo_Painter.TestApp
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPressure = this.Pressure = properties.Pressure;
 
-                Vector2 item = this.Position;
-                this.Mixer.XHdr = this.ColorHdr;
-                this.Mixer.ConstructYZ(item, this.GrayAndWhite);
+                this.Mixer.ConstructMix(this.Position, this.GrayAndWhite);
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    Vector4 hdr = 255f * this.Mixer.Mix();
-                    ds.FillCircle(item, 24, Windows.UI.Color.FromArgb((byte)hdr.W, (byte)hdr.X, (byte)hdr.Y, (byte)hdr.Z));
+                    Vector4 hdr = 255f * this.Mixer.GetMix(this.ColorHdr);
+                    ds.FillCircle(this.Position, 24, Windows.UI.Color.FromArgb((byte)hdr.W, (byte)hdr.X, (byte)hdr.Y, (byte)hdr.Z));
                 }
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -284,9 +294,9 @@ namespace Luo_Painter.TestApp
                         float smooth = i / length;
                         Vector2 item = Vector2.Lerp(this.StartingPosition, this.Position, smooth);
 
-                        this.Mixer.MixY(item, this.GrayAndWhite);
+                        this.Mixer.MixY(item, 24, this.GrayAndWhite);
 
-                        Vector4 hdr = 255f * this.Mixer.Mix();
+                        Vector4 hdr = 255f * this.Mixer.GetMix(this.ColorHdr);
                         ds.FillCircle(item, 24, Windows.UI.Color.FromArgb((byte)hdr.W, (byte)hdr.X, (byte)hdr.Y, (byte)hdr.Z));
                     }
                 }
