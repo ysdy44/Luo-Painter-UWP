@@ -20,7 +20,8 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        public void IsometricTip(StrokeSegment segment, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
+
+        public void SegmentTip(StrokeSegment segment, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
         {
             switch (shape)
             {
@@ -96,7 +97,7 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardness(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void SegmentDrawShaderBrushEdgeHardness(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, segment.Bounds))
@@ -146,7 +147,7 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void IsometricDrawShaderBrushEdgeHardnessWithTexture(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void SegmentDrawShaderBrushEdgeHardnessWithTexture(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, segment.Bounds))

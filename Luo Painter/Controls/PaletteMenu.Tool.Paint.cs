@@ -27,9 +27,9 @@ namespace Luo_Painter.Controls
 
             //@Task
             if (false)
-                this.Paint_PaintAsync(segment);
+                this.PaintSegmentAsync(segment);
             else
-                Task.Run(() => this.Paint_PaintAsync(segment));
+                Task.Run(() => this.PaintSegmentAsync(segment));
         }
         private void Paint_Delta()
         {
@@ -48,9 +48,9 @@ namespace Luo_Painter.Controls
 
             //@Task
             if (false)
-                this.Paint_PaintAsync(segment);
+                this.PaintSegmentAsync(segment);
             else
-                Task.Run(() => this.Paint_PaintAsync(segment));
+                Task.Run(() => this.PaintSegmentAsync(segment));
 
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
@@ -62,18 +62,18 @@ namespace Luo_Painter.Controls
 
             //@Task
             if (false)
-                this.Paint_HistoryAsync();
+                this.PaintHistoryAsync();
             else
-                Task.Run(this.Paint_HistoryAsync);
+                Task.Run(this.PaintHistoryAsync);
         }
 
 
-        private void Paint_PaintAsync(StrokeSegment segment)
+        private void PaintSegmentAsync(StrokeSegment segment)
         {
             //@Task
             lock (this.Locker)
             {
-                this.Paint(segment);
+                this.PaintSegment(segment);
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 using (ds.CreateLayer(1f, segment.Bounds))
                 {
@@ -83,7 +83,7 @@ namespace Luo_Painter.Controls
                 this.CanvasControl.Invalidate(); // Invalidate
             }
         }
-        private void Paint_HistoryAsync()
+        private void PaintHistoryAsync()
         {
             //@Task
             lock (this.Locker)

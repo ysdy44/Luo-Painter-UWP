@@ -41,9 +41,9 @@ namespace Luo_Painter
 
             //@Task
             if (true)
-                this.Paint_PaintAsync(stroke, segment);
+                this.PaintSegmentAsync(stroke, segment);
             else
-                Task.Run(() => this.Paint_PaintAsync(stroke, segment));
+                Task.Run(() => this.PaintSegmentAsync(stroke, segment));
         }
         private void Paint_Delta()
         {
@@ -65,9 +65,9 @@ namespace Luo_Painter
 
             //@Task
             if (true)
-                this.Paint_PaintAsync(stroke, segment);
+                this.PaintSegmentAsync(stroke, segment);
             else
-                Task.Run(() => this.Paint_PaintAsync(stroke, segment));
+                Task.Run(() => this.PaintSegmentAsync(stroke, segment));
 
             this.StartingPosition = this.Position;
             this.StartingPoint = this.Point;
@@ -81,18 +81,18 @@ namespace Luo_Painter
 
             //@Task
             if (true)
-                this.Paint_HistoryAsync();
+                this.PaintHistoryAsync();
             else
-                Task.Run(this.Paint_HistoryAsync);
+                Task.Run(this.PaintHistoryAsync);
         }
 
-        private void Paint_PaintAsync(Stroke stroke, StrokeSegment segment)
+        private void PaintSegmentAsync(Stroke stroke, StrokeSegment segment)
         {
             //@Task
             lock (this.Locker)
             {
                 this.BitmapLayer.Hit(segment.Bounds);
-                this.Paint(segment);
+                this.PaintSegment(segment);
 
                 if (stroke.HasIntersect)
                 {
@@ -100,7 +100,7 @@ namespace Luo_Painter
                 }
             }
         }
-        private void Paint_HistoryAsync()
+        private void PaintHistoryAsync()
         {
             //@Task
             lock (this.Locker)
