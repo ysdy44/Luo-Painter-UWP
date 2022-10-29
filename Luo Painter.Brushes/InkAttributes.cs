@@ -21,13 +21,6 @@ namespace Luo_Painter.Brushes
         /// </summary>
         public InkType Type { get; set; } = InkType.General; /// <see cref="InkPresenter.GetType"/>
 
-        /// <summary>
-        /// <see cref=" InkType.None"/> <para/>
-        /// <see cref=" InkType.Blend"/> <para/>
-        /// <see cref=" InkType.Mix"/> <para/>
-        /// </summary>
-        public InkType Mode { get; set; } = InkType.None; /// <see cref="InkPresenter.GetType"/>
-
 
         public float Size { get; set; }
         public float Opacity { get; set; } /// <see cref="InkPresenter.GetType"/>
@@ -45,7 +38,7 @@ namespace Luo_Painter.Brushes
 
         public BlendEffectMode BlendMode { get; set; } = (BlendEffectMode)(-1); /// <see cref="InkPresenter.GetType"/>
         public float Mix { get; set; } /// <see cref="InkPresenter.GetType"/>
-        public float Wet { get; set; } = 0.1f;
+        public float Wet { get; set; } = 10;
         public float Persistence { get; set; }
 
 

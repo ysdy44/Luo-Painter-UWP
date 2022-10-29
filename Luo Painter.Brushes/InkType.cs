@@ -56,9 +56,6 @@ namespace Luo_Painter.Brushes
         General_Grain_Blend_Mix = General | Grain | Blend | Mix,
         General_Opacity_Grain_Blend_Mix = General | Opacity | Grain | Blend | Mix,
 
-        General_Grain_Opacity = General_Opacity_Grain,
-        General_Grain_Opacity_Blend = General_Opacity_Grain_Blend,
-
         #endregion
 
         ShapeGeneral = Shape | General,
@@ -82,9 +79,6 @@ namespace Luo_Painter.Brushes
         ShapeGeneral_Grain_Blend_Mix = Shape | General_Grain_Blend_Mix,
         ShapeGeneral_Opacity_Grain_Blend_Mix = Shape | General_Opacity_Grain_Blend_Mix,
 
-        ShapeGeneral_Grain_Opacity = ShapeGeneral_Opacity_Grain,
-        ShapeGeneral_Grain_Opacity_Blend = ShapeGeneral_Opacity_Grain_Blend,
-
         #endregion
 
         Tip = 32768 | UIOpacity | UISpacing | UITip | UIGrain | UIBlendMode,
@@ -99,12 +93,6 @@ namespace Luo_Painter.Brushes
         Tip_Grain_Blend = Tip | Grain | Blend,
         Tip_Opacity_Grain_Blend = Tip | Opacity | Grain | Blend,
 
-        Tip_Grain_Opacity = Tip_Opacity_Grain,
-        Tip_Grain_Opacity_Blend = Tip_Opacity_Grain_Blend,
-
-        Tip_Mix = Tip | Mix,
-        Tip_Grain_Mix = Tip | Grain | Mix,
-
         #endregion
 
         Line = 65536 | UIOpacity | UIGrain | UIBlendMode,
@@ -118,12 +106,6 @@ namespace Luo_Painter.Brushes
         Line_Opacity_Blend = Line | Opacity | Blend,
         Line_Grain_Blend = Line | Grain | Blend,
         Line_Opacity_Grain_Blend = Line | Opacity | Grain | Blend,
-
-        Line_Grain_Opacity = Line_Opacity_Grain,
-        Line_Grain_Opacity_Blend = Line_Opacity_Grain_Blend,
-
-        Line_Mix = Line | Mix,
-        Line_Grain_Mix = Line | Grain | Mix,
 
         #endregion
 
