@@ -132,7 +132,7 @@ namespace Luo_Painter.TestApp
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    segment.IsometricTip(ds, Colors.White);
+                    ds.DrawLine(segment.StartingPosition, segment.Position, Colors.White);
                 }
 
                 Rect rect = this.Position.GetRect(12 * properties.Pressure);
