@@ -116,7 +116,6 @@ namespace Luo_Painter
         public InkPresenter InkPresenter { get; } = new InkPresenter
         {
             Type = InkType.Tip,
-            Mode = InkType.None,
 
             Size = 12f,
             Opacity = 1f,
@@ -124,10 +123,6 @@ namespace Luo_Painter
             Spacing = 0.25f,
             Flow = 1f,
         };
-
-        int MixX = -1;
-        int MixY = -1;
-        readonly InkMixer InkMixer = new InkMixer();
 
         public Color Color => this.ColorMenu.Color;
         public Vector4 ColorHdr => this.ColorMenu.ColorHdr;

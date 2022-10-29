@@ -32,7 +32,6 @@ namespace Luo_Painter.Controls
         public InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
         public InkPresenter InkPresenter => this.InkParameter.InkPresenter;
 
-        InkMixer InkMixer = new InkMixer();
         public Color Color => this.InkParameter.Color;
         public Vector4 ColorHdr => this.InkParameter.ColorHdr;
 
