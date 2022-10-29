@@ -134,9 +134,6 @@
     <Compile Include="InkPresenter.Render.cs" />
     <Compile Include="InkType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stroke.cs" />
-    <Compile Include="StrokeSegment.cs" />
-    <Compile Include="StrokeSegment.Render.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Brushes.rd.xml" />
   </ItemGroup>
   <ItemGroup>
