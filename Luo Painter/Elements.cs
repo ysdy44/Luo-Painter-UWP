@@ -30,6 +30,32 @@ namespace Luo_Painter
         public override string ToString() => $"{typeof(DrawPage)} to {typeof(StylePage)}, NavigationMode is {this.NavigationMode}";
     }
 
+    public class XamlListView : ListView
+    {
+        // 1. It is a UserControl.xaml that contains a ListView.
+        // <UserControl>
+        //      <ListView>
+        //      ...
+        //      </ListView>
+        // </UserControl>
+        // Ok.
+
+        // 2. It is a UserControl.xaml, RootNode is ListView.
+        // <ListView>
+        //      ...
+        // </ListView>
+        // Exception:
+        // Windows.UI.Xaml.Markup.XamlParseException:
+        // “XAML parsing failed.”
+        // Why ?
+
+        // 3. It is a UserControl.xaml, RootNode is XamlListView.
+        // <local:XamlListView>
+        //      ...
+        // </local:XamlListView>
+        // Ok, but why ?
+    }
+
     internal sealed class SizeRange : InverseProportionRange
     {
         public SizeRange() : base(12, 1, 400, 100000) { }
@@ -90,6 +116,8 @@ namespace Luo_Painter
         }
     }
 
+    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, OptionType, OptionType> { }
+    internal class ToolGrouping : Grouping<OptionType, OptionType> { }
     internal sealed class ToolIcon : TIcon<OptionType>
     {
         public ToolIcon()
@@ -114,11 +142,6 @@ namespace Luo_Painter
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
         }
-    }
-    internal sealed class ToolGroupingList : List<ToolGrouping> { }
-    internal class ToolGrouping : List<OptionType>, IList<OptionType>, IGrouping<OptionType, OptionType>
-    {
-        public OptionType Key { set; get; }
     }
 
     internal sealed class InkList : List<InkType> { }
