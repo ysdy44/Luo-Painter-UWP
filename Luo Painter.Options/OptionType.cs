@@ -92,6 +92,8 @@ namespace Luo_Painter.Options
         LayerMenu = Menu | 12 << 8 | IsItemClickEnabled,
         AddMenu = Menu | 13 << 8 | IsItemClickEnabled,
         AddMenuWithRename = Menu | 14 << 8,
+        PropertyMenu = Menu | 15 << 8 | IsItemClickEnabled,
+        PropertyMenuWithRename = Menu | 16 << 8,
 
         #endregion
 
