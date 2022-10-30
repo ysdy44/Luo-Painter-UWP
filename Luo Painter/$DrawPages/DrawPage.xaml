@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
+    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -18,7 +19,7 @@
 
     <FrameworkElement.Resources>
         <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind Canvas}"/>
+        <brushes:InkCanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <!--Extension-->
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>

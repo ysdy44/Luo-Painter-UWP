@@ -13,10 +13,15 @@ namespace Luo_Painter.Controls
             {
                 this.StartingPosition = this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                if (properties.IsEraser || properties.IsBarrelButtonPressed)
-                    this.StartingPressure = this.Pressure = 1;
-                else
-                    this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+                switch (this.Operator.Device)
+                {
+                    case InkInputDevice.Pen:
+                        this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+                        break;
+                    default:
+                        this.StartingPressure = this.Pressure = 1;
+                        break;
+                }
 
                 this.Paint_Start();
             };
@@ -24,10 +29,15 @@ namespace Luo_Painter.Controls
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                if (properties.IsEraser || properties.IsBarrelButtonPressed)
-                    this.Pressure = 1;
-                else
-                    this.Pressure = properties.Pressure * properties.Pressure;
+                switch (this.Operator.Device)
+                {
+                    case InkInputDevice.Pen:
+                        this.Pressure = properties.Pressure * properties.Pressure;
+                        break;
+                    default:
+                        this.Pressure = 1;
+                        break;
+                }
 
                 this.Paint_Delta();
             };

@@ -20,7 +20,16 @@ namespace Luo_Painter
 
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
-                this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+
+                switch (this.Operator.Device)
+                {
+                    case InkInputDevice.Pen:
+                        this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+                        break;
+                    default:
+                        this.StartingPressure = this.Pressure = 1;
+                        break;
+                }
 
                 for (int i = 0; i < this.ReferenceImages.Count; i++)
                 {
@@ -48,7 +57,16 @@ namespace Luo_Painter
             {
                 this.Position = this.ToPosition(point);
                 this.Point = point;
-                this.Pressure = properties.Pressure * properties.Pressure;
+
+                switch (this.Operator.Device)
+                {
+                    case InkInputDevice.Pen:
+                        this.Pressure = properties.Pressure * properties.Pressure;
+                        break;
+                    default:
+                        this.Pressure = 1;
+                        break;
+                }
 
                 if (this.ReferenceImage is null)
                 {
