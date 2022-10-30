@@ -69,41 +69,9 @@ namespace Luo_Painter
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.UndoParameter);
                         else if (LayerDictionary.Instance.ContainsKey(propertyHistory.Id))
-                        {
-                            if (LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter))
-                            {
-                                switch (propertyHistory.Type)
-                                {
-                                    case HistoryType.Opacity:
-                                    case HistoryType.BlendMode:
-                                        this.LayerListView.OnSelectedItemChanged();
-                                        return true;
-                                    default:
-                                        return true;
-                                }
-                            }
-                            else return false;
-                        }
-                        else
-                            return false;
+                            return LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter);
                     }
                     return false;
-                case HistoryMode.Propertys:
-                    if (history is IPropertysHistory propertysHistory)
-                    {
-                        foreach (string id in propertysHistory.Ids)
-                        {
-                            if (LayerDictionary.Instance.ContainsKey(id))
-                            {
-                                if (LayerDictionary.Instance[id] is ILayer layer)
-                                {
-                                    layer.History(propertysHistory.Type, propertysHistory.UndoParameter);
-                                }
-                            }
-                        }
-                        return true;
-                    }
-                    else return false;
                 default:
                     return false;
             }
@@ -158,38 +126,9 @@ namespace Luo_Painter
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.RedoParameter);
                         else if (LayerDictionary.Instance.ContainsKey(propertyHistory.Id))
-                        {
-                            if (LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter))
-                            {
-                                switch (propertyHistory.Type)
-                                {
-                                    case HistoryType.Opacity:
-                                    case HistoryType.BlendMode:
-                                        this.LayerListView.OnSelectedItemChanged();
-                                        return true;
-                                    default:
-                                        return true;
-                                }
-                            }
-                            else return false;
-                        }
-                        else
-                            return false;
+                            return LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter);
                     }
                     return false;
-                case HistoryMode.Propertys:
-                    if (history is IPropertysHistory propertysHistory)
-                    {
-                        foreach (string id in propertysHistory.Ids)
-                        {
-                            if (LayerDictionary.Instance[id] is ILayer layer)
-                            {
-                                layer.History(propertysHistory.Type, propertysHistory.RedoParameter);
-                            }
-                        }
-                        return true;
-                    }
-                    else return false;
                 default:
                     return false;
             }
