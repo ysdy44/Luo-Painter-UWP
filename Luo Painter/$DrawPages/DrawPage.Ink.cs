@@ -1,13 +1,8 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
+﻿using Luo_Painter.Brushes;
+using Luo_Painter.Controls;
 using Luo_Painter.Layers;
-using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Numerics;
-using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -17,58 +12,37 @@ namespace Luo_Painter
 
         bool InkIsEnabled;
 
-        private void SetInkToolType(OptionType type)
+        private async void ConstructBrush(PaintBrush brush = null)
         {
-            InkType toolType;
-            switch (type)
-            {
-                case OptionType.PaintBrush: toolType = InkType.General; break;
-                case OptionType.PaintWatercolorPen: toolType = InkType.Tip; break;
-                case OptionType.PaintPencil: toolType = InkType.Line; break;
-                case OptionType.PaintEraseBrush: toolType = InkType.Erase; break;
-                case OptionType.PaintLiquefaction: toolType = InkType.Liquefy; break;
-                default: toolType = default; break;
-            }
+            if (brush is null) return;
 
-            if (this.InkPresenter.Type == toolType) return;
-            this.InkPresenter.Type = toolType;
+            if (string.IsNullOrEmpty(brush.Shape)) this.InkPresenter.ClearShape();
+            else this.InkPresenter.ConstructShape(brush.Shape, await CanvasBitmap.LoadAsync(this.CanvasDevice, brush.Shape.GetTextureSource()));
 
+            if (string.IsNullOrEmpty(brush.Grain)) this.InkPresenter.ClearGrain();
+            else this.InkPresenter.ConstructGrain(brush.Grain, await CanvasBitmap.LoadAsync(this.CanvasDevice, brush.Grain.GetTextureSource()));
+
+            this.InkPresenter.Construct(brush);
             this.InkType = this.InkPresenter.GetType();
+
+            this.InkIsEnabled = false;
+            this.AppBar.ConstructInk(this.InkPresenter, true);
+            this.InkIsEnabled = true;
+
+            this.PaintScrollViewer.ConstructInk(this.InkPresenter);
+            this.PaintScrollViewer.TryInk();
         }
 
-
-        private void ConstructBrush()
+        private void ConstructSize(float size)
         {
-            this.BrushMenu.ItemClick += async (s, brush) =>
-            {
-                if (string.IsNullOrEmpty(brush.Shape) is false) this.InkPresenter.ConstructShape(brush.Shape, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{brush.Shape}/Source.png"));
-                else this.InkPresenter.ClearShape();
+            this.InkPresenter.Size = size;
 
-                if (string.IsNullOrEmpty(brush.Grain) is false) this.InkPresenter.ConstructGrain(brush.Grain, await CanvasBitmap.LoadAsync(this.CanvasDevice, $@"Luo Painter.Brushes/Textures/{brush.Grain}/Source.png"));
-                else this.InkPresenter.ClearGrain();
+            this.InkIsEnabled = false;
+            this.AppBar.ConstructInk(this.InkPresenter, true);
+            this.InkIsEnabled = true;
 
-                this.InkPresenter.Construct(brush);
-                this.InkType = this.InkPresenter.GetType();
-
-                this.InkIsEnabled = false;
-                this.AppBar.ConstructInk(this.InkPresenter, true);
-                this.InkIsEnabled = true;
-
-                this.PaintScrollViewer.ConstructInk(this.InkPresenter);
-                this.PaintScrollViewer.TryInk();
-            };
-
-            this.SizeMenu.ItemClick += (s, size) =>
-            {
-                this.InkPresenter.Size = (float)size;
-
-                this.InkIsEnabled = false;
-                this.AppBar.ConstructInk(this.InkPresenter, true);
-                this.InkIsEnabled = true;
-
-                this.PaintScrollViewer.ConstructInk(this.InkPresenter);
-                this.PaintScrollViewer.TryInk();
-            };
+            this.PaintScrollViewer.ConstructInk(this.InkPresenter);
+            this.PaintScrollViewer.TryInk();
         }
 
         private void ConstructInk()
