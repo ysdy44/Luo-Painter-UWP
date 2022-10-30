@@ -69,21 +69,6 @@
                     >                        
                     Properties
                 </TextBlock>
-                <TextBlock                        
-                    x:Name="PropertyCountTextBlock"                            
-                    Margin="8,4"                          
-                    IsHitTestVisible="false"                           
-                    FontWeight="Medium"                          
-                    TextTrimming="CharacterEllipsis"                          
-                    FontSize="20"                          
-                    TextWrapping="Wrap"                
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"            
-                    Foreground="{ThemeResource SystemColorControlAccentBrush}"
-                    Style="{StaticResource SubheaderTextBlockStyle}"                       
-                    >                        
-                    0
-                </TextBlock>
 
                 <!--Opacity-->
                 <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
@@ -200,8 +185,8 @@
         <local:OptionKeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape" CommandParameter="FullScreen" Command="{x:Bind Command}" />
 
 
-        <local:OptionKeyboardAccelerator Modifiers="None" Key="F2" CommandParameter="AddMenuWithRename" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="None" Key="F3" CommandParameter="AddMenu" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="None" Key="F2" CommandParameter="PropertyMenuWithRename" Command="{x:Bind Command}" />
+        <local:OptionKeyboardAccelerator Modifiers="None" Key="F3" CommandParameter="PropertyMenu" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="None" Key="F5" CommandParameter="PaintMenu" Command="{x:Bind Command}" />
         <local:OptionKeyboardAccelerator Modifiers="None" Key="F6" CommandParameter="BrushMenu" Command="{x:Bind Command}" />
 
@@ -374,11 +359,7 @@
                     <Grid>
 
                         <!--Layer-->
-                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" >
-                            <controls:LayerListView.Header>
-                                <controls:AddHeader x:Name="AddMenu"/>
-                            </controls:LayerListView.Header>
-                        </controls:LayerListView>
+                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
 
                         <!--Head-->
                         <ScrollViewer x:Name="HeadScrollViewer" Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppHorizontalScrollViewerStyle}">
@@ -562,7 +543,7 @@
             <controls:EditMenu x:Name="EditMenu" />
             <controls:AdjustmentMenu x:Name="AdjustmentMenu" />
             <controls:OtherMenu x:Name="OtherMenu" />
-            <controls:LayerMenu x:Name="LayerMenu"/>
+            <controls:LayerMenu x:Name="LayerMenu" SelectedItem="{x:Bind LayerListView.SelectedItem, Mode=OneWay}"/>
             <controls:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
             <controls:PaletteMenu x:Name="PaletteMenu" />
         </elements:ExpanderLightDismissOverlay>

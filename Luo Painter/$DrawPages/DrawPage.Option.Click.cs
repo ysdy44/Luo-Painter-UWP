@@ -529,12 +529,17 @@ namespace Luo_Painter
                     this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
                     break;
                 case OptionType.AddMenu:
-                    this.AddMenu.Show();
+                    this.AddFlyout.ShowAt(this.LayerListView.PlacementTarget);
                     break;
-                case OptionType.AddMenuWithRename:
-                    this.AddMenu.Show();
-                    this.AddMenu.Rename();
+
+                case OptionType.PropertyMenu:
+                    this.PropertyFlyout.ShowAt(this.LayerListView.PlacementTarget);
                     break;
+                case OptionType.PropertyMenuWithRename:
+                    this.PropertyFlyout.ShowAt(this.LayerListView.PlacementTarget);
+                    this.NameTextBox.Focus(FocusState.Keyboard);
+                    this.NameTextBox.SelectAll();
+                    break; 
 
                 #endregion
 

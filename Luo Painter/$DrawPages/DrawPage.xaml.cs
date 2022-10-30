@@ -152,7 +152,9 @@ namespace Luo_Painter
 
             this.ConstructLayers();
             this.ConstructLayer();
-
+            this.ConstructPropertys();
+            this.ConstructProperty();
+            
             this.ConstructFoots();
             this.ConstructFoot();
 
@@ -179,7 +181,6 @@ namespace Luo_Painter
 
             this.Command.Click += (s, type) => this.Click(type);
 
-            this.AddMenu.ItemClick += (s, type) => this.Click(type);
             this.LayerMenu.ItemClick += (s, type) => this.Click(type);
             this.EditMenu.ItemClick += (s, type) => this.Click(type);
             this.AdjustmentMenu.ItemClick += (s, type) => this.Click(type);
@@ -189,6 +190,9 @@ namespace Luo_Painter
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
 
+
+            this.LayerListView.AddClick += (s, e) => this.Click(OptionType.AddMenu);
+            this.LayerListView.PropertyClick += (s, e) => this.Click(OptionType.PropertyMenu);
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
             this.LayerButton.Click += (s, e) => this.Click(OptionType.LayerMenu);
