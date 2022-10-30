@@ -127,7 +127,6 @@
     <Compile Include="Layerage.cs" />
     <Compile Include="Models\CompositeHistory.cs" />
     <Compile Include="Models\PropertyHistory.cs" />
-    <Compile Include="Models\PropertysHistory.cs" />
     <Compile Include="Models\SetupHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Historys.rd.xml" />
