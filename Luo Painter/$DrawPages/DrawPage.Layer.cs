@@ -1,60 +1,16 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Brushes;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.Storage.Pickers;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
-
-        readonly IDictionary<string, string> NameUndoParameters = new Dictionary<string, string>();
-        private IDictionary<string, string> CloneNameUndoParameters()
-        {
-            IDictionary<string, string> dic = new Dictionary<string, string>();
-            foreach (var item in this.NameUndoParameters)
-            {
-                dic.Add(item);
-            }
-            return dic;
-        }
-
-        readonly IDictionary<string, BlendEffectMode?> BlendModeUndoParameters = new Dictionary<string, BlendEffectMode?>();
-        private IDictionary<string, BlendEffectMode?> CloneBlendModeUndoParameters()
-        {
-            IDictionary<string, BlendEffectMode?> dic = new Dictionary<string, BlendEffectMode?>();
-            foreach (var item in this.BlendModeUndoParameters)
-            {
-                dic.Add(item);
-            }
-            return dic;
-        }
-
-        float StartingOpacity;
-        readonly IDictionary<string, float> OpacityUndoParameters = new Dictionary<string, float>();
-        private IDictionary<string, float> CloneOpacityUndoParameters()
-        {
-            IDictionary<string, float> dic = new Dictionary<string, float>();
-            foreach (var item in this.OpacityUndoParameters)
-            {
-                dic.Add(item);
-            }
-            return dic;
-        }
-
 
         private IEnumerable<string> Ids()
         {
@@ -67,15 +23,8 @@ namespace Luo_Painter
             }
         }
 
-
         private void ConstructLayers()
         {
-            this.LayerListView.SelectedItemChanged += (s, item) =>
-            {
-                this.LayerMenu.SetSelectedItem(item);
-                this.AddMenu.SetSelectedItem(item);
-            };
-
             this.LayerListView.DragItemsStarting += (s, e) => this.LayerManager.DragItemsStarting(this, e.Items);
             this.LayerListView.DragItemsCompleted += (s, e) =>
             {
@@ -99,237 +48,74 @@ namespace Luo_Painter
                         break;
                 }
             };
+        }
 
+        private void ConstructLayer()
+        {
             this.LayerListView.VisualClick += (s, layer) =>
             {
                 Visibility undo = layer.Visibility;
                 Visibility redo = layer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
                 string[] ids = this.Ids().ToArray();
-                if (ids.Contains(layer.Id) && ids.Length > 1)
+
+                if (ids.Length <= 1)
                 {
-                    IDictionary<string, Visibility> undoParameters = new Dictionary<string, Visibility>();
-
-                    foreach (string id in ids)
-                    {
-                        if (LayerDictionary.Instance.ContainsKey(id))
-                        {
-                            ILayer layer2 = LayerDictionary.Instance[id];
-                            if (layer2.Visibility == redo) continue;
-
-                            undoParameters.Add(id, layer2.Visibility);
-                            layer2.Visibility = redo;
-                        }
-                    }
-
-                    // History
-                    int removes = this.History.Push(new PropertysHistory<Visibility>(HistoryType.Visibility, undoParameters, undo, redo));
-                }
-                else
-                {
-                    // History
                     layer.Visibility = redo;
+
+                    // History
                     int removes = this.History.Push(new PropertyHistory<Visibility>(HistoryType.Visibility, layer.Id, undo, redo));
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.RaiseHistoryCanExecuteChanged();
+                    return;
                 }
 
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                if (ids.Contains(layer.Id) is false)
+                {
+                    layer.Visibility = redo;
 
-                this.RaiseHistoryCanExecuteChanged();
+                    // History
+                    int removes = this.History.Push(new PropertyHistory<Visibility>(HistoryType.Visibility, layer.Id, undo, redo));
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.RaiseHistoryCanExecuteChanged();
+                    return;
+                }
+
+                IEnumerable<IHistory> his = this.GetVisibilityHistory(ids, redo);
+                switch (his.Count())
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        // History
+                        int removes1 = this.History.Push(his.Single());
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        this.RaiseHistoryCanExecuteChanged();
+                        break;
+                    default:
+                        // History
+                        int removes2 = this.History.Push(new CompositeHistory(his.ToArray()));
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        this.RaiseHistoryCanExecuteChanged();
+                        break;
+                }
             };
         }
 
-        private void ConstructLayer()
+        private IEnumerable<IHistory> GetVisibilityHistory(string[] ids, Visibility redo)
         {
-            this.AddMenu.NameHistory += (undo, redo) =>
+            foreach (string id in ids)
             {
-                this.NameUndoParameters.Clear();
+                if (LayerDictionary.Instance.ContainsKey(id) is false) continue;
 
-                foreach (object item in this.LayerSelectedItems)
-                {
-                    if (item is ILayer layer)
-                    {
-                        if (layer.Name != redo)
-                        {
-                            layer.CacheName();
-                            layer.Name = redo;
+                ILayer layer2 = LayerDictionary.Instance[id];
+                if (layer2.Visibility == redo) continue;
 
-                            this.NameUndoParameters.Add(layer.Id, layer.StartingName);
-                        }
-                    }
-                }
+                Visibility undo = layer2.Visibility;
+                layer2.Visibility = redo;
 
-                switch (this.NameUndoParameters.Count)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        foreach (var item in this.NameUndoParameters)
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertyHistory<string>(HistoryType.Name, item.Key, item.Value, redo));
-
-                            this.RaiseHistoryCanExecuteChanged();
-                            break;
-                        }
-                        break;
-                    default:
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertysHistory<string>(HistoryType.Name, this.CloneNameUndoParameters(), undo, redo));
-
-                            this.RaiseHistoryCanExecuteChanged();
-                        }
-                        break;
-                }
-            };
-
-            this.AddMenu.BlendModeHistory += (undo, redo) =>
-            {
-                this.BlendModeUndoParameters.Clear();
-
-                foreach (object item in this.LayerSelectedItems)
-                {
-                    if (item is ILayer layer)
-                    {
-                        if (layer.BlendMode != redo)
-                        {
-                            layer.CacheBlendMode();
-                            layer.BlendMode = redo;
-
-                            this.BlendModeUndoParameters.Add(layer.Id, layer.StartingBlendMode);
-                        }
-                    }
-                }
-
-                switch (this.BlendModeUndoParameters.Count)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        foreach (var item in this.BlendModeUndoParameters)
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, item.Key, item.Value, redo));
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                            this.RaiseHistoryCanExecuteChanged();
-                            break;
-                        }
-                        break;
-                    default:
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertysHistory<BlendEffectMode?>(HistoryType.BlendMode, this.CloneBlendModeUndoParameters(), undo, redo));
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                            this.RaiseHistoryCanExecuteChanged();
-                        }
-                        break;
-                }
-            };
-
-            this.AddMenu.OpacitySlider.ValueChangedStarted += (s, e) =>
-            {
-                this.StartingOpacity = (float)(this.AddMenu.OpacitySlider.Value / 100);
-
-                this.OpacityUndoParameters.Clear();
-
-                foreach (object item in this.LayerSelectedItems)
-                {
-                    if (item is ILayer layer)
-                    {
-                        layer.CacheOpacity();
-
-                        this.OpacityUndoParameters.Add(layer.Id, layer.StartingOpacity);
-                    }
-                }
-            };
-
-            this.AddMenu.OpacitySlider.ValueChangedDelta += (s, e) =>
-            {
-                float opacity = (float)(e.NewValue / 100);
-                foreach (object item in this.LayerSelectedItems)
-                {
-                    if (item is ILayer layer)
-                    {
-                        layer.Opacity = opacity;
-                    }
-                }
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-            };
-
-            this.AddMenu.OpacitySlider.ValueChangedCompleted += (s, e) =>
-            {
-                float undo = (float)(this.StartingOpacity / 100);
-                float redo = (float)(this.AddMenu.OpacitySlider.Value / 100);
-
-                switch (this.OpacityUndoParameters.Count)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        foreach (var item in this.OpacityUndoParameters)
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Key, item.Value, redo));
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                            this.RaiseHistoryCanExecuteChanged();
-                            break;
-                        }
-                        break;
-                    default:
-                        {
-                            // History
-                            int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                            this.RaiseHistoryCanExecuteChanged();
-                        }
-                        break;
-                }
-            };
-
-            //this.AddMenu.OpacityHistory += (undo, redo) =>
-            //{
-            //    this.OpacityUndoParameters.Clear();
-
-            //    foreach (object item in this.LayerSelectedItems)
-            //    {
-            //        if (item is ILayer layer)
-            //        {
-            //            layer.CacheOpacity();
-            //            layer.Opacity = redo;
-            //            this.OpacityUndoParameters.Add(layer.Id, layer.StartingOpacity);
-            //        }
-            //    }
-
-            //    switch (this.OpacityUndoParameters.Count)
-            //    {
-            //        case 0:
-            //            break;
-            //        case 1:
-            //            foreach (var item in this.OpacityUndoParameters)
-            //            {
-            //                // History
-            //                int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, item.Key, item.Value, redo));
-            //                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            //                this.RaiseHistoryCanExecuteChanged();
-            //                break;
-            //            }
-            //            break;
-            //        default:
-            //            {
-            //                // History
-            //                int removes = this.History.Push(new PropertysHistory<float>(HistoryType.Opacity, this.CloneOpacityUndoParameters(), undo, redo));
-            //                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-            //                this.RaiseHistoryCanExecuteChanged();
-            //            }
-            //            break;
-            //    }
-            //};
+                yield return new PropertyHistory<Visibility>(HistoryType.Visibility, layer2.Id, undo, redo);
+            }
         }
 
     }
