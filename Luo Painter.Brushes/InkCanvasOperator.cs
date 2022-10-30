@@ -8,9 +8,19 @@ using Windows.UI.Input;
 namespace Luo_Painter.Brushes
 {
     /// <summary>
+    /// The touch mode of <see cref = "CanvasOperator" />.
+    /// </summary>
+    public enum InkTouchMode
+    {
+        Single,
+        Right,
+        Disable
+    }
+
+    /// <summary>
     /// The input device type of <see cref = "CanvasOperator" />.
     /// </summary>
-    internal enum InkInputDevice
+    public enum InkInputDevice
     {
         None,
 
@@ -33,6 +43,18 @@ namespace Luo_Painter.Brushes
 
 
         #region DependencyProperty
+
+
+        /// <summary>
+        /// Gets the current input device type.
+        /// </summary>
+        public InkInputDevice Device { get; private set; }
+
+
+        /// <summary>
+        /// Gets or sets the touch mode.
+        /// </summary>
+        public InkTouchMode TouchMode { get; set; }
 
 
         /// <summary>
@@ -118,8 +140,6 @@ namespace Luo_Painter.Brushes
         Vector2 StartingEvenPoint;
         Vector2 EvenPoint;
         Vector2 OddPoint;
-
-        InkInputDevice Device;
 
 
         // Pointer Pressed
@@ -271,9 +291,22 @@ namespace Luo_Painter.Brushes
 
                                     if (Vector2.Distance(this.StartingEvenPoint, this.EvenPoint) > 12f)
                                     {
-                                        this.Device = InkInputDevice.OneFinger;
-                                        this.DestinationControl.CapturePointer(e.Pointer);
-                                        this.Single_Start?.Invoke(this.EvenPoint, pointerPoint.Properties); // Delegate
+                                        switch (this.TouchMode)
+                                        {
+                                            case InkTouchMode.Single:
+                                                this.Device = InkInputDevice.OneFinger;
+                                                this.DestinationControl.CapturePointer(e.Pointer);
+                                                this.Single_Start?.Invoke(this.EvenPoint, pointerPoint.Properties); // Delegate
+                                                break;
+                                            case InkTouchMode.Right:
+                                                this.Device = InkInputDevice.RightButton;
+                                                this.DestinationControl.CapturePointer(e.Pointer);
+                                                this.Right_Start?.Invoke(this.EvenPoint); // Delegate
+                                                break;
+                                            default:
+                                                this.Device = InkInputDevice.None;
+                                                break;
+                                        }
                                     }
                                 }
                                 return;
@@ -306,6 +339,19 @@ namespace Luo_Painter.Brushes
                                 this.Double_Delta?.Invoke((this.OddPoint + this.EvenPoint) / 2, Vector2.Distance(this.OddPoint, this.EvenPoint)); // Delegate
                                 return;
                             }
+                        case InkInputDevice.RightButton:
+                            switch (this.TouchMode)
+                            {
+                                case InkTouchMode.Right:
+                                    PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
+                                    Vector2 point = pointerPoint.Position.ToVector2();
+
+                                    this.Right_Delta?.Invoke(point); // Delegate
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return;
                         default:
                             return;
                     }
