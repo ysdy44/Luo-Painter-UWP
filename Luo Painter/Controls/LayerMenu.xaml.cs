@@ -1,12 +1,7 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Elements;
-using Luo_Painter.Layers;
+﻿using Luo_Painter.Elements;
 using Luo_Painter.Options;
-using Microsoft.Graphics.Canvas.Effects;
-using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
 using System;
-using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
 
 namespace Luo_Painter.Controls
 {
@@ -25,6 +20,25 @@ namespace Luo_Painter.Controls
             set => this.PasteItem.IsEnabled = value;
         }
 
+        public object SelectedItem
+        {
+            set
+            {
+                if (value is null)
+                {
+                    this.CutItem.IsEnabled = false;
+                    this.CopyItem.IsEnabled = false;
+                    this.RemoveItem.IsEnabled = false;
+                }
+                else
+                {
+                    this.CutItem.IsEnabled = true;
+                    this.CopyItem.IsEnabled = true;
+                    this.RemoveItem.IsEnabled = true;
+                }
+            }
+        }
+
         //@Construct
         public LayerMenu()
         {
@@ -34,22 +48,6 @@ namespace Luo_Painter.Controls
         //@Strings
         public void ConstructStrings(ResourceLoader resource)
         {
-        }
-
-        public void SetSelectedItem(ILayer layer)
-        {
-            if (layer is null)
-            {
-                this.CutItem.IsEnabled = false;
-                this.CopyItem.IsEnabled = false;
-                this.RemoveItem.IsEnabled = false;
-            }
-            else
-            {
-                this.CutItem.IsEnabled = true;
-                this.CopyItem.IsEnabled = true;
-                this.RemoveItem.IsEnabled = true;
-            }
         }
 
     }
