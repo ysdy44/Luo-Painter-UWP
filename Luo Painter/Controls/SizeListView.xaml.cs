@@ -23,22 +23,14 @@ namespace Luo_Painter.Controls
         }
     }
 
-    public sealed partial class SizeListView : UserControl
+    public sealed partial class SizeListView : XamlListView
     {
-        //@Delegate
-        public event EventHandler<double> ItemClick;
 
         //@Construct
         public SizeListView()
         {
             this.InitializeComponent();
-            this.ListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is PaintSize item)
-                {
-                    this.ItemClick?.Invoke(this, item.Size);//Delegate
-                }
-            };
+            base.Loaded += (s, e) => base.SelectedIndex = 16;
         }
 
         //@Strings

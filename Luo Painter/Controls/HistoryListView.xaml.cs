@@ -4,10 +4,8 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class HistoryListView : UserControl
+    public sealed partial class HistoryListView : XamlListView
     {
-
-        public object ItemsSource { set => this.ListView.ItemsSource = value; }
 
         //@Construct
         public HistoryListView()

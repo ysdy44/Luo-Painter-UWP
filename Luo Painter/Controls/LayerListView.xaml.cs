@@ -15,13 +15,11 @@ namespace Luo_Painter.Controls
 {
     internal class LayerCommand : RelayCommand<ILayer> { }
 
-    public sealed partial class LayerListView : UserControl
+    public sealed partial class LayerListView : XamlListView
     {
         //@Delegate
         public event EventHandler<ILayer> SelectedItemChanged;
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
-        public event DragItemsStartingEventHandler DragItemsStarting { remove => this.ListView.DragItemsStarting -= value; add => this.ListView.DragItemsStarting += value; }
-        public event TypedEventHandler<ListViewBase, DragItemsCompletedEventArgs> DragItemsCompleted { remove => this.ListView.DragItemsCompleted -= value; add => this.ListView.DragItemsCompleted += value; }
 
         //@Converter
         private Visibility DoubleToVisibilityConverter(double value) => value == 0 ? Visibility.Collapsed : Visibility.Visible;
@@ -33,13 +31,7 @@ namespace Luo_Painter.Controls
 
         long SelectedItemToken;
 
-        public FrameworkElement PlacementTarget => this;
-        public object Header { get => this.ListView.Header; set => this.ListView.Header = value; }
-        public int SelectedIndex { get => this.ListView.SelectedIndex; set => this.ListView.SelectedIndex = value; }
-        public object SelectedItem { get => this.ListView.SelectedItem; set => this.ListView.SelectedItem = value; }
-        public IList<object> SelectedItems => this.ListView.SelectedItems;
-        public object ItemsSource { set => this.ListView.ItemsSource = value; }
-        public ImageSource MarqueeSource { set => this.Image.Source = value; }
+        public ImageSource MarqueeSource { get => this.Image.Source; set => this.Image.Source = value; }
 
         //@Construct
         public LayerListView()
@@ -48,12 +40,12 @@ namespace Luo_Painter.Controls
             base.Unloaded += (s, e) =>
             {
                 // Unregister Listener
-                this.ListView.UnregisterPropertyChangedCallback(Selector.SelectedItemProperty, this.SelectedItemToken);
+                base.UnregisterPropertyChangedCallback(Selector.SelectedItemProperty, this.SelectedItemToken);
             };
             base.Loaded += (s, e) =>
             {
                 // Register Listener
-                this.SelectedItemToken = this.ListView.RegisterPropertyChangedCallback(Selector.SelectedItemProperty, (sender, prop) =>
+                this.SelectedItemToken = base.RegisterPropertyChangedCallback(Selector.SelectedItemProperty, (sender, prop) =>
                 {
                     ListView control = (ListView)sender;
                     this.OnSelectedItemChanged(control.GetValue(prop));

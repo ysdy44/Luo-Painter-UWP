@@ -156,7 +156,6 @@ namespace Luo_Painter
             this.ConstructFoots();
             this.ConstructFoot();
 
-            this.ConstructBrush();
             this.ConstructInk();
 
             this.ConstructSetup();
@@ -185,8 +184,6 @@ namespace Luo_Painter
             this.EditMenu.ItemClick += (s, type) => this.Click(type);
             this.AdjustmentMenu.ItemClick += (s, type) => this.Click(type);
             this.OtherMenu.ItemClick += (s, type) => this.Click(type);
-            this.ToolListView.ItemClick += (s, type) => this.Click(type);
-            this.ToolListView.Construct(this.OptionType);
 
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
@@ -239,6 +236,29 @@ namespace Luo_Painter
             };
 
 
+            this.Click(this.OptionType);
+            this.ToolListView.SelectedItem = this.OptionType;
+            this.ToolListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is OptionType item)
+                {
+                    this.Click(item);
+                }
+            };
+            this.BrushMenu.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is PaintBrush brush)
+                {
+                    this.ConstructBrush(brush);
+                }
+            };
+            this.SizeMenu.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is PaintSize item)
+                {
+                    this.ConstructSize((float)item.Size);
+                }
+            };
             this.ColorMenu.ColorChanged += (s, e) =>
             {
                 switch (this.OptionType)
@@ -274,7 +294,7 @@ namespace Luo_Painter
         {
             switch (e.NavigationMode)
             {
-                case NavigationMode.New:
+                case NavigationMode.New: 
                     break;
                 case NavigationMode.Back:
                     break;
@@ -296,7 +316,7 @@ namespace Luo_Painter
         {
             switch (e.NavigationMode)
             {
-                case NavigationMode.Back:
+                case NavigationMode.Back: 
                     break;
                 case NavigationMode.New:
                     // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)

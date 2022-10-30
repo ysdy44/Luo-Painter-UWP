@@ -1,70 +1,66 @@
-﻿<UserControl
+﻿<luo_painter:XamlListView
     x:Class="Luo_Painter.Controls.HistoryListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:historys="using:Luo_Painter.Historys"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
     Margin="0,50,0,0"
+    IsItemClickEnabled="True"
+    FooterTemplate="{StaticResource AppListViewBaseFooter}"     
     >
 
-    <ListView
-        x:Name="ListView"
-        IsItemClickEnabled="True"
-        FooterTemplate="{StaticResource AppListViewBaseFooter}"              
-        >
+    <ItemsControl.ItemContainerStyle>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Margin" Value="0,0,0,1"/>
+            <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+            <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        </Style>
+    </ItemsControl.ItemContainerStyle>
 
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="Margin" Value="0,0,0,1"/>
-                <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-                <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
-            </Style>
-        </ItemsControl.ItemContainerStyle>
-
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="historys:IHistory">
-                <SwipeControl>
-                    <SwipeControl.RightItems>
-                        <SwipeItems Mode="Execute">
-                            <SwipeItem>
-                                <SwipeItem.IconSource>
-                                    <SymbolIconSource Symbol="Undo"/>
-                                </SwipeItem.IconSource>
-                                <SwipeItem.Text>
-                                    Undo
-                                </SwipeItem.Text>
-                            </SwipeItem>
-                        </SwipeItems>
-                    </SwipeControl.RightItems>
-                    <TextBlock VerticalAlignment="Center">                   
-                        <Run Text="{x:Bind Mode}"/>                  
-                        <Run Text="{x:Bind Type}"/>
-                    </TextBlock>
-                </SwipeControl>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-
-        <ListViewBase.Header>
-            <Border Height="44" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" >
-                <TextBlock 
-                    Margin="16,0"
-                    IsHitTestVisible="false" 
-                    FontWeight="Medium" 
-                    TextTrimming="CharacterEllipsis" 
-                    FontSize="20" 
-                    TextWrapping="Wrap" 
-                    VerticalAlignment="Center" 
-                    Style="{StaticResource SubheaderTextBlockStyle}"
-                     >
-                    Histories
+    <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="historys:IHistory">
+            <SwipeControl>
+                <SwipeControl.RightItems>
+                    <SwipeItems Mode="Execute">
+                        <SwipeItem>
+                            <SwipeItem.IconSource>
+                                <SymbolIconSource Symbol="Undo"/>
+                            </SwipeItem.IconSource>
+                            <SwipeItem.Text>
+                                Undo
+                            </SwipeItem.Text>
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeControl.RightItems>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{x:Bind Mode}"/>
+                    <Run Text="{x:Bind Type}"/>
                 </TextBlock>
-            </Border>
-        </ListViewBase.Header>
+            </SwipeControl>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
 
-    </ListView>
+    <ListViewBase.Header>
+        <Border Height="44" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" >
+            <TextBlock 
+                x:Name="TitleTextBlock"
+                Margin="16,0"
+                IsHitTestVisible="false" 
+                FontWeight="Medium" 
+                TextTrimming="CharacterEllipsis" 
+                FontSize="20" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Center"
+                Style="{StaticResource SubheaderTextBlockStyle}"
+                >
+                Histories
+            </TextBlock>
+        </Border>
+    </ListViewBase.Header>
 
-</UserControl>
+</luo_painter:XamlListView>

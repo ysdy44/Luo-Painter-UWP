@@ -23,23 +23,16 @@ namespace Luo_Painter.Controls
         public string Subtitle => ((int)this.Size).ToString();
     }
 
-    public sealed partial class BrushListView : UserControl
+    public sealed partial class BrushListView : XamlListView
     {
         //@Delegate
-        public event EventHandler<InkAttributes> ItemClick;
         public event RoutedEventHandler Add { remove => this.AddButton.Click -= value; add => this.AddButton.Click += value; }
 
         //@Construct
         public BrushListView()
         {
             this.InitializeComponent();
-            this.ListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is PaintBrush item)
-                {
-                    this.ItemClick?.Invoke(this, item);//Delegate
-                }
-            };
+            base.Loaded += (s, e) => base.SelectedIndex = 2;
         }
 
         //@Strings
