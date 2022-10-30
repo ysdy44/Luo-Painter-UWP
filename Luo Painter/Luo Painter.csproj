@@ -156,9 +156,6 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AddHeader.xaml.cs">
-      <DependentUpon>AddHeader.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\BrushListView.xaml.cs">
       <DependentUpon>BrushListView.xaml</DependentUpon>
     </Compile>
@@ -329,10 +326,6 @@
     <Page Include="%24StylePages\StylePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\AddHeader.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\BrushListView.xaml">
       <Generator>MSBuild:Compile</Generator>
