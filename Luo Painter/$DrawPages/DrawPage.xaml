@@ -6,9 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
+    xmlns:blends="using:Luo_Painter.Blends"
     xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     NavigationCacheMode="Required"
     IsEnabled="False"
@@ -27,6 +29,163 @@
         <local:SizeRange x:Name="SizeRange"/>
         <!--Command-->
         <local:OptionTypeCommand x:Name="Command"/>
+        <!--Flyout-->
+        <Flyout x:Name="AddFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <StackPanel Spacing="2" Padding="6,4" Width="318">
+
+                <TextBlock                        
+                    x:Name="AddTextBlock"                            
+                    Margin="8,4"                          
+                    IsHitTestVisible="false"                           
+                    FontWeight="Medium"                          
+                    TextTrimming="CharacterEllipsis"                          
+                    FontSize="20"                          
+                    TextWrapping="Wrap"                          
+                    VerticalAlignment="Center"                          
+                    Style="{StaticResource SubheaderTextBlockStyle}"                       
+                    >                        
+                    Add
+                </TextBlock>
+
+                <local:OptionItemButton Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+                <local:OptionItemButton Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+                <local:OptionItemButton Type="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+            </StackPanel>
+        </Flyout>
+        <Flyout x:Name="PropertyFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <StackPanel Spacing="2" Padding="6,4" Width="318">
+
+                <TextBlock                        
+                    x:Name="PropertyTextBlock"                            
+                    Margin="8,4"                          
+                    IsHitTestVisible="false"                           
+                    FontWeight="Medium"                          
+                    TextTrimming="CharacterEllipsis"                          
+                    FontSize="20"                          
+                    TextWrapping="Wrap"                          
+                    VerticalAlignment="Center"                          
+                    Style="{StaticResource SubheaderTextBlockStyle}"                       
+                    >                        
+                    Properties
+                </TextBlock>
+                <TextBlock                        
+                    x:Name="PropertyCountTextBlock"                            
+                    Margin="8,4"                          
+                    IsHitTestVisible="false"                           
+                    FontWeight="Medium"                          
+                    TextTrimming="CharacterEllipsis"                          
+                    FontSize="20"                          
+                    TextWrapping="Wrap"                
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"            
+                    Foreground="{ThemeResource SystemColorControlAccentBrush}"
+                    Style="{StaticResource SubheaderTextBlockStyle}"                       
+                    >                        
+                    0
+                </TextBlock>
+
+                <!--Opacity-->
+                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    <Slider x:Name="OpacitySlider" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
+                        <FrameworkElement.Tag>
+                            Opacity
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button                                    
+                                Padding="4,0"                                   
+                                MinWidth="44"                                    
+                                Height="28"                                      
+                                BorderThickness="1"                                       
+                                BorderBrush="{ThemeResource AppStroke}"                                       
+                                Background="{ThemeResource SystemAltLowColor}"                                     
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock>                                       
+                                    <Run Text="{x:Bind OpacitySlider.Value, Mode=OneWay}" />                  
+                                    <Run>%</Run>
+                                </TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+                </Border>
+
+                <!--BlendMode-->
+                <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                    Blend Mode
+                </TextBlock>
+                <ComboBox x:Name="BlendModeComboBox" >
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="effects:BlendEffectMode">
+                            <local:BlendIcon Type="{x:Bind}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsSource>
+                        <local:BlendList x:Name="BlendCollection">
+                            <!--None-->
+                            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
+                            <!--Darken-->
+                            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
+                            <!--Lighten-->
+                            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
+                            <!--Contrast-->
+                            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
+                            <!--Difference-->
+                            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Division</effects:BlendEffectMode>
+                            <!--Color-->
+                            <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Color</effects:BlendEffectMode>
+                            <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
+                        </local:BlendList>
+                    </ItemsControl.ItemsSource>
+
+                </ComboBox>
+
+                <!--Name-->
+                <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                    Name
+                </TextBlock>
+                <TextBox x:Name="NameTextBox" >
+                    <TextBox.PlaceholderText>
+                        Input Text...
+                    </TextBox.PlaceholderText>
+                </TextBox>
+
+                <!--TagType-->
+                <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                    Tag Type
+                </TextBlock>
+                <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                    <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
+                </Border>
+
+            </StackPanel>
+        </Flyout>
     </FrameworkElement.Resources>
 
 
@@ -93,7 +252,7 @@
                         <Setter Target="LayerListView.Margin" Value="0"/>
                         <Setter Target="HeadScrollViewer.Visibility" Value="Collapsed"/>
                         <Setter Target="HeadButton.Visibility" Value="Visible"/>
-                        
+
                         <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
                         <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
 
@@ -105,7 +264,7 @@
                         <Setter Target="LeftSplitView.DisplayMode" Value="Overlay"/>
                     </VisualState.Setters>
                 </VisualState>
-                
+
                 <!--Phone
                 <VisualState x:Name="Phone">
                     <VisualState.StateTriggers>
@@ -136,7 +295,7 @@
 
                         <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
                         <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
-                        
+
                         <!--SplitView-->
                         <Setter Target="RightSplitView.IsPaneOpen" Value="False"/>
                         <Setter Target="LeftSplitView.IsPaneOpen" Value="False"/>
