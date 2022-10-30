@@ -20,7 +20,7 @@
     ReorderMode="Enabled"   
     ScrollViewer.VerticalScrollBarVisibility="Hidden"
     >
-
+    
     <FrameworkElement.Tag>
         <Button x:Name="VisualButton" CommandParameter="{x:Null}">
             <ButtonBase.Command>
@@ -152,6 +152,38 @@
             </elements:SelectedSwiper>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
+
+    <ListViewBase.Header>
+        <Grid x:Name="Grid" Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                x:Name="TitleTextBlock"
+                Margin="16,0"
+                IsHitTestVisible="false" 
+                FontWeight="Medium" 
+                TextTrimming="CharacterEllipsis" 
+                FontSize="20" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Center" 
+                Style="{StaticResource SubheaderTextBlockStyle}"
+                >
+                Layers
+            </TextBlock>
+
+            <Button x:Name="PropertyButton" Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
+                <FontIcon Glyph="&#xE946;" FontFamily="Segoe MDL2 Assets"/>
+            </Button>
+
+            <Button x:Name="AddButton" Grid.Column="2" Style="{StaticResource AppButtonStyle}" >
+                <SymbolIcon Symbol="Add"/>
+            </Button>
+        </Grid>
+    </ListViewBase.Header>
 
     <ListViewBase.Footer>
         <Grid Padding="2,0,0,0" Height="55" >
