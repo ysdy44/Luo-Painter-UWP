@@ -156,6 +156,7 @@
     <Content Include="RippleEffect.hlsl" />
     <Content Include="SdrOverlayEffect.hlsl" />
     <Content Include="SprayGun.txt" />
+    <Content Include="Threshold.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Liquefaction.hlsl" />
@@ -185,6 +186,7 @@
     <Content Include="ReinhardEffect.bin" />
     <Content Include="SdrOverlayEffect.bin" />
     <None Include="SprayGun.shader" />
+    <Content Include="Threshold.bin" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
