@@ -91,7 +91,7 @@ namespace Luo_Painter.Options
 
         LayerMenu = Menu | 12 << 8 | IsItemClickEnabled,
         AddMenu = Menu | 13 << 8 | IsItemClickEnabled,
-        AddMenuWithRename = Menu | 14 << 8,
+
         PropertyMenu = Menu | 15 << 8 | IsItemClickEnabled,
         PropertyMenuWithRename = Menu | 16 << 8,
 
@@ -192,6 +192,7 @@ namespace Luo_Painter.Options
         GradientMapping = Other | 3 << 8 | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
         RippleEffect = Other | 4 << 8 | HasPreview | AllowDrag | ExistIcon | HasDifference | IsItemClickEnabled,
         Fill = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        Threshold = Other | 6 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
