@@ -195,30 +195,5 @@ namespace Luo_Painter
             this.RaiseHistoryCanExecuteChanged();
         }
 
-
-        private ICanvasImage GetPreview(OptionType type, ICanvasImage image)
-        {
-            switch (type)
-            {
-                case OptionType.None:
-                    return image;
-
-                case OptionType.Transform:
-                    return this.GetTransformPreview(image);
-                case OptionType.DisplacementLiquefaction:
-                    return this.GetDisplacementLiquefactionPreview(image);
-                case OptionType.GradientMapping:
-                    return this.GetGradientMappingPreview(image);
-                case OptionType.RippleEffect:
-                    return this.GetRippleEffectPreview(image);
-
-                case OptionType.MarqueeTransform:
-                    return this.GetTransformPreview(image);
-
-                default:
-                    return this.AppBar.GetPreview(type, image);
-            }
-        }
-
     }
 }
