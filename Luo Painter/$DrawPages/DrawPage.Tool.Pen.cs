@@ -16,9 +16,11 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        bool PenIsSmooth => this.PenComboBox.SelectedIndex is 0;
+
         private void ConstructPen()
         {
-            this.AppBar.PenCloseButtonClick += (s, e) =>
+            this.PenCloseButton.Click += (s, e) =>
             {
                 if (this.LayerSelectedItem is null)
                 {
@@ -70,11 +72,11 @@ namespace Luo_Painter
                     Point = anchors.ClosePoint,
                     LeftControlPoint = anchors.ClosePoint,
                     RightControlPoint = anchors.ClosePoint,
-                    IsSmooth = this.AppBar.PenIsSmooth
+                    IsSmooth = this.PenIsSmooth
                 });
 
                 anchors.ClosePoint = this.StartingPosition;
-                anchors.CloseIsSmooth = this.AppBar.PenIsSmooth;
+                anchors.CloseIsSmooth = this.PenIsSmooth;
                 anchors.Segment(this.CanvasControl, false);
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -88,7 +90,7 @@ namespace Luo_Painter
                     Point = this.Position,
                     LeftControlPoint = this.Position,
                     RightControlPoint = this.Position,
-                    IsSmooth = this.AppBar.PenIsSmooth
+                    IsSmooth = this.PenIsSmooth
                 }
             };
 
@@ -96,7 +98,7 @@ namespace Luo_Painter
             add.StrokeWidth = this.InkPresenter.Size;
 
             add.ClosePoint = this.Position;
-            add.CloseIsSmooth = this.AppBar.PenIsSmooth;
+            add.CloseIsSmooth = this.PenIsSmooth;
             add.Segment(this.CanvasControl, false);
 
             int count = this.CurveLayer.Anchorss.Count;
@@ -113,7 +115,7 @@ namespace Luo_Painter
             if (anchors is null) return;
 
             anchors.ClosePoint = this.Position;
-            anchors.CloseIsSmooth = this.AppBar.PenIsSmooth;
+            anchors.CloseIsSmooth = this.PenIsSmooth;
             anchors.Segment(this.CanvasControl, false);
             anchors.Invalidate();
             this.CurveLayer.Invalidate();

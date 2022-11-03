@@ -16,6 +16,21 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        MarqueeCompositeMode MarqueeCompositeMode
+        {
+            get
+            {
+                switch (this.MarqueeComboBox.SelectedIndex)
+                {
+                    case 0: return MarqueeCompositeMode.New;
+                    case 1: return MarqueeCompositeMode.Add;
+                    case 2: return MarqueeCompositeMode.Subtract;
+                    case 3: return MarqueeCompositeMode.Intersect;
+                    default: return MarqueeCompositeMode.New;
+                }
+            }
+        }
+
         MarqueeToolType MarqueeToolType;
         readonly MarqueeTool MarqueeTool = new MarqueeTool();
 
@@ -42,7 +57,7 @@ namespace Luo_Painter
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.AppBar.MarqueeCompositeMode);
+                ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
             }
 
             // History

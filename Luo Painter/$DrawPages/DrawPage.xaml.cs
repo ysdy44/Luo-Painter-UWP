@@ -344,7 +344,7 @@ namespace Luo_Painter
                         this.Transformer.Height = item.Height;
                         this.Transformer.Fit();
 
-                        this.AppBar.ConstructView(this.Transformer);
+                        this.ConstructView(this.Transformer);
 
                         this.ApplicationView.Title = item.DisplayName;
                         this.ApplicationView.PersistedStateId = item.Path;

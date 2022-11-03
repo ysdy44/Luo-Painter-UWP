@@ -70,7 +70,7 @@ namespace Luo_Painter
                     //@Debug
                     // OptionType becomes Tool when it is Effect
                     this.OptionType = this.ToolListView.SelectedItem;
-                    this.AppBar.Construct(this.ToolListView.SelectedItem);
+                    this.ConstructAppBar(this.ToolListView.SelectedItem);
 
                     await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
                     break;
@@ -539,7 +539,7 @@ namespace Luo_Painter
                     this.PropertyFlyout.ShowAt(this.LayerListView.PlacementTarget);
                     this.NameTextBox.Focus(FocusState.Keyboard);
                     this.NameTextBox.SelectAll();
-                    break; 
+                    break;
 
                 #endregion
 
@@ -557,7 +557,7 @@ namespace Luo_Painter
 
                     this.BitmapLayer = null;
                     this.OptionType = OptionType.CropCanvas;
-                    this.AppBar.Construct(OptionType.CropCanvas);
+                    this.ConstructAppBar(OptionType.CropCanvas);
                     this.SetCanvasState(true);
                     break;
 
@@ -1231,7 +1231,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.AppBar.Construct(type);
+                        this.ConstructAppBar(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -1261,7 +1261,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.AppBar.Construct(type);
+                        this.ConstructAppBar(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -1279,7 +1279,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.AppBar.Construct(type);
+                        this.ConstructAppBar(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -1297,7 +1297,7 @@ namespace Luo_Painter
                         }
 
                         this.OptionType = type;
-                        this.AppBar.Construct(type);
+                        this.ConstructAppBar(type);
                         this.SetCanvasState(true);
                     }
                     break;
@@ -1353,7 +1353,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.AppBar.Construct(type);
+                                this.ConstructAppBar(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1412,7 +1412,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.AppBar.Construct(type);
+                                this.ConstructAppBar(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1441,7 +1441,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.AppBar.Construct(type);
+                                this.ConstructAppBar(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1517,7 +1517,7 @@ namespace Luo_Painter
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
                                 this.OptionType = type;
-                                this.AppBar.Construct(type);
+                                this.ConstructAppBar(type);
                                 this.SetCanvasState(true);
                                 break;
                             }
@@ -1617,7 +1617,7 @@ namespace Luo_Painter
                     {
                         this.BitmapLayer = null;
                         this.OptionType = type;
-                        this.AppBar.Construct(type);
+                        this.ConstructAppBar(type);
                         this.SetCanvasState(default);
                     }
                     break;

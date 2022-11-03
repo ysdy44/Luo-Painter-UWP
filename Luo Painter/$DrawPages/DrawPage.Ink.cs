@@ -10,7 +10,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        bool InkIsEnabled;
+        bool IsInkEnabled;
 
         private async void ConstructBrush(PaintBrush brush = null)
         {
@@ -25,9 +25,9 @@ namespace Luo_Painter
             this.InkPresenter.Construct(brush);
             this.InkType = this.InkPresenter.GetType();
 
-            this.InkIsEnabled = false;
-            this.AppBar.ConstructInk(this.InkPresenter, true);
-            this.InkIsEnabled = true;
+            this.IsInkEnabled = false;
+            this.ConstructInk(this.InkPresenter, true);
+            this.IsInkEnabled = true;
 
             this.PaintScrollViewer.ConstructInk(this.InkPresenter);
             this.PaintScrollViewer.TryInk();
@@ -37,29 +37,51 @@ namespace Luo_Painter
         {
             this.InkPresenter.Size = size;
 
-            this.InkIsEnabled = false;
-            this.AppBar.ConstructInk(this.InkPresenter, true);
-            this.InkIsEnabled = true;
+            this.IsInkEnabled = false;
+            this.ConstructInk(this.InkPresenter, true);
+            this.IsInkEnabled = true;
 
             this.PaintScrollViewer.ConstructInk(this.InkPresenter);
             this.PaintScrollViewer.TryInk();
         }
 
-        private void ConstructInk()
+        public void ConstructInk(InkPresenter presenter, bool onlyValue)
         {
-            this.AppBar.ConstructInk(this.InkPresenter, false);
-            this.InkIsEnabled = true;
-
-            this.AppBar.SizeValueChanged += (s, e) =>
+            // 1.Minimum
+            if (onlyValue is false)
             {
-                if (this.InkIsEnabled is false) return;
+                this.InkSizeSlider.Minimum = this.SizeRange.XRange.Minimum;
+                this.InkOpacitySlider.Minimum = 0d;
+            }
+
+            // 2.Value
+            this.InkSizeSlider.Value = this.SizeRange.ConvertYToX(presenter.Size);
+            this.InkOpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
+
+            // 3.Maximum
+            if (onlyValue is false)
+            {
+                this.InkSizeSlider.Maximum = this.SizeRange.XRange.Maximum;
+                this.InkOpacitySlider.Maximum = 100d;
+            }
+        }
+
+
+        public void ConstructInk()
+        {
+            this.ConstructInk(this.InkPresenter, false);
+            this.IsInkEnabled = true;
+
+            this.InkSizeSlider.ValueChanged += (s, e) =>
+            {
+                if (this.IsInkEnabled is false) return;
 
                 double size = this.SizeRange.ConvertXToY(e.NewValue);
                 this.InkPresenter.Size = (float)size;
             };
-            this.AppBar.OpacityValueChanged += (s, e) =>
+            this.InkOpacitySlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
 
                 double opacity = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.Opacity = (float)opacity;

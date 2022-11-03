@@ -15,6 +15,11 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        int BrushMode => this.BrushComboBox.SelectedIndex;
+
+        bool IsBrushOpaque => this.BrushOpaqueButton.IsChecked is true;
+        bool IsBrushReverse => this.BrushReverseButton.IsChecked is true;
+
         CanvasLinearGradientBrush LinearGradientBrush;
         CanvasRadialGradientBrush RadialGradientBrush;
         Rect BrushBounds;
@@ -46,7 +51,7 @@ namespace Luo_Painter
                 return;
             }
 
-            this.SelectionType = this.BitmapLayer.GetDrawSelection(this.AppBar.IsBrushOpaque, this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+            this.SelectionType = this.BitmapLayer.GetDrawSelection(this.IsBrushOpaque, this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
             switch (this.SelectionType)
             {
                 case SelectionType.None:
@@ -62,14 +67,14 @@ namespace Luo_Painter
 
             Color startColor = this.ColorMenu.Color;
             Color endColor = this.ColorMenu.Color;
-            switch (this.AppBar.IsBrushReverse)
+            switch (this.IsBrushReverse)
             {
                 case true: startColor.A = byte.MinValue; break;
                 case false: endColor.A = byte.MinValue; break;
                 default: break;
             }
 
-            switch (this.AppBar.BrushMode)
+            switch (this.BrushMode)
             {
                 case 0:
                     return;
@@ -102,7 +107,7 @@ namespace Luo_Painter
             if (this.SelectionType is SelectionType.None) return;
             if (Vector2.DistanceSquared(this.StartingPoint, this.Point) < 100) return;
 
-            switch (this.AppBar.BrushMode)
+            switch (this.BrushMode)
             {
                 case 0:
                     break;
@@ -133,7 +138,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
 
-            switch (this.AppBar.BrushMode)
+            switch (this.BrushMode)
             {
                 case 0:
                     this.Brush(new CanvasSolidColorBrush(this.CanvasDevice, this.ColorMenu.Color));
@@ -142,7 +147,7 @@ namespace Luo_Painter
                     {
                         Color startColor = this.ColorMenu.Color;
                         Color endColor = this.ColorMenu.Color;
-                        switch (this.AppBar.IsBrushReverse)
+                        switch (this.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
                             case false: endColor.A = byte.MinValue; break;
@@ -162,7 +167,7 @@ namespace Luo_Painter
                         Color startColor = this.ColorMenu.Color;
                         Color endColor = this.ColorMenu.Color;
 
-                        switch (this.AppBar.IsBrushReverse)
+                        switch (this.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
                             case false: endColor.A = byte.MinValue; break;
@@ -184,7 +189,7 @@ namespace Luo_Painter
                         Color startColor = this.ColorMenu.Color;
                         Color endColor = this.ColorMenu.Color;
 
-                        switch (this.AppBar.IsBrushReverse)
+                        switch (this.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
                             case false: endColor.A = byte.MinValue; break;

@@ -15,6 +15,11 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        double DisplacementLiquefactionSize => (float)this.DisplacementLiquefactionSizeSlider.Value;
+        double DisplacementLiquefactionPressure => (float)this.DisplacementLiquefactionPressureSlider.Value;
+
+        int DisplacementLiquefactionMode => this.DisplacementLiquefactionModeComboBox.SelectedIndex;
+
         float DisplacementLiquefactionAmount = 512;
 
         private void SetDisplacementLiquefaction()
@@ -28,34 +33,13 @@ namespace Luo_Painter
         {
         }
 
-        private ICanvasImage GetDisplacementLiquefactionPreview(ICanvasImage image)
-        {
-            return new DisplacementMapEffect
-            {
-                XChannelSelect = EffectChannelSelect.Red,
-                YChannelSelect = EffectChannelSelect.Green,
-                Amount = this.DisplacementLiquefactionAmount,
-                Source = image,
-                Displacement = new GaussianBlurEffect
-                {
-                    BlurAmount = 16,
-                    Source = new BorderEffect
-                    {
-                        ExtendX = CanvasEdgeBehavior.Clamp,
-                        ExtendY = CanvasEdgeBehavior.Clamp,
-                        Source = this.Displacement[BitmapType.Source],
-                    }
-                }
-            };
-        }
-
 
         private void DisplacementLiquefaction_Delta()
         {
             if (this.StartingPosition == this.Position) return;
 
-            float radius = (float)this.AppBar.DisplacementLiquefactionSize;
-            float pressure = (float)this.AppBar.DisplacementLiquefactionPressure / 100;
+            float radius = (float)this.DisplacementLiquefactionSize;
+            float pressure = (float)this.DisplacementLiquefactionPressure / 100;
 
             this.Displacement.Shade(new PixelShaderEffect(this.DisplacementLiquefactionShaderCodeBytes)
             {
@@ -64,7 +48,7 @@ namespace Luo_Painter
                 Properties =
                 {
                     /// <see cref="DisplacementLiquefactionMode"/> to <see cref="System.Int32"/>
-                    ["mode"] =1+this.AppBar.DisplacementLiquefactionMode,
+                    ["mode"] =1+this.DisplacementLiquefactionMode,
                     ["amount"] = this.DisplacementLiquefactionAmount,
                     ["pressure"] = pressure,
                     ["radius"] = radius,

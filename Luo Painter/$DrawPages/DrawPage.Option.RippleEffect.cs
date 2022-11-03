@@ -16,20 +16,41 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        Rippler Rippler = Rippler.Zero;
+
         bool IsRipplerPoint;
         Vector2 RipplerCenter;
         Vector2 StartingRipplerCenter;
         Vector2 RipplerPoint;
         Vector2 StartingRipplerPoint;
 
+        public void ConstructRippleEffect()
+        {
+            this.FrequencySlider.ValueChanged += (s, e) =>
+            {
+                this.Rippler.Frequency = (float)(e.NewValue);
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+            };
+            this.PhaseSlider.ValueChanged += (s, e) =>
+            {
+                this.Rippler.Phase = (float)(e.NewValue);
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+            };
+            this.AmplitudeSlider.ValueChanged += (s, e) =>
+            {
+                this.Rippler.Amplitude = (float)(e.NewValue);
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+            };
+        }
+
         private void SetRippleEffect(BitmapLayer bitmapLayer)
         {
             if (this.RipplerCenter == Vector2.Zero)
             {
-                this.AppBar.Rippler.Spread = System.Math.Min(bitmapLayer.Width, bitmapLayer.Height) / 4096f;
+                this.Rippler.Spread = System.Math.Min(bitmapLayer.Width, bitmapLayer.Height) / 4096f;
 
                 this.RipplerCenter = bitmapLayer.Center;
-                this.RipplerPoint.X = this.RipplerCenter.X + this.AppBar.Rippler.Spread * 1.41421356f * 512;
+                this.RipplerPoint.X = this.RipplerCenter.X + this.Rippler.Spread * 1.41421356f * 512;
                 this.RipplerPoint.Y = this.RipplerCenter.Y;
             }
         }
@@ -51,24 +72,6 @@ namespace Luo_Painter
             ds.DrawNode2(point);
         }
 
-        private ICanvasImage GetRippleEffectPreview(ICanvasImage image)
-        {
-            return new PixelShaderEffect(this.RippleEffectShaderCodeBytes)
-            {
-                Source2BorderMode = EffectBorderMode.Hard,
-                Source1 = image,
-                Properties =
-                {
-                    ["frequency"] = this.AppBar.Rippler.Frequency,
-                    ["phase"] = this.AppBar.Rippler.Phase,
-                    ["amplitude"] = this.AppBar.Rippler.Amplitude,
-                    ["spread"] = this.AppBar.Rippler.Spread,
-                    ["center"] = this.RipplerCenter,
-                    ["dpi"] = 96.0f, // Default value 96f,
-                },
-            };
-        }
-
 
         private void RippleEffect_Start()
         {
@@ -84,7 +87,7 @@ namespace Luo_Painter
 
             if (this.IsRipplerPoint)
             {
-                this.AppBar.Rippler.Spread = Vector2.Distance(this.RipplerCenter, this.RipplerPoint) / 512 / 1.41421356f;
+                this.Rippler.Spread = Vector2.Distance(this.RipplerCenter, this.RipplerPoint) / 512 / 1.41421356f;
 
                 this.Tip(TipType.Spread);
             }

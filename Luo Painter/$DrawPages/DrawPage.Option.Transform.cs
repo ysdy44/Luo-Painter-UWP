@@ -17,6 +17,8 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        int TransformMode => this.TransformComboBox.SelectedIndex;
+
         Vector2 Move;
         Vector2 StartingMove;
 
@@ -25,6 +27,15 @@ namespace Luo_Painter
         Transformer BoundsFreeTransformer;
         Matrix3x2 BoundsFreeMatrix;
         Vector2 BoundsFreeDistance;
+
+        public void ConstructTransform()
+        {
+            this.TransformComboBox.SelectionChanged += (s, e) =>
+            {
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+        }
 
         private void SetTransform(PixelBounds bounds)
         {
@@ -42,7 +53,7 @@ namespace Luo_Painter
 
         private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds, Matrix3x2 matrix)
         {
-            switch (this.AppBar.TransformMode)
+            switch (this.TransformMode)
             {
                 case 0:
                     break;
@@ -61,49 +72,10 @@ namespace Luo_Painter
             }
         }
 
-        private ICanvasImage GetTransformPreview(ICanvasImage image)
-        {
-            switch (this.AppBar.TransformMode)
-            {
-                case 0:
-                    return new Transform2DEffect
-                    {
-                        BorderMode = EffectBorderMode.Hard,
-                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                        TransformMatrix = Matrix3x2.CreateTranslation(this.Move),
-                        Source = image
-                    };
-                case 1:
-                    return new Transform2DEffect
-                    {
-                        BorderMode = EffectBorderMode.Hard,
-                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                        TransformMatrix = this.BoundsMatrix,
-                        Source = image
-                    };
-                case 2:
-                    return new PixelShaderEffect(this.FreeTransformShaderCodeBytes)
-                    {
-                        Source1 = image,
-                        Properties =
-                        {
-                            ["matrix3x2"] = this.BoundsFreeMatrix,
-                            ["zdistance"] = this.BoundsFreeDistance,
-                            ["left"] = this.Bounds.Left,
-                            ["top"] = this.Bounds.Top,
-                            ["right"] = this.Bounds.Right,
-                            ["bottom"] = this.Bounds.Bottom,
-                        },
-                    };
-                default:
-                    return image;
-            }
-        }
-
 
         private void Transform_Start()
         {
-            switch (this.AppBar.TransformMode)
+            switch (this.TransformMode)
             {
                 case 0:
                     this.StartingMove = this.Move;
@@ -124,7 +96,7 @@ namespace Luo_Painter
 
         private void Transform_Delta()
         {
-            switch (this.AppBar.TransformMode)
+            switch (this.TransformMode)
             {
                 case 0:
                     this.Move = this.Position - this.StartingPosition + this.StartingMove;

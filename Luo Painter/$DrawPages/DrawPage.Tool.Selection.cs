@@ -16,12 +16,14 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        bool SelectionIsSubtract => this.SelectionComboBox.SelectedIndex is 0 is false;
+
         private void SelectionBrush_Start()
         {
         }
         private void SelectionBrush_Delta()
         {
-            this.Marquee.Marquee(this.StartingPosition, this.Position, 32, this.AppBar.SelectionIsSubtract);
+            this.Marquee.Marquee(this.StartingPosition, this.Position, 32, this.SelectionIsSubtract);
             this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, this.Position, 32));
             this.CanvasControl.Invalidate(); // Invalidate
         }
@@ -40,7 +42,7 @@ namespace Luo_Painter
         {
             if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
             {
-                this.SelectionFlood(this.Position, bitmapLayer, this.AppBar.SelectionIsSubtract);
+                this.SelectionFlood(this.Position, bitmapLayer, this.SelectionIsSubtract);
             }
             else
             {

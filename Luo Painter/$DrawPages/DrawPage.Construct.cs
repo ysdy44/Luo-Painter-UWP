@@ -51,7 +51,7 @@ namespace Luo_Painter
                     break;
 
                 case TipType.Spread:
-                    this.ToastTip.Tip("Spread", $"{this.AppBar.Rippler.Spread * 100:0.00}%");
+                    this.ToastTip.Tip("Spread", $"{this.Rippler.Spread * 100:0.00}%");
                     break;
                 case TipType.Zoom:
                     this.ToastTip.Tip("Zoom", $"{this.Transformer.Scale * 100:0.00}%");

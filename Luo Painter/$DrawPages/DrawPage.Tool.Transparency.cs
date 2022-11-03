@@ -14,9 +14,13 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        int TransparencyMode => this.TransparencyComboBox.SelectedIndex;
+
+        bool IsTransparencyReverse => this.TransparencyReverseButton.IsChecked is true;
+
         private Color GetStartColor()
         {
-            switch (this.AppBar.IsTransparencyReverse)
+            switch (this.IsTransparencyReverse)
             {
                 case true: return Colors.Transparent;
                 default: return Colors.Black;
@@ -24,7 +28,7 @@ namespace Luo_Painter
         }
         private Color GetEndColor()
         {
-            switch (this.AppBar.IsTransparencyReverse)
+            switch (this.IsTransparencyReverse)
             {
                 case true: return Colors.Black;
                 default: return Colors.Transparent;
@@ -80,7 +84,7 @@ namespace Luo_Painter
                     break;
             }
 
-            switch (this.AppBar.TransparencyMode)
+            switch (this.TransparencyMode)
             {
                 case 0:
                     this.LinearGradientBrush = new CanvasLinearGradientBrush(this.CanvasDevice, this.GetStartColor(), this.GetEndColor())
@@ -111,7 +115,7 @@ namespace Luo_Painter
             if (this.SelectionType is SelectionType.None) return;
             if (Vector2.DistanceSquared(this.StartingPoint, this.Point) < 100) return;
 
-            switch (this.AppBar.TransparencyMode)
+            switch (this.TransparencyMode)
             {
                 case 0:
                     this.LinearGradientBrush.EndPoint = this.Position;
@@ -140,7 +144,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
             if (this.SelectionType is SelectionType.None) return;
 
-            switch (this.AppBar.TransparencyMode)
+            switch (this.TransparencyMode)
             {
                 case 0:
                     this.LinearGradientBrush?.Dispose();

@@ -133,7 +133,7 @@ namespace Luo_Painter
             {
                 this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
 
-                this.AppBar.ConstructView(this.Transformer);
+                this.ConstructView(this.Transformer);
             };
 
             // Wheel
@@ -149,7 +149,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.CanvasControl.Invalidate(); // Invalidate
 
-                this.AppBar.ConstructView(this.Transformer);
+                this.ConstructView(this.Transformer);
             };
         }
 
