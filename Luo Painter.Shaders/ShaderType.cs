@@ -25,5 +25,6 @@
         BrushEdgeHardnessWithTexture,
         LalphaMaskEffect,
         RalphaMaskEffect,
+        Threshold,
     }
 }

@@ -31,6 +31,7 @@ call :COMPILE BrushEdgeHardness.hlsl   || goto END
 call :COMPILE BrushEdgeHardnessWithTexture.hlsl   || goto END
 call :COMPILE LalphaMaskEffect.hlsl   || goto END
 call :COMPILE RalphaMaskEffect.hlsl   || goto END
+call :COMPILE Threshold.hlsl   || goto END
 
 goto END
 

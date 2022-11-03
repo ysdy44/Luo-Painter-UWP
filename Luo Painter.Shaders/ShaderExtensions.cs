@@ -44,6 +44,7 @@ namespace Luo_Painter.Shaders
                 case ShaderType.BrushEdgeHardnessWithTexture: return "ms-appx:///Luo Painter.Shaders/BrushEdgeHardnessWithTexture.bin";
                 case ShaderType.LalphaMaskEffect: return "ms-appx:///Luo Painter.Shaders/LalphaMaskEffect.bin";
                 case ShaderType.RalphaMaskEffect: return "ms-appx:///Luo Painter.Shaders/RalphaMaskEffect.bin";
+                case ShaderType.Threshold: return "ms-appx:///Luo Painter.Shaders/Threshold.bin";
                 default: throw new NullReferenceException($"The shader for {type} is null.");
             }
         }
