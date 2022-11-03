@@ -399,7 +399,7 @@
                 </VisualState>
 
             </VisualStateGroup>
-            
+
             <VisualStateGroup>
 
                 <!--Phone-->
@@ -770,7 +770,6 @@
 
 
         <!--AppBar-->
-        <controls:ContextAppBar x:Name="AppBar" Grid.Column="1" />
         <Grid
             x:Name="AppBarGrid"
             Grid.Column="1"       

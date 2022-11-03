@@ -158,19 +158,24 @@ namespace Luo_Painter
 
             this.ConstructLayers();
             this.ConstructLayer();
+
             this.ConstructPropertys();
             this.ConstructProperty();
-            
+
             this.ConstructFoots();
             this.ConstructFoot();
-
+            
+            this.ConstructEffect();
+            this.ConstructGeometry();
+            
             this.ConstructInk();
 
             this.ConstructSetup();
 
             this.ConstructGradientMapping();
+            this.ConstructRippleEffect();
             this.ConstructVector();
-
+            this.ConstructTransform();
             this.ConstructPen();
             base.SizeChanged += (s, e) =>
             {
@@ -269,8 +274,10 @@ namespace Luo_Painter
                     this.ConstructSize((float)item.Size);
                 }
             };
-            this.ColorMenu.ColorChanged += (s, e) =>
+            this.ColorPicker.ColorChanged += (s, e) =>
             {
+                if (this.ColorFlyout.IsOpen is false) return;
+
                 switch (this.OptionType)
                 {
                     case OptionType.GradientMapping:
@@ -304,7 +311,7 @@ namespace Luo_Painter
         {
             switch (e.NavigationMode)
             {
-                case NavigationMode.New: 
+                case NavigationMode.New:
                     break;
                 case NavigationMode.Back:
                     break;
@@ -326,7 +333,7 @@ namespace Luo_Painter
         {
             switch (e.NavigationMode)
             {
-                case NavigationMode.Back: 
+                case NavigationMode.Back:
                     break;
                 case NavigationMode.New:
                     // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
