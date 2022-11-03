@@ -58,8 +58,6 @@ namespace Luo_Painter
 
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
-        public GradientStopSelectorWithUI GradientMappingSelector => this.AppBar.Selector;
-
         readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>
         {
             [0] = Colors.LightBlue,
@@ -82,8 +80,8 @@ namespace Luo_Painter
                 this.GradientMappingSelector.SetCurrent(s);
                 if (this.GradientMappingSelector.CurrentStop == null) return;
 
-                this.ColorMenu.Show(this.GradientMappingSelector.CurrentStop.Color);
-                this.ColorMenu.ShowAt(this.GradientMappingSelector.CurrentButton, Elements.ExpanderPlacementMode.Top);
+                this.ColorPicker.Color = this.GradientMappingSelector.CurrentStop.Color;
+                this.ColorFlyout.ShowAt(this.GradientMappingSelector.CurrentButton);
             };
 
             this.GradientMappingSelector.ItemManipulationStarted += (s, e) =>

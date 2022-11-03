@@ -53,6 +53,12 @@ namespace Luo_Painter
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
+        public double SizeConverter(double value) => this.SizeRange.ConvertXToY(value);
+        private double FontSizeConverter(double value) => this.SizeConverter(value) / 4 + 1;
+        private string SizeToStringConverter(double value) => string.Format("{0:F}", this.SizeConverter(value));
+        private double OpacityConverter(double value) => value / 100;
+        private string OpacityToStringConverter(double value) => $"{(int)value} %";
+
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
