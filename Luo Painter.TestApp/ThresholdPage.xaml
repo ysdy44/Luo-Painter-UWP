@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.ThresholdPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <xaml:CanvasControl x:Name="CanvasControl"/>
+            <Rectangle Grid.Column="1" Fill="Gray"/>
+            <xaml:CanvasControl x:Name="OriginCanvasControl" Grid.Column="2" ClearColor="White"/>
+        </Grid>
+
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <ContentControl.Content>
+                <Slider x:Name="Slider" Margin="12,4,2,0" MinWidth="200" Value="150" Minimum="0" Maximum="300" />
+            </ContentControl.Content>
+
+            <AppBarButton x:Name="AddButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="N"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Add"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Add
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="FontColor"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Color1
+                </AppBarButton.Label>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <ColorPicker x:Name="ColorPicker0" Color="White"/>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+            <AppBarButton>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="FontColor"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Color2
+                </AppBarButton.Label>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <ColorPicker x:Name="ColorPicker1" Color="Black"/>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+        </CommandBar>
+
+    </Grid>
+</Page>
