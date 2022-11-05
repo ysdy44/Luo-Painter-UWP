@@ -2175,6 +2175,7 @@
 
 
         <!--Dialog-->
+        <controls:EffectDialog x:Name="EffectDialog" />
         <controls:ExportDialog x:Name="ExportDialog" />
         <controls:TextureDialog x:Name="TextureDialog" />
         <controls:StretchDialog x:Name="StretchDialog" />

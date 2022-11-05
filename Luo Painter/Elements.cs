@@ -71,7 +71,7 @@ namespace Luo_Painter
 
     internal sealed class AdjustmentGroupingList : GroupingList<AdjustmentGrouping, OptionType, OptionType> { }
     internal sealed class AdjustmentGrouping : Grouping<OptionType, OptionType> { }
-    internal sealed class AdjustmentImage : TButton<OptionType>
+    internal sealed class AdjustmentImage : TIcon<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {

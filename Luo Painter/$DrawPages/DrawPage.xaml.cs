@@ -164,10 +164,10 @@ namespace Luo_Painter
 
             this.ConstructFoots();
             this.ConstructFoot();
-            
+
             this.ConstructEffect();
             this.ConstructGeometry();
-            
+
             this.ConstructInk();
 
             this.ConstructSetup();
@@ -196,6 +196,17 @@ namespace Luo_Painter
             this.EditMenu.ItemClick += (s, type) => this.Click(type);
             this.AdjustmentMenu.ItemClick += (s, type) => this.Click(type);
             this.OtherMenu.ItemClick += (s, type) => this.Click(type);
+
+            this.AdjustmentMenu.MoreClick += async (s, type) =>
+            {
+                this.ExpanderLightDismissOverlay.Hide();
+                await this.EffectDialog.ShowInstance();
+            };
+            this.EffectDialog.ItemClick += (s, type) =>
+            {
+                this.EffectDialog.Hide();
+                this.Click(type);
+            };
 
 
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
