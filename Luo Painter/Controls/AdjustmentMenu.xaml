@@ -15,124 +15,44 @@
     >
 
     <elements:Expander.Title>
-        Adjustment
+        Adjustments
     </elements:Expander.Title>
 
-    <elements:Expander.TopAppBar>
-        <ListBox SelectedIndex="{x:Bind FlipView.SelectedIndex, Mode=TwoWay}" ItemsSource="{x:Bind Collection}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="luo_painter:AdjustmentGrouping">
-                    <TextBlock Text="{x:Bind Key}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListBox>
-    </elements:Expander.TopAppBar>
-
-    <FrameworkElement.Tag>
-        <Button x:Name="Button" CommandParameter="{x:Null}" Style="{x:Null}" >
-            <ButtonBase.Command>
-                <luo_painter:OptionTypeCommand x:Name="Command"/>
-            </ButtonBase.Command>
-        </Button>
-    </FrameworkElement.Tag>
-
     <FrameworkElement.Resources>
-        <!--Collection-->
-        <luo_painter:AdjustmentGroupingList x:Name="Collection">
-            <luo_painter:AdjustmentGrouping Key="Adjustment">
-                <options:OptionType>Gray</options:OptionType>
-                <options:OptionType>Invert</options:OptionType>
-                <options:OptionType>Exposure</options:OptionType>
-                <options:OptionType>Brightness</options:OptionType>
-                <options:OptionType>Saturation</options:OptionType>
-                <options:OptionType>HueRotation</options:OptionType>
-                <options:OptionType>Contrast</options:OptionType>
-                <options:OptionType>Temperature</options:OptionType>
-                <options:OptionType>HighlightsAndShadows</options:OptionType>
-            </luo_painter:AdjustmentGrouping>
-            <luo_painter:AdjustmentGrouping Key="Effect1">
-                <options:OptionType>GaussianBlur</options:OptionType>
-                <options:OptionType>DirectionalBlur</options:OptionType>
-                <options:OptionType>Sharpen</options:OptionType>
-                <options:OptionType>Shadow</options:OptionType>
-                <options:OptionType>ChromaKey</options:OptionType>
-                <options:OptionType>EdgeDetection</options:OptionType>
-                <options:OptionType>Border</options:OptionType>
-                <options:OptionType>Emboss</options:OptionType>
-                <options:OptionType>Lighting</options:OptionType>
-            </luo_painter:AdjustmentGrouping>
-            <luo_painter:AdjustmentGrouping Key="Effect2">
-                <options:OptionType>LuminanceToAlpha</options:OptionType>
-                <options:OptionType>Fog</options:OptionType>
-                <options:OptionType>Sepia</options:OptionType>
-                <options:OptionType>Posterize</options:OptionType>
-                <options:OptionType>Colouring</options:OptionType>
-                <options:OptionType>Tint</options:OptionType>
-                <options:OptionType>DiscreteTransfer</options:OptionType>
-                <options:OptionType>Vignette</options:OptionType>
-                <options:OptionType>GammaTransfer</options:OptionType>
-            </luo_painter:AdjustmentGrouping>
-            <luo_painter:AdjustmentGrouping Key="Effect3">
-                <options:OptionType>Glass</options:OptionType>
-                <options:OptionType>PinchPunch</options:OptionType>
-                <options:OptionType>Morphology</options:OptionType>
-            </luo_painter:AdjustmentGrouping>
-        </luo_painter:AdjustmentGroupingList>
+        <!--Command-->
+        <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <FlipView x:Name="FlipView" Height="480" Background="Transparent" ItemsSource="{x:Bind Collection}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="luo_painter:AdjustmentGrouping">
-                <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
-                    <ItemsControl ItemsSource="{x:Bind}" >
+    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
+        <StackPanel Spacing="2" Padding="6,4">
 
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Horizontal" HorizontalAlignment="Center" MaximumRowsOrColumns="3"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+            <!--Adjust-->
+            <luo_painter:OptionItemButton Type="Gray" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Invert" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="Margin" Value="4,2"/>
-                                <Setter Property="Width" Value="150"/>
-                                <Setter Property="Height" Value="92"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="BorderBrush" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+            
+            <luo_painter:OptionItemButton Type="Exposure" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Brightness" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Saturation" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="HueRotation" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Contrast" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Temperature" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="HighlightsAndShadows" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <luo_painter:AdjustmentImage
-                                    Padding="0"      
-                                    HorizontalAlignment="Stretch"                                       
-                                    VerticalAlignment="Stretch" 
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"          
-                                    Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-                                    Style="{StaticResource TextBlockButtonStyle}"                                      
-                                    Type="{Binding}"                                         
-                                    CommandParameter="{Binding}"                                         
-                                    Command="{Binding ElementName=Button, Path=Command, Mode=OneWay}"
-                                    >
-                                    <ContentControl.ContentTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <Border Padding="2,0" Height="20" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundAltMediumBrush}">
-                                                <TextBlock Text="{Binding}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ContentControl.ContentTemplate>
-                                </luo_painter:AdjustmentImage>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
 
-                    </ItemsControl>
-                </ScrollViewer>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </FlipView>
+            <!--Effect-->
+            <luo_painter:OptionItemButton Type="GaussianBlur" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="DirectionalBlur" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Sharpen" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Shadow" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="EdgeDetection" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Morphology" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Emboss" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+            <luo_painter:OptionItemButton Type="Straighten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
+
+        </StackPanel>
+    </ScrollViewer>
 
 </elements:Expander>
