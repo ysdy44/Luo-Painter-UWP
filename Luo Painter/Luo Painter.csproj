@@ -160,6 +160,9 @@
     <Compile Include="Controls\BrushListView.xaml.cs">
       <DependentUpon>BrushListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EffectDialog.xaml.cs">
+      <DependentUpon>EffectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ExtendDialog.xaml.cs">
       <DependentUpon>ExtendDialog.xaml</DependentUpon>
     </Compile>
@@ -326,6 +329,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\BrushListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\EffectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
