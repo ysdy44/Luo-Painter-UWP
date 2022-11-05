@@ -231,6 +231,8 @@ namespace Luo_Painter.Options
         Glass = Effect3 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         PinchPunch = Effect3 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Morphology = Effect3 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Straighten = Effect3 | 4 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Edge = Effect3 | 5 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         #endregion
 

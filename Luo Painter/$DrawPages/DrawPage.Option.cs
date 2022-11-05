@@ -1451,6 +1451,7 @@ namespace Luo_Painter
                     }
                     break;
                 //case OptionType.RippleEffect: break;
+                //case OptionType.Threshold: break;
                 case OptionType.Fill: break;
 
                 // Adjustment
@@ -1479,6 +1480,7 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.RippleEffect:
+                case OptionType.Threshold:
                 case OptionType.Exposure:
                 case OptionType.Brightness:
                 case OptionType.Saturation:
@@ -1539,6 +1541,8 @@ namespace Luo_Painter
                 case OptionType.Glass: break;
                 case OptionType.PinchPunch: break;
                 case OptionType.Morphology: break;
+                case OptionType.Straighten: break;
+                case OptionType.Edge: break;
 
                 #endregion
 
