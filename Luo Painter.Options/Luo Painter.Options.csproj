@@ -158,6 +158,7 @@
     <Content Include="Thumbnails\Sepia.jpg" />
     <Content Include="Thumbnails\Shadow.jpg" />
     <Content Include="Thumbnails\Sharpen.jpg" />
+    <Content Include="Thumbnails\Straighten.jpg" />
     <Content Include="Thumbnails\Temperature.jpg" />
     <Content Include="Thumbnails\Tint.jpg" />
     <Content Include="Thumbnails\Vignette.jpg" />
