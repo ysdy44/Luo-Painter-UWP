@@ -52,6 +52,24 @@
             <luo_painter:OptionItemButton Type="Emboss" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
             <luo_painter:OptionItemButton Type="Straighten" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
 
+            <Rectangle Margin="0,2" Style="{StaticResource AppRectangleStyle}"/>
+
+            <!--More-->
+            <Button x:Name="MoreButton" HorizontalContentAlignment="Stretch" Style="{StaticResource AppBorderButtonStyle}" >
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <SymbolIcon Symbol="More"/>
+                    <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
+                        More
+                    </TextBlock>
+                    <FontIcon Grid.Column="2" Glyph="&#xE00F;"  FontSize="12" FontFamily="Segoe MDL2 Assets"/>
+                </Grid>
+            </Button>
+            
         </StackPanel>
     </ScrollViewer>
 

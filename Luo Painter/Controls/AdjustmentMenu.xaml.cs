@@ -2,7 +2,7 @@
 using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Controls
@@ -14,6 +14,11 @@ namespace Luo_Painter.Controls
         {
             remove => this.Command.Click -= value;
             add => this.Command.Click += value;
+        }
+        public event RoutedEventHandler MoreClick
+        {
+            remove => this.MoreButton.Click -= value; 
+            add => this.MoreButton.Click += value; 
         }
 
         //@Construct
