@@ -97,16 +97,15 @@
             <StaticResource x:Key="MenuFlyoutPresenterBackground" ResourceKey="SystemControlAcrylicElementBrush"/>
             <StaticResource x:Key="MenuFlyoutPresenterBorderBrush" ResourceKey="AppStroke"/>
             <StaticResource x:Key="MenuFlyoutSeparatorThemeBrush" ResourceKey="AppStroke"/>
-            <Style TargetType="MenuFlyoutSeparator">
-                <Setter Property="Background" Value="{ThemeResource AppBorderBrush}" />
-                <Setter Property="Padding" Value="4,2" />
-            </Style>
 
             <!--Make the Background binding the Accent-Brush-->
             <StaticResource x:Key="ComboBoxItemRevealBackgroundSelected" ResourceKey="SystemColorControlAccentBrush" />
             <StaticResource x:Key="ComboBoxItemRevealBackgroundSelectedUnfocused" ResourceKey="SystemColorControlAccentBrush" />
             <StaticResource x:Key="ComboBoxItemRevealBackgroundSelectedPressed" ResourceKey="SystemColorControlAccentBrush" />
             <StaticResource x:Key="ComboBoxItemRevealBackgroundSelectedPointerOver" ResourceKey="SystemColorControlAccentBrush" />
+
+            <StaticResource x:Key="ComboBoxDropDownBackground" ResourceKey="SystemControlAcrylicElementBrush"/>
+            <StaticResource x:Key="ComboBoxDropDownBorderBrush" ResourceKey="AppStroke"/>
 
             <StaticResource x:Key="SliderTrackValueFill" ResourceKey="SystemColorControlAccentBrush" />
             <StaticResource x:Key="SliderThumbBackground" ResourceKey="SystemColorControlAccentBrush" />
