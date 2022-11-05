@@ -323,10 +323,6 @@ namespace Luo_Painter
                     this.IsFullScreen = true;
 
                     VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
-
-                    this.FullScreenKey.IsEnabled = false;
-                    await Task.Delay(200);
-                    this.FullScreenKey.IsEnabled = true;
                     break;
                 case OptionType.UnFullScreen:
                     this.ApplicationView.ExitFullScreenMode();
@@ -375,7 +371,7 @@ namespace Luo_Painter
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                             this.RaiseHistoryCanExecuteChanged();
-                            this.EditMenu.PasteIsEnabled = true;
+                            this.RaiseEditCanExecuteChanged();
                         }
                         else this.Tip(TipType.NoLayer);
                     }
@@ -399,7 +395,7 @@ namespace Luo_Painter
                                     break;
                             }
 
-                            this.EditMenu.PasteIsEnabled = true;
+                            this.RaiseEditCanExecuteChanged();
                         }
                     }
                     break;
@@ -505,16 +501,6 @@ namespace Luo_Painter
                     this.PaletteMenu.Toggle(this.PaletteButton, ExpanderPlacementMode.Bottom);
                     break;
 
-                case OptionType.EditMenu:
-                    this.EditMenu.Toggle(this.EditButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.AdjustmentMenu:
-                    this.AdjustmentMenu.Toggle(this.AdjustmentButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.OtherMenu:
-                    this.OtherMenu.Toggle(this.OtherButton, ExpanderPlacementMode.Bottom);
-                    break;
-
                 case OptionType.PaintMenu:
                     this.HeadComboBox.SelectedIndex = 1;
                     break;
@@ -525,9 +511,6 @@ namespace Luo_Painter
                     this.HeadComboBox.SelectedIndex = 3;
                     break;
 
-                case OptionType.LayerMenu:
-                    this.LayerMenu.Toggle(this.LayerButton, ExpanderPlacementMode.Bottom);
-                    break;
                 case OptionType.AddMenu:
                     this.AddFlyout.ShowAt(this.LayerListView.PlacementTarget);
                     break;
@@ -854,7 +837,7 @@ namespace Luo_Painter
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                                     this.RaiseHistoryCanExecuteChanged();
-                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                    this.RaiseLayerCanExecuteChanged();
                                 }
                                 break;
                             default:
@@ -865,7 +848,7 @@ namespace Luo_Painter
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                                     this.RaiseHistoryCanExecuteChanged();
-                                    this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                    this.RaiseLayerCanExecuteChanged();
                                 }
                                 break;
                         }
@@ -884,11 +867,11 @@ namespace Luo_Painter
                             case 1:
                                 if (this.LayerSelectedItem is ILayer layer)
                                     this.LayerManager.Copy(this, layer);
-                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                this.RaiseLayerCanExecuteChanged();
                                 break;
                             default:
                                 this.LayerManager.Copy(this, items);
-                                this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+                                this.RaiseLayerCanExecuteChanged();
                                 break;
                         }
                     }

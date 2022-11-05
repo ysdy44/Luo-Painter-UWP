@@ -22,6 +22,24 @@ namespace Luo_Painter
         }
 
 
+        public void RaiseHistoryCanExecuteChanged()
+        {
+            this.UndoButton.IsEnabled = this.History.CanUndo;
+            this.UndoButton2.IsEnabled = this.History.CanUndo;
+
+            this.RedoButton.IsEnabled = this.History.CanRedo;
+            this.RedoButton2.IsEnabled = this.History.CanRedo;
+        }
+        public void RaiseEditCanExecuteChanged()
+        {
+            this.EditMenu.PasteIsEnabled = true;
+        }
+        public void RaiseLayerCanExecuteChanged()
+        {
+            this.LayerMenu.PasteIsEnabled = this.ClipboardLayers.Count is 0 is false;
+        }
+
+
         public void Tip(string title, string subtitle)
         {
             this.ToastTip.Tip(title, subtitle);

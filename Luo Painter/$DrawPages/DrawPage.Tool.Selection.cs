@@ -70,7 +70,7 @@ namespace Luo_Painter
                     this.Tip(TipType.NoPixelForMarquee);
                     return false;
                 case PixelBoundsMode.Solid:
-                    this.EditMenu.Execute(isSubtract ? OptionType.Deselect : OptionType.All);
+                    this.Click(isSubtract ? OptionType.Deselect : OptionType.All);
                     return true;
                 default:
                     // History
