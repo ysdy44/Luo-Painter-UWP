@@ -192,16 +192,7 @@ namespace Luo_Painter
 
             this.Command.Click += (s, type) => this.Click(type);
 
-            this.LayerMenu.ItemClick += (s, type) => this.Click(type);
-            this.EditMenu.ItemClick += (s, type) => this.Click(type);
-            this.AdjustmentMenu.ItemClick += (s, type) => this.Click(type);
-            this.OtherMenu.ItemClick += (s, type) => this.Click(type);
-
-            this.AdjustmentMenu.MoreClick += async (s, type) =>
-            {
-                this.ExpanderLightDismissOverlay.Hide();
-                await this.EffectDialog.ShowInstance();
-            };
+            this.MoreItem.Click += async (s, type) => await this.EffectDialog.ShowInstance();
             this.EffectDialog.ItemClick += (s, type) =>
             {
                 this.EffectDialog.Hide();
@@ -217,14 +208,9 @@ namespace Luo_Painter
             this.LayerListView.PropertyClick += (s, e) => this.Click(OptionType.PropertyMenu);
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
-            this.LayerButton.Click += (s, e) => this.Click(OptionType.LayerMenu);
 
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
             this.PaletteButton.Click += (s, e) => this.Click(OptionType.PaletteMenu);
-
-            this.EditButton.Click += (s, e) => this.Click(OptionType.EditMenu);
-            this.AdjustmentButton.Click += (s, e) => this.Click(OptionType.AdjustmentMenu);
-            this.OtherButton.Click += (s, e) => this.Click(OptionType.OtherMenu);
 
 
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
@@ -244,7 +230,6 @@ namespace Luo_Painter
 
             this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
             this.KeyButton2.Click += (s, e) => this.KeyboardShortcuts.Tip();
-            this.KeyboardShortcuts.ItemsSource = from c in base.KeyboardAccelerators where c.Key != default select new Controls.KeyboardShortcut(c);
 
 
             this.LeftSplitButton.Click += (s, e) => this.LeftSplitView.IsPaneOpen = true;

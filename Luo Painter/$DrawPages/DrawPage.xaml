@@ -10,6 +10,7 @@
     xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:options="using:Luo_Painter.Options"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     NavigationCacheMode="Required"
@@ -44,29 +45,21 @@
                 ColorSpectrumComponents="SaturationValue"             
                 />
         </Flyout>
-        <Flyout x:Name="AddFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <StackPanel Spacing="2" Padding="6,4" Width="318">
-
-                <TextBlock                        
-                    x:Name="AddTextBlock"                            
-                    Margin="8,4"                          
-                    IsHitTestVisible="false"                           
-                    FontWeight="Medium"                          
-                    TextTrimming="CharacterEllipsis"                          
-                    FontSize="20"                          
-                    TextWrapping="Wrap"                          
-                    VerticalAlignment="Center"                          
-                    Style="{StaticResource SubheaderTextBlockStyle}"                       
-                    >                        
+        <MenuFlyout x:Name="AddFlyout">
+            <!--Add-->
+            <MenuFlyoutSeparator x:Name="AddHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                <UIElement.AccessKey>
                     Add
-                </TextBlock>
-
-                <local:OptionItemButton Type="AddLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:OptionItemButton Type="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-                <local:OptionItemButton Type="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppBorderButtonStyle}" />
-
-            </StackPanel>
-        </Flyout>
+                </UIElement.AccessKey>
+            </MenuFlyoutSeparator>
+            <MenuFlyoutItem options:OptionExtensions.Type="AddLayer" Command="{x:Bind Command}">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Insert"/>
+                </UIElement.KeyboardAccelerators>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
+            <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
+        </MenuFlyout>
         <Flyout x:Name="PropertyFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <StackPanel Spacing="2" Padding="6,4" Width="318">
 
@@ -185,8 +178,8 @@
 
             </StackPanel>
         </Flyout>
-
-
+        
+  
         <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:ScaleRange x:Name="ScaleRange"/>
@@ -234,50 +227,6 @@
             </StackPanel>
         </Flyout>
     </FrameworkElement.Resources>
-
-
-    <UIElement.KeyboardAccelerators>
-        <KeyboardAccelerator>
-            <!--Without it, All controls will show ToolTip for KeyboardAccelerator-->
-        </KeyboardAccelerator>
-
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="S" CommandParameter="Save" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="Z" CommandParameter="Undo" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="Y" CommandParameter="Redo" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator x:Name="FullScreenKey" Modifiers="None" Key="Escape" CommandParameter="FullScreen" Command="{x:Bind Command}" />
-
-
-        <local:OptionKeyboardAccelerator Modifiers="None" Key="F2" CommandParameter="PropertyMenuWithRename" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="None" Key="F3" CommandParameter="PropertyMenu" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="None" Key="F5" CommandParameter="PaintMenu" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="None" Key="F6" CommandParameter="BrushMenu" Command="{x:Bind Command}" />
-
-
-        <local:OptionKeyboardAccelerator Key="Delete" CommandParameter="Remove" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Key="Insert" CommandParameter="AddLayer" Command="{x:Bind Command}" />
-
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="X" CommandParameter="Cut" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="J" CommandParameter="Duplicate" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="C" CommandParameter="Copy" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="V" CommandParameter="Paste" Command="{x:Bind Command}" />
-
-        <local:OptionKeyboardAccelerator Key="Back" CommandParameter="Clear" Command="{x:Bind Command}" />
-
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="E" CommandParameter="Extract" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="M" CommandParameter="Merge" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="F" CommandParameter="Flatten" Command="{x:Bind Command}" />
-
-
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="A" CommandParameter="All" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="D" CommandParameter="Deselect" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="P" CommandParameter="Pixel" Command="{x:Bind Command}" />
-
-
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Group" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="U" CommandParameter="Ungroup" Command="{x:Bind Command}" />
-        <local:OptionKeyboardAccelerator Modifiers="Control" Key="R" CommandParameter="Release" Command="{x:Bind Command}" />
-    </UIElement.KeyboardAccelerators>
 
 
     <Grid>
@@ -714,7 +663,70 @@
                                 <Button x:Name="ExportButton" Foreground="Black" Background="#FFC003" Style="{StaticResource AppTextBlockButtonStyle}" >
                                     <SymbolIcon Symbol="NewWindow"/>
                                 </Button>
-                                <Button x:Name="LayerButton" Style="{StaticResource AppButtonStyle}" >
+                                <Button Style="{StaticResource AppButtonStyle}" >
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <!--Layer-->
+                                            <MenuFlyoutSeparator x:Name="LayerHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                                <UIElement.AccessKey>
+                                                    Layers
+                                                </UIElement.AccessKey>
+                                            </MenuFlyoutSeparator>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="CutLayer" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="CopyLayer" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem x:Name="PasteLayerItem" options:OptionExtensions.Type="PasteLayer" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Remove" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Key="Delete"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Duplicate" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Extract" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Merge" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="M"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Flatten" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="F"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Group" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="G"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Ungroup" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="U"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Release" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="R"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <!--
+                                            <MenuFlyoutItem options:OptionExtensions.Type="ExpandStroke" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Union" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Exclude" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Xor" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Intersect" Command="{x:Bind Command}"/>
+                                            -->
+                                        </MenuFlyout>
+                                    </Button.Flyout>
                                     <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
                                 </Button>
                             </StackPanel>
@@ -750,13 +762,142 @@
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                                <Button x:Name="EditButton" Style="{StaticResource AppButtonStyle}" >
+                                <Button Style="{StaticResource AppButtonStyle}" >
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <!--Edit-->
+                                            <MenuFlyoutSeparator x:Name="EditHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                                <UIElement.AccessKey>
+                                                    Edit
+                                                </UIElement.AccessKey>
+                                            </MenuFlyoutSeparator>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Cut" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="X"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Copy" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem x:Name="PasteItem" options:OptionExtensions.Type="Paste" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="V"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem x:Name="ClearItem" options:OptionExtensions.Type="Clear" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Key="Back"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="All" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Deselect" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="D"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="MarqueeInvert" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="I"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Pixel" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="P"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Feather" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="MarqueeTransform" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Grow" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Shrink" Command="{x:Bind Command}"/>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
                                     <local:ElementIcon Type="Edit"/>
                                 </Button>
-                                <Button x:Name="AdjustmentButton" Style="{StaticResource AppButtonStyle}" >
+                                <Button Style="{StaticResource AppButtonStyle}" >
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <!--Adjustment-->
+                                            <MenuFlyoutSeparator x:Name="AdjustmentHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                                <UIElement.AccessKey>
+                                                    Adjustments
+                                                </UIElement.AccessKey>
+                                            </MenuFlyoutSeparator>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Gray" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Invert" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Exposure" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Brightness" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Saturation" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="HueRotation" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Contrast" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Temperature" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="HighlightsAndShadows" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="GaussianBlur" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="DirectionalBlur" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Sharpen" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Shadow" Command="{x:Bind Command}"/>
+                                            <!--
+                                            <MenuFlyoutItem options:OptionExtensions.Type="EdgeDetection" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Morphology" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Emboss" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Straighten" Command="{x:Bind Command}"/>
+                                            -->
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem x:Name="MoreItem">
+                                                <MenuFlyoutItem.Tag>
+                                                    <SymbolIcon Symbol="More"/>
+                                                </MenuFlyoutItem.Tag>
+                                                <MenuFlyoutItem.Text>
+                                                    More
+                                                </MenuFlyoutItem.Text>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
                                     <local:ElementIcon Type="Adjustment"/>
                                 </Button>
-                                <Button x:Name="OtherButton" Style="{StaticResource AppButtonStyle}" >
+                                <Button Style="{StaticResource AppButtonStyle}" >
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <!--Other-->
+                                            <MenuFlyoutSeparator x:Name="OtherHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                                <UIElement.AccessKey>
+                                                    Others
+                                                </UIElement.AccessKey>
+                                            </MenuFlyoutSeparator>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutSeparator/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="Transform" Command="{x:Bind Command}">
+                                                <UIElement.KeyboardAccelerators>
+                                                    <KeyboardAccelerator Modifiers="Control" Key="T"/>
+                                                </UIElement.KeyboardAccelerators>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="GradientMapping" Command="{x:Bind Command}"/>
+                                            <MenuFlyoutItem options:OptionExtensions.Type="RippleEffect" Command="{x:Bind Command}"/>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
                                     <SymbolIcon Symbol="More"/>
                                 </Button>
                             </StackPanel>
@@ -2165,10 +2306,6 @@
         <!--Expander-->
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-            <controls:EditMenu x:Name="EditMenu" />
-            <controls:AdjustmentMenu x:Name="AdjustmentMenu" />
-            <controls:OtherMenu x:Name="OtherMenu" />
-            <controls:LayerMenu x:Name="LayerMenu" SelectedItem="{x:Bind LayerListView.SelectedItem, Mode=OneWay}"/>
             <controls:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
             <controls:PaletteMenu x:Name="PaletteMenu" />
         </elements:ExpanderLightDismissOverlay>
