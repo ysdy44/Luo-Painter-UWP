@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<ItemsControl
     x:Name="UserControl"
     x:Class="Luo_Painter.Controls.KeyboardShortcuts"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -24,40 +24,81 @@
         </Storyboard>
     </FrameworkElement.Resources>
 
-    <Border
-        CornerRadius="14"          
-        Padding="2,12"              
-        Background="{ThemeResource AppAcrylicOverlayBrush}">
-        <ScrollViewer>
-            <ItemsControl x:Name="ItemsControl" >
+    <Control.Template>
+        <ControlTemplate TargetType="ItemsControl">
+            <Border
+                CornerRadius="14" 
+                Padding="2,12" 
+                Background="{ThemeResource AppAcrylicOverlayBrush}"
+                >
+                <ScrollViewer>
+                    <ItemsPresenter/>
+                </ScrollViewer>
+            </Border>
+        </ControlTemplate>
+    </Control.Template>
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" ItemWidth="320" ItemHeight="55"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+    <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" ItemWidth="320" ItemHeight="55"/>
+        </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
 
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
+    <ItemsControl.ItemContainerStyle>
+        <Style TargetType="ContentPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </ItemsControl.ItemContainerStyle>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="local:KeyboardShortcut">
-                        <Grid Padding="60,2">
-                            <TextBlock Text="{x:Bind Key}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
-                                <!--Key-->
-                            </TextBlock>
-                            <TextBlock Text="{x:Bind Value}" FontSize="14" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
-                                <!--Value-->
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+    <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="local:KeyboardShortcut">
+            <Grid Padding="60,2">
+                <TextBlock Text="{x:Bind CommandParameter}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
+                    <!--CommandParameter-->
+                </TextBlock>
+                <TextBlock Text="{x:Bind}" FontSize="14" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
+                    <!--String-->
+                </TextBlock>
+            </Grid>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
 
-            </ItemsControl>
-        </ScrollViewer>
-    </Border>
-</UserControl>
+    <local:KeyboardShortcut Modifiers="Control" Key="S" CommandParameter="Save" />
+    <local:KeyboardShortcut Modifiers="Control" Key="Z" CommandParameter="Undo" />
+    <local:KeyboardShortcut Modifiers="Control" Key="Y" CommandParameter="Redo" />
+    <local:KeyboardShortcut Modifiers="None" Key="Escape" CommandParameter="FullScreen" />
+
+
+    <local:KeyboardShortcut Modifiers="None" Key="F2" CommandParameter="PropertyMenuWithRename" />
+    <local:KeyboardShortcut Modifiers="None" Key="F3" CommandParameter="PropertyMenu" />
+    <local:KeyboardShortcut Modifiers="None" Key="F5" CommandParameter="PaintMenu" />
+    <local:KeyboardShortcut Modifiers="None" Key="F6" CommandParameter="BrushMenu" />
+
+
+    <local:KeyboardShortcut Key="Delete" CommandParameter="Remove" />
+    <local:KeyboardShortcut Key="Insert" CommandParameter="AddLayer" />
+
+    <local:KeyboardShortcut Modifiers="Control" Key="X" CommandParameter="Cut" />
+    <local:KeyboardShortcut Modifiers="Control" Key="J" CommandParameter="Duplicate" />
+    <local:KeyboardShortcut Modifiers="Control" Key="C" CommandParameter="Copy" />
+    <local:KeyboardShortcut Modifiers="Control" Key="V" CommandParameter="Paste" />
+
+    <local:KeyboardShortcut Key="Back" CommandParameter="Clear" />
+
+    <local:KeyboardShortcut Modifiers="Control" Key="E" CommandParameter="Extract" />
+    <local:KeyboardShortcut Modifiers="Control" Key="M" CommandParameter="Merge" />
+    <local:KeyboardShortcut Modifiers="Control" Key="F" CommandParameter="Flatten" />
+
+
+    <local:KeyboardShortcut Modifiers="Control" Key="A" CommandParameter="All" />
+    <local:KeyboardShortcut Modifiers="Control" Key="D" CommandParameter="Deselect" />
+    <local:KeyboardShortcut Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" />
+    <local:KeyboardShortcut Modifiers="Control" Key="P" CommandParameter="Pixel" />
+
+
+    <local:KeyboardShortcut Modifiers="Control" Key="G" CommandParameter="Group" />
+    <local:KeyboardShortcut Modifiers="Control" Key="U" CommandParameter="Ungroup" />
+    <local:KeyboardShortcut Modifiers="Control" Key="R" CommandParameter="Release" />
+
+</ItemsControl>

@@ -2,38 +2,36 @@
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Luo_Painter.Options;
 
 namespace Luo_Painter.Controls
 {
-    internal struct KeyboardShortcut
+    internal class KeyboardShortcut
     {
-        public readonly string Key;
-        public readonly string Value;
-        public KeyboardShortcut(KeyboardAccelerator key)
+        public VirtualKeyModifiers Modifiers { get; set; }
+        public VirtualKey Key { get; set; }
+        public OptionType CommandParameter { get; set; }
+        public override string ToString()
         {
-            this.Key = key.ToString();
-            switch (key.Modifiers)
+            switch (this.Modifiers)
             {
-                case VirtualKeyModifiers.None: this.Value = $"{key.Key}"; break;
-                case VirtualKeyModifiers.Control: this.Value = $"Ctrl + {key.Key}"; break;
-                case VirtualKeyModifiers.Menu: this.Value = $"Alt + {key.Key}"; break;
-                case VirtualKeyModifiers.Shift: this.Value = $"Shift + {key.Key}"; break;
-                case VirtualKeyModifiers.Windows: this.Value = $"Win + {key.Key}"; break;
-                default: this.Value = $"{key.Key}"; break;
+                case VirtualKeyModifiers.None: return $"{this.Key}";
+                case VirtualKeyModifiers.Control: return $"Ctrl + {this.Key}";
+                case VirtualKeyModifiers.Menu: return $"Alt + {this.Key}";
+                case VirtualKeyModifiers.Shift: return $"Shift + {this.Key}";
+                case VirtualKeyModifiers.Windows: return $"Win + {this.Key}";
+                default: return $"{this.Key}";
             }
         }
     }
 
-    public sealed partial class KeyboardShortcuts : UserControl
+    public sealed partial class KeyboardShortcuts : ItemsControl
     {
 
         readonly DispatcherTimer Timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromSeconds(5)
         };
-
-        public object ItemsSource { set => this.ItemsControl.ItemsSource = value; }
 
         //@Construct
         public KeyboardShortcuts()
