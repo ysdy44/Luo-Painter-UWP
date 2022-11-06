@@ -73,27 +73,28 @@ namespace Luo_Painter.Options
 
         #region Menu
 
-        ExportMenu = Menu | 1 << 8 | IsItemClickEnabled,
+        DockLeft = Menu | 1 << 8 | IsItemClickEnabled,
+        DockRight = Menu | 2 << 8 | IsItemClickEnabled,
 
-        ToolMenu = Menu | 2 << 8 | IsItemClickEnabled,
-        HistoryMenu = Menu | 3 << 8 | IsItemClickEnabled,
-
+        ExportMenu = Menu | 3 << 8 | IsItemClickEnabled,
         ColorMenu = Menu | 4 << 8 | IsItemClickEnabled,
         PaletteMenu = Menu | 5 << 8 | IsItemClickEnabled,
 
-        EditMenu = Menu | 6 << 8 | IsItemClickEnabled,
-        AdjustmentMenu = Menu | 7 << 8 | IsItemClickEnabled,
-        OtherMenu = Menu | 8 << 8 | IsItemClickEnabled,
+        EditMenu = Menu | 6 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        AdjustmentMenu = Menu | 7 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        OtherMenu = Menu | 8 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
 
-        PaintMenu = Menu | 9 << 8 | IsItemClickEnabled,
-        BrushMenu = Menu | 10 << 8 | IsItemClickEnabled,
-        SizeMenu = Menu | 111 << 8 | IsItemClickEnabled,
+        PaintMenu = Menu | 9 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        BrushMenu = Menu | 10 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        SizeMenu = Menu | 11 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
 
-        LayerMenu = Menu | 12 << 8 | IsItemClickEnabled,
-        AddMenu = Menu | 13 << 8 | IsItemClickEnabled,
+        ToolMenu = Menu | 12 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        HistoryMenu = Menu | 13 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        LayerMenu = Menu | 14 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
 
-        PropertyMenu = Menu | 15 << 8 | IsItemClickEnabled,
-        PropertyMenuWithRename = Menu | 16 << 8,
+        AddMenu = Menu | 15 << 8 | IsItemClickEnabled,
+        PropertyMenu = Menu | 16 << 8 | IsItemClickEnabled,
+        PropertyMenuWithRename = Menu | 17 << 8,
 
         #endregion
 
