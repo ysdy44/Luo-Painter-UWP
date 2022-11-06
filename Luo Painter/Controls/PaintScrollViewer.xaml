@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
-    xmlns:brushes="using:Luo_Painter.Brushes"  
+    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
@@ -23,21 +23,11 @@
     </FrameworkElement.Resources>
 
     <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <StackPanel Padding="4,0">
 
-
-            <Grid Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
                 <TextBlock 
-                    Margin="16,0"
+                    Margin="12,0"
                     IsHitTestVisible="false" 
                     FontWeight="Medium" 
                     TextTrimming="CharacterEllipsis" 
@@ -48,526 +38,538 @@
                     >
                     Paint
                 </TextBlock>
-                <!--Type-->
-                <ComboBox x:Name="ComboBox" Grid.Column="1" SelectedIndex="1" Margin="4,0" HorizontalAlignment="Stretch" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="brushes:InkType">
-                            <luo_painter:InkItem Type="{x:Bind}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsSource>
-                        <luo_painter:InkList x:Name="InkCollection">
-                            <brushes:InkType>General</brushes:InkType>
-                            <brushes:InkType>Tip</brushes:InkType>
-                            <brushes:InkType>Line</brushes:InkType>
-                            <brushes:InkType>Blur</brushes:InkType>
-                            <brushes:InkType>Mosaic</brushes:InkType>
-                            <brushes:InkType>Erase</brushes:InkType>
-                            <brushes:InkType>Liquefy</brushes:InkType>
-                        </luo_painter:InkList>
-                    </ItemsControl.ItemsSource>
-                </ComboBox>
-            </Grid>
+            </Border>
+
 
             <!--Ink-->
-            <canvas:CanvasControl               
-                x:Name="InkCanvasControl"       
-                Grid.Row="1" 
-                HorizontalAlignment="Center"
-                Width="320"                
-                Height="120"               
-                UseSharedDevice="True"                 
-                CustomDevice="{x:Bind CanvasDevice}"          
-                Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}"
-                />
-
-            <!--Body-->
-            <StackPanel Grid.Row="2" Padding="4,0" >
-
-                <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                    <StackPanel>
-
-                        <!--Size-->
-                        <Slider
-                            x:Name="SizeSlider"
-                            SmallChange="1000" 
-                            StepFrequency="1000" 
-                            Foreground="{ThemeResource SystemColorControlAccentBrush}"
-                            Style="{StaticResource AppSliderStyle}" 
-                            >
-                            <FrameworkElement.Tag>
-                                Size
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button 
-                                    Content="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"            
-                                    Padding="4,0" 
-                                    MinWidth="44" 
-                                    Height="28"
-                                    BorderThickness="1" 
-                                    BorderBrush="{ThemeResource AppStroke}" 
-                                    Background="{ThemeResource SystemAltLowColor}" 
-                                    >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                        <!--Opacity-->
-                        <Slider 
-                            x:Name="OpacitySlider" 
-                            Foreground="{ThemeResource SystemColorControlAccentBrush}"
-                            Style="{StaticResource AppSliderStyle}" 
-                            >
-                            <FrameworkElement.Tag>
-                                Opacity
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button 
-                                   x:Name="OpacityButton"
-                                    Padding="4,0" 
-                                    MinWidth="44" 
-                                    Height="28"
-                                    BorderThickness="1" 
-                                    BorderBrush="{ThemeResource AppStroke}"
-                                    Background="{ThemeResource SystemAltLowColor}" 
-                                    >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
-                                        <Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                        <!--Spacing-->
-                        <Slider 
-                            x:Name="SpacingSlider"
-                            SmallChange="10000"
-                            StepFrequency="10000" 
-                            Style="{StaticResource AppSliderStyle}" 
-                            Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}"
-                            >
-                            <FrameworkElement.Tag>
-                                Spacing
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button
-                                   x:Name="SpacingButton"
-                                    Padding="4,0"
-                                    MinWidth="44" 
-                                    Height="28"
-                                    BorderThickness="1"
-                                    BorderBrush="{ThemeResource AppStroke}" 
-                                    Background="{ThemeResource SystemAltLowColor}" >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}" />
-                                        <Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                        <!--Flow-->
-                        <Slider 
-                            x:Name="FlowSlider" 
-                            Style="{StaticResource AppSliderStyle}" 
-                            Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
-                            >
-                            <FrameworkElement.Tag>
-                                Flow
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button 
-                                   x:Name="FlowButton"
-                                    Padding="4,0" 
-                                    MinWidth="44" 
-                                    Height="28"
-                                    BorderThickness="1" 
-                                    BorderBrush="{ThemeResource AppStroke}"
-                                    Background="{ThemeResource SystemAltLowColor}" 
-                                    >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind RoundConverter(FlowSlider.Value), Mode=OneWay}" />
-                                        <Run>%</Run>
-                                    </TextBlock>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                    </StackPanel>
-                </Border>
+            <Border Margin="0,6" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <canvas:CanvasControl               
+                    x:Name="InkCanvasControl"       
+                    HorizontalAlignment="Center"
+                    Width="240"                           
+                    Height="120"                            
+                    UseSharedDevice="True"                               
+                    CustomDevice="{x:Bind CanvasDevice}"                       
+                    Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}"              
+                    />
+            </Border>
 
 
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                           Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" />
+            <!--Type-->
+            <ComboBox x:Name="ComboBox" SelectedIndex="1" HorizontalAlignment="Stretch">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="brushes:InkType">
+                        <luo_painter:InkItem Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsSource>
+                    <luo_painter:InkList x:Name="InkCollection">
+                        <brushes:InkType>General</brushes:InkType>
+                        <brushes:InkType>Tip</brushes:InkType>
+                        <brushes:InkType>Line</brushes:InkType>
+                        <brushes:InkType>Blur</brushes:InkType>
+                        <brushes:InkType>Mosaic</brushes:InkType>
+                        <brushes:InkType>Erase</brushes:InkType>
+                        <brushes:InkType>Liquefy</brushes:InkType>
+                    </luo_painter:InkList>
+                </ItemsControl.ItemsSource>
+            </ComboBox>
 
 
-                <!--Hardness-->
-                <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" >
-                    Hardness
-                </TextBlock>
+            <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                <StackPanel>
 
-                <Grid ColumnSpacing="4" 
-                      Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="146"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                        <Grid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                            <UIElement.RenderTransformOrigin>
-                                0.5, 1
-                            </UIElement.RenderTransformOrigin>
-                            <UIElement.RenderTransform>
-                                <ScaleTransform ScaleX="3.65" ScaleY="3.65"/>
-                            </UIElement.RenderTransform>
-                            <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneRadioButton.IsChecked), Mode=OneWay}"/>
-                            <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineRadioButton.IsChecked), Mode=OneWay}"/>
-                            <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticRadioButton.IsChecked), Mode=OneWay}"/>
-                            <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeRadioButton.IsChecked), Mode=OneWay}"/>
-                            <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticRadioButton.IsChecked), Mode=OneWay}"/>
-                        </Grid>
-                    </Border>
-                    <Border Grid.Column="1" Padding="9,3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <StackPanel Spacing="4" >
-                            <RadioButton x:Name="NoneRadioButton" GroupName="Hardness" IsChecked="True">
-                                None
-                            </RadioButton>
-                            <RadioButton x:Name="CosineRadioButton" GroupName="Hardness">
-                                Cosine
-                            </RadioButton>
-                            <RadioButton x:Name="QuadraticRadioButton" GroupName="Hardness">
-                                Quadratic
-                            </RadioButton>
-                            <RadioButton x:Name="CubeRadioButton" GroupName="Hardness">
-                                Cube
-                            </RadioButton>
-                            <RadioButton x:Name="QuarticRadioButton" GroupName="Hardness">
-                                Quartic
-                            </RadioButton>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                           Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" />
-
-
-                <!--Tip-->
-                <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" >
-                    Tip Shape
-                </TextBlock>
-
-                <Grid Height="146" ColumnSpacing="4"
-                      Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="146"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
-                        <Border Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="White" 
-                                CornerRadius="{x:Bind CornerRadiusConverter(TipListBox.SelectedIndex), Mode=OneWay}" >
-                            <Border.Background>
-                                <SolidColorBrush Color="{x:Bind ColorConverter(TipListBox.SelectedIndex), Mode=OneWay}"/>
-                            </Border.Background>
-                        </Border>
-                    </Border>
-                    <ListBox x:Name="TipListBox" Grid.Column="1" Style="{StaticResource AppGrid2x2ListBoxStyle}">
-                        <FontIcon Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
-                        <FontIcon Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
-                        <FontIcon Glyph="&#xE002;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
-                        <FontIcon Glyph="&#xE003;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
-                    </ListBox>
-                </Grid>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                           Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" />
-
-
-                <!--Shape-->
-                <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
-                    Shape
-                </TextBlock>
-
-                <Grid Height="146" ColumnSpacing="4"
-                      Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="146"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage x:Name="ShapeImage">
-                                    <!--UriSource-->
-                                </BitmapImage>
-                            </Image.Source>
-                        </Image>
-                    </Border>
-                    <Border Grid.Column="1" Padding="9" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <StackPanel Spacing="6" Padding="0,4" >
-                            <Button x:Name="SelectShapeButton" IsEnabled="{x:Bind ShapeButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
-                                Select
-                            </Button>
-                            <ToggleButton x:Name="RotateButton" IsEnabled="{x:Bind ShapeButton.IsOn, Mode=OneWay}" >
-                                Rotate
-                            </ToggleButton>
-                            <ToggleSwitch x:Name="ShapeButton" Margin="2,0"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"
-                           Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" />
-
-
-                <!--Grain-->
-                <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" >
-                    Grain
-                </TextBlock>
-
-                <Grid Height="146" ColumnSpacing="4"
-                      Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="146"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="Black">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage x:Name="GrainImage">
-                                    <!--UriSource-->
-                                </BitmapImage>
-                            </Image.Source>
-                        </Image>
-                    </Border>
-                    <Border Grid.Column="1" Padding="9" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                        <StackPanel Spacing="6" Padding="0,4" >
-                            <Button x:Name="SelectGrainButton" IsEnabled="{x:Bind GrainButton.IsOn, Mode=OneWay}" Style="{StaticResource AppBorderButtonStyle}">
-                                Select
-                            </Button>
-                            <TextBox x:Name="StepTextBox" IsEnabled="{x:Bind GrainButton.IsOn, Mode=OneWay}" >
-                                <!--Text-->
-                            </TextBox>
-                            <ToggleSwitch x:Name="GrainButton" Margin="2,0"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" />
-
-                <!--BlendMode-->
-                <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
-                    Blend Mode
-                </TextBlock>
-
-                <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
-                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" >
-                
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="effects:BlendEffectMode">
-                            <luo_painter:BlendIcon Type="{x:Bind}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                    <ItemsControl.ItemsSource>
-                        <luo_painter:BlendList x:Name="BlendCollection">
-                            <!--None-->
-                            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                            <!--Darken-->
-                            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                            <!--Lighten-->
-                            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                            <!--Contrast-->
-                            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                            <!--Difference-->
-                            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                        </luo_painter:BlendList>
-                    </ItemsControl.ItemsSource>
-                    
-                </ListView>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" 
-                           Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" />
-
-
-                <!--MixColor-->
-                <TextBlock x:Name="MixColorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                           Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}" >
-                    Mix Color
-                </TextBlock>
-
-                <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
-                           Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}" >
-                    <StackPanel>
-
-                        <Slider x:Name="MixSlider" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="Gray" Offset="0"/>
-                                    <GradientStop Color="#FF143C" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Mix
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button
-                                    x:Name="MixButton" 
-                                    Content="{x:Bind MixSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" 
-                                    MinWidth="70" 
-                                    Height="28"
-                                    BorderThickness="1" 
-                                    BorderBrush="{ThemeResource AppStroke}"
-                                    Background="{ThemeResource SystemAltLowColor}"
-                                    >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                        <Slider x:Name="WetSlider" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="Gray" Offset="0"/>
-                                    <GradientStop Color="Chartreuse" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Wet
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button
-                                    x:Name="WetButton" 
-                                    Content="{x:Bind WetSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" 
-                                    MinWidth="70" 
-                                    Height="28"
-                                    BorderThickness="1" 
-                                    BorderBrush="{ThemeResource AppStroke}"
-                                    Background="{ThemeResource SystemAltLowColor}"
-                                    >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                        <Slider x:Name="PersistenceSlider" Style="{StaticResource AppSliderStyle}">
-                            <Slider.Background>
-                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Color="Gray" Offset="0"/>
-                                    <GradientStop Color="#0090FF" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Slider.Background>
-                            <FrameworkElement.Tag>
-                                Persistence 
-                            </FrameworkElement.Tag>
-                            <Slider.Header>
-                                <Button
-                                    x:Name="PersistenceButton" 
-                                    Content="{x:Bind PersistenceSlider.Value, Mode=OneWay}"            
-                                    Padding="4,0" 
-                                    MinWidth="70" 
-                                    Height="28"
-                                    BorderThickness="1" 
-                                    BorderBrush="{ThemeResource AppStroke}"
-                                    Background="{ThemeResource SystemAltLowColor}"
-                                    >
-                                    <Button.Flyout>
-                                        <Flyout>
-
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </Slider.Header>
-                        </Slider>
-
-                    </StackPanel>
-                </Border>
-
-
-                <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" />
-
-
-                <!--IgnorePressure-->
-                <TextBlock x:Name="IgnorePressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                    Ignore Pressure
-                </TextBlock>
-
-                <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                    <Grid ColumnSpacing="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="146"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="SizeTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    <!--Size-->
+                    <Slider
+                        x:Name="SizeSlider"
+                        SmallChange="1000" 
+                        StepFrequency="1000" 
+                        Foreground="{ThemeResource SystemColorControlAccentBrush}"
+                        Style="{StaticResource AppSliderStyle}" 
+                        >
+                        <FrameworkElement.Tag>
                             Size
-                        </TextBlock>
-                        <ToggleSwitch x:Name="IgnoreSizePressureButton" Grid.Column="1" Margin="9,0"/>
-                    </Grid>
-                </Border>
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                                Content="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="44" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
 
-                <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
-                        Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}" >
-                    <Grid ColumnSpacing="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="146"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="FlowTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                    <!--Opacity-->
+                    <Slider 
+                        x:Name="OpacitySlider" 
+                        Foreground="{ThemeResource SystemColorControlAccentBrush}"
+                        Style="{StaticResource AppSliderStyle}" 
+                        >
+                        <FrameworkElement.Tag>
+                            Opacity
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                               x:Name="OpacityButton"
+                                Padding="4,0" 
+                                MinWidth="44" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock>
+                                    <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
+                                    <Run>%</Run>
+                                </TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                    <!--Spacing-->
+                    <Slider 
+                        x:Name="SpacingSlider"
+                        SmallChange="10000"
+                        StepFrequency="10000" 
+                        Style="{StaticResource AppSliderStyle}" 
+                        Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}"
+                        >
+                        <FrameworkElement.Tag>
+                            Spacing
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                               x:Name="SpacingButton"
+                                Padding="4,0"
+                                MinWidth="44" 
+                                Height="28"
+                                BorderThickness="1"
+                                BorderBrush="{ThemeResource AppStroke}" 
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock>
+                                    <Run Text="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}" />
+                                    <Run>%</Run>
+                                </TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                    <!--Flow-->
+                    <Slider 
+                        x:Name="FlowSlider" 
+                        Style="{StaticResource AppSliderStyle}" 
+                        Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
+                        >
+                        <FrameworkElement.Tag>
                             Flow
-                        </TextBlock>
-                        <ToggleSwitch x:Name="IgnoreFlowPressureButton" Grid.Column="1" Margin="9,0"/>
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button 
+                               x:Name="FlowButton"
+                                Padding="4,0" 
+                                MinWidth="44" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Background="{ThemeResource SystemAltLowColor}" 
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                                <TextBlock>
+                                    <Run Text="{x:Bind RoundConverter(FlowSlider.Value), Mode=OneWay}" />
+                                    <Run>%</Run>
+                                </TextBlock>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                </StackPanel>
+            </Border>
+
+
+            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" />
+
+
+            <!--Hardness-->
+            <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                       Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
+                Hardness
+            </TextBlock>
+
+            <Grid ColumnSpacing="8" 
+                      Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="136"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Grid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <UIElement.RenderTransformOrigin>
+                            0.5, 1
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <ScaleTransform ScaleX="3" ScaleY="3"/>
+                        </UIElement.RenderTransform>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneItem.IsSelected), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineItem.IsSelected), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticItem.IsSelected), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeItem.IsSelected), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticItem.IsSelected), Mode=OneWay}"/>
                     </Grid>
                 </Border>
+                <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
+                    <ListViewItem x:Name="NoneItem">None</ListViewItem>
+                    <ListViewItem x:Name="CosineItem">Cosine</ListViewItem>
+                    <ListViewItem x:Name="QuadraticItem">Quadratic</ListViewItem>
+                    <ListViewItem x:Name="CubeItem">Cube</ListViewItem>
+                    <ListViewItem x:Name="QuarticItem">Quartic</ListViewItem>
+                </ListView>
+            </Grid>
 
-                <ContentControl HorizontalContentAlignment  ="Center" ContentTemplate="{StaticResource AppListViewBaseFooter}"/>
 
-            </StackPanel>
+            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" />
 
-        </Grid>
+
+            <!--Tip-->
+            <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                       Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
+                    Tip Shape
+            </TextBlock>
+
+            <Grid Height="136" ColumnSpacing="8"
+                      Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="136"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Border 
+                        Width="80"
+                        Height="80" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource AppBarItemDisabledForegroundThemeBrush}" 
+                        CornerRadius="{x:Bind CornerRadiusConverter(TipListBox.SelectedIndex), Mode=OneWay}"
+                        >
+                        <Border.Background>
+                            <SolidColorBrush 
+                                Color="{ThemeResource SystemBaseHighColor}" 
+                                Opacity="{x:Bind TipOpacityConverter(TipListBox.SelectedIndex), Mode=OneWay}"
+                                />
+                        </Border.Background>
+                    </Border>
+                </Border>
+                <ListBox x:Name="TipListBox" Grid.Column="1" Style="{StaticResource AppGrid2x2ListBoxStyle}">
+                    <FontIcon Glyph="&#xEA3B;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xEA3A;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xE002;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xE003;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
+                </ListBox>
+            </Grid>
+
+
+            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" />
+
+
+            <!--Shape-->
+            <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                       Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                Shape
+            </TextBlock>
+
+            <Grid ColumnSpacing="8" RowSpacing="4"
+                      Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="136"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.RowSpan="3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <BitmapIcon x:Name="ShapeImage" ShowAsMonochrome="True">
+                        <!--UriSource-->
+                    </BitmapIcon>
+                </Border>
+
+                <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                    Import...
+                </Button>
+                <ToggleButton x:Name="RecolorShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                    Recolor
+                </ToggleButton>
+                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                    Remove
+                </Button>
+
+                <TextBlock x:Name="RotateTextBlock" Grid.Row="4" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Rotate Shape
+                </TextBlock>
+                <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Grid.Row="3" />
+
+            </Grid>
+
+
+            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" />
+
+
+            <!--Grain-->
+            <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                       Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
+                Grain
+            </TextBlock>
+
+            <Grid ColumnSpacing="8" RowSpacing="4"
+                      Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="136"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.RowSpan="3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <BitmapIcon x:Name="GrainImage" ShowAsMonochrome="True">
+                        <!--UriSource-->
+                    </BitmapIcon>
+                </Border>
+
+                <Button x:Name="ImportGrainButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                    Import...
+                </Button>
+                <ToggleButton x:Name="RecolorGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                    Recolor
+                </ToggleButton>
+                <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                    Remove
+                </Button>
+
+                <TextBlock x:Name="StepTextBlock" Grid.Row="4" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Step of Grain
+                </TextBlock>
+                <TextBox x:Name="StepTextBox" Grid.Column="1" Grid.Row="3" >
+                    <!--Text-->
+                </TextBox>
+
+            </Grid>
+
+
+            <MenuFlyoutSeparator Margin="0,4"/>
+
+            <!--BlendMode-->
+            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                       Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
+                Blend Mode
+            </TextBlock>
+
+            <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
+                      Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="effects:BlendEffectMode">
+                        <luo_painter:BlendIcon Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsSource>
+                    <luo_painter:BlendList x:Name="BlendCollection">
+                        <!--None-->
+                        <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                        <!--Darken-->
+                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                        <!--Lighten-->
+                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                        <!--Contrast-->
+                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                        <!--Difference-->
+                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                    </luo_painter:BlendList>
+                </ItemsControl.ItemsSource>
+
+            </ListView>
+
+
+            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}" />
+
+
+            <!--MixColor-->
+            <TextBlock x:Name="MixColorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                       Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
+                Mix Color
+            </TextBlock>
+
+            <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                    Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
+                <StackPanel>
+
+                    <Slider x:Name="MixSlider" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Gray" Offset="0"/>
+                                <GradientStop Color="#FF143C" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Mix
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="MixButton" 
+                                Content="{x:Bind MixSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                    <Slider x:Name="WetSlider" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Gray" Offset="0"/>
+                                <GradientStop Color="Chartreuse" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Wet
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="WetButton" 
+                                Content="{x:Bind WetSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                    <Slider x:Name="PersistenceSlider" Style="{StaticResource AppSliderStyle}">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Gray" Offset="0"/>
+                                <GradientStop Color="#0090FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                        <FrameworkElement.Tag>
+                            Persistence
+                        </FrameworkElement.Tag>
+                        <Slider.Header>
+                            <Button
+                                x:Name="PersistenceButton" 
+                                Content="{x:Bind PersistenceSlider.Value, Mode=OneWay}"            
+                                Padding="4,0" 
+                                MinWidth="70" 
+                                Height="28"
+                                BorderThickness="1" 
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Background="{ThemeResource SystemAltLowColor}"
+                                >
+                                <Button.Flyout>
+                                    <Flyout>
+
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Slider.Header>
+                    </Slider>
+
+                </StackPanel>
+            </Border>
+
+
+            <MenuFlyoutSeparator Margin="0,4"/>
+
+
+            <!--IgnorePressure-->
+            <TextBlock x:Name="IgnorePressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                Ignore Pressure
+            </TextBlock>
+
+            <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                <Grid ColumnSpacing="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="136"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="SizeTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                        Size
+                    </TextBlock>
+                    <ToggleSwitch x:Name="IgnoreSizePressureButton" Grid.Column="1" />
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                    Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
+                <Grid ColumnSpacing="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="136"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="FlowTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                        Flow
+                    </TextBlock>
+                    <ToggleSwitch x:Name="IgnoreFlowPressureButton" Grid.Column="1" />
+                </Grid>
+            </Border>
+
+            <ContentControl HorizontalContentAlignment  ="Center" ContentTemplate="{StaticResource AppListViewBaseFooter}"/>
+
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

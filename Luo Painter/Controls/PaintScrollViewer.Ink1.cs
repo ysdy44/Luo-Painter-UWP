@@ -102,34 +102,12 @@ namespace Luo_Painter.Controls
                 }
             };
 
-            this.NoneRadioButton.Checked += (s, e) =>
+
+            this.HardnessListView.ItemClick += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Hardness = BrushEdgeHardness.None;
-                this.TryInk();
-            };
-            this.CosineRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Hardness = BrushEdgeHardness.Cosine;
-                this.TryInk();
-            };
-            this.QuadraticRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Hardness = BrushEdgeHardness.Quadratic;
-                this.TryInk();
-            };
-            this.CubeRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Hardness = BrushEdgeHardness.Cube;
-                this.TryInk();
-            };
-            this.QuarticRadioButton.Checked += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                this.InkPresenter.Hardness = BrushEdgeHardness.Quartic;
+                int index = this.HardnessListView.SelectedIndex;
+                this.InkPresenter.Hardness = (BrushEdgeHardness)index;
                 this.TryInk();
             };
 

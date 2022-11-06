@@ -48,11 +48,7 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
-                this.NoneRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.None;
-                this.CosineRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Cosine;
-                this.QuadraticRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Quadratic;
-                this.CubeRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Cube;
-                this.QuarticRadioButton.IsChecked = presenter.Hardness is BrushEdgeHardness.Quartic;
+                this.HardnessListView.SelectedIndex = (int)presenter.Hardness;
 
 
                 this.BlendModeListView.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);
@@ -73,14 +69,14 @@ namespace Luo_Painter.Controls
                 //this.PersistenceSlider.Maximum = 100d;
 
 
-                this.RotateButton.IsChecked = presenter.Rotate;
+                this.RotateButton.IsOn = presenter.Rotate;
                 this.StepTextBox.Text = presenter.Step.ToString();
 
-                this.ShapeButton.IsOn = presenter.AllowShape;
                 this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
-
-                this.GrainButton.IsOn = presenter.AllowGrain;
                 this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
+
+                this.RecolorShapeButton.IsChecked = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
+                this.RecolorGrainButton.IsChecked = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
             }
             this.InkIsEnabled = true;
         }

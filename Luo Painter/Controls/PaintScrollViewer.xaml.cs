@@ -31,10 +31,11 @@ namespace Luo_Painter.Controls
 
         private bool BooleanConverter(bool? value) => value is true;
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
+        private double OpacityConverter(bool value) => value ? 1 : 0.5;
 
         private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
         private CornerRadius CornerRadiusConverter(int value) => new CornerRadius((value is 0 || value is 1) ? 40 : 0);
-        private Color ColorConverter(int value) => (value is 0 || value is 2) ? Colors.White : Colors.Transparent;
+        private double TipOpacityConverter(int value) => (value is 0 || value is 2) ? 1 : 0;
 
         private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
@@ -107,7 +108,11 @@ namespace Luo_Painter.Controls
             this.ConstructInk3();
 
             this.IsDrak = base.ActualTheme is ElementTheme.Dark;
-            base.ActualThemeChanged += (s, e) => this.IsDrak = base.ActualTheme is ElementTheme.Dark;
+            base.ActualThemeChanged += (s, e) =>
+            {
+                this.IsDrak = base.ActualTheme is ElementTheme.Dark;
+                this.TryInkAsync();
+            };
         }
 
     }
