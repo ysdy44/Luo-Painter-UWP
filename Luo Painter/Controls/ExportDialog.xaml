@@ -53,47 +53,68 @@
                 </Border>
             </Grid>
         </Border>
+        
+        <Grid ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+         
+            <!--DPI-->
+            <TextBlock x:Name="DPITextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
+                DPI
+            </TextBlock>
+            <ComboBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" >
+                <ComboBoxItem>72</ComboBoxItem>
+                <ComboBoxItem FontWeight="Bold">96</ComboBoxItem>
+                <ComboBoxItem>144</ComboBoxItem>
+                <ComboBoxItem>192</ComboBoxItem>
+                <ComboBoxItem>300</ComboBoxItem>
+                <ComboBoxItem>400</ComboBoxItem>
+            </ComboBox>
 
-        <!--DPI-->
-        <TextBlock x:Name="DPITextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
-            DPI
-        </TextBlock>
-        <ComboBox x:Name="DPIComboBox" SelectedIndex="1" >
-            <ComboBoxItem>72</ComboBoxItem>
-            <ComboBoxItem FontWeight="Bold">96</ComboBoxItem>
-            <ComboBoxItem>144</ComboBoxItem>
-            <ComboBoxItem>192</ComboBoxItem>
-            <ComboBoxItem>300</ComboBoxItem>
-            <ComboBoxItem>400</ComboBoxItem>
-        </ComboBox>
+            <!--Format-->
+            <TextBlock x:Name="FormatTextBlock" Grid.Column="1" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
+                File Format
+            </TextBlock>
+            <ComboBox x:Name="FormatComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" >
+                <ComboBoxItem FontWeight="Bold">JPEG</ComboBoxItem>
+                <ComboBoxItem FontWeight="Bold">PNG</ComboBoxItem>
+                <ComboBoxItem>BMP</ComboBoxItem>
+                <ComboBoxItem>GIF</ComboBoxItem>
+                <ComboBoxItem>TIFF</ComboBoxItem>
+            </ComboBox>
 
-        <!--Format-->
-        <TextBlock x:Name="FormatTextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
-            File Format
-        </TextBlock>
-        <ComboBox x:Name="FormatComboBox" SelectedIndex="0" >
-            <ComboBoxItem FontWeight="Bold">JPEG</ComboBoxItem>
-            <ComboBoxItem FontWeight="Bold">PNG</ComboBoxItem>
-            <ComboBoxItem>BMP</ComboBoxItem>
-            <ComboBoxItem>GIF</ComboBoxItem>
-            <ComboBoxItem>TIFF</ComboBoxItem>
-        </ComboBox>
+        </Grid>
 
-        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
+        <MenuFlyoutSeparator Margin="0,4"/>
 
-        <ComboBox x:Name="ComboBox" SelectedIndex="0" >
-            <ComboBoxItem x:Name="NoneItem" FontWeight="Bold">Export</ComboBoxItem>
-            <ComboBoxItem x:Name="AllItem">Export All Layers</ComboBoxItem>
-            <ComboBoxItem x:Name="CurrentItem">Export Current Layer</ComboBoxItem>
-        </ComboBox>
+        <Grid ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+          
+            <ComboBox x:Name="ComboBox" SelectedIndex="0" >
+                <ComboBoxItem x:Name="NoneItem" FontWeight="Bold">Export</ComboBoxItem>
+                <ComboBoxItem x:Name="AllItem">Export All Layers</ComboBoxItem>
+                <ComboBoxItem x:Name="CurrentItem">Export Current Layer</ComboBoxItem>
+            </ComboBox>
 
-        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}"/>
-
-        <Border Padding="10,2" Height="38" Style="{StaticResource AppRoundedBorderStyle}">
-            <CheckBox x:Name="CheckBox">
-                Open in File Explorer
-            </CheckBox>
-        </Border>
+            <ToggleButton x:Name="CheckBox" Grid.Column="1" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="ToolTip">
+                        Open in File Explorer after Export
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Folder"/>
+            </ToggleButton>
+            
+        </Grid>
 
     </StackPanel>
 </ContentDialog>
