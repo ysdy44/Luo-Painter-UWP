@@ -454,8 +454,10 @@ namespace Luo_Painter
                 #region Menu
 
                 case OptionType.DockLeft:
+                    this.LeftSplitView.IsPaneOpen = !this.LeftSplitView.IsPaneOpen;
                     break;
                 case OptionType.DockRight:
+                    this.RightSplitView.IsPaneOpen = !this.RightSplitView.IsPaneOpen;
                     break;
 
                 case OptionType.ExportMenu:
@@ -489,21 +491,53 @@ namespace Luo_Painter
                     this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
                     break;
                 case OptionType.PaletteMenu:
-                    this.PaletteMenu.Toggle(this.PaletteButton, ExpanderPlacementMode.Bottom);
+                    //this.PaletteMenu.Toggle(this.PaletteButton, ExpanderPlacementMode.Bottom);
                     break;
 
                 case OptionType.PaintMenu:
+                    this.ToolListView.Visibility = Visibility.Collapsed;
+                    this.BrushMenu.Visibility = Visibility.Collapsed;
+                    this.SizeMenu.Visibility = Visibility.Collapsed;
+                    this.HistoryMenu.Visibility = Visibility.Collapsed;
+                    this.PaintScrollViewer.Visibility = Visibility.Visible;
+                    this.RightSplitView.IsPaneOpen = true;
                     break;
                 case OptionType.BrushMenu:
+                    this.ToolListView.Visibility = Visibility.Collapsed;
+                    this.PaintScrollViewer.Visibility = Visibility.Collapsed;
+                    this.SizeMenu.Visibility = Visibility.Collapsed;
+                    this.HistoryMenu.Visibility = Visibility.Collapsed;
+                    this.BrushMenu.Visibility = Visibility.Visible;
+                    this.RightSplitView.IsPaneOpen = true;
                     break;
                 case OptionType.SizeMenu:
+                    this.ToolListView.Visibility = Visibility.Collapsed;
+                    this.PaintScrollViewer.Visibility = Visibility.Collapsed;
+                    this.BrushMenu.Visibility = Visibility.Collapsed;
+                    this.HistoryMenu.Visibility = Visibility.Collapsed;
+                    this.SizeMenu.Visibility = Visibility.Visible;
+                    this.RightSplitView.IsPaneOpen = true;
                     break;
 
                 case OptionType.ToolMenu:
+                    this.PaintScrollViewer.Visibility = Visibility.Collapsed;
+                    this.BrushMenu.Visibility = Visibility.Collapsed;
+                    this.SizeMenu.Visibility = Visibility.Collapsed;
+                    this.HistoryMenu.Visibility = Visibility.Collapsed;
+                    this.ToolListView.Visibility = Visibility.Visible;
+                    this.RightSplitView.IsPaneOpen = true;
                     break;
                 case OptionType.HistoryMenu:
+                    this.ToolListView.Visibility = Visibility.Collapsed;
+                    this.PaintScrollViewer.Visibility = Visibility.Collapsed;
+                    this.BrushMenu.Visibility = Visibility.Collapsed;
+                    this.SizeMenu.Visibility = Visibility.Collapsed;
+                    this.HistoryMenu.Visibility = Visibility.Visible;
+                    this.RightSplitView.IsPaneOpen = true;
                     break;
                 case OptionType.LayerMenu:
+                    this.LayerListView.Visibility = Visibility.Visible;
+                    this.LeftSplitView.IsPaneOpen = true;
                     break;
 
                 case OptionType.AddMenu:

@@ -204,6 +204,13 @@ namespace Luo_Painter
             //this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
 
 
+            this.DockLeftButton.Click += (s, e) => this.DockLeftFlyout.ShowAt(this.DockLeftButton);
+            this.DockLeftButton2.Click += (s, e) => this.DockLeftFlyout.ShowAt(this.DockLeftButton2);
+
+            this.DockRightButton.Click += (s, e) => this.DockRightFlyout.ShowAt(this.DockRightButton);
+            this.DockRightButton2.Click += (s, e) => this.DockRightFlyout.ShowAt(this.DockRightButton2);
+
+
             this.LeftSplitButton.Click += (s, e) => this.LeftSplitView.IsPaneOpen = true;
             this.LeftSplitButton.PointerEntered += (s, e) =>
             {
