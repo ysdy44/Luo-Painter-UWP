@@ -17,24 +17,6 @@ namespace Luo_Painter.Controls
             remove => this.VisualCommand.Click -= value;
             add => this.VisualCommand.Click += value;
         }
-        public event RoutedEventHandler AddClick
-        {
-            remove => this.AddButton.Click -= value;
-            add => this.AddButton.Click += value;
-        }
-        public event RoutedEventHandler PropertyClick
-        {
-            remove => this.PropertyButton.Click -= value;
-            add => this.PropertyButton.Click += value;
-        }
-
-        //@Content
-        public FrameworkElement PlacementTarget => this.PropertyButton;
-        public ImageSource MarqueeSource
-        {
-            get => this.Image.Source;
-            set => this.Image.Source = value;
-        }
 
         //@Construct
         public LayerListView()
