@@ -30,18 +30,6 @@
     </Style>
 
 
-    <!--ToggleButton-->
-    <Style TargetType="ToggleButton" >
-        <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="Padding" Value="12,0" />
-        <Setter Property="Height" Value="40" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-    </Style>
-
-
     <!--Line-->
     <Style TargetType="Line">
         <Setter Property="X1" Value="0" />
@@ -668,64 +656,6 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
         <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
-    </Style>
-
-
-    <!--Rectangle-->
-    <Style x:Key="AppRectangleStyle" TargetType="Rectangle">
-        <Setter Property="MinWidth" Value="1" />
-        <Setter Property="MinHeight" Value="1" />
-        <Setter Property="MaxHeight" Value="30" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Fill" Value="{ThemeResource SystemAltLowColor}" />
-    </Style>
-
-
-    <!--Button-->
-    <Style x:Key="AppButtonStyle" TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}" >
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Width" Value="70" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="0" />
-    </Style>
-    <Style x:Key="AppTextBlockButtonStyle" TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}" >
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Width" Value="70" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}" />
-        <Setter Property="Background" Value="{ThemeResource AppBackgroundMediumDark}" />
-    </Style>
-
-
-    <!--Button-->
-    <Style x:Key="AppBorderButtonStyle" TargetType="Button" >
-        <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="Padding" Value="12,0" />
-        <Setter Property="Height" Value="40" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-    </Style>
-    <Style x:Key="AppAccentBorderButtonStyle" TargetType="Button" >
-        <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="Padding" Value="12,0" />
-        <Setter Property="Height" Value="40" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{ThemeResource SystemColorControlAccentBrush}" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
     </Style>
 
 

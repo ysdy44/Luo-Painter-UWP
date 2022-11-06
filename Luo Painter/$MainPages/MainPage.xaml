@@ -163,7 +163,6 @@
                         <AdaptiveTrigger  MinWindowWidth="1000" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-
                     </VisualState.Setters>
                 </VisualState>
 
@@ -470,7 +469,7 @@
                 Luo Painter
             </TextBlock>
 
-            <Button x:Name="DocumentationButton" Width="Auto" Style="{StaticResource AppButtonStyle}" 
+            <Button x:Name="DocumentationButton" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" 
                     IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="DocumentationButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
@@ -486,7 +485,7 @@
                 <FontIcon FontSize="20" Glyph="&#xE11B;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
             </Button>
 
-            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Style="{StaticResource AppButtonStyle}" 
+            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" 
                     IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="SettingButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
@@ -556,7 +555,7 @@
 
             </ListView>
 
-            <Button x:Name="HomeButton" Visibility="Collapsed" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="HomeButton" Visibility="Collapsed" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="HomeButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
                         Go Home
@@ -570,7 +569,7 @@
                 <SymbolIcon Symbol="Home"/>
             </Button>
 
-            <Button x:Name="BackButton" Grid.Column="2" Visibility="Collapsed" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="BackButton" Grid.Column="2" Visibility="Collapsed" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="BackButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
                         Go Back

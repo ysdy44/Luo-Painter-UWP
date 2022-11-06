@@ -68,7 +68,7 @@
                 >
                 Brushes
             </TextBlock>
-            <Button x:Name="AddButton" Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="AddButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                 <SymbolIcon Symbol="Add"/>
             </Button>
         </Grid>

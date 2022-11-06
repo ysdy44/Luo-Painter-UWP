@@ -24,7 +24,7 @@
 
     <StackPanel>
 
-        <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
+        <controls:SizePicker x:Name="SizePicker" Margin="0,0,0,8" >
             <controls:SizePicker.WidthText>
                 Width
             </controls:SizePicker.WidthText>
@@ -33,8 +33,12 @@
             </controls:SizePicker.HeightText>
         </controls:SizePicker>
 
-        <TextBlock Margin="2,0" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-            <Run x:Name="IndicatorRun" >Indicator</Run>
+        <MenuFlyoutSeparator Margin="0,4"/>
+
+        <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+            <Run x:Name="IndicatorRun" >
+                Anchored to canvas
+            </Run>
             <Span Foreground="{ThemeResource SystemColorControlAccentBrush}">
                 <Run>(</Run><Run x:Name="ModeRun">
                     <!--Mode-->                 

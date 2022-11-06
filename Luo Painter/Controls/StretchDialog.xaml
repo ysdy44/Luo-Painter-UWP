@@ -32,7 +32,7 @@
             </controls:SizePicker.HeightText>
         </controls:SizePicker>
 
-        <Rectangle Margin="0,4" Style="{StaticResource AppRectangleStyle}" />
+        <MenuFlyoutSeparator Margin="0,4"/>
 
         <TextBlock x:Name="InterpolationTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">               
             Interpolation

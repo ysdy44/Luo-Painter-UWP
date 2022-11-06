@@ -33,11 +33,11 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ImageButton" Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="ImageButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                 <SymbolIcon Symbol="Pictures"/>
             </Button>
 
-            <Button x:Name="ClearButton" Grid.Column="2" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="ClearButton" Grid.Column="2" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                 <SymbolIcon Symbol="Delete"/>
             </Button>
         </Grid>

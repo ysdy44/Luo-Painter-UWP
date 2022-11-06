@@ -401,7 +401,7 @@
                                         Layers
                                     </TextBlock>
 
-                                    <Button Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
+                                    <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                                         <Button.Flyout>
                                             <Flyout x:Name="PropertyFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                                                 <StackPanel Spacing="2" Padding="6,4" Width="318">
@@ -522,7 +522,7 @@
                                         <FontIcon Glyph="&#xE946;" FontFamily="Segoe MDL2 Assets"/>
                                     </Button>
 
-                                    <Button Grid.Column="2" Style="{StaticResource AppButtonStyle}" >
+                                    <Button Grid.Column="2" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                                         <Button.Flyout>
                                             <MenuFlyout>
                                                 <!--Add-->
@@ -543,7 +543,7 @@
                                         <SymbolIcon Symbol="Add"/>
                                     </Button>
 
-                                    <Button Grid.Column="3" Style="{StaticResource AppButtonStyle}" >
+                                    <Button Grid.Column="3" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                                         <Button.Flyout>
                                             <MenuFlyout>
                                                 <!--Layer-->
@@ -697,7 +697,7 @@
                     </Grid>
 
                     <!--Head-->
-                    <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1,1,1,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                    <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
                             <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
@@ -749,7 +749,7 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                            <Button Style="{StaticResource AppButtonStyle}" >
+                            <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                                 <Button.Flyout>
                                     <MenuFlyout>
                                         <!--Edit-->
@@ -808,7 +808,7 @@
                                 </Button.Flyout>
                                 <local:OptionIcon Type="EditMenu"/>
                             </Button>
-                            <Button Style="{StaticResource AppButtonStyle}" >
+                            <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                                 <Button.Flyout>
                                     <MenuFlyout>
                                         <!--Adjustment-->
@@ -853,7 +853,7 @@
                                 </Button.Flyout>
                                 <local:OptionIcon Type="AdjustmentMenu"/>
                             </Button>
-                            <Button Style="{StaticResource AppButtonStyle}" >
+                            <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                                 <Button.Flyout>
                                     <MenuFlyout>
                                         <!--Other-->

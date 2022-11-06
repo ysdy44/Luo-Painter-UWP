@@ -198,67 +198,6 @@
                 </TextBox>
 
                 <TextBlock>
-                    Rectangle
-                </TextBlock>
-
-                <Rectangle Style="{StaticResource AppRectangleStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            AppRectangleStyle
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </Rectangle>
-
-                <TextBlock>
-                    Button
-                </TextBlock>
-
-                <Button Style="{StaticResource AppButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            AppButtonStyle
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    ABCD
-                </Button>
-
-                <Button Style="{StaticResource AppTextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            AppTextBlockButtonStyle
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    ABCD
-                </Button>
-
-                <Button Style="{StaticResource AppBorderButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            AppBorderButtonStyle
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    ABCD
-                </Button>
-
-                <Button>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Default
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    ABCD
-                </Button>
-
-                <Button Style="{StaticResource AppAccentBorderButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            AppAccentBorderButtonStyle
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    ABCD
-                </Button>
-
-                <TextBlock>
                     ToggleButton
                 </TextBlock>
 
@@ -332,7 +271,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        
+
         <!--Head-->
         <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
             <Grid.ColumnDefinitions>
@@ -351,7 +290,7 @@
                 Luo Styler
             </TextBlock>
 
-            <Button x:Name="BackButton" Width="Auto" Style="{StaticResource AppButtonStyle}" >
+            <Button x:Name="BackButton" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="BackButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
                         Go Back
@@ -364,7 +303,7 @@
                 </ContentControl.ContentTransitions>
                 <SymbolIcon Symbol="Back"/>
             </Button>
-            
+
         </Grid>
 
 
@@ -383,7 +322,7 @@
                 Cancel
             </ContentDialog.SecondaryButtonText>
         </ContentDialog>
-        
-        
+
+
     </Grid>
 </Page>
