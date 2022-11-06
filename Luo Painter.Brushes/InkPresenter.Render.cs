@@ -12,7 +12,7 @@ namespace Luo_Painter.Brushes
     {
 
         //@Const
-        public const int Width = 320;
+        public const int Width = 240;
         public const int Height = 120;
         public const int HeightHalf = 60;
 

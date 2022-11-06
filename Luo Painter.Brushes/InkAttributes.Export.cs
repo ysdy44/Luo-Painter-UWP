@@ -34,7 +34,10 @@ namespace Luo_Painter.Brushes
 
 
                 new XAttribute("Rotate", this.Rotate),
-                new XAttribute("Step", this.Step));
+                new XAttribute("Step", this.Step),
+
+                new XAttribute("RecolorShape", this.RecolorShape),
+                new XAttribute("RecolorGrain", this.RecolorGrain));
 
             if (string.IsNullOrEmpty(this.Shape) is false) element.Add(new XAttribute("Shape", this.Shape));
             if (string.IsNullOrEmpty(this.Grain) is false) element.Add(new XAttribute("Grain", this.Grain));
@@ -110,6 +113,9 @@ namespace Luo_Painter.Brushes
 
             if (element.Attribute("Shape") is XAttribute shape) this.Shape = shape.Value;
             if (element.Attribute("Grain") is XAttribute grain) this.Grain = grain.Value;
+
+            if (element.Attribute("RecolorShape") is XAttribute recolorShape) this.RecolorShape = (bool)recolorShape;
+            if (element.Attribute("RecolorGrain") is XAttribute recolorGrain) this.RecolorGrain = (bool)recolorGrain;
         }
 
     }

@@ -2,7 +2,7 @@
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter
+    public sealed partial class InkPresenter : InkAttributes
     {
 
         public void ConstructShape(string path, CanvasBitmap source)

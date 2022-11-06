@@ -28,7 +28,7 @@ namespace Luo_Painter.Brushes
         public float Flow { get; set; } /// <see cref="InkPresenter.GetType"/>
 
         public bool IgnoreSizePressure { get; set; }
-        public bool IgnoreFlowPressure { get; set; }
+        public bool IgnoreFlowPressure { get; set; } = true;
 
 
         public PenTipShape Tip { get; set; }
@@ -47,6 +47,9 @@ namespace Luo_Painter.Brushes
 
         public string Shape { get; set; }  /// <see cref="InkPresenter.GetType"/>
         public string Grain { get; set; }  /// <see cref="InkPresenter.GetType"/>
+
+        public bool RecolorShape { get; set; } = true;
+        public bool RecolorGrain { get; set; } = true;
 
 
         public void CopyWith(InkAttributes attributes)
@@ -80,6 +83,9 @@ namespace Luo_Painter.Brushes
 
             this.Shape = attributes.Shape;
             this.Grain = attributes.Grain;
+
+            this.RecolorShape = attributes.RecolorShape;
+            this.RecolorGrain = attributes.RecolorGrain;
         }
 
     }
