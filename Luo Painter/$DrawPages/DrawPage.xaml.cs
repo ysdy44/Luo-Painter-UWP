@@ -177,17 +177,6 @@ namespace Luo_Painter
             this.ConstructVector();
             this.ConstructTransform();
             this.ConstructPen();
-            base.SizeChanged += (s, e) =>
-            {
-                if (this.IsFullScreen) return;
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                if (e.NewSize.Width > 1200)
-                    VisualStateManager.GoToState(this, nameof(Hub), false);
-                else
-                    VisualStateManager.GoToState(this, nameof(PC), false);
-            };
 
 
             this.Command.Click += (s, type) => this.Click(type);
@@ -203,33 +192,16 @@ namespace Luo_Painter
             this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
             this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
 
-
-            this.LayerListView.AddClick += (s, e) => this.Click(OptionType.AddMenu);
-            this.LayerListView.PropertyClick += (s, e) => this.Click(OptionType.PropertyMenu);
-
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
-
             this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
-            this.PaletteButton.Click += (s, e) => this.Click(OptionType.PaletteMenu);
-
-
+            //this.PaletteButton.Click += (s, e) => this.Click(OptionType.PaletteMenu);
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
-            this.HomeButton2.Click += (s, e) => this.Click(OptionType.Close);
-
-            this.SaveButton.Click += (s, e) => this.Click(OptionType.Save);
-            this.SaveButton2.Click += (s, e) => this.Click(OptionType.Save);
-
+            //this.SaveButton.Click += (s, e) => this.Click(OptionType.Save);
             this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
-            this.UndoButton2.Click += (s, e) => this.Click(OptionType.Undo);
-
             this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
-            this.RedoButton2.Click += (s, e) => this.Click(OptionType.Redo);
-
             this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
             this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
-
-            this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
-            this.KeyButton2.Click += (s, e) => this.KeyboardShortcuts.Tip();
+            //this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
 
 
             this.LeftSplitButton.Click += (s, e) => this.LeftSplitView.IsPaneOpen = true;

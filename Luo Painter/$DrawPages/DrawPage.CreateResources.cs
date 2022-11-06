@@ -71,7 +71,7 @@ namespace Luo_Painter
             this.Marquee = new BitmapLayer(this.CanvasDevice, width, height);
             this.Marquee.RenderThumbnail();
 
-            this.LayerListView.MarqueeSource = this.Marquee.Thumbnail;
+            this.MarqueeImage.Source = this.Marquee.Thumbnail;
         }
 
 

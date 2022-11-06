@@ -321,17 +321,10 @@ namespace Luo_Painter
 
                     this.ApplicationView.TryEnterFullScreenMode();
                     this.IsFullScreen = true;
-
-                    VisualStateManager.GoToState(this, nameof(FullScreen), useTransitions: true);
                     break;
                 case OptionType.UnFullScreen:
                     this.ApplicationView.ExitFullScreenMode();
                     this.IsFullScreen = false;
-
-                    if (base.ActualWidth > 1200)
-                        VisualStateManager.GoToState(this, nameof(Hub), false);
-                    else
-                        VisualStateManager.GoToState(this, nameof(PC), false);
                     break;
 
                 #endregion
@@ -460,6 +453,11 @@ namespace Luo_Painter
 
                 #region Menu
 
+                case OptionType.DockLeft:
+                    break;
+                case OptionType.DockRight:
+                    break;
+
                 case OptionType.ExportMenu:
                     {
                         ContentDialogResult result = await this.ExportDialog.ShowInstance();
@@ -487,13 +485,6 @@ namespace Luo_Painter
                         }
                     }
                     break;
-
-                case OptionType.ToolMenu:
-                    this.HeadComboBox.SelectedIndex = 0;
-                    break;
-                case OptionType.HistoryMenu:
-                    this.HeadComboBox.SelectedIndex = 5;
-                    break;
                 case OptionType.ColorMenu:
                     this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
                     break;
@@ -502,26 +493,24 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintMenu:
-                    this.HeadComboBox.SelectedIndex = 1;
                     break;
                 case OptionType.BrushMenu:
-                    this.HeadComboBox.SelectedIndex = 2;
                     break;
                 case OptionType.SizeMenu:
-                    this.HeadComboBox.SelectedIndex = 3;
+                    break;
+
+                case OptionType.ToolMenu:
+                    break;
+                case OptionType.HistoryMenu:
+                    break;
+                case OptionType.LayerMenu:
                     break;
 
                 case OptionType.AddMenu:
-                    this.AddFlyout.ShowAt(this.LayerListView.PlacementTarget);
                     break;
-
                 case OptionType.PropertyMenu:
-                    this.PropertyFlyout.ShowAt(this.LayerListView.PlacementTarget);
                     break;
                 case OptionType.PropertyMenuWithRename:
-                    this.PropertyFlyout.ShowAt(this.LayerListView.PlacementTarget);
-                    this.NameTextBox.Focus(FocusState.Keyboard);
-                    this.NameTextBox.SelectAll();
                     break;
 
                 #endregion

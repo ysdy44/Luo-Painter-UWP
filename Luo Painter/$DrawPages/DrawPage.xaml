@@ -45,141 +45,6 @@
                 ColorSpectrumComponents="SaturationValue"             
                 />
         </Flyout>
-        <MenuFlyout x:Name="AddFlyout">
-            <!--Add-->
-            <MenuFlyoutSeparator x:Name="AddHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                <UIElement.AccessKey>
-                    Add
-                </UIElement.AccessKey>
-            </MenuFlyoutSeparator>
-            <MenuFlyoutItem options:OptionExtensions.Type="AddLayer" Command="{x:Bind Command}">
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="Insert"/>
-                </UIElement.KeyboardAccelerators>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
-            <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
-        </MenuFlyout>
-        <Flyout x:Name="PropertyFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <StackPanel Spacing="2" Padding="6,4" Width="318">
-
-                <TextBlock                        
-                    x:Name="PropertyTextBlock"                            
-                    Margin="8,4"                          
-                    IsHitTestVisible="false"                           
-                    FontWeight="Medium"                          
-                    TextTrimming="CharacterEllipsis"                          
-                    FontSize="20"                          
-                    TextWrapping="Wrap"                          
-                    VerticalAlignment="Center"                          
-                    Style="{StaticResource SubheaderTextBlockStyle}"                       
-                    >                        
-                    Properties
-                </TextBlock>
-
-                <!--Opacity-->
-                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                    <Slider x:Name="OpacitySlider" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
-                        <FrameworkElement.Tag>
-                            Opacity
-                        </FrameworkElement.Tag>
-                        <Slider.Header>
-                            <Button                                    
-                                Padding="4,0"                                   
-                                MinWidth="44"                                    
-                                Height="28"                                      
-                                BorderThickness="1"                                       
-                                BorderBrush="{ThemeResource AppStroke}"                                       
-                                Background="{ThemeResource SystemAltLowColor}"                                     
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>                                       
-                                    <Run Text="{x:Bind OpacitySlider.Value, Mode=OneWay}" />                  
-                                    <Run>%</Run>
-                                </TextBlock>
-                            </Button>
-                        </Slider.Header>
-                    </Slider>
-                </Border>
-
-                <!--BlendMode-->
-                <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                    Blend Mode
-                </TextBlock>
-                <ComboBox x:Name="BlendModeComboBox" >
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="effects:BlendEffectMode">
-                            <local:BlendIcon Type="{x:Bind}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                    <ItemsControl.ItemsSource>
-                        <local:BlendList x:Name="BlendCollection">
-                            <!--None-->
-                            <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
-                            <!--Darken-->
-                            <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
-                            <!--Lighten-->
-                            <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
-                            <!--Contrast-->
-                            <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
-                            <!--Difference-->
-                            <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Division</effects:BlendEffectMode>
-                            <!--Color-->
-                            <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Color</effects:BlendEffectMode>
-                            <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
-                        </local:BlendList>
-                    </ItemsControl.ItemsSource>
-
-                </ComboBox>
-
-                <!--Name-->
-                <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                    Name
-                </TextBlock>
-                <TextBox x:Name="NameTextBox" >
-                    <TextBox.PlaceholderText>
-                        Input Text...
-                    </TextBox.PlaceholderText>
-                </TextBox>
-
-                <!--TagType-->
-                <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                    Tag Type
-                </TextBlock>
-                <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                    <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
-                </Border>
-
-            </StackPanel>
-        </Flyout>
-        
-  
         <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:ScaleRange x:Name="ScaleRange"/>
@@ -544,8 +409,267 @@
                     <Grid>
 
                         <!--Layer-->
-                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
+                        <!--Layer-->
+                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" >
 
+                            <ListViewBase.Header>
+                                <Grid Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        x:Name="LayerTitleTextBlock"
+                                        Margin="16,0,0,0"
+                                        IsHitTestVisible="false" 
+                                        FontWeight="Medium" 
+                                        TextTrimming="CharacterEllipsis" 
+                                        FontSize="20" 
+                                        TextWrapping="Wrap" 
+                                        VerticalAlignment="Center" 
+                                        Style="{StaticResource SubheaderTextBlockStyle}"
+                                        >
+                                        Layers
+                                    </TextBlock>
+
+                                    <Button Grid.Column="1" Style="{StaticResource AppButtonStyle}" >
+                                        <Button.Flyout>
+                                            <Flyout x:Name="PropertyFlyout" Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                                <StackPanel Spacing="2" Padding="6,4" Width="318">
+
+                                                    <TextBlock                        
+                                                        x:Name="PropertyTextBlock"                            
+                                                        Margin="8,4"                          
+                                                        IsHitTestVisible="false"                           
+                                                        FontWeight="Medium"                          
+                                                        TextTrimming="CharacterEllipsis"                          
+                                                        FontSize="20"                          
+                                                        TextWrapping="Wrap"                          
+                                                        VerticalAlignment="Center"                          
+                                                        Style="{StaticResource SubheaderTextBlockStyle}"                       
+                                                        >                        
+                                                        Properties
+                                                    </TextBlock>
+
+                                                    <!--Opacity-->
+                                                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                                        <Slider x:Name="OpacitySlider" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}" >
+                                                            <FrameworkElement.Tag>
+                                                                Opacity
+                                                            </FrameworkElement.Tag>
+                                                            <Slider.Header>
+                                                                <Button
+                                                                    Padding="4,0"                            
+                                                                    MinWidth="44"                            
+                                                                    Height="28"                              
+                                                                    BorderThickness="1"                             
+                                                                    BorderBrush="{ThemeResource AppStroke}"                             
+                                                                    Background="{ThemeResource SystemAltLowColor}"
+                                                                    >
+                                                                    <Button.Flyout>
+                                                                        <Flyout>
+
+                                                                        </Flyout>
+                                                                    </Button.Flyout>
+                                                                    <TextBlock><Run Text="{x:Bind OpacitySlider.Value, Mode=OneWay}" /><Run>%</Run></TextBlock>
+                                                                </Button>
+                                                            </Slider.Header>
+                                                        </Slider>
+                                                    </Border>
+
+                                                    <!--BlendMode-->
+                                                    <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                                        Blend Mode
+                                                    </TextBlock>
+                                                    <ComboBox x:Name="BlendModeComboBox" >
+
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="effects:BlendEffectMode">
+                                                                <local:BlendIcon Type="{x:Bind}"/>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+
+                                                        <ItemsControl.ItemsSource>
+                                                            <local:BlendList x:Name="BlendCollection">
+                                                                <!--None-->
+                                                                <effects:BlendEffectMode>-1</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
+                                                                <!--Darken-->
+                                                                <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
+                                                                <!--Lighten-->
+                                                                <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
+                                                                <!--Contrast-->
+                                                                <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
+                                                                <!--Difference-->
+                                                                <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Division</effects:BlendEffectMode>
+                                                                <!--Color-->
+                                                                <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Color</effects:BlendEffectMode>
+                                                                <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
+                                                            </local:BlendList>
+                                                        </ItemsControl.ItemsSource>
+
+                                                    </ComboBox>
+
+                                                    <!--Name-->
+                                                    <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                                        Name
+                                                    </TextBlock>
+                                                    <TextBox x:Name="NameTextBox" >
+                                                        <TextBox.PlaceholderText>
+                                                            Input Text...
+                                                        </TextBox.PlaceholderText>
+                                                    </TextBox>
+
+                                                    <!--TagType-->
+                                                    <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                                        Tag Type
+                                                    </TextBlock>
+                                                    <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                                                        <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
+                                                    </Border>
+
+                                                </StackPanel>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                        <FontIcon Glyph="&#xE946;" FontFamily="Segoe MDL2 Assets"/>
+                                    </Button>
+
+                                    <Button Grid.Column="2" Style="{StaticResource AppButtonStyle}" >
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <!--Add-->
+                                                <MenuFlyoutSeparator x:Name="AddHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                                    <UIElement.AccessKey>
+                                                        Add
+                                                    </UIElement.AccessKey>
+                                                </MenuFlyoutSeparator>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="AddLayer" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Key="Insert"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                        <SymbolIcon Symbol="Add"/>
+                                    </Button>
+
+                                    <Button Grid.Column="3" Style="{StaticResource AppButtonStyle}" >
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <!--Layer-->
+                                                <MenuFlyoutSeparator x:Name="LayerHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                                    <UIElement.AccessKey>
+                                                        Layers
+                                                    </UIElement.AccessKey>
+                                                </MenuFlyoutSeparator>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="CutLayer" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="CopyLayer" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem x:Name="PasteLayerItem" options:OptionExtensions.Type="PasteLayer" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Remove" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Key="Delete"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutSeparator/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Duplicate" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Extract" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Merge" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="M"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Flatten" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="F"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutSeparator/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Group" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="G"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Ungroup" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="U"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Release" Command="{x:Bind Command}">
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="Control" Key="R"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                </MenuFlyoutItem>
+                                                <!--
+                                                <MenuFlyoutItem options:OptionExtensions.Type="ExpandStroke" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutSeparator/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Union" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Exclude" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Xor" Command="{x:Bind Command}"/>
+                                                <MenuFlyoutItem options:OptionExtensions.Type="Intersect" Command="{x:Bind Command}"/>
+                                                -->
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                        <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
+                                    </Button>
+                                </Grid>
+                            </ListViewBase.Header>
+
+                            <ListViewBase.Footer>
+                                <Grid Padding="2,0,0,0" Height="55" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="66"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="42"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        x:Name="MarqueeTextBlock"                
+                                        Grid.Column="1"              
+                                        IsHitTestVisible="False"              
+                                        VerticalAlignment="Center"          
+                                        >           
+                                        Marquee
+                                    </TextBlock>
+                                    <Border CornerRadius="2" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Image x:Name="MarqueeImage"/>
+                                    </Border>
+                                    <SymbolIcon Grid.Column="2" Symbol="SelectAll" />
+                                </Grid>
+                            </ListViewBase.Footer>
+
+                        </controls:LayerListView>
+                        
                         <!--Head-->
                         <ScrollViewer x:Name="HeadScrollViewer" Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" Style="{StaticResource AppHorizontalScrollViewerStyle}">
                             <StackPanel Orientation="Horizontal">
@@ -662,72 +786,6 @@
                                 </Button>
                                 <Button x:Name="ExportButton" Foreground="Black" Background="#FFC003" Style="{StaticResource AppTextBlockButtonStyle}" >
                                     <SymbolIcon Symbol="NewWindow"/>
-                                </Button>
-                                <Button Style="{StaticResource AppButtonStyle}" >
-                                    <Button.Flyout>
-                                        <MenuFlyout>
-                                            <!--Layer-->
-                                            <MenuFlyoutSeparator x:Name="LayerHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                                <UIElement.AccessKey>
-                                                    Layers
-                                                </UIElement.AccessKey>
-                                            </MenuFlyoutSeparator>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="CutLayer" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="CopyLayer" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutItem x:Name="PasteLayerItem" options:OptionExtensions.Type="PasteLayer" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Remove" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Key="Delete"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutSeparator/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Duplicate" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="C"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Extract" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Merge" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="M"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Flatten" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="F"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutSeparator/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Group" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="G"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Ungroup" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="U"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Release" Command="{x:Bind Command}">
-                                                <UIElement.KeyboardAccelerators>
-                                                    <KeyboardAccelerator Modifiers="Control" Key="R"/>
-                                                </UIElement.KeyboardAccelerators>
-                                            </MenuFlyoutItem>
-                                            <!--
-                                            <MenuFlyoutItem options:OptionExtensions.Type="ExpandStroke" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutSeparator/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Union" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Exclude" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Xor" Command="{x:Bind Command}"/>
-                                            <MenuFlyoutItem options:OptionExtensions.Type="Intersect" Command="{x:Bind Command}"/>
-                                            -->
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                    <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
                                 </Button>
                             </StackPanel>
 
