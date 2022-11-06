@@ -164,11 +164,11 @@
                         <Setter Target="DockGrid.Visibility" Value="Collapsed"/>
 
                         <!--Split-->
-                        <Setter Target="LeftSplitButton.Visibility" Value="Visible"/>
-                        <Setter Target="RightSplitButton.Visibility" Value="Visible"/>
+                        <Setter Target="SplitLeftButton.Visibility" Value="Visible"/>
+                        <Setter Target="SplitRightButton.Visibility" Value="Visible"/>
 
-                        <Setter Target="RightSplitView.DisplayMode" Value="Overlay"/>
-                        <Setter Target="LeftSplitView.DisplayMode" Value="Overlay"/>
+                        <Setter Target="SplitRightView.DisplayMode" Value="Overlay"/>
+                        <Setter Target="SplitLeftView.DisplayMode" Value="Overlay"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -337,10 +337,9 @@
 
         <!--Body-->
         <SplitView 
-            x:Name="RightSplitView"
+            x:Name="SplitRightView"
             PanePlacement="Right"
             OpenPaneLength="280"
-            IsPaneOpen="True"                    
             DisplayMode="Inline"
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
@@ -367,10 +366,9 @@
                 </Grid>
             </SplitView.Pane>
             <SplitView 
-                x:Name="LeftSplitView"
+                x:Name="SplitLeftView"
                 PanePlacement="Left"                     
                 OpenPaneLength="280"                    
-                IsPaneOpen="True"                    
                 DisplayMode="Inline"                   
                 PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"                   
                 >
@@ -670,10 +668,10 @@
                     </Canvas>
 
                     <!--Split-->
-                    <Button x:Name="LeftSplitButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="0,6,6,0" HorizontalAlignment="Left" BorderThickness="0,1,1,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                    <Button x:Name="SplitLeftButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="0,6,6,0" HorizontalAlignment="Left" BorderThickness="0,1,1,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
                         <Line X1="0" X2="0" Y1="0" Y2="36" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="{ThemeResource AppForeground}"/>
                     </Button>
-                    <Button x:Name="RightSplitButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="6,0,0,6" HorizontalAlignment="Right" BorderThickness="1,1,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                    <Button x:Name="SplitRightButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="6,0,0,6" HorizontalAlignment="Right" BorderThickness="1,1,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
                         <Line X1="0" X2="0" Y1="0" Y2="36" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="{ThemeResource AppForeground}"/>
                     </Button>
 
@@ -681,7 +679,7 @@
                     <Grid x:Name="DockGrid" Height="50" VerticalAlignment="Top" >
 
                         <Button x:Name="DockLeftButton2" Width="90" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
-                                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(LeftSplitView.IsPaneOpen), Mode=OneWay}" >
+                                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(SplitLeftView.IsPaneOpen), Mode=OneWay}" >
                             <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
                                 <SymbolIcon Symbol="DockLeft"/>
                                 <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />
@@ -689,7 +687,7 @@
                         </Button>
 
                         <Button x:Name="DockRightButton2" Width="90" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
-                                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(RightSplitView.IsPaneOpen), Mode=OneWay}" >
+                                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(SplitRightView.IsPaneOpen), Mode=OneWay}" >
                             <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
                                 <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />
                                 <SymbolIcon Symbol="DockRight"/>

@@ -211,18 +211,18 @@ namespace Luo_Painter
             this.DockRightButton2.Click += (s, e) => this.DockRightFlyout.ShowAt(this.DockRightButton2);
 
 
-            this.LeftSplitButton.Click += (s, e) => this.LeftSplitView.IsPaneOpen = true;
-            this.LeftSplitButton.PointerEntered += (s, e) =>
+            this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;
+            this.SplitLeftButton.PointerEntered += (s, e) =>
             {
                 if (e.Pointer.PointerDeviceType is PointerDeviceType.Touch) return;
-                this.LeftSplitView.IsPaneOpen = true;
+                this.SplitLeftView.IsPaneOpen = true;
             };
 
-            this.RightSplitButton.Click += (s, e) => this.RightSplitView.IsPaneOpen = true;
-            this.RightSplitButton.PointerEntered += (s, e) =>
+            this.SplitRightButton.Click += (s, e) => this.SplitRightView.IsPaneOpen = true;
+            this.SplitRightButton.PointerEntered += (s, e) =>
             {
                 if (e.Pointer.PointerDeviceType is PointerDeviceType.Touch) return;
-                this.RightSplitView.IsPaneOpen = true;
+                this.SplitRightView.IsPaneOpen = true;
             };
 
 

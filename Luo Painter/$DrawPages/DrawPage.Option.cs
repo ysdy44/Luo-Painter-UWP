@@ -454,10 +454,10 @@ namespace Luo_Painter
                 #region Menu
 
                 case OptionType.DockLeft:
-                    this.LeftSplitView.IsPaneOpen = !this.LeftSplitView.IsPaneOpen;
+                    this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
                     break;
                 case OptionType.DockRight:
-                    this.RightSplitView.IsPaneOpen = !this.RightSplitView.IsPaneOpen;
+                    this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
                     break;
 
                 case OptionType.ExportMenu:
@@ -500,7 +500,7 @@ namespace Luo_Painter
                     this.SizeMenu.Visibility = Visibility.Collapsed;
                     this.HistoryMenu.Visibility = Visibility.Collapsed;
                     this.PaintScrollViewer.Visibility = Visibility.Visible;
-                    this.RightSplitView.IsPaneOpen = true;
+                    this.SplitRightView.IsPaneOpen = true;
                     break;
                 case OptionType.BrushMenu:
                     this.ToolListView.Visibility = Visibility.Collapsed;
@@ -508,7 +508,7 @@ namespace Luo_Painter
                     this.SizeMenu.Visibility = Visibility.Collapsed;
                     this.HistoryMenu.Visibility = Visibility.Collapsed;
                     this.BrushMenu.Visibility = Visibility.Visible;
-                    this.RightSplitView.IsPaneOpen = true;
+                    this.SplitRightView.IsPaneOpen = true;
                     break;
                 case OptionType.SizeMenu:
                     this.ToolListView.Visibility = Visibility.Collapsed;
@@ -516,7 +516,7 @@ namespace Luo_Painter
                     this.BrushMenu.Visibility = Visibility.Collapsed;
                     this.HistoryMenu.Visibility = Visibility.Collapsed;
                     this.SizeMenu.Visibility = Visibility.Visible;
-                    this.RightSplitView.IsPaneOpen = true;
+                    this.SplitRightView.IsPaneOpen = true;
                     break;
 
                 case OptionType.ToolMenu:
@@ -525,7 +525,7 @@ namespace Luo_Painter
                     this.SizeMenu.Visibility = Visibility.Collapsed;
                     this.HistoryMenu.Visibility = Visibility.Collapsed;
                     this.ToolListView.Visibility = Visibility.Visible;
-                    this.RightSplitView.IsPaneOpen = true;
+                    this.SplitRightView.IsPaneOpen = true;
                     break;
                 case OptionType.HistoryMenu:
                     this.ToolListView.Visibility = Visibility.Collapsed;
@@ -533,11 +533,11 @@ namespace Luo_Painter
                     this.BrushMenu.Visibility = Visibility.Collapsed;
                     this.SizeMenu.Visibility = Visibility.Collapsed;
                     this.HistoryMenu.Visibility = Visibility.Visible;
-                    this.RightSplitView.IsPaneOpen = true;
+                    this.SplitRightView.IsPaneOpen = true;
                     break;
                 case OptionType.LayerMenu:
                     this.LayerListView.Visibility = Visibility.Visible;
-                    this.LeftSplitView.IsPaneOpen = true;
+                    this.SplitLeftView.IsPaneOpen = true;
                     break;
 
                 case OptionType.AddMenu:
