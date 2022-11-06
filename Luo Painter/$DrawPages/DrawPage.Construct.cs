@@ -25,10 +25,7 @@ namespace Luo_Painter
         public void RaiseHistoryCanExecuteChanged()
         {
             this.UndoButton.IsEnabled = this.History.CanUndo;
-            this.UndoButton2.IsEnabled = this.History.CanUndo;
-
             this.RedoButton.IsEnabled = this.History.CanRedo;
-            this.RedoButton2.IsEnabled = this.History.CanRedo;
         }
         public void RaiseEditCanExecuteChanged()
         {
