@@ -183,21 +183,18 @@ namespace Luo_Painter
         }
     }
 
-    internal class OptionItemButtonWithIsEnabled : OptionItemButton
+    internal class OptionIcon : TIcon<OptionType>
     {
-        public OptionItemButtonWithIsEnabled()
+        protected override void OnTypeChanged(OptionType value)
         {
-            base.Loaded += (s, e) => this.ContentControl.GoToState(base.IsEnabled);
-            base.IsEnabledChanged += (s, e) =>
-            {
-                if (e.NewValue is bool value)
-                {
-                    this.ContentControl.GoToState(value);
-                }
-            };
+            base.Width = 32;
+            base.VerticalContentAlignment = VerticalAlignment.Center;
+            base.HorizontalContentAlignment = HorizontalAlignment.Center;
+            base.Content = value;
+            base.Resources.Source = new Uri(value.GetResource());
+            base.Template = value.GetTemplate(base.Resources);
         }
     }
-
     internal class OptionItem : TIcon<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
@@ -213,39 +210,7 @@ namespace Luo_Painter
             }, value.ToString());
         }
     }
-    internal class OptionItemButton : TButton<OptionType>
-    {
-        protected ContentControl ContentControl = new ContentControl
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center,
-        };
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            base.CommandParameter = value;
-            base.Resources.Source = new Uri(value.GetResource());
-            this.ContentControl.Template = value.GetTemplate(base.Resources);
 
-            if (value.HasPreview())
-            {
-                base.Content = Element.GetGrid(this.ContentControl, value.ToString());
-            }
-            else
-            {
-                this.ContentControl.Width = 32;
-                base.Content = Element.GetStackPanel(this.ContentControl, value.ToString());
-            }
-        }
-    }
-
-    [ContentProperty(Name = nameof(Content))]
-    internal sealed class OptionItemCase : OptionItem, ICase<OptionType>
-    {
-        public OptionType Value => base.Type;
-        public void OnNavigatedFrom() { }
-        public void OnNavigatedTo() { }
-    }
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : DependencyObject, ICase<OptionType>
     {
@@ -272,13 +237,6 @@ namespace Luo_Painter
     [ContentProperty(Name = nameof(SwitchCases))]
     internal sealed class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
 
-    internal class OptionKeyboardAccelerator : KeyboardAccelerator
-    {
-        public OptionType CommandParameter { get; set; }
-        public OptionTypeCommand Command { get; set; }
-        public OptionKeyboardAccelerator() => base.Invoked += (s, e) => this.Command.Execute(this.CommandParameter);
-        public override string ToString() => this.CommandParameter.ToString();
-    }
     internal class OptionTypeCommand : RelayCommand<OptionType> { }
 
     internal static class Element
