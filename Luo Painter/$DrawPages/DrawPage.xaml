@@ -517,13 +517,13 @@
                             <SymbolIcon Symbol="ViewAll"/>
                         </ListBoxItem>
                         <ListBoxItem x:Name="PaintItem" Width="70">
-                            <local:ElementIcon Type="Paint"/>
+                            <local:OptionIcon Type="PaintMenu"/>
                         </ListBoxItem>
                         <ListBoxItem x:Name="BrushItem" Width="70">
-                            <local:ElementIcon Type="Brush"/>
+                            <local:OptionIcon Type="BrushMenu"/>
                         </ListBoxItem>
                         <ListBoxItem x:Name="SizeItem" Width="70">
-                            <local:ElementIcon Type="Size"/>
+                            <local:OptionIcon Type="SizeMenu"/>
                         </ListBoxItem>
                         <ListBoxItem x:Name="HistoryItem" Width="70">
                             <FontIcon Glyph="&#xF738;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
@@ -819,7 +819,7 @@
                                             <MenuFlyoutItem options:OptionExtensions.Type="Shrink" Command="{x:Bind Command}"/>
                                         </MenuFlyout>
                                     </Button.Flyout>
-                                    <local:ElementIcon Type="Edit"/>
+                                    <local:OptionIcon Type="EditMenu"/>
                                 </Button>
                                 <Button Style="{StaticResource AppButtonStyle}" >
                                     <Button.Flyout>
@@ -864,7 +864,7 @@
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </Button.Flyout>
-                                    <local:ElementIcon Type="Adjustment"/>
+                                    <local:OptionIcon Type="AdjustmentMenu"/>
                                 </Button>
                                 <Button Style="{StaticResource AppButtonStyle}" >
                                     <Button.Flyout>

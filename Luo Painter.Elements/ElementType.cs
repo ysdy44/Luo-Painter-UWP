@@ -2,14 +2,6 @@
 {
     public enum ElementType
     {
-        Paint,
-        Brush,
-        Size,
-
-        Edit,
-        Layer,
-        Adjustment,
-
         Snap,
         SnapToTick,
 
