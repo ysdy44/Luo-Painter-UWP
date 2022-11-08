@@ -33,10 +33,44 @@ namespace Luo_Painter.Brushes
         private double OffsetY(double radian) => (float)System.Math.Clamp(System.Math.Sin(radian + radian), -1, 1);
 
 
-        public void IsometricTip(CanvasDrawingSession ds, Color color, bool ignoreSpacing)
+        public void IsometricTipFillCircle(CanvasDrawingSession ds, Color color)
         {
             float size = this.Size / 24 + 1;
-            float spacing = ignoreSpacing ? 0.25f : this.Spacing;
+            float spacing = 0.25f;
+
+            float open = this.IgnoreSizePressure ? (size + 10) : 10;
+            float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
+
+            float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
+            float x = open + startingSizePressure * spacing;
+
+            ds.FillCircle(open, InkPresenter.HeightHalf, startingSizePressure, color);
+            ds.FillCircle(end, InkPresenter.HeightHalf, startingSizePressure, color);
+
+            do
+            {
+                // 1. Get Radian
+                double radian = this.Radian((x - open) / (end - open));
+                float offsetY = 20 * (float)this.OffsetY(radian);
+                float pressure = this.IgnoreSizePressure ? 1 : (float)this.Pressure(radian);
+
+                // 2. Get Position
+                Vector2 position = new Vector2(x, InkPresenter.Height / 2 + offsetY);
+
+                // 3. Draw
+                float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
+                ds.FillCircle(position, sizePressure, color);
+
+                // 4. Foreach
+                x += sizePressure * spacing;
+            } while (x < end);
+        }
+
+
+        public void IsometricTip(CanvasDrawingSession ds, Color color, bool ignoreSpacing = false)
+        {
+            float size = this.Size / 24 + 1;
+            float spacing = this.Spacing;
 
             float open = this.IgnoreSizePressure ? (size + 10) : 10;
             float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
