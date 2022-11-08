@@ -746,25 +746,7 @@
                                 </UIElement.KeyboardAccelerators>
                                 <SymbolIcon Symbol="Redo"/>
                             </Button>
-                            <Button 
-                                x:Name="ColorButton" 
-                                Width="70" 
-                                Height="50" 
-                                Foreground="{ThemeResource AppForeground}" 
-                                Style="{StaticResource TextBlockButtonStyle}" 
-                                ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}" 
-                                ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}" 
-                                ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}" 
-                                >
-                                <UIElement.ManipulationMode>
-                                    TranslateX, TranslateY
-                                </UIElement.ManipulationMode>
-                                <Grid>
-                                    <FontIcon Glyph="&#xE91F;" FontSize="32" FontFamily="Segoe MDL2 Assets" />
-                                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
-                                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{x:Bind ColorMenu.Foreground}" />
-                                </Grid>
-                            </Button>
+                            <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
@@ -2263,8 +2245,6 @@
         <!--Expander-->
         <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
         <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-            <controls:ColorMenu x:Name="ColorMenu" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
-            <controls:PaletteMenu x:Name="PaletteMenu" />
         </elements:ExpanderLightDismissOverlay>
 
 

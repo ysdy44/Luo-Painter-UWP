@@ -77,6 +77,10 @@ namespace Luo_Painter
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
 
+        ColorButton ColorMenu => this.ColorButton;
+        ColorButton PaletteMenu => this.ColorButton;
+
+
         GradientMesh GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget GrayAndWhite { get; set; }
@@ -118,7 +122,7 @@ namespace Luo_Painter
 
         #region IInkParameter
 
-        public InkType InkType { get; set; } = InkType.General;
+        public InkType InkType { get; set; } = InkType.Tip;
         public InkPresenter InkPresenter { get; } = new InkPresenter
         {
             Type = InkType.Tip,
@@ -189,12 +193,7 @@ namespace Luo_Painter
             };
 
 
-            this.LightDismissOverlay.Tapped += (s, e) => this.ExpanderLightDismissOverlay.Hide();
-            this.ExpanderLightDismissOverlay.IsFlyoutChanged += (s, isFlyout) => this.LightDismissOverlay.Visibility = isFlyout ? Visibility.Visible : Visibility.Collapsed;
-
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
-            this.ColorButton.Click += (s, e) => this.Click(OptionType.ColorMenu);
-            //this.PaletteButton.Click += (s, e) => this.Click(OptionType.PaletteMenu);
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
             //this.SaveButton.Click += (s, e) => this.Click(OptionType.Save);
             this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
@@ -249,10 +248,8 @@ namespace Luo_Painter
                     this.ConstructSize((float)item.Size);
                 }
             };
-            this.ColorPicker.ColorChanged += (s, e) =>
+            this.ColorButton.ColorChanged += (s, e) =>
             {
-                if (this.ColorFlyout.IsOpen is false) return;
-
                 switch (this.OptionType)
                 {
                     case OptionType.GradientMapping:
