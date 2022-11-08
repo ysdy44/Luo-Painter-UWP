@@ -2272,6 +2272,7 @@
 
 
                         <!--Button-->
+                        <!--
                         <StackPanel x:Name="AppBarStackPanel" Visibility="Collapsed" Spacing="6" Orientation="Horizontal" Margin="6,0" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" >
                             <Button x:Name="AppBarPrimaryButton" CornerRadius="4" Width="70" Height="40" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
                                 <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
@@ -2280,7 +2281,40 @@
                                 <FontIcon Glyph="&#xEB90;" FontFamily="Segoe MDL2 Assets"/>
                             </Button>
                         </StackPanel>
+                        -->
+                    </Grid>
 
+                    <!--AppBar-->
+                    <Grid x:Name="AppBarStackPanel" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                            <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="AppBarPrimaryButton" Grid.Column="2" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
+                            Apply
+                        </Button>
+                        <Button x:Name="AppBarSecondaryButton" Grid.Column="3" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" >
+                            Reset
+                        </Button>
+                        <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                            <SymbolIcon Symbol="Back"/>
+                        </Button>
+                        <TextBlock
+                            x:Name="TitleTextBlock"
+                            Grid.Column="1" 
+                            Margin="16,0"
+                            IsHitTestVisible="false" 
+                            FontWeight="Medium" 
+                            TextTrimming="CharacterEllipsis" 
+                            FontSize="20" 
+                            TextWrapping="Wrap" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource SubheaderTextBlockStyle}"
+                            >   
+                            <!--Title-->
+                        </TextBlock>
                     </Grid>
 
                 </Grid>
