@@ -12,6 +12,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
+    internal enum ContextAppBarDevice
+    {
+        None,
+        Phone,
+        Pad,
+        PC,
+        Hub,
+    }
     internal enum ContextAppBarState
     {
         None,
@@ -23,6 +31,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
+        ContextAppBarDevice AppBarDevice;
         Point AppBarStartingPosition;
 
         public void ConstructFoots()
@@ -46,25 +55,66 @@ namespace Luo_Painter
                 }
             };
             this.AppBarThumb.DragCompleted += (s, e) => { };
+
+            this.ContentGrid.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                ContextAppBarDevice device = this.GetDevice((int)e.NewSize.Width);
+                if (this.AppBarDevice == device) return;
+                this.AppBarDevice = device;
+
+                switch (device)
+                {
+                    case ContextAppBarDevice.Phone:
+                        VisualStateManager.GoToState(this, nameof(Phone), false);
+                        break;
+                    case ContextAppBarDevice.Pad:
+                        VisualStateManager.GoToState(this, nameof(Pad), false);
+                        break;
+                    case ContextAppBarDevice.PC:
+                        VisualStateManager.GoToState(this, nameof(PC), false);
+                        break;
+                    case ContextAppBarDevice.Hub:
+                        VisualStateManager.GoToState(this, nameof(Hub), false);
+                        break;
+                    default:
+                        break;
+                }
+            };
         }
+
+        private ContextAppBarDevice GetDevice(int width)
+        {
+            if (width > 1200) return ContextAppBarDevice.Hub;
+            else if (width > 900) return ContextAppBarDevice.PC;
+            else if (width > 600) return ContextAppBarDevice.Pad;
+            else return ContextAppBarDevice.Phone;
+        }
+
 
         public void ConstructAppBar(OptionType type)
         {
             switch (this.GetState(type))
             {
                 case ContextAppBarState.None:
+                    this.TitleTextBlock.Text = string.Empty;
                     this.SwitchPresenter.Value = default;
                     VisualStateManager.GoToState(this, nameof(AppBarNormal), false);
                     break;
                 case ContextAppBarState.Main:
+                    this.TitleTextBlock.Text = string.Empty;
                     this.SwitchPresenter.Value = this.GetType(type);
                     VisualStateManager.GoToState(this, nameof(AppBarMain), false);
                     break;
                 case ContextAppBarState.Preview:
+                    this.TitleTextBlock.Text = type.ToString();
                     this.SwitchPresenter.Value = this.GetType(type);
                     VisualStateManager.GoToState(this, nameof(AppBarPreview), false);
                     break;
                 case ContextAppBarState.DragPreview:
+                    this.TitleTextBlock.Text = type.ToString();
                     this.SwitchPresenter.Value = this.GetType(type);
                     VisualStateManager.GoToState(this, nameof(AppBarDragPreview), false);
                     break;
@@ -96,6 +146,11 @@ namespace Luo_Painter
         public void ConstructFoot()
         {
             this.AppBarSecondaryButton.Click += (s, e) =>
+            {
+
+            };
+
+            this.AppBarBackButton.Click += (s, e) =>
             {
                 if (this.OptionType is OptionType.CropCanvas)
                 {
