@@ -1,9 +1,10 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaletteMenu : Expander, IInkParameter
+    public sealed partial class ColorButton : Button, IInkParameter
     {
 
         private void ConstructOperator()

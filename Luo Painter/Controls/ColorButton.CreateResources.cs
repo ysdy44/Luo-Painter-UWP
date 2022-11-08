@@ -3,10 +3,11 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaletteMenu : Expander, IInkParameter
+    public sealed partial class ColorButton : Button, IInkParameter
     {
 
         byte[] LiquefactionShaderCodeBytes;

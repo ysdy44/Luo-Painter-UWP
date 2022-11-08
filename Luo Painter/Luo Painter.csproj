@@ -160,7 +160,13 @@
     <Compile Include="Controls\BrushListView.xaml.cs">
       <DependentUpon>BrushListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ColorButton.Canvas.cs" />
     <Compile Include="Controls\ColorButton.Color.cs" />
+    <Compile Include="Controls\ColorButton.CreateResources.cs" />
+    <Compile Include="Controls\ColorButton.Ink.cs" />
+    <Compile Include="Controls\ColorButton.Operator.cs" />
+    <Compile Include="Controls\ColorButton.Paint.cs" />
+    <Compile Include="Controls\ColorButton.Tool.Paint.cs" />
     <Compile Include="Controls\EffectDialog.xaml.cs">
       <DependentUpon>EffectDialog.xaml</DependentUpon>
     </Compile>
@@ -188,14 +194,6 @@
     <Compile Include="Controls\PaintScrollViewer.Ink3.cs" />
     <Compile Include="Controls\PaintScrollViewer.xaml.cs">
       <DependentUpon>PaintScrollViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PaletteMenu.Canvas.cs" />
-    <Compile Include="Controls\PaletteMenu.CreateResources.cs" />
-    <Compile Include="Controls\PaletteMenu.Operator.cs" />
-    <Compile Include="Controls\PaletteMenu.Paint.cs" />
-    <Compile Include="Controls\PaletteMenu.Tool.Paint.cs" />
-    <Compile Include="Controls\PaletteMenu.xaml.cs">
-      <DependentUpon>PaletteMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SimulateCanvas.xaml.cs">
       <DependentUpon>SimulateCanvas.xaml</DependentUpon>
@@ -346,10 +344,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\PaintScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\PaletteMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaletteMenu : Expander, IInkParameter
+    public sealed partial class ColorButton : Button, IInkParameter
     {
 
         private void PaintCap(StrokeCap cap)

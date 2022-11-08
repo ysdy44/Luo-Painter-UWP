@@ -5,10 +5,11 @@ using Microsoft.Graphics.Canvas;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaletteMenu : Expander, IInkParameter
+    public sealed partial class ColorButton : Button, IInkParameter
     {
 
         private void Paint_Start()
