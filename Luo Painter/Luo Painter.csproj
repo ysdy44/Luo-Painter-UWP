@@ -160,6 +160,7 @@
     <Compile Include="Controls\BrushListView.xaml.cs">
       <DependentUpon>BrushListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ColorButton.Color.cs" />
     <Compile Include="Controls\EffectDialog.xaml.cs">
       <DependentUpon>EffectDialog.xaml</DependentUpon>
     </Compile>
@@ -225,8 +226,8 @@
     <Compile Include="FileUtils\FileUtil.Folder.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="FileUtils\FileUtil.Sample.cs" />
-    <Compile Include="Controls\ColorMenu.xaml.cs">
-      <DependentUpon>ColorMenu.xaml</DependentUpon>
+    <Compile Include="Controls\ColorButton.xaml.cs">
+      <DependentUpon>ColorButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExportDialog.xaml.cs">
       <DependentUpon>ExportDialog.xaml</DependentUpon>
@@ -384,7 +385,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ColorMenu.xaml">
+    <Page Include="Controls\ColorButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
