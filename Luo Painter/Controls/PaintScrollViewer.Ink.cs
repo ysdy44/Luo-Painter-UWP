@@ -103,7 +103,7 @@ namespace Luo_Painter.Controls
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricTip(ds, this.Color, false);
+                        this.InkPresenter.IsometricTip(ds, this.Color);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -128,7 +128,7 @@ namespace Luo_Painter.Controls
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricTip(ds, this.Color, true);
+                        this.InkPresenter.IsometricTipFillCircle(ds, this.Color);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;

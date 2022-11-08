@@ -48,7 +48,7 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
-                this.HardnessListView.SelectedIndex = (int)presenter.Hardness;
+                this.HardnessListView.SelectedIndex = this.HardnessCollection.IndexOf(presenter.Hardness);
 
 
                 this.BlendModeListView.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);

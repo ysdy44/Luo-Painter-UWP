@@ -234,19 +234,31 @@
                         <UIElement.RenderTransform>
                             <ScaleTransform ScaleX="3" ScaleY="3"/>
                         </UIElement.RenderTransform>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind BooleanToVisibilityConverter(NoneItem.IsSelected), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind BooleanToVisibilityConverter(CosineItem.IsSelected), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind BooleanToVisibilityConverter(QuadraticItem.IsSelected), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind BooleanToVisibilityConverter(CubeItem.IsSelected), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind BooleanToVisibilityConverter(QuarticItem.IsSelected), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind Int0VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind Int1VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind Int2VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind Int3VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind Int4VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
                     </Grid>
                 </Border>
                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
-                    <ListViewItem x:Name="NoneItem">None</ListViewItem>
-                    <ListViewItem x:Name="CosineItem">Cosine</ListViewItem>
-                    <ListViewItem x:Name="QuadraticItem">Quadratic</ListViewItem>
-                    <ListViewItem x:Name="CubeItem">Cube</ListViewItem>
-                    <ListViewItem x:Name="QuarticItem">Quartic</ListViewItem>
+        
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="brushes:BrushEdgeHardness">
+                            <luo_painter:HardnessIcon Type="{x:Bind}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsSource>
+                        <luo_painter:HardnessList x:Name="HardnessCollection">
+                            <brushes:BrushEdgeHardness>None</brushes:BrushEdgeHardness>
+                            <brushes:BrushEdgeHardness>Cosine</brushes:BrushEdgeHardness>
+                            <brushes:BrushEdgeHardness>Quadratic</brushes:BrushEdgeHardness>
+                            <brushes:BrushEdgeHardness>Cube</brushes:BrushEdgeHardness>
+                            <brushes:BrushEdgeHardness>Quartic</brushes:BrushEdgeHardness>
+                        </luo_painter:HardnessList>
+                    </ItemsControl.ItemsSource>
+                    
                 </ListView>
             </Grid>
 

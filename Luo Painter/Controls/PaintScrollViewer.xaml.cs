@@ -37,18 +37,24 @@ namespace Luo_Painter.Controls
         private CornerRadius CornerRadiusConverter(int value) => new CornerRadius((value is 0 || value is 1) ? 40 : 0);
         private double TipOpacityConverter(int value) => (value is 0 || value is 2) ? 1 : 0;
 
+        private Visibility Int0VisibilityConverter(int value) => value is 0 ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Int1VisibilityConverter(int value) => value is 1 ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Int2VisibilityConverter(int value) => value is 2 ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Int3VisibilityConverter(int value) => value is 3 ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Int4VisibilityConverter(int value) => value is 4 ? Visibility.Visible : Visibility.Collapsed;
+
         private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
-     
+
         private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility TipVisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) ? Visibility.Visible : Visibility.Collapsed;
-    
+
         private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
 
         private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility MixColorVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMix) ? Visibility.Visible : Visibility.Collapsed;
-    
+
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 

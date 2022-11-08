@@ -106,9 +106,11 @@ namespace Luo_Painter.Controls
             this.HardnessListView.ItemClick += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                int index = this.HardnessListView.SelectedIndex;
-                this.InkPresenter.Hardness = (BrushEdgeHardness)index;
-                this.TryInk();
+                if (e.ClickedItem is BrushEdgeHardness item)
+                {
+                    this.InkPresenter.Hardness = item;
+                    this.TryInk();
+                }
             };
 
 
