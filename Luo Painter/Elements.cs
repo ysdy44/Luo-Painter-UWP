@@ -173,6 +173,16 @@ namespace Luo_Painter
         }
     }
 
+    internal sealed class HardnessList : List<BrushEdgeHardness> { }
+    internal sealed class HardnessGroupingList : List<BrushEdgeHardness> { }
+    internal sealed class HardnessIcon : TIcon<BrushEdgeHardness>
+    {
+        protected override void OnTypeChanged(BrushEdgeHardness value)
+        {
+            base.Content = value.ToString();
+        }
+    }
+
     internal sealed class BlendList : List<BlendEffectMode> { }
     internal sealed class BlendGroupingList : List<BlendEffectMode> { }
     internal sealed class BlendIcon : TIcon<BlendEffectMode>
