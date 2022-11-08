@@ -58,6 +58,8 @@ namespace Luo_Painter.Controls
             {
                 this.Timer.Stop();
 
+                this.SolidColorBrush.Color = this.ColorPicker.Color;
+
                 foreach (Color item in this.ObservableCollection)
                 {
                     if (item == this.Color) return;

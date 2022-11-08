@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
@@ -22,7 +18,6 @@ namespace Luo_Painter.Controls
     public sealed partial class ColorButton : Button, IInkParameter
     {
         //@Converter
-        private Symbol ColorSpectrumShapeSymbolConverter(bool? value) => value == true ? Symbol.Target : Symbol.Stop;
         private ColorSpectrumShape ColorSpectrumShapeConverter(int value) => value is 0 ? ColorSpectrumShape.Box : ColorSpectrumShape.Ring;
         private ColorSpectrumComponents ColorSpectrumComponentsConverter(int value)
         {
@@ -85,6 +80,11 @@ namespace Luo_Painter.Controls
         public ColorButton()
         {
             this.InitializeComponent();
+            this.ConstructCanvas();
+            this.ConstructOperator();
+
+            this.ConstructInk();
+
             this.ConstructColor();
             this.ConstructStraw();
             this.SetColorHdr(this.ColorPicker.Color);
