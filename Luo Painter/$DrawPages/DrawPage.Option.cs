@@ -319,10 +319,12 @@ namespace Luo_Painter
                         return;
                     }
 
+                    VisualStateManager.GoToState(this, nameof(FullScreen), false);
                     this.ApplicationView.TryEnterFullScreenMode();
                     this.IsFullScreen = true;
                     break;
                 case OptionType.UnFullScreen:
+                    VisualStateManager.GoToState(this, nameof(UnFullScreen), false);
                     this.ApplicationView.ExitFullScreenMode();
                     this.IsFullScreen = false;
                     break;
@@ -486,12 +488,6 @@ namespace Luo_Painter
                                 break;
                         }
                     }
-                    break;
-                case OptionType.ColorMenu:
-                    this.ColorMenu.Toggle(this.ColorButton, ExpanderPlacementMode.Bottom);
-                    break;
-                case OptionType.PaletteMenu:
-                    //this.PaletteMenu.Toggle(this.PaletteButton, ExpanderPlacementMode.Bottom);
                     break;
 
                 case OptionType.PaintMenu:
