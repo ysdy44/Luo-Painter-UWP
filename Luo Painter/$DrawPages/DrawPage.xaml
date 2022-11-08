@@ -99,10 +99,10 @@
 
                 <transformers:RemoteControl 
                     x:Name="RemoteControl"
-                    BorderThickness="1"               
-                    BorderBrush="{ThemeResource AppStroke}"               
-                    Background="{ThemeResource SystemAltLowColor}"             
-                    Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"              
+                    BorderThickness="1" 
+                    BorderBrush="{ThemeResource AppStroke}" 
+                    Background="{ThemeResource SystemAltLowColor}" 
+                    Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}" 
                     />
             </StackPanel>
         </Flyout>
@@ -185,17 +185,31 @@
 
             <VisualStateGroup>
 
-                <!--Phone-->
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
+                <!--UnFullScreen-->
+                <VisualState x:Name="UnFullScreen"/>
+
+                <!--FullScreen-->
+                <VisualState x:Name="FullScreen">
                     <VisualState.Setters>
                         <!--Head-->
                         <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
                         <Setter Target="RedoButton.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
 
+            </VisualStateGroup>
 
+            <VisualStateGroup>
+
+                <!--Phone-->
+                <VisualState x:Name="Phone">
+                    <!--
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    -->
+                    <VisualState.Setters>
                         <!--AppBar-->
                         <Setter Target="AppBarTransform.X" Value="0"/>
                         <Setter Target="AppBarTransform.Y" Value="0"/>
@@ -259,10 +273,12 @@
                 </VisualState>
 
                 <!--Pad-->
-                <VisualState>
+                <VisualState x:Name="Pad">
+                    <!--
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="600"/>
                     </VisualState.StateTriggers>
+                    -->
                     <VisualState.Setters>
                         <!--AppBar-->
                         <Setter Target="AppBarTransform.X" Value="0"/>
@@ -297,11 +313,12 @@
                     </VisualState.Setters>
                 </VisualState>
 
-                <!--PC-->
-                <VisualState>
+                <VisualState x:Name="PC">
+                    <!--
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="900"/>
                     </VisualState.StateTriggers>
+                    -->
                     <VisualState.Setters>
                         <!--AppBar-->
                         <Setter Target="AppBarTransform.X" Value="0"/>
@@ -310,10 +327,12 @@
                 </VisualState>
 
                 <!--Hub-->
-                <VisualState>
+                <VisualState x:Name="Hub">
+                    <!--
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1200"/>
                     </VisualState.StateTriggers>
+                    -->
                     <VisualState.Setters>
                         <!--AppBar-->
                         <Setter Target="AppBarTransform.X" Value="0"/>
@@ -367,10 +386,10 @@
             </SplitView.Pane>
             <SplitView 
                 x:Name="SplitLeftView"
-                PanePlacement="Left"                     
-                OpenPaneLength="280"                    
-                DisplayMode="Inline"                   
-                PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"                   
+                PanePlacement="Left" 
+                OpenPaneLength="280" 
+                DisplayMode="Inline" 
+                PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}" 
                 >
                 <SplitView.Pane>
                     <Grid>
@@ -407,15 +426,15 @@
                                                 <StackPanel Spacing="2" Padding="6,4" Width="318">
 
                                                     <TextBlock                        
-                                                        x:Name="PropertyTextBlock"                            
-                                                        Margin="8,4"                          
-                                                        IsHitTestVisible="false"                           
-                                                        FontWeight="Medium"                          
-                                                        TextTrimming="CharacterEllipsis"                          
-                                                        FontSize="20"                          
-                                                        TextWrapping="Wrap"                          
-                                                        VerticalAlignment="Center"                          
-                                                        Style="{StaticResource SubheaderTextBlockStyle}"                       
+                                                        x:Name="PropertyTextBlock" 
+                                                        Margin="8,4" 
+                                                        IsHitTestVisible="false" 
+                                                        FontWeight="Medium" 
+                                                        TextTrimming="CharacterEllipsis" 
+                                                        FontSize="20" 
+                                                        TextWrapping="Wrap" 
+                                                        VerticalAlignment="Center" 
+                                                        Style="{StaticResource SubheaderTextBlockStyle}" 
                                                         >                        
                                                         Properties
                                                     </TextBlock>
@@ -428,11 +447,11 @@
                                                             </FrameworkElement.Tag>
                                                             <Slider.Header>
                                                                 <Button
-                                                                    Padding="4,0"                            
-                                                                    MinWidth="44"                            
-                                                                    Height="28"                              
-                                                                    BorderThickness="1"                             
-                                                                    BorderBrush="{ThemeResource AppStroke}"                             
+                                                                    Padding="4,0" 
+                                                                    MinWidth="44" 
+                                                                    Height="28" 
+                                                                    BorderThickness="1" 
+                                                                    BorderBrush="{ThemeResource AppStroke}" 
                                                                     Background="{ThemeResource SystemAltLowColor}"
                                                                     >
                                                                     <Button.Flyout>
@@ -620,10 +639,10 @@
                                         <ColumnDefinition Width="42"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        x:Name="MarqueeTextBlock"                
-                                        Grid.Column="1"              
-                                        IsHitTestVisible="False"              
-                                        VerticalAlignment="Center"          
+                                        x:Name="MarqueeTextBlock" 
+                                        Grid.Column="1" 
+                                        IsHitTestVisible="False" 
+                                        VerticalAlignment="Center" 
                                         >           
                                         Marquee
                                     </TextBlock>
@@ -648,7 +667,7 @@
 
                     </Grid>
                 </SplitView.Pane>
-                <Grid>
+                <Grid x:Name="ContentGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
@@ -732,10 +751,10 @@
                                 Width="70" 
                                 Height="50" 
                                 Foreground="{ThemeResource AppForeground}" 
-                                Style="{StaticResource TextBlockButtonStyle}"
-                                ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}"                     
-                                ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}"                      
-                                ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}"                     
+                                Style="{StaticResource TextBlockButtonStyle}" 
+                                ManipulationStarted="{x:Bind ColorMenu.ManipulationStarted2}" 
+                                ManipulationDelta="{x:Bind ColorMenu.ManipulationDelta2}" 
+                                ManipulationCompleted="{x:Bind ColorMenu.ManipulationCompleted2}" 
                                 >
                                 <UIElement.ManipulationMode>
                                     TranslateX, TranslateY
@@ -894,12 +913,12 @@
                     <!--AppBar-->
                     <Grid
                         x:Name="AppBarGrid"
-                        Grid.Row="1"       
-                        Margin="22"        
-                        MinWidth="426"         
-                        MinHeight="50"        
-                        HorizontalAlignment="Center"        
-                        VerticalAlignment="Bottom"         
+                        Grid.Row="1" 
+                        Margin="22" 
+                        MinWidth="426" 
+                        MinHeight="50" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Bottom" 
                         >
                         <UIElement.RenderTransformOrigin>
                             0.5,0.5
@@ -917,7 +936,7 @@
                             />
 
                         <!--Thumb-->
-                        <Thumb x:Name="AppBarThumb" Visibility="Collapsed" Height="50" VerticalAlignment="Top" >
+                        <Thumb x:Name="AppBarThumb" Visibility="Collapsed" CornerRadius="2" Height="50" VerticalAlignment="Top" >
                             <Thumb.Template>
                                 <ControlTemplate TargetType="Thumb">
                                     <Grid Background="Transparent">
@@ -943,42 +962,42 @@
                                         </VisualStateManager.VisualStateGroups>
 
                                         <Border 
-                                            x:Name="Background"                                          
-                                            IsHitTestVisible="False"                           
+                                            x:Name="Background" 
+                                            IsHitTestVisible="False" 
                                             Width="36" 
                                             Height="6" 
                                             Margin="3" 
                                             VerticalAlignment="Top" 
                                             CornerRadius="{TemplateBinding CornerRadius}" 
-                                            BorderThickness="{TemplateBinding BorderThickness}"            
-                                            BorderBrush="{TemplateBinding BorderBrush}"            
-                                            Background="{TemplateBinding Background}"           
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            Background="{TemplateBinding Background}" 
                                             />
                                         <Border 
-                                            x:Name="BackgroundPointerOver"                                        
+                                            x:Name="BackgroundPointerOver" 
                                             Opacity="0" 
                                             IsHitTestVisible="False"
                                             Width="36"
                                             Height="6" 
                                             Margin="3" 
                                             VerticalAlignment="Top" 
-                                            CornerRadius="{TemplateBinding CornerRadius}"          
-                                            BorderThickness="{TemplateBinding BorderThickness}"              
-                                            BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}"             
-                                            Background="{ThemeResource ThumbBackgroundPointerOver}"              
+                                            CornerRadius="{TemplateBinding CornerRadius}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}" 
+                                            Background="{ThemeResource ThumbBackgroundPointerOver}" 
                                             />
                                         <Border 
-                                            x:Name="BackgroundPressed"                                          
+                                            x:Name="BackgroundPressed" 
                                             Opacity="0" 
                                             IsHitTestVisible="False"
                                             Width="36" 
                                             Height="6"
                                             Margin="3" 
                                             VerticalAlignment="Top" 
-                                            CornerRadius="{TemplateBinding CornerRadius}"          
-                                            Background="{ThemeResource ThumbBackgroundPressed}"             
-                                            BorderBrush="{ThemeResource ThumbBorderBrushPressed}"              
-                                            BorderThickness="{TemplateBinding BorderThickness}"                
+                                            CornerRadius="{TemplateBinding CornerRadius}" 
+                                            Background="{ThemeResource ThumbBackgroundPressed}" 
+                                            BorderBrush="{ThemeResource ThumbBorderBrushPressed}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
                                             />
                                     </Grid>
                                 </ControlTemplate>
@@ -991,14 +1010,14 @@
 
 
                             <local:OptionCase Value="CropCanvas">
-                                <Border Margin="10,0,160,0" Style="{StaticResource AppRoundedBorderStyle}" >
+                                <Border Margin="10,0" Style="{StaticResource AppRoundedBorderStyle}" >
                                     <Slider 
                                         x:Name="CropCanvasSlider" 
                                         Minimum="-180" 
                                         Maximum="180" 
                                         Value="0" 
                                         TickFrequency="12" 
-                                        TickPlacement="Outside"                        
+                                        TickPlacement="Outside" 
                                         Background="{StaticResource SystemControlDisabledBaseLowBrush}" 
                                         Foreground="Transparent" 
                                         VerticalAlignment="Center"
@@ -1020,93 +1039,84 @@
 
 
                             <local:OptionCase Value="Feather">
-                                <StackPanel>
-                                    <local:OptionItem Type="Feather" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Feather
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button
-                                                x:Name="FeatherButton"
-                                                Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Feather
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button
+                                            x:Name="FeatherButton"
+                                            Content="{x:Bind FeatherSlider.Value, Mode=OneWay}"
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
                             <local:OptionCase Value="Grow">
-                                <StackPanel>
-                                    <local:OptionItem Type="Grow" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Grow
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button 
-                                                x:Name="GrowButton" 
-                                                Content="{x:Bind GrowSlider.Value, Mode=OneWay}"
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Grow
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="GrowButton" 
+                                            Content="{x:Bind GrowSlider.Value, Mode=OneWay}"
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
                             <local:OptionCase Value="Shrink">
-                                <StackPanel>
-                                    <local:OptionItem Type="Shrink" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Shrink
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button 
-                                                x:Name="ShrinkButton" 
-                                                Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}"            
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Shrink
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="ShrinkButton" 
+                                            Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="Transform">
-                                <ComboBox x:Name="TransformComboBox" Margin="10,8,160,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <ComboBox x:Name="TransformComboBox" Margin="10,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                     <ComboBoxItem>Move</ComboBoxItem>
                                     <ComboBoxItem>Transform</ComboBoxItem>
                                     <ComboBoxItem>Free Transform</ComboBoxItem>
@@ -1114,7 +1124,7 @@
                             </local:OptionCase>
                             <local:OptionCase Value="DisplacementLiquefaction">
                                 <StackPanel>
-                                    <ComboBox x:Name="DisplacementLiquefactionModeComboBox" Margin="10,8,160,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                    <ComboBox x:Name="DisplacementLiquefactionModeComboBox" Margin="10,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                         <ComboBoxItem>Push</ComboBoxItem>
                                         <ComboBoxItem>Pinch</ComboBoxItem>
                                         <ComboBoxItem>Expand</ComboBoxItem>
@@ -1130,10 +1140,10 @@
                                             <Slider.Header>
                                                 <Button
                                                     x:Name="DisplacementLiquefactionSizeButton" 
-                                                    Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}"           
+                                                    Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}" 
                                                     Padding="4,0" 
                                                     MinWidth="70" 
-                                                    Height="28"                                         
+                                                    Height="28" 
                                                     BorderThickness="1" 
                                                     BorderBrush="{ThemeResource AppStroke}"
                                                     Background="{ThemeResource SystemAltLowColor}" 
@@ -1152,10 +1162,10 @@
                                             </FrameworkElement.Tag>
                                             <Slider.Header>
                                                 <Button
-                                                    x:Name="DisplacementLiquefactionPressureButton"                                        
+                                                    x:Name="DisplacementLiquefactionPressureButton" 
                                                     Padding="4,0" 
                                                     MinWidth="70" 
-                                                    Height="28"                                           
+                                                    Height="28" 
                                                     BorderThickness="1" 
                                                     BorderBrush="{ThemeResource AppStroke}" 
                                                     Background="{ThemeResource SystemAltLowColor}" 
@@ -1173,136 +1183,94 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GradientMapping">
-                                <StackPanel>
-                                    <local:OptionItem Type="GradientMapping" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="26,4" Width="740" Height="50" HorizontalAlignment="Stretch">
-                                        <elements:GradientStopSelector.ItemStyle>
-                                            <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                                                <Setter Property="Width" Value="50"/>
-                                                <Setter Property="Height" Value="50"/>
-                                                <Setter Property="Padding" Value="3"/>
-                                            </Style>
-                                        </elements:GradientStopSelector.ItemStyle>
-                                        <elements:GradientStopSelector.ItemTemplate>
-                                            <DataTemplate x:DataType="GradientStop">
-                                                <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                                            <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                    <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                                        <Rectangle.Fill>
-                                                            <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                                        </Rectangle.Fill>
-                                                    </Rectangle>
-                                                </Border>
-                                            </DataTemplate>
-                                        </elements:GradientStopSelector.ItemTemplate>
-                                    </elements:GradientStopSelectorWithUI>
-                                </StackPanel>
+                                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="26,4" Height="50" HorizontalAlignment="Stretch">
+                                    <elements:GradientStopSelector.ItemStyle>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                                            <Setter Property="Width" Value="50"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="Padding" Value="3"/>
+                                        </Style>
+                                    </elements:GradientStopSelector.ItemStyle>
+                                    <elements:GradientStopSelector.ItemTemplate>
+                                        <DataTemplate x:DataType="GradientStop">
+                                            <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                                        <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                                <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                                                    <Rectangle.Fill>
+                                                        <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                            </Border>
+                                        </DataTemplate>
+                                    </elements:GradientStopSelector.ItemTemplate>
+                                </elements:GradientStopSelectorWithUI>
                             </local:OptionCase>
                             <local:OptionCase Value="RippleEffect">
-                                <StackPanel>
-                                    <local:OptionItem Type="RippleEffect" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
-                                        <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
-                                            <FrameworkElement.Tag>
-                                                Frequency
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button
-                                                    x:Name="FrequencyButton" 
-                                                    Content="{x:Bind FrequencySlider.Value, Mode=OneWay}"            
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"
-                                                    BorderThickness="1"
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}" 
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
-                                            <FrameworkElement.Tag>
-                                                Phase
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button 
-                                                    x:Name="PhaseButton"
-                                                    Content="{x:Bind PhaseSlider.Value, Mode=OneWay}"                                                                
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"                                        
-                                                    BorderThickness="1" 
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}" 
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                            <FrameworkElement.Tag>
-                                                Amplitude
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button
-                                                    x:Name="AmplitudeButton"
-                                                    Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}"                           
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"                                          
-                                                    BorderThickness="1"
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}" 
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                    </StackPanel>
-                                </StackPanel>
-                            </local:OptionCase>
-
-
-                            <local:OptionCase Value="Exposure">
-                                <StackPanel>
-                                    <local:OptionItem Type="Exposure" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                        <Slider.Background>
-                                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                <GradientStop Color="Black" Offset="0"/>
-                                                <GradientStop Color="White" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Slider.Background>
+                                <StackPanel x:Name="RippleEffectPanel" Orientation="Horizontal">
+                                    <Slider x:Name="FrequencySlider" Width="260" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}">
                                         <FrameworkElement.Tag>
-                                            Exposure
+                                            Frequency
                                         </FrameworkElement.Tag>
                                         <Slider.Header>
-                                            <Button 
-                                                x:Name="ExposureButton" 
-                                                Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
+                                            <Button
+                                                x:Name="FrequencyButton" 
+                                                Content="{x:Bind FrequencySlider.Value, Mode=OneWay}" 
                                                 Padding="4,0" 
                                                 MinWidth="70" 
                                                 Height="28"
+                                                BorderThickness="1"
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}" 
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                    <Slider x:Name="PhaseSlider" Width="260" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}">
+                                        <FrameworkElement.Tag>
+                                            Phase
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button 
+                                                x:Name="PhaseButton"
+                                                Content="{x:Bind PhaseSlider.Value, Mode=OneWay}" 
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28" 
                                                 BorderThickness="1" 
                                                 BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}"
+                                                Background="{ThemeResource SystemAltLowColor}" 
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                    <Slider x:Name="AmplitudeSlider" Width="260" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                                        <FrameworkElement.Tag>
+                                            Amplitude
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button
+                                                x:Name="AmplitudeButton"
+                                                Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}" 
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28" 
+                                                BorderThickness="1"
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}" 
                                                 >
                                                 <Button.Flyout>
                                                     <Flyout>
@@ -1314,23 +1282,226 @@
                                     </Slider>
                                 </StackPanel>
                             </local:OptionCase>
+
+
+                            <local:OptionCase Value="Exposure">
+                                <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                                    <Slider.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="Black" Offset="0"/>
+                                            <GradientStop Color="White" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Slider.Background>
+                                    <FrameworkElement.Tag>
+                                        Exposure
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                                x:Name="ExposureButton" 
+                                                Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28"
+                                                BorderThickness="1" 
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}"
+                                                >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
                             <local:OptionCase Value="Brightness">
-                                <StackPanel>
-                                    <local:OptionItem Type="Brightness" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                                <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                                    <Slider.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="Black" Offset="0"/>
+                                            <GradientStop Color="White" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Slider.Background>
+                                    <FrameworkElement.Tag>
+                                        Brightness
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="BrightnessButton" 
+                                            Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1"
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Saturation">
+                                <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
+                                    <Slider.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="Gray" Offset="0"/>
+                                            <GradientStop Color="#00A5FF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Slider.Background>
+                                    <FrameworkElement.Tag>
+                                        Saturation
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button
+                                            x:Name="SaturationButton" 
+                                            Content="{x:Bind SaturationSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}"
+                                            Background="{ThemeResource SystemAltLowColor}"
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="HueRotation">
+                                <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                                    <Slider.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="#FFCE3B" Offset="0"/>
+                                            <GradientStop Color="#72C075" Offset="0.125"/>
+                                            <GradientStop Color="#46A7F6" Offset="0.25"/>
+                                            <GradientStop Color="#784BB0" Offset="0.375"/>
+                                            <GradientStop Color="#A336B5" Offset="0.5"/>
+                                            <GradientStop Color="#EB2E6E" Offset="0.625"/>
+                                            <GradientStop Color="#EC5449" Offset="0.75"/>
+                                            <GradientStop Color="#FFA827" Offset="0.875"/>
+                                            <GradientStop Color="#FFCE3B" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Slider.Background>
+                                    <FrameworkElement.Tag>
+                                        HueRotation
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="HueRotationButton" 
+                                            Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Contrast">
+                                <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                    <Slider.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="#888888" Offset="0"/>
+
+                                            <GradientStop Color="#6D6D6D" Offset="0.4"/>
+                                            <GradientStop Color="#909090" Offset="0.5"/>
+
+                                            <GradientStop Color="#353535" Offset="0.6"/>
+                                            <GradientStop Color="#C9C9C9" Offset="0.7"/>
+
+                                            <GradientStop Color="#000000" Offset="0.8"/>
+                                            <GradientStop Color="#FFFFFF" Offset="1"/>
+
+                                        </LinearGradientBrush>
+                                    </Slider.Background>
+                                    <FrameworkElement.Tag>
+                                        Contrast
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button
+                                            x:Name="ContrastButton" 
+                                            Content="{x:Bind ContrastSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Temperature">
+                                <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
+                                    <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
                                         <Slider.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                <GradientStop Color="Black" Offset="0"/>
-                                                <GradientStop Color="White" Offset="1"/>
+                                                <GradientStop Color="#3EADF5" Offset="0"/>
+                                                <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                                                <GradientStop Color="#F99652" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Slider.Background>
                                         <FrameworkElement.Tag>
-                                            Brightness
+                                            Temperature
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button
+                                                x:Name="TemperatureButton" 
+                                                Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}" 
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28"
+                                                BorderThickness="1" 
+                                                BorderBrush="{ThemeResource AppStroke}"
+                                                Background="{ThemeResource SystemAltLowColor}" 
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                    <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                        <Slider.Background>
+                                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                                <GradientStop Color="#9680C9" Offset="0"/>
+                                                <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                                                <GradientStop Color="#80763E" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Slider.Background>
+                                        <FrameworkElement.Tag>
+                                            Tint
                                         </FrameworkElement.Tag>
                                         <Slider.Header>
                                             <Button 
-                                                x:Name="BrightnessButton" 
-                                                Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}"            
+                                                x:Name="TintButton" 
+                                                Content="{x:Bind TintSlider.Value, Mode=OneWay}" 
                                                 Padding="4,0" 
                                                 MinWidth="70" 
                                                 Height="28"
@@ -1348,143 +1519,100 @@
                                     </Slider>
                                 </StackPanel>
                             </local:OptionCase>
-                            <local:OptionCase Value="Saturation">
-                                <StackPanel>
-                                    <local:OptionItem Type="Saturation" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                        <Slider.Background>
-                                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                <GradientStop Color="Gray" Offset="0"/>
-                                                <GradientStop Color="#00A5FF" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Slider.Background>
-                                        <FrameworkElement.Tag>
-                                            Saturation
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button
-                                                x:Name="SaturationButton" 
-                                                Content="{x:Bind SaturationSlider.Value, Mode=OneWay}"            
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}"
-                                                Background="{ThemeResource SystemAltLowColor}"
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="HueRotation">
-                                <StackPanel>
-                                    <local:OptionItem Type="HueRotation" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                                        <Slider.Background>
-                                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                <GradientStop Color="#FFCE3B" Offset="0"/>
-                                                <GradientStop Color="#72C075" Offset="0.125"/>
-                                                <GradientStop Color="#46A7F6" Offset="0.25"/>
-                                                <GradientStop Color="#784BB0" Offset="0.375"/>
-                                                <GradientStop Color="#A336B5" Offset="0.5"/>
-                                                <GradientStop Color="#EB2E6E" Offset="0.625"/>
-                                                <GradientStop Color="#EC5449" Offset="0.75"/>
-                                                <GradientStop Color="#FFA827" Offset="0.875"/>
-                                                <GradientStop Color="#FFCE3B" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Slider.Background>
-                                        <FrameworkElement.Tag>
-                                            HueRotation
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button 
-                                                x:Name="HueRotationButton" 
-                                                Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}"            
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="Contrast">
-                                <StackPanel>
-                                    <local:OptionItem Type="Contrast" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                        <Slider.Background>
-                                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                <GradientStop Color="#888888" Offset="0"/>
-
-                                                <GradientStop Color="#6D6D6D" Offset="0.4"/>
-                                                <GradientStop Color="#909090" Offset="0.5"/>
-
-                                                <GradientStop Color="#353535" Offset="0.6"/>
-                                                <GradientStop Color="#C9C9C9" Offset="0.7"/>
-
-                                                <GradientStop Color="#000000" Offset="0.8"/>
-                                                <GradientStop Color="#FFFFFF" Offset="1"/>
-
-                                            </LinearGradientBrush>
-                                        </Slider.Background>
-                                        <FrameworkElement.Tag>
-                                            Contrast
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button
-                                                x:Name="ContrastButton" 
-                                                Content="{x:Bind ContrastSlider.Value, Mode=OneWay}"            
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="Temperature">
-                                <StackPanel>
-                                    <local:OptionItem Type="Temperature" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel x:Name="TemperaturePanel" Orientation="Horizontal">
-                                        <Slider x:Name="TemperatureSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <local:OptionCase Value="HighlightsAndShadows">
+                                <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
+                                    <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
+                                        <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
                                             <Slider.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Color="#3EADF5" Offset="0"/>
-                                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                                                    <GradientStop Color="#F99652" Offset="1"/>
+                                                    <GradientStop Color="Black" Offset="0"/>
+                                                    <GradientStop Color="Gray" Offset="1"/>
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                             <FrameworkElement.Tag>
-                                                Temperature
+                                                Shadows
                                             </FrameworkElement.Tag>
                                             <Slider.Header>
                                                 <Button
-                                                    x:Name="TemperatureButton" 
-                                                    Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}"            
+                                                    x:Name="ShadowsButton"
+                                                    Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}" 
+                                                    Padding="4,0"
+                                                    MinWidth="70"
+                                                    Height="28"
+                                                    BorderThickness="1" 
+                                                    BorderBrush="{ThemeResource AppStroke}" 
+                                                    Background="{ThemeResource SystemAltLowColor}" 
+                                                    >
+                                                    <Button.Flyout>
+                                                        <Flyout>
+
+                                                        </Flyout>
+                                                    </Button.Flyout>
+                                                </Button>
+                                            </Slider.Header>
+                                        </Slider>
+                                        <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"/>
+                                                    <GradientStop Color="White" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                            <FrameworkElement.Tag>
+                                                Highlights
+                                            </FrameworkElement.Tag>
+                                            <Slider.Header>
+                                                <Button
+                                                    x:Name="HighlightsButton"
+                                                    Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}" 
+                                                    Padding="4,0" 
+                                                    MinWidth="70"
+                                                    Height="28"
+                                                    BorderThickness="1" 
+                                                    BorderBrush="{ThemeResource AppStroke}" 
+                                                    Background="{ThemeResource SystemAltLowColor}" 
+                                                    >
+                                                    <Button.Flyout>
+                                                        <Flyout>
+
+                                                        </Flyout>
+                                                    </Button.Flyout>
+                                                </Button>
+                                            </Slider.Header>
+                                        </Slider>
+                                    </StackPanel>
+                                    <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
+                                        <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                            <FrameworkElement.Tag>
+                                                Clarity
+                                            </FrameworkElement.Tag>
+                                            <Slider.Header>
+                                                <Button 
+                                                    x:Name="ClarityButton" 
+                                                    Content="{x:Bind ClaritySlider.Value, Mode=OneWay}" 
+                                                    Padding="4,0" 
+                                                    MinWidth="70" 
+                                                    Height="28"
+                                                    BorderThickness="1" 
+                                                    BorderBrush="{ThemeResource AppStroke}"
+                                                    Background="{ThemeResource SystemAltLowColor}"
+                                                    >
+                                                    <Button.Flyout>
+                                                        <Flyout>
+
+                                                        </Flyout>
+                                                    </Button.Flyout>
+                                                </Button>
+                                            </Slider.Header>
+                                        </Slider>
+                                        <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
+                                            <FrameworkElement.Tag>
+                                                Blur
+                                            </FrameworkElement.Tag>
+                                            <Slider.Header>
+                                                <Button 
+                                                    x:Name="BlurButton" 
+                                                    Content="{x:Bind BlurSlider.Value, Mode=OneWay}" 
                                                     Padding="4,0" 
                                                     MinWidth="70" 
                                                     Height="28"
@@ -1500,158 +1628,13 @@
                                                 </Button>
                                             </Slider.Header>
                                         </Slider>
-                                        <Slider x:Name="TintSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Color="#9680C9" Offset="0"/>
-                                                    <GradientStop Color="#FFFFFF" Offset="0.5"/>
-                                                    <GradientStop Color="#80763E" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                            <FrameworkElement.Tag>
-                                                Tint
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button 
-                                                    x:Name="TintButton" 
-                                                    Content="{x:Bind TintSlider.Value, Mode=OneWay}"            
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"
-                                                    BorderThickness="1"
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}" 
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                    </StackPanel>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="HighlightsAndShadows">
-                                <StackPanel>
-                                    <local:OptionItem Type="HighlightsAndShadows" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel x:Name="HighlightsAndShadowsPanel" Orientation="Vertical" >
-                                        <StackPanel x:Name="HighlightsAndShadowsPanel1" Orientation="Horizontal" >
-                                            <Slider x:Name="ShadowsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                                <Slider.Background>
-                                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                        <GradientStop Color="Black" Offset="0"/>
-                                                        <GradientStop Color="Gray" Offset="1"/>
-                                                    </LinearGradientBrush>
-                                                </Slider.Background>
-                                                <FrameworkElement.Tag>
-                                                    Shadows
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button
-                                                        x:Name="ShadowsButton"
-                                                        Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}"            
-                                                        Padding="4,0"
-                                                        MinWidth="70"
-                                                        Height="28"
-                                                        BorderThickness="1" 
-                                                        BorderBrush="{ThemeResource AppStroke}" 
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                            <Slider x:Name="HighlightsSlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                                <Slider.Background>
-                                                    <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                                        <GradientStop Color="Gray" Offset="0"/>
-                                                        <GradientStop Color="White" Offset="1"/>
-                                                    </LinearGradientBrush>
-                                                </Slider.Background>
-                                                <FrameworkElement.Tag>
-                                                    Highlights
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button
-                                                        x:Name="HighlightsButton"
-                                                        Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}"            
-                                                        Padding="4,0" 
-                                                        MinWidth="70"
-                                                        Height="28"
-                                                        BorderThickness="1" 
-                                                        BorderBrush="{ThemeResource AppStroke}" 
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                        </StackPanel>
-                                        <StackPanel x:Name="HighlightsAndShadowsPanel2" Orientation="Horizontal" >
-                                            <Slider x:Name="ClaritySlider" Width="260" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                                <FrameworkElement.Tag>
-                                                    Clarity
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button 
-                                                        x:Name="ClarityButton" 
-                                                        Content="{x:Bind ClaritySlider.Value, Mode=OneWay}"            
-                                                        Padding="4,0" 
-                                                        MinWidth="70" 
-                                                        Height="28"
-                                                        BorderThickness="1" 
-                                                        BorderBrush="{ThemeResource AppStroke}"
-                                                        Background="{ThemeResource SystemAltLowColor}"
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                            <Slider x:Name="BlurSlider" Width="260" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}">
-                                                <FrameworkElement.Tag>
-                                                    Blur
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button 
-                                                        x:Name="BlurButton" 
-                                                        Content="{x:Bind BlurSlider.Value, Mode=OneWay}"            
-                                                        Padding="4,0" 
-                                                        MinWidth="70" 
-                                                        Height="28"
-                                                        BorderThickness="1" 
-                                                        BorderBrush="{ThemeResource AppStroke}"
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="LuminanceToAlpha">
-                                <ComboBox x:Name="LuminanceToAlphaComboBox" Margin="10,8,160,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <ComboBox x:Name="LuminanceToAlphaComboBox" Margin="10,8" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                     <ComboBoxItem>Normal</ComboBoxItem>
                                     <ComboBoxItem>White Paper</ComboBoxItem>
                                     <ComboBoxItem>Black Paper</ComboBoxItem>
@@ -1684,11 +1667,11 @@
                                     <!--Size-->
                                     <Slider                                             
                                         x:Name="InkSizeSlider"
-                                        Width="300"                
-                                        SmallChange="1000"                                          
-                                        StepFrequency="1000"                                                 
-                                        FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}"             
-                                        Tag="{x:Bind SizeToStringConverter(InkSizeSlider.Value), Mode=OneWay}"        
+                                        Width="300" 
+                                        SmallChange="1000" 
+                                        StepFrequency="1000" 
+                                        FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
+                                        Tag="{x:Bind SizeToStringConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Style="{StaticResource AppInkSliderStyle}"
                                         >
                                         <Control.BorderBrush>
@@ -1701,11 +1684,11 @@
 
                                     <!--Opacity-->
                                     <Slider                 
-                                        x:Name="InkOpacitySlider"      
+                                        x:Name="InkOpacitySlider" 
                                         Grid.Column="2"
-                                        Width="300"                 
-                                        FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}"                   
-                                        Tag="{x:Bind OpacityToStringConverter(InkOpacitySlider.Value), Mode=OneWay}"        
+                                        Width="300" 
+                                        FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
+                                        Tag="{x:Bind OpacityToStringConverter(InkOpacitySlider.Value), Mode=OneWay}" 
                                         Style="{StaticResource AppInkSliderStyle}" 
                                         >
                                         <Control.BorderBrush>
@@ -1728,11 +1711,11 @@
                                     <!--Radian-->
                                     <Slider
                                         x:Name="RadianSlider"
-                                        Width="300"                
+                                        Width="300" 
                                         Value="0" 
                                         Minimum="-180" 
                                         Maximum="180" 
-                                        Style="{StaticResource AppDefaultSliderStyle}"     
+                                        Style="{StaticResource AppDefaultSliderStyle}" 
                                         >
                                         <Slider.Header>
                                             Radian
@@ -1741,10 +1724,10 @@
 
                                     <!--Scale-->
                                     <Slider                 
-                                        x:Name="ScaleSlider"      
+                                        x:Name="ScaleSlider" 
                                         Grid.Column="1"
-                                        Width="300"                 
-                                        Style="{StaticResource AppDefaultSliderStyle}"    
+                                        Width="300" 
+                                        Style="{StaticResource AppDefaultSliderStyle}" 
                                         >
                                         <Slider.Header>
                                             Scale
@@ -1813,184 +1796,119 @@
                                 <local:OptionItem Type="GeometryEllipse" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryRoundRectTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryRoundRect" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Corner
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button
-                                                x:Name="RoundRectCornerButton" 
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Corner
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button
+                                            x:Name="RoundRectCornerButton" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind RoundRectCornerSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <TextBlock><Run Text="{x:Bind RoundRectCornerSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryTriangleTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryTriangle" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Center Point
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button 
-                                                x:Name="TriangleCenterButton" 
-                                                Padding="4,0"
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Center Point
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="TriangleCenterButton" 
+                                            Padding="4,0"
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind TriangleCenterSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <TextBlock><Run Text="{x:Bind TriangleCenterSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDiamondTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryDiamond" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Mid Point
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button
-                                                x:Name="DiamondMidButton" 
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Mid Point
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button
+                                            x:Name="DiamondMidButton" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind DiamondMidSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <TextBlock><Run Text="{x:Bind DiamondMidSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPentagonTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryPentagon" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
+                                <Slider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Points
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="PentagonPointsButton" 
+                                            Content="{x:Bind PentagonPointsSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}"
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="GeometryStarTransform">
+                                <StackPanel x:Name="StarPanel" Orientation="Horizontal" >
+                                    <Slider x:Name="StarPointsSlider" Width="260" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
                                         <FrameworkElement.Tag>
                                             Points
                                         </FrameworkElement.Tag>
                                         <Slider.Header>
                                             <Button 
-                                                x:Name="PentagonPointsButton" 
-                                                Content="{x:Bind PentagonPointsSlider.Value, Mode=OneWay}"            
+                                                x:Name="StarPointsButton"
+                                                Content="{x:Bind StarPointsSlider.Value, Mode=OneWay}" 
                                                 Padding="4,0" 
                                                 MinWidth="70" 
                                                 Height="28"
                                                 BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}"
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="GeometryStarTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryStar" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel x:Name="StarPanel" Orientation="Horizontal" >
-                                        <Slider x:Name="StarPointsSlider" Width="260" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
-                                            <FrameworkElement.Tag>
-                                                Points
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button 
-                                                    x:Name="StarPointsButton"
-                                                    Content="{x:Bind StarPointsSlider.Value, Mode=OneWay}"            
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"
-                                                    BorderThickness="1" 
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}" 
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="StarInnerRadiusSlider" Width="260" Value="40" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                            <FrameworkElement.Tag>
-                                                Inner Radius
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button
-                                                    x:Name="StarInnerRadiusButton" 
-                                                    Content="{x:Bind StarInnerRadiusSlider.Value, Mode=OneWay}"                                         
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"                                                
-                                                    BorderThickness="1"
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}"
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                    </StackPanel>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="GeometryDountTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryDount" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Hole Radius
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button 
-                                                x:Name="DountHoleRadiusButton" 
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1"
                                                 BorderBrush="{ThemeResource AppStroke}" 
                                                 Background="{ThemeResource SystemAltLowColor}" 
                                                 >
@@ -1999,129 +1917,21 @@
 
                                                     </Flyout>
                                                 </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind DountHoleRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
                                             </Button>
                                         </Slider.Header>
                                     </Slider>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="GeometryCogTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryCog" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel x:Name="CogPanel" >
-                                        <StackPanel x:Name="CogPanel1" Orientation="Horizontal" >
-                                            <Slider x:Name="CogCountSlider" Width="260" Value="8" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
-                                                <FrameworkElement.Tag>
-                                                    Count
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button 
-                                                        x:Name="CogCountButton" 
-                                                        Content="{x:Bind CogCountSlider.Value, Mode=OneWay}"            
-                                                        Padding="4,0" 
-                                                        MinWidth="70" 
-                                                        Height="28"
-                                                        BorderThickness="1"
-                                                        BorderBrush="{ThemeResource AppStroke}"
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                            <Slider x:Name="CogInnerRadiusSlider" Width="260" Value="70" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                                <FrameworkElement.Tag>
-                                                    Inner Radius
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button 
-                                                        x:Name="CogInnerRadiusButton" 
-                                                        Padding="4,0" 
-                                                        MinWidth="70"
-                                                        Height="28"
-                                                        BorderThickness="1"
-                                                        BorderBrush="{ThemeResource AppStroke}" 
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                        <TextBlock><Run Text="{x:Bind CogInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                        </StackPanel>
-                                        <StackPanel x:Name="CogPanel2" Orientation="Horizontal" >
-                                            <Slider x:Name="CogToothSlider" Width="260" Value="30" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                                <FrameworkElement.Tag>
-                                                    Tooth
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button 
-                                                        x:Name="CogToothButton" 
-                                                        Padding="4,0" 
-                                                        MinWidth="70" 
-                                                        Height="28"
-                                                        BorderThickness="1"
-                                                        BorderBrush="{ThemeResource AppStroke}" 
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                        <TextBlock><Run Text="{x:Bind CogToothSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                            <Slider x:Name="CogNotchSlider" Width="260" Value="60" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                                <FrameworkElement.Tag>
-                                                    Notch
-                                                </FrameworkElement.Tag>
-                                                <Slider.Header>
-                                                    <Button 
-                                                        x:Name="CogNotchButton" 
-                                                        Padding="4,0" 
-                                                        MinWidth="70" 
-                                                        Height="28"
-                                                        BorderThickness="1" 
-                                                        BorderBrush="{ThemeResource AppStroke}"
-                                                        Background="{ThemeResource SystemAltLowColor}" 
-                                                        >
-                                                        <Button.Flyout>
-                                                            <Flyout>
-
-                                                            </Flyout>
-                                                        </Button.Flyout>
-                                                        <TextBlock><Run Text="{x:Bind CogNotchSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                    </Button>
-                                                </Slider.Header>
-                                            </Slider>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </local:OptionCase>
-                            <local:OptionCase Value="GeometryPieTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryPie" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                                    <Slider x:Name="StarInnerRadiusSlider" Width="260" Value="40" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
                                         <FrameworkElement.Tag>
-                                            Sweep Angle
+                                            Inner Radius
                                         </FrameworkElement.Tag>
                                         <Slider.Header>
                                             <Button
-                                                x:Name="PieSweepAngleButton" 
+                                                x:Name="StarInnerRadiusButton" 
+                                                Content="{x:Bind StarInnerRadiusSlider.Value, Mode=OneWay}" 
                                                 Padding="4,0" 
                                                 MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
+                                                Height="28" 
+                                                BorderThickness="1"
                                                 BorderBrush="{ThemeResource AppStroke}" 
                                                 Background="{ThemeResource SystemAltLowColor}"
                                                 >
@@ -2130,27 +1940,73 @@
 
                                                     </Flyout>
                                                 </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind PieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
                                             </Button>
                                         </Slider.Header>
                                     </Slider>
                                 </StackPanel>
                             </local:OptionCase>
-                            <local:OptionCase Value="GeometryCookieTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryCookie" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel x:Name="CookiePanel" Orientation="Horizontal" >
-                                        <Slider x:Name="CookieInnerRadiusSlider" Width="260" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                            <local:OptionCase Value="GeometryDountTransform">
+                                <Slider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Hole Radius
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="DountHoleRadiusButton" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1"
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <TextBlock><Run Text="{x:Bind DountHoleRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="GeometryCogTransform">
+                                <StackPanel x:Name="CogPanel" >
+                                    <StackPanel x:Name="CogPanel1" Orientation="Horizontal" >
+                                        <Slider x:Name="CogCountSlider" Width="260" Value="8" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
+                                            <FrameworkElement.Tag>
+                                                Count
+                                            </FrameworkElement.Tag>
+                                            <Slider.Header>
+                                                <Button 
+                                                    x:Name="CogCountButton" 
+                                                    Content="{x:Bind CogCountSlider.Value, Mode=OneWay}" 
+                                                    Padding="4,0" 
+                                                    MinWidth="70" 
+                                                    Height="28"
+                                                    BorderThickness="1"
+                                                    BorderBrush="{ThemeResource AppStroke}"
+                                                    Background="{ThemeResource SystemAltLowColor}" 
+                                                    >
+                                                    <Button.Flyout>
+                                                        <Flyout>
+
+                                                        </Flyout>
+                                                    </Button.Flyout>
+                                                </Button>
+                                            </Slider.Header>
+                                        </Slider>
+                                        <Slider x:Name="CogInnerRadiusSlider" Width="260" Value="70" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
                                             <FrameworkElement.Tag>
                                                 Inner Radius
                                             </FrameworkElement.Tag>
                                             <Slider.Header>
-                                                <Button
-                                                    x:Name="CookieInnerRadiusButton"                                           
+                                                <Button 
+                                                    x:Name="CogInnerRadiusButton" 
                                                     Padding="4,0" 
-                                                    MinWidth="70" 
+                                                    MinWidth="70"
                                                     Height="28"
-                                                    BorderThickness="1" 
+                                                    BorderThickness="1"
                                                     BorderBrush="{ThemeResource AppStroke}" 
                                                     Background="{ThemeResource SystemAltLowColor}" 
                                                     >
@@ -2159,21 +2015,23 @@
 
                                                         </Flyout>
                                                     </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind CookieInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                                    <TextBlock><Run Text="{x:Bind CogInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
                                                 </Button>
                                             </Slider.Header>
                                         </Slider>
-                                        <Slider x:Name="CookieSweepAngleSlider" Width="260" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                                    </StackPanel>
+                                    <StackPanel x:Name="CogPanel2" Orientation="Horizontal" >
+                                        <Slider x:Name="CogToothSlider" Width="260" Value="30" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
                                             <FrameworkElement.Tag>
-                                                Sweep Angle
+                                                Tooth
                                             </FrameworkElement.Tag>
                                             <Slider.Header>
                                                 <Button 
-                                                    x:Name="CookieSweepAngleButton" 
+                                                    x:Name="CogToothButton" 
                                                     Padding="4,0" 
                                                     MinWidth="70" 
                                                     Height="28"
-                                                    BorderThickness="1" 
+                                                    BorderThickness="1"
                                                     BorderBrush="{ThemeResource AppStroke}" 
                                                     Background="{ThemeResource SystemAltLowColor}" 
                                                     >
@@ -2182,56 +2040,151 @@
 
                                                         </Flyout>
                                                     </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind CookieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
+                                                    <TextBlock><Run Text="{x:Bind CogToothSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                                </Button>
+                                            </Slider.Header>
+                                        </Slider>
+                                        <Slider x:Name="CogNotchSlider" Width="260" Value="60" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                            <FrameworkElement.Tag>
+                                                Notch
+                                            </FrameworkElement.Tag>
+                                            <Slider.Header>
+                                                <Button 
+                                                    x:Name="CogNotchButton" 
+                                                    Padding="4,0" 
+                                                    MinWidth="70" 
+                                                    Height="28"
+                                                    BorderThickness="1" 
+                                                    BorderBrush="{ThemeResource AppStroke}"
+                                                    Background="{ThemeResource SystemAltLowColor}" 
+                                                    >
+                                                    <Button.Flyout>
+                                                        <Flyout>
+
+                                                        </Flyout>
+                                                    </Button.Flyout>
+                                                    <TextBlock><Run Text="{x:Bind CogNotchSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
                                                 </Button>
                                             </Slider.Header>
                                         </Slider>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
+                            <local:OptionCase Value="GeometryPieTransform">
+                                <Slider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Sweep Angle
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button
+                                            x:Name="PieSweepAngleButton" 
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}"
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
+
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <TextBlock><Run Text="{x:Bind PieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="GeometryCookieTransform">
+                                <StackPanel x:Name="CookiePanel" Orientation="Horizontal" >
+                                    <Slider x:Name="CookieInnerRadiusSlider" Width="260" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                        <FrameworkElement.Tag>
+                                            Inner Radius
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button
+                                                x:Name="CookieInnerRadiusButton" 
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28"
+                                                BorderThickness="1" 
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}" 
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                                <TextBlock><Run Text="{x:Bind CookieInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                    <Slider x:Name="CookieSweepAngleSlider" Width="260" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
+                                        <FrameworkElement.Tag>
+                                            Sweep Angle
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button 
+                                                x:Name="CookieSweepAngleButton" 
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28"
+                                                BorderThickness="1" 
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}" 
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                                <TextBlock><Run Text="{x:Bind CookieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                </StackPanel>
+                            </local:OptionCase>
                             <local:OptionCase Value="GeometryArrowTransform">
                                 <StackPanel>
-                                    <local:OptionItem Type="GeometryArrow" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <StackPanel>
-                                        <Slider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                            <FrameworkElement.Tag>
-                                                Width
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button 
-                                                    x:Name="ArrowWidthButton" 
-                                                    Padding="4,0" 
-                                                    MinWidth="70" 
-                                                    Height="28"
-                                                    BorderThickness="1" 
-                                                    BorderBrush="{ThemeResource AppStroke}" 
-                                                    Background="{ThemeResource SystemAltLowColor}" 
-                                                    >
-                                                    <Button.Flyout>
-                                                        <Flyout>
+                                    <Slider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                        <FrameworkElement.Tag>
+                                            Width
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button 
+                                                x:Name="ArrowWidthButton" 
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28"
+                                                BorderThickness="1" 
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}" 
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
 
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind ArrowWidthSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                        <StackPanel Orientation="Horizontal" Spacing="4" Height="50" Padding="8,0" >
-                                            <TextBlock x:Name="ArrowLeftTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                                                Left Tail
-                                            </TextBlock>
-                                            <ComboBox x:Name="ArrowLeftTailComboBox" SelectedIndex="0" >
-                                                <ComboBoxItem>None</ComboBoxItem>
-                                                <ComboBoxItem>Arrow</ComboBoxItem>
-                                            </ComboBox>
-                                            <TextBlock x:Name="ArrowRightTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                                                Right Tail
-                                            </TextBlock>
-                                            <ComboBox x:Name="ArrowRightTailComboBox" SelectedIndex="1" >
-                                                <ComboBoxItem>None</ComboBoxItem>
-                                                <ComboBoxItem>Arrow</ComboBoxItem>
-                                            </ComboBox>
-                                        </StackPanel>
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                                <TextBlock><Run Text="{x:Bind ArrowWidthSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                    <StackPanel Orientation="Horizontal" Spacing="4" Height="50" Padding="8,0" >
+                                        <TextBlock x:Name="ArrowLeftTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                            Left Tail
+                                        </TextBlock>
+                                        <ComboBox x:Name="ArrowLeftTailComboBox" SelectedIndex="0" >
+                                            <ComboBoxItem>None</ComboBoxItem>
+                                            <ComboBoxItem>Arrow</ComboBoxItem>
+                                        </ComboBox>
+                                        <TextBlock x:Name="ArrowRightTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                            Right Tail
+                                        </TextBlock>
+                                        <ComboBox x:Name="ArrowRightTailComboBox" SelectedIndex="1" >
+                                            <ComboBoxItem>None</ComboBoxItem>
+                                            <ComboBoxItem>Arrow</ComboBoxItem>
+                                        </ComboBox>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
@@ -2239,49 +2192,34 @@
                                 <local:OptionItem Type="GeometryCapsule" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryHeartTransform">
-                                <StackPanel>
-                                    <local:OptionItem Type="GeometryHeart" Margin="8,0" Height="50" VerticalContentAlignment="Center"/>
-                                    <Slider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Spread
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button 
-                                                x:Name="HeartSpreadButton" 
-                                                Content="{x:Bind HeartSpreadSlider.Value, Mode=OneWay}"       
-                                                Padding="4,0"
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}" 
-                                                >
-                                                <Button.Flyout>
-                                                    <Flyout>
+                                <Slider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
+                                    <FrameworkElement.Tag>
+                                        Spread
+                                    </FrameworkElement.Tag>
+                                    <Slider.Header>
+                                        <Button 
+                                            x:Name="HeartSpreadButton" 
+                                            Content="{x:Bind HeartSpreadSlider.Value, Mode=OneWay}" 
+                                            Padding="4,0"
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}" 
+                                            >
+                                            <Button.Flyout>
+                                                <Flyout>
 
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </Slider.Header>
-                                    </Slider>
-                                </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </Slider.Header>
+                                </Slider>
                             </local:OptionCase>
 
 
                         </local:OptionSwitchPresenter>
 
-
-                        <!--Button-->
-                        <!--
-                        <StackPanel x:Name="AppBarStackPanel" Visibility="Collapsed" Spacing="6" Orientation="Horizontal" Margin="6,0" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" >
-                            <Button x:Name="AppBarPrimaryButton" CornerRadius="4" Width="70" Height="40" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
-                                <FontIcon Glyph="&#xEC61;" FontFamily="Segoe MDL2 Assets"/>
-                            </Button>
-                            <Button x:Name="AppBarSecondaryButton" CornerRadius="4" Width="70" Height="40" VerticalAlignment="Center" BorderThickness="1" >
-                                <FontIcon Glyph="&#xEB90;" FontFamily="Segoe MDL2 Assets"/>
-                            </Button>
-                        </StackPanel>
-                        -->
                     </Grid>
 
                     <!--AppBar-->
