@@ -20,42 +20,14 @@ namespace Luo_Painter
         PC,
         Hub,
     }
-    internal enum ContextAppBarState
-    {
-        None,
-        Main,
-        Preview,
-        DragPreview,
-    }
 
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
         ContextAppBarDevice AppBarDevice;
-        Point AppBarStartingPosition;
 
         public void ConstructFoots()
         {
-            this.AppBarThumb.DragStarted += (s, e) => this.AppBarStartingPosition = new Point(this.AppBarTransform.X, this.AppBarTransform.Y);
-            this.AppBarThumb.DragDelta += (s, e) =>
-            {
-                if (this.AppBarGrid.Margin.Bottom is 0)
-                {
-                    this.AppBarStartingPosition.Y += e.VerticalChange;
-
-                    this.AppBarTransform.Y = System.Math.Clamp(this.AppBarStartingPosition.Y, 50, this.SwitchPresenter.ActualHeight);
-                }
-                else
-                {
-                    this.AppBarStartingPosition.X += e.HorizontalChange;
-                    this.AppBarStartingPosition.Y += e.VerticalChange;
-
-                    this.AppBarTransform.X = this.AppBarStartingPosition.X;
-                    this.AppBarTransform.Y = this.AppBarStartingPosition.Y;
-                }
-            };
-            this.AppBarThumb.DragCompleted += (s, e) => { };
-
             this.ContentGrid.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
@@ -96,30 +68,17 @@ namespace Luo_Painter
 
         public void ConstructAppBar(OptionType type)
         {
-            switch (this.GetState(type))
+            if (type.HasPreview())
             {
-                case ContextAppBarState.None:
-                    this.TitleTextBlock.Text = string.Empty;
-                    this.SwitchPresenter.Value = default;
-                    VisualStateManager.GoToState(this, nameof(AppBarNormal), false);
-                    break;
-                case ContextAppBarState.Main:
-                    this.TitleTextBlock.Text = string.Empty;
-                    this.SwitchPresenter.Value = this.GetType(type);
-                    VisualStateManager.GoToState(this, nameof(AppBarMain), false);
-                    break;
-                case ContextAppBarState.Preview:
-                    this.TitleTextBlock.Text = type.ToString();
-                    this.SwitchPresenter.Value = this.GetType(type);
-                    VisualStateManager.GoToState(this, nameof(AppBarPreview), false);
-                    break;
-                case ContextAppBarState.DragPreview:
-                    this.TitleTextBlock.Text = type.ToString();
-                    this.SwitchPresenter.Value = this.GetType(type);
-                    VisualStateManager.GoToState(this, nameof(AppBarDragPreview), false);
-                    break;
-                default:
-                    break;
+                this.TitleTextBlock.Text = type.ToString();
+                this.SwitchPresenter.Value = this.GetType(type);
+                VisualStateManager.GoToState(this, nameof(AppBarPreview), false);
+            }
+            else
+            {
+                this.TitleTextBlock.Text = string.Empty;
+                this.SwitchPresenter.Value = this.GetType(type);
+                VisualStateManager.GoToState(this, nameof(AppBarNormal), false);
             }
         }
 
@@ -132,22 +91,24 @@ namespace Luo_Painter
             else return type;
         }
 
-        private ContextAppBarState GetState(OptionType type)
-        {
-            if (type == default) return default;
-
-            if (type.HasPreview() is false)
-                return ContextAppBarState.Main;
-
-            return type.AllowDrag() ? ContextAppBarState.DragPreview : ContextAppBarState.Preview;
-        }
-
 
         public void ConstructFoot()
         {
             this.AppBarSecondaryButton.Click += (s, e) =>
             {
+                if (this.OptionType is OptionType.CropCanvas)
+                {
+                    this.CancelCropCanvas();
+                }
+                if (this.OptionType.IsGeometry())
+                {
+                    this.CancelGeometryTransform();
+                }
 
+                this.BitmapLayer = null;
+                this.OptionType = this.ToolListView.SelectedItem;
+                this.ConstructAppBar(this.OptionType);
+                this.SetCanvasState(false);
             };
 
             this.AppBarBackButton.Click += (s, e) =>
@@ -163,7 +124,7 @@ namespace Luo_Painter
 
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedItem;
-                this.ConstructAppBar(this.ToolListView.SelectedItem);
+                this.ConstructAppBar(this.OptionType);
                 this.SetCanvasState(false);
             };
 
@@ -195,7 +156,7 @@ namespace Luo_Painter
 
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedItem;
-                this.ConstructAppBar(this.ToolListView.SelectedItem);
+                this.ConstructAppBar(this.OptionType);
                 this.SetCanvasState(false);
             };
         }

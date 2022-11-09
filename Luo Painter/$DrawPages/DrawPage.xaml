@@ -101,46 +101,18 @@
         <!--VisualState-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-
                 <!--Normal-->
-                <VisualState x:Name="AppBarNormal">
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--Main-->
-                <VisualState x:Name="AppBarMain">
-                    <VisualState.Setters>
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-                    </VisualState.Setters>
-                </VisualState>
-
+                <VisualState x:Name="AppBarNormal"/>
                 <!--Preview-->
                 <VisualState x:Name="AppBarPreview">
                     <VisualState.Setters>
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-
-                        <Setter Target="AppBarStackPanel.Visibility" Value="Visible"/>
+                        <Setter Target="HeadGrid.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarHeadGrid.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
-
-                <!--DragPreview-->
-                <VisualState x:Name="AppBarDragPreview">
-                    <VisualState.Setters>
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-
-                        <Setter Target="AppBarThumb.Visibility" Value="Visible"/>
-                        <Setter Target="AppBarStackPanel.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-
             </VisualStateGroup>
 
             <VisualStateGroup>
-
                 <!--Overlay-->
                 <VisualState>
                     <VisualState.StateTriggers>
@@ -148,7 +120,8 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--Dock-->
-                        <Setter Target="DockGrid.Visibility" Value="Collapsed"/>
+                        <Setter Target="DockLeftButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="DockRightButton.Visibility" Value="Collapsed"/>
 
                         <!--Split-->
                         <Setter Target="SplitLeftButton.Visibility" Value="Visible"/>
@@ -158,32 +131,45 @@
                         <Setter Target="SplitLeftView.DisplayMode" Value="Overlay"/>
                     </VisualState.Setters>
                 </VisualState>
-
                 <!--Inline-->
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1080"/>
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
                 </VisualState>
-
             </VisualStateGroup>
 
             <VisualStateGroup>
-
                 <!--UnFullScreen-->
                 <VisualState x:Name="UnFullScreen"/>
-
                 <!--FullScreen-->
                 <VisualState x:Name="FullScreen">
+                    <VisualState.Setters>
+                        <!--Head-->
+                        <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="UnFullScreenButton.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <!--Phone-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--Head-->
                         <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
                         <Setter Target="RedoButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
-
+                <!--Pad-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
             </VisualStateGroup>
 
             <VisualStateGroup>
@@ -198,9 +184,6 @@
                     -->
                     <VisualState.Setters>
                         <!--AppBar-->
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-
                         <Setter Target="AppBarBorder.CornerRadius" Value="0"/>
                         <Setter Target="AppBarBorder.Margin" Value="0"/>
                         <Setter Target="AppBarBorder.HorizontalAlignment" Value="Stretch"/>
@@ -268,9 +251,6 @@
                     -->
                     <VisualState.Setters>
                         <!--AppBar-->
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-
                         <Setter Target="AppBarBorder.CornerRadius" Value="8,8,0,0"/>
                         <Setter Target="AppBarBorder.Margin" Value="0"/>
                         <Setter Target="AppBarBorder.BorderThickness" Value="1,1,1,0"/>
@@ -306,11 +286,6 @@
                         <AdaptiveTrigger MinWindowWidth="900"/>
                     </VisualState.StateTriggers>
                     -->
-                    <VisualState.Setters>
-                        <!--AppBar-->
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-                    </VisualState.Setters>
                 </VisualState>
 
                 <!--Hub-->
@@ -321,10 +296,6 @@
                     </VisualState.StateTriggers>
                     -->
                     <VisualState.Setters>
-                        <!--AppBar-->
-                        <Setter Target="AppBarTransform.X" Value="0"/>
-                        <Setter Target="AppBarTransform.Y" Value="0"/>
-
                         <!--Option-->
                         <Setter Target="HighlightsAndShadowsPanel.Orientation" Value="Horizontal"/>
 
@@ -520,12 +491,6 @@
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Bottom" 
                         >
-                        <UIElement.RenderTransformOrigin>
-                            0.5,0.5
-                        </UIElement.RenderTransformOrigin>
-                        <UIElement.RenderTransform>
-                            <TranslateTransform x:Name="AppBarTransform" Y="0"/>
-                        </UIElement.RenderTransform>
 
                         <Border 
                             x:Name="AppBarBorder"
@@ -534,76 +499,6 @@
                             BorderBrush="{ThemeResource AppStroke}" 
                             Background="{ThemeResource AppAcrylicElementBrush}" 
                             />
-
-                        <!--Thumb-->
-                        <Thumb x:Name="AppBarThumb" Visibility="Collapsed" CornerRadius="2" Height="50" VerticalAlignment="Top" >
-                            <Thumb.Template>
-                                <ControlTemplate TargetType="Thumb">
-                                    <Grid Background="Transparent">
-
-                                        <!--VisualState-->
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup x:Name="CommonStates">
-                                                <VisualState x:Name="Normal" />
-                                                <VisualState x:Name="PointerOver">
-                                                    <Storyboard>
-                                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPointerOver" />
-                                                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
-                                                    </Storyboard>
-                                                </VisualState>
-                                                <VisualState x:Name="Pressed">
-                                                    <Storyboard>
-                                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BackgroundPressed" />
-                                                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Background" />
-                                                    </Storyboard>
-                                                </VisualState>
-                                                <VisualState x:Name="Disabled" />
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-
-                                        <Border 
-                                            x:Name="Background" 
-                                            IsHitTestVisible="False" 
-                                            Width="36" 
-                                            Height="6" 
-                                            Margin="3" 
-                                            VerticalAlignment="Top" 
-                                            CornerRadius="{TemplateBinding CornerRadius}" 
-                                            BorderThickness="{TemplateBinding BorderThickness}" 
-                                            BorderBrush="{TemplateBinding BorderBrush}" 
-                                            Background="{TemplateBinding Background}" 
-                                            />
-                                        <Border 
-                                            x:Name="BackgroundPointerOver" 
-                                            Opacity="0" 
-                                            IsHitTestVisible="False"
-                                            Width="36"
-                                            Height="6" 
-                                            Margin="3" 
-                                            VerticalAlignment="Top" 
-                                            CornerRadius="{TemplateBinding CornerRadius}" 
-                                            BorderThickness="{TemplateBinding BorderThickness}" 
-                                            BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}" 
-                                            Background="{ThemeResource ThumbBackgroundPointerOver}" 
-                                            />
-                                        <Border 
-                                            x:Name="BackgroundPressed" 
-                                            Opacity="0" 
-                                            IsHitTestVisible="False"
-                                            Width="36" 
-                                            Height="6"
-                                            Margin="3" 
-                                            VerticalAlignment="Top" 
-                                            CornerRadius="{TemplateBinding CornerRadius}" 
-                                            Background="{ThemeResource ThumbBackgroundPressed}" 
-                                            BorderBrush="{ThemeResource ThumbBorderBrushPressed}" 
-                                            BorderThickness="{TemplateBinding BorderThickness}" 
-                                            />
-                                    </Grid>
-                                </ControlTemplate>
-                            </Thumb.Template>
-                        </Thumb>
-
 
                         <!--SwitchPresenter-->
                         <local:OptionSwitchPresenter x:Name="SwitchPresenter" MinHeight="50" >
@@ -1823,7 +1718,7 @@
                     </Grid>
 
                     <!--AppBar-->
-                    <Grid x:Name="AppBarStackPanel" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                    <Grid x:Name="AppBarHeadGrid" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="3*"/>
