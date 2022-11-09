@@ -326,18 +326,8 @@
                     <!--Tool-->
                     <controls:ToolListView x:Name="ToolListView" Visibility="Collapsed"/>
                     <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
-                    <controls:BrushListView x:Name="BrushMenu" Visibility="Collapsed"/>
-                    <controls:SizeListView x:Name="SizeMenu" Visibility="Collapsed"/>
-
-                    <!--Dock-->
-                    <Border Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" >
-                        <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                            <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
-                                <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />
-                                <SymbolIcon Symbol="DockRight"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
+                    <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
+                    <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
 
                 </Grid>
             </SplitView.Pane>
@@ -382,17 +372,7 @@
 
                         </controls:LayerListView>
                         <controls:EffectListView x:Name="EffectListView" Visibility="Collapsed"/>
-                        <controls:HistoryListView x:Name="HistoryMenu" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
-
-                        <!--Dock-->
-                        <Border Height="50" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" >
-                            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <SymbolIcon Symbol="DockLeft"/>
-                                    <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />
-                                </StackPanel>
-                            </Button>
-                        </Border>
+                        <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
 
                     </Grid>
                 </SplitView.Pane>
@@ -426,7 +406,7 @@
                     <!--Dock-->
                     <Grid x:Name="DockGrid" Height="50" VerticalAlignment="Top" >
 
-                        <Button x:Name="DockLeftButton2" Width="90" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                        <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
                                 Visibility="{x:Bind ReverseBooleanToVisibilityConverter(SplitLeftView.IsPaneOpen), Mode=OneWay}" >
                             <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
                                 <SymbolIcon Symbol="DockLeft"/>
@@ -434,7 +414,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="DockRightButton2" Width="90" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                        <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
                                 Visibility="{x:Bind ReverseBooleanToVisibilityConverter(SplitRightView.IsPaneOpen), Mode=OneWay}" >
                             <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
                                 <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />

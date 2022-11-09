@@ -456,10 +456,21 @@ namespace Luo_Painter
                 #region Menu
 
                 case OptionType.DockLeft:
-                    this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
+                    if (this.SplitLeftView.IsPaneOpen is false) this.SplitLeftView.IsPaneOpen = true;
+                    else if (this.DockLeftButton.ContextFlyout.IsOpen) this.SplitLeftView.IsPaneOpen = false;
+                    else this.Click(OptionType.DockLeftMenu);
                     break;
                 case OptionType.DockRight:
-                    this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
+                    if (this.SplitRightView.IsPaneOpen is false) this.SplitRightView.IsPaneOpen = true;
+                    else if (this.DockRightButton.ContextFlyout.IsOpen) this.SplitRightView.IsPaneOpen = false;
+                    else this.Click(OptionType.DockRightMenu);
+                    break;
+
+                case OptionType.DockLeftMenu:
+                    this.DockLeftButton.ContextFlyout.ShowAt(this.DockLeftButton);
+                    break;
+                case OptionType.DockRightMenu:
+                    this.DockRightButton.ContextFlyout.ShowAt(this.DockRightButton);
                     break;
 
                 case OptionType.ExportMenu:
@@ -492,46 +503,49 @@ namespace Luo_Painter
 
                 case OptionType.PaintMenu:
                     this.ToolListView.Visibility = Visibility.Collapsed;
-                    this.BrushMenu.Visibility = Visibility.Collapsed;
-                    this.SizeMenu.Visibility = Visibility.Collapsed;
-                    this.HistoryMenu.Visibility = Visibility.Collapsed;
+                    this.BrushListView.Visibility = Visibility.Collapsed;
+                    this.SizeListView.Visibility = Visibility.Collapsed;
                     this.PaintScrollViewer.Visibility = Visibility.Visible;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
                 case OptionType.BrushMenu:
                     this.ToolListView.Visibility = Visibility.Collapsed;
                     this.PaintScrollViewer.Visibility = Visibility.Collapsed;
-                    this.SizeMenu.Visibility = Visibility.Collapsed;
-                    this.HistoryMenu.Visibility = Visibility.Collapsed;
-                    this.BrushMenu.Visibility = Visibility.Visible;
+                    this.SizeListView.Visibility = Visibility.Collapsed;
+                    this.BrushListView.Visibility = Visibility.Visible;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
                 case OptionType.SizeMenu:
                     this.ToolListView.Visibility = Visibility.Collapsed;
                     this.PaintScrollViewer.Visibility = Visibility.Collapsed;
-                    this.BrushMenu.Visibility = Visibility.Collapsed;
-                    this.HistoryMenu.Visibility = Visibility.Collapsed;
-                    this.SizeMenu.Visibility = Visibility.Visible;
+                    this.BrushListView.Visibility = Visibility.Collapsed;
+                    this.SizeListView.Visibility = Visibility.Visible;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
 
                 case OptionType.ToolMenu:
                     this.PaintScrollViewer.Visibility = Visibility.Collapsed;
-                    this.BrushMenu.Visibility = Visibility.Collapsed;
-                    this.SizeMenu.Visibility = Visibility.Collapsed;
-                    this.HistoryMenu.Visibility = Visibility.Collapsed;
+                    this.BrushListView.Visibility = Visibility.Collapsed;
+                    this.SizeListView.Visibility = Visibility.Collapsed;
                     this.ToolListView.Visibility = Visibility.Visible;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
+
                 case OptionType.HistoryMenu:
-                    this.ToolListView.Visibility = Visibility.Collapsed;
-                    this.PaintScrollViewer.Visibility = Visibility.Collapsed;
-                    this.BrushMenu.Visibility = Visibility.Collapsed;
-                    this.SizeMenu.Visibility = Visibility.Collapsed;
-                    this.HistoryMenu.Visibility = Visibility.Visible;
-                    this.SplitRightView.IsPaneOpen = true;
+                    this.LayerListView.Visibility = Visibility.Collapsed;
+                    this.EffectListView.Visibility = Visibility.Collapsed;
+                    this.HistoryListView.Visibility = Visibility.Visible;
+                    this.SplitLeftView.IsPaneOpen = true;
+                    break;
+                case OptionType.EffectMenu:
+                    this.LayerListView.Visibility = Visibility.Collapsed;
+                    this.HistoryListView.Visibility = Visibility.Collapsed;
+                    this.EffectListView.Visibility = Visibility.Visible;
+                    this.SplitLeftView.IsPaneOpen = true;
                     break;
                 case OptionType.LayerMenu:
+                    this.EffectListView.Visibility = Visibility.Collapsed;
+                    this.HistoryListView.Visibility = Visibility.Collapsed;
                     this.LayerListView.Visibility = Visibility.Visible;
                     this.SplitLeftView.IsPaneOpen = true;
                     break;

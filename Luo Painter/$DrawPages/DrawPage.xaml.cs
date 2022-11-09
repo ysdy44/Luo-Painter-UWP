@@ -194,11 +194,13 @@ namespace Luo_Painter
             //this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
 
 
-            this.DockLeftButton.Click += (s, e) => this.DockLeftFlyout.ShowAt(this.DockLeftButton);
-            this.DockLeftButton2.Click += (s, e) => this.DockLeftFlyout.ShowAt(this.DockLeftButton2);
+            this.DockLeftButton.Holding += (s, e) => this.Click(OptionType.DockLeftMenu);
+            this.DockLeftButton.RightTapped += (s, e) => this.Click(OptionType.DockLeftMenu);
+            this.DockLeftButton.Click += (s, e) => this.Click(OptionType.DockLeft);
 
-            this.DockRightButton.Click += (s, e) => this.DockRightFlyout.ShowAt(this.DockRightButton);
-            this.DockRightButton2.Click += (s, e) => this.DockRightFlyout.ShowAt(this.DockRightButton2);
+            this.DockRightButton.Holding += (s, e) => this.Click(OptionType.DockRightMenu);
+            this.DockRightButton.RightTapped += (s, e) => this.Click(OptionType.DockRightMenu);
+            this.DockRightButton.Click += (s, e) => this.Click(OptionType.DockRight);
 
 
             this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;
@@ -234,14 +236,14 @@ namespace Luo_Painter
             };
 
 
-            this.BrushMenu.ItemClick += (s, e) =>
+            this.BrushListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is PaintBrush brush)
                 {
                     this.ConstructBrush(brush);
                 }
             };
-            this.SizeMenu.ItemClick += (s, e) =>
+            this.SizeListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is PaintSize item)
                 {
@@ -250,7 +252,7 @@ namespace Luo_Painter
             };
             this.ColorPicker.ColorChanged += (s, e) =>
             {
-                if (this.ColorFlyout.IsOpen is false) return;
+                if (base.ContextFlyout.IsOpen is false) return;
 
                 switch (this.OptionType)
                 {
