@@ -76,25 +76,30 @@ namespace Luo_Painter.Options
         DockLeft = Menu | 1 << 8 | IsItemClickEnabled,
         DockRight = Menu | 2 << 8 | IsItemClickEnabled,
 
-        ExportMenu = Menu | 3 << 8 | IsItemClickEnabled,
-        ColorMenu = Menu | 4 << 8 | IsItemClickEnabled,
-        PaletteMenu = Menu | 5 << 8 | IsItemClickEnabled,
+        DockLeftMenu = Menu | 3 << 8 | IsItemClickEnabled,
+        DockRightMenu = Menu | 4 << 8 | IsItemClickEnabled,
 
-        EditMenu = Menu | 6 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        AdjustmentMenu = Menu | 7 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        OtherMenu = Menu | 8 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        ExportMenu = Menu | 5 << 8 | IsItemClickEnabled,
+        ColorMenu = Menu | 6 << 8 | IsItemClickEnabled,
+        PaletteMenu = Menu | 7 << 8 | IsItemClickEnabled,
 
-        PaintMenu = Menu | 9 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        BrushMenu = Menu | 10 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        SizeMenu = Menu | 11 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        EditMenu = Menu | 8 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        AdjustmentMenu = Menu | 9 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        OtherMenu = Menu | 10 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
 
-        ToolMenu = Menu | 12 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        HistoryMenu = Menu | 13 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        LayerMenu = Menu | 14 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        PaintMenu = Menu | 11 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        BrushMenu = Menu | 12 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        SizeMenu = Menu | 13 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
 
-        AddMenu = Menu | 15 << 8 | IsItemClickEnabled,
-        PropertyMenu = Menu | 16 << 8 | IsItemClickEnabled,
-        PropertyMenuWithRename = Menu | 17 << 8,
+        ToolMenu = Menu | 14 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+
+        HistoryMenu = Menu | 15 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        EffectMenu = Menu | 16 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        LayerMenu = Menu | 17 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+
+        AddMenu = Menu | 18 << 8 | IsItemClickEnabled,
+        PropertyMenu = Menu | 19 << 8 | IsItemClickEnabled,
+        PropertyMenuWithRename = Menu | 20 << 8,
 
         #endregion
 
