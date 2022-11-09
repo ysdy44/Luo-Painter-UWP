@@ -168,6 +168,9 @@
     <Compile Include="Controls\ColorButton.Paint.cs" />
     <Compile Include="Controls\ColorButton.Tool.Paint.cs" />
     <Compile Include="Controls\ColorButton.Tool.Straw.cs" />
+    <Compile Include="Controls\ColorPicker2.xaml.cs">
+      <DependentUpon>ColorPicker2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EffectDialog.xaml.cs">
       <DependentUpon>EffectDialog.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\BrushListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorPicker2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

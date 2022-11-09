@@ -1,0 +1,81 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Controls.ColorPicker2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400" 
+    >
+
+    <StackPanel Width="320" >
+
+        <!--Type-->
+        <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
+            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="BoxHueToolTip">
+                        Hue
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <luo_painter:ElementIcon Type="ColorBoxHue"/>
+            </ListBoxItem>
+            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="BoxSaturationToolTip">
+                        Saturation
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <luo_painter:ElementIcon Type="ColorBoxSaturation"/>
+            </ListBoxItem>
+            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="BoxValueToolTip">
+                        Value
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <luo_painter:ElementIcon Type="ColorBoxValue"/>
+            </ListBoxItem>
+
+            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="RingSaturationToolTip">
+                        Saturation
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <luo_painter:ElementIcon Type="ColorRingSaturation"/>
+            </ListBoxItem>
+            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="RingValueToolTip">
+                        Value
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <luo_painter:ElementIcon Type="ColorRingValue"/>
+            </ListBoxItem>
+        </ListBox>
+
+        <!--Color-->
+        <ColorPicker
+            x:Name="ColorPicker" 
+            Width="320"
+            Height="358"
+            Color="Black" 
+            IsMoreButtonVisible="False" 
+            IsHexInputVisible="False" 
+            IsColorSpectrumVisible="True" 
+            IsColorSliderVisible="True" 
+            IsColorPreviewVisible="False" 
+            IsColorChannelTextInputVisible="False" 
+            IsAlphaTextInputVisible="False" 
+            IsAlphaSliderVisible="False" 
+            IsAlphaEnabled="False" 
+            ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+            ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+            />
+
+    </StackPanel>
+
+</UserControl>
