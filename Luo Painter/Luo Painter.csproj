@@ -171,8 +171,8 @@
     <Compile Include="Controls\ColorPicker2.xaml.cs">
       <DependentUpon>ColorPicker2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EffectDialog.xaml.cs">
-      <DependentUpon>EffectDialog.xaml</DependentUpon>
+    <Compile Include="Controls\EffectListView.xaml.cs">
+      <DependentUpon>EffectListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendDialog.xaml.cs">
       <DependentUpon>ExtendDialog.xaml</DependentUpon>
@@ -333,7 +333,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\EffectDialog.xaml">
+    <Page Include="Controls\EffectListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
