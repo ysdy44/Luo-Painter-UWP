@@ -19,6 +19,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    <UIElement.ContextFlyout>
+        <!--Flyout-->
+        <Flyout x:Name="ColorFlyout" Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <controls:ColorPicker2 x:Name="ColorPicker" />
+        </Flyout>
+    </UIElement.ContextFlyout>
+
 
     <FrameworkElement.Resources>
         <!--Transformer-->
@@ -28,25 +35,6 @@
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
         <!--Command-->
         <local:OptionTypeCommand x:Name="Command"/>
-        <!--Flyout-->
-        <Flyout x:Name="ColorFlyout" Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <controls:ColorPicker2 x:Name="ColorPicker" />
-        </Flyout>
-        <!--MenuFlyout-->
-        <MenuFlyout x:Name="DockLeftFlyout" Placement="Bottom">
-            <MenuFlyoutItem options:OptionExtensions.Type="LayerMenu" FontWeight="Bold" Command="{x:Bind Command}" />
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem options:OptionExtensions.Type="DockLeft" Command="{x:Bind Command}"/>
-        </MenuFlyout>
-        <MenuFlyout x:Name="DockRightFlyout" Placement="Bottom">
-            <MenuFlyoutItem options:OptionExtensions.Type="ToolMenu" Command="{x:Bind Command}" />
-            <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" />
-            <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" />
-            <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" />
-            <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}"/>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem options:OptionExtensions.Type="DockRight" Command="{x:Bind Command}"/>
-        </MenuFlyout>
         <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:ScaleRange x:Name="ScaleRange"/>
@@ -315,6 +303,7 @@
         <!--Body-->
         <SplitView 
             x:Name="SplitRightView"
+            Margin="0,50,0,0"
             PanePlacement="Right"
             OpenPaneLength="280"
             DisplayMode="Inline"
@@ -326,7 +315,7 @@
                     <!--Tool-->
                     <controls:ToolListView x:Name="ToolListView" Visibility="Collapsed"/>
                     <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
-                    <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
+                    <controls:BrushListView x:Name="BrushListView" Visibility="Visible"/>
                     <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
 
                 </Grid>
@@ -360,7 +349,7 @@
                                         Grid.Column="1" 
                                         IsHitTestVisible="False" 
                                         VerticalAlignment="Center" 
-                                        >           
+                                        >                                   
                                         Marquee
                                     </TextBlock>
                                     <Border CornerRadius="2" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -377,12 +366,8 @@
                     </Grid>
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
 
-                    <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Grid.Row="1" Background="Transparent" >
+                    <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Background="Transparent" >
                         <!--AlignmentGrid-->
                         <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" />
 
@@ -396,76 +381,16 @@
                     </Canvas>
 
                     <!--Split-->
-                    <Button x:Name="SplitLeftButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="0,6,6,0" HorizontalAlignment="Left" BorderThickness="0,1,1,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                    <Button x:Name="SplitLeftButton" Visibility="Collapsed" Width="24" Height="110" CornerRadius="0,6,6,0" HorizontalAlignment="Left" BorderThickness="0,1,1,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
                         <Line X1="0" X2="0" Y1="0" Y2="36" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="{ThemeResource AppForeground}"/>
                     </Button>
-                    <Button x:Name="SplitRightButton" Grid.Row="1" Visibility="Collapsed" Width="24" Height="110" CornerRadius="6,0,0,6" HorizontalAlignment="Right" BorderThickness="1,1,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                    <Button x:Name="SplitRightButton" Visibility="Collapsed" Width="24" Height="110" CornerRadius="6,0,0,6" HorizontalAlignment="Right" BorderThickness="1,1,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
                         <Line X1="0" X2="0" Y1="0" Y2="36" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeThickness="3" Stroke="{ThemeResource AppForeground}"/>
                     </Button>
-
-                    <!--Dock-->
-                    <Grid x:Name="DockGrid" Height="50" VerticalAlignment="Top" >
-
-                        <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
-                                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(SplitLeftView.IsPaneOpen), Mode=OneWay}" >
-                            <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
-                                <SymbolIcon Symbol="DockLeft"/>
-                                <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
-                                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(SplitRightView.IsPaneOpen), Mode=OneWay}" >
-                            <StackPanel Spacing="12" Orientation="Horizontal" VerticalAlignment="Center">
-                                <FontIcon Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" />
-                                <SymbolIcon Symbol="DockRight"/>
-                            </StackPanel>
-                        </Button>
-
-                    </Grid>
-
-                    <!--Head-->
-                    <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                            <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="Home"/>
-                            </Button>
-                            <Button x:Name="ExportButton" Width="70" Height="50" Foreground="#FFC003" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="NewWindow"/>
-                            </Button>
-                            <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="FullScreen" />
-                            </Button>
-                            <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="BackToWindow" />
-                            </Button>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <Button x:Name="UndoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <UIElement.KeyboardAccelerators>
-                                    <KeyboardAccelerator Modifiers="Control" Key="Z"/>
-                                </UIElement.KeyboardAccelerators>
-                                <SymbolIcon Symbol="Undo"/>
-                            </Button>
-                            <Button x:Name="RedoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                                <UIElement.KeyboardAccelerators>
-                                    <KeyboardAccelerator Modifiers="Control" Key="Y"/>
-                                </UIElement.KeyboardAccelerators>
-                                <SymbolIcon Symbol="Redo"/>
-                            </Button>
-                            <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
-                        </StackPanel>
-
-                        <controls:HeadButton x:Name="HeadButton"/>
-
-                    </Grid>
 
                     <!--AppBar-->
                     <Grid
                         x:Name="AppBarGrid"
-                        Grid.Row="1" 
                         Margin="22" 
                         MinWidth="426" 
                         MinHeight="50" 
@@ -659,7 +584,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GradientMapping">
-                                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="26,4" Height="50" HorizontalAlignment="Stretch">
+                                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="26,4" Width="740" Height="50" HorizontalAlignment="Stretch">
                                     <elements:GradientStopSelector.ItemStyle>
                                         <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
                                             <Setter Property="Width" Value="50"/>
@@ -1698,42 +1623,121 @@
 
                     </Grid>
 
-                    <!--AppBar-->
-                    <Grid x:Name="AppBarHeadGrid" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
-                            <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="AppBarPrimaryButton" Grid.Column="2" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
-                            Apply
-                        </Button>
-                        <Button x:Name="AppBarSecondaryButton" Grid.Column="3" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" >
-                            Reset
-                        </Button>
-                        <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                            <SymbolIcon Symbol="Back"/>
-                        </Button>
-                        <TextBlock
-                            x:Name="TitleTextBlock"
-                            Grid.Column="1" 
-                            Margin="16,0"
-                            IsHitTestVisible="false" 
-                            FontWeight="Medium" 
-                            TextTrimming="CharacterEllipsis" 
-                            FontSize="20" 
-                            TextWrapping="Wrap" 
-                            VerticalAlignment="Center" 
-                            Style="{StaticResource SubheaderTextBlockStyle}"
-                            >   
-                            <!--Title-->
-                        </TextBlock>
-                    </Grid>
-
                 </Grid>
             </SplitView>
         </SplitView>
+
+
+        <!--Head-->
+        <Grid Height="50" VerticalAlignment="Top" >
+
+            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                <UIElement.ContextFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem options:OptionExtensions.Type="LayerMenu" FontWeight="Bold" Command="{x:Bind Command}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}"/>
+                        <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem options:OptionExtensions.Type="DockLeft" Command="{x:Bind Command}"/>
+                    </MenuFlyout>
+                </UIElement.ContextFlyout>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="DockLeft"/>
+                    <FontIcon Margin="12,0,0,0" Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" 
+                              Visibility="{x:Bind SplitLeftView.IsPaneOpen, Mode=OneWay}"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                <UIElement.ContextFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem options:OptionExtensions.Type="ToolMenu" Command="{x:Bind Command}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" />
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem options:OptionExtensions.Type="DockRight" Command="{x:Bind Command}"/>
+                    </MenuFlyout>
+                </UIElement.ContextFlyout>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <FontIcon Margin="0,0,12,0" Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" 
+                              Visibility="{x:Bind SplitRightView.IsPaneOpen, Mode=OneWay}"/>
+                    <SymbolIcon Symbol="DockRight"/>
+                </StackPanel>
+            </Button>
+
+            <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                    <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <SymbolIcon Symbol="Home"/>
+                    </Button>
+                    <Button x:Name="ExportButton" Width="70" Height="50" Foreground="#FFC003" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <SymbolIcon Symbol="NewWindow"/>
+                    </Button>
+                    <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <SymbolIcon Symbol="FullScreen" />
+                    </Button>
+                    <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <SymbolIcon Symbol="BackToWindow" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button x:Name="UndoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Z"/>
+                        </UIElement.KeyboardAccelerators>
+                        <SymbolIcon Symbol="Undo"/>
+                    </Button>
+                    <Button x:Name="RedoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="Y"/>
+                        </UIElement.KeyboardAccelerators>
+                        <SymbolIcon Symbol="Redo"/>
+                    </Button>
+                    <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
+                </StackPanel>
+
+                <controls:HeadButton x:Name="HeadButton"/>
+
+            </Grid>
+
+
+            <!--AppBar-->
+            <Grid x:Name="AppBarHeadGrid" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                    <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AppBarPrimaryButton" Grid.Column="2" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
+                    Apply
+                </Button>
+                <Button x:Name="AppBarSecondaryButton" Grid.Column="3" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" >
+                    Reset
+                </Button>
+                <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <SymbolIcon Symbol="Back"/>
+                </Button>
+                <TextBlock
+                    x:Name="TitleTextBlock"
+                    Grid.Column="1" 
+                    Margin="16,0"
+                    IsHitTestVisible="false" 
+                    FontWeight="Medium" 
+                    TextTrimming="CharacterEllipsis" 
+                    FontSize="20" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Center" 
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    >   
+                    <!--Title-->
+                </TextBlock>
+            </Grid>
+
+        </Grid>
 
 
         <!--Expander-->
