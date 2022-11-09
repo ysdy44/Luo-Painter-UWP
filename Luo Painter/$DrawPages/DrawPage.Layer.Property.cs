@@ -21,7 +21,7 @@ namespace Luo_Painter
 
         private void ConstructPropertys()
         {
-            this.PropertyFlyout.Closed += (s, e) =>
+            this.LayerButton.Closed += (s, e) =>
             {
                 switch (this.OpacityCount)
                 {
@@ -30,7 +30,7 @@ namespace Luo_Painter
                     case 1:
                         if (this.LayerListView.SelectedItem is ILayer layer)
                         {
-                            float redo = (float)(this.OpacitySlider.Value / 100);
+                            float redo = this.LayerButton.OpacityValue;
 
                             // History
                             int removes = this.History.Push(new PropertyHistory<float>(HistoryType.Opacity, layer.Id, layer.StartingOpacity, redo));
@@ -53,8 +53,7 @@ namespace Luo_Painter
                     case 1:
                         if (this.LayerListView.SelectedItem is ILayer layer)
                         {
-                            int index = this.BlendModeComboBox.SelectedIndex;
-                            BlendEffectMode? redo = (index is 0) ? default : this.BlendCollection[index];
+                            BlendEffectMode? redo = this.LayerButton.BlendModeValue;
 
                             // History
                             int removes = this.History.Push(new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, layer.Id, layer.StartingBlendMode, redo));
@@ -77,7 +76,7 @@ namespace Luo_Painter
                     case 1:
                         if (this.LayerListView.SelectedItem is ILayer layer)
                         {
-                            string redo = (string)this.NameTextBox.Text;
+                            string redo = this.LayerButton.NameValue;
 
                             // History
                             int removes = this.History.Push(new PropertyHistory<string>(HistoryType.Name, layer.Id, layer.StartingName, redo));
@@ -94,47 +93,28 @@ namespace Luo_Painter
                 }
             };
 
-            this.PropertyFlyout.Opened += (s, e) =>
+            this.LayerButton.Opened += (s, e) =>
             {
                 this.IsPropertyEnabled = false;
                 if (this.LayerListView.SelectedItem is ILayer layer)
-                {
-                    this.NameTextBox.IsEnabled = true;
-                    this.NameTextBox.Text = layer.Name ?? string.Empty;
-                    this.OpacitySlider.IsEnabled = true;
-                    this.OpacitySlider.Value = layer.Opacity * 100;
-                    this.BlendModeComboBox.IsEnabled = true;
-                    this.BlendModeComboBox.SelectedIndex = layer.BlendMode.HasValue ? this.BlendCollection.IndexOf(layer.BlendMode.Value) : 0;
-                    this.TagTypeSegmented.IsEnabled = true;
-                }
+                    this.LayerButton.Construct(layer);
                 else
-                {
-                    this.NameTextBox.IsEnabled = false;
-                    this.NameTextBox.Text = string.Empty;
-                    this.OpacitySlider.Value = 100;
-                    this.OpacitySlider.IsEnabled = false;
-                    this.BlendModeComboBox.IsEnabled = false;
-                    this.BlendModeComboBox.SelectedIndex = -1;
-                    this.TagTypeSegmented.IsEnabled = false;
-                }
+                    this.LayerButton.Clear();
                 this.IsPropertyEnabled = true;
 
-
                 this.OpacityCount = 0;
-
                 this.BlendModeCount = 0;
-
                 this.NameCount = 0;
             };
         }
 
         private void ConstructProperty()
         {
-            this.OpacitySlider.ValueChanged += (s, e) =>
+            this.LayerButton.OpacityChanged += (s, e) =>
             {
                 if (this.IsPropertyEnabled is false) return;
 
-                float opacity = (float)(e.NewValue / 100);
+                float redo = (float)(e.NewValue / 100);
 
                 if (this.OpacityCount is 0)
                 {
@@ -142,25 +122,24 @@ namespace Luo_Painter
                     {
                         this.OpacityCount++;
                         item.CacheOpacity();
-                        item.Opacity = opacity;
+                        item.Opacity = redo;
                     }
                 }
                 else
                 {
                     foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
-                        item.Opacity = opacity;
+                        item.Opacity = redo;
                     }
                 }
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
-            this.BlendModeComboBox.SelectionChanged += (s, e) =>
+            this.LayerButton.BlendModeChanged += (s, e) =>
             {
                 if (this.IsPropertyEnabled is false) return;
 
-                int index = this.BlendModeComboBox.SelectedIndex;
-                BlendEffectMode? mode = (index is 0) ? default : this.BlendCollection[index];
+                BlendEffectMode? redo = this.LayerButton.BlendModeValue;
 
                 if (this.BlendModeCount is 0)
                 {
@@ -168,24 +147,24 @@ namespace Luo_Painter
                     {
                         this.BlendModeCount++;
                         item.CacheBlendMode();
-                        item.BlendMode = mode;
+                        item.BlendMode = redo;
                     }
                 }
                 else
                 {
                     foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
-                        item.BlendMode = mode;
+                        item.BlendMode = redo;
                     }
                 }
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
-            this.NameTextBox.SelectionChanged += (s, e) =>
+            this.LayerButton.NameChanged += (s, e) =>
             {
                 if (this.IsPropertyEnabled is false) return;
 
-                string name = this.NameTextBox.Text;
+                string redo = this.LayerButton.NameValue;
 
                 if (this.NameCount is 0)
                 {
@@ -193,14 +172,14 @@ namespace Luo_Painter
                     {
                         this.NameCount++;
                         item.CacheName();
-                        item.Name = name;
+                        item.Name = redo;
                     }
                 }
                 else
                 {
                     foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
-                        item.Name = name;
+                        item.Name = redo;
                     }
                 }
             };
@@ -208,7 +187,7 @@ namespace Luo_Painter
 
         private IEnumerable<IHistory> GetOpacityHistory()
         {
-            float redo = (float)(this.OpacitySlider.Value / 100);
+            float redo = this.LayerButton.OpacityValue;
 
             foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
             {
@@ -219,8 +198,7 @@ namespace Luo_Painter
         }
         private IEnumerable<IHistory> GetBlendModeHistory()
         {
-            int index = this.BlendModeComboBox.SelectedIndex;
-            BlendEffectMode? redo = (index is 0) ? default : this.BlendCollection[index];
+            BlendEffectMode? redo = this.LayerButton.BlendModeValue;
 
             foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
             {
@@ -231,7 +209,7 @@ namespace Luo_Painter
         }
         private IEnumerable<IHistory> GetNameHistory()
         {
-            string redo = this.NameTextBox.Text;
+            string redo = this.LayerButton.NameValue;
 
             foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
             {

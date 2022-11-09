@@ -77,10 +77,6 @@ namespace Luo_Painter
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
 
-        ColorButton ColorMenu => this.ColorButton;
-        ColorButton PaletteMenu => this.ColorButton;
-
-
         GradientMesh GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget GrayAndWhite { get; set; }
@@ -134,8 +130,8 @@ namespace Luo_Painter
             Flow = 1f,
         };
 
-        public Color Color => this.ColorMenu.Color;
-        public Vector4 ColorHdr => this.ColorMenu.ColorHdr;
+        public Color Color => this.ColorButton.Color;
+        public Vector4 ColorHdr => this.ColorButton.ColorHdr;
 
         public string TextureSelectedItem => this.TextureDialog.SelectedItem;
         public void ConstructTexture(string path) => this.TextureDialog.Construct(path);
@@ -144,7 +140,7 @@ namespace Luo_Painter
         public void Construct(IInkParameter item)
         {
             this.PaintScrollViewer.Construct(item);
-            this.PaletteMenu.Construct(item);
+            this.ColorButton.Construct(item);
         }
 
         #endregion
@@ -184,8 +180,9 @@ namespace Luo_Painter
 
 
             this.Command.Click += (s, type) => this.Click(type);
-
-            this.MoreItem.Click += async (s, type) => await this.EffectDialog.ShowInstance();
+            this.LayerButton.ItemClick += (s, type) => this.Click(type);
+            this.HeadButton.ItemClick += (s, type) => this.Click(type);
+            this.HeadButton.MoreClick += async (s, type) => await this.EffectDialog.ShowInstance();
             this.EffectDialog.ItemClick += (s, type) =>
             {
                 this.EffectDialog.Hide();
@@ -248,8 +245,10 @@ namespace Luo_Painter
                     this.ConstructSize((float)item.Size);
                 }
             };
-            this.ColorButton.ColorChanged += (s, e) =>
+            this.ColorPicker.ColorChanged += (s, e) =>
             {
+                if (this.ColorFlyout.IsOpen is false) return;
+
                 switch (this.OptionType)
                 {
                     case OptionType.GradientMapping:

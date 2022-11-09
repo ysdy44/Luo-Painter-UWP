@@ -29,11 +29,11 @@ namespace Luo_Painter
         }
         public void RaiseEditCanExecuteChanged()
         {
-            this.PasteItem.IsEnabled = true;
+            this.HeadButton.PasteIsEnabled = true;
         }
         public void RaiseLayerCanExecuteChanged()
         {
-            this.PasteLayerItem.IsEnabled = this.ClipboardLayers.Count is 0 is false;
+            this.LayerButton.PasteLayerIsEnabled = this.ClipboardLayers.Count is 0 is false;
         }
 
 
