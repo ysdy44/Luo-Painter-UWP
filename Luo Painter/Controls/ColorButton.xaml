@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
@@ -26,7 +27,7 @@
 
     <Button.Flyout>
         <Flyout Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <StackPanel Width="320" >
+            <StackPanel Width="320" Height="512" >
 
                 <!--Title-->
                 <Grid Padding="6,0" Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
@@ -36,38 +37,19 @@
                         <ColumnDefinition Width="45"/>
                         <ColumnDefinition Width="45"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <ComboBox SelectedIndex="0" HorizontalAlignment="Left">
-                        <ComboBoxItem x:Name="ColorItem">
-                            <TextBlock                                
-                                x:Name="ColorTitleTextBlock"      
-                                IsHitTestVisible="false"                                 
-                                FontWeight="Medium"                      
-                                TextTrimming="CharacterEllipsis"                      
-                                FontSize="20"                     
-                                TextWrapping="Wrap"                     
-                                VerticalAlignment="Center"                     
-                                Style="{StaticResource SubheaderTextBlockStyle}"                    
-                                >                      
-                                Color
-                            </TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem x:Name="PaletteItem">
-                            <TextBlock                                
-                                x:Name="PaletteTitleTextBlock"      
-                                IsHitTestVisible="false"                                 
-                                FontWeight="Medium"                      
-                                TextTrimming="CharacterEllipsis"                      
-                                FontSize="20"                     
-                                TextWrapping="Wrap"                     
-                                VerticalAlignment="Center"                     
-                                Style="{StaticResource SubheaderTextBlockStyle}"                    
-                                >                      
-                                Palette
-                            </TextBlock>
-                        </ComboBoxItem>
-                    </ComboBox>
-
+                    <TextBlock                        
+                        x:Name="TitleTextBlock"    
+                        Margin="10,0"
+                        IsHitTestVisible="false"                         
+                        FontWeight="Medium"                      
+                        TextTrimming="CharacterEllipsis"                      
+                        FontSize="20"                     
+                        TextWrapping="Wrap"                     
+                        VerticalAlignment="Center"                     
+                        Style="{StaticResource SubheaderTextBlockStyle}"                    
+                        >                      
+                        Color
+                    </TextBlock>
                     <Button x:Name="StrawButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                         <UIElement.ManipulationMode>
                             TranslateX, TranslateY
@@ -87,26 +69,58 @@
                 </Grid>
 
                 <!--Type-->
-                <Grid ColumnSpacing="8" Padding="6,0" Height="50" Visibility="{x:Bind ColorItem.IsSelected, Mode=OneWay}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
+                <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
+                    <ListBoxItem x:Name="BoxHueItem" Width="51" HorizontalContentAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Hue
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <luo_painter:ElementIcon Type="ColorBoxHue"/>
+                    </ListBoxItem>
+                    <ListBoxItem x:Name="BoxSaturationItem" Width="51" HorizontalContentAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Saturation
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <luo_painter:ElementIcon Type="ColorBoxSaturation"/>
+                    </ListBoxItem>
+                    <ListBoxItem x:Name="BoxValueItem" Width="51" HorizontalContentAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Value
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <luo_painter:ElementIcon Type="ColorBoxValue"/>
+                    </ListBoxItem>
 
-                    <!--Components-->
-                    <ComboBox x:Name="ComponentsComboBox" SelectedIndex="0" >
-                        <ComboBoxItem x:Name="SaturationValueItem">SaturationValue</ComboBoxItem>
-                        <ComboBoxItem x:Name="HueSaturationItem">HueSaturation</ComboBoxItem>
-                        <ComboBoxItem x:Name="HueValueItem">HueValue</ComboBoxItem>
-                    </ComboBox>
+                    <ListBoxItem x:Name="RingSaturationItem" Width="51" HorizontalContentAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Saturation
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <luo_painter:ElementIcon Type="ColorRingSaturation"/>
+                    </ListBoxItem>
+                    <ListBoxItem x:Name="RingValueItem" Width="51" HorizontalContentAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Value
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <luo_painter:ElementIcon Type="ColorRingValue"/>
+                    </ListBoxItem>
 
-                    <!--Shape-->
-                    <ComboBox x:Name="ShapeComboBox" Grid.Column="1" SelectedIndex="0" >
-                        <ComboBoxItem x:Name="BoxItem">Box</ComboBoxItem>
-                        <ComboBoxItem x:Name="RingItem">Ring</ComboBoxItem>
-                    </ComboBox>
-
-                </Grid>
+                    <ListBoxItem x:Name="PaletteItem" Width="51" HorizontalContentAlignment="Center">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Palette
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <luo_painter:ElementIcon Type="ColorPalette"/>
+                    </ListBoxItem>
+                </ListBox>
 
                 <!--Color-->
                 <ColorPicker
@@ -123,35 +137,42 @@
                     IsAlphaTextInputVisible="False" 
                     IsAlphaSliderVisible="False" 
                     IsAlphaEnabled="False" 
-                    ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ShapeComboBox.SelectedIndex),Mode=OneWay}" 
-                    ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ComponentsComboBox.SelectedIndex),Mode=OneWay}" 
-                    Visibility="{x:Bind ColorItem.IsSelected, Mode=OneWay}"
+                    ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+                    ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+                    Visibility="{x:Bind ColorVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
                     />
 
                 <!--Swatches-->
                 <ListView 
                     x:Name="ListView"
-                    Margin="0,6"
+                    Margin="8,11"
+                    Padding="0"
+                    Height="28"
                     IsItemClickEnabled="True"
                     SelectionMode="None" 
+                    Background="{ThemeResource AppBackground}"
                     ItemsSource="{x:Bind ObservableCollection}"          
-                    Visibility="{x:Bind ColorItem.IsSelected, Mode=OneWay}"
+                    Visibility="{x:Bind ColorVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+                    ScrollViewer.HorizontalScrollMode="Enabled"
+                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                    ScrollViewer.VerticalScrollMode="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
                     >
 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Margin="8,0" Orientation="Horizontal" />
+                            <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Padding" Value="0"/>
-                            <Setter Property="Margin" Value="1"/>
-                            <Setter Property="Width" Value="42"/>
-                            <Setter Property="MinWidth" Value="42"/>
-                            <Setter Property="Height" Value="42"/>
-                            <Setter Property="MinHeight" Value="42"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Width" Value="28"/>
+                            <Setter Property="MinWidth" Value="28"/>
+                            <Setter Property="Height" Value="28"/>
+                            <Setter Property="MinHeight" Value="28"/>
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                         </Style>
@@ -165,7 +186,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Rectangle RadiusX="4" RadiusY="4" Width="36" Height="36" StrokeThickness="1" Stroke="White" >
+                            <Rectangle Width="28" Height="28" >
                                 <Shape.Fill>
                                     <SolidColorBrush Color="{Binding}"/>
                                 </Shape.Fill>
@@ -175,8 +196,19 @@
 
                 </ListView>
 
+                <!--Palette-->
+                <canvas:CanvasControl 
+                    x:Name="CanvasControl" 
+                    Width="320"
+                    Height="358"
+                    ClearColor="White" 
+                    UseSharedDevice="True" 
+                    CustomDevice="{x:Bind CanvasDevice}" 
+                    Visibility="{x:Bind PaletteVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+                    />
+
                 <!--Tool-->
-                <Grid Padding="6,0" Height="50" Visibility="{x:Bind PaletteItem.IsSelected, Mode=OneWay}">
+                <Grid Padding="6,0" Height="50" Visibility="{x:Bind PaletteVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
@@ -184,10 +216,10 @@
                     </Grid.ColumnDefinitions>
 
                     <!--Tool-->
-                    <ComboBox x:Name="ToolComboBox" SelectedIndex="0" >
-                        <ComboBoxItem x:Name="PaintItem">Paint</ComboBoxItem>
-                        <ComboBoxItem x:Name="StrawItem">Straw</ComboBoxItem>
-                    </ComboBox>
+                    <ListBox x:Name="ToolComboBox" SelectedIndex="0" VerticalAlignment="Center" Style="{StaticResource AppSegmentListBoxStyle}">
+                        <ListBoxItem x:Name="PaintItem">Paint</ListBoxItem>
+                        <ListBoxItem x:Name="StrawItem">Straw</ListBoxItem>
+                    </ListBox>
 
                     <Button x:Name="ImageButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                         <SymbolIcon Symbol="Pictures"/>
@@ -197,17 +229,6 @@
                         <SymbolIcon Symbol="Delete"/>
                     </Button>
                 </Grid>
-                
-                <!--Palette-->
-                <canvas:CanvasControl 
-                    x:Name="CanvasControl" 
-                    Width="320"
-                    Height="408"
-                    ClearColor="White" 
-                    UseSharedDevice="True" 
-                    CustomDevice="{x:Bind CanvasDevice}" 
-                    Visibility="{x:Bind PaletteItem.IsSelected, Mode=OneWay}"
-                    />
 
             </StackPanel>
         </Flyout>

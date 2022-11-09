@@ -1,5 +1,8 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
+using System.IO;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -23,8 +26,18 @@ namespace Luo_Painter.Controls
                         this.StartingPressure = this.Pressure = 1;
                         break;
                 }
-
-                this.Paint_Start();
+                
+                switch (this.ToolComboBox.SelectedIndex)
+                {
+                    case 0:
+                        this.Paint_Start();
+                        break;
+                    case 1:
+                        this.Straw_Start();
+                        break;
+                    default:
+                        break;
+                }
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
@@ -40,11 +53,31 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
-                this.Paint_Delta();
+                switch (this.ToolComboBox.SelectedIndex)
+                {
+                    case 0:
+                        this.Paint_Delta();
+                        break;
+                    case 1:
+                        this.Straw_Delta();
+                        break;
+                    default:
+                        break;
+                }
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                this.Paint_Complete();
+                switch (this.ToolComboBox.SelectedIndex)
+                {
+                    case 0:
+                        this.Paint_Complete();
+                        break;
+                    case 1:
+                        this.Straw_Complete();
+                        break;
+                    default:
+                        break;
+                }
             };
         }
 

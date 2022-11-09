@@ -14,22 +14,11 @@ namespace Luo_Painter.Controls
 
         private void ConstructCanvas()
         {
-            this.CanvasControl.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                if (this.CanvasControl.ReadyToDraw is false) return;
-                Vector2 size = this.CanvasControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
-                this.CreateResources((int)size.X, (int)size.Y);
-            };
-
-
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                float sizeX = sender.Dpi.ConvertDipsToPixels((float)sender.ActualWidth);
-                float sizeY = sender.Dpi.ConvertDipsToPixels((float)sender.ActualHeight);
-                this.CreateResources((int)sizeX, (int)sizeY);
+                float width = sender.Dpi.ConvertDipsToPixels(320);
+                float height = sender.Dpi.ConvertDipsToPixels(358);
+                this.CreateResources((int)width, (int)height);
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasControl.Draw += (sender, args) =>

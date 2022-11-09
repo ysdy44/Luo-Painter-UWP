@@ -10,6 +10,8 @@ using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
@@ -18,14 +20,21 @@ namespace Luo_Painter.Controls
     public sealed partial class ColorButton : Button, IInkParameter
     {
         //@Converter
-        private ColorSpectrumShape ColorSpectrumShapeConverter(int value) => value is 0 ? ColorSpectrumShape.Box : ColorSpectrumShape.Ring;
+        private Visibility ColorVisibilityConverter(int value) => value is 5 ? Visibility.Collapsed : Visibility.Visible;
+        private Visibility PaletteVisibilityConverter(int value) => value is 5 ? Visibility.Visible : Visibility.Collapsed;
+        private ColorSpectrumShape ColorSpectrumShapeConverter(int value) => value is 3 || value is 4 ? ColorSpectrumShape.Ring : ColorSpectrumShape.Box;
         private ColorSpectrumComponents ColorSpectrumComponentsConverter(int value)
         {
             switch (value)
             {
-                case 0: return ColorSpectrumComponents.SaturationValue;
-                case 1: return ColorSpectrumComponents.HueSaturation;
-                default: return ColorSpectrumComponents.HueValue;
+                case 0: return ColorSpectrumComponents.SaturationValue; // Hue
+                case 1: return ColorSpectrumComponents.HueSaturation; // Saturation
+                case 2: return ColorSpectrumComponents.HueValue; // Value
+
+                case 3: return ColorSpectrumComponents.HueSaturation; // Saturation
+                case 4: return ColorSpectrumComponents.HueValue; // Value
+
+                default: return ColorSpectrumComponents.SaturationValue;
             }
         }
 
@@ -36,10 +45,10 @@ namespace Luo_Painter.Controls
         public Eyedropper Eyedropper { get; set; }
         public ClickEyedropper ClickEyedropper { get; set; }
 
-        public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 
         //@Task
         readonly object Locker = new object();
+        public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         BitmapLayer BitmapLayer { get; set; }
 
         Vector2 StartingPosition;
@@ -88,6 +97,38 @@ namespace Luo_Painter.Controls
             this.ConstructColor();
             this.ConstructStraw();
             this.SetColorHdr(this.ColorPicker.Color);
+
+            this.ColorPicker.Loaded += (s, e) =>
+            {
+                if (s is DependencyObject reference)
+                {
+                    DependencyObject grid = VisualTreeHelper.GetChild(reference, 0); // Grid
+                    DependencyObject stackPanel = VisualTreeHelper.GetChild(grid, 0); // StackPanel
+
+                    // 1. Slider
+                    DependencyObject thirdDimensionSliderGrid = VisualTreeHelper.GetChild(stackPanel, 1); // Grid ThirdDimensionSliderGrid Margin 0,12,0,0
+                    DependencyObject rectangle = VisualTreeHelper.GetChild(thirdDimensionSliderGrid, 0); // Rectangle Height 11
+
+                    if (thirdDimensionSliderGrid is FrameworkElement thirdDimensionSliderGrid1)
+                    {
+                        thirdDimensionSliderGrid1.Margin = new Thickness(0);
+                    }
+                    if (rectangle is FrameworkElement rectangle1)
+                    {
+                        rectangle1.Height = 22;
+                    }
+
+                    // 2. ColorSpectrum
+                    DependencyObject colorSpectrumGrid = VisualTreeHelper.GetChild(stackPanel, 0); // Grid ColorSpectrumGrid 
+                    DependencyObject colorSpectrum = VisualTreeHelper.GetChild(colorSpectrumGrid, 0); // ColorSpectrum ColorSpectrum MaxWidth="336" MaxHeight="336" MinWidth="256" MinHeight="256" 
+
+                    if (colorSpectrum is ColorSpectrum colorSpectrum1)
+                    {
+                        colorSpectrum1.MaxWidth = 1200;
+                        colorSpectrum1.MaxHeight = 1200;
+                    }
+                }
+            };
         }
 
         //@Strings
@@ -115,23 +156,6 @@ namespace Luo_Painter.Controls
             }
             this.ColorPicker.ColorChanged += this.ColorChanged;
             this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
-        }
-
-        public UIElement GetTarget()
-        {
-            if (Window.Current.Content is FrameworkElement frame)
-            {
-                if (frame.Parent is FrameworkElement border)
-                {
-                    if (border.Parent is FrameworkElement rootScrollViewer)
-                        return rootScrollViewer;
-                    else
-                        return border;
-                }
-                else
-                    return frame;
-            }
-            else return Window.Current.Content;
         }
 
     }
