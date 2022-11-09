@@ -94,7 +94,7 @@ namespace Luo_Painter
                 }
             };
 
-            add.Color = this.ColorMenu.Color;
+            add.Color = this.Color;
             add.StrokeWidth = this.InkPresenter.Size;
 
             add.ClosePoint = this.Position;

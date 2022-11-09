@@ -65,8 +65,8 @@ namespace Luo_Painter
                     break;
             }
 
-            Color startColor = this.ColorMenu.Color;
-            Color endColor = this.ColorMenu.Color;
+            Color startColor = this.Color;
+            Color endColor = this.Color;
             switch (this.IsBrushReverse)
             {
                 case true: startColor.A = byte.MinValue; break;
@@ -141,12 +141,12 @@ namespace Luo_Painter
             switch (this.BrushMode)
             {
                 case 0:
-                    this.Brush(new CanvasSolidColorBrush(this.CanvasDevice, this.ColorMenu.Color));
+                    this.Brush(new CanvasSolidColorBrush(this.CanvasDevice, this.ColorButton.Color));
                     break;
                 case 1:
                     {
-                        Color startColor = this.ColorMenu.Color;
-                        Color endColor = this.ColorMenu.Color;
+                        Color startColor = this.Color;
+                        Color endColor = this.Color;
                         switch (this.IsBrushReverse)
                         {
                             case true: startColor.A = byte.MinValue; break;
@@ -164,8 +164,8 @@ namespace Luo_Painter
                     break;
                 case 2:
                     {
-                        Color startColor = this.ColorMenu.Color;
-                        Color endColor = this.ColorMenu.Color;
+                        Color startColor = this.Color;
+                        Color endColor = this.Color;
 
                         switch (this.IsBrushReverse)
                         {
@@ -186,8 +186,8 @@ namespace Luo_Painter
                     break;
                 case 3:
                     {
-                        Color startColor = this.ColorMenu.Color;
-                        Color endColor = this.ColorMenu.Color;
+                        Color startColor = this.Color;
+                        Color endColor = this.Color;
 
                         switch (this.IsBrushReverse)
                         {

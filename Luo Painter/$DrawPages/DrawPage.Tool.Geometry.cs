@@ -45,7 +45,7 @@ namespace Luo_Painter
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
             {
                 ds.Clear(Colors.Transparent);
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.ColorMenu.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.Color);
             }
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -56,7 +56,7 @@ namespace Luo_Painter
         {
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
             {
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.ColorMenu.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.Color);
             }
             this.BitmapLayer.Hit(this.BoundsTransformer);
 
@@ -89,7 +89,7 @@ namespace Luo_Painter
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
             {
                 ds.Clear(Colors.Transparent);
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.ColorMenu.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.ColorButton.Color);
             }
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
