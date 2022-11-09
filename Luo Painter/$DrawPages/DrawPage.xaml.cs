@@ -182,12 +182,6 @@ namespace Luo_Painter
             this.Command.Click += (s, type) => this.Click(type);
             this.LayerButton.ItemClick += (s, type) => this.Click(type);
             this.HeadButton.ItemClick += (s, type) => this.Click(type);
-            this.HeadButton.MoreClick += async (s, type) => await this.EffectDialog.ShowInstance();
-            this.EffectDialog.ItemClick += (s, type) =>
-            {
-                this.EffectDialog.Hide();
-                this.Click(type);
-            };
 
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
@@ -231,6 +225,15 @@ namespace Luo_Painter
                     this.Click(item);
                 }
             };
+            this.EffectListView.ItemClick += (s, e) =>
+            {
+                if (e.ClickedItem is OptionType item)
+                {
+                    this.Click(item);
+                }
+            };
+
+
             this.BrushMenu.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is PaintBrush brush)

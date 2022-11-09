@@ -1,25 +1,18 @@
-﻿using Luo_Painter.Options;
-using System;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.ApplicationModel.Resources;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class EffectDialog : ContentDialog
+    public sealed partial class EffectListView : XamlListView
     {
-        //@Delegate
-        public event EventHandler<OptionType> ItemClick;
-   
         //@Construct
-        public EffectDialog()
+        public EffectListView()
         {
             this.InitializeComponent();
-            this.ListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is OptionType item)
-                {
-                    this.ItemClick?.Invoke(this, item);//Delegate
-                }
-            };
+        }
+
+        //@Strings
+        public void ConstructStrings(ResourceLoader resource)
+        {
         }
 
     }
