@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="ColorRingSaturationIcon" TargetType="ContentControl">
+        <Ellipse Width="20" Height="20" StrokeThickness="1" Stroke="{ThemeResource AppForeground}">
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#00D1FE"/>
+                    <GradientStop Offset="1" Color="#88FFFFFF"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
+        </Ellipse>
+    </ControlTemplate>
+
+</ResourceDictionary>

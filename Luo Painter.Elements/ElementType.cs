@@ -10,6 +10,16 @@
 
         ConvertToCurves,
 
+        // Color
+        ColorBoxHue,
+        ColorBoxSaturation,
+        ColorBoxValue,
+
+        ColorRingSaturation,
+        ColorRingValue,
+
+        ColorPalette,
+
         // CompositeModes
         New,
         Add,
