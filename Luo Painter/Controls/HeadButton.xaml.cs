@@ -10,7 +10,6 @@ namespace Luo_Painter.Controls
     {
         //@Delegate
         public event EventHandler<OptionType> ItemClick { remove => this.Command.Click -= value; add => this.Command.Click += value; }
-        public event RoutedEventHandler MoreClick { remove => this.MoreItem.Click -= value; add => this.MoreItem.Click += value; }
 
         //@Content
         public bool PasteIsEnabled { get => this.PasteItem.IsEnabled; set => this.PasteItem.IsEnabled = value; }

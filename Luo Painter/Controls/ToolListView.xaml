@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     d:DesignWidth="400"  
     d:DesignHeight="400"
-    Margin="0,50,0,0"    
     IsItemClickEnabled="True"      
     SelectionMode="Single"                        
     ScrollViewer.VerticalScrollBarVisibility="Hidden"

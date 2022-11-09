@@ -16,7 +16,7 @@
         <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
     
-    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <Button.Flyout>
             <MenuFlyout>
                 <!--Edit-->
@@ -75,7 +75,7 @@
         </Button.Flyout>
         <luo_painter:OptionIcon Type="EditMenu"/>
     </Button>
-    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <Button.Flyout>
             <MenuFlyout>
                 <!--Adjustment-->
@@ -108,19 +108,12 @@
                 <MenuFlyoutItem options:OptionExtensions.Type="Straighten" Command="{x:Bind Command}"/>
                 -->
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Name="MoreItem">
-                    <MenuFlyoutItem.Tag>
-                        <SymbolIcon Symbol="More"/>
-                    </MenuFlyoutItem.Tag>
-                    <MenuFlyoutItem.Text>
-                        More
-                    </MenuFlyoutItem.Text>
-                </MenuFlyoutItem>
+                <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}"/>
             </MenuFlyout>
         </Button.Flyout>
         <luo_painter:OptionIcon Type="AdjustmentMenu"/>
     </Button>
-    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <Button.Flyout>
             <MenuFlyout>
                 <!--Other-->

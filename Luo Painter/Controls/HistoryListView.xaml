@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    Margin="0,50,0,0"
     IsItemClickEnabled="True"
     FooterTemplate="{StaticResource AppListViewBaseFooter}"     
     >
@@ -18,7 +17,6 @@
         <Style TargetType="ListViewItem">
             <Setter Property="Margin" Value="0,0,0,1"/>
             <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-            <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
         </Style>
     </ItemsControl.ItemContainerStyle>
 
@@ -46,7 +44,7 @@
     </ItemsControl.ItemTemplate>
 
     <ListViewBase.Header>
-        <Border Height="44" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" >
+        <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
             <TextBlock 
                 x:Name="TitleTextBlock"
                 Margin="16,0"

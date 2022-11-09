@@ -70,51 +70,51 @@
 
                 <!--Type-->
                 <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
-                    <ListBoxItem x:Name="BoxHueItem" Width="51" HorizontalContentAlignment="Center">
+                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip>
+                            <ToolTip x:Name="BoxHueToolTip">
                                 Hue
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <luo_painter:ElementIcon Type="ColorBoxHue"/>
                     </ListBoxItem>
-                    <ListBoxItem x:Name="BoxSaturationItem" Width="51" HorizontalContentAlignment="Center">
+                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip>
+                            <ToolTip x:Name="BoxSaturationToolTip">
                                 Saturation
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <luo_painter:ElementIcon Type="ColorBoxSaturation"/>
                     </ListBoxItem>
-                    <ListBoxItem x:Name="BoxValueItem" Width="51" HorizontalContentAlignment="Center">
+                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip>
+                            <ToolTip x:Name="BoxValueToolTip">
                                 Value
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <luo_painter:ElementIcon Type="ColorBoxValue"/>
                     </ListBoxItem>
 
-                    <ListBoxItem x:Name="RingSaturationItem" Width="51" HorizontalContentAlignment="Center">
+                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip>
+                            <ToolTip x:Name="RingSaturationToolTip">
                                 Saturation
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <luo_painter:ElementIcon Type="ColorRingSaturation"/>
                     </ListBoxItem>
-                    <ListBoxItem x:Name="RingValueItem" Width="51" HorizontalContentAlignment="Center">
+                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip>
+                            <ToolTip x:Name="RingValueToolTip">
                                 Value
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <luo_painter:ElementIcon Type="ColorRingValue"/>
                     </ListBoxItem>
 
-                    <ListBoxItem x:Name="PaletteItem" Width="51" HorizontalContentAlignment="Center">
+                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip>
+                            <ToolTip x:Name="PaletteItemToolTip">
                                 Palette
                             </ToolTip>
                         </ToolTipService.ToolTip>

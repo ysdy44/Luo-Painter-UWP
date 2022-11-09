@@ -11,7 +11,6 @@
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"  
-    Margin="0,50,0,0" 
     IsItemClickEnabled="True"
     SelectionMode="Extended"   
     AllowDrop="True" 
