@@ -173,6 +173,8 @@ namespace Luo_Painter
 
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();
+            this.ConstructThreshold();
+
             this.ConstructVector();
             this.ConstructTransform();
             this.ConstructPen();
@@ -257,6 +259,9 @@ namespace Luo_Painter
                 {
                     case OptionType.GradientMapping:
                         this.GradientMappingColorChanged(e.NewColor);
+                        break;
+                    case OptionType.Threshold:
+                        this.ThresholdColorChanged(e.NewColor);
                         break;
                     default:
                         break;

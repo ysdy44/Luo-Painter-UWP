@@ -29,6 +29,7 @@ namespace Luo_Painter
         byte[] FreeTransformShaderCodeBytes;
         byte[] GradientMappingShaderCodeBytes;
         byte[] RippleEffectShaderCodeBytes;
+        byte[] ThresholdShaderCodeBytes;
         byte[] DifferenceShaderCodeBytes;
         byte[] DottedLineTransformShaderCodeBytes;
         byte[] LalphaMaskShaderCodeBytes;
@@ -85,6 +86,7 @@ namespace Luo_Painter
             this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
             this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
             this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
+            this.ThresholdShaderCodeBytes = await ShaderType.Threshold.LoadAsync();
             this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
             this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
             this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();

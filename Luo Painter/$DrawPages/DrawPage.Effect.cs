@@ -83,6 +83,19 @@ namespace Luo_Painter
                         },
                     };
 
+                case OptionType.Threshold:
+                    return new PixelShaderEffect(this.ThresholdShaderCodeBytes)
+                    {
+                        Source2BorderMode = EffectBorderMode.Hard,
+                        Source1 = image,
+                        Properties =
+                        {
+                            ["threshold"] = this.Threshold,
+                            ["color0"] = this.ThresholdColor0,
+                            ["color1"] = this.ThresholdColor1,
+                        },
+                    };
+
                 case OptionType.Transform:
                 case OptionType.MarqueeTransform:
                     switch (this.TransformMode)
