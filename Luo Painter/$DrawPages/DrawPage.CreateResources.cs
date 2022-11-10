@@ -43,6 +43,9 @@ namespace Luo_Painter
 
         private void CreateResources(int width, int height)
         {
+            //@DPI
+            this.Mesh = new CanvasRenderTarget(this.CanvasDevice, width, height, 96);
+
             float scale = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(25);
             using (ScaleEffect scaleEffect = new ScaleEffect
             {
@@ -56,8 +59,9 @@ namespace Luo_Painter
                 ExtendY = CanvasEdgeBehavior.Wrap,
                 Source = scaleEffect
             })
+            using (CanvasDrawingSession ds = this.Mesh.CreateDrawingSession())
             {
-                this.Mesh = new BitmapLayer(this.CanvasDevice, borderEffect, width, height);
+                ds.DrawImage(borderEffect);
             }
 
             this.Clipboard = new BitmapLayer(this.CanvasDevice, width, height);

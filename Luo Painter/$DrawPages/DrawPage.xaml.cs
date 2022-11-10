@@ -79,8 +79,7 @@ namespace Luo_Painter
 
         GradientMesh GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
-        CanvasRenderTarget GrayAndWhite { get; set; }
-        BitmapLayer Mesh { get; set; }
+        CanvasRenderTarget Mesh { get; set; }
 
 
         //@Task

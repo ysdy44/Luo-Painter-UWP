@@ -91,7 +91,7 @@ namespace Luo_Painter
             {
                 InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                 Scale = new Vector2(scale),
-                Source = this.Nodes.Render(this.Mesh[BitmapType.Source])
+                Source = this.Nodes.Render(this.Mesh)
             })
             {
                 await CanvasImage.SaveAsync(image, new Rect

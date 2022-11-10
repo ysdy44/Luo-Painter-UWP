@@ -29,12 +29,7 @@ namespace Luo_Painter
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
-
-                Vector2 size = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
-                this.Transformer.ControlWidth = size.X;
-                this.Transformer.ControlHeight = size.Y;
-
-                this.AlignmentGrid.RebuildWithInterpolation(e.NewSize);
+                if (this.AlignmentGrid.RebuildWithInterpolation(e.NewSize) is false) return;
 
                 this.CanvasControl.Width =
                 this.CanvasAnimatedControl.Width =
@@ -43,6 +38,10 @@ namespace Luo_Painter
                 this.CanvasControl.Height =
                 this.CanvasAnimatedControl.Height =
                 this.CanvasVirtualControl.Height = e.NewSize.Height;
+
+                Vector2 size = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
+                this.Transformer.ControlWidth = size.X;
+                this.Transformer.ControlHeight = size.Y;
             };
 
 
@@ -172,7 +171,7 @@ namespace Luo_Painter
                     using (CanvasDrawingSession ds = sender.CreateDrawingSession(region))
                     using (Transform2DEffect mesh = new Transform2DEffect
                     {
-                        Source = this.Mesh[BitmapType.Source],
+                        Source = this.Mesh,
                         TransformMatrix = this.Transformer.GetMatrix(),
                         InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
                     })
