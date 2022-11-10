@@ -683,6 +683,69 @@
                                     </Slider>
                                 </StackPanel>
                             </local:OptionCase>
+                            <local:OptionCase Value="Threshold">
+                                <StackPanel>
+                                    <Slider x:Name="ThresholdSlider" Minimum="-150" Maximum="150" Style="{StaticResource AppSliderStyle}">
+                                        <Slider.Background>
+                                            <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                                <GradientStop Color="Black" Offset="0"/>
+                                                <GradientStop Color="White" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Slider.Background>
+                                        <FrameworkElement.Tag>
+                                            Threshold
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button 
+                                                x:Name="ThresholdButton" 
+                                                Content="{x:Bind ThresholdSlider.Value, Mode=OneWay}"
+                                                Padding="4,0" 
+                                                MinWidth="70" 
+                                                Height="28"
+                                                BorderThickness="1" 
+                                                BorderBrush="{ThemeResource AppStroke}" 
+                                                Background="{ThemeResource SystemAltLowColor}"
+                                                >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                    <Grid Height="50" Padding="8,0" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <MenuFlyoutSeparator Grid.Column="1" />
+                                        <MenuFlyoutSeparator Grid.Column="3" />
+
+                                        <Button x:Name="ThresholdColor0Button" CornerRadius="4" Width="100" Height="40" BorderThickness="1" >
+                                            <Control.Background>
+                                                <SolidColorBrush x:Name="ThresholdColor0Brush" Color="White"/>
+                                            </Control.Background>
+                                            <Rectangle RadiusX="4" RadiusY="4" Width="82" Height="29" Fill="{x:Bind ThresholdColor0Button.Background, Mode=OneWay}"/>
+                                        </Button>
+                                        <Button x:Name="ThresholdColor1Button" Grid.Column="4" CornerRadius="4" Width="100" Height="40" BorderThickness="1" >
+                                            <Control.Background>
+                                                <SolidColorBrush x:Name="ThresholdColor1Brush" Color="Black"/>
+                                            </Control.Background>
+                                            <Rectangle RadiusX="4" RadiusY="4" Width="82" Height="29" Fill="{x:Bind ThresholdColor1Button.Background, Mode=OneWay}"/>
+                                        </Button>
+
+                                        <Button x:Name="ThresholdReverseButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" >
+                                            Reverse
+                                        </Button>
+
+                                    </Grid>
+                                </StackPanel>
+                            </local:OptionCase>
 
 
                             <local:OptionCase Value="Exposure">
@@ -698,15 +761,15 @@
                                     </FrameworkElement.Tag>
                                     <Slider.Header>
                                         <Button 
-                                                x:Name="ExposureButton" 
-                                                Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
-                                                Padding="4,0" 
-                                                MinWidth="70" 
-                                                Height="28"
-                                                BorderThickness="1" 
-                                                BorderBrush="{ThemeResource AppStroke}" 
-                                                Background="{ThemeResource SystemAltLowColor}"
-                                                >
+                                            x:Name="ExposureButton" 
+                                            Content="{x:Bind ExposureSlider.Value, Mode=OneWay}"
+                                            Padding="4,0" 
+                                            MinWidth="70" 
+                                            Height="28"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppStroke}" 
+                                            Background="{ThemeResource SystemAltLowColor}"
+                                            >
                                             <Button.Flyout>
                                                 <Flyout>
 

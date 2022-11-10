@@ -10,12 +10,12 @@
     Orientation="Horizontal" 
     HorizontalAlignment="Center" 
     >
-    
+
     <FrameworkElement.Resources>
         <!--Command-->
         <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
-    
+
     <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <Button.Flyout>
             <MenuFlyout>
@@ -143,6 +143,7 @@
                 <MenuFlyoutItem options:OptionExtensions.Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="GradientMapping" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="RippleEffect" Command="{x:Bind Command}"/>
+                <MenuFlyoutItem options:OptionExtensions.Type="Threshold" Command="{x:Bind Command}"/>
             </MenuFlyout>
         </Button.Flyout>
         <SymbolIcon Symbol="More"/>
