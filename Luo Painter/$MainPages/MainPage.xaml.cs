@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -53,9 +53,9 @@ namespace Luo_Painter
         public int SelectedCount { get; private set; }
         public MetadataObservableCollection Paths { get; } = new MetadataObservableCollection();
         public ProjectObservableCollection ObservableCollection { get; } = new ProjectObservableCollection();
-       
+
         public IList<string> ClipboardProjects { get; } = new List<string>();
-        public string ClipboardPath { get; private set; } 
+        public string ClipboardPath { get; private set; }
 
         private void Load() => this.ObservableCollection.Load(this.Paths.GetPath());
 
@@ -77,17 +77,10 @@ namespace Luo_Painter
 
             this.DocumentationButton.Click += (s, e) =>
             {
-                foreach (var item in ObservableCollection)
-                {
-                    item.IsEnabled = false;
-                }
             };
             this.SettingButton.Click += (s, e) =>
             {
-                foreach (var item in ObservableCollection)
-                {
-                    item.IsEnabled = true;
-                }
+                base.Frame.Navigate(typeof(StylePage));
             };
 
             this.HomeButton.Click += (s, e) =>
@@ -135,6 +128,26 @@ namespace Luo_Painter
                     default:
                         break;
                 }
+            };
+
+
+            // Drag and Drop 
+            base.AllowDrop = true;
+            base.Drop += async (s, e) =>
+            {
+                if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
+
+                foreach (IStorageItem item in await e.DataView.GetStorageItemsAsync())
+                {
+                    this.Action(ProjectAction.Image, item);
+                    break;
+                }
+            };
+            base.DragOver += (s, e) =>
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+                //e.DragUIOverride.Caption = 
+                e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
             };
         }
 
