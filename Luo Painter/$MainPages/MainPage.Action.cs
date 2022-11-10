@@ -215,6 +215,18 @@ namespace Luo_Painter
                             this.RenameTextBox.SelectAll();
                             this.RenameTextBox.Focus(FocusState.Keyboard);
 
+                            switch (project.Type)
+                            {
+                                case StorageItemTypes.File:
+                                    this.RenameIcon.Symbol = Symbol.Document;
+                                    break;
+                                case StorageItemTypes.Folder:
+                                    this.RenameIcon.Symbol = Symbol.Folder;
+                                    break;
+                                default:
+                                    break;
+                            }
+
                             ContentDialogResult result = await this.RenameDialog.ShowInstance();
                             switch (result)
                             {

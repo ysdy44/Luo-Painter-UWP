@@ -469,7 +469,7 @@
                 Luo Painter
             </TextBlock>
 
-            <Button x:Name="DocumentationButton" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" 
+            <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
                     IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="DocumentationButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
@@ -485,7 +485,7 @@
                 <FontIcon FontSize="20" Glyph="&#xE11B;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
             </Button>
 
-            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" 
+            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
                     IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="SettingButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
