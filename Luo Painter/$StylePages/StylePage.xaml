@@ -22,7 +22,7 @@
 
         <!--Body-->
         <ScrollViewer>
-            <StackPanel Padding="14,50,14,22" Spacing="32">
+            <StackPanel MaxWidth="600" Padding="14,50,14,22" Spacing="32">
 
                 <TextBlock>
                     ListBox
@@ -260,12 +260,40 @@
                     </ToolTipService.ToolTip>
                     <Button.Flyout>
                         <Flyout FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                            <TextBlock>
-                                ABCD
-                            </TextBlock>
+                            <StackPanel>
+                                <TextBlock>
+                                    ABCD
+                                </TextBlock>
+                                <TextBlock>
+                                    ABCD
+                                </TextBlock>
+                                <TextBlock>
+                                    ABCD
+                                </TextBlock>
+                                <TextBlock>
+                                    ABCD
+                                </TextBlock>
+                            </StackPanel>
                         </Flyout>
                     </Button.Flyout>
                     Show Flyout
+                </Button>
+
+                <TextBlock>
+                    MenuFlyoutItem
+                </TextBlock>
+
+                <Button>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="ABCD"/>
+                            <MenuFlyoutItem Text="ABCD"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="ABCD"/>
+                            <MenuFlyoutItem Text="ABCD"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                    Show MenuFlyout
                 </Button>
 
             </StackPanel>
@@ -290,7 +318,7 @@
                 Luo Styler
             </TextBlock>
 
-            <Button x:Name="BackButton" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
+            <Button x:Name="BackButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="BackButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
                         Go Back
