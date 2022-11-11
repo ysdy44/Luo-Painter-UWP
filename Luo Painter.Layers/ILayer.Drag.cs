@@ -19,8 +19,11 @@ namespace Luo_Painter.Layers
 
         void Exist(bool isExist);
 
+        /// <summary>
+        /// Command fot IsExpand
+        /// </summary>
         void RaiseCanExecuteChanged();
-        bool CanExecute(object parameter);
-        void Execute(object parameter);
+        //bool CanExecute(object parameter);
+        //void Execute(object parameter);
     }
 }

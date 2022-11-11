@@ -87,19 +87,6 @@ namespace Luo_Painter.Layers.Models
 
             this.RenderThumbnail();
         }
-        public BitmapLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap bitmap, int width, int height, Vector2 offset) : this(resourceCreator, width, height)
-        {
-            int x = (int)offset.X;
-            int y = (int)offset.Y;
-
-            int w = System.Math.Min(width, (int)bitmap.SizeInPixels.Width);
-            int h = System.Math.Min(height, (int)bitmap.SizeInPixels.Height);
-
-            this.OriginRenderTarget.CopyPixelsFromBitmap(bitmap, x, y, 0, 0, w, h);
-            this.SourceRenderTarget.CopyPixelsFromBitmap(bitmap, x, y, 0, 0, w, h);
-
-            this.RenderThumbnail();
-        }
 
         public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer) : this(resourceCreator, bitmapLayer.SourceRenderTarget, bitmapLayer.Width, bitmapLayer.Height) { }
         public BitmapLayer(ICanvasResourceCreator resourceCreator, BitmapLayer bitmapLayer, int width, int height) : this(resourceCreator, bitmapLayer.SourceRenderTarget, width, height) { }

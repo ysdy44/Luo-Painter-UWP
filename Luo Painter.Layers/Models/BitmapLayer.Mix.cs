@@ -47,7 +47,7 @@ namespace Luo_Painter.Layers.Models
             if (x >= base.Width) return;
             if (y >= base.Height) return;
 
-            Color color = this.SourceRenderTarget.GetPixelColors(x, y, 1, 1).Single();
+            Color color = this.OriginRenderTarget.GetPixelColors(x, y, 1, 1).Single();
             if (color == Colors.Transparent) return;
 
             this.MixWetHdr =
@@ -92,7 +92,7 @@ namespace Luo_Painter.Layers.Models
                 if (x >= base.Width) return;
                 if (y >= base.Height) return;
 
-                Color color = this.SourceRenderTarget.GetPixelColors(x, y, 1, 1).Single();
+                Color color = this.OriginRenderTarget.GetPixelColors(x, y, 1, 1).Single();
                 if (color == Colors.Transparent) return;
 
 

@@ -30,8 +30,8 @@ namespace Luo_Painter.Layers
             {
                 X = startingPosition.X - size,
                 Y = startingPosition.Y - size,
-                Width = startingPosition.X + size + size,
-                Height = startingPosition.Y + size + size,
+                Width = size + size,
+                Height = size + size,
             };
         }
 
