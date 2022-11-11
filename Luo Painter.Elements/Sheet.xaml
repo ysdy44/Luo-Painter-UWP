@@ -54,7 +54,7 @@
                             </Storyboard>
 
                             <Storyboard x:Key="HideLeftStoryboard" >
-                                <DoubleAnimation Duration="0:0:0.2" From="0" To="-400" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="-350" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
                                     </DoubleAnimation.EasingFunction>
@@ -64,7 +64,28 @@
                                 </ObjectAnimationUsingKeyFrames>
                             </Storyboard>
                             <Storyboard x:Key="ShowLeftStoryboard" >
-                                <DoubleAnimation Duration="0:0:0.2" From="-400" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                <DoubleAnimation Duration="0:0:0.2" From="-350" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="HideRightStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.2" From="0" To="350" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="ShowRightStoryboard" >
+                                <DoubleAnimation Duration="0:0:0.2" From="350" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
                                     </DoubleAnimation.EasingFunction>
@@ -78,7 +99,7 @@
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
                                     <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
                                 </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimation Duration="0:0:0.2" From="{x:Null}" To="400" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                <DoubleAnimation Duration="0:0:0.2" From="{x:Null}" To="350" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
                                     </DoubleAnimation.EasingFunction>
@@ -88,7 +109,7 @@
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
                                     <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
                                 </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimation Duration="0:0:0.2" From="400" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                                <DoubleAnimation Duration="0:0:0.2" From="350" To="0" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
                                     <DoubleAnimation.EasingFunction>
                                         <CircleEase/>
                                     </DoubleAnimation.EasingFunction>
@@ -104,32 +125,36 @@
                         </UIElement.RenderTransform>
 
                         <Rectangle x:Name="WideShader" IsHitTestVisible="False" Width="74" Visibility="Collapsed" >
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="1,0.5" EndPoint="0,0.5">
+                            <Shape.Fill>
+                                <LinearGradientBrush>
                                     <GradientStop Color="#00000000" Offset="0"/>
                                     <GradientStop Color="#44000000" Offset="0.8"/>
                                     <GradientStop Color="#66000000" Offset="1"/>
                                 </LinearGradientBrush>
-                            </Rectangle.Fill>
+                            </Shape.Fill>
                         </Rectangle>
 
                         <Rectangle x:Name="TailShader" IsHitTestVisible="False" Height="74" Visibility="Collapsed" >
-                            <Rectangle.Fill>
+                            <Shape.Fill>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Color="#00000000" Offset="0"/>
                                     <GradientStop Color="#44000000" Offset="0.8"/>
                                     <GradientStop Color="#66000000" Offset="1"/>
                                 </LinearGradientBrush>
-                            </Rectangle.Fill>
+                            </Shape.Fill>
                         </Rectangle>
 
-                        <Grid x:Name="Grid" Grid.Column="0" MinWidth="400" Background="{TemplateBinding Background}">
+                        <Grid x:Name="Grid" Grid.Column="0" MinWidth="350" Background="{TemplateBinding Background}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="46" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <ContentPresenter x:Name="ContentPresenter" Grid.Row="1" Content="{TemplateBinding Content}" />
+                            <ScrollViewer Grid.Row="2" Margin="{TemplateBinding Padding}" >
+                                <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" />
+                            </ScrollViewer>
 
                             <!--Head-->
                             <Thumb x:Name="Thumb" >
@@ -212,6 +237,16 @@
                             <Button x:Name="Button" Width="70" Height="70" HorizontalAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Style="{StaticResource TextBlockButtonStyle}" >
                                 <FontIcon Glyph="&#xEB90;" FontFamily="Segoe MDL2 Assets"/>
                             </Button>
+
+                            <!--Body-->
+                            <Border Grid.Row="1" Child="{TemplateBinding TopAppBar}">
+                                <!--Child-->
+                            </Border>
+
+                            <!--Body-->
+                            <Border Grid.Row="3" Child="{TemplateBinding BottomAppBar}">
+                                <!--Child-->
+                            </Border>
 
                         </Grid>
 

@@ -22,7 +22,7 @@ namespace Luo_Painter.Elements
         /// <summary> Writeable Source with Refreshing. </summary>
         DynamicWithRefresh,
     }
-    
+
     /// <summary>
     /// Represents an Source of the Image-Control
     /// whose data can be Refreshed 
@@ -69,7 +69,7 @@ namespace Luo_Painter.Elements
         public FileImageSource(string path)
         {
             if (string.IsNullOrEmpty(path)) return;
-        
+
             this.BitmapImage = new BitmapImage(new Uri(path));
         }
 
@@ -105,9 +105,9 @@ namespace Luo_Painter.Elements
 
                     if (file is null) return FileImageSourceResult.None;
 
-                    using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                    using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite))
                     {
-                        BitmapDecoder decoder = await BitmapDecoder.CreateAsync(accessStream);
+                        BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
                         using (SoftwareBitmap bitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied))
                         {
                             this.WriteableBitmap = new WriteableBitmap(bitmap.PixelWidth, bitmap.PixelHeight);
@@ -133,9 +133,9 @@ namespace Luo_Painter.Elements
 
                 if (file is null) return FileImageSourceResult.None;
 
-                using (IRandomAccessStream accessStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
-                    this.WriteableBitmap.SetSource(accessStream);
+                    this.WriteableBitmap.SetSource(stream);
                     this.WriteableBitmap.Invalidate();
                     return FileImageSourceResult.DynamicWithRefresh;
                 }

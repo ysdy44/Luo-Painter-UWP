@@ -199,14 +199,20 @@ namespace Luo_Painter.Elements
         private void UpdateStoryboard()
         {
             if (this.HideDoubleAnimation is null) return;
-            this.HideDoubleAnimation.To = base.ActualHeight;
+     
+            //@Debug
+            //this.HideDoubleAnimation.To = base.ActualHeight;
+            this.HideDoubleAnimation.To = base.Margin.Top + base.ActualHeight + base.Margin.Bottom;
         }
 
         private void UpdateTranslateTransform()
         {
             if (this.TranslateTransform is null) return;
             if (this.IsShow) return;
-            this.TranslateTransform.Y = base.ActualHeight;
+     
+            //@Debug
+            //this.TranslateTransform.Y = base.ActualHeight;
+            this.TranslateTransform.Y = base.Margin.Top + base.ActualHeight + base.Margin.Bottom;
         }
 
         private void UpdateDefaultButton()
@@ -215,11 +221,11 @@ namespace Luo_Painter.Elements
             {
                 case ContentDialogButton.Primary:
                     if (this.PrimaryButton is null) return;
-                    this.PrimaryButton.Focus(FocusState.Keyboard); 
+                    this.PrimaryButton.Focus(FocusState.Keyboard);
                     break;
                 case ContentDialogButton.Secondary:
                     if (this.SecondaryButton is null) return;
-                    this.SecondaryButton.Focus(FocusState.Keyboard); 
+                    this.SecondaryButton.Focus(FocusState.Keyboard);
                     break;
                 default:
                     break;

@@ -71,7 +71,7 @@ namespace Luo_Painter.Elements
         public double Move(double transform, double delta, bool isInertial, double minimum, double maximum)
         {
             // NoInertial
-            if (isInertial == false) return System.Math.Clamp(transform + delta, minimum, maximum);
+            if (isInertial is false) return System.Math.Clamp(transform + delta, minimum, maximum);
 
             // Direction
             switch (this.Direction)

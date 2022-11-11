@@ -19,7 +19,7 @@ namespace Luo_Painter.Elements
     }
 
     [ContentProperty(Name = nameof(Content))]
-    public sealed class Sheet : ContentControl
+    public class Sheet : ContentControl
     {
 
         public Visibility WideConverter(ViewMode value) => value == ViewMode.Wide ? Visibility.Visible : Visibility.Collapsed;
@@ -30,6 +30,8 @@ namespace Luo_Painter.Elements
         Storyboard ShowStoryboard;
         Storyboard HideLeftStoryboard;
         Storyboard ShowLeftStoryboard;
+        Storyboard HideRightStoryboard;
+        Storyboard ShowRightStoryboard;
         Storyboard HideBottomStoryboard;
         Storyboard ShowBottomStoryboard;
         TranslateTransform TranslateTransform;
@@ -48,6 +50,7 @@ namespace Luo_Painter.Elements
         double X;
         double Y;
         ViewMode Mode;
+        public SplitViewPanePlacement PanePlacement { get; set; }
 
         #region DependencyProperty 
 
@@ -60,6 +63,26 @@ namespace Luo_Painter.Elements
         }
         /// <summary> Identifies the <see cref = "Sheet.Title" /> dependency property. </summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Sheet), new PropertyMetadata(string.Empty));
+
+
+        /// <summary> Gets or sets <see cref = "Sheet" />'s top AppBar. </summary>
+        public UIElement TopAppBar
+        {
+            get => (UIElement)base.GetValue(TopAppBarProperty);
+            set => base.SetValue(TopAppBarProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Sheet.TopAppBar" /> dependency property. </summary>
+        public static readonly DependencyProperty TopAppBarProperty = DependencyProperty.Register(nameof(TopAppBar), typeof(UIElement), typeof(Sheet), new PropertyMetadata(null));
+
+
+        /// <summary> Gets or sets <see cref = "Sheet" />'s bottom AppBar. </summary>
+        public UIElement BottomAppBar
+        {
+            get => (UIElement)base.GetValue(BottomAppBarProperty);
+            set => base.SetValue(BottomAppBarProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Sheet.BottomAppBar" /> dependency property. </summary>
+        public static readonly DependencyProperty BottomAppBarProperty = DependencyProperty.Register(nameof(BottomAppBar), typeof(UIElement), typeof(Sheet), new PropertyMetadata(null));
 
 
         #endregion
@@ -83,7 +106,7 @@ namespace Luo_Painter.Elements
                         case ViewMode.Center:
                             double h = System.Math.Min(e.NewSize.Height, this.ContentPresenter.DesiredSize.Height + 70);
 
-                            this.Grid.Width = 400;
+                            this.Grid.Width = 350;
                             this.Grid.Height = double.NaN;
                             Canvas.SetLeft(this.Grid, e.NewSize.Width / 2 - 200);
                             Canvas.SetTop(this.Grid, (e.NewSize.Height - h) / 2);
@@ -97,16 +120,40 @@ namespace Luo_Painter.Elements
                             this.TranslateTransform.Y = 0;
                             break;
                         case ViewMode.Wide:
-                            this.Grid.Width = 400;
+                            this.Grid.Width = 350;
                             this.Grid.Height = e.NewSize.Height;
-                            Canvas.SetLeft(this.Grid, 0);
+                            switch (this.PanePlacement)
+                            {
+                                case SplitViewPanePlacement.Left:
+                                    Canvas.SetLeft(this.Grid, 0);
+                                    break;
+                                case SplitViewPanePlacement.Right:
+                                    Canvas.SetLeft(this.Grid, e.NewSize.Width - 350);
+                                    break;
+                            }
                             Canvas.SetTop(this.Grid, 0);
 
                             this.WideShader.Height = e.NewSize.Height;
-                            Canvas.SetLeft(this.WideShader, 400 - 14);
+                            switch (this.PanePlacement)
+                            {
+                                case SplitViewPanePlacement.Left:
+                                    Canvas.SetLeft(this.WideShader, 350 - 14);
+                                    break;
+                                case SplitViewPanePlacement.Right:
+                                    Canvas.SetLeft(this.WideShader, e.NewSize.Width - 350 - 74 + 14);
+                                    break;
+                            }
                             Canvas.SetTop(this.WideShader, 0);
 
-                            this.Grid.CornerRadius = new CornerRadius(0, 14, 14, 0);
+                            switch (this.PanePlacement)
+                            {
+                                case SplitViewPanePlacement.Left:
+                                    this.Grid.CornerRadius = new CornerRadius(0, 14, 14, 0);
+                                    break;
+                                case SplitViewPanePlacement.Right:
+                                    this.Grid.CornerRadius = new CornerRadius(14, 0, 0, 14);
+                                    break;
+                            }
                             this.WideShader.Visibility = Visibility.Visible;
                             this.TailShader.Visibility = Visibility.Collapsed;
 
@@ -146,7 +193,7 @@ namespace Luo_Painter.Elements
                             this.TailShader.Visibility = Visibility.Collapsed;
 
                             this.Thumb.Visibility = Visibility.Visible;
-                            this.TranslateTransform.X= 0;
+                            this.TranslateTransform.X = 0;
                             this.TranslateTransform.Y = 0;
                             break;
                         default:
@@ -160,10 +207,17 @@ namespace Luo_Painter.Elements
                         case ViewMode.Center:
                             double h = System.Math.Min(e.NewSize.Height, this.ContentPresenter.DesiredSize.Height + 70);
 
-                            Canvas.SetLeft(this.Grid, e.NewSize.Width / 2 - 200);
+                            Canvas.SetLeft(this.Grid, e.NewSize.Width / 2 - 350 / 2);
                             Canvas.SetTop(this.Grid, (e.NewSize.Height - h) / 2);
                             break;
                         case ViewMode.Wide:
+                            switch (this.PanePlacement)
+                            {
+                                case SplitViewPanePlacement.Right:
+                                    Canvas.SetLeft(this.Grid, e.NewSize.Width - 350);
+                                    Canvas.SetLeft(this.WideShader, e.NewSize.Width - 350 - 74 + 14);
+                                    break;
+                            }
                             this.Grid.Height = e.NewSize.Height;
                             break;
                         case ViewMode.Tall:
@@ -188,6 +242,10 @@ namespace Luo_Painter.Elements
         }
         private ViewMode GetMode(Size size)
         {
+            if (size.Width < 641) return ViewMode.Full;
+            return ViewMode.Wide;
+
+
             bool outWidth = size.Width > 641;
             bool outHeight = size.Height > 641;
 
@@ -207,6 +265,8 @@ namespace Luo_Painter.Elements
                 this.ShowStoryboard = null;
                 this.HideLeftStoryboard = null;
                 this.ShowLeftStoryboard = null;
+                this.HideRightStoryboard = null;
+                this.ShowRightStoryboard = null;
                 this.HideBottomStoryboard = null;
                 this.ShowBottomStoryboard = null;
                 this.TranslateTransform = null;
@@ -218,6 +278,8 @@ namespace Luo_Painter.Elements
                 this.ShowStoryboard = this.RootGrid.Resources[nameof(ShowStoryboard)] as Storyboard;
                 this.HideLeftStoryboard = this.RootGrid.Resources[nameof(HideLeftStoryboard)] as Storyboard;
                 this.ShowLeftStoryboard = this.RootGrid.Resources[nameof(ShowLeftStoryboard)] as Storyboard;
+                this.HideRightStoryboard = this.RootGrid.Resources[nameof(HideRightStoryboard)] as Storyboard;
+                this.ShowRightStoryboard = this.RootGrid.Resources[nameof(ShowRightStoryboard)] as Storyboard;
                 this.HideBottomStoryboard = this.RootGrid.Resources[nameof(HideBottomStoryboard)] as Storyboard;
                 this.ShowBottomStoryboard = this.RootGrid.Resources[nameof(ShowBottomStoryboard)] as Storyboard;
                 this.TranslateTransform = this.RootGrid.RenderTransform as TranslateTransform;
@@ -250,7 +312,26 @@ namespace Luo_Painter.Elements
             }
 
             this.WideShader = base.GetTemplateChild(nameof(WideShader)) as Rectangle;
-            if (this.WideShader is null is false) this.WideShader.Visibility = this.WideConverter(this.Mode);
+            if (this.WideShader is null is false)
+            {
+                this.WideShader.Visibility = this.WideConverter(this.Mode);
+                if (this.WideShader.Fill is LinearGradientBrush brush)
+                {
+                    switch (this.PanePlacement)
+                    {
+                        case SplitViewPanePlacement.Left:
+                            brush.StartPoint = new Point(1, 0.5);
+                            brush.EndPoint = new Point(0, 0.5);
+                            break;
+                        case SplitViewPanePlacement.Right:
+                            brush.StartPoint = new Point(0, 0.5);
+                            brush.EndPoint = new Point(1, 0.5);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
 
             this.TailShader = base.GetTemplateChild(nameof(TailShader)) as Rectangle;
             if (this.TailShader is null is false) this.TailShader.Visibility = this.TallConverter(this.Mode);
@@ -291,7 +372,17 @@ namespace Luo_Painter.Elements
             switch (this.Mode)
             {
                 case ViewMode.Wide:
-                    this.ShowLeftStoryboard.Begin(); // Storyboard
+                    switch (this.PanePlacement)
+                    {
+                        case SplitViewPanePlacement.Left:
+                            this.ShowLeftStoryboard.Begin(); // Storyboard
+                            break;
+                        case SplitViewPanePlacement.Right:
+                            this.ShowRightStoryboard.Begin(); // Storyboard
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     this.ShowBottomStoryboard.Begin(); // Storyboard
@@ -304,7 +395,17 @@ namespace Luo_Painter.Elements
             switch (this.Mode)
             {
                 case ViewMode.Wide:
-                    this.HideLeftStoryboard.Begin(); // Storyboard
+                    switch (this.PanePlacement)
+                    {
+                        case SplitViewPanePlacement.Left:
+                            this.HideLeftStoryboard.Begin(); // Storyboard
+                            break;
+                        case SplitViewPanePlacement.Right:
+                            this.HideRightStoryboard.Begin(); // Storyboard
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     this.HideBottomStoryboard.Begin(); // Storyboard

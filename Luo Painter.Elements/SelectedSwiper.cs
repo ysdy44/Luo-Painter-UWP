@@ -32,8 +32,12 @@ namespace Luo_Painter.Elements
                 if (this.Ancestor is null) return;
                 this.Ancestor.Visibility = base.IsHitTestVisible ? Visibility.Visible : Visibility.Collapsed;
             };
-            base.RightItems = new SwipeItems { this.Item };
-            base.RightItems.Mode = SwipeMode.Execute;
+            //@Debug
+            // Left is better
+            //base.RightItems = new SwipeItems { this.Item };
+            //base.RightItems.Mode = SwipeMode.Execute;
+            base.LeftItems = new SwipeItems { this.Item };
+            base.LeftItems.Mode = SwipeMode.Execute;
             this.Item.Invoked += (s, e) => this.Ancestor.Toggle();
         }
     }

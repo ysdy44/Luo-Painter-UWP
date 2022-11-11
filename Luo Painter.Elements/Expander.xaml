@@ -202,7 +202,7 @@
 
 
                         <!--Head-->
-                        <Thumb x:Name="Thumb" >
+                        <Thumb x:Name="Thumb" CornerRadius="2">
                             <Thumb.Template>
                                 <ControlTemplate TargetType="Thumb">
                                     <Grid Background="Transparent" >

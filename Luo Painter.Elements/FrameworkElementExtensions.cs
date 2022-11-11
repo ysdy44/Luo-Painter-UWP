@@ -10,6 +10,10 @@ namespace Luo_Painter.Elements
     {
 
         public static void Toggle(this SelectorItem selectorItem) => selectorItem.IsSelected = !selectorItem.IsSelected;
+        /// <summary>
+        /// Pokes the Z index of a target <see cref="UIElement"/>.
+        /// </summary>
+        /// <param name="element">The target <see cref="UIElement"/> to poke the Z index for.</param>
         public static void PokeZIndex(this UIElement element)
         {
             int oldZIndex = Canvas.GetZIndex(element);
