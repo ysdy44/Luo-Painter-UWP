@@ -69,8 +69,8 @@ namespace Luo_Painter
 
                     //@Debug
                     // OptionType becomes Tool when it is Effect
-                    this.OptionType = this.ToolListView.SelectedItem;
-                    this.ConstructAppBar(this.ToolListView.SelectedItem);
+                    this.OptionType = this.ToolListView.SelectedType;
+                    this.ConstructAppBar(this.ToolListView.SelectedType);
 
                     await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
                     break;
@@ -598,7 +598,7 @@ namespace Luo_Painter
                                 {
                                     this.Transformer.Width = w;
                                     this.Transformer.Height = h;
-                                    this.Transformer.Fit();
+                                    this.Transformer.ReloadMatrix();
 
                                     this.CreateResources(w, h);
                                     this.CreateMarqueeResources(w, h);
@@ -632,8 +632,8 @@ namespace Luo_Painter
                                 int width = this.Transformer.Width;
                                 int height = this.Transformer.Height;
 
-                                int w = this.StretchDialog.Size.Width;
-                                int h = this.StretchDialog.Size.Height;
+                                int w = this.ExtendDialog.Size.Width;
+                                int h = this.ExtendDialog.Size.Height;
                                 if (w == width && h == height) break;
 
                                 IndicatorMode indicator = this.ExtendDialog.Indicator;
@@ -642,7 +642,7 @@ namespace Luo_Painter
                                 {
                                     this.Transformer.Width = w;
                                     this.Transformer.Height = h;
-                                    this.Transformer.Fit();
+                                    this.Transformer.ReloadMatrix();
 
                                     this.CreateResources(w, h);
                                     this.CreateMarqueeResources(w, h);
@@ -698,8 +698,6 @@ namespace Luo_Painter
                 case OptionType.FlipHorizontal:
                     this.ExpanderLightDismissOverlay.Hide();
 
-                    this.Transformer.Fit();
-
                     // History
                     {
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray()));
@@ -711,8 +709,6 @@ namespace Luo_Painter
                     break;
                 case OptionType.FlipVertical:
                     this.ExpanderLightDismissOverlay.Hide();
-
-                    this.Transformer.Fit();
 
                     // History
                     {
@@ -736,7 +732,7 @@ namespace Luo_Painter
 
                         this.Transformer.Width = w;
                         this.Transformer.Height = h;
-                        this.Transformer.Fit();
+                        this.Transformer.ReloadMatrix();
 
                         this.CreateResources(w, h);
                         this.CreateMarqueeResources(w, h);
@@ -772,7 +768,7 @@ namespace Luo_Painter
 
                         this.Transformer.Width = w;
                         this.Transformer.Height = h;
-                        this.Transformer.Fit();
+                        this.Transformer.ReloadMatrix();
 
                         this.CreateResources(w, h);
                         this.CreateMarqueeResources(w, h);
@@ -798,8 +794,6 @@ namespace Luo_Painter
                     break;
                 case OptionType.OverTurn:
                     this.ExpanderLightDismissOverlay.Hide();
-
-                    this.Transformer.Fit();
 
                     // History
                     {

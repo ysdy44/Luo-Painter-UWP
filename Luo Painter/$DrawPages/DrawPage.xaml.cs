@@ -220,7 +220,7 @@ namespace Luo_Painter
 
 
             this.Click(this.OptionType);
-            this.ToolListView.SelectedItem = this.OptionType;
+            this.ToolListView.SelectedType = this.OptionType;
             this.ToolListView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is OptionType item)

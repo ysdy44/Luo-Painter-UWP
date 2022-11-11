@@ -106,7 +106,7 @@ namespace Luo_Painter
                 }
 
                 this.BitmapLayer = null;
-                this.OptionType = this.ToolListView.SelectedItem;
+                this.OptionType = this.ToolListView.SelectedType;
                 this.ConstructAppBar(this.OptionType);
                 this.SetCanvasState(false);
             };
@@ -123,7 +123,7 @@ namespace Luo_Painter
                 }
 
                 this.BitmapLayer = null;
-                this.OptionType = this.ToolListView.SelectedItem;
+                this.OptionType = this.ToolListView.SelectedType;
                 this.ConstructAppBar(this.OptionType);
                 this.SetCanvasState(false);
             };
@@ -155,7 +155,7 @@ namespace Luo_Painter
                 }
 
                 this.BitmapLayer = null;
-                this.OptionType = this.ToolListView.SelectedItem;
+                this.OptionType = this.ToolListView.SelectedType;
                 this.ConstructAppBar(this.OptionType);
                 this.SetCanvasState(false);
             };
