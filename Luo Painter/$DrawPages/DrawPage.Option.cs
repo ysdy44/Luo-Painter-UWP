@@ -311,8 +311,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.FullScreen:
-                    if (this.ExpanderLightDismissOverlay.Hide()) break;
-
                     if (this.IsFullScreen)
                     {
                         this.Click(OptionType.UnFullScreen);
@@ -334,8 +332,6 @@ namespace Luo_Painter
                 #region Edit
 
                 case OptionType.Cut: // Copy + Clear
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -372,8 +368,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Copy:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -395,8 +389,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Paste:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         Color[] interpolationColors = this.Clipboard.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Clipboard.GetInterpolationBoundsMode(interpolationColors);
@@ -419,8 +411,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Clear:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -562,8 +552,6 @@ namespace Luo_Painter
                 #region Setup
 
                 case OptionType.CropCanvas:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         int width = this.Transformer.Width;
                         int height = this.Transformer.Height;
@@ -578,8 +566,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Stretch:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
                         ContentDialogResult result = await this.StretchDialog.ShowInstance();
@@ -620,8 +606,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Extend:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         this.ExtendDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
                         ContentDialogResult result = await this.ExtendDialog.ShowInstance();
@@ -667,8 +651,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Offset:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         this.OffsetDialog.Resezing(0, 0);
                         ContentDialogResult result = await this.OffsetDialog.ShowInstance();
@@ -696,8 +678,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.FlipHorizontal:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     // History
                     {
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray()));
@@ -708,8 +688,6 @@ namespace Luo_Painter
                     this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.FlipVertical:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     // History
                     {
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray()));
@@ -721,8 +699,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.LeftTurn:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         int width = this.Transformer.Width;
                         int height = this.Transformer.Height;
@@ -757,8 +733,6 @@ namespace Luo_Painter
                     this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.RightTurn:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         int width = this.Transformer.Width;
                         int height = this.Transformer.Height;
@@ -793,8 +767,6 @@ namespace Luo_Painter
                     this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.OverTurn:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     // History
                     {
                         int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray()));
@@ -847,8 +819,6 @@ namespace Luo_Painter
 
                 // Clipboard
                 case OptionType.CutLayer:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -882,8 +852,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.CopyLayer:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         // History
                         var items = this.LayerSelectedItems;
@@ -904,8 +872,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.PasteLayer:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         switch (this.ClipboardLayers.Count)
                         {
@@ -939,8 +905,6 @@ namespace Luo_Painter
 
                 // Layering
                 case OptionType.Remove:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -972,15 +936,11 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Duplicate: // CopyLayer + PasteLayer
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     this.Click(OptionType.CopyLayer);
                     this.Click(OptionType.PasteLayer);
                     return;
 
                 case OptionType.Extract:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
@@ -1014,8 +974,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Merge:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1052,8 +1010,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Flatten:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         using (CanvasCommandList commandList = new CanvasCommandList(this.CanvasDevice))
                         {
@@ -1072,8 +1028,6 @@ namespace Luo_Painter
 
                 // Grouping
                 case OptionType.Group:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -1109,8 +1063,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Ungroup:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1127,8 +1079,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Release:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         var items = this.LayerSelectedItems;
                         switch (items.Count)
@@ -1228,8 +1178,6 @@ namespace Luo_Painter
 
                 // Marquees
                 case OptionType.Feather:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
@@ -1246,8 +1194,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.MarqueeTransform:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
@@ -1276,8 +1222,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Grow:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
@@ -1294,8 +1238,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Shrink:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
@@ -1325,8 +1267,6 @@ namespace Luo_Painter
 
                 // Other
                 case OptionType.Transform:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1373,8 +1313,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.DisplacementLiquefaction:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1432,8 +1370,6 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.GradientMapping:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1467,8 +1403,6 @@ namespace Luo_Painter
                 // Adjustment
                 case OptionType.Gray:
                 case OptionType.Invert:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1512,8 +1446,6 @@ namespace Luo_Painter
 
                 // Effect2
                 case OptionType.LuminanceToAlpha:
-                    this.ExpanderLightDismissOverlay.Hide();
-
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {

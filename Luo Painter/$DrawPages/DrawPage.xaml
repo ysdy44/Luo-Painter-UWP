@@ -21,7 +21,7 @@
 
     <UIElement.ContextFlyout>
         <!--Flyout-->
-        <Flyout x:Name="ColorFlyout" Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+        <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <controls:ColorPicker2 x:Name="ColorPicker" />
         </Flyout>
     </UIElement.ContextFlyout>
@@ -1801,12 +1801,6 @@
             </Grid>
 
         </Grid>
-
-
-        <!--Expander-->
-        <Rectangle x:Name="LightDismissOverlay" Visibility="Collapsed" Fill="Transparent"/>
-        <elements:ExpanderLightDismissOverlay x:Name="ExpanderLightDismissOverlay" >
-        </elements:ExpanderLightDismissOverlay>
 
 
         <!--Dialog-->

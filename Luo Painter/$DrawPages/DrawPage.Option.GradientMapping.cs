@@ -81,7 +81,7 @@ namespace Luo_Painter
                 if (this.GradientMappingSelector.CurrentStop == null) return;
 
                 this.ColorPicker.Color = this.GradientMappingSelector.CurrentStop.Color;
-                this.ColorFlyout.ShowAt(this.GradientMappingSelector.CurrentButton);
+                base.ContextFlyout.ShowAt(this.GradientMappingSelector.CurrentButton);
             };
 
             this.GradientMappingSelector.ItemManipulationStarted += (s, e) =>
