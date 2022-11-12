@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="PaintStrawIcon" TargetType="ContentControl">
+        <Path HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" >
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="DeepPink" Offset="0.5"/>
+                    <GradientStop Color="DeepSkyBlue" Offset="0.6"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
+            <Path.Data>
+                M18.605,0C19.398,-0 20.192,0.302 20.796,0.907C21.401,1.511 21.703,2.305 21.703,3.098C21.703,3.891 21.401,4.684 20.796,5.288L18.481,7.603C18.384,7.701 18.282,7.79 18.176,7.872C19.077,8.797 19.069,10.28 18.153,11.196L16.556,12.793L14.936,11.173L6.39,19.72C5.599,19.57 4.749,19.801 4.138,20.413C3.93,20.62 3.767,20.854 3.647,21.105L3.624,21.082C2.795,21.91 1.45,21.91 0.621,21.082C0.207,20.667 -0,20.124 0,19.58C-0,19.037 0.207,18.493 0.621,18.079L0.598,18.056C0.849,17.936 1.083,17.773 1.29,17.565C1.902,16.954 2.133,16.104 1.983,15.313L10.53,6.767L8.766,5.003L10.362,3.406C11.286,2.482 12.787,2.482 13.711,3.406L13.832,3.527C13.913,3.421 14.002,3.319 14.1,3.222L16.415,0.907C17.019,0.302 17.812,0 18.605,0Z
+            </Path.Data>
+        </Path>
+    </ControlTemplate>
+
+</ResourceDictionary>

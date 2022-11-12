@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="PaintBrushMultiIcon" TargetType="ContentControl">
+        <Path HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" >
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="DeepPink" Offset="0.3"/>
+                    <GradientStop Color="DeepSkyBlue" Offset="0.8"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
+            <Path.Data>
+                M11.05,11.05C8.633,9.032 4.604,9.87 2.058,12.919C-0.488,15.968 -0.593,20.082 1.823,22.1C2.175,20.205 3.283,17.682 5.123,15.478C6.963,13.274 9.248,11.734 11.05,11.05ZM11.05,11.05C9.032,13.466 9.87,17.495 12.919,20.041C15.968,22.588 20.082,22.693 22.1,20.276C20.205,19.925 17.682,18.817 15.478,16.977C13.274,15.136 11.734,12.851 11.05,11.05ZM11.05,11.05C13.466,13.068 17.495,12.23 20.041,9.181C22.588,6.132 22.693,2.018 20.276,0C19.925,1.894 18.817,4.418 16.977,6.622C15.136,8.826 12.851,10.366 11.05,11.05ZM11.05,11.05C13.068,8.633 12.23,4.604 9.181,2.058C6.132,-0.488 2.018,-0.593 0,1.823C1.894,2.175 4.418,3.283 6.622,5.123C8.826,6.963 10.366,9.248 11.05,11.05Z
+            </Path.Data>
+        </Path>
+    </ControlTemplate>
+
+</ResourceDictionary>
