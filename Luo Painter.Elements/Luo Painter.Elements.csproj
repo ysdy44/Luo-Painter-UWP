@@ -130,7 +130,6 @@
     </Compile>
     <Compile Include="DPIExtensions.cs" />
     <Compile Include="ElementExtensions.cs" />
-    <Compile Include="ElementGroupType.cs" />
     <Compile Include="ElementType.cs" />
     <Compile Include="Expander.Construct.cs" />
     <Compile Include="Expander.Math.cs" />
