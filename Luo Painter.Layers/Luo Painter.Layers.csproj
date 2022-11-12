@@ -164,6 +164,7 @@
     <Compile Include="Models\CurveLayer.Anchor.cs" />
     <Compile Include="Models\CurveLayer.cs" />
     <Compile Include="Models\GroupLayer.cs" />
+    <Compile Include="PaintTaskCollection.cs" />
     <Compile Include="PixelBounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StrokeCap.cs" />
