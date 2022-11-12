@@ -166,7 +166,6 @@
     <Compile Include="Models\GroupLayer.cs" />
     <Compile Include="PixelBounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stroke.cs" />
     <Compile Include="StrokeCap.cs" />
     <Compile Include="StrokeSegment.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Layers.rd.xml" />
