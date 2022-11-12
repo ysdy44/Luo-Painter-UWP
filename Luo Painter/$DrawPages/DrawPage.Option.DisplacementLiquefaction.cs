@@ -55,15 +55,13 @@ namespace Luo_Painter
                     ["position"] = this.StartingPosition,
                     ["targetPosition"] = this.Position,
                 }
-            }, RectExtensions.GetRect(this.Position, this.Position, radius));
+            }, RectExtensions.GetRect(this.Position, radius));
 
-            Rect region = this.Point.GetRect(this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(radius * 2 * this.Transformer.Scale));
-            if (this.CanvasVirtualControl.Size.TryIntersect(ref region))
-            {
-                this.CanvasVirtualControl.Invalidate(region); // Invalidate
-            }
-
+            Rect? region = RectExtensions.TryGetRect(this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(radius * 2 * this.Transformer.Scale));
             this.StartingPosition = this.Position;
+
+            if (region.HasValue)
+                this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
         }
 
         private void DisplacementLiquefaction_Complete()
