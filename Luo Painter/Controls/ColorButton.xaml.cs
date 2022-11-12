@@ -2,6 +2,7 @@
 using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -46,21 +47,28 @@ namespace Luo_Painter.Controls
         public ClickEyedropper ClickEyedropper { get; set; }
 
 
-        //@Task
-        readonly object Locker = new object();
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         BitmapLayer BitmapLayer { get; set; }
+
+
+        //@Task
+        readonly object Locker = new object();
+        //@Debug
+        // "Paint_Complete" must be after  "Paint_Delta"
+        readonly IList<Task> Tasks = new List<Task>();
 
         Vector2 StartingPosition;
         Vector2 Position;
         float StartingPressure;
         float Pressure;
 
+
         ObservableCollection<Color> ObservableCollection { get; } = new ObservableCollection<Color>();
         readonly DispatcherTimer Timer = new DispatcherTimer
         {
             Interval = System.TimeSpan.FromSeconds(1)
         };
+
 
         #region IInkParameter
 
