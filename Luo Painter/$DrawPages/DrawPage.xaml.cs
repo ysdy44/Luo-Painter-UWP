@@ -98,9 +98,8 @@ namespace Luo_Painter
 
         //@Task
         readonly object Locker = new object();
-        //@Debug
-        // "Paint_Complete" must be after  "Paint_Delta"
-        readonly IList<Task> Tasks = new List<Task>();
+        //@ Paint
+        readonly PaintTaskCollection Tasks = new PaintTaskCollection();
 
 
         Vector2 StartingPosition;
