@@ -1512,10 +1512,10 @@ namespace Luo_Painter
 
                 // Paint
                 case OptionType.PaintBrush:
-                case OptionType.PaintWatercolorPen:
-                case OptionType.PaintPencil:
-                case OptionType.PaintEraseBrush:
-                case OptionType.PaintLiquefaction:
+                case OptionType.PaintLine:
+                case OptionType.PaintBrushForce:
+                case OptionType.PaintBrushMulti:
+                case OptionType.PaintStraw:
 
                 // Vector
                 case OptionType.Cursor:

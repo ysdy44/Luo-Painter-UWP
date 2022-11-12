@@ -58,10 +58,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintBrush:
-                case OptionType.PaintWatercolorPen:
-                case OptionType.PaintPencil:
-                case OptionType.PaintEraseBrush:
-                case OptionType.PaintLiquefaction:
                     this.Paint_Start();
                     break;
 
@@ -130,10 +126,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintBrush:
-                case OptionType.PaintWatercolorPen:
-                case OptionType.PaintPencil:
-                case OptionType.PaintEraseBrush:
-                case OptionType.PaintLiquefaction:
                     this.Paint_Delta();
                     break;
 
@@ -202,10 +194,6 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintBrush:
-                case OptionType.PaintWatercolorPen:
-                case OptionType.PaintPencil:
-                case OptionType.PaintEraseBrush:
-                case OptionType.PaintLiquefaction:
                     this.Paint_Complete();
                     break;
 

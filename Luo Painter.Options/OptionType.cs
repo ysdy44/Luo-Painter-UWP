@@ -266,10 +266,10 @@ namespace Luo_Painter.Options
 
         // Paint
         PaintBrush = Paint | 1 << 8 | ExistIcon | IsItemClickEnabled,
-        PaintWatercolorPen = Paint | 2 << 8 | ExistIcon | IsItemClickEnabled,
-        PaintPencil = Paint | 3 << 8 | ExistIcon | IsItemClickEnabled,
-        PaintEraseBrush = Paint | 4 << 8 | ExistIcon | IsItemClickEnabled,
-        PaintLiquefaction = Paint | 5 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintLine = Paint | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintBrushForce = Paint | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintBrushMulti = Paint | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        PaintStraw = Paint | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Vector
         Cursor = Vector | 1 << 8 | ExistIcon | IsItemClickEnabled,
