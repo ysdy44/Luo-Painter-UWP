@@ -3,10 +3,13 @@ using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas.Effects;
-using System.Numerics;
+using Microsoft.Graphics.Canvas;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -32,14 +35,23 @@ namespace Luo_Painter
                 return;
             }
 
-            Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
+            Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
 
-            //@Task
-            if (true)
-                this.PaintCapAsync(stroke, cap);
+            if (this.InkType.HasFlag(InkType.General))
+            {
+                if (region.HasValue)
+                    this.Tasks.Add(Task.Run(() => this.PaintCapAsync(cap, region.Value)));
+                else
+                    this.Tasks.Add(Task.Run(() => this.PaintCapAsync(cap)));
+            }
             else
-                Task.Run(() => this.PaintCapAsync(stroke, cap));
+            {
+                if (region.HasValue)
+                    this.PaintCapAsync(cap, region.Value);
+                else
+                    this.PaintCapAsync(cap);
+            }
         }
         private void Paint_Delta()
         {
@@ -48,68 +60,107 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
-
             if (segment.InRadius) return;
 
-            Stroke stroke = new Stroke(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
-
-            //@Task
-            if (true)
-                this.PaintSegmentAsync(stroke, segment);
-            else
-                Task.Run(() => this.PaintSegmentAsync(stroke, segment));
-
+            Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale));
             this.StartingPosition = this.Position;
             this.StartingPoint = this.Point;
             this.StartingPressure = this.Pressure;
+
+
+            if (this.InkType.HasFlag(InkType.General))
+            {
+                if (region.HasValue)
+                    this.Tasks.Add(Task.Run(() => this.PaintSegmentAsync(segment, region.Value)));
+                else
+                    this.Tasks.Add(Task.Run(() => this.PaintSegmentAsync(segment)));
+            }
+            else
+            {
+                if (region.HasValue)
+                    this.PaintSegmentAsync(segment, region.Value);
+                else
+                    this.PaintSegmentAsync(segment);
+            }
         }
-        private void Paint_Complete()
+        private async void Paint_Complete()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            //@Task
-            if (true)
-                this.PaintHistoryAsync();
-            else
-                Task.Run(this.PaintHistoryAsync);
+            if (this.Tasks.Count is 0 is false)
+            {
+                //@Task
+                await Task.WhenAll(this.Tasks.ToArray());
+                this.Tasks.Clear();
+            }
+
+            this.PaintHistoryAsync();
         }
-        
-        private void PaintCapAsync(Stroke stroke, StrokeCap cap)
+
+
+        private void PaintCapAsync(StrokeCap cap)
         {
             //@Task
             lock (this.Locker)
             {
                 this.BitmapLayer.Hit(cap.Bounds);
                 this.PaintCap(cap);
-
-                if (stroke.HasIntersect)
-                {
-                    this.CanvasVirtualControl.Invalidate(stroke.Intersect); // Invalidate
-                }
             }
         }
-        private void PaintSegmentAsync(Stroke stroke, StrokeSegment segment)
+        private async void PaintCapAsync(StrokeCap cap, Rect region)
+        {
+            //@Task
+            lock (this.Locker)
+            {
+                this.BitmapLayer.Hit(cap.Bounds);
+                this.PaintCap(cap);
+            }
+
+            await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                this.CanvasVirtualControl.Invalidate(region); // Invalidate
+            });
+        }
+
+        private void PaintSegmentAsync(StrokeSegment segment)
         {
             //@Task
             lock (this.Locker)
             {
                 this.BitmapLayer.Hit(segment.Bounds);
                 this.PaintSegment(segment);
-
-                if (stroke.HasIntersect)
-                {
-                    this.CanvasVirtualControl.Invalidate(stroke.Intersect); // Invalidate
-                }
             }
         }
+        private async void PaintSegmentAsync(StrokeSegment segment, Rect region)
+        {
+            //@Task
+            lock (this.Locker)
+            {
+                this.BitmapLayer.Hit(segment.Bounds);
+                this.PaintSegment(segment);
+            }
+
+            await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                this.CanvasVirtualControl.Invalidate(region); // Invalidate
+            });
+        }
+
         private void PaintHistoryAsync()
         {
             //@Task
             lock (this.Locker)
             {
-                this.Paint();
+                if (this.InkType is InkType.Liquefy is false)
+                {
+                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                    {
+                        ds.Clear(Colors.Transparent);
+                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                    }
+                }
                 this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
                 // History
