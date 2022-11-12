@@ -67,7 +67,7 @@ namespace Luo_Painter.Brushes
         }
 
 
-        public void IsometricTip(CanvasDrawingSession ds, Color color, bool ignoreSpacing = false)
+        public void IsometricTip(CanvasDrawingSession ds, Color color)
         {
             float size = this.Size / 24 + 1;
             float spacing = this.Spacing;

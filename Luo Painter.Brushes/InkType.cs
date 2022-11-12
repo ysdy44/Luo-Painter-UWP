@@ -111,7 +111,7 @@ namespace Luo_Painter.Brushes
 
         Blur = 131072 | UISpacing | UIFlow | UIHardness,
 
-        Mosaic = 262144 | UISpacing | UIHardness,
+        Mosaic = 262144,
 
         Erase = 524288 | UIOpacity | UISpacing | UIFlow | UIHardness,
         Erase_Opacity = Erase | Opacity,

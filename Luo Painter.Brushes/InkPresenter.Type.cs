@@ -84,7 +84,7 @@ namespace Luo_Painter.Brushes
                                 else
                                 {
                                     if (this.Mix == 0f)
-                                        return InkType.ShapeGeneral;
+                                        return InkType.ShapeGeneral_Opacity;
                                     else
                                         return InkType.ShapeGeneral_Opacity_Mix;
                                 }
@@ -167,7 +167,7 @@ namespace Luo_Painter.Brushes
                                 else
                                 {
                                     if (this.Mix == 0f)
-                                        return InkType.General;
+                                        return InkType.General_Opacity;
                                     else
                                         return InkType.General_Opacity_Mix;
                                 }
@@ -212,7 +212,7 @@ namespace Luo_Painter.Brushes
                             if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
                                 return InkType.Tip_Opacity_Blend;
                             else
-                                return InkType.Tip;
+                                return InkType.Tip_Opacity;
                         }
                     }
 
@@ -253,7 +253,7 @@ namespace Luo_Painter.Brushes
                             if (System.Enum.IsDefined(typeof(BlendEffectMode), this.BlendMode))
                                 return InkType.Line_Opacity_Blend;
                             else
-                                return InkType.Line;
+                                return InkType.Line_Opacity;
                         }
                     }
 
