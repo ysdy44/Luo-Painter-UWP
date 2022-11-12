@@ -46,6 +46,9 @@ namespace Luo_Painter
         [MainPageToDrawPage(NavigationMode.Forward)]
         private async void Action(ProjectAction action, object obj = null)
         {
+            if (this.Disabler) return;
+            this.Disabler = true;
+
             switch (action)
             {
                 case ProjectAction.File:
@@ -269,6 +272,8 @@ namespace Luo_Painter
                 default:
                     break;
             }
+
+            this.Disabler = false;
         }
 
     }

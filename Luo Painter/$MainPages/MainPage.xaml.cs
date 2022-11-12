@@ -57,6 +57,11 @@ namespace Luo_Painter
         public IList<string> ClipboardProjects { get; } = new List<string>();
         public string ClipboardPath { get; private set; }
 
+        //@Debug
+        // Disable it,
+        // or Crash when Double-Clicking a Project Item.
+        bool Disabler;
+
         private void Load() => this.ObservableCollection.Load(this.Paths.GetPath());
 
         public MainPage()
@@ -80,11 +85,15 @@ namespace Luo_Painter
             };
             this.SettingButton.Click += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 base.Frame.Navigate(typeof(StylePage));
             };
 
             this.HomeButton.Click += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (this.Paths.GoHome())
                 {
                     this.Load();
@@ -93,6 +102,8 @@ namespace Luo_Painter
             };
             this.BackButton.Click += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (this.Paths.GoBack())
                 {
                     this.Load();
@@ -102,6 +113,8 @@ namespace Luo_Painter
 
             this.PathListView.ItemClick += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (e.ClickedItem is Metadata item)
                 {
                     int removes = this.Paths.Navigate(item.Path);
@@ -114,6 +127,8 @@ namespace Luo_Painter
 
             this.OrderListBox.SelectionChanged += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 switch (this.OrderListBox.SelectedIndex)
                 {
                     case 0:
@@ -135,6 +150,7 @@ namespace Luo_Painter
             base.AllowDrop = true;
             base.Drop += async (s, e) =>
             {
+                if (this.Disabler) return;
                 if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
 
                 foreach (IStorageItem item in await e.DataView.GetStorageItemsAsync())

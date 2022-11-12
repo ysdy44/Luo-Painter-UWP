@@ -25,7 +25,9 @@ namespace Luo_Painter
         {
             this.ListView.DragItemsStarting += (s, e) =>
             {
-                foreach (Project item in e.Items)
+                if (this.Disabler) return;
+
+                foreach (Project item in e.Items.Cast<Project>())
                 {
                     switch (item.Type)
                     {
@@ -37,6 +39,8 @@ namespace Luo_Painter
             };
             this.ListView.DragItemsCompleted += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (this.ObservableCollection.FirstOrDefault() is Project item)
                 {
                     switch (item.Type)
@@ -64,6 +68,8 @@ namespace Luo_Painter
             };
             this.ListView.RightTapped += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (e.OriginalSource is FrameworkElement element)
                 {
                     if (element.DataContext is Project item)
@@ -87,6 +93,8 @@ namespace Luo_Painter
 
             this.ListView.ItemClick += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (e.ClickedItem is Project item)
                 {
                     switch (item.Type)
@@ -104,6 +112,8 @@ namespace Luo_Painter
         {
             this.AppBarListView.ItemClick += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 if (e.ClickedItem is SymbolIcon item)
                 {
                     switch (item.Symbol)
@@ -122,6 +132,8 @@ namespace Luo_Painter
             this.DupliateDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DupliateHide);
             this.DupliateDocker.PrimaryButtonClick += async (s, e) =>
             {
+                if (this.Disabler) return;
+
                 await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), this.ListView.SelectedItems);
                 this.Action(ProjectAction.DupliateHide);
             };
@@ -129,6 +141,8 @@ namespace Luo_Painter
             this.DeleteDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DeleteHide);
             this.DeleteDocker.PrimaryButtonClick += async (s, e) =>
             {
+                if (this.Disabler) return;
+
                 await this.ObservableCollection.DeleteAsync(this.ListView.SelectedItems);
                 this.Action(ProjectAction.DeleteHide);
             };
@@ -136,8 +150,10 @@ namespace Luo_Painter
             this.SelectDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.SelectHide);
             this.SelectDocker.PrimaryButtonClick += (s, e) =>
             {
+                if (this.Disabler) return;
+
                 this.ClipboardPath = this.Paths.GetPath();
-                foreach (Project item in this.ListView.SelectedItems)
+                foreach (Project item in this.ListView.SelectedItems.Cast<Project>())
                 {
                     switch (item.Type)
                     {
@@ -152,6 +168,8 @@ namespace Luo_Painter
             this.MoveDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.MoveHide);
             this.MoveDocker.PrimaryButtonClick += async (s, e) =>
             {
+                if (this.Disabler) return;
+
                 string path = this.Paths.GetPath();
                 if (this.ClipboardPath != path) 
                 {
