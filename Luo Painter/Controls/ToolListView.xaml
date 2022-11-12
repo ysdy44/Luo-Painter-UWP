@@ -33,6 +33,10 @@
                     </luo_painter:ToolGrouping>
                     <luo_painter:ToolGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
+                        <options:OptionType>PaintLine</options:OptionType>
+                        <options:OptionType>PaintBrushForce</options:OptionType>
+                        <options:OptionType>PaintBrushMulti</options:OptionType>
+                        <options:OptionType>PaintStraw</options:OptionType>
                     </luo_painter:ToolGrouping>
                     <luo_painter:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>
@@ -82,14 +86,14 @@
     </FrameworkElement.Resources>
 
     <ItemsControl.ItemContainerTransitions>
-            <TransitionCollection>
+        <TransitionCollection>
 
-            </TransitionCollection>
-        </ItemsControl.ItemContainerTransitions>
+        </TransitionCollection>
+    </ItemsControl.ItemContainerTransitions>
 
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <ItemsWrapGrid                   
+    <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+            <ItemsWrapGrid                   
                     ItemWidth="70"
                     ItemHeight="50"
                    
@@ -100,56 +104,56 @@
                     GroupHeaderPlacement="Top"          
                     GroupPadding="0"    
                     />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+        </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
 
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="MinWidth" Value="55"/>
-                <Setter Property="Height" Value="55"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Padding" Value="2,1"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Transitions">
-                    <Setter.Value>
-                        <TransitionCollection>
+    <ItemsControl.ItemContainerStyle>
+        <Style TargetType="ListViewItem">
+            <Setter Property="MinWidth" Value="55"/>
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="2,1"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Transitions">
+                <Setter.Value>
+                    <TransitionCollection>
 
-                        </TransitionCollection>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ItemsControl.ItemContainerStyle>
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ItemsControl.ItemContainerStyle>
 
-        <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="options:OptionType">
-                <luo_painter:ToolIcon Type="{x:Bind}"/>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
+    <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="options:OptionType">
+            <luo_painter:ToolIcon Type="{x:Bind}"/>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
 
-        <ItemsControl.GroupStyle>
-            <GroupStyle HidesIfEmpty="True">
-                <GroupStyle.HeaderContainerStyle>
-                    <Style TargetType="ListViewHeaderItem">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="MinHeight" Value="2"/>
-                        <Setter Property="Height" Value="Auto"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewHeaderItem">
-                                    <Rectangle Height="1" Fill="{ThemeResource AppStroke}" />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </GroupStyle.HeaderContainerStyle>
-            </GroupStyle>
-        </ItemsControl.GroupStyle>
+    <ItemsControl.GroupStyle>
+        <GroupStyle HidesIfEmpty="True">
+            <GroupStyle.HeaderContainerStyle>
+                <Style TargetType="ListViewHeaderItem">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="MinHeight" Value="2"/>
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewHeaderItem">
+                                <Rectangle Height="1" Fill="{ThemeResource AppStroke}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </GroupStyle.HeaderContainerStyle>
+        </GroupStyle>
+    </ItemsControl.GroupStyle>
 
-        <ListViewBase.Header>
-            <Border Height="50" >
+    <ListViewBase.Header>
+        <Border Height="50" >
             <TextBlock
                 x:Name="TitleTextBlock"
                 Margin="16,0"
@@ -163,7 +167,7 @@
                 >
                 Tools
             </TextBlock>
-            </Border>
-        </ListViewBase.Header>
+        </Border>
+    </ListViewBase.Header>
 
 </luo_painter:XamlListView>
