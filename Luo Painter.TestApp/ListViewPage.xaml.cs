@@ -54,8 +54,8 @@ namespace Luo_Painter.TestApp
     internal sealed class ToolGroupingList : GroupingList<ToolGrouping, OptionType, OptionType> { }
     internal sealed class ToolGrouping : Grouping<OptionType, OptionType> { }
 
-    internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendGroupType, BlendEffectMode> { }
-    internal sealed class BlendGrouping : Grouping<BlendGroupType, BlendEffectMode> { }
+    internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendEffectMode, BlendEffectMode> { }
+    internal sealed class BlendGrouping : Grouping<BlendEffectMode, BlendEffectMode> { }
 
 
     public sealed partial class ListViewPage : Page

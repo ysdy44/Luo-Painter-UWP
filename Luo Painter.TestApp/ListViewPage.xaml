@@ -4,9 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:blends="using:Luo_Painter.Blends"
-    xmlns:local="using:Luo_Painter.TestApp"
     xmlns:options="using:Luo_Painter.Options"
+    xmlns:local="using:Luo_Painter.TestApp"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -77,7 +76,7 @@
             </CollectionViewSource.Source>
         </CollectionViewSource>
 
-        <local:BlendGrouping x:Name="BlendCollection" Key="None">
+        <local:BlendGrouping x:Name="BlendCollection" Key="Multiply">
             <effects:BlendEffectMode>-1</effects:BlendEffectMode>
             <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
             <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
@@ -92,10 +91,12 @@
         <CollectionViewSource x:Name="BlendCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
                 <local:BlendGroupingList x:Name="BlendGroupingList">
-                    <local:BlendGrouping Key="None">
+                    <!--None-->
+                    <local:BlendGrouping Key="-1">
                         <effects:BlendEffectMode>-1</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
                     </local:BlendGrouping>
+                    <!--Darken-->
                     <local:BlendGrouping Key="Darken">
                         <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
@@ -103,6 +104,7 @@
                         <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
                         <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
                     </local:BlendGrouping>
+                    <!--Lighten-->
                     <local:BlendGrouping Key="Lighten">
                         <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
@@ -110,7 +112,8 @@
                         <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
                         <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
                     </local:BlendGrouping>
-                    <local:BlendGrouping Key="Contrast">
+                    <!--Contrast-->
+                    <local:BlendGrouping Key="Overlay">
                         <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
                         <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
@@ -119,12 +122,14 @@
                         <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
                         <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
                     </local:BlendGrouping>
+                    <!--Difference-->
                     <local:BlendGrouping Key="Difference">
                         <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Division</effects:BlendEffectMode>
                     </local:BlendGrouping>
+                    <!--Color-->
                     <local:BlendGrouping Key="Color">
                         <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
                         <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
