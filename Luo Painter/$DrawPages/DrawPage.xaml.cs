@@ -81,24 +81,26 @@ namespace Luo_Painter
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget Mesh { get; set; }
 
-
-        //@Task
-        readonly object Locker = new object();
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
         BitmapLayer Displacement { get; set; }
         CurveLayer CurveLayer { get; set; }
 
-
         bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
 
-
         bool IsReferenceImageResizing { get; set; }
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
+
+
+        //@Task
+        readonly object Locker = new object();
+        //@Debug
+        // "Paint_Complete" must be after  "Paint_Delta"
+        readonly IList<Task> Tasks = new List<Task>();
 
 
         Vector2 StartingPosition;
