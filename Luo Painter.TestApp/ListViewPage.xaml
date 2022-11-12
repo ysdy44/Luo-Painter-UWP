@@ -29,6 +29,10 @@
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
+                        <options:OptionType>PaintLine</options:OptionType>
+                        <options:OptionType>PaintBrushForce</options:OptionType>
+                        <options:OptionType>PaintBrushMulti</options:OptionType>
+                        <options:OptionType>PaintStraw</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>
