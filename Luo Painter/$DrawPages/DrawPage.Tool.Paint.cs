@@ -36,34 +36,24 @@ namespace Luo_Painter
                 return;
             }
 
-            //@Task
-            {
-                StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
-                lock (this.Locker)
-                {
-                    this.BitmapLayer.Hit(cap.Bounds);
-                    this.PaintCap(cap);
-                }
+            this.CanvasControl.Invalidate(); // Invalidate
 
-                Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.Size * this.Transformer.Scale));
-                if (region.HasValue)
-                {
-                    await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                    {
-                        this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
-                    });
-                }
-            }
+            //@Paint
+            StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
+            this.PaintCapAsync(cap);
 
             //@Paint
             this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintAsync);
+            await Task.Run(this.PaintSegmentAsync);
         }
+
         private void Paint_Delta()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
+
+            this.CanvasControl.Invalidate(); // Invalidate
 
             StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
             if (segment.InRadius) return;
@@ -75,11 +65,14 @@ namespace Luo_Painter
             this.StartingPoint = this.Point;
             this.StartingPressure = this.Pressure;
         }
+
         private void Paint_Complete()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
+
+            this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
             this.Tasks.State = PaintTaskState.Painted;

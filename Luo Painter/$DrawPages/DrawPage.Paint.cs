@@ -16,7 +16,22 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private async void PaintAsync()
+        private void PaintCapAsync(StrokeCap cap) => this.PaintCapAsync(cap, this.ToPoint(cap.StartingPosition));
+        private void PaintCapAsync(StrokeCap cap, Vector2 startingPoint)
+        {
+            //@Task
+            lock (this.Locker)
+            {
+                this.BitmapLayer.Hit(cap.Bounds);
+                this.PaintCap(cap);
+            }
+
+            Rect? region = RectExtensions.TryGetRect(startingPoint, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.Size * this.Transformer.Scale));
+            if (region.HasValue)
+                this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
+        }
+
+        private async void PaintSegmentAsync()
         {
             while (true)
             {
@@ -39,7 +54,7 @@ namespace Luo_Painter
                         Rect? region = RectExtensions.TryGetRect(this.ToPoint(segment.StartingPosition), this.ToPoint(segment.Position), this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(segment.Size * this.Transformer.Scale));
                         if (region.HasValue)
                         {
-                            await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                            await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                             {
                                 this.CanvasVirtualControl.Invalidate(region.Value);
                             });
@@ -49,7 +64,7 @@ namespace Luo_Painter
                         //@Paint
                         this.Tasks.State = PaintTaskState.Finished;
 
-                        await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                        await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                         {
                             //@Task
                             lock (this.Locker)
