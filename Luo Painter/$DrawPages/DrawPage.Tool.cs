@@ -58,7 +58,19 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintBrush:
-                    this.Paint_Start();
+                    this.PaintBrush_Start();
+                    break;
+                case OptionType.PaintLine:
+                    this.PaintLine_Start();
+                    break;
+                case OptionType.PaintBrushForce:
+                    this.PaintBrushForce_Start();
+                    break;
+                case OptionType.PaintBrushMulti:
+                    this.PaintBrushMulti_Start();
+                    break;
+                case OptionType.PaintStraw:
+                    this.PaintStraw_Start();
                     break;
 
                 case OptionType.View:
@@ -126,7 +138,19 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintBrush:
-                    this.Paint_Delta();
+                    this.PaintBrush_Delta();
+                    break;
+                case OptionType.PaintLine:
+                    this.PaintLine_Delta();
+                    break;
+                case OptionType.PaintBrushForce:
+                    this.PaintBrushForce_Delta();
+                    break;
+                case OptionType.PaintBrushMulti:
+                    this.PaintBrushMulti_Delta();
+                    break;
+                case OptionType.PaintStraw:
+                    this.PaintStraw_Delta();
                     break;
 
                 case OptionType.View:
@@ -194,7 +218,19 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintBrush:
-                    this.Paint_Complete();
+                    this.PaintBrush_Complete();
+                    break;
+                case OptionType.PaintLine:
+                    this.PaintLine_Complete();
+                    break;
+                case OptionType.PaintBrushForce:
+                    this.PaintBrushForce_Complete();
+                    break;
+                case OptionType.PaintBrushMulti:
+                    this.PaintBrushMulti_Complete();
+                    break;
+                case OptionType.PaintStraw:
+                    this.PaintStraw_Complete();
                     break;
 
                 case OptionType.View:

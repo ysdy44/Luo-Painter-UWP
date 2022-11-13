@@ -1,15 +1,8 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -17,7 +10,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private async void Paint_Start()
+        private async void PaintBrush_Start()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
@@ -47,7 +40,7 @@ namespace Luo_Painter
             await Task.Run(this.PaintSegmentAsync);
         }
 
-        private void Paint_Delta()
+        private void PaintBrush_Delta()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
@@ -66,7 +59,7 @@ namespace Luo_Painter
             this.StartingPressure = this.Pressure;
         }
 
-        private void Paint_Complete()
+        private void PaintBrush_Complete()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;

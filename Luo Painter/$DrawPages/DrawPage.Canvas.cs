@@ -103,6 +103,28 @@ namespace Luo_Painter
                         this.DrawRippleEffect(sender, args.DrawingSession);
                         break;
 
+                    case OptionType.PaintBrush:
+                    case OptionType.PaintBrushMulti:
+                        if (this.BitmapLayer is null) break;
+
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        break;
+                    case OptionType.PaintLine:
+                        if (this.BitmapLayer is null) break;
+
+                        args.DrawingSession.DrawLine(this.StartingPoint, this.Point, Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        break;
+                    case OptionType.PaintBrushForce:
+                        if (this.BitmapLayer is null) break;
+
+                        Vector2 stabilizer = this.ToPoint(this.Tasks.StartingStabilizer);
+                        args.DrawingSession.DrawLine(stabilizer, this.Point, Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        args.DrawingSession.DrawCircle(stabilizer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        break;
+
                     default:
                         if (this.OptionType.IsGeometry())
                         {
