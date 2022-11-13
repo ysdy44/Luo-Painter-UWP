@@ -9,22 +9,23 @@ namespace Luo_Painter.Projects
         public void OrderByType()
         {
             if (base.Count < 3) return;
-            this.Order(this.OrderByDescending(c => c.Type));
+            this.Order(this.OrderByDescending(c => c.Type).Reverse().ToArray());
         }
         public void OrderByTime()
         {
             if (base.Count < 3) return;
-            this.Order(this.OrderByDescending(c => c.DateCreated));
+            //@Debug
+            // Order by DateCreated
+            this.Order(this.OrderByDescending(c => c.DateCreated).ToArray());
         }
         public void OrderByName()
         {
             if (base.Count < 3) return;
-            this.Order(this.OrderByDescending(c => c.Name));
+            this.Order(this.OrderByDescending(c => c.Name).Reverse().ToArray());
         }
 
-        private void Order(IOrderedEnumerable<Project> ordered)
+        private void Order(Project[] array)
         {
-            Project[] array = ordered.Reverse().ToArray();
             for (int i = 0; i < array.Length; i++)
             {
                 int index = base.IndexOf(array[i]);

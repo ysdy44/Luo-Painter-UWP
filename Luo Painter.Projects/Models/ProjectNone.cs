@@ -1,4 +1,5 @@
-﻿using Windows.Storage;
+﻿using System;
+using Windows.Storage;
 
 namespace Luo_Painter.Projects.Models
 {
@@ -6,6 +7,11 @@ namespace Luo_Painter.Projects.Models
     {
         //@Static
         public static readonly ProjectNone Add = new ProjectNone();
-        private ProjectNone() : base(StorageItemTypes.None) { }
+        private ProjectNone() : base(StorageItemTypes.None)
+        {
+            //@Debug
+            // Order by DateCreated
+            this.DateCreated = DateTimeOffset.MaxValue;
+        }
     }
 }
