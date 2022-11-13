@@ -1,136 +1,82 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System.Linq;
 using System.Numerics;
+using Windows.Foundation;
+using Windows.UI.Core;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using System;
 
 namespace Luo_Painter
 {
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private void Paint()
+        private async void PaintAsync()
         {
-            switch (this.InkType)
+            while (true)
             {
-                case InkType.General:
-                case InkType.General_Mix:
-                case InkType.ShapeGeneral:
-                case InkType.ShapeGeneral_Mix:
-                case InkType.Tip:
-                case InkType.Line:
-                    this.BitmapLayer.Draw(this.BitmapLayer[BitmapType.Temp]);
-                    break;
+                switch (this.Tasks.GetBehavior())
+                {
+                    case PaintTaskBehavior.WaitingWork:
+                        continue;
+                    case PaintTaskBehavior.Working:
+                    case PaintTaskBehavior.WorkingBeforeDead:
+                        StrokeSegment segment = this.Tasks.First();
+                        this.Tasks.Remove(segment);
 
-                case InkType.General_Grain:
-                case InkType.General_Grain_Mix:
-                case InkType.General_Opacity_Grain:
-                case InkType.General_Opacity_Grain_Mix:
-                case InkType.ShapeGeneral_Grain:
-                case InkType.ShapeGeneral_Grain_Mix:
-                case InkType.ShapeGeneral_Opacity_Grain:
-                case InkType.ShapeGeneral_Opacity_Grain_Mix:
-                case InkType.Tip_Grain:
-                case InkType.Tip_Opacity_Grain:
-                case InkType.Line_Grain:
-                case InkType.Line_Opacity_Grain:
-                    using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
-                    using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(opacity))
-                    {
-                        this.BitmapLayer.Draw(Grain);
-                    }
-                    break;
+                        //@Task
+                        lock (this.Locker)
+                        {
+                            this.BitmapLayer.Hit(segment.Bounds);
+                            this.PaintSegment(segment);
+                        }
 
-                case InkType.General_Opacity:
-                case InkType.General_Opacity_Mix:
-                case InkType.ShapeGeneral_Opacity:
-                case InkType.ShapeGeneral_Opacity_Mix:
-                case InkType.Tip_Opacity:
-                case InkType.Line_Opacity:
-                    using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
-                    {
-                        this.BitmapLayer.Draw(opacity);
-                    }
-                    break;
+                        Rect? region = RectExtensions.TryGetRect(this.ToPoint(segment.StartingPosition), this.ToPoint(segment.Position), this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(segment.Size * this.Transformer.Scale));
+                        if (region.HasValue)
+                        {
+                            await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                            {
+                                this.CanvasVirtualControl.Invalidate(region.Value);
+                            });
+                        }
+                        break;
+                    default:
+                        //@Paint
+                        this.Tasks.State = PaintTaskState.Finished;
 
-                case InkType.General_Blend:
-                case InkType.General_Blend_Mix:
-                case InkType.ShapeGeneral_Blend:
-                case InkType.ShapeGeneral_Blend_Mix:
-                case InkType.Tip_Blend:
-                case InkType.Line_Blend:
-                    using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    {
-                        this.BitmapLayer.DrawCopy(blend);
-                    }
-                    break;
+                        await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                        {
+                            //@Task
+                            lock (this.Locker)
+                            {
+                                if (this.InkType is InkType.Liquefy is false)
+                                {
+                                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                                    {
+                                        ds.Clear(Colors.Transparent);
+                                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                                    }
+                                }
+                                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
-                case InkType.General_Grain_Blend:
-                case InkType.General_Grain_Blend_Mix:
-                case InkType.ShapeGeneral_Grain_Blend:
-                case InkType.ShapeGeneral_Grain_Blend_Mix:
-                case InkType.Tip_Grain_Blend:
-                case InkType.Line_Grain_Blend:
-                    using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(blend))
-                    {
-                        this.BitmapLayer.DrawCopy(Grain);
-                    }
-                    break;
+                                // History
+                                int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                                this.BitmapLayer.Flush();
+                                this.BitmapLayer.RenderThumbnail();
 
-                case InkType.General_Opacity_Blend:
-                case InkType.General_Opacity_Blend_Mix:
-                case InkType.ShapeGeneral_Opacity_Blend:
-                case InkType.ShapeGeneral_Opacity_Blend_Mix:
-                case InkType.Tip_Opacity_Blend:
-                case InkType.Line_Opacity_Blend:
-                    using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    {
-                        this.BitmapLayer.DrawCopy(blend);
-                    }
-                    break;
+                                this.BitmapLayer = null;
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
 
-                case InkType.General_Opacity_Grain_Blend:
-                case InkType.General_Opacity_Grain_Blend_Mix:
-                case InkType.ShapeGeneral_Opacity_Grain_Blend:
-                case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
-                case InkType.Tip_Opacity_Grain_Blend:
-                case InkType.Line_Opacity_Grain_Blend:
-                    using (OpacityEffect opacity = this.InkPresenter.GetOpacity(this.BitmapLayer[BitmapType.Temp]))
-                    using (BlendEffect blend = this.InkPresenter.GetBlend(this.BitmapLayer[BitmapType.Origin], opacity))
-                    using (AlphaMaskEffect Grain = this.InkPresenter.GetGrain(blend))
-                    {
-                        this.BitmapLayer.DrawCopy(Grain);
-                    }
-                    break;
-
-                case InkType.Blur:
-                    using (AlphaMaskEffect blur = this.InkPresenter.GetBlur(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    {
-                        this.BitmapLayer.Draw(blur);
-                    }
-                    break;
-
-                case InkType.Mosaic:
-                    using (ScaleEffect mosaic = this.InkPresenter.GetMosaic(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    {
-                        this.BitmapLayer.Draw(mosaic);
-                    }
-                    break;
-
-                case InkType.Erase:
-                case InkType.Erase_Opacity:
-                    using (ArithmeticCompositeEffect erase = this.InkPresenter.GetErase(this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]))
-                    {
-                        this.BitmapLayer.DrawCopy(erase);
-                    }
-                    break;
-
-                case InkType.Liquefy:
-                    break;
-
-                default:
-                    break;
+                                this.RaiseHistoryCanExecuteChanged();
+                            }
+                        });
+                        return;
+                }
             }
         }
 
