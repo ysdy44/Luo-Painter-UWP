@@ -1,10 +1,12 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
+using System.Linq;
 using System.Numerics;
-using System.Timers;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -13,7 +15,7 @@ namespace Luo_Painter.TestApp
 {
     public sealed partial class InkForcePage : Page
     {
-        
+
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
@@ -23,23 +25,11 @@ namespace Luo_Painter.TestApp
             StartCap = CanvasCapStyle.Round,
             EndCap = CanvasCapStyle.Round,
         };
-        readonly Timer Timer = new Timer
-        {
-            Interval = 20
-        };
+
+        private readonly PaintTaskCollection Tasks = new PaintTaskCollection();
 
         CanvasRenderTarget RenderTarget;
         Transformer Border;
-
-        const float Gm1 = 100.0f;
-        const float ttm = InkForcePage.dt * InkForcePage.dt;
-        const float dt = 0.001666f; 
-
-        float Acceleration = 0;
-        float Speed = 80;
-        float Mass = 10000;
-        Vector2 Velocity;
-        Vector2 PositionStabilizer;
 
         Vector2 StartingPosition;
         Vector2 Position;
@@ -58,7 +48,7 @@ namespace Luo_Painter.TestApp
         {
             this.Slider.ValueChanged += (s, e) =>
             {
-                this.Speed = (float)e.NewValue * 2;
+                this.Tasks.Speed = (float)e.NewValue * 2;
             };
             this.ClearButton.Click += (s, e) =>
             {
@@ -68,37 +58,6 @@ namespace Luo_Painter.TestApp
                 }
 
                 this.CanvasControl.Invalidate(); // Invalidate
-            };
-            this.Timer.Elapsed += (s, e) =>
-            {
-                float durationTime = 20 / this.Speed;
-                int times = 0;
-
-                using (CanvasDrawingSession ds = this.RenderTarget.CreateDrawingSession())
-                {
-                    for (this.Acceleration += durationTime; this.Acceleration >= InkForcePage.dt; this.Acceleration -= InkForcePage.dt, times++)
-                    {
-                        float strokeWidth = 12 * 2 * this.Pressure;
-                        if (strokeWidth < 1) return;
-
-                        Vector2 vector = this.Position - this.PositionStabilizer;
-                        float length = vector.Length();
-                        if (length < 2) return;
-
-                        float f = InkForcePage.Gm1 * this.Mass / 10;
-                        Vector2 fd = f * vector / length;
-
-                        this.Velocity += fd * InkForcePage.ttm;
-                        this.Velocity *= 1 - InkForcePage.dt / length * 100;
-                        this.PositionStabilizer += this.Velocity * InkForcePage.dt * 1;
-
-                        ds.DrawLine(this.StartingPosition, this.PositionStabilizer, Colors.DodgerBlue, strokeWidth, this.CanvasStrokeStyle);
-
-                        this.StartingPosition = this.PositionStabilizer;
-                    }
-                }
-
-                this.CanvasControl.Invalidate();
             };
         }
 
@@ -139,7 +98,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.DrawBound(this.Border, matrix);
 
                 Vector2 p = Vector2.Transform(this.Position, matrix);
-                Vector2 sp = Vector2.Transform(this.StartingPosition, matrix);
+                Vector2 sp = Vector2.Transform(this.Tasks.StartingStabilizer, matrix);
                 args.DrawingSession.DrawLine(sp, p, Colors.White);
                 args.DrawingSession.DrawCircle(p, 12, Colors.White);
                 args.DrawingSession.DrawCircle(sp, 12, Colors.White);
@@ -149,15 +108,16 @@ namespace Luo_Painter.TestApp
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += async (point, properties) =>
             {
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
 
-                this.PositionStabilizer = this.Position;
-                this.Velocity = Vector2.Zero;
+                //@Paint
+                this.Tasks.StartForce(this.StartingPosition);
+                this.Tasks.State = PaintTaskState.Painting;
+                await Task.Run(this.PaintAsync);
 
-                this.Timer.Start();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
@@ -166,12 +126,17 @@ namespace Luo_Painter.TestApp
                 this.Pressure = properties.Pressure * properties.Pressure;
 
                 // goto Timer.Elapsed
+                this.Tasks.Position = this.Position;
+                this.Tasks.Pressure = this.Pressure;
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
                 this.Position = this.ToPosition(point);
 
-                this.Timer.Stop();
+                //@Paint
+                this.Tasks.StopForce();
+                this.Tasks.State = PaintTaskState.Painted;
+
                 this.CanvasControl.Invalidate(); // Invalidate
             };
 
@@ -223,5 +188,36 @@ namespace Luo_Painter.TestApp
                 this.CanvasControl.Invalidate(); // Invalidate
             };
         }
+
+        private void PaintAsync()
+        {
+            while (true)
+            {
+                switch (this.Tasks.GetBehavior())
+                {
+                    case PaintTaskBehavior.WaitingWork:
+                        continue;
+                    case PaintTaskBehavior.Working:
+                    case PaintTaskBehavior.WorkingBeforeDead:
+                        StrokeSegment segment = this.Tasks.First();
+                        this.Tasks.Remove(segment);
+
+                        using (CanvasDrawingSession ds = this.RenderTarget.CreateDrawingSession())
+                        {
+                            ds.DrawLine(segment.StartingPosition, segment.Position, Colors.DodgerBlue, segment.StartingSize, this.CanvasStrokeStyle);
+                        }
+
+                        this.CanvasControl.Invalidate();
+                        break;
+                    case PaintTaskBehavior.Dead:
+                        //@Paint
+                        this.Tasks.State = PaintTaskState.Finished;
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
+
     }
 }
