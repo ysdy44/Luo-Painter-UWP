@@ -44,10 +44,12 @@ namespace Luo_Painter.Layers
             double boundsTop = point.Y - radius;
             if (boundsTop >= intersectSize.Height) return null;
 
+            boundsLeft = System.Math.Clamp(boundsLeft, 0, intersectSize.Width);
+            boundsTop = System.Math.Clamp(boundsTop, 0, intersectSize.Height);
             return new Rect
             (
-                System.Math.Clamp(boundsLeft, 0, intersectSize.Width),
-                System.Math.Clamp(boundsTop, 0, intersectSize.Height),
+                boundsLeft,
+                boundsTop,
                 System.Math.Max(System.Math.Min(boundsRight, intersectSize.Width) - boundsLeft, 0),
                 System.Math.Max(System.Math.Min(boundsBottom, intersectSize.Height) - boundsTop, 0)
             );
@@ -67,37 +69,15 @@ namespace Luo_Painter.Layers
             double boundsTop = System.Math.Min(point0.Y, point1.Y) - radius;
             if (boundsTop >= intersectSize.Height) return null;
 
+            boundsLeft = System.Math.Clamp(boundsLeft, 0, intersectSize.Width);
+            boundsTop = System.Math.Clamp(boundsTop, 0, intersectSize.Height);
             return new Rect
             (
-                System.Math.Clamp(boundsLeft, 0, intersectSize.Width),
-                System.Math.Clamp(boundsTop, 0, intersectSize.Height),
+                boundsLeft,
+                boundsTop,
                 System.Math.Max(System.Math.Min(boundsRight, intersectSize.Width) - boundsLeft, 0),
                 System.Math.Max(System.Math.Min(boundsBottom, intersectSize.Height) - boundsTop, 0)
             );
-        }
-
-        public static bool TryIntersect(this Size size, ref Rect rect)
-        {
-            if (rect.Left > size.Width - 1) return false;
-            if (rect.Top > size.Height - 1) return false;
-            if (rect.Right < 0) return false;
-            if (rect.Bottom < 0) return false;
-
-            rect.X = System.Math.Max(0, rect.Left);
-            rect.Y = System.Math.Max(0, rect.Top);
-            rect.Width = System.Math.Min(size.Width - 1, rect.Right) - rect.X;
-            rect.Height = System.Math.Min(size.Height - 1, rect.Bottom) - rect.Y;
-            return true;
-        }
-        public static bool TryIntersect(this Rect region, ref Rect rect)
-        {
-            if (rect.Left > region.Right) return false;
-            if (rect.Top > region.Bottom) return false;
-            if (rect.Right < region.Left) return false;
-            if (rect.Bottom < region.Top) return false;
-
-            rect.Intersect(region);
-            return true;
         }
 
     }
