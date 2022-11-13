@@ -22,12 +22,12 @@ namespace Luo_Painter.TestApp
 
         private void ConstructCanvas()
         {
-            this.CanvasControl.SizeChanged += (s, e) =>
+            this.CanvasVirtualControl.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
             };
-            this.CanvasControl.RegionsInvalidated += (sender, args) =>
+            this.CanvasVirtualControl.RegionsInvalidated += (sender, args) =>
             {
                 foreach (Rect region in args.InvalidatedRegions)
                 {
@@ -45,21 +45,19 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.Position = point;
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.Operator.Single_Delta += (point, properties) =>
             {
-                Rect region = RectExtensions.GetRect(point, this.Position, 10);
+                Rect? region = RectExtensions.TryGetRect(point, this.Position, this.CanvasVirtualControl.Size, 10);
                 this.Position = point;
 
-                if (this.CanvasControl.Size.TryIntersect(ref region))
-                {
-                    this.CanvasControl.Invalidate(region); // Invalidate
-                }
+                if (region.HasValue)
+                    this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
         }
 

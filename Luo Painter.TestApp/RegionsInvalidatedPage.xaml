@@ -15,6 +15,6 @@
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
     </FrameworkElement.Resources>
 
-    <xaml:CanvasVirtualControl x:Name="CanvasControl"/>
+    <xaml:CanvasVirtualControl x:Name="CanvasVirtualControl"/>
 
 </Page>
