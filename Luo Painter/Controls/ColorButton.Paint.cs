@@ -4,14 +4,68 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
+using System.Linq;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class ColorButton : Button, IInkParameter
     {
+
+        private async void PaintAsync()
+        {
+            while (true)
+            {
+                switch (this.Tasks.GetBehavior())
+                {
+                    case PaintTaskBehavior.WaitingWork:
+                        continue;
+                    case PaintTaskBehavior.Working:
+                    case PaintTaskBehavior.WorkingBeforeDead:
+                        StrokeSegment segment = this.Tasks.First();
+                        this.Tasks.Remove(segment);
+
+                        //@Task
+                        lock (this.Locker)
+                        {
+                            this.BitmapLayer.Hit(segment.Bounds);
+                            this.PaintSegment(segment);
+                        }
+
+                        this.CanvasControl.Invalidate();
+                        break;
+                    case PaintTaskBehavior.Dead:
+                        //@Paint
+                        this.Tasks.State = PaintTaskState.Finished;
+
+                        await this.CanvasControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                        {
+                            //@Task
+                            lock (this.Locker)
+                            {
+                                if (this.InkType is InkType.Liquefy is false)
+                                {
+                                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                                    {
+                                        ds.Clear(Colors.Transparent);
+                                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                                    }
+                                }
+                                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+
+                                this.CanvasControl.Invalidate(); // Invalidate
+                            }
+                        });
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
 
         private void PaintCap(StrokeCap cap)
         {

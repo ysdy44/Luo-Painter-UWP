@@ -61,56 +61,5 @@ namespace Luo_Painter.Controls
             this.Tasks.State = PaintTaskState.Painted;
         }
 
-        private async void PaintAsync()
-        {
-            while (true)
-            {
-                switch (this.Tasks.GetBehavior())
-                {
-                    case PaintTaskBehavior.WaitingWork:
-                        continue;
-                    case PaintTaskBehavior.Working:
-                    case PaintTaskBehavior.WorkingBeforeDead:
-                        StrokeSegment segment = this.Tasks.First();
-                        this.Tasks.Remove(segment);
-
-                        //@Task
-                        lock (this.Locker)
-                        {
-                            this.BitmapLayer.Hit(segment.Bounds);
-                            this.PaintSegment(segment);
-                        }
-
-                        this.CanvasControl.Invalidate();
-                        break;
-                    case PaintTaskBehavior.Dead:
-                        //@Paint
-                        this.Tasks.State = PaintTaskState.Finished;
-
-                        await CanvasControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                        {
-                            //@Task
-                            lock (this.Locker)
-                            {
-                                if (this.InkType is InkType.Liquefy is false)
-                                {
-                                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
-                                    {
-                                        ds.Clear(Colors.Transparent);
-                                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
-                                    }
-                                }
-                                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-
-                                this.CanvasControl.Invalidate(); // Invalidate
-                            }
-                        });
-                        return;
-                    default:
-                        return;
-                }
-            }
-        }
-
     }
 }
