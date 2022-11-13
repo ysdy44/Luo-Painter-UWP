@@ -35,6 +35,10 @@ namespace Luo_Painter
         SelectToMove,
         MoveHide,
 
+        Dupliate,
+        Delete,
+        Move,
+
         New,
         Rename,
         Local,
@@ -126,11 +130,6 @@ namespace Luo_Painter
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.DupliateDocker.IsShow = true;
-
-                        if (obj is Project project)
-                        {
-                            this.ListView.SelectedItem = project;
-                        }
                     }
                     break;
                 case ProjectAction.DupliateHide:
@@ -145,11 +144,6 @@ namespace Luo_Painter
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.DeleteDocker.IsShow = true;
-
-                        if (obj is Project project)
-                        {
-                            this.ListView.SelectedItem = project;
-                        }
                     }
                     break;
                 case ProjectAction.DeleteHide:
@@ -164,11 +158,6 @@ namespace Luo_Painter
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.SelectDocker.IsShow = true;
-
-                        if (obj is Project project)
-                        {
-                            this.ListView.SelectedItem = project;
-                        }
                     }
                     break;
                 case ProjectAction.SelectHide:
@@ -189,6 +178,33 @@ namespace Luo_Painter
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.MoveDocker.IsShow = false;
+                    break;
+
+                case ProjectAction.Dupliate:
+                    {
+                        if (obj is ProjectFile projectFile)
+                        {
+                            await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), projectFile);
+                        }
+                    }
+                    break;
+                case ProjectAction.Delete:
+                    {
+                        if (obj is Project project)
+                        {
+                            await this.ObservableCollection.DeleteAsync(project);
+                        }
+                    }
+                    break;
+                case ProjectAction.Move:
+                    {
+                        if (obj is Project project)
+                        {
+                            this.ClipboardPath = this.Paths.GetPath();
+                            this.ClipboardProjects.Add(project.Path);
+                            this.Action(ProjectAction.SelectToMove);
+                        }
+                    }
                     break;
 
                 case ProjectAction.New:
