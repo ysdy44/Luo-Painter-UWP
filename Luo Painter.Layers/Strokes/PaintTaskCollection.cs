@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
@@ -19,7 +20,7 @@ namespace Luo_Painter.Layers
         WorkingBeforeDead,
     }
 
-    public sealed class PaintTaskCollection : List<StrokeSegment>
+    public sealed partial class PaintTaskCollection : List<StrokeSegment>, IDisposable
     {
         public PaintTaskState State { get; set; } = PaintTaskState.Finished;
         public PaintTaskBehavior GetBehavior()
