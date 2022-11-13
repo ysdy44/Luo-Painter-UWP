@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -10,9 +11,31 @@ namespace Luo_Painter.Projects
     public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
     {
 
+        public async Task DeleteAsync(Project selectedItem)
+        {
+            switch (selectedItem.Type)
+            {
+                case StorageItemTypes.File:
+                    if (selectedItem is ProjectFile item2)
+                    {
+                        await item2.DeleteAsync();
+                        base.Remove(selectedItem);
+                    }
+                    break;
+                case StorageItemTypes.Folder:
+                    if (selectedItem is ProjectFolder item3)
+                    {
+                        await item3.DeleteAsync();
+                        base.Remove(selectedItem);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
         public async Task DeleteAsync(IEnumerable<object> selectedItems)
         {
-            foreach (Project item in selectedItems)
+            foreach (Project item in selectedItems.Cast<Project>())
             {
                 switch (item.Type)
                 {
@@ -43,6 +66,26 @@ namespace Luo_Painter.Projects
             this.Temp.Clear();
         }
 
+        public async Task CopyAsync(string path, ProjectFile selectedItem, string suffix = "Dupliate")
+        {
+            if (path is null)
+            {
+                Project item = await selectedItem.CopyAsync(ApplicationData.Current.LocalFolder, suffix);
+                if (item is null) return;
+
+                base.Add(item);
+            }
+            else
+            {
+                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+                if (folder is null) return;
+
+                Project item = await selectedItem.CopyAsync(folder, suffix);
+                if (item is null) return;
+
+                base.Add(item);
+            }
+        }
         public async Task CopyAsync(string path, IEnumerable<object> selectedItems, string suffix = "Dupliate")
         {
             StorageFolder folder;
@@ -56,7 +99,7 @@ namespace Luo_Painter.Projects
                 if (folder is null) return;
             }
 
-            foreach (Project item in selectedItems)
+            foreach (Project item in selectedItems.Cast<Project>())
             {
                 switch (item.Type)
                 {
