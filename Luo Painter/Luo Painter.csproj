@@ -140,6 +140,7 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.PaintBrushForce.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintLine.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintStraw.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Pen.cs" />
