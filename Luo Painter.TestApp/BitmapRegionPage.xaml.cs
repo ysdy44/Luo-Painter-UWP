@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Historys;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
