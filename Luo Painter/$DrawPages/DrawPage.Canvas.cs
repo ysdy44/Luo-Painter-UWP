@@ -33,11 +33,15 @@ namespace Luo_Painter
 
                 this.CanvasControl.Width =
                 this.CanvasAnimatedControl.Width =
-                this.CanvasVirtualControl.Width = e.NewSize.Width;
+                this.CanvasVirtualControl.Width =
+                this.SimulateCanvas.Width =
+                e.NewSize.Width;
 
                 this.CanvasControl.Height =
                 this.CanvasAnimatedControl.Height =
-                this.CanvasVirtualControl.Height = e.NewSize.Height;
+                this.CanvasVirtualControl.Height =
+                this.SimulateCanvas.Height =
+                e.NewSize.Height;
 
                 Vector2 size = this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(e.NewSize.ToVector2());
                 this.Transformer.ControlWidth = size.X;

@@ -62,10 +62,11 @@ namespace Luo_Painter
                     if (this.IsFullScreen)
                     {
                         this.Click(OptionType.UnFullScreen);
-                        return;
+                        break;
                     }
 
-                    base.IsEnabled = false;
+                    if (this.Disabler) break;
+                    this.Disabler = true;
 
                     //@Debug
                     // OptionType becomes Tool when it is Effect
@@ -73,11 +74,22 @@ namespace Luo_Painter
                     this.ConstructAppBar(this.ToolListView.SelectedType);
 
                     await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
+
+                    if (base.Frame.CanGoBack)
+                    {
+                        base.Frame.GoBack();
+                        break;
+                    }
+
+                    this.Disabler = false;
                     break;
                 case OptionType.Save:
-                    base.IsEnabled = false;
+                    if (this.Disabler) break;
+                    this.Disabler = true;
+
                     await this.SaveAsync(this.ApplicationView.PersistedStateId, false);
-                    base.IsEnabled = true;
+
+                    this.Disabler = false;
                     break;
 
                 case OptionType.Export:
@@ -314,7 +326,7 @@ namespace Luo_Painter
                     if (this.IsFullScreen)
                     {
                         this.Click(OptionType.UnFullScreen);
-                        return;
+                        break;
                     }
 
                     VisualStateManager.GoToState(this, nameof(FullScreen), false);
@@ -474,13 +486,13 @@ namespace Luo_Painter
                                 {
                                     case ExportMode.None:
                                         this.Click(OptionType.Export);
-                                        return;
+                                        break;
                                     case ExportMode.All:
                                         this.Click(OptionType.ExportAll);
-                                        return;
+                                        break;
                                     case ExportMode.Current:
                                         this.Click(OptionType.ExportCurrent);
-                                        return;
+                                        break;
                                     default:
                                         break;
                                 }
@@ -938,7 +950,7 @@ namespace Luo_Painter
                 case OptionType.Duplicate: // CopyLayer + PasteLayer
                     this.Click(OptionType.CopyLayer);
                     this.Click(OptionType.PasteLayer);
-                    return;
+                    break;
 
                 case OptionType.Extract:
                     {
@@ -1512,9 +1524,9 @@ namespace Luo_Painter
 
                 // Paint
                 case OptionType.PaintBrush:
-                case OptionType.PaintLine:
-                case OptionType.PaintBrushForce:
                 case OptionType.PaintBrushMulti:
+                case OptionType.PaintBrushForce:
+                case OptionType.PaintLine:
                 case OptionType.PaintStraw:
 
                 // Vector

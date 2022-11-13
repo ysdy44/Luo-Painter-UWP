@@ -145,6 +145,11 @@ namespace Luo_Painter
 
         #endregion
 
+        public bool Disabler
+        {
+            get => App.SourcePageType != SourcePageType.DrawPage;
+            set => App.SourcePageType = value ? SourcePageType.Invalid : SourcePageType.DrawPage;
+        }
 
         //@Construct
         public DrawPage()
@@ -292,15 +297,13 @@ namespace Luo_Painter
         {
             switch (e.NavigationMode)
             {
-                case NavigationMode.New:
+                case NavigationMode.New: // Go to DrawPage
                     break;
                 case NavigationMode.Back:
                     break;
                 default:
                     break;
             }
-
-            base.IsEnabled = false;
 
             if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
             {
@@ -314,7 +317,7 @@ namespace Luo_Painter
         {
             switch (e.NavigationMode)
             {
-                case NavigationMode.Back:
+                case NavigationMode.Back: // Come to DrawPage
                     break;
                 case NavigationMode.New:
                     // Frist Open: Page.OnNavigatedTo (ReadyToDraw=false) > Canvas.CreateResources (ReadyToDraw=true)
@@ -354,7 +357,6 @@ namespace Luo_Painter
 
                         if (base.Frame.CanGoBack)
                         {
-                            base.IsEnabled = false;
                             base.Frame.GoBack();
                             return;
                         }
@@ -364,19 +366,20 @@ namespace Luo_Painter
                     break;
             }
 
-            base.IsEnabled = true;
-
             DisplayInformation display = DisplayInformation.GetForCurrentView();
             if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
             {
                 manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 manager.BackRequested += this.BackRequested;
             }
+
+            this.Disabler = false;
         }
         private void BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
 
+            if (this.Disabler) return;
             this.Click(OptionType.Close);
         }
 

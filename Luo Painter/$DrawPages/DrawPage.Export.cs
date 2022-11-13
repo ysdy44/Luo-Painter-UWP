@@ -29,7 +29,7 @@ namespace Luo_Painter
     {
 
         [MainPageToDrawPage(NavigationMode.Back)]
-        public async Task SaveAsync(string path, bool isGoBack)
+        public async Task SaveAsync(string path, bool isClear)
         {
             XDocument docLayers = new XDocument(new XElement("Root",
                 from l
@@ -103,17 +103,12 @@ namespace Luo_Painter
 
 
             // 6. Clear
-            if (isGoBack)
+            if (isClear)
             {
                 this.History.Clear();
                 LayerDictionary.Instance.Clear();
                 this.Nodes.Clear();
                 this.ObservableCollection.Clear();
-
-                if (base.Frame.CanGoBack)
-                {
-                    base.Frame.GoBack();
-                }
             }
         }
 
