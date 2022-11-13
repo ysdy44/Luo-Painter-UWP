@@ -36,6 +36,7 @@ namespace Luo_Painter.Controls
     public sealed partial class TextureDialog : ContentDialog
     {
 
+        //@Content
         public string SelectedItem => (this.GridView.SelectedItem is PaintTexture item) ? item.Path : null;
 
         //@Construct

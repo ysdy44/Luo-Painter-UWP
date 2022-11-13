@@ -10,6 +10,9 @@ namespace Luo_Painter.Controls
         {
             this.InkIsEnabled = false;
             {
+                this.Type = presenter.Type;
+
+
                 this.ComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.Type);
 
 

@@ -91,8 +91,8 @@ namespace Luo_Painter.Controls
 
         private void Follow()
         {
-            this.Point.X = base.ActualWidth / 2;
-            this.Point.Y = base.ActualHeight / 2;
+            this.Point.X = Window.Current.Bounds.Width / 2;
+            this.Point.Y = Window.Current.Bounds.Height / 2;
             this.Vector.X = (float)this.Point.X;
             this.Vector.Y = (float)this.Point.Y;
         }

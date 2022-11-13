@@ -207,7 +207,7 @@
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem options:OptionExtensions.Type="Duplicate" Command="{x:Bind Command}">
                     <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                        <KeyboardAccelerator Modifiers="Control" Key="D"/>
                     </UIElement.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem options:OptionExtensions.Type="Extract" Command="{x:Bind Command}">

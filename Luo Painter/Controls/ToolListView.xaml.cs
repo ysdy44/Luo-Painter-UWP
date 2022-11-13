@@ -20,14 +20,9 @@ namespace Luo_Painter.Controls
         //@Content
         public OptionType SelectedType
         {
-            get => this.selectedType;
-            set
-            {
-                this.selectedType = value;
-                base.SelectedIndex = this.Collection.IndexOf(value);
-            }
+            get => (base.SelectedItem is OptionType item) ? item : OptionType.PaintBrush;
+            set => base.SelectedIndex = this.Collection.IndexOf(value);
         }
-        private OptionType selectedType;
 
         //@Construct
         public ToolListView()
