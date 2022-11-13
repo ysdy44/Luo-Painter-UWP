@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Windows.Foundation;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.Layers
 {
     public static class RectExtensions
     {
