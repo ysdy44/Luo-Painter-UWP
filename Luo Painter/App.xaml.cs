@@ -37,11 +37,25 @@ namespace Luo_Painter
       }) { }
     }
 
+    internal enum SourcePageType : byte
+    {
+        Invalid,
+
+        MainPage,
+        DrawPage,
+        StylePage,
+    }
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
+        /// <summary>
+        /// <see cref="Frame.SourcePageType"/>
+        /// </summary>
+        internal static SourcePageType SourcePageType { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
