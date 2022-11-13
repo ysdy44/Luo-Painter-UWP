@@ -70,6 +70,10 @@ namespace Luo_Painter
             {
                 if (this.Disabler) return;
 
+                if (this.DupliateDocker.IsShow) return;
+                if (this.DeleteDocker.IsShow) return;
+                if (this.SelectDocker.IsShow) return;
+
                 if (e.OriginalSource is FrameworkElement element)
                 {
                     if (element.DataContext is Project item)
@@ -171,7 +175,7 @@ namespace Luo_Painter
                 if (this.Disabler) return;
 
                 string path = this.Paths.GetPath();
-                if (this.ClipboardPath != path) 
+                if (this.ClipboardPath != path)
                 {
                     await this.ObservableCollection.Move(path, this.ClipboardProjects);
                 }
@@ -181,17 +185,16 @@ namespace Luo_Painter
 
             this.RenameCommand.Click += (s, e) => this.Action(ProjectAction.Rename, e);
 
-            this.DupliateItem.Click += (s, e) => this.Action(ProjectAction.DupliateShow, this.RenameItem.CommandParameter as Project);
-            this.DupliateItem2.Click += (s, e) => this.Action(ProjectAction.DupliateShow, this.RenameItem.CommandParameter as Project);
+            this.DupliateItem.Click += (s, e) => this.Action(ProjectAction.Dupliate, this.RenameItem.CommandParameter);
 
-            this.DeleteItem.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
-            this.DeleteItem2.Click += (s, e) => this.Action(ProjectAction.DeleteShow, this.RenameItem.CommandParameter as Project);
+            this.DeleteItem.Click += (s, e) => this.Action(ProjectAction.Delete, this.RenameItem.CommandParameter);
+            this.DeleteItem2.Click += (s, e) => this.Action(ProjectAction.Delete, this.RenameItem.CommandParameter);
 
-            this.MoveItem.Click += (s, e) => this.Action(ProjectAction.SelectShow, this.RenameItem.CommandParameter as Project);
-        
-            this.LocalItem.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter as Project);
-            this.LocalItem2.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter as Project);
-            
+            this.MoveItem.Click += (s, e) => this.Action(ProjectAction.Move, this.RenameItem.CommandParameter);
+
+            this.LocalItem.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter);
+            this.LocalItem2.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter);
+
             this.RenameDialog.IsPrimaryButtonEnabled = false;
             this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);
             this.NewTextBox.TextChanged += (s, e) => this.NewDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.NewTextBox.Text);

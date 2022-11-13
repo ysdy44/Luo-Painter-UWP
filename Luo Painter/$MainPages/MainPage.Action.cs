@@ -202,7 +202,20 @@ namespace Luo_Painter
                         {
                             this.ClipboardPath = this.Paths.GetPath();
                             this.ClipboardProjects.Add(project.Path);
-                            this.Action(ProjectAction.SelectToMove);
+
+                            //@Debug
+                            //if (false)
+                            //{
+                            //    this.Action(ProjectAction.SelectToMove);
+                            //}
+                            //else
+                            //{
+                            this.ObservableCollection.Enable(StorageItemTypes.Folder);
+                            this.ListView.IsItemClickEnabled = true;
+                            this.AppBarListView.IsItemClickEnabled = false;
+                            this.SelectDocker.IsShow = false;
+                            this.MoveDocker.IsShow = true;
+                            //}
                         }
                     }
                     break;

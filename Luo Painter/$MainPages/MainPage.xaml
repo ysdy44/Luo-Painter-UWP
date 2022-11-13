@@ -20,103 +20,63 @@
                 <MenuFlyoutItem.Command>
                     <local:ProjectCommand x:Name="RenameCommand"/>
                 </MenuFlyoutItem.Command>
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Rename" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Rename" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Rename
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="DupliateItem" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Dupliate
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutItem x:Name="DeleteItem" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Delete" Foreground="Red">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Delete" Foreground="Red"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Delete
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="MoveItem" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Move to Folder
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="LocalItem" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Local Folder
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
         </MenuFlyout>
         <MenuFlyout x:Name="FolderMenuFlyout">
-            <MenuFlyoutItem x:Name="DupliateItem2" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Dupliate
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
             <MenuFlyoutItem x:Name="DeleteItem2" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Delete" Foreground="Red">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Delete" Foreground="Red"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Delete
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="LocalItem2" >
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                        <UIElement.RenderTransform>
-                            <ScaleTransform ScaleX="1.1"  ScaleY="1.1" />
-                        </UIElement.RenderTransform>
-                    </SymbolIcon>
-                </MenuFlyoutItem.Icon>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                </MenuFlyoutItem.Tag>
                 <MenuFlyoutItem.Text>
                     Local Folder
                 </MenuFlyoutItem.Text>
