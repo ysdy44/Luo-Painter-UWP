@@ -57,10 +57,11 @@ namespace Luo_Painter
         public IList<string> ClipboardProjects { get; } = new List<string>();
         public string ClipboardPath { get; private set; }
 
-        //@Debug
-        // Disable it,
-        // or Crash when Double-Clicking a Project Item.
-        bool Disabler;
+        public bool Disabler
+        {
+            get => App.SourcePageType != SourcePageType.MainPage;
+            set => App.SourcePageType = value ? SourcePageType.Invalid : SourcePageType.MainPage;
+        }
 
         private void Load() => this.ObservableCollection.Load(this.Paths.GetPath());
 
@@ -189,6 +190,8 @@ namespace Luo_Painter
             {
                 manager.BackRequested += this.BackRequested;
             }
+
+            this.Disabler = false;
         }
         private void BackRequested(object sender, BackRequestedEventArgs e)
         {

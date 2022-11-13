@@ -63,6 +63,7 @@ namespace Luo_Painter
                             }
 
                             base.Frame.Navigate(typeof(DrawPage), parameter);
+                            return;
                         }
                     }
                     break;
@@ -93,7 +94,7 @@ namespace Luo_Painter
 
                                 this.ObservableCollection.Insert(project);
                                 base.Frame.Navigate(typeof(DrawPage), parameter);
-                                break;
+                                return;
                             default:
                                 break;
                         }
@@ -115,9 +116,9 @@ namespace Luo_Painter
 
                             this.ObservableCollection.Insert(project);
                             base.Frame.Navigate(typeof(DrawPage), parameter);
+                            return;
                         }
                     }
-                    break;
 
                 case ProjectAction.DupliateShow:
                     {
