@@ -10,7 +10,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        int PaintBrushMultiMode => 0;
+        int PaintBrushMultiMode => this.PaintBrushMultiComboBox.SelectedIndex;
 
         private async void PaintBrushMulti_Start()
         {

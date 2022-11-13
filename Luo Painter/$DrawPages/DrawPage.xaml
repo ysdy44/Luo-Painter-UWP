@@ -1162,6 +1162,21 @@
 
                                 </Grid>
                             </local:OptionCase>
+                            <local:OptionCase Value="PaintBrushMulti">
+                                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                                    <ComboBox x:Name="PaintBrushMultiComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                                        <ComboBoxItem x:Name="PaintBrushMultiMirrorHorizontalItem">Mirror (Horizontal)</ComboBoxItem>
+                                        <ComboBoxItem x:Name="PaintBrushMultiMirrorVerticalItem">Mirror (Vertical)</ComboBoxItem>
+                                        <ComboBoxItem x:Name="PaintBrushMultiSymmetryItem">Symmetry</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                            </local:OptionCase>
+                            <local:OptionCase Value="PaintStraw">
+                                <ListBox x:Name="PaintStrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ListBoxItem x:Name="PaintStrawAllItem">All Layers</ListBoxItem>
+                                    <ListBoxItem x:Name="PaintStrawCurrentItem">Current Layer</ListBoxItem>
+                                </ListBox>
+                            </local:OptionCase>
                             <local:OptionCase Value="View">
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
                                     <Grid.ColumnDefinitions>
@@ -1200,8 +1215,8 @@
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" MinWidth="70"/>
+                                        <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox x:Name="BrushComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
                                         <ComboBoxItem>Color</ComboBoxItem>
@@ -1209,10 +1224,10 @@
                                         <ComboBoxItem>RadialGradient</ComboBoxItem>
                                         <ComboBoxItem>EllipticalGradient</ComboBoxItem>
                                     </ComboBox>
-                                    <ToggleButton x:Name="BrushOpaqueButton" Grid.Column="1" >
+                                    <ToggleButton x:Name="BrushOpaqueButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                         Opaque
                                     </ToggleButton>
-                                    <ToggleButton x:Name="BrushReverseButton" Grid.Column="2" >
+                                    <ToggleButton x:Name="BrushReverseButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                         Reverse
                                     </ToggleButton>
                                 </Grid>
@@ -1221,14 +1236,14 @@
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox x:Name="TransparencyComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
                                         <ComboBoxItem>LinearGradient</ComboBoxItem>
                                         <ComboBoxItem>RadialGradient</ComboBoxItem>
                                         <ComboBoxItem>EllipticalGradient</ComboBoxItem>
                                     </ComboBox>
-                                    <ToggleButton x:Name="TransparencyReverseButton" Grid.Column="1" >
+                                    <ToggleButton x:Name="TransparencyReverseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                         Reverse
                                     </ToggleButton>
                                 </Grid>
@@ -1237,13 +1252,13 @@
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox x:Name="PenComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
                                         <ComboBoxItem>Curve</ComboBoxItem>
                                         <ComboBoxItem>Line</ComboBoxItem>
                                     </ComboBox>
-                                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" BorderThickness="1" >
+                                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                         Close
                                     </Button>
                                 </Grid>

@@ -87,7 +87,13 @@ namespace Luo_Painter
             if (type is OptionType.MarqueeTransform) return OptionType.Transform;
             else if (type.IsMarquee()) return OptionType.Marquee;
             else if (type.IsSelection()) return OptionType.Selection;
-            else if (type.IsPaint()) return OptionType.Paint;
+
+            //@Debug
+            //else if (type.IsPaint()) return OptionType.Paint;
+            else if (type is OptionType.PaintBrush) return OptionType.Paint;
+            else if (type is OptionType.PaintLine) return OptionType.Paint;
+            else if (type is OptionType.PaintBrushForce) return OptionType.Paint;
+
             else return type;
         }
 
