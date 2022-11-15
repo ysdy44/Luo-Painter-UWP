@@ -12,16 +12,25 @@ namespace Luo_Painter.Layers
         const float ttm = PaintTaskCollection.dt * PaintTaskCollection.dt;
         const float dt = 0.001666f;
 
+        // Force
         float Acceleration = 0;
         float Mass = 10000;
         Vector2 Velocity;
         public float Speed { get; set; } = 80;
 
-        public Vector2 StartingStabilizer { get; private set; }
-        public Vector2 Stabilizer { get; private set; }
+        // Stabilizer
+        public Vector2 StartingPositionStabilizer { get; private set; }
+        public Vector2 PositionStabilizer { get; private set; }
 
+        public float PressureStabilizer { get; private set; } = 1;
+        public float StartingPressureStabilizer { get; private set; } = 1;
+
+        // Paint 
         public Vector2 Position { get; set; }
         public float Pressure { get; set; } = 1;
+        // Ink 
+        float Size = 12;
+        float Spacing = 0.25f;
 
         readonly System.Timers.Timer Timer = new System.Timers.Timer
         {
@@ -37,10 +46,7 @@ namespace Luo_Painter.Layers
 
                 for (this.Acceleration += durationTime; this.Acceleration >= PaintTaskCollection.dt; this.Acceleration -= PaintTaskCollection.dt, times++)
                 {
-                    float strokeWidth = 12 * 2 * this.Pressure;
-                    if (strokeWidth < 1) return;
-
-                    Vector2 vector = this.Position - this.Stabilizer;
+                    Vector2 vector = this.Position - this.PositionStabilizer;
                     float length = vector.Length();
                     if (length < 2) return;
 
@@ -49,28 +55,39 @@ namespace Luo_Painter.Layers
 
                     this.Velocity += fd * PaintTaskCollection.ttm;
                     this.Velocity *= 1 - PaintTaskCollection.dt / length * 100;
-                    this.Stabilizer += this.Velocity * PaintTaskCollection.dt * 1;
+                    this.PositionStabilizer += this.Velocity * PaintTaskCollection.dt * 1;
 
-                    StrokeSegment segment = new StrokeSegment(this.StartingStabilizer, this.Stabilizer);
+                    StrokeSegment segment = new StrokeSegment(this.StartingPositionStabilizer, this.PositionStabilizer, this.StartingPressureStabilizer, this.Pressure, this.Size, this.Spacing);
                     if (segment.InRadius) continue;
 
                     base.Add(segment);
 
-                    this.StartingStabilizer = this.Stabilizer;
+                    this.StartingPositionStabilizer = this.PositionStabilizer;
+                    this.StartingPressureStabilizer = this.PressureStabilizer;
+                    this.PressureStabilizer = this.Pressure;
                 }
             };
         }
 
         public void StopForce() => this.Timer.Stop();
-        public void StartForce(Vector2 position)
+        public void StartForce(Vector2 position, float pressure, float size, float spacing)
         {
-            this.Pressure = 1;
-            this.Position = position;
-
-            this.StartingStabilizer = position;
-            this.Stabilizer = position;
-
+            // Force
             this.Velocity = Vector2.Zero;
+
+            // Stabilizer
+            this.StartingPositionStabilizer = position;
+            this.PositionStabilizer = position;
+
+            this.StartingPressureStabilizer = pressure;
+            this.PressureStabilizer = pressure;
+
+            // Paint 
+            this.Position = position;
+            this.Pressure = pressure;
+            // Ink 
+            this.Size = size;
+            this.Spacing = spacing;
 
             this.Timer.Start();
         }

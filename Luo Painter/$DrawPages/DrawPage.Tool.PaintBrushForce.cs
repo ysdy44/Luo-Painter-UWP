@@ -36,8 +36,6 @@ namespace Luo_Painter
                 return;
             }
 
-            this.CanvasControl.Invalidate(); // Invalidate
-
             //@Task
             {
                 StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
@@ -58,7 +56,10 @@ namespace Luo_Painter
             }
 
             //@Paint
-            this.Tasks.StartForce(this.StartingPosition);
+            this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            this.CanvasControl.Invalidate(); // Invalidate
+
+            //@Paint
             this.Tasks.State = PaintTaskState.Painting;
             await Task.Run(this.PaintSegmentAsync);
         }
@@ -69,11 +70,11 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            this.CanvasControl.Invalidate(); // Invalidate
-
-            // goto Timer.Elapsed
+            //@Paint
             this.Tasks.Position = this.Position;
             this.Tasks.Pressure = this.Pressure;
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private void PaintBrushForce_Complete()
@@ -82,11 +83,11 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
-            this.CanvasControl.Invalidate(); // Invalidate
-
             //@Paint
             this.Tasks.StopForce();
             this.Tasks.State = PaintTaskState.Painted;
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
     }

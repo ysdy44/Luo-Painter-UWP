@@ -98,7 +98,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.DrawBound(this.Border, matrix);
 
                 Vector2 p = Vector2.Transform(this.Position, matrix);
-                Vector2 sp = Vector2.Transform(this.Tasks.StartingStabilizer, matrix);
+                Vector2 sp = Vector2.Transform(this.Tasks.StartingPositionStabilizer, matrix);
                 args.DrawingSession.DrawLine(sp, p, Colors.White);
                 args.DrawingSession.DrawCircle(p, 12, Colors.White);
                 args.DrawingSession.DrawCircle(sp, 12, Colors.White);
@@ -114,7 +114,7 @@ namespace Luo_Painter.TestApp
                 this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
 
                 //@Paint
-                this.Tasks.StartForce(this.StartingPosition);
+                this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f);
                 this.Tasks.State = PaintTaskState.Painting;
                 await Task.Run(this.PaintAsync);
 
