@@ -143,7 +143,6 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintBrushForce.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintBrushMulti.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintLine.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Tool.PaintStraw.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Pen.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Selection.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />

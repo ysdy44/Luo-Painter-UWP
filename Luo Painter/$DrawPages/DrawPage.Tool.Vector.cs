@@ -83,7 +83,7 @@ namespace Luo_Painter
         {
             this.Transformer.CacheMove(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.StartingPoint));
 
-            this.SetCanvasState(true);
+            this.CanvasAnimatedControl.Invalidate(true); // Invalidate
         }
         private void View_Delta()
         {
@@ -96,9 +96,19 @@ namespace Luo_Painter
         {
             this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
 
-            this.SetCanvasState(this.OptionType.HasPreview());
+            this.CanvasAnimatedControl.Invalidate(this.OptionType.HasPreview()); // Invalidate
 
             this.ConstructView(this.Transformer);
+        }
+
+        private void Straw_Start()
+        {
+        }
+        private void Straw_Delta()
+        {
+        }
+        private void Straw_Complete()
+        {
         }
 
     }
