@@ -1,12 +1,29 @@
-﻿using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
     public static class CanvasDrawingSessionExtensions
     {
+        public static void Invalidate(this CanvasAnimatedControl canvasAnimatedControl, bool isPaused)
+        {
+            if (canvasAnimatedControl.Paused == isPaused) return;
+
+            if (isPaused)
+            {
+                canvasAnimatedControl.Paused = true;
+                canvasAnimatedControl.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                canvasAnimatedControl.Invalidate(); // Invalidate
+                canvasAnimatedControl.Paused = false;
+                canvasAnimatedControl.Visibility = Visibility.Visible;
+            }
+        }
 
         private static void DrawAnchor(this CanvasDrawingSession ds, Anchor anchor, Vector2 point)
         {
