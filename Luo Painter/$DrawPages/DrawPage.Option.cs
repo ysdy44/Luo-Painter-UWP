@@ -574,7 +574,9 @@ namespace Luo_Painter
                     this.BitmapLayer = null;
                     this.OptionType = OptionType.CropCanvas;
                     this.ConstructAppBar(OptionType.CropCanvas);
-                    this.SetCanvasState(true);
+
+                    this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
                     break;
 
                 case OptionType.Stretch:
@@ -1200,9 +1202,11 @@ namespace Luo_Painter
                             break;
                         }
 
-                        this.OptionType = type;
-                        this.ConstructAppBar(type);
-                        this.SetCanvasState(true);
+                        this.OptionType = OptionType.Feather;
+                        this.ConstructAppBar(OptionType.Feather);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
                     }
                     break;
                 case OptionType.MarqueeTransform:
@@ -1228,9 +1232,11 @@ namespace Luo_Painter
                                 break;
                         }
 
-                        this.OptionType = type;
-                        this.ConstructAppBar(type);
-                        this.SetCanvasState(true);
+                        this.OptionType = OptionType.MarqueeTransform;
+                        this.ConstructAppBar(OptionType.MarqueeTransform);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
                     }
                     break;
                 case OptionType.Grow:
@@ -1244,9 +1250,11 @@ namespace Luo_Painter
                             break;
                         }
 
-                        this.OptionType = type;
-                        this.ConstructAppBar(type);
-                        this.SetCanvasState(true);
+                        this.OptionType = OptionType.Grow;
+                        this.ConstructAppBar(OptionType.Grow);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
                     }
                     break;
                 case OptionType.Shrink:
@@ -1260,9 +1268,11 @@ namespace Luo_Painter
                             break;
                         }
 
-                        this.OptionType = type;
-                        this.ConstructAppBar(type);
-                        this.SetCanvasState(true);
+                        this.OptionType = OptionType.Shrink;
+                        this.ConstructAppBar(OptionType.Shrink);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
                     }
                     break;
 
@@ -1314,9 +1324,12 @@ namespace Luo_Painter
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
-                                this.OptionType = type;
-                                this.ConstructAppBar(type);
-                                this.SetCanvasState(true);
+
+                                this.OptionType = OptionType.Transform;
+                                this.ConstructAppBar(OptionType.Transform);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
                             else this.Tip(TipType.NotBitmapLayer);
@@ -1371,9 +1384,12 @@ namespace Luo_Painter
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
-                                this.OptionType = type;
-                                this.ConstructAppBar(type);
-                                this.SetCanvasState(true);
+
+                                this.OptionType = OptionType.DisplacementLiquefaction;
+                                this.ConstructAppBar(OptionType.DisplacementLiquefaction);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
                             else this.Tip(TipType.NotBitmapLayer);
@@ -1398,9 +1414,12 @@ namespace Luo_Painter
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
-                                this.OptionType = type;
-                                this.ConstructAppBar(type);
-                                this.SetCanvasState(true);
+
+                                this.OptionType = OptionType.GradientMapping;
+                                this.ConstructAppBar(OptionType.GradientMapping);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
                             else this.Tip(TipType.NotBitmapLayer);
@@ -1474,7 +1493,9 @@ namespace Luo_Painter
                                 this.SelectionType = state;
                                 this.OptionType = type;
                                 this.ConstructAppBar(type);
-                                this.SetCanvasState(true);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 break;
                             }
                             else this.Tip(TipType.NotBitmapLayer);
@@ -1572,11 +1593,25 @@ namespace Luo_Painter
                 case OptionType.PatternGrid:
                 case OptionType.PatternDiagonal:
                 case OptionType.PatternSpotted:
+                    if (this.OptionType.HasPreview())
                     {
+                        // Tool
                         this.BitmapLayer = null;
                         this.OptionType = type;
                         this.ConstructAppBar(type);
-                        this.SetCanvasState(default);
+
+                        this.CanvasAnimatedControl.Invalidate(this.OptionType.HasPreview()); // Invalidate
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
+                    }
+                    else
+                    {
+                        // Tool
+                        this.BitmapLayer = null;
+                        this.OptionType = type;
+                        this.ConstructAppBar(type);
+
+                        this.CanvasAnimatedControl.Invalidate(this.OptionType.HasPreview()); // Invalidate
                     }
                     break;
 
