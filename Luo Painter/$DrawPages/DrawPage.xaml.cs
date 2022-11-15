@@ -37,6 +37,15 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
+    public enum ContextAppBarDevice
+    {
+        None,
+        Phone,
+        Pad,
+        PC,
+        Hub,
+    }
+
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
@@ -62,6 +71,118 @@ namespace Luo_Painter
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
+
+
+        #region DependencyProperty: Device
+
+
+        // GradientStopSelector
+        private double ReverseDevicePhoneToWidth740Converter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone: return double.NaN;
+                case ContextAppBarDevice.Pad: return 500;
+                default: return 740;
+            }
+        }
+
+        // InkSlider
+        private double ReverseDevicePhoneToWidth300Converter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone: return double.NaN;
+                default: return 300;
+            }
+        }
+
+        // Slider 
+        private double ReverseDevicePhoneToWidth260Converter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone: return double.NaN;
+                default: return 260;
+            }
+        }
+
+        // Slider Slider 
+        private double ReverseDevicePhoneAndPadToWidth260Converter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone:
+                case ContextAppBarDevice.Pad: return double.NaN;
+                default: return 260;
+            }
+        }
+        private Orientation ReverseDevicePhoneAndPadToOrientationHorizontalConverter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone:
+                case ContextAppBarDevice.Pad: return Orientation.Vertical;
+                default: return Orientation.Horizontal;
+            }
+        }
+
+        // Slider Slider Slider Slider 
+        private Orientation DevicePhoneToOrientationVerticalConverter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone: return Orientation.Vertical;
+                default: return Orientation.Horizontal;
+            }
+        }
+        private Orientation DeviceHubToOrientationHorizontalConverter(ContextAppBarDevice value)
+        {
+            switch (value)
+            {
+                case ContextAppBarDevice.Phone:
+                case ContextAppBarDevice.Pad:
+                case ContextAppBarDevice.PC: return Orientation.Vertical;
+                default: return Orientation.Horizontal;
+            }
+        }
+
+
+        /// <summary> Gets or set the device for <see cref="DrawPage"/>. </summary>
+        public ContextAppBarDevice Device
+        {
+            get => (ContextAppBarDevice)base.GetValue(DeviceProperty);
+            set => base.SetValue(DeviceProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "DrawPage.Device" /> dependency property. </summary>
+        public static readonly DependencyProperty DeviceProperty = DependencyProperty.Register(nameof(Device), typeof(ContextAppBarDevice), typeof(DrawPage), new PropertyMetadata(ContextAppBarDevice.None, (sender, e) =>
+        {
+            DrawPage control = (DrawPage)sender;
+
+            if (e.NewValue is ContextAppBarDevice value)
+            {
+                switch (value)
+                {
+                    case ContextAppBarDevice.Phone:
+                        VisualStateManager.GoToState(control, "Phone", false);
+                        break;
+                    case ContextAppBarDevice.Pad:
+                        VisualStateManager.GoToState(control, "Pad", false);
+                        break;
+                    case ContextAppBarDevice.PC:
+                        VisualStateManager.GoToState(control, "PC", false);
+                        break;
+                    case ContextAppBarDevice.Hub:
+                        VisualStateManager.GoToState(control, "Hub", false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }));
+
+
+        #endregion
 
 
         public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
@@ -167,8 +288,7 @@ namespace Luo_Painter
             this.ConstructPropertys();
             this.ConstructProperty();
 
-            this.ConstructFoots();
-            this.ConstructFoot();
+            this.ConstructAppBar();
 
             this.ConstructEffect();
             this.ConstructGeometry();
@@ -184,6 +304,19 @@ namespace Luo_Painter
             this.ConstructVector();
             this.ConstructTransform();
             this.ConstructPen();
+
+
+            this.ContentGrid.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                double width = (int)e.NewSize.Width;
+                if (width > 1200) this.Device = ContextAppBarDevice.Hub;
+                else if (width > 900) this.Device = ContextAppBarDevice.PC;
+                else if (width > 600) this.Device = ContextAppBarDevice.Pad;
+                else this.Device = ContextAppBarDevice.Phone;
+            };
 
 
             this.Command.Click += (s, type) => this.Click(type);

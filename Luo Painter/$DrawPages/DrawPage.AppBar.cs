@@ -4,101 +4,44 @@ using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System.Numerics;
-using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal enum ContextAppBarDevice
-    {
-        None,
-        Phone,
-        Pad,
-        PC,
-        Hub,
-    }
-
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
-
-        ContextAppBarDevice AppBarDevice;
-
-        public void ConstructFoots()
-        {
-            this.ContentGrid.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                ContextAppBarDevice device = this.GetDevice((int)e.NewSize.Width);
-                if (this.AppBarDevice == device) return;
-                this.AppBarDevice = device;
-
-                switch (device)
-                {
-                    case ContextAppBarDevice.Phone:
-                        VisualStateManager.GoToState(this, nameof(Phone), false);
-                        break;
-                    case ContextAppBarDevice.Pad:
-                        VisualStateManager.GoToState(this, nameof(Pad), false);
-                        break;
-                    case ContextAppBarDevice.PC:
-                        VisualStateManager.GoToState(this, nameof(PC), false);
-                        break;
-                    case ContextAppBarDevice.Hub:
-                        VisualStateManager.GoToState(this, nameof(Hub), false);
-                        break;
-                    default:
-                        break;
-                }
-            };
-        }
-
-        private ContextAppBarDevice GetDevice(int width)
-        {
-            if (width > 1200) return ContextAppBarDevice.Hub;
-            else if (width > 900) return ContextAppBarDevice.PC;
-            else if (width > 600) return ContextAppBarDevice.Pad;
-            else return ContextAppBarDevice.Phone;
-        }
-
 
         public void ConstructAppBar(OptionType type)
         {
             if (type.HasPreview())
             {
                 this.TitleTextBlock.Text = type.ToString();
-                this.SwitchPresenter.Value = this.GetType(type);
                 VisualStateManager.GoToState(this, nameof(AppBarPreview), false);
             }
             else
             {
                 this.TitleTextBlock.Text = string.Empty;
-                this.SwitchPresenter.Value = this.GetType(type);
                 VisualStateManager.GoToState(this, nameof(AppBarNormal), false);
             }
-        }
 
-        private OptionType GetType(OptionType type)
-        {
-            if (type is OptionType.MarqueeTransform) return OptionType.Transform;
-            else if (type.IsMarquee()) return OptionType.Marquee;
-            else if (type.IsSelection()) return OptionType.Selection;
+            if (type is OptionType.MarqueeTransform) this.SwitchPresenter.Value = OptionType.Transform;
+            else if (type.IsMarquee()) this.SwitchPresenter.Value = OptionType.Marquee;
+            else if (type.IsSelection()) this.SwitchPresenter.Value = OptionType.Selection;
+            else if (type.IsGeometry()) this.SwitchPresenter.Value = type.ToGeometryTransform();
 
             //@Debug
-            //else if (type.IsPaint()) return OptionType.Paint;
-            else if (type is OptionType.PaintBrush) return OptionType.Paint;
-            else if (type is OptionType.PaintLine) return OptionType.Paint;
-            else if (type is OptionType.PaintBrushForce) return OptionType.Paint;
+            //else if (type.IsPaint()) this.SwitchPresenter.Value = OptionType.Paint;
+            else if (type is OptionType.PaintBrush) this.SwitchPresenter.Value = OptionType.Paint;
+            else if (type is OptionType.PaintLine) this.SwitchPresenter.Value = OptionType.Paint;
+            else if (type is OptionType.PaintBrushForce) this.SwitchPresenter.Value = OptionType.Paint;
 
-            else return type;
+            else this.SwitchPresenter.Value = type;
         }
 
 
-        public void ConstructFoot()
+        public void ConstructAppBar()
         {
             this.AppBarSecondaryButton.Click += (s, e) =>
             {
@@ -114,7 +57,10 @@ namespace Luo_Painter
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedType;
                 this.ConstructAppBar(this.OptionType);
-                this.SetCanvasState(false);
+
+                this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
             };
 
             this.AppBarBackButton.Click += (s, e) =>
@@ -131,7 +77,10 @@ namespace Luo_Painter
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedType;
                 this.ConstructAppBar(this.OptionType);
-                this.SetCanvasState(false);
+
+                this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
             };
 
             this.AppBarPrimaryButton.Click += (s, e) =>
@@ -163,7 +112,10 @@ namespace Luo_Painter
                 this.BitmapLayer = null;
                 this.OptionType = this.ToolListView.SelectedType;
                 this.ConstructAppBar(this.OptionType);
-                this.SetCanvasState(false);
+
+                this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
             };
         }
 
