@@ -16,7 +16,7 @@ namespace Luo_Painter
             // Single
             this.Operator.Single_Start += (point, properties) =>
             {
-                this.SetCanvasState(true);
+                this.CanvasAnimatedControl.Paused = true; // Invalidate
 
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
@@ -84,7 +84,7 @@ namespace Luo_Painter
             };
             this.Operator.Single_Complete += (point, properties) =>
             {
-                this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
+                this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
 
                 if (this.ReferenceImage is null)
                 {
@@ -120,7 +120,7 @@ namespace Luo_Painter
             {
                 this.Transformer.CachePinch(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(center), this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(space));
 
-                this.SetCanvasState(true);
+                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
             };
             this.Operator.Double_Delta += (center, space) =>
             {
@@ -131,7 +131,7 @@ namespace Luo_Painter
             };
             this.Operator.Double_Complete += (center, space) =>
             {
-                this.SetCanvasState(this.OptionType.IsMarquees() || this.OptionType.IsEffect());
+                this.CanvasAnimatedControl.Invalidate(this.OptionType.HasPreview()); // Invalidate
 
                 this.ConstructView(this.Transformer);
             };
