@@ -36,7 +36,7 @@
                         <options:OptionType>PaintLine</options:OptionType>
                         <options:OptionType>PaintBrushForce</options:OptionType>
                         <options:OptionType>PaintBrushMulti</options:OptionType>
-                        <options:OptionType>PaintStraw</options:OptionType>
+                        <options:OptionType>Straw</options:OptionType>
                     </luo_painter:ToolGrouping>
                     <luo_painter:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>

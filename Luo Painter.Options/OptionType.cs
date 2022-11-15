@@ -269,17 +269,20 @@ namespace Luo_Painter.Options
         PaintLine = Paint | 2 << 8 | ExistIcon | IsItemClickEnabled,
         PaintBrushForce = Paint | 3 << 8 | ExistIcon | IsItemClickEnabled,
         PaintBrushMulti = Paint | 4 << 8 | ExistIcon | IsItemClickEnabled,
-        PaintStraw = Paint | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Vector
         Cursor = Vector | 1 << 8 | ExistIcon | IsItemClickEnabled,
         View = Vector | 2 << 8 | ExistIcon | IsItemClickEnabled,
-        Crop = Vector | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        Straw = Vector | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        Crop = Vector | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
-        Brush = Vector | 4 << 8 | ExistIcon | IsItemClickEnabled,
-        Transparency = Vector | 5 << 8 | ExistIcon | IsItemClickEnabled,
+        Brush = Vector | 5 << 8 | ExistIcon | IsItemClickEnabled,
+        Transparency = Vector | 6 << 8 | ExistIcon | IsItemClickEnabled,
 
-        Image = Vector | 6 << 8 | ExistIcon | IsItemClickEnabled,
+        Image = Vector | 7 << 8 | ExistIcon | IsItemClickEnabled,
+
+
+
 
         // Curve
         Node = Curve | 1 << 8 | ExistIcon | IsItemClickEnabled,

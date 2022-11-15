@@ -7,15 +7,15 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        private void PaintStraw_Start()
+        private void Straw_Start()
         {
         }
 
-        private void PaintStraw_Delta()
+        private void Straw_Delta()
         {
         }
 
-        private void PaintStraw_Complete()
+        private void Straw_Complete()
         {
         }
 

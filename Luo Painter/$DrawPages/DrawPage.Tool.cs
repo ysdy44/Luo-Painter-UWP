@@ -69,12 +69,12 @@ namespace Luo_Painter
                 case OptionType.PaintBrushMulti:
                     this.PaintBrushMulti_Start();
                     break;
-                case OptionType.PaintStraw:
-                    this.PaintStraw_Start();
-                    break;
 
                 case OptionType.View:
                     this.View_Start();
+                    break;
+                case OptionType.Straw:
+                    this.Straw_Start();
                     break;
                 case OptionType.Brush:
                     this.Brush_Start();
@@ -149,12 +149,12 @@ namespace Luo_Painter
                 case OptionType.PaintBrushMulti:
                     this.PaintBrushMulti_Delta();
                     break;
-                case OptionType.PaintStraw:
-                    this.PaintStraw_Delta();
-                    break;
 
                 case OptionType.View:
                     this.View_Delta();
+                    break;
+                case OptionType.Straw:
+                    this.Straw_Delta();
                     break;
                 case OptionType.Brush:
                     this.Brush_Delta();
@@ -229,12 +229,12 @@ namespace Luo_Painter
                 case OptionType.PaintBrushMulti:
                     this.PaintBrushMulti_Complete();
                     break;
-                case OptionType.PaintStraw:
-                    this.PaintStraw_Complete();
-                    break;
 
                 case OptionType.View:
                     this.View_Complete();
+                    break;
+                case OptionType.Straw:
+                    this.Straw_Complete();
                     break;
                 case OptionType.Brush:
                     this.Brush_Complete();

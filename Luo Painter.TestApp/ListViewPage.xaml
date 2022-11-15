@@ -32,11 +32,11 @@
                         <options:OptionType>PaintLine</options:OptionType>
                         <options:OptionType>PaintBrushForce</options:OptionType>
                         <options:OptionType>PaintBrushMulti</options:OptionType>
-                        <options:OptionType>PaintStraw</options:OptionType>
                     </local:ToolGrouping>
                     <local:ToolGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>
                         <options:OptionType>View</options:OptionType>
+                        <options:OptionType>Straw</options:OptionType>
                         <options:OptionType>Brush</options:OptionType>
                         <options:OptionType>Transparency</options:OptionType>
                         <options:OptionType>Image</options:OptionType>

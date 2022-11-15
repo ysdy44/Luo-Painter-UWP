@@ -1527,11 +1527,11 @@ namespace Luo_Painter
                 case OptionType.PaintBrushMulti:
                 case OptionType.PaintBrushForce:
                 case OptionType.PaintLine:
-                case OptionType.PaintStraw:
 
                 // Vector
                 case OptionType.Cursor:
                 case OptionType.View:
+                case OptionType.Straw:
                 case OptionType.Crop:
 
                 case OptionType.Brush:

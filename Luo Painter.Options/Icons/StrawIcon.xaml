@@ -2,12 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ControlTemplate x:Key="PaintStrawIcon" TargetType="ContentControl">
+    <ControlTemplate x:Key="StrawIcon" TargetType="ContentControl">
         <Path HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" >
             <Shape.Fill>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="DeepPink" Offset="0.5"/>
-                    <GradientStop Color="DeepSkyBlue" Offset="0.6"/>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="Gold" Offset="0.4"/>
+                    <GradientStop Color="Coral" Offset="0.5"/>
                 </LinearGradientBrush>
             </Shape.Fill>
             <Path.Data>

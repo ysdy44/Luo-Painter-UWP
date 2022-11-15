@@ -1171,12 +1171,6 @@
                                     </ComboBox>
                                 </Grid>
                             </local:OptionCase>
-                            <local:OptionCase Value="PaintStraw">
-                                <ListBox x:Name="PaintStrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <ListBoxItem x:Name="PaintStrawAllItem">All Layers</ListBoxItem>
-                                    <ListBoxItem x:Name="PaintStrawCurrentItem">Current Layer</ListBoxItem>
-                                </ListBox>
-                            </local:OptionCase>
                             <local:OptionCase Value="View">
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
                                     <Grid.ColumnDefinitions>
@@ -1210,6 +1204,12 @@
                                         </Slider.Header>
                                     </Slider>
                                 </Grid>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Straw">
+                                <ListBox x:Name="StrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ListBoxItem x:Name="StrawAllItem">All Layers</ListBoxItem>
+                                    <ListBoxItem x:Name="StrawCurrentItem">Current Layer</ListBoxItem>
+                                </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="Brush">
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
