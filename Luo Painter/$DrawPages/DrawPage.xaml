@@ -1163,13 +1163,35 @@
                                 </Grid>
                             </local:OptionCase>
                             <local:OptionCase Value="PaintBrushMulti">
-                                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
-                                    <ComboBox x:Name="PaintBrushMultiComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
-                                        <ComboBoxItem x:Name="PaintBrushMultiMirrorHorizontalItem">Mirror (Horizontal)</ComboBoxItem>
-                                        <ComboBoxItem x:Name="PaintBrushMultiMirrorVerticalItem">Mirror (Vertical)</ComboBoxItem>
-                                        <ComboBoxItem x:Name="PaintBrushMultiSymmetryItem">Symmetry</ComboBoxItem>
-                                    </ComboBox>
-                                </Grid>
+                                <StackPanel>
+                                    <ListBox x:Name="MultiComboBox" SelectedIndex="1" Margin="12,4,12,0" >
+                                        <ListBoxItem x:Name="MultiMirrorItem">Mirror</ListBoxItem>
+                                        <ListBoxItem x:Name="MultiSymmetryItem">Symmetry</ListBoxItem>
+                                        <ListBoxItem x:Name="MultiMirrorSymmetryItem">Mirror &amp; Symmetry</ListBoxItem>
+                                    </ListBox>
+                                    <ListBox x:Name="MultiMirrorComboBox" SelectedIndex="0" Margin="12,6,12,10" Style="{StaticResource AppSegmentListBoxStyle}"
+                                              Visibility="{x:Bind BooleanToVisibilityConverter(MultiMirrorItem.IsSelected), Mode=OneWay}">
+                                        <ListBoxItem x:Name="MultiHorizontalItem">Horizontal</ListBoxItem>
+                                        <ListBoxItem x:Name="MultiVerticalItem">Vertical</ListBoxItem>
+                                        <ListBoxItem x:Name="MultiHorizontalVerticalItem">Horizontal &amp; Vertical</ListBoxItem>
+                                    </ListBox>
+                                    <Slider x:Name="MultiSlider" Value="4" Minimum="2" Maximum="24" Style="{StaticResource AppSliderStyle}"
+                                              Visibility="{x:Bind ReverseBooleanToVisibilityConverter(MultiMirrorItem.IsSelected), Mode=OneWay}">
+                                        <FrameworkElement.Tag>
+                                            Count
+                                        </FrameworkElement.Tag>
+                                        <Slider.Header>
+                                            <Button x:Name="MultiButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
+                                                    Content="{x:Bind MultiSlider.Value, Mode=OneWay}" >
+                                                <Button.Flyout>
+                                                    <Flyout>
+
+                                                    </Flyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </Slider.Header>
+                                    </Slider>
+                                </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="View">
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >

@@ -104,6 +104,7 @@ namespace Luo_Painter
                         break;
 
                     case OptionType.PaintBrush:
+                    case OptionType.PaintBrushForce:
                     case OptionType.PaintBrushMulti:
                         if (this.BitmapLayer is null) break;
 
@@ -115,14 +116,6 @@ namespace Luo_Painter
                         args.DrawingSession.DrawLine(this.StartingPoint, this.Point, Colors.Gray);
                         args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
                         args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
-                        break;
-                    case OptionType.PaintBrushForce:
-                        if (this.BitmapLayer is null) break;
-
-                        Vector2 stabilizer = this.ToPoint(this.Tasks.StartingStabilizer);
-                        args.DrawingSession.DrawLine(stabilizer, this.Point, Colors.Gray);
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
-                        args.DrawingSession.DrawCircle(stabilizer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
                         break;
 
                     default:
