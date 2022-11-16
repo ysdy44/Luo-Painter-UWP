@@ -207,6 +207,19 @@ namespace Luo_Painter
                     }
                 }
             };
+
+
+            this.StrawCanvasControl.CreateResources += (sender, args) =>
+            {
+                this.StrawViewer.CreateResources(sender);
+            };
+            this.StrawCanvasControl.Draw += (sender, args) =>
+            {
+                //@DPI 
+                args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                args.DrawingSession.DrawImage(this.StrawViewer.StrawImage);
+            };
         }
 
         private ICanvasImage GetMezzanine()
@@ -270,6 +283,22 @@ namespace Luo_Painter
                     Source2 = this.BitmapLayer[BitmapType.Origin],
                     Source3 = this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Origin])
                 };
+            }
+        }
+
+        private void Straw()
+        {
+            using (CanvasDrawingSession ds = this.StrawViewer.CreateDrawingSession())
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawImage(this.Nodes.Render(this.Mesh,
+                    this.Transformer.GetMatrix() *
+                    Matrix3x2.CreateTranslation(-this.StrawCanvasControl.Dpi.ConvertDipsToPixels(this.Point)) *
+                    Matrix3x2.CreateScale(4) *
+                    Matrix3x2.CreateTranslation(this.StrawViewer.StrawCenterX, this.StrawViewer.StrawCenterY),
+                    CanvasImageInterpolation.NearestNeighbor));
             }
         }
 

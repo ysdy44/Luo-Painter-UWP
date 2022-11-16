@@ -297,6 +297,19 @@
 
                         <!--Simulate-->
                         <controls:SimulateCanvas x:Name="SimulateCanvas" />
+                        
+                        <!--Straw-->
+                        <controls:StrawViewer x:Name="StrawViewer">
+                            <Path StrokeThickness="1" Stroke="Black" Fill="White">
+                                <Path.Data>
+                                    M38.61,99.44l22.22,22.31l22.219,-22.31l35.627,-0c1.646,-0 2.983,-1.337 2.983,-2.983l0,-93.474c0,-1.646 -1.337,-2.983 -2.983,-2.983l-115.693,0c-1.646,0 -2.983,1.337 -2.983,2.983l-0,93.474c-0,1.646 1.337,2.983 2.983,2.983l35.627,-0Z
+                                </Path.Data>
+                            </Path>
+                            <canvas:CanvasControl x:Name="StrawCanvasControl" Canvas.Left="5" Canvas.Top="4" Width="112" Height="90"
+                                ClearColor="Black" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                            <FontIcon Canvas.Left="44" Canvas.Top="22" FontSize="40" Glyph="&#x2BD0;" Foreground="White" FontFamily="Segoe UI Symbol" />
+                        </controls:StrawViewer>
+
                     </Canvas>
 
                     <!--Split-->
