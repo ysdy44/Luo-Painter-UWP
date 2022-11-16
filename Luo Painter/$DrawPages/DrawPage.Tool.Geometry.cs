@@ -89,7 +89,7 @@ namespace Luo_Painter
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
             {
                 ds.Clear(Colors.Transparent);
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.ColorButton.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.Color);
             }
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -99,10 +99,16 @@ namespace Luo_Painter
 
         private void Geometry_Start()
         {
+            if (this.LayerSelectedItem is null)
+            {
+                this.Tip(TipType.NoLayer);
+                return;
+            }
+
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip(TipType.NoLayer);
+                this.Tip(TipType.NotBitmapLayer);
                 return;
             }
 
@@ -121,7 +127,6 @@ namespace Luo_Painter
 
             this.OptionType = this.OptionType.ToGeometryTransform();
             this.ConstructAppBar(this.OptionType);
-            this.SetCanvasState(true);
         }
 
         public CanvasGeometry CreateGeometry(ICanvasResourceCreator resourceCreator, OptionType type, ITransformerLTRB transformerLTRB)
