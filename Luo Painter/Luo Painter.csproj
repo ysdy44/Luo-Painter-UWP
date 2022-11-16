@@ -221,6 +221,9 @@
     <Compile Include="Controls\SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StrawViewer.xaml.cs">
+      <DependentUpon>StrawViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StretchDialog.xaml.cs">
       <DependentUpon>StretchDialog.xaml</DependentUpon>
     </Compile>
@@ -386,6 +389,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SizePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\StrawViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
