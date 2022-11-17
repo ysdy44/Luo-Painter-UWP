@@ -28,7 +28,8 @@ namespace Luo_Painter.Options
         IsItemClickEnabled = 1,
         ExistIcon = 2,
         ExistThumbnail = 4,
-        AllowDrag = 8,
+        AllowDrag = 7,
+        HasMenu = 8,
         HasPreview = 16,
         HasDifference = 32,
         WithState = 64,
@@ -79,26 +80,26 @@ namespace Luo_Painter.Options
         DockLeftMenu = Menu | 3 << 8 | IsItemClickEnabled,
         DockRightMenu = Menu | 4 << 8 | IsItemClickEnabled,
 
-        ExportMenu = Menu | 5 << 8 | IsItemClickEnabled,
-        ColorMenu = Menu | 6 << 8 | IsItemClickEnabled,
-        PaletteMenu = Menu | 7 << 8 | IsItemClickEnabled,
+        ExportMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
+        ColorMenu = Menu | 6 << 8 | HasMenu | IsItemClickEnabled,
+        PaletteMenu = Menu | 7 << 8 | HasMenu | IsItemClickEnabled,
 
-        EditMenu = Menu | 8 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        AdjustmentMenu = Menu | 9 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        OtherMenu = Menu | 10 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        EditMenu = Menu | 8 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        AdjustmentMenu = Menu | 9 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        OtherMenu = Menu | 10 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        PaintMenu = Menu | 11 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        BrushMenu = Menu | 12 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        SizeMenu = Menu | 13 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        PaintMenu = Menu | 11 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        BrushMenu = Menu | 12 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        SizeMenu = Menu | 13 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        ToolMenu = Menu | 14 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        ToolMenu = Menu | 14 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        HistoryMenu = Menu | 15 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        EffectMenu = Menu | 16 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
-        LayerMenu = Menu | 17 << 8 | IsItemClickEnabled | ExistIcon | IsItemClickEnabled,
+        HistoryMenu = Menu | 15 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        EffectMenu = Menu | 16 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        LayerMenu = Menu | 17 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        AddMenu = Menu | 18 << 8 | IsItemClickEnabled,
-        PropertyMenu = Menu | 19 << 8 | IsItemClickEnabled,
+        AddMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
+        PropertyMenu = Menu | 19 << 8 | HasMenu | IsItemClickEnabled,
         PropertyMenuWithRename = Menu | 20 << 8,
 
         #endregion
@@ -107,9 +108,9 @@ namespace Luo_Painter.Options
 
         CropCanvas = Setup | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        Stretch = Setup | 2 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        Extend = Setup | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        Offset = Setup | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Stretch = Setup | 2 << 8 | WithState | HasPreview | HasMenu | ExistIcon | IsItemClickEnabled,
+        Extend = Setup | 3 << 8 | WithState | HasPreview | HasMenu | ExistIcon | IsItemClickEnabled,
+        Offset = Setup | 4 << 8 | WithState | HasPreview | HasMenu | ExistIcon | IsItemClickEnabled,
 
         FlipHorizontal = Setup | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         FlipVertical = Setup | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -176,10 +177,10 @@ namespace Luo_Painter.Options
         Pixel = Selecting | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         // Marquees
-        Feather = Marquees | 5 << 8 | WithState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        MarqueeTransform = 6 << 8 | Marquees | WithTransform | WithState | HasDifference | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        Grow = Marquees | 7 << 8 | WithState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        Shrink = Marquees | 8 << 8 | WithState | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
+        Feather = Marquees | 5 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        MarqueeTransform = 6 << 8 | Marquees | WithTransform | WithState | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        Grow = Marquees | 7 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Shrink = Marquees | 8 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
@@ -195,21 +196,21 @@ namespace Luo_Painter.Options
         // Other
         Transform = Other | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         DisplacementLiquefaction = Other | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        GradientMapping = Other | 3 << 8 | HasPreview | AllowDrag | ExistIcon | IsItemClickEnabled,
-        RippleEffect = Other | 4 << 8 | HasPreview | AllowDrag | ExistIcon | HasDifference | IsItemClickEnabled,
+        GradientMapping = Other | 3 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        RippleEffect = Other | 4 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
         Fill = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
         Threshold = Other | 6 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Invert = Adjustment | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Exposure = Adjustment | 3 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Brightness = Adjustment | 4 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Saturation = Adjustment | 5 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        HueRotation = Adjustment | 6 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Contrast = Adjustment | 7 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Temperature = Adjustment | 8 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | AllowDrag | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Exposure = Adjustment | 3 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Brightness = Adjustment | 4 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Saturation = Adjustment | 5 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        HueRotation = Adjustment | 6 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Contrast = Adjustment | 7 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Temperature = Adjustment | 8 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         // Effect1
         GaussianBlur = Effect1 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -322,24 +323,24 @@ namespace Luo_Painter.Options
 
         // GeometryTransform
         // Geometry0
-        GeometryRectangleTransform = GeometryRectangle | WithTransform | HasPreview | AllowDrag,
-        GeometryEllipseTransform = GeometryEllipse | WithTransform | HasPreview | AllowDrag,
+        GeometryRectangleTransform = GeometryRectangle | WithTransform | HasPreview,
+        GeometryEllipseTransform = GeometryEllipse | WithTransform | HasPreview,
         // Geometry1
-        GeometryRoundRectTransform = GeometryRoundRect | WithTransform | HasPreview | AllowDrag,
-        GeometryTriangleTransform = GeometryTriangle | WithTransform | HasPreview | AllowDrag,
-        GeometryDiamondTransform = GeometryDiamond | WithTransform | HasPreview | AllowDrag,
+        GeometryRoundRectTransform = GeometryRoundRect | WithTransform | HasPreview,
+        GeometryTriangleTransform = GeometryTriangle | WithTransform | HasPreview,
+        GeometryDiamondTransform = GeometryDiamond | WithTransform | HasPreview,
         // Geometry2
-        GeometryPentagonTransform = GeometryPentagon | WithTransform | HasPreview | AllowDrag,
-        GeometryStarTransform = GeometryStar | WithTransform | HasPreview | AllowDrag,
-        GeometryCogTransform = GeometryCog | WithTransform | HasPreview | AllowDrag,
+        GeometryPentagonTransform = GeometryPentagon | WithTransform | HasPreview,
+        GeometryStarTransform = GeometryStar | WithTransform | HasPreview,
+        GeometryCogTransform = GeometryCog | WithTransform | HasPreview,
         // Geometry3
-        GeometryDountTransform = GeometryDount | WithTransform | HasPreview | AllowDrag,
-        GeometryPieTransform = GeometryPie | WithTransform | HasPreview | AllowDrag,
-        GeometryCookieTransform = GeometryCookie | WithTransform | HasPreview | AllowDrag,
+        GeometryDountTransform = GeometryDount | WithTransform | HasPreview,
+        GeometryPieTransform = GeometryPie | WithTransform | HasPreview,
+        GeometryCookieTransform = GeometryCookie | WithTransform | HasPreview,
         // Geometry4
-        GeometryArrowTransform = GeometryArrow | WithTransform | HasPreview | AllowDrag,
-        GeometryCapsuleTransform = GeometryCapsule | WithTransform | HasPreview | AllowDrag,
-        GeometryHeartTransform = GeometryHeart | WithTransform | HasPreview | AllowDrag,
+        GeometryArrowTransform = GeometryArrow | WithTransform | HasPreview,
+        GeometryCapsuleTransform = GeometryCapsule | WithTransform | HasPreview,
+        GeometryHeartTransform = GeometryHeart | WithTransform | HasPreview,
 
     }
 }
