@@ -36,6 +36,30 @@ namespace Luo_Painter.Controls
         public LayerListView()
         {
             this.InitializeComponent();
+            this.ConstructPropertys();
+            this.ConstructProperty();
+            base.RightTapped += (s, e) =>
+            {
+                if (e.OriginalSource is FrameworkElement element)
+                {
+                    if (element.DataContext is ILayer item)
+                    {
+                        base.SelectedItem = item;
+                        this.MenuFlyout.ShowAt(this, e.GetPosition(this));
+                    }
+                }
+            };
+            base.DoubleTapped += (s, e) =>
+            {
+                if (e.OriginalSource is FrameworkElement element)
+                {
+                    if (element.DataContext is ILayer item)
+                    {
+                        base.SelectedItem = item;
+                        this.Flyout.ShowAt(element);
+                    }
+                }
+            };
             this.MenuFlyout.Opened += (s, e) =>
             {
                 bool isEnabled = base.SelectedItem is null is false;
