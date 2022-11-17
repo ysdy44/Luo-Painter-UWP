@@ -16,13 +16,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <UIElement.ContextFlyout>
-        <!--Flyout-->
-        <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <controls:ColorPicker2 x:Name="ColorPicker" />
-        </Flyout>
-    </UIElement.ContextFlyout>
-
 
     <FrameworkElement.Resources>
         <!--Transformer-->
@@ -48,6 +41,9 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <!--Flyout-->
+        <Flyout x:Name="ColorFlyout" Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <controls:ColorPicker2 x:Name="ColorPicker" />
+        </Flyout>
         <Flyout x:Name="ViewFlyout">
             <StackPanel Spacing="4">
 
@@ -175,6 +171,7 @@
                         <Setter Target="AppBarBorder.BorderThickness" Value="0,1,0,0"/>
                         <Setter Target="AppBarGrid.Margin" Value="0"/>
                         <Setter Target="AppBarGrid.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="SwitchPresenter.Margin" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -252,31 +249,6 @@
                         <!--Layer-->
                         <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" >
 
-                            <ListViewBase.Header>
-                                <controls:LayerButton x:Name="LayerButton"/>
-                            </ListViewBase.Header>
-
-                            <ListViewBase.Footer>
-                                <Grid Padding="2,0,0,0" Height="55" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="66"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="42"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        x:Name="MarqueeTextBlock" 
-                                        Grid.Column="1" 
-                                        IsHitTestVisible="False" 
-                                        VerticalAlignment="Center" 
-                                        >                                   
-                                        Marquee
-                                    </TextBlock>
-                                    <Border CornerRadius="2" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Image x:Name="MarqueeImage"/>
-                                    </Border>
-                                    <SymbolIcon Grid.Column="2" Symbol="SelectAll" />
-                                </Grid>
-                            </ListViewBase.Footer>
 
                         </controls:LayerListView>
                         <controls:EffectListView x:Name="EffectListView" Visibility="Collapsed"/>
@@ -297,7 +269,7 @@
 
                         <!--Simulate-->
                         <controls:SimulateCanvas x:Name="SimulateCanvas" />
-                        
+
                         <!--Straw-->
                         <controls:StrawViewer x:Name="StrawViewer">
                             <Path StrokeThickness="1" Stroke="Black" Fill="White">
@@ -305,8 +277,9 @@
                                     M38.61,99.44l22.22,22.31l22.219,-22.31l35.627,-0c1.646,-0 2.983,-1.337 2.983,-2.983l0,-93.474c0,-1.646 -1.337,-2.983 -2.983,-2.983l-115.693,0c-1.646,0 -2.983,1.337 -2.983,2.983l-0,93.474c-0,1.646 1.337,2.983 2.983,2.983l35.627,-0Z
                                 </Path.Data>
                             </Path>
-                            <canvas:CanvasControl x:Name="StrawCanvasControl" Canvas.Left="5" Canvas.Top="4" Width="112" Height="90"
-                                ClearColor="Black" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                            <Border Canvas.Left="5" Canvas.Top="4" Width="112" Height="90" Background="{ThemeResource AppBackgroundDark}">
+                                <canvas:CanvasControl x:Name="StrawCanvasControl" Width="112" Height="90" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+                            </Border>
                             <FontIcon Canvas.Left="44" Canvas.Top="22" FontSize="40" Glyph="&#x2BD0;" Foreground="White" FontFamily="Segoe UI Symbol" />
                         </controls:StrawViewer>
 
@@ -339,7 +312,7 @@
                             />
 
                         <!--SwitchPresenter-->
-                        <local:OptionSwitchPresenter x:Name="SwitchPresenter" MinHeight="50" >
+                        <local:OptionSwitchPresenter x:Name="SwitchPresenter" Margin="12,0" MinHeight="50" >
 
 
                             <local:OptionCase Value="CropCanvas">
@@ -1392,7 +1365,7 @@
         <!--Head-->
         <Grid Height="50" VerticalAlignment="Top" >
 
-            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="DockLeftButton" ClickMode="Hover" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <UIElement.ContextFlyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem options:OptionExtensions.Type="LayerMenu" FontWeight="Bold" Command="{x:Bind Command}" />
@@ -1409,7 +1382,7 @@
                 </StackPanel>
             </Button>
 
-            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="DockRightButton" ClickMode="Hover" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <UIElement.ContextFlyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem options:OptionExtensions.Type="ToolMenu" Command="{x:Bind Command}" />
@@ -1427,7 +1400,7 @@
                 </StackPanel>
             </Button>
 
-            <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+            <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
                     <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
@@ -1466,7 +1439,7 @@
 
 
             <!--AppBar-->
-            <Grid x:Name="AppBarHeadGrid" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="900" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
+            <Grid x:Name="AppBarHeadGrid" ColumnSpacing="6" Padding="6,0" Visibility="Collapsed" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="3*"/>

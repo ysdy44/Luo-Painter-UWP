@@ -272,6 +272,9 @@ namespace Luo_Painter
             set => App.SourcePageType = value ? SourcePageType.Invalid : SourcePageType.DrawPage;
         }
 
+        LayerListView LayerButton => this.LayerListView;
+        LayerListView MarqueeImage => this.LayerListView;
+        
         //@Construct
         public DrawPage()
         {
@@ -284,9 +287,6 @@ namespace Luo_Painter
 
             this.ConstructLayers();
             this.ConstructLayer();
-
-            this.ConstructPropertys();
-            this.ConstructProperty();
 
             this.ConstructAppBar();
 
@@ -320,8 +320,16 @@ namespace Luo_Painter
 
 
             this.Command.Click += (s, type) => this.Click(type);
-            this.LayerButton.ItemClick += (s, type) => this.Click(type);
+            this.LayerListView.ItemClick2 += (s, type) => this.Click(type);
             this.HeadButton.ItemClick += (s, type) => this.Click(type);
+            this.LayerListView.Invalidate += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.LayerListView.History += (s, e) =>
+            {
+                // History
+                int removes = this.History.Push(e);
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.RaiseHistoryCanExecuteChanged();
+            };
 
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
@@ -392,7 +400,7 @@ namespace Luo_Painter
             };
             this.ColorPicker.ColorChanged += (s, e) =>
             {
-                if (base.ContextFlyout.IsOpen is false) return;
+                if (this.ColorFlyout.IsOpen is false) return;
 
                 switch (this.OptionType)
                 {
