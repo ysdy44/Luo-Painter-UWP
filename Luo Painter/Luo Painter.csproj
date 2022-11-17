@@ -116,17 +116,16 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="%24DrawPages\DrawPage.Effect.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Layer.Property.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
+    <Compile Include="%24DrawPages\DrawPage.AppBar.cs" />
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
     <Compile Include="%24DrawPages\DrawPage.CreateResources.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Effect.cs" />
     <Compile Include="%24DrawPages\DrawPage.Export.cs" />
-    <Compile Include="%24DrawPages\DrawPage.AppBar.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.DisplacementLiquefaction.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.GradientMapping.cs" />
@@ -136,10 +135,11 @@
     <Compile Include="%24DrawPages\DrawPage.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Setup.CropCanvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Brush.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Geometry.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintBrush.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintBrushForce.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintBrushMulti.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintLine.cs" />
@@ -147,6 +147,9 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.Selection.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
+    <Compile Include="%24DrawPages\DrawPage.xaml.cs">
+      <DependentUpon>DrawPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="%24MainPages\MainPage.Action.cs" />
     <Compile Include="%24MainPages\MainPage.Construct.cs" />
     <Compile Include="%24StylePages\StylePage.xaml.cs">
@@ -154,9 +157,6 @@
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="%24DrawPages\DrawPage.xaml.cs">
-      <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -190,9 +190,7 @@
     <Compile Include="Controls\KeyboardShortcuts.xaml.cs">
       <DependentUpon>KeyboardShortcuts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LayerButton.xaml.cs">
-      <DependentUpon>LayerButton.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\LayerListView.Property.cs" />
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
@@ -360,10 +358,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\LayerButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\LayerListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -486,9 +480,6 @@
       <Project>{31ccde60-a61f-438d-a3ef-c26216f5f517}</Project>
       <Name>Luo Painter.Shaders</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
