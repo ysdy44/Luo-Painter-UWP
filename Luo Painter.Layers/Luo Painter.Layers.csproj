@@ -152,6 +152,7 @@
     <Compile Include="LayerRenders\LayerNodes.cs" />
     <Compile Include="LayerRenders\LayerNodes.Export.cs" />
     <Compile Include="LayerManagers\LayerObservableCollection.cs" />
+    <Compile Include="Layers\LayerBase.UI.cs" />
     <Compile Include="LayerType.cs" />
     <Compile Include="Models\BitmapLayer.cs" />
     <Compile Include="Models\BitmapLayer.FloodSelect.cs" />
