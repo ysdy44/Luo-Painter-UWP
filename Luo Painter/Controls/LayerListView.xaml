@@ -35,24 +35,6 @@
     <FrameworkElement.Resources>
         <!--Command-->
         <luo_painter:OptionTypeCommand x:Name="Command"/>
-        <!--StaticResource-->
-        <!--Disabled is Hidden-->
-        <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
-        <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent"/>
-        <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Transparent"/>
-        <!--Style-->
-        <Style TargetType="Button">
-            <Setter Property="Padding" Value="2"/>
-            <Setter Property="CornerRadius" Value="2"/>
-            <Setter Property="Width" Value="36"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource SystemControlBackgroundListLowBrush}"/>
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundListLowBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-        </Style>
     </FrameworkElement.Resources>
 
     <ItemsControl.ItemsPanel>
@@ -91,11 +73,9 @@
             <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}" >
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" elements:FrameworkElementExtensions.Depth="{x:Bind Depth, Mode=OneWay}" />
+                        <ColumnDefinition Width="Auto" MinWidth="{x:Bind UIDepth, Mode=OneWay}"/>
                         <ColumnDefinition Width="66"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="4"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
@@ -103,7 +83,7 @@
                         Grid.Column="2" 
                         IsHitTestVisible="False" 
                         VerticalAlignment="Center"                         
-                        elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}"                         
+                        Opacity="{x:Bind UIVisibility, Mode=OneWay}"                         
                         >
                         <Run Text="{x:Bind Name, Mode=OneWay}"/>                           
                         <Run>                        
@@ -113,30 +93,50 @@
                         </Run>
                     </TextBlock>
 
-                    <Button Grid.Column="3" Command="{x:Bind}" >
-                        <FontIcon Glyph="&#xE228;" FontSize="16" FontWeight="Normal" FontFamily="{ThemeResource SymbolThemeFontFamily}" >
-                            <UIElement.RenderTransformOrigin>
-                                0.5,0.5
-                            </UIElement.RenderTransformOrigin>
-                            <UIElement.RenderTransform>
-                                <RotateTransform elements:FrameworkElementExtensions.IsExpand="{x:Bind IsExpand, Mode=OneWay}" />
-                            </UIElement.RenderTransform>
-                        </FontIcon>
-                    </Button>
+                    <StackPanel Grid.Column="3" Margin="2,0" Spacing="4" Orientation="Horizontal">
 
-                    <Button
-                        Grid.Column="5"
-                        CommandParameter="{Binding}" 
-                        Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
-                        >
-                        <FontIcon 
-                            Glyph="&#xE7B3;"
-                            FontSize="22"
-                            FontWeight="Normal"
-                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                            elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}" 
+                        <TextBlock 
+                            IsHitTestVisible="False"
+                            Margin="8,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            Text="{x:Bind UIBlendMode, Mode=OneWay}"
+                            Opacity="{x:Bind UIVisibility, Mode=OneWay}"             
                             />
-                    </Button>
+
+                        <local:LayerButton CommandParameter="{x:Bind}" Command="{x:Bind}" >
+                            <FontIcon
+                                IsHitTestVisible="False"
+                                Glyph="&#xE228;" 
+                                FontSize="12" 
+                                FontWeight="Normal" 
+                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                Opacity="{x:Bind UIVisibility, Mode=OneWay}" 
+                                >
+                                <UIElement.RenderTransformOrigin>
+                                    0.5,0.5
+                                </UIElement.RenderTransformOrigin>
+                                <UIElement.RenderTransform>
+                                    <RotateTransform Angle="{x:Bind UIIsExpand, Mode=OneWay}" />
+                                </UIElement.RenderTransform>
+                            </FontIcon>
+                        </local:LayerButton>
+
+                        <local:LayerButton 
+                            CommandParameter="{Binding}" 
+                            Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
+                            >
+                            <FontIcon 
+                                IsHitTestVisible="False"
+                                Glyph="&#xE7B3;"
+                                FontSize="18"
+                                FontWeight="Normal"
+                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                Opacity="{x:Bind UIVisibility, Mode=OneWay}" 
+                                />
+                        </local:LayerButton>
+
+                    </StackPanel>
 
                     <Border 
                         Grid.Column="1" 
@@ -147,9 +147,12 @@
                         Background="White" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        elements:FrameworkElementExtensions.Visible="{x:Bind Visibility, Mode=OneWay}"  
+                        Opacity="{x:Bind UIVisibility, Mode=OneWay}"  
                         >
-                        <Image Source="{x:Bind Thumbnail, Mode=OneWay}" />
+                        <Image 
+                            Source="{x:Bind Thumbnail, Mode=OneWay}"
+                            Opacity="{x:Bind Opacity, Mode=OneWay}"
+                            />
                     </Border>
 
                 </Grid>
