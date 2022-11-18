@@ -56,6 +56,7 @@ namespace Luo_Painter.Layers
                 this.blendMode = value;
                 this.RenderMode = this.GetRenderMode();
                 this.OnPropertyChanged(nameof(BlendMode)); // Notify 
+                this.OnPropertyChanged(nameof(UIBlendMode)); // Notify 
             }
         }
         private BlendEffectMode? blendMode;
@@ -71,6 +72,7 @@ namespace Luo_Painter.Layers
                 this.visibility = value;
                 this.RenderMode = this.GetRenderMode();
                 this.OnPropertyChanged(nameof(Visibility)); // Notify 
+                this.OnPropertyChanged(nameof(UIVisibility)); // Notify 
             }
         }
         private Visibility visibility;

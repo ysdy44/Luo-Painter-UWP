@@ -12,6 +12,7 @@ namespace Luo_Painter.Layers
             {
                 this.depth = value;
                 this.OnPropertyChanged(nameof(Depth)); // Notify 
+                this.OnPropertyChanged(nameof(UIDepth)); // Notify 
             }
         }
         private int depth;
@@ -34,6 +35,7 @@ namespace Luo_Painter.Layers
             {
                 this.isExpand = value;
                 this.OnPropertyChanged(nameof(IsExpand)); // Notify 
+                this.OnPropertyChanged(nameof(UIIsExpand)); // Notify 
             }
         }
         private bool isExpand = true;
