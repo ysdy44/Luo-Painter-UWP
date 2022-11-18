@@ -133,6 +133,7 @@
     <Compile Include="ILayer.Drag.cs" />
     <Compile Include="ILayer.Render.cs" />
     <Compile Include="ILayer.Setup.cs" />
+    <Compile Include="ILayer.UI.cs" />
     <Compile Include="LayerManagers\ILayerManager.cs" />
     <Compile Include="LayerManagers\LayerRootNodes.Clipboard.cs" />
     <Compile Include="LayerManagers\LayerRootNodes.Drag.cs" />
