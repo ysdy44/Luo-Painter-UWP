@@ -166,7 +166,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock
@@ -302,27 +301,6 @@
 
             <Button Grid.Column="2" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                 <Button.Flyout>
-                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                        <!--Add-->
-                        <MenuFlyoutSeparator x:Name="AddHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                            <UIElement.AccessKey>
-                                Add
-                            </UIElement.AccessKey>
-                        </MenuFlyoutSeparator>
-                        <MenuFlyoutItem options:OptionExtensions.Type="AddLayer" Command="{x:Bind Command}">
-                            <UIElement.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="Insert"/>
-                            </UIElement.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
-                    </MenuFlyout>
-                </Button.Flyout>
-                <SymbolIcon Symbol="Add"/>
-            </Button>
-
-            <Button Grid.Column="3" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
-                <Button.Flyout>
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
                         <!--Layer-->
                         <MenuFlyoutSeparator x:Name="LayerHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
@@ -392,25 +370,34 @@
     </ListViewBase.Header>
 
     <ListViewBase.Footer>
-        <Grid Padding="2,0,0,0" Height="55" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="66"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="42"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                x:Name="MarqueeTextBlock" 
-                Grid.Column="1" 
-                IsHitTestVisible="False" 
-                VerticalAlignment="Center" 
-                >                                   
-                Marquee
-            </TextBlock>
-            <Border CornerRadius="2" IsHitTestVisible="False" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image x:Name="MarqueeImage"/>
-            </Border>
-            <SymbolIcon Grid.Column="2" Symbol="SelectAll" />
-        </Grid>
+        <SplitButton
+            x:Name="AddButton"
+            Margin="7"
+            Height="36"
+            CornerRadius="4"            
+            BorderThickness="1"               
+            HorizontalAlignment="Stretch"               
+            VerticalAlignment="Stretch"   
+            >
+            <SplitButton.Flyout>
+                <MenuFlyout Placement="TopEdgeAlignedRight">
+                    <!--Add-->
+                    <MenuFlyoutSeparator x:Name="AddHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                        <UIElement.AccessKey>
+                            Add
+                        </UIElement.AccessKey>
+                    </MenuFlyoutSeparator>
+                    <MenuFlyoutItem options:OptionExtensions.Type="AddLayer" Command="{x:Bind Command}">
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Insert"/>
+                        </UIElement.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
+                </MenuFlyout>
+            </SplitButton.Flyout>
+            <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
+        </SplitButton>
     </ListViewBase.Footer>
 
 </luo_painter:XamlListView>

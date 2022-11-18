@@ -30,7 +30,7 @@ namespace Luo_Painter.Controls
         //@Content
         public bool PasteLayerIsEnabled { get; set; }
         public bool IsOpen => this.Flyout.IsOpen;
-        public ImageSource Source { set => this.MarqueeImage.Source = value; }
+        public ImageSource Source { get; set; }
 
         //@Construct
         public LayerListView()
@@ -60,6 +60,8 @@ namespace Luo_Painter.Controls
                     }
                 }
             };
+
+            this.AddButton.Click += (s, e) => this.Command.Execute(OptionType.AddLayer);
             this.MenuFlyout.Opened += (s, e) =>
             {
                 bool isEnabled = base.SelectedItem is null is false;
