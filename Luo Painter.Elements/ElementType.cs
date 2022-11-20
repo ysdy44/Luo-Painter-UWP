@@ -57,5 +57,11 @@
         BrushEdgeHardnessQuadratic,
         BrushEdgeHardnessCube,
         BrushEdgeHardnessQuartic,
+
+        // SymmetryModes
+        SymmetryX, 
+        SymmetryY, 
+        SymmetryRadial,
+        MirrorRadial
     }
 }
