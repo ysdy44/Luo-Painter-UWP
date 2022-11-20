@@ -26,11 +26,11 @@ namespace Luo_Painter.Controls
                         this.StartingPressure = this.Pressure = 1;
                         break;
                 }
-                
+
                 switch (this.ToolComboBox.SelectedIndex)
                 {
                     case 0:
-                        this.Paint_Start();
+                        this.PaintBrush_Start();
                         break;
                     case 1:
                         this.Straw_Start();
@@ -56,7 +56,7 @@ namespace Luo_Painter.Controls
                 switch (this.ToolComboBox.SelectedIndex)
                 {
                     case 0:
-                        this.Paint_Delta();
+                        this.PaintBrush_Delta();
                         break;
                     case 1:
                         this.Straw_Delta();
@@ -70,7 +70,7 @@ namespace Luo_Painter.Controls
                 switch (this.ToolComboBox.SelectedIndex)
                 {
                     case 0:
-                        this.Paint_Complete();
+                        this.PaintBrush_Complete();
                         break;
                     case 1:
                         this.Straw_Complete();
