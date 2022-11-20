@@ -924,25 +924,20 @@
                             </local:OptionCase>
                             <local:OptionCase Value="PaintBrushMulti">
                                 <StackPanel>
-                                    <ListBox x:Name="MultiComboBox" SelectedIndex="1" Margin="12,4,12,0" >
-                                        <ListBoxItem x:Name="MultiMirrorItem">Mirror</ListBoxItem>
-                                        <ListBoxItem x:Name="MultiSymmetryItem">Symmetry</ListBoxItem>
-                                        <ListBoxItem x:Name="MultiMirrorSymmetryItem">Mirror &amp; Symmetry</ListBoxItem>
+                                    <ListBox x:Name="SymmetryComboBox" SelectedIndex="0" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                        <local:ElementItem Type="SymmetryX"/>
+                                        <local:ElementItem Type="SymmetryY"/>
+                                        <local:ElementItem Type="SymmetryRadial"/>
+                                        <local:ElementItem Type="MirrorRadial"/>
                                     </ListBox>
-                                    <ListBox x:Name="MultiMirrorComboBox" SelectedIndex="0" Margin="12,6,12,10" Style="{StaticResource AppSegmentListBoxStyle}"
-                                              Visibility="{x:Bind BooleanToVisibilityConverter(MultiMirrorItem.IsSelected), Mode=OneWay}">
-                                        <ListBoxItem x:Name="MultiHorizontalItem">Horizontal</ListBoxItem>
-                                        <ListBoxItem x:Name="MultiVerticalItem">Vertical</ListBoxItem>
-                                        <ListBoxItem x:Name="MultiHorizontalVerticalItem">Horizontal &amp; Vertical</ListBoxItem>
-                                    </ListBox>
-                                    <Slider x:Name="MultiSlider" Value="4" Minimum="2" Maximum="24" Style="{StaticResource AppSliderStyle}"
-                                              Visibility="{x:Bind ReverseBooleanToVisibilityConverter(MultiMirrorItem.IsSelected), Mode=OneWay}">
+                                    <Slider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" Style="{StaticResource AppSliderStyle}"
+                                              Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
                                         <FrameworkElement.Tag>
-                                            Count
+                                            Sectors
                                         </FrameworkElement.Tag>
                                         <Slider.Header>
-                                            <Button x:Name="MultiButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind MultiSlider.Value, Mode=OneWay}" >
+                                            <Button x:Name="SymmetryButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
+                                                    Content="{x:Bind SymmetrySlider.Value, Mode=OneWay}" >
                                                 <Button.Flyout>
                                                     <Flyout>
 
