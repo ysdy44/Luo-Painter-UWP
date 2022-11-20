@@ -68,6 +68,16 @@ namespace Luo_Painter
         private double OpacityConverter(double value) => value / 100;
         private string OpacityToStringConverter(double value) => $"{(int)value} %";
 
+        private Visibility SymmetryIndexToVisibilityConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return Visibility.Collapsed;
+                case 1: return Visibility.Collapsed;
+                default: return Visibility.Visible;
+            }
+        }
+
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
@@ -222,6 +232,8 @@ namespace Luo_Painter
         //@ Paint
         readonly PaintTaskCollection Tasks = new PaintTaskCollection();
 
+        SymmetryType SymmetryType;
+        readonly Symmetryer Symmetryer = new Symmetryer();
 
         Vector2 StartingPosition;
         Vector2 Position;
@@ -274,7 +286,7 @@ namespace Luo_Painter
 
         LayerListView LayerButton => this.LayerListView;
         LayerListView MarqueeImage => this.LayerListView;
-        
+
         //@Construct
         public DrawPage()
         {
