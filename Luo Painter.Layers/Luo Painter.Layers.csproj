@@ -175,6 +175,7 @@
     <Compile Include="Strokes\StrokeCap.Symmetry.cs" />
     <Compile Include="Strokes\StrokeSegment.cs" />
     <Compile Include="Strokes\StrokeSegment.Symmetry.cs" />
+    <Compile Include="Strokes\Symmetryer.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Layers.rd.xml" />
   </ItemGroup>
   <ItemGroup>
