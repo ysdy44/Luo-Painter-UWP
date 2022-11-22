@@ -306,6 +306,7 @@ namespace Luo_Painter
             this.ConstructGeometry();
 
             this.ConstructInk();
+            this.ConstructSymmetry();
 
             this.ConstructSetup();
 
@@ -352,15 +353,6 @@ namespace Luo_Painter
             this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
             this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
             //this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
-
-
-            this.DockLeftButton.Holding += (s, e) => this.Click(OptionType.DockLeftMenu);
-            this.DockLeftButton.RightTapped += (s, e) => this.Click(OptionType.DockLeftMenu);
-            this.DockLeftButton.Click += (s, e) => this.Click(OptionType.DockLeft);
-
-            this.DockRightButton.Holding += (s, e) => this.Click(OptionType.DockRightMenu);
-            this.DockRightButton.RightTapped += (s, e) => this.Click(OptionType.DockRightMenu);
-            this.DockRightButton.Click += (s, e) => this.Click(OptionType.DockRight);
 
 
             this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;
