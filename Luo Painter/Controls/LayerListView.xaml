@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:blends="using:Luo_Painter.Blends"
@@ -183,11 +184,16 @@
             </TextBlock>
 
             <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="PropertieToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Properties
+                    </ToolTip>
+                </ToolTipService.ToolTip>
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F3"/>
                 </UIElement.KeyboardAccelerators>
                 <Button.Flyout>
-                    <Flyout x:Name="Flyout" Placement="BottomEdgeAlignedLeft" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                    <Flyout x:Name="Flyout" Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                         <StackPanel Spacing="2" Padding="6,4" Width="318">
 
                             <TextBlock                                
@@ -300,6 +306,11 @@
             </Button>
 
             <Button Grid.Column="2" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="LayerToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Layers
+                    </ToolTip>
+                </ToolTipService.ToolTip>
                 <Button.Flyout>
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
                         <!--Layer-->
@@ -379,6 +390,11 @@
             HorizontalAlignment="Stretch"               
             VerticalAlignment="Stretch"   
             >
+            <ToolTipService.ToolTip>
+                <ToolTip x:Name="AddToolTip" Style="{StaticResource AppToolTipStyle}">
+                    Add
+                </ToolTip>
+            </ToolTipService.ToolTip>
             <SplitButton.Flyout>
                 <MenuFlyout Placement="TopEdgeAlignedRight">
                     <!--Add-->
