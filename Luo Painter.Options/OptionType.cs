@@ -28,7 +28,6 @@ namespace Luo_Painter.Options
         IsItemClickEnabled = 1,
         ExistIcon = 2,
         ExistThumbnail = 4,
-        AllowDrag = 7,
         HasMenu = 8,
         HasPreview = 16,
         HasDifference = 32,
@@ -74,11 +73,8 @@ namespace Luo_Painter.Options
 
         #region Menu
 
-        DockLeft = Menu | 1 << 8 | IsItemClickEnabled,
-        DockRight = Menu | 2 << 8 | IsItemClickEnabled,
-
-        DockLeftMenu = Menu | 3 << 8 | IsItemClickEnabled,
-        DockRightMenu = Menu | 4 << 8 | IsItemClickEnabled,
+        DockLeft = Menu | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        DockRight = Menu | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
         ExportMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
         ColorMenu = Menu | 6 << 8 | HasMenu | IsItemClickEnabled,
@@ -91,11 +87,9 @@ namespace Luo_Painter.Options
         PaintMenu = Menu | 11 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         BrushMenu = Menu | 12 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         SizeMenu = Menu | 13 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-
-        ToolMenu = Menu | 14 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-
+        EffectMenu = Menu | 14 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         HistoryMenu = Menu | 15 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        EffectMenu = Menu | 16 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+
         LayerMenu = Menu | 17 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
         AddMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
@@ -108,9 +102,9 @@ namespace Luo_Painter.Options
 
         CropCanvas = Setup | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        Stretch = Setup | 2 << 8 | WithState | HasPreview | HasMenu | ExistIcon | IsItemClickEnabled,
-        Extend = Setup | 3 << 8 | WithState | HasPreview | HasMenu | ExistIcon | IsItemClickEnabled,
-        Offset = Setup | 4 << 8 | WithState | HasPreview | HasMenu | ExistIcon | IsItemClickEnabled,
+        Stretch = Setup | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Extend = Setup | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Offset = Setup | 4 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
 
         FlipHorizontal = Setup | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         FlipVertical = Setup | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
