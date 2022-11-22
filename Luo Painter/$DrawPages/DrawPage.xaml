@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:local="using:Luo_Painter"
@@ -226,15 +227,13 @@
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
             <SplitView.Pane>
-                <Grid>
-
-                    <!--Tool-->
-                    <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
-                    <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
+                <elements:IndexGrid x:Name="IndexGrid">
+                    <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Visible"/>
                     <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
                     <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
-
-                </Grid>
+                    <controls:EffectListView x:Name="EffectListView" Visibility="Collapsed"/>
+                    <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
+                </elements:IndexGrid>
             </SplitView.Pane>
             <SplitView 
                 x:Name="SplitLeftView"
@@ -244,17 +243,7 @@
                 PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}" 
                 >
                 <SplitView.Pane>
-                    <Grid>
-
-                        <!--Layer-->
-                        <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" >
-
-
-                        </controls:LayerListView>
-                        <controls:EffectListView x:Name="EffectListView" Visibility="Collapsed"/>
-                        <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
-
-                    </Grid>
+                    <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">
 
@@ -1361,37 +1350,43 @@
         <Grid Height="50" VerticalAlignment="Top" >
 
             <Button x:Name="DockLeftButton" ClickMode="Hover" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                <UIElement.ContextFlyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem options:OptionExtensions.Type="LayerMenu" FontWeight="Bold" Command="{x:Bind Command}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="DockLeft" Command="{x:Bind Command}"/>
-                    </MenuFlyout>
-                </UIElement.ContextFlyout>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="LayoutToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Layouts
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Button.Flyout>
+                    <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False">
+                        <controls:ToolListView x:Name="ToolListView"/>
+                    </Flyout>
+                </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <SymbolIcon Symbol="DockLeft"/>
-                    <FontIcon Margin="12,0,0,0" Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" 
-                              Visibility="{x:Bind SplitLeftView.IsPaneOpen, Mode=OneWay}"/>
+                    <FontIcon Margin="8,0" Glyph="&#xE15E;" FontSize="20" FontFamily="Segoe UI Symbol"/>
+                    <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
                 </StackPanel>
             </Button>
 
             <Button x:Name="DockRightButton" ClickMode="Hover" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                <UIElement.ContextFlyout>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="ToolToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Tools
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem options:OptionExtensions.Type="ToolMenu" Command="{x:Bind Command}" />
                         <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" />
                         <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" />
                         <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}"/>
+                        <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}"/>
                         <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem options:OptionExtensions.Type="DockLeft" Command="{x:Bind Command}"/>
                         <MenuFlyoutItem options:OptionExtensions.Type="DockRight" Command="{x:Bind Command}"/>
                     </MenuFlyout>
-                </UIElement.ContextFlyout>
+                </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <FontIcon Margin="0,0,12,0" Glyph="&#xE70D;" FontSize="14" FontFamily="Segoe MDL2 Assets" 
-                              Visibility="{x:Bind SplitRightView.IsPaneOpen, Mode=OneWay}"/>
-                    <SymbolIcon Symbol="DockRight"/>
+                    <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Margin="8,0" Glyph="&#xF246;" FontSize="20" FontFamily="Segoe MDL2 Assets"/>
                 </StackPanel>
             </Button>
 
@@ -1399,27 +1394,57 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
                     <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="HomeToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Home
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="Home"/>
                     </Button>
                     <Button x:Name="ExportButton" Width="70" Height="50" Foreground="#FFC003" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="ExportToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Export
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="NewWindow"/>
                     </Button>
                     <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="FullScreenToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Full screen
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="FullScreen" />
                     </Button>
                     <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="UnFullScreenToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Exit Full screen
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="BackToWindow" />
                     </Button>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                     <Button x:Name="UndoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="UndoToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Undo
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
                     <Button x:Name="RedoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="RedoToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Redo
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
@@ -1448,6 +1473,11 @@
                     Reset
                 </Button>
                 <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Name="AppBarBackToolTip" Style="{StaticResource AppToolTipStyle}">
+                            Back
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
                     <SymbolIcon Symbol="Back"/>
                 </Button>
                 <TextBlock
