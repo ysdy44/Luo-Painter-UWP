@@ -150,6 +150,7 @@
     <Compile Include="Grid2x2Panel.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
+    <Compile Include="IndexGrid.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="MetadataObservableCollection.cs" />
     <Compile Include="SelectedIcon.xaml.cs">
