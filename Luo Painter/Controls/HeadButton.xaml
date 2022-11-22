@@ -16,9 +16,14 @@
         <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button ClickMode="Hover" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+        <ToolTipService.ToolTip>
+            <ToolTip x:Name="EditToolTip" Style="{StaticResource AppToolTipStyle}">
+                Edit
+            </ToolTip>
+        </ToolTipService.ToolTip>
         <Button.Flyout>
-            <MenuFlyout>
+            <MenuFlyout x:Name="MenuFlyout" Placement="Bottom">
                 <!--Edit-->
                 <MenuFlyoutSeparator x:Name="EditHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                     <UIElement.AccessKey>
@@ -45,7 +50,12 @@
                         <KeyboardAccelerator Key="Back"/>
                     </UIElement.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
+                <!--Select-->
+                <MenuFlyoutSeparator x:Name="SelectHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                    <UIElement.AccessKey>
+                        Select
+                    </UIElement.AccessKey>
+                </MenuFlyoutSeparator>
                 <MenuFlyoutItem options:OptionExtensions.Type="All" Command="{x:Bind Command}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="A"/>
@@ -75,9 +85,14 @@
         </Button.Flyout>
         <luo_painter:OptionIcon Type="EditMenu"/>
     </Button>
-    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button ClickMode="Hover" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+        <ToolTipService.ToolTip>
+            <ToolTip x:Name="AdjustmentToolTip" Style="{StaticResource AppToolTipStyle}">
+                Adjustments
+            </ToolTip>
+        </ToolTipService.ToolTip>
         <Button.Flyout>
-            <MenuFlyout>
+            <MenuFlyout Placement="Bottom">
                 <!--Adjustment-->
                 <MenuFlyoutSeparator x:Name="AdjustmentHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                     <UIElement.AccessKey>
@@ -95,7 +110,12 @@
                 <MenuFlyoutItem options:OptionExtensions.Type="Contrast" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="Temperature" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="HighlightsAndShadows" Command="{x:Bind Command}"/>
-                <MenuFlyoutSeparator/>
+                <!--Effect-->
+                <MenuFlyoutSeparator x:Name="EffectHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                    <UIElement.AccessKey>
+                        Effects
+                    </UIElement.AccessKey>
+                </MenuFlyoutSeparator>
                 <MenuFlyoutItem options:OptionExtensions.Type="GaussianBlur" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="DirectionalBlur" Command="{x:Bind Command}"/>
                 <MenuFlyoutSeparator/>
@@ -113,13 +133,18 @@
         </Button.Flyout>
         <luo_painter:OptionIcon Type="AdjustmentMenu"/>
     </Button>
-    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button ClickMode="Hover" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+        <ToolTipService.ToolTip>
+            <ToolTip x:Name="MoreToolTip" Style="{StaticResource AppToolTipStyle}">
+                More
+            </ToolTip>
+        </ToolTipService.ToolTip>
         <Button.Flyout>
-            <MenuFlyout>
-                <!--Other-->
-                <MenuFlyoutSeparator x:Name="OtherHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+            <MenuFlyout Placement="Bottom">
+                <!--Setup-->
+                <MenuFlyoutSeparator x:Name="SetupHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                     <UIElement.AccessKey>
-                        Others
+                        Setup
                     </UIElement.AccessKey>
                 </MenuFlyoutSeparator>
                 <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
@@ -134,7 +159,12 @@
                 <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
-                <MenuFlyoutSeparator/>
+                <!--Other-->
+                <MenuFlyoutSeparator x:Name="OtherHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                    <UIElement.AccessKey>
+                        Others
+                    </UIElement.AccessKey>
+                </MenuFlyoutSeparator>
                 <MenuFlyoutItem options:OptionExtensions.Type="Transform" Command="{x:Bind Command}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="T"/>

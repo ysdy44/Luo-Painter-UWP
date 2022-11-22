@@ -12,12 +12,16 @@ namespace Luo_Painter.Controls
         public event EventHandler<OptionType> ItemClick { remove => this.Command.Click -= value; add => this.Command.Click += value; }
 
         //@Content
-        public bool PasteIsEnabled { get => this.PasteItem.IsEnabled; set => this.PasteItem.IsEnabled = value; }
+        public bool PasteIsEnabled { get; set; }
 
         //@Construct
         public HeadButton()
         {
             this.InitializeComponent();
+            this.MenuFlyout.Opened += (s, e) =>
+            {
+                this.PasteItem.GoToState(this.PasteIsEnabled);
+            };
         }
 
         //@Strings
