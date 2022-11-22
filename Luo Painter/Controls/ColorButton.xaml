@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
@@ -16,6 +17,12 @@
     Style="{StaticResource TextBlockButtonStyle}" 
     >
 
+    <ToolTipService.ToolTip>
+        <ToolTip x:Name="ColorToolTip" Style="{StaticResource AppToolTipStyle}">
+            Color
+        </ToolTip>
+    </ToolTipService.ToolTip>
+
     <UIElement.ManipulationMode>
         TranslateX, TranslateY
     </UIElement.ManipulationMode>
@@ -26,7 +33,7 @@
     </FrameworkElement.Resources>
 
     <Button.Flyout>
-        <Flyout Placement="Bottom" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+        <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <StackPanel Width="320" Height="512" >
 
                 <!--Title-->
@@ -51,6 +58,11 @@
                         Color
                     </TextBlock>
                     <Button x:Name="StrawButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="StrawToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Straw
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
                         <UIElement.ManipulationMode>
                             TranslateX, TranslateY
                         </UIElement.ManipulationMode>
@@ -72,7 +84,7 @@
                 <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
                     <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Name="BoxHueToolTip">
+                            <ToolTip x:Name="BoxHueToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Hue
                             </ToolTip>
                         </ToolTipService.ToolTip>
@@ -80,7 +92,7 @@
                     </ListBoxItem>
                     <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Name="BoxSaturationToolTip">
+                            <ToolTip x:Name="BoxSaturationToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Saturation
                             </ToolTip>
                         </ToolTipService.ToolTip>
@@ -88,7 +100,7 @@
                     </ListBoxItem>
                     <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Name="BoxValueToolTip">
+                            <ToolTip x:Name="BoxValueToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Value
                             </ToolTip>
                         </ToolTipService.ToolTip>
@@ -97,7 +109,7 @@
 
                     <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Name="RingSaturationToolTip">
+                            <ToolTip x:Name="RingSaturationToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Saturation
                             </ToolTip>
                         </ToolTipService.ToolTip>
@@ -105,7 +117,7 @@
                     </ListBoxItem>
                     <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Name="RingValueToolTip">
+                            <ToolTip x:Name="RingValueToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Value
                             </ToolTip>
                         </ToolTipService.ToolTip>
@@ -114,7 +126,7 @@
 
                     <ListBoxItem Width="51" HorizontalContentAlignment="Center">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Name="PaletteItemToolTip">
+                            <ToolTip x:Name="PaletteItemToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Palette
                             </ToolTip>
                         </ToolTipService.ToolTip>

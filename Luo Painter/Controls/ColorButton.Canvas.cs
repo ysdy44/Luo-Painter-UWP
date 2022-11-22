@@ -3,8 +3,6 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Numerics;
-using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -27,6 +25,7 @@ namespace Luo_Painter.Controls
                 args.DrawingSession.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
                 args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Source]);
+                args.DrawingSession.DrawImage(this.BitmapLayer[BitmapType.Temp]);
             };
         }
 
