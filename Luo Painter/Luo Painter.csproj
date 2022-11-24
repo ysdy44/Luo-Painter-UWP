@@ -133,6 +133,7 @@
     <Compile Include="%24DrawPages\DrawPage.Option.Threshold.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.Transform.cs" />
     <Compile Include="%24DrawPages\DrawPage.Paint.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Picker.cs" />
     <Compile Include="%24DrawPages\DrawPage.Setup.CropCanvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Brush.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
