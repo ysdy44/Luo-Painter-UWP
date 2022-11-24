@@ -3,10 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
-    xmlns:controls="using:Luo_Painter.Controls"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -19,6 +20,10 @@
         <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Size-->
         <elements:TextBoxExtension x:Name="Step" Value="1024" Minimum="16" Maximum="16384"/>
+        <!--Flyout-->
+        <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <local:NumberPicker x:Name="NumberPicker" />
+        </Flyout>
     </FrameworkElement.Resources>
 
     <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
@@ -56,11 +61,13 @@
 
             <!--Type-->
             <ComboBox x:Name="ComboBox" SelectedIndex="1" HorizontalAlignment="Stretch">
+                
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="brushes:InkType">
                         <luo_painter:InkItem Type="{x:Bind}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                
                 <ItemsControl.ItemsSource>
                     <luo_painter:InkList x:Name="InkCollection">
                         <brushes:InkType>General</brushes:InkType>
@@ -72,6 +79,7 @@
                         <brushes:InkType>Liquefy</brushes:InkType>
                     </luo_painter:InkList>
                 </ItemsControl.ItemsSource>
+                
             </ComboBox>
 
 
@@ -79,132 +87,59 @@
                 <StackPanel>
 
                     <!--Size-->
-                    <Slider
-                        x:Name="SizeSlider"
+                    <local:NumberSlider2
+                        x:Name="SizeSlider" 
                         SmallChange="1000" 
                         StepFrequency="1000" 
+                        Number="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"
+                        NumberMinimum="{x:Bind IntConverter(SizeRange.YRange.Minimum), Mode=OneWay}"
+                        NumberMaximum="{x:Bind IntConverter(SizeRange.YRange.Maximum), Mode=OneWay}"
                         Foreground="{ThemeResource SystemColorControlAccentBrush}"
-                        Style="{StaticResource AppSliderStyle}" 
                         >
-                        <FrameworkElement.Tag>
-                            Size
-                        </FrameworkElement.Tag>
                         <Slider.Header>
-                            <Button 
-                                Content="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"            
-                                Padding="4,0" 
-                                MinWidth="44" 
-                                Height="28"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}" 
-                                Background="{ThemeResource SystemAltLowColor}" 
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
+                            Size
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider2>
 
                     <!--Opacity-->
-                    <Slider 
-                        x:Name="OpacitySlider" 
-                        Foreground="{ThemeResource SystemColorControlAccentBrush}"
-                        Style="{StaticResource AppSliderStyle}" 
+                    <local:NumberSlider
+                        x:Name="OpacitySlider"
+                        Minimum="0"
+                        Maximum="100"
+                        Unit="%"
+                        Foreground="{ThemeResource SystemColorControlAccentBrush}" 
                         >
-                        <FrameworkElement.Tag>
-                            Opacity
-                        </FrameworkElement.Tag>
                         <Slider.Header>
-                            <Button 
-                               x:Name="OpacityButton"
-                                Padding="4,0" 
-                                MinWidth="44" 
-                                Height="28"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}"
-                                Background="{ThemeResource SystemAltLowColor}" 
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind RoundConverter(OpacitySlider.Value), Mode=OneWay}" />
-                                    <Run>%</Run>
-                                </TextBlock>
-                            </Button>
+                            Opacity
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider>
 
                     <!--Spacing-->
-                    <Slider 
+                    <local:NumberSlider2
                         x:Name="SpacingSlider"
-                        SmallChange="10000"
-                        StepFrequency="10000" 
-                        Style="{StaticResource AppSliderStyle}" 
-                        Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}"
+                        SmallChange="10000" 
+                        StepFrequency="10000"
+                        Unit="%"
+                        Number="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}"
+                        NumberMinimum="{x:Bind IntConverter(SpacingRange.YRange.Minimum), Mode=OneWay}"
+                        NumberMaximum="{x:Bind IntConverter(SpacingRange.YRange.Maximum), Mode=OneWay}"
+                        Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}" 
                         >
-                        <FrameworkElement.Tag>
-                            Spacing
-                        </FrameworkElement.Tag>
                         <Slider.Header>
-                            <Button
-                               x:Name="SpacingButton"
-                                Padding="4,0"
-                                MinWidth="44" 
-                                Height="28"
-                                BorderThickness="1"
-                                BorderBrush="{ThemeResource AppStroke}" 
-                                Background="{ThemeResource SystemAltLowColor}"
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}" />
-                                    <Run>%</Run>
-                                </TextBlock>
-                            </Button>
+                            Spacing
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider2>
 
                     <!--Flow-->
-                    <Slider 
+                    <local:NumberSlider
                         x:Name="FlowSlider" 
-                        Style="{StaticResource AppSliderStyle}" 
-                        Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
+                        Unit="%" 
+                        Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}" 
                         >
-                        <FrameworkElement.Tag>
-                            Flow
-                        </FrameworkElement.Tag>
                         <Slider.Header>
-                            <Button 
-                               x:Name="FlowButton"
-                                Padding="4,0" 
-                                MinWidth="44" 
-                                Height="28"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}"
-                                Background="{ThemeResource SystemAltLowColor}" 
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                                <TextBlock>
-                                    <Run Text="{x:Bind RoundConverter(FlowSlider.Value), Mode=OneWay}" />
-                                    <Run>%</Run>
-                                </TextBlock>
-                            </Button>
+                            Flow
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider>
 
                 </StackPanel>
             </Border>
@@ -241,7 +176,7 @@
                     </Grid>
                 </Border>
                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
-        
+
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="brushes:BrushEdgeHardness">
                             <luo_painter:HardnessIcon Type="{x:Bind}"/>
@@ -257,7 +192,7 @@
                             <brushes:BrushEdgeHardness>Quartic</brushes:BrushEdgeHardness>
                         </luo_painter:HardnessList>
                     </ItemsControl.ItemsSource>
-                    
+
                 </ListView>
             </Grid>
 
@@ -411,7 +346,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="effects:BlendEffectMode">
-                        <luo_painter:BlendIcon Type="{x:Bind}"/>
+                        <luo_painter:BlendIcon Type="{x:Bind}" HorizontalContentAlignment="Stretch"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
@@ -450,95 +385,41 @@
                     Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
                 <StackPanel>
 
-                    <Slider x:Name="MixSlider" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
+                    <local:NumberSlider x:Name="MixSlider" Unit="%" >
+                        <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
                                 <GradientStop Color="#FF143C" Offset="1"/>
                             </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Mix
-                        </FrameworkElement.Tag>
+                        </Control.Background>
                         <Slider.Header>
-                            <Button
-                                x:Name="MixButton" 
-                                Content="{x:Bind MixSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" 
-                                MinWidth="70" 
-                                Height="28"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}"
-                                Background="{ThemeResource SystemAltLowColor}"
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
+                            Mix
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider>
 
-                    <Slider x:Name="WetSlider" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
+                    <local:NumberSlider x:Name="WetSlider" >
+                        <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
                                 <GradientStop Color="Chartreuse" Offset="1"/>
                             </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Wet
-                        </FrameworkElement.Tag>
+                        </Control.Background>
                         <Slider.Header>
-                            <Button
-                                x:Name="WetButton" 
-                                Content="{x:Bind WetSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" 
-                                MinWidth="70" 
-                                Height="28"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}"
-                                Background="{ThemeResource SystemAltLowColor}"
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
+                            Wet
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider>
 
-                    <Slider x:Name="PersistenceSlider" Style="{StaticResource AppSliderStyle}">
-                        <Slider.Background>
+                    <local:NumberSlider x:Name="PersistenceSlider" Unit="%" >
+                        <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
                                 <GradientStop Color="#0090FF" Offset="1"/>
                             </LinearGradientBrush>
-                        </Slider.Background>
-                        <FrameworkElement.Tag>
-                            Persistence
-                        </FrameworkElement.Tag>
+                        </Control.Background>
                         <Slider.Header>
-                            <Button
-                                x:Name="PersistenceButton" 
-                                Content="{x:Bind PersistenceSlider.Value, Mode=OneWay}"            
-                                Padding="4,0" 
-                                MinWidth="70" 
-                                Height="28"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}"
-                                Background="{ThemeResource SystemAltLowColor}"
-                                >
-                                <Button.Flyout>
-                                    <Flyout>
-
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
+                            Persistence
                         </Slider.Header>
-                    </Slider>
+                    </local:NumberSlider>
 
                 </StackPanel>
             </Border>

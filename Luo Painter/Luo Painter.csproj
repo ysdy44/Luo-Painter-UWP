@@ -217,6 +217,7 @@
     <Compile Include="Controls\PaintScrollViewer.Ink1.cs" />
     <Compile Include="Controls\PaintScrollViewer.Ink2.cs" />
     <Compile Include="Controls\PaintScrollViewer.Ink3.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Picker.cs" />
     <Compile Include="Controls\PaintScrollViewer.xaml.cs">
       <DependentUpon>PaintScrollViewer.xaml</DependentUpon>
     </Compile>

@@ -1,23 +1,10 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
-using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.UI.Xaml;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter.Controls
 {
@@ -25,9 +12,10 @@ namespace Luo_Painter.Controls
     {
 
         //@Converter
+        private int IntConverter(double value) => (int)value;
         private string RoundConverter(double value) => $"{value:0}";
-        private string SizeXToYConverter(double value) => this.RoundConverter(this.SizeRange.ConvertXToY(value));
-        private string SpacingXToYConverter(double value) => this.RoundConverter(this.SpacingRange.ConvertXToY(value));
+        private int SizeXToYConverter(double value) => (int)this.SizeRange.ConvertXToY(value);
+        private int SpacingXToYConverter(double value) => (int)this.SpacingRange.ConvertXToY(value);
 
         private bool BooleanConverter(bool? value) => value is true;
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
@@ -108,6 +96,8 @@ namespace Luo_Painter.Controls
         {
             this.InitializeComponent();
             this.ConstructCanvas();
+
+            this.ConstructPicker();
 
             this.ConstructInk1();
             this.ConstructInk2();
