@@ -33,6 +33,7 @@
         
         <TextBlock        
             x:Name="TitleTextBlock" 
+            Width="200"
             Margin="10,4"
             IsTextSelectionEnabled="True"
             FontWeight="Medium" 
@@ -114,7 +115,7 @@
                 <KeyboardAccelerator Modifiers="None" Key="NumberPad1"/>
                 <KeyboardAccelerator Modifiers="None" Key="Number1"/>
             </UIElement.KeyboardAccelerators>
-            0
+            1
         </Button>
         <Button x:Name="TwoButton" Canvas.Left="60" Canvas.Top="160" Width="60" Height="60" FontWeight="Bold" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Background="Transparent">
             <UIElement.KeyboardAccelerators>

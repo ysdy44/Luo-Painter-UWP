@@ -25,8 +25,8 @@ namespace Luo_Painter.Controls
     {
         //@Delegate
         public event NumberChangedHandler NumberChanging = null;
-        public event NumberChangedHandler NumberChanged = null;
-        public event NumberChangedHandler Close = null;
+        public event NumberChangedHandler PrimaryButtonClick = null;
+        public event NumberChangedHandler SecondaryButtonClick = null;
 
         //@Content
         public bool IsNegative { get; private set; }
@@ -58,6 +58,7 @@ namespace Luo_Painter.Controls
             {
                 if (this.Timers is 0)
                 {
+                    this.Absnumber = 0;
                     this.Invalidate(); // Invalidate
                 }
                 else
@@ -75,6 +76,7 @@ namespace Luo_Painter.Controls
             {
                 if (this.Timers is 0)
                 {
+                    this.Absnumber = 0;
                     this.Invalidate(); // Invalidate
                 }
                 else
@@ -91,6 +93,7 @@ namespace Luo_Painter.Controls
             {
                 if (this.Timers is 0)
                 {
+                    this.Absnumber = 0;
                     this.Invalidate(); // Invalidate
                 }
                 else
@@ -120,11 +123,11 @@ namespace Luo_Painter.Controls
 
             this.OKButton.Click += (s, e) =>
             {
-                this.NumberChanged?.Invoke(this, this.ToValue()); // Delegate
+                this.PrimaryButtonClick?.Invoke(this, this.ToValue()); // Delegate
             };
             this.CancelButton.Click += (s, e) =>
             {
-                this.Close?.Invoke(this, this.ToValue()); // Delegate
+                this.SecondaryButtonClick?.Invoke(this, this.ToValue()); // Delegate
             };
 
             this.PasteButton.Click += async (s, e) =>
@@ -133,6 +136,10 @@ namespace Luo_Painter.Controls
                 if (view.Contains(StandardDataFormats.Text))
                 {
                     string text = await view.GetTextAsync();
+                    if (string.IsNullOrEmpty(text)) return;
+
+                    text = System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", "");
+                    if (string.IsNullOrEmpty(text)) return;
 
                     if (int.TryParse(text, out int value))
                     {
