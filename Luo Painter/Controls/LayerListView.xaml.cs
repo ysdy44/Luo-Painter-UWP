@@ -14,16 +14,8 @@ namespace Luo_Painter.Controls
     public sealed partial class LayerListView : XamlListView
     {
         //@Delegate
-        public event EventHandler<ILayer> VisualClick
-        {
-            remove => this.VisualCommand.Click -= value;
-            add => this.VisualCommand.Click += value;
-        }
-        public event EventHandler<OptionType> ItemClick2
-        {
-            remove => this.Command.Click -= value;
-            add => this.Command.Click += value;
-        }
+        public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
+        public event EventHandler<OptionType> ItemClick2 { remove => this.Command.Click -= value; add => this.Command.Click += value; }
         public event EventHandler<IHistory> History;
         public event EventHandler<object> Invalidate;
 
@@ -31,6 +23,14 @@ namespace Luo_Painter.Controls
         public bool PasteLayerIsEnabled { get; set; }
         public bool IsOpen => this.Flyout.IsOpen;
         public ImageSource Source { get; set; }
+
+        //@Delegate
+        public event RoutedEventHandler OpacitySliderClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
+
+        //@Content
+        public INumberSlider IOpacitySlider => this.OpacitySlider;
+        public FrameworkElement OpacitySliderPlacementTarget => this.OpacitySlider.PlacementTarget;
+        public double OpacitySliderValue { set => this.OpacitySlider.Value = value; }
 
         //@Construct
         public LayerListView()
