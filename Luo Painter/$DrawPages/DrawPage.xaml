@@ -42,10 +42,13 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <!--Flyout-->
-        <Flyout x:Name="ColorFlyout" Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+        <Flyout x:Name="ColorFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <controls:ColorPicker2 x:Name="ColorPicker" />
         </Flyout>
-        <Flyout x:Name="ViewFlyout">
+        <Flyout x:Name="NumberFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <controls:NumberPicker x:Name="NumberPicker" />
+        </Flyout>
+        <Flyout x:Name="ViewFlyout" Windows10version1903:ShouldConstrainToRootBounds="False">
             <StackPanel Spacing="4">
 
                 <Button x:Name="RadianClearButton" CornerRadius="4" Height="38" BorderThickness="1" >
@@ -306,7 +309,7 @@
 
                             <local:OptionCase Value="CropCanvas">
                                 <Border Margin="10,0" Style="{StaticResource AppRoundedBorderStyle}" >
-                                    <Slider 
+                                    <controls:NumberSlider 
                                         x:Name="CropCanvasSlider" 
                                         Minimum="-180" 
                                         Maximum="180" 
@@ -328,61 +331,31 @@
                                             <StaticResource x:Key="SliderThumbBackgroundPointerOver" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
                                             <StaticResource x:Key="SliderTrackValueFillPointerOver" ResourceKey="SystemControlDisabledTransparentBrush"/>
                                         </FrameworkElement.Resources>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                 </Border>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="Feather">
-                                <Slider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Feather
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" >
                                     <Slider.Header>
-                                        <Button x:Name="FeatherButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind FeatherSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Feather
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Grow">
-                                <Slider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Grow
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" >
                                     <Slider.Header>
-                                        <Button x:Name="GrowButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind GrowSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Grow
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Shrink">
-                                <Slider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Shrink
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" >
                                     <Slider.Header>
-                                        <Button x:Name="ShrinkButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind ShrinkSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Shrink
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
 
 
@@ -404,38 +377,18 @@
                                         <ListBoxItem x:Name="DisplacementLiquefactionResetItem">Reset</ListBoxItem>
                                     </ListBox>
                                     <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}" >
-                                        <Slider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" Style="{StaticResource AppSliderStyle}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
-                                                Size
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button x:Name="DisplacementLiquefactionSizeButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                        Content="{x:Bind DisplacementLiquefactionSizeSlider.Value, Mode=OneWay}" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
-                                            </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="DisplacementLiquefactionPressureSlider" Value="12" Minimum="10" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        <controls:NumberSlider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" 
                                                 Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
-                                                Pressure
-                                            </FrameworkElement.Tag>
                                             <Slider.Header>
-                                                <Button x:Name="DisplacementLiquefactionPressureButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind DisplacementLiquefactionPressureSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                </Button>
+                                                Pressure
                                             </Slider.Header>
-                                        </Slider>
+                                        </controls:NumberSlider>
+                                        <controls:NumberSlider x:Name="DisplacementLiquefactionPressureSlider" Value="12" Minimum="10" Maximum="100" Unit="%"
+                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                            <Slider.Header>
+                                                Pressure
+                                            </Slider.Header>
+                                        </controls:NumberSlider>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
@@ -469,79 +422,39 @@
                             </local:OptionCase>
                             <local:OptionCase Value="RippleEffect">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <Slider x:Name="FrequencySlider" Value="140" Minimum="0" Maximum="300" Style="{StaticResource AppSliderStyle}"
+                                    <controls:NumberSlider x:Name="FrequencySlider" Value="140" Minimum="0" Maximum="300" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
+                                        <Slider.Header>
                                             Frequency
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button x:Name="FrequencyButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind FrequencySlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
                                         </Slider.Header>
-                                    </Slider>
-                                    <Slider x:Name="PhaseSlider" Minimum="-100" Maximum="0" Style="{StaticResource AppSliderStyle}"
+                                    </controls:NumberSlider>
+                                    <controls:NumberSlider x:Name="PhaseSlider" Minimum="-100" Maximum="0" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
+                                        <Slider.Header>
                                             Phase
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button x:Name="PhaseButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind PhaseSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
                                         </Slider.Header>
-                                    </Slider>
-                                    <Slider x:Name="AmplitudeSlider" Value="60" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}"
+                                    </controls:NumberSlider>
+                                    <controls:NumberSlider x:Name="AmplitudeSlider" Value="60" Minimum="0" Maximum="200" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
-                                            Amplitude
-                                        </FrameworkElement.Tag>
                                         <Slider.Header>
-                                            <Button x:Name="AmplitudeButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind AmplitudeSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
+                                            Amplitude
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Threshold">
                                 <StackPanel>
-                                    <Slider x:Name="ThresholdSlider" Minimum="-150" Maximum="150" Style="{StaticResource AppSliderStyle}">
-                                        <Slider.Background>
+                                    <controls:NumberSlider x:Name="ThresholdSlider" Minimum="-150" Maximum="150" >
+                                        <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="Black" Offset="0"/>
                                                 <GradientStop Color="White" Offset="1"/>
                                             </LinearGradientBrush>
-                                        </Slider.Background>
-                                        <FrameworkElement.Tag>
-                                            Threshold
-                                        </FrameworkElement.Tag>
+                                        </Control.Background>
                                         <Slider.Header>
-                                            <Button x:Name="ThresholdButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind ThresholdSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
+                                            Threshold
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                     <Grid Height="50" Padding="8,0" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -577,77 +490,48 @@
 
 
                             <local:OptionCase Value="Exposure">
-                                <Slider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                    <Slider.Background>
+                                <controls:NumberSlider x:Name="ExposureSlider" Minimum="-200" Maximum="200" >
+                                    <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
                                             <GradientStop Color="White" Offset="1"/>
                                         </LinearGradientBrush>
-                                    </Slider.Background>
-                                    <FrameworkElement.Tag>
-                                        Exposure
-                                    </FrameworkElement.Tag>
+                                    </Control.Background>
                                     <Slider.Header>
-                                        <Button x:Name="ExposureButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind ExposureSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Exposure
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Brightness">
-                                <Slider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                    <Slider.Background>
+                                <controls:NumberSlider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" >
+                                    <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
                                             <GradientStop Color="White" Offset="1"/>
                                         </LinearGradientBrush>
-                                    </Slider.Background>
-                                    <FrameworkElement.Tag>
-                                        Brightness
-                                    </FrameworkElement.Tag>
+                                    </Control.Background>
                                     <Slider.Header>
-                                        <Button x:Name="BrightnessButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind BrightnessSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Brightness
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
+
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
-                                <Slider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Style="{StaticResource AppSliderStyle}">
-                                    <Slider.Background>
+                                <controls:NumberSlider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" >
+                                    <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Gray" Offset="0"/>
                                             <GradientStop Color="#00A5FF" Offset="1"/>
                                         </LinearGradientBrush>
-                                    </Slider.Background>
-                                    <FrameworkElement.Tag>
-                                        Saturation
-                                    </FrameworkElement.Tag>
+                                    </Control.Background>
                                     <Slider.Header>
-                                        <Button x:Name="SaturationButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind SaturationSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Saturation
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="HueRotation">
-                                <Slider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                                    <Slider.Background>
+                                <controls:NumberSlider x:Name="HueRotationSlider" Minimum="0" Maximum="360" >
+                                    <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#FFCE3B" Offset="0"/>
                                             <GradientStop Color="#72C075" Offset="0.125"/>
@@ -659,25 +543,15 @@
                                             <GradientStop Color="#FFA827" Offset="0.875"/>
                                             <GradientStop Color="#FFCE3B" Offset="1"/>
                                         </LinearGradientBrush>
-                                    </Slider.Background>
-                                    <FrameworkElement.Tag>
-                                        HueRotation
-                                    </FrameworkElement.Tag>
+                                    </Control.Background>
                                     <Slider.Header>
-                                        <Button x:Name="HueRotationButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind HueRotationSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        HueRotation
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Contrast">
-                                <Slider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                    <Slider.Background>
+                                <controls:NumberSlider x:Name="ContrastSlider" Minimum="-100" Maximum="100" >
+                                    <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#888888" Offset="0"/>
 
@@ -691,153 +565,83 @@
                                             <GradientStop Color="#FFFFFF" Offset="1"/>
 
                                         </LinearGradientBrush>
-                                    </Slider.Background>
-                                    <FrameworkElement.Tag>
-                                        Contrast
-                                    </FrameworkElement.Tag>
+                                    </Control.Background>
                                     <Slider.Header>
-                                        <Button x:Name="ContrastButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind ContrastSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Contrast
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Temperature">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <Slider x:Name="TemperatureSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                    <controls:NumberSlider x:Name="TemperatureSlider" Minimum="-100" Maximum="100" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Background>
+                                        <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="#3EADF5" Offset="0"/>
                                                 <GradientStop Color="#FFFFFF" Offset="0.5"/>
                                                 <GradientStop Color="#F99652" Offset="1"/>
                                             </LinearGradientBrush>
-                                        </Slider.Background>
-                                        <FrameworkElement.Tag>
-                                            Temperature
-                                        </FrameworkElement.Tag>
+                                        </Control.Background>
                                         <Slider.Header>
-                                            <Button x:Name="TemperatureButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind TemperatureSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
+                                            Temperature
                                         </Slider.Header>
-                                    </Slider>
-                                    <Slider x:Name="TintSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                    </controls:NumberSlider>
+                                    <controls:NumberSlider x:Name="TintSlider" Minimum="-100" Maximum="100" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Background>
+                                        <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="#9680C9" Offset="0"/>
                                                 <GradientStop Color="#FFFFFF" Offset="0.5"/>
                                                 <GradientStop Color="#80763E" Offset="1"/>
                                             </LinearGradientBrush>
-                                        </Slider.Background>
-                                        <FrameworkElement.Tag>
-                                            Tint
-                                        </FrameworkElement.Tag>
+                                        </Control.Background>
                                         <Slider.Header>
-                                            <Button x:Name="TintButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind TintSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
+                                            Tint
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="HighlightsAndShadows">
                                 <StackPanel Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <Slider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        <controls:NumberSlider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" 
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Background>
+                                            <Control.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                     <GradientStop Color="Black" Offset="0"/>
                                                     <GradientStop Color="Gray" Offset="1"/>
                                                 </LinearGradientBrush>
-                                            </Slider.Background>
-                                            <FrameworkElement.Tag>
-                                                Shadows
-                                            </FrameworkElement.Tag>
+                                            </Control.Background>
                                             <Slider.Header>
-                                                <Button x:Name="ShadowsButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                        Content="{x:Bind ShadowsSlider.Value, Mode=OneWay}" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
+                                                Shadows
                                             </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="HighlightsSlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        </controls:NumberSlider>
+                                        <controls:NumberSlider x:Name="HighlightsSlider" Minimum="-100" Maximum="100" 
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Background>
+                                            <Control.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                     <GradientStop Color="Gray" Offset="0"/>
                                                     <GradientStop Color="White" Offset="1"/>
                                                 </LinearGradientBrush>
-                                            </Slider.Background>
-                                            <FrameworkElement.Tag>
-                                                Highlights
-                                            </FrameworkElement.Tag>
+                                            </Control.Background>
                                             <Slider.Header>
-                                                <Button x:Name="HighlightsButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                        Content="{x:Bind HighlightsSlider.Value, Mode=OneWay}" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
+                                                Highlights
                                             </Slider.Header>
-                                        </Slider>
+                                        </controls:NumberSlider>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <Slider x:Name="ClaritySlider" Minimum="-100" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        <controls:NumberSlider x:Name="ClaritySlider" Minimum="-100" Maximum="100" 
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
+                                            <Slider.Header>
                                                 Clarity
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button x:Name="ClarityButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                        Content="{x:Bind ClaritySlider.Value, Mode=OneWay}" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
                                             </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="BlurSlider" Value="125" Minimum="0" Maximum="1000" Style="{StaticResource AppSliderStyle}"
+                                        </controls:NumberSlider>
+                                        <controls:NumberSlider x:Name="BlurSlider" Value="125" Minimum="0" Maximum="1000" 
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
-                                                Blur
-                                            </FrameworkElement.Tag>
                                             <Slider.Header>
-                                                <Button x:Name="BlurButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                        Content="{x:Bind BlurSlider.Value, Mode=OneWay}" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
+                                                Blur
                                             </Slider.Header>
-                                        </Slider>
+                                        </controls:NumberSlider>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
@@ -919,22 +723,12 @@
                                         <local:ElementItem Type="SymmetryRadial"/>
                                         <local:ElementItem Type="MirrorRadial"/>
                                     </ListBox>
-                                    <Slider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" Style="{StaticResource AppSliderStyle}"
+                                    <controls:NumberSlider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" 
                                               Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
-                                        <FrameworkElement.Tag>
-                                            Sectors
-                                        </FrameworkElement.Tag>
                                         <Slider.Header>
-                                            <Button x:Name="SymmetryButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind SymmetrySlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
+                                            Sectors
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="View">
@@ -1036,268 +830,118 @@
                             <local:OptionCase Value="GeometryEllipseTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryRoundRectTransform">
-                                <Slider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Corner
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Unit="%" >
                                     <Slider.Header>
-                                        <Button x:Name="RoundRectCornerButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                            <TextBlock><Run Text="{x:Bind RoundRectCornerSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                        </Button>
+                                        Corner
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryTriangleTransform">
-                                <Slider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Center Point
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Unit="%" >
                                     <Slider.Header>
-                                        <Button x:Name="TriangleCenterButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                            <TextBlock><Run Text="{x:Bind TriangleCenterSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                        </Button>
+                                        Center Point
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDiamondTransform">
-                                <Slider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Mid Point
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Unit="%" >
                                     <Slider.Header>
-                                        <Button x:Name="DiamondMidButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                            <TextBlock><Run Text="{x:Bind DiamondMidSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                        </Button>
+                                        Mid Point
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPentagonTransform">
-                                <Slider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Points
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" >
                                     <Slider.Header>
-                                        <Button x:Name="PentagonPointsButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind PentagonPointsSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Points
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryStarTransform">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <Slider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}"
+                                    <controls:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
+                                        <Slider.Header>
                                             Points
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button x:Name="StarPointsButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind StarPointsSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
                                         </Slider.Header>
-                                    </Slider>
-                                    <Slider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                    </controls:NumberSlider>
+                                    <controls:NumberSlider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
-                                            Inner Radius
-                                        </FrameworkElement.Tag>
                                         <Slider.Header>
-                                            <Button x:Name="StarInnerRadiusButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                    Content="{x:Bind StarInnerRadiusSlider.Value, Mode=OneWay}" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
+                                            Inner Radius
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDountTransform">
-                                <Slider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Hole Radius
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%">
                                     <Slider.Header>
-                                        <Button x:Name="DountHoleRadiusButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                            <TextBlock><Run Text="{x:Bind DountHoleRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                        </Button>
+                                        Hole Radius
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCogTransform">
                                 <StackPanel Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <Slider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" Style="{StaticResource AppSliderStyle}"
+                                        <controls:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" 
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
+                                            <Slider.Header>
                                                 Count
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button x:Name="CogCountButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                        Content="{x:Bind CogCountSlider.Value, Mode=OneWay}" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                </Button>
                                             </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        </controls:NumberSlider>
+                                        <controls:NumberSlider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Unit="%"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
-                                                Inner Radius
-                                            </FrameworkElement.Tag>
                                             <Slider.Header>
-                                                <Button x:Name="CogInnerRadiusButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind CogInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                </Button>
+                                                Inner Radius
                                             </Slider.Header>
-                                        </Slider>
+                                        </controls:NumberSlider>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <Slider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        <controls:NumberSlider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Unit="%"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
+                                            <Slider.Header>
                                                 Tooth
-                                            </FrameworkElement.Tag>
-                                            <Slider.Header>
-                                                <Button x:Name="CogToothButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind CogToothSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                </Button>
                                             </Slider.Header>
-                                        </Slider>
-                                        <Slider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                        </controls:NumberSlider>
+                                        <controls:NumberSlider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Unit="%"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <FrameworkElement.Tag>
-                                                Notch
-                                            </FrameworkElement.Tag>
                                             <Slider.Header>
-                                                <Button x:Name="CogNotchButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                    <Button.Flyout>
-                                                        <Flyout>
-
-                                                        </Flyout>
-                                                    </Button.Flyout>
-                                                    <TextBlock><Run Text="{x:Bind CogNotchSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                                </Button>
+                                                Notch
                                             </Slider.Header>
-                                        </Slider>
+                                        </controls:NumberSlider>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPieTransform">
-                                <Slider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Sweep Angle
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º">
                                     <Slider.Header>
-                                        <Button x:Name="PieSweepAngleButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                            <TextBlock><Run Text="{x:Bind PieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
-                                        </Button>
+                                        Sweep Angle
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCookieTransform">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <Slider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}"
+                                    <controls:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
+                                        <Slider.Header>
                                             Inner Radius
-                                        </FrameworkElement.Tag>
-                                        <Slider.Header>
-                                            <Button x:Name="CookieInnerRadiusButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind CookieInnerRadiusSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                            </Button>
                                         </Slider.Header>
-                                    </Slider>
-                                    <Slider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Style="{StaticResource AppSliderStyle}"
+                                    </controls:NumberSlider>
+                                    <controls:NumberSlider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <FrameworkElement.Tag>
-                                            Sweep Angle
-                                        </FrameworkElement.Tag>
                                         <Slider.Header>
-                                            <Button x:Name="CookieSweepAngleButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind CookieSweepAngleSlider.Value, Mode=OneWay}"/><Run>º</Run></TextBlock>
-                                            </Button>
+                                            Sweep Angle
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryArrowTransform">
                                 <StackPanel>
-                                    <Slider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                        <FrameworkElement.Tag>
-                                            Width
-                                        </FrameworkElement.Tag>
+                                    <controls:NumberSlider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Unit="%">
                                         <Slider.Header>
-                                            <Button x:Name="ArrowWidthButton" CornerRadius="4" MinWidth="50" BorderThickness="1" >
-                                                <Button.Flyout>
-                                                    <Flyout>
-
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                                <TextBlock><Run Text="{x:Bind ArrowWidthSlider.Value, Mode=OneWay}"/><Run>%</Run></TextBlock>
-                                            </Button>
+                                            Width
                                         </Slider.Header>
-                                    </Slider>
+                                    </controls:NumberSlider>
                                     <StackPanel Orientation="Horizontal" Spacing="4" Height="50" Padding="8,0" >
                                         <TextBlock x:Name="ArrowLeftTailTextBlock" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                                             Left Tail
@@ -1319,21 +963,11 @@
                             <local:OptionCase Value="GeometryCapsuleTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryHeartTransform">
-                                <Slider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" Style="{StaticResource AppSliderStyle}">
-                                    <FrameworkElement.Tag>
-                                        Spread
-                                    </FrameworkElement.Tag>
+                                <controls:NumberSlider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" >
                                     <Slider.Header>
-                                        <Button x:Name="HeartSpreadButton" CornerRadius="4" MinWidth="50" BorderThickness="1" 
-                                                Content="{x:Bind HeartSpreadSlider.Value, Mode=OneWay}" >
-                                            <Button.Flyout>
-                                                <Flyout>
-
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                        Spread
                                     </Slider.Header>
-                                </Slider>
+                                </controls:NumberSlider>
                             </local:OptionCase>
 
 
@@ -1374,7 +1008,7 @@
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" />
+                 <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" />
                         <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" />
                         <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" />
                         <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}"/>
