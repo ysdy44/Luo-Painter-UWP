@@ -13,22 +13,47 @@ namespace Luo_Painter
 
         public void ConstructEffect()
         {
+            // Feather
             this.FeatherSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.FeatherSlider.Click += (s, e) => this.NumberShowAt(this.FeatherSlider);
+            // Grow
             this.GrowSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.GrowSlider.Click += (s, e) => this.NumberShowAt(this.GrowSlider);
+            // Shrink
             this.ShrinkSlider.ValueChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
+            this.ShrinkSlider.Click += (s, e) => this.NumberShowAt(this.ShrinkSlider);
 
+            // Exposure
             this.ExposureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ExposureSlider.Click += (s, e) => this.NumberShowAt(this.ExposureSlider);
+            // Brightness
             this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.BrightnessSlider.Click += (s, e) => this.NumberShowAt(this.BrightnessSlider);
+            // Saturation
             this.SaturationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.SaturationSlider.Click += (s, e) => this.NumberShowAt(this.SaturationSlider);
+            // HueRotation
             this.HueRotationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.HueRotationSlider.Click += (s, e) => this.NumberShowAt(this.HueRotationSlider);
+            // Contrast
             this.ContrastSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ContrastSlider.Click += (s, e) => this.NumberShowAt(this.ContrastSlider);
+            // Temperature
             this.TemperatureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.TemperatureSlider.Click += (s, e) => this.NumberShowAt(this.TemperatureSlider, NumberPickerMode.Case0);
             this.TintSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.TintSlider.Click += (s, e) => this.NumberShowAt(this.TintSlider, NumberPickerMode.Case1);
+            // HighlightsAndShadows
             this.ShadowsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ShadowsSlider.Click += (s, e) => this.NumberShowAt(this.ShadowsSlider, NumberPickerMode.Case0);
             this.HighlightsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.HighlightsSlider.Click += (s, e) => this.NumberShowAt(this.HighlightsSlider, NumberPickerMode.Case1);
             this.ClaritySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ClaritySlider.Click += (s, e) => this.NumberShowAt(this.ClaritySlider, NumberPickerMode.Case2);
             this.BlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.BlurSlider.Click += (s, e) => this.NumberShowAt(this.BlurSlider, NumberPickerMode.Case3);
 
+            // LuminanceToAlpha
             this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
