@@ -16,6 +16,9 @@ namespace Luo_Painter.Controls
         int NumberMaximum { get; }
 
         string Unit { get; }
+
+        /// <summary> <see cref="FlyoutBase.Target"/> </summary>
+        FrameworkElement PlacementTarget { get; }
     }
 
     //@Delegate
