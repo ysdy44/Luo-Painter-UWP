@@ -33,7 +33,7 @@ namespace Luo_Painter
         }
         public void RaiseLayerCanExecuteChanged()
         {
-            this.LayerButton.PasteLayerIsEnabled = this.ClipboardLayers.Count is 0 is false;
+            this.LayerListView.PasteLayerIsEnabled = this.ClipboardLayers.Count is 0 is false;
         }
 
 
@@ -92,31 +92,6 @@ namespace Luo_Painter
                     break;
             }
         }
-
-
-        private void SetCanvasState(bool isPaused)
-        {
-            // if (this.CanvasAnimatedControl.Paused == isPaused) return;
-
-            if (isPaused)
-            {
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-
-                this.CanvasAnimatedControl.Paused = true;
-                this.CanvasAnimatedControl.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasAnimatedControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-
-                this.CanvasAnimatedControl.Paused = false;
-                this.CanvasAnimatedControl.Visibility = Visibility.Visible;
-            }
-        }
-
 
     }
 }

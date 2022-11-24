@@ -284,8 +284,6 @@ namespace Luo_Painter
             set => App.SourcePageType = value ? SourcePageType.Invalid : SourcePageType.DrawPage;
         }
 
-        LayerListView LayerButton => this.LayerListView;
-        LayerListView MarqueeImage => this.LayerListView;
 
         //@Construct
         public DrawPage()
@@ -299,6 +297,8 @@ namespace Luo_Painter
 
             this.ConstructLayers();
             this.ConstructLayer();
+
+            this.ConstructPicker();
 
             this.ConstructAppBar();
 
@@ -400,22 +400,6 @@ namespace Luo_Painter
                 if (e.ClickedItem is PaintSize item)
                 {
                     this.ConstructSize((float)item.Size);
-                }
-            };
-            this.ColorPicker.ColorChanged += (s, e) =>
-            {
-                if (this.ColorFlyout.IsOpen is false) return;
-
-                switch (this.OptionType)
-                {
-                    case OptionType.GradientMapping:
-                        this.GradientMappingColorChanged(e.NewColor);
-                        break;
-                    case OptionType.Threshold:
-                        this.ThresholdColorChanged(e.NewColor);
-                        break;
-                    default:
-                        break;
                 }
             };
 
