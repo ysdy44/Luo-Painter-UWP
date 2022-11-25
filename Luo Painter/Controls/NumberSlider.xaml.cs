@@ -22,7 +22,7 @@ namespace Luo_Painter.Controls
             };
         }
     }
-    /*
+
     public sealed partial class NumberSlider2 : NumberSliderBase
     {
         //@Override
@@ -47,7 +47,7 @@ namespace Luo_Painter.Controls
             this.InitializeComponent();
         }
     }
-     */
+
     [TemplatePart(Name = nameof(HeaderButton), Type = typeof(Button))]
     public abstract partial class NumberSliderBase : Slider, INumberSlider
     {
