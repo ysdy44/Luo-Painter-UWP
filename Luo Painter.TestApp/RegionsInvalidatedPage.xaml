@@ -12,7 +12,7 @@
 
     <FrameworkElement.Resources>
         <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasVirtualControl}"/>
     </FrameworkElement.Resources>
 
     <xaml:CanvasVirtualControl x:Name="CanvasVirtualControl"/>

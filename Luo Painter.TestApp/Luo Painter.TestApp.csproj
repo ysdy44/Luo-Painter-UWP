@@ -306,6 +306,9 @@
     <Compile Include="ThresholdPage.xaml.cs">
       <DependentUpon>ThresholdPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToastPage.xaml.cs">
+      <DependentUpon>ToastPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
     </Compile>
@@ -575,6 +578,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ThresholdPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToastPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
