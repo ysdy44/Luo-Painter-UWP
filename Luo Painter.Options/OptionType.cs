@@ -188,12 +188,14 @@ namespace Luo_Painter.Options
         Effect3 = Effect | 16 << 16,
 
         // Other
-        Transform = Other | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        DisplacementLiquefaction = Other | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        GradientMapping = Other | 3 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
-        RippleEffect = Other | 4 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
-        Fill = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
-        Threshold = Other | 6 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        Move = Other | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        Transform = Other | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        FreeTransform = Other | 3 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        DisplacementLiquefaction = Other | 4 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        GradientMapping = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        RippleEffect = Other | 6 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
+        Fill = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        Threshold = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -205,6 +207,8 @@ namespace Luo_Painter.Options
         Contrast = Adjustment | 7 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Temperature = Adjustment | 8 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        ColorMatrix = Adjustment | 12 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        ColorMatch = Adjustment | 13 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         // Effect1
         GaussianBlur = Effect1 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
