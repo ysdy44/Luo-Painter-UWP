@@ -39,7 +39,7 @@ namespace Luo_Painter.Controls
         }
         private int number;
         public override int NumberMinimum { get; set; }
-        public override int NumberMaximum { get; set; }
+        public override int NumberMaximum { get; set; } = 100;
 
         //@Construct
         public NumberSlider2()
@@ -48,7 +48,7 @@ namespace Luo_Painter.Controls
         }
     }
 
-    [TemplatePart(Name = nameof(HeaderButton), Type = typeof(Button))]
+    [TemplatePart(Name = nameof(HeaderButton), Type = typeof(NumberButtonBase))]
     public abstract partial class NumberSliderBase : Slider, INumberSlider
     {
 
@@ -83,7 +83,7 @@ namespace Luo_Painter.Controls
         }
         private string unit = string.Empty;
 
-        protected Button HeaderButton;
+        protected NumberButtonBase HeaderButton;
 
         //@Construct
         internal NumberSliderBase()
@@ -101,7 +101,7 @@ namespace Luo_Painter.Controls
                 this.HeaderButton.Content = null;
                 this.HeaderButton.Click -= this.Click;
             }
-            this.HeaderButton = base.GetTemplateChild(nameof(HeaderButton)) as Button;
+            this.HeaderButton = base.GetTemplateChild(nameof(HeaderButton)) as NumberButtonBase;
             if (this.HeaderButton is null is false)
             {
                 if (string.IsNullOrEmpty(this.Unit)) this.HeaderButton.Content = this.Number;

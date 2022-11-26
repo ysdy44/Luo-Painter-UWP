@@ -192,21 +192,14 @@
                                 <RowDefinition Height="28" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button 
-                                x:Name="HeaderButton"   
-                                CornerRadius="4"   
-                                MinWidth="56"   
-                                BorderThickness="1" 
-                                HorizontalAlignment="Right" 
-                                VerticalAlignment="Stretch"
-                                >
+                            <controls:NumberButtonBase x:Name="HeaderButton" HorizontalAlignment="Right" >
                                 <!--
                                 <TextBlock>
                                     <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}"/>
                                     <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Unit}"/>
                                 </TextBlock>
                                 -->
-                            </Button>
+                            </controls:NumberButtonBase>
                             <ContentPresenter 
                                 x:Name="HeaderContentPresenter"
                                 Content="{TemplateBinding Header}"
