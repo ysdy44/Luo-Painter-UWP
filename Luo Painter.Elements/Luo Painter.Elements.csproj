@@ -181,7 +181,9 @@
     <Compile Include="SwitchGroupPresenter.cs" />
     <Compile Include="SwitchPresenter.cs" />
     <Compile Include="ThumbSlider.cs" />
+    <Compile Include="ToastAudioType.cs" />
     <Compile Include="ToastExtensions.cs" />
+    <Compile Include="ToastExtensions.LaunchFile.cs" />
     <Compile Include="TSelector.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
