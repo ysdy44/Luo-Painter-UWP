@@ -42,12 +42,25 @@ namespace Luo_Painter.Controls
 
         public string Unit { get; private set; }
 
+        // Cursor
+        readonly DispatcherTimer Timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(600)
+        };
+
+        bool Tick;
         int Timers;
 
         //@Construct
         public NumberPicker()
         {
             this.InitializeComponent();
+            this.Timer.Tick += (s, e) =>
+            {
+                this.Tick = !this.Tick;
+                this.CursorBrush.Opacity = this.Tick ? 1 : 0;
+            };
+
             this.OneButton.Click += (s, e) => this.Input(1);
             this.TwoButton.Click += (s, e) => this.Input(2);
             this.ThreeButton.Click += (s, e) => this.Input(3);
@@ -165,6 +178,23 @@ namespace Luo_Painter.Controls
             };
         }
 
+        public void Close()
+        {
+            // Cursor
+            this.Tick = false;
+            this.CursorBrush.Opacity = 0;
+
+            this.Timer.Stop();
+        }
+        public void Open()
+        {
+            // Cursor
+            this.Tick = true;
+            this.CursorBrush.Opacity = 1;
+
+            this.Timer.Start();
+        }
+
         public void Construct(INumberSlider placementTarget)
         {
             this.IsNegative = placementTarget.Number < 0;
@@ -175,18 +205,29 @@ namespace Luo_Painter.Controls
 
             this.Unit = placementTarget.Unit;
 
+            // Cursor
+            this.Tick = true;
+            this.CursorBrush.Opacity = 1;
+
             // UI
             this.Timers = 0;
             VisualStateManager.GoToState(this, this.InRange() ? nameof(Normal) : nameof(Disabled), true);
-            this.TitleTextBlock.Text = this.ToString();
+            this.TitleRun.Text = this.ToString();
             this.TitleTextBlock.SelectAll();
         }
         private void Invalidate()
         {
+            // Cursor
+            this.Tick = true;
+            this.CursorBrush.Opacity = 1;
+
+            this.Timer.Stop();
+            this.Timer.Start();
+
             // UI
             this.Timers++;
             VisualStateManager.GoToState(this, this.InRange() ? nameof(Normal) : nameof(Disabled), true);
-            this.TitleTextBlock.Text = this.ToString();
+            this.TitleRun.Text = this.ToString();
         }
         private void Input(int value)
         {

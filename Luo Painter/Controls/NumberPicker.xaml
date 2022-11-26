@@ -30,9 +30,9 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <TextBlock        
-            x:Name="TitleTextBlock" 
+            x:Name="TitleTextBlock"
             Width="200"
             Margin="10,4"
             IsTextSelectionEnabled="True"
@@ -42,8 +42,15 @@
             TextWrapping="Wrap" 
             VerticalAlignment="Center" 
             Style="{StaticResource SubheaderTextBlockStyle}" 
-            >        
-            0
+            >
+            <Run x:Name="TitleRun">
+                0
+            </Run><Run>
+                <Run.Foreground>
+                    <SolidColorBrush x:Name="CursorBrush" Opacity="1" Color="{ThemeResource SystemBaseHighColor}"/>
+                </Run.Foreground>
+                |
+            </Run>
         </TextBlock>
 
         <Button x:Name="PasteButton" Canvas.Left="180" Canvas.Top="0" Height="40" Width="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource TextBlockButtonStyle}">
