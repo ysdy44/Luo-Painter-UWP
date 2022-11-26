@@ -134,6 +134,8 @@
     <Content Include="Thumbnails\Border.jpg" />
     <Content Include="Thumbnails\Brightness.jpg" />
     <Content Include="Thumbnails\ChromaKey.jpg" />
+    <Content Include="Thumbnails\ColorMatch.jpg" />
+    <Content Include="Thumbnails\ColorMatrix.jpg" />
     <Content Include="Thumbnails\Colouring.jpg" />
     <Content Include="Thumbnails\Contrast.jpg" />
     <Content Include="Thumbnails\DirectionalBlur.jpg" />
