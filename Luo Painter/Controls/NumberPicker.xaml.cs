@@ -1,8 +1,11 @@
 ﻿using System;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
@@ -42,6 +45,24 @@ namespace Luo_Painter.Controls
 
         public string Unit { get; private set; }
 
+        // Popup
+        readonly Popup Popup = new Popup();
+        readonly Border Border = new Border
+        {
+            CornerRadius = new CornerRadius(4),
+            Padding = new Thickness(4),
+            BorderThickness = new Thickness(1),
+            BorderBrush = new SolidColorBrush(Windows.UI.Colors.Black),
+            Background = new SolidColorBrush(Windows.UI.Colors.White),
+        };
+        readonly TextBlock TextBlock = new TextBlock
+        {
+            FontWeight = FontWeights.SemiBold,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Foreground = new SolidColorBrush(Windows.UI.Colors.Black),
+        };
+
         // Cursor
         readonly DispatcherTimer Timer = new DispatcherTimer
         {
@@ -55,6 +76,9 @@ namespace Luo_Painter.Controls
         public NumberPicker()
         {
             this.InitializeComponent();
+            this.Border.Child = this.TextBlock;
+            this.Popup.Child = this.Border;
+
             this.Timer.Tick += (s, e) =>
             {
                 this.Tick = !this.Tick;
@@ -185,6 +209,9 @@ namespace Luo_Painter.Controls
             this.CursorBrush.Opacity = 0;
 
             this.Timer.Stop();
+
+            // Popup
+            this.Popup.IsOpen = false;
         }
         public void Open()
         {
@@ -193,6 +220,9 @@ namespace Luo_Painter.Controls
             this.CursorBrush.Opacity = 1;
 
             this.Timer.Start();
+
+            // Popup
+            this.Popup.IsOpen = true;
         }
 
         public void Construct(INumberSlider placementTarget)
@@ -212,8 +242,15 @@ namespace Luo_Painter.Controls
             // UI
             this.Timers = 0;
             VisualStateManager.GoToState(this, this.InRange() ? nameof(Normal) : nameof(Disabled), true);
-            this.TitleRun.Text = this.ToString();
+            this.TitleRun.Text = this.TextBlock.Text = this.ToString();
             this.TitleTextBlock.SelectAll();
+
+            // Popup
+            Point transform = placementTarget.PlacementTarget.TransformToVisual(Window.Current.Content).TransformPoint(default);
+            this.Popup.HorizontalOffset = transform.X;
+            this.Popup.VerticalOffset = transform.Y;
+            this.Popup.Width = this.Border.Width = placementTarget.PlacementTarget.ActualWidth;
+            this.Popup.Height = this.Border.Height = placementTarget.PlacementTarget.ActualHeight;
         }
         private void Invalidate()
         {
@@ -227,7 +264,7 @@ namespace Luo_Painter.Controls
             // UI
             this.Timers++;
             VisualStateManager.GoToState(this, this.InRange() ? nameof(Normal) : nameof(Disabled), true);
-            this.TitleRun.Text = this.ToString();
+            this.TitleRun.Text = this.TextBlock.Text = this.ToString();
         }
         private void Input(int value)
         {
