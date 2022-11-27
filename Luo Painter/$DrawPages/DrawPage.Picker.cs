@@ -16,6 +16,8 @@ namespace Luo_Painter
         Case3,
         Case4,
         Case5,
+        Case6,
+        Case7,
 
         LayerOpacity,
     }

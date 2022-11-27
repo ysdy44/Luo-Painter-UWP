@@ -128,6 +128,7 @@
     <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.DisplacementLiquefaction.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Option.FreeTransform.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.GradientMapping.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.Move.cs" />
     <Compile Include="%24DrawPages\DrawPage.Option.RippleEffect.cs" />
