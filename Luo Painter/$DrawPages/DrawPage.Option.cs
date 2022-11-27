@@ -95,13 +95,13 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Export:
-                    if (this.Nodes.Count() is 0)
                     {
-                        this.Tip(TipType.NoLayer);
-                        break;
-                    }
+                        if (this.Nodes.Count() is 0)
+                        {
+                            this.Tip(TipType.NoLayer);
+                            break;
+                        }
 
-                    {
                         StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                         if (file is null) break;
                         this.Tip(TipType.Saving);
@@ -143,31 +143,20 @@ namespace Luo_Painter
                             break;
                         }
 
-                        this.Tip(TipType.SaveSuccess);
-
-                        if (this.ExportDialog.IsOpenFileExplorer)
-                        {
-                            try
-                            {
-                                await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
-                                {
-                                    ItemsToSelect = { file }
-                                });
-                            }
-                            catch (Exception)
-                            {
-                            }
-                        }
+                        if (result)
+                            ToastExtensions.Show(file);
+                        else
+                            this.Tip(TipType.SaveFailed);
                     }
                     break;
                 case OptionType.ExportAll:
-                    if (this.Nodes.Count() is 0)
                     {
-                        this.Tip(TipType.NoLayer);
-                        break;
-                    }
+                        if (this.Nodes.Count() is 0)
+                        {
+                            this.Tip(TipType.NoLayer);
+                            break;
+                        }
 
-                    {
                         IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
                         if (folder is null) break;
                         this.Tip(TipType.Saving);
@@ -223,11 +212,10 @@ namespace Luo_Painter
                             }
                         }
 
-                        if (options.ItemsToSelect.Count is 0) break;
-                        if (this.ExportDialog.IsOpenFileExplorer)
-                        {
+                        if (options.ItemsToSelect.Count is 0)
+                            await Launcher.LaunchFolderAsync(folder);
+                        else
                             await Launcher.LaunchFolderAsync(folder, options);
-                        }
                     }
                     break;
                 case OptionType.ExportCurrent:
@@ -269,27 +257,10 @@ namespace Luo_Painter
                                 }
                             }
 
-                            if (result is false)
-                            {
+                            if (result)
+                                ToastExtensions.Show(file);
+                            else
                                 this.Tip(TipType.SaveFailed);
-                                break;
-                            }
-
-                            this.Tip(TipType.SaveSuccess);
-
-                            if (this.ExportDialog.IsOpenFileExplorer)
-                            {
-                                try
-                                {
-                                    await Launcher.LaunchFolderAsync(await file.GetParentAsync(), new FolderLauncherOptions
-                                    {
-                                        ItemsToSelect = { file }
-                                    });
-                                }
-                                catch (Exception)
-                                {
-                                }
-                            }
                         }
                         else this.Tip(TipType.NoLayer);
                     }
@@ -1384,7 +1355,7 @@ namespace Luo_Painter
                                     break;
                                 }
 
-                                this.SetDisplacementLiquefaction();
+                                this.ResetDisplacementLiquefaction();
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
@@ -1414,7 +1385,7 @@ namespace Luo_Painter
                                     break;
                                 }
 
-                                this.SetGradientMapping();
+                                this.ResetGradientMapping();
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
@@ -1431,7 +1402,36 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
-                //case OptionType.RippleEffect: break;
+                case OptionType.RippleEffect:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
+                            {
+                                SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+                                if (state is SelectionType.None)
+                                {
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    break;
+                                }
+
+                                this.ResetRippleEffect(bitmapLayer);
+
+                                this.BitmapLayer = bitmapLayer;
+                                this.SelectionType = state;
+
+                                this.OptionType = OptionType.RippleEffect;
+                                this.ConstructAppBar(OptionType.RippleEffect);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
+                                break;
+                            }
+                            else this.Tip(TipType.NotBitmapLayer);
+                        }
+                        else this.Tip(TipType.NoLayer);
+                    }
+                    break;
                 //case OptionType.Threshold: break;
                 case OptionType.Fill: break;
 
@@ -1470,7 +1470,6 @@ namespace Luo_Painter
                 case OptionType.ColorMatrix:
                 case OptionType.ColorMatch:
 
-                case OptionType.RippleEffect:
                 case OptionType.Threshold:
 
                 // Effect1
