@@ -381,11 +381,6 @@
                             </local:OptionCase>
                             <local:OptionCase Value="Transform">
                                 <StackPanel>
-                                    <ListBox x:Name="TransformComboBox" SelectedIndex="1" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                        <ListBoxItem x:Name="MoveItem">Move</ListBoxItem>
-                                        <ListBoxItem x:Name="TransformItem">Transform</ListBoxItem>
-                                        <ListBoxItem x:Name="FreeTransformItem">Free Transform</ListBoxItem>
-                                    </ListBox>
                                     <Grid Height="50" ColumnSpacing="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
@@ -519,7 +514,7 @@
                             
                             <local:OptionCase Value="DisplacementLiquefaction">
                                 <StackPanel>
-                                    <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
                                         <ListBoxItem x:Name="PushItem">Push</ListBoxItem>
                                         <ListBoxItem x:Name="PinchItem">Pinch</ListBoxItem>
                                         <ListBoxItem x:Name="ExpandItem">Expand</ListBoxItem>
@@ -531,7 +526,7 @@
                                         <elements:NumberSlider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
-                                                Pressure
+                                                Size
                                             </Slider.Header>
                                         </elements:NumberSlider>
                                         <elements:NumberSlider x:Name="DisplacementLiquefactionPressureSlider" Value="12" Minimum="10" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}"
@@ -1141,7 +1136,7 @@
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
-                    <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False">
+                    <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                         <controls:ToolListView x:Name="ToolListView"/>
                     </Flyout>
                 </Button.Flyout>
@@ -1159,14 +1154,14 @@
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                 <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}"/>
-                        <MenuFlyoutSeparator/>
                         <MenuFlyoutItem options:OptionExtensions.Type="DockLeft" Command="{x:Bind Command}"/>
                         <MenuFlyoutItem options:OptionExtensions.Type="DockRight" Command="{x:Bind Command}"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
+                        <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
                     </MenuFlyout>
                 </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
