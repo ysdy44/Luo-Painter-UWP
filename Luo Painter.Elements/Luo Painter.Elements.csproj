@@ -153,6 +153,15 @@
     <Compile Include="IndexGrid.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="MetadataObservableCollection.cs" />
+    <Compile Include="NumberButton.xaml.cs">
+      <DependentUpon>NumberButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NumberPicker.xaml.cs">
+      <DependentUpon>NumberPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NumberSlider.xaml.cs">
+      <DependentUpon>NumberSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
@@ -358,6 +367,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Icons\VerticalIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NumberButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NumberPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NumberSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
