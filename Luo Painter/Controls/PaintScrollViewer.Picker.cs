@@ -15,6 +15,8 @@ namespace Luo_Painter.Controls
         Mix,
         Wet,
         Persistence,
+
+        Step,
     }
 
     public sealed partial class PaintScrollViewer : UserControl, IInkParameter
@@ -39,6 +41,11 @@ namespace Luo_Painter.Controls
             this.MixSlider.Click += (s, e) => this.NumberShowAt(this.MixSlider, PaintNumberPickerMode.Mix);
             this.WetSlider.Click += (s, e) => this.NumberShowAt(this.WetSlider, PaintNumberPickerMode.Wet);
             this.PersistenceSlider.Click += (s, e) => this.NumberShowAt(this.PersistenceSlider, PaintNumberPickerMode.Persistence);
+
+            this.StepButton.Click += (s, e) => this.NumberShowAt(this.StepButton, PaintNumberPickerMode.Step);
+
+            this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
+            this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
 
             this.NumberPicker.SecondaryButtonClick += (s, e) => this.NumberFlyout.Hide();
             this.NumberPicker.PrimaryButtonClick += (s, e) =>
@@ -65,10 +72,20 @@ namespace Luo_Painter.Controls
                         break;
 
                     case PaintNumberPickerMode.Mix:
+                        this.MixSlider.Value = e;
                         break;
                     case PaintNumberPickerMode.Wet:
+                        this.WetSlider.Value = e;
                         break;
                     case PaintNumberPickerMode.Persistence:
+                        this.PersistenceSlider.Value = e;
+                        break;
+
+                    case PaintNumberPickerMode.Step:
+                        this.InkPresenter.Step = e;
+                        this.TryInk();
+
+                        this.StepButton.Number = e;
                         break;
 
                     default:

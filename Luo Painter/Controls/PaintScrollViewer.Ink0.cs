@@ -73,7 +73,7 @@ namespace Luo_Painter.Controls
 
 
                 this.RotateButton.IsOn = presenter.Rotate;
-                this.StepTextBox.Text = presenter.Step.ToString();
+                this.StepButton.Number = presenter.Step;
 
                 this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
                 this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());

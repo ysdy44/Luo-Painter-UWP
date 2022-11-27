@@ -18,8 +18,6 @@
         <!--Range-->
         <luo_painter:SizeRange x:Name="SizeRange"/>
         <luo_painter:SpacingRange x:Name="SpacingRange"/>
-        <!--Size-->
-        <elements:TextBoxExtension x:Name="Step" Value="1024" Minimum="16" Maximum="16384"/>
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <local:NumberPicker x:Name="NumberPicker" />
@@ -61,13 +59,13 @@
 
             <!--Type-->
             <ComboBox x:Name="ComboBox" SelectedIndex="1" HorizontalAlignment="Stretch">
-                
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="brushes:InkType">
                         <luo_painter:InkItem Type="{x:Bind}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-                
+
                 <ItemsControl.ItemsSource>
                     <luo_painter:InkList x:Name="InkCollection">
                         <brushes:InkType>General</brushes:InkType>
@@ -79,7 +77,7 @@
                         <brushes:InkType>Liquefy</brushes:InkType>
                     </luo_painter:InkList>
                 </ItemsControl.ItemsSource>
-                
+
             </ComboBox>
 
 
@@ -326,9 +324,9 @@
                 <TextBlock x:Name="StepTextBlock" Grid.Row="4" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                     Step of Grain
                 </TextBlock>
-                <TextBox x:Name="StepTextBox" Grid.Column="1" Grid.Row="3" >
+                <local:NumberButton x:Name="StepButton" Grid.Column="1" Grid.Row="3" Number="1024" NumberMinimum="16" NumberMaximum="16384" Margin="12,2" HorizontalAlignment="Right" >
                     <!--Text-->
-                </TextBox>
+                </local:NumberButton>
 
             </Grid>
 

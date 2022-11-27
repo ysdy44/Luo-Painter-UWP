@@ -56,15 +56,6 @@ namespace Luo_Painter.Controls
                 this.InkType = this.InkPresenter.GetType();
                 this.TryInk();
             };
-
-            this.StepTextBox.Text = this.Step.ToString();
-            this.StepTextBox.LostFocus += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                if (this.Step.IsMatch(this.StepTextBox) is false) return;
-                this.InkPresenter.Step = this.Step.Value;
-                this.TryInk();
-            };
         }
 
     }
