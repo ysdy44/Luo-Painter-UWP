@@ -1,12 +1,9 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 
@@ -22,7 +19,14 @@ namespace Luo_Painter
 
         float DisplacementLiquefactionAmount = 512;
 
-        private void SetDisplacementLiquefaction()
+        public void ConstructDisplacementLiquefaction()
+        {
+            this.DisplacementLiquefactionSizeSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionSizeSlider, NumberPickerMode.Case0);
+            this.DisplacementLiquefactionPressureSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionPressureSlider, NumberPickerMode.Case1);
+        }
+
+        private void SetDisplacementLiquefaction() => this.ResetDisplacementLiquefaction();
+        private void ResetDisplacementLiquefaction()
         {
             this.DisplacementLiquefactionAmount = this.Displacement.Center.Length();
             this.Displacement.ClearDisplacement();
@@ -32,7 +36,6 @@ namespace Luo_Painter
         private void DrawDisplacementLiquefaction(CanvasControl sender, CanvasDrawingSession ds)
         {
         }
-
 
         private void DisplacementLiquefaction_Delta()
         {

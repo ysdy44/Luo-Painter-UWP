@@ -16,6 +16,7 @@ namespace Luo_Painter
 
         public void ConstructThreshold()
         {
+            this.ThresholdSlider.Click += (s, e) => this.NumberShowAt(this.ThresholdSlider);
             this.ThresholdSlider.ValueChanged += (s, e) =>
             {
                 this.Threshold = (float)System.Math.Clamp((e.NewValue + 150) / 100, 0, 3);
@@ -26,13 +27,13 @@ namespace Luo_Painter
             {
                 this.ThresholdIsColor1 = false;
                 this.ColorPicker.Color = Color.FromArgb((byte)(this.ThresholdColor0.W * 255f), (byte)(this.ThresholdColor0.X * 255f), (byte)(this.ThresholdColor0.Y * 255f), (byte)(this.ThresholdColor0.Z * 255f));
-                base.ContextFlyout.ShowAt(this.ThresholdColor0Button);
+                this.ColorFlyout.ShowAt(this.ThresholdColor0Button);
             };
             this.ThresholdColor1Button.Click += (s, e) =>
             {
                 this.ThresholdIsColor1 = true;
                 this.ColorPicker.Color = Color.FromArgb((byte)(this.ThresholdColor1.W * 255f), (byte)(this.ThresholdColor1.X * 255f), (byte)(this.ThresholdColor1.Y * 255f), (byte)(this.ThresholdColor1.Z * 255f));
-                base.ContextFlyout.ShowAt(this.ThresholdColor1Button);
+                this.ColorFlyout.ShowAt(this.ThresholdColor1Button);
             };
 
             this.ThresholdReverseButton.Click += (s, e) =>

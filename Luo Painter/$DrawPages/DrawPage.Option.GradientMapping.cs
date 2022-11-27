@@ -1,7 +1,5 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Luo_Painter.Layers;
-using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -11,7 +9,6 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.Graphics.Effects;
 using Windows.UI;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
@@ -66,12 +63,12 @@ namespace Luo_Painter
             [1] = Colors.PaleVioletRed,
         };
 
-        private void SetGradientMapping()
+        private void SetGradientMapping() => this.ResetGradientMapping();
+        private void ResetGradientMapping()
         {
             this.GradientMappingSelector.Reset(this.Stops);
             this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
         }
-
 
         private void ConstructGradientMapping()
         {
@@ -81,7 +78,7 @@ namespace Luo_Painter
                 if (this.GradientMappingSelector.CurrentStop == null) return;
 
                 this.ColorPicker.Color = this.GradientMappingSelector.CurrentStop.Color;
-                base.ContextFlyout.ShowAt(this.GradientMappingSelector.CurrentButton);
+                this.ColorFlyout.ShowAt(this.GradientMappingSelector.CurrentButton);
             };
 
             this.GradientMappingSelector.ItemManipulationStarted += (s, e) =>
@@ -108,7 +105,6 @@ namespace Luo_Painter
                 }
             };
 
-
             this.GradientMappingSelector.ManipulationMode = ManipulationModes.TranslateX;
             this.GradientMappingSelector.ManipulationStarted += (s, e) =>
             {
@@ -134,7 +130,6 @@ namespace Luo_Painter
             };
         }
 
-
         private ICanvasImage GetGradientMappingPreview(ICanvasImage image)
         {
             return new PixelShaderEffect(this.GradientMappingShaderCodeBytes)
@@ -144,7 +139,6 @@ namespace Luo_Painter
                 Source2 = this.GradientMesh.Source
             };
         }
-
 
         private void GradientMappingColorChanged(Color color)
         {

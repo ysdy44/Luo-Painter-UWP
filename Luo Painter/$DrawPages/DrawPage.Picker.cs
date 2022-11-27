@@ -26,7 +26,7 @@ namespace Luo_Painter
     {
 
         NumberPickerMode NumberPickerMode;
-    
+
         private void NumberShowAt(INumberBase number, NumberPickerMode mode = default)
         {
             this.NumberPickerMode = mode;
@@ -132,6 +132,50 @@ namespace Luo_Painter
                                         break;
                                 }
                                 break;
+
+                            case OptionType.Move:
+                                this.SetMove(this.NumberPickerMode, e);
+                                break;
+                            case OptionType.Transform:
+                                this.SetTransform(this.NumberPickerMode, e);
+                                break;
+                            case OptionType.FreeTransform:
+                                this.SetFreeTransform(this.NumberPickerMode, e);
+                                break;
+
+                            case OptionType.DisplacementLiquefaction:
+                                switch (this.NumberPickerMode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.DisplacementLiquefactionSizeSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.DisplacementLiquefactionPressureSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.RippleEffect:
+                                switch (this.NumberPickerMode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.FrequencySlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.PhaseSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.AmplitudeSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.Threshold:
+                                this.ThresholdSlider.Value = e;
+                                break;
+
 
                             default:
                                 break;

@@ -5,10 +5,8 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
-using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -26,16 +24,21 @@ namespace Luo_Painter
 
         public void ConstructRippleEffect()
         {
+            this.FrequencySlider.Click += (s, e) => this.NumberShowAt(this.FrequencySlider, NumberPickerMode.Case0);
             this.FrequencySlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Frequency = (float)(e.NewValue);
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
+
+            this.PhaseSlider.Click += (s, e) => this.NumberShowAt(this.PhaseSlider, NumberPickerMode.Case1);
             this.PhaseSlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Phase = (float)(e.NewValue);
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
+
+            this.AmplitudeSlider.Click += (s, e) => this.NumberShowAt(this.AmplitudeSlider, NumberPickerMode.Case2);
             this.AmplitudeSlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Amplitude = (float)(e.NewValue);
@@ -43,7 +46,8 @@ namespace Luo_Painter
             };
         }
 
-        private void SetRippleEffect(BitmapLayer bitmapLayer)
+        private void SetRippleEffect(BitmapLayer bitmapLayer) => this.ResetRippleEffect(bitmapLayer);
+        private void ResetRippleEffect(BitmapLayer bitmapLayer)
         {
             if (this.RipplerCenter == Vector2.Zero)
             {
@@ -54,7 +58,6 @@ namespace Luo_Painter
                 this.RipplerPoint.Y = this.RipplerCenter.Y;
             }
         }
-
 
         private void DrawRippleEffect(CanvasControl sender, CanvasDrawingSession ds)
         {
@@ -71,7 +74,6 @@ namespace Luo_Painter
             ds.DrawNode2(center);
             ds.DrawNode2(point);
         }
-
 
         private void RippleEffect_Start()
         {
