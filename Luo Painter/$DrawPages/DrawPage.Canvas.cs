@@ -82,7 +82,7 @@ namespace Luo_Painter
                                 args.DrawingSession.Transform = Matrix3x2.Identity;
                                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
 
-                                this.DrawTransform(sender, args.DrawingSession, matrix);
+                                args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
                                 break;
                         }
                         break;
@@ -91,9 +91,19 @@ namespace Luo_Painter
                         this.DrawCropCanvas(sender, args.DrawingSession);
                         break;
 
-                    case OptionType.Transform:
-                        this.DrawTransform(sender, args.DrawingSession, matrix);
+                    case OptionType.Move:
                         break;
+                    case OptionType.Transform:
+                        args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
+                        break;
+                    case OptionType.FreeTransform:
+                        args.DrawingSession.DrawBound(this.BoundsFreeTransformer, matrix);
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftTop, matrix));
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightTop, matrix));
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightBottom, matrix));
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftBottom, matrix));
+                        break;
+
                     case OptionType.DisplacementLiquefaction:
                         this.DrawDisplacementLiquefaction(sender, args.DrawingSession);
                         break;
@@ -105,7 +115,6 @@ namespace Luo_Painter
 
                     case OptionType.PaintBrush:
                     case OptionType.PaintBrushForce:
-                    case OptionType.PaintBrushMulti:
                         if (this.BitmapLayer is null) break;
 
                         args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
@@ -116,6 +125,9 @@ namespace Luo_Painter
                         args.DrawingSession.DrawLine(this.StartingPoint, this.Point, Colors.Gray);
                         args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
                         args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        break;
+                    case OptionType.PaintBrushMulti:
+                        this.DrawPaintBrushMulti(sender, args.DrawingSession, this.ToPoint(this.Marquee.Center));
                         break;
 
                     default:
@@ -292,13 +304,23 @@ namespace Luo_Painter
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.Blend = CanvasBlend.Copy;
 
-                ds.DrawImage(this.Nodes.Render(this.Mesh,
+                Matrix3x2 matrix =
                     this.Transformer.GetMatrix() *
                     Matrix3x2.CreateTranslation(-this.StrawCanvasControl.Dpi.ConvertDipsToPixels(this.Point)) *
                     Matrix3x2.CreateScale(4) *
-                    Matrix3x2.CreateTranslation(this.StrawViewer.StrawCenterX, this.StrawViewer.StrawCenterY),
-                    CanvasImageInterpolation.NearestNeighbor));
+                    Matrix3x2.CreateTranslation(this.StrawViewer.StrawCenterX, this.StrawViewer.StrawCenterY);
+
+                using (Transform2DEffect mesh = new Transform2DEffect
+                {
+                    Source = this.Mesh,
+                    TransformMatrix = matrix,
+                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                })
+                {
+                    ds.DrawImage(this.Nodes.Render(mesh, matrix, CanvasImageInterpolation.NearestNeighbor));
+                }
             }
         }
 

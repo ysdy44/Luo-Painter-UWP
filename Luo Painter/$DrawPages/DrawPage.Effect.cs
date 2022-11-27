@@ -121,43 +121,37 @@ namespace Luo_Painter
                         },
                     };
 
+                case OptionType.Move:
+                    return new Transform2DEffect
+                    {
+                        BorderMode = EffectBorderMode.Hard,
+                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                        TransformMatrix = Matrix3x2.CreateTranslation(this.Move),
+                        Source = image
+                    };
                 case OptionType.Transform:
                 case OptionType.MarqueeTransform:
-                    switch (this.TransformMode)
+                    return new Transform2DEffect
                     {
-                        case 0:
-                            return new Transform2DEffect
-                            {
-                                BorderMode = EffectBorderMode.Hard,
-                                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                                TransformMatrix = Matrix3x2.CreateTranslation(this.Move),
-                                Source = image
-                            };
-                        case 1:
-                            return new Transform2DEffect
-                            {
-                                BorderMode = EffectBorderMode.Hard,
-                                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                                TransformMatrix = this.BoundsMatrix,
-                                Source = image
-                            };
-                        case 2:
-                            return new PixelShaderEffect(this.FreeTransformShaderCodeBytes)
-                            {
-                                Source1 = image,
-                                Properties =
-                                {
-                                    ["matrix3x2"] = this.BoundsFreeMatrix,
-                                    ["zdistance"] = this.BoundsFreeDistance,
-                                    ["left"] = this.Bounds.Left,
-                                    ["top"] = this.Bounds.Top,
-                                    ["right"] = this.Bounds.Right,
-                                    ["bottom"] = this.Bounds.Bottom,
-                                },
-                            };
-                        default:
-                            return image;
-                    }
+                        BorderMode = EffectBorderMode.Hard,
+                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                        TransformMatrix = this.BoundsMatrix,
+                        Source = image
+                    };
+                case OptionType.FreeTransform:
+                    return new PixelShaderEffect(this.FreeTransformShaderCodeBytes)
+                    {
+                        Source1 = image,
+                        Properties =
+                        {
+                            ["matrix3x2"] = this.BoundsFreeMatrix,
+                            ["zdistance"] = this.BoundsFreeDistance,
+                            ["left"] = this.Bounds.Left,
+                            ["top"] = this.Bounds.Top,
+                            ["right"] = this.Bounds.Right,
+                            ["bottom"] = this.Bounds.Bottom,
+                        },
+                    };
 
 
                 case OptionType.Feather:

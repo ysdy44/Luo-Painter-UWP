@@ -1248,9 +1248,30 @@ namespace Luo_Painter
                 case OptionType.Adjustment: break;
                 case OptionType.Effect1: break;
                 case OptionType.Effect2: break;
-                case OptionType.Effect3: break;
 
                 // Other
+                case OptionType.Move:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
+                            {
+                                this.BitmapLayer = bitmapLayer;
+
+                                this.ResetMove();
+
+                                this.OptionType = OptionType.Move;
+                                this.ConstructAppBar(OptionType.Move);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
+                                break;
+                            }
+                            else this.Tip(TipType.NotBitmapLayer);
+                        }
+                        else this.Tip(TipType.NoLayer);
+                    }
+                    break;
                 case OptionType.Transform:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
@@ -1300,6 +1321,56 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
+                case OptionType.FreeTransform:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
+                            {
+                                SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+                                if (state is SelectionType.None)
+                                {
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    break;
+                                }
+
+                                switch (state)
+                                {
+                                    case SelectionType.PixelBounds:
+                                        {
+                                            PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
+                                            PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds, InterpolationColors);
+                                            this.ResetFreeTransform(bounds);
+                                        }
+                                        break;
+                                    case SelectionType.MarqueePixelBounds:
+                                        {
+                                            PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
+                                            PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, InterpolationColors);
+                                            this.ResetFreeTransform(bounds);
+                                        }
+                                        break;
+                                    default:
+                                        this.ResetFreeTransform(bitmapLayer.Bounds);
+                                        break;
+                                }
+
+                                this.BitmapLayer = bitmapLayer;
+                                this.SelectionType = state;
+
+                                this.OptionType = OptionType.FreeTransform;
+                                this.ConstructAppBar(OptionType.FreeTransform);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
+                                break;
+                            }
+                            else this.Tip(TipType.NotBitmapLayer);
+                        }
+                        else this.Tip(TipType.NoLayer);
+                    }
+                    break;
+
                 case OptionType.DisplacementLiquefaction:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
@@ -1313,37 +1384,7 @@ namespace Luo_Painter
                                     break;
                                 }
 
-                                switch (type)
-                                {
-                                    case OptionType.Transform:
-                                        switch (state)
-                                        {
-                                            case SelectionType.PixelBounds:
-                                                {
-                                                    PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
-                                                    PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds, InterpolationColors);
-                                                    this.SetTransform(bounds);
-                                                }
-                                                break;
-                                            case SelectionType.MarqueePixelBounds:
-                                                {
-                                                    PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
-                                                    PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, InterpolationColors);
-                                                    this.SetTransform(bounds);
-                                                }
-                                                break;
-                                            default:
-                                                this.SetTransform(bitmapLayer.Bounds);
-                                                break;
-                                        }
-                                        break;
-                                    case OptionType.DisplacementLiquefaction:
-                                        this.SetDisplacementLiquefaction();
-                                        break;
-                                    case OptionType.GradientMapping:
-                                        this.SetGradientMapping();
-                                        break;
-                                }
+                                this.SetDisplacementLiquefaction();
 
                                 this.BitmapLayer = bitmapLayer;
                                 this.SelectionType = state;
@@ -1417,8 +1458,6 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
-                case OptionType.RippleEffect:
-                case OptionType.Threshold:
                 case OptionType.Exposure:
                 case OptionType.Brightness:
                 case OptionType.Saturation:
@@ -1426,19 +1465,28 @@ namespace Luo_Painter
                 case OptionType.Contrast:
                 case OptionType.Temperature:
                 case OptionType.HighlightsAndShadows:
+                case OptionType.GammaTransfer:
+                case OptionType.Vignette:
+                case OptionType.ColorMatrix:
+                case OptionType.ColorMatch:
+
+                case OptionType.RippleEffect:
+                case OptionType.Threshold:
 
                 // Effect1
-                //case OptionType.GaussianBlur: break;
-                //case OptionType.DirectionalBlur: break;
-                //case OptionType.Sharpen: break;
-                //case OptionType.Shadow: break;
-                //case OptionType.ChromaKey: break;
-                //case OptionType.EdgeDetection: break;
-                //case OptionType.Border: break;
-                //case OptionType.Emboss: break;
-                //case OptionType.Lighting: break;
+                //case OptionType.GaussianBlur:
+                //case OptionType.DirectionalBlur:
+                //case OptionType.Sharpen:
+                //case OptionType.Shadow:
+                //case OptionType.EdgeDetection:
+                //case OptionType.Morphology:
+                //case OptionType.Emboss:
+                //case OptionType.Straighten:
 
                 // Effect2
+                //case OptionType.ChromaKey: 
+                //case OptionType.Border:
+                //case OptionType.Lighting: 
                 case OptionType.LuminanceToAlpha:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
@@ -1466,21 +1514,14 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
-                case OptionType.Fog: break;
-                case OptionType.Sepia: break;
-                case OptionType.Posterize: break;
-                case OptionType.Colouring: break;
-                case OptionType.Tint: break;
-                case OptionType.DiscreteTransfer: break;
-                case OptionType.Vignette: break;
-                case OptionType.GammaTransfer: break;
-
-                // Effect3
-                case OptionType.Glass: break;
-                case OptionType.PinchPunch: break;
-                case OptionType.Morphology: break;
-                case OptionType.Straighten: break;
-                case OptionType.Edge: break;
+                //case OptionType.Fog:
+                //case OptionType.Sepia:
+                //case OptionType.Posterize:
+                //case OptionType.Colouring:
+                //case OptionType.Tint:
+                //case OptionType.DiscreteTransfer:
+                //case OptionType.Glass:
+                //case OptionType.PinchPunch:
 
                 #endregion
 
