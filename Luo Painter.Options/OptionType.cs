@@ -119,10 +119,15 @@ namespace Luo_Painter.Options
 
         // Category
         Add = Layer | 1 << 16,
+
         Clipboard = Layer | 2 << 16,
         Layering = Layer | 4 << 16,
         Grouping = Layer | 8 << 16,
         Combine = Layer | 16 << 16,
+
+        Transforms = Layer | 32 << 16,
+        Arrange = Layer | 64 << 16,
+        Align = Layer | 128 << 16,
 
         // Add
         AddLayer = Add | 2 << 8 | ExistIcon | IsItemClickEnabled,
@@ -154,7 +159,30 @@ namespace Luo_Painter.Options
         Xor = Combine | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         Intersect = Combine | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        ExpandStroke = Layer | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        ExpandStroke = Combine | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Transforms
+        MirrorHorizontally = Transforms | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        MirrorVertically = Transforms | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        RotateLeft = Transforms | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        RotateRight = Transforms | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Arrange
+        BackOne = Arrange | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        ForwardOne = Arrange | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        MoveBack = Arrange | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        MoveFront = Arrange | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Align
+        AlignLeft = Align | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AlignCenter = Align | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AlignRight = Align | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        SpaceHorizontally = Align | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        AlignTop = Align | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AlignMiddle = Align | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        AlignBottom = Align | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        SpaceVertically = Align | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
@@ -207,37 +235,35 @@ namespace Luo_Painter.Options
         Contrast = Adjustment | 7 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Temperature = Adjustment | 8 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        GammaTransfer = Adjustment | 10 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Vignette = Adjustment | 11 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         ColorMatrix = Adjustment | 12 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         ColorMatch = Adjustment | 13 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         // Effect1
-        GaussianBlur = Effect1 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        DirectionalBlur = Effect1 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Sharpen = Effect1 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Shadow = Effect1 | 4 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        ChromaKey = Effect1 | 5 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        EdgeDetection = Effect1 | 6 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Border = Effect1 | 7 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Emboss = Effect1 | 8 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Lighting = Effect1 | 9 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        GaussianBlur = Effect1 | 1 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        DirectionalBlur = Effect1 | 2 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Sharpen = Effect1 | 3 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Shadow = Effect1 | 4 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        EdgeDetection = Effect1 | 5 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Edge = Effect1 | 5 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Morphology = Effect1 | 6 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Emboss = Effect1 | 7 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Straighten = Effect1 | 8 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         // Effect2
-        LuminanceToAlpha = Effect2 | 1 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Fog = Effect2 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Sepia = Effect2 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Posterize = Effect2 | 4 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Colouring = Effect2 | 5 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Tint = Effect2 | 6 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        DiscreteTransfer = Effect2 | 7 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Vignette = Effect2 | 8 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        GammaTransfer = Effect2 | 9 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-
-        // Effect3
-        Glass = Effect3 | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        PinchPunch = Effect3 | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Morphology = Effect3 | 3 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Straighten = Effect3 | 4 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Edge = Effect3 | 5 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        ChromaKey = Effect2 | 1 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Border = Effect2 | 2 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Lighting = Effect2 | 3 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        LuminanceToAlpha = Effect2 | 4 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Fog = Effect2 | 5 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Sepia = Effect2 | 6 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Posterize = Effect2 | 7 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Colouring = Effect2 | 8 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Tint = Effect2 | 9 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        DiscreteTransfer = Effect2 | 10 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Glass = Effect2 | 11 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        PinchPunch = Effect2 | 12 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
 
         #endregion
 
@@ -279,9 +305,6 @@ namespace Luo_Painter.Options
         Transparency = Vector | 6 << 8 | ExistIcon | IsItemClickEnabled,
 
         Image = Vector | 7 << 8 | ExistIcon | IsItemClickEnabled,
-
-
-
 
         // Curve
         Node = Curve | 1 << 8 | ExistIcon | IsItemClickEnabled,
