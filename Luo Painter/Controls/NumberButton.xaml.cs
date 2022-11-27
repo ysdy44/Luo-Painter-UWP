@@ -1,9 +1,9 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.Elements
 {
-    public sealed class NumberButton : NumberButtonBase, INumberSlider
+    public sealed class NumberButton : NumberButtonBase, INumberBase
     {
         //@Content
         public FrameworkElement PlacementTarget => this;

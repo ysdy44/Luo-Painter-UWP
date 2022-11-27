@@ -3,13 +3,13 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.Elements
 {
-    public interface INumberSlider
+    public interface INumberBase
     {
         /// <summary> <see cref="RangeBase.Value"/> </summary>
         int Number { get; }
@@ -49,8 +49,8 @@ namespace Luo_Painter.Controls
         readonly Popup Popup = new Popup();
         readonly Border Border = new Border
         {
-            CornerRadius = new CornerRadius(4),
-            Padding = new Thickness(4),
+            CornerRadius = new CornerRadius(2),
+            Padding = new Thickness(2, 0, 2, 0),
             BorderThickness = new Thickness(1),
             BorderBrush = new SolidColorBrush(Windows.UI.Colors.Black),
             Background = new SolidColorBrush(Windows.UI.Colors.White),
@@ -225,15 +225,15 @@ namespace Luo_Painter.Controls
             this.Popup.IsOpen = true;
         }
 
-        public void Construct(INumberSlider placementTarget)
+        public void Construct(INumberBase number)
         {
-            this.IsNegative = placementTarget.Number < 0;
-            this.Absnumber = System.Math.Abs(placementTarget.Number);
+            this.IsNegative = number.Number < 0;
+            this.Absnumber = System.Math.Abs(number.Number);
 
-            this.Minimum = placementTarget.NumberMinimum;
-            this.Maximum = placementTarget.NumberMaximum;
+            this.Minimum = number.NumberMinimum;
+            this.Maximum = number.NumberMaximum;
 
-            this.Unit = placementTarget.Unit;
+            this.Unit = number.Unit;
 
             // Cursor
             this.Tick = true;
@@ -246,11 +246,11 @@ namespace Luo_Painter.Controls
             this.TitleTextBlock.SelectAll();
 
             // Popup
-            Point transform = placementTarget.PlacementTarget.TransformToVisual(Window.Current.Content).TransformPoint(default);
+            Point transform = number.PlacementTarget.TransformToVisual(Window.Current.Content).TransformPoint(default);
             this.Popup.HorizontalOffset = transform.X;
             this.Popup.VerticalOffset = transform.Y;
-            this.Popup.Width = this.Border.Width = placementTarget.PlacementTarget.ActualWidth;
-            this.Popup.Height = this.Border.Height = placementTarget.PlacementTarget.ActualHeight;
+            this.Popup.Width = this.Border.Width = number.PlacementTarget.ActualWidth;
+            this.Popup.Height = this.Border.Height = number.PlacementTarget.ActualHeight;
         }
         private void Invalidate()
         {
@@ -306,14 +306,14 @@ namespace Luo_Painter.Controls
             if (string.IsNullOrEmpty(this.Unit))
             {
                 if (this.IsNegative)
-                    return $"- {this.Absnumber}";
+                    return $"-{this.Absnumber}";
                 else
                     return $"{this.Absnumber}";
             }
             else
             {
                 if (this.IsNegative)
-                    return $"- {this.Absnumber} {this.Unit}";
+                    return $"-{this.Absnumber} {this.Unit}";
                 else
                     return $"{this.Absnumber} {this.Unit}";
             }

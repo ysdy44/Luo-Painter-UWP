@@ -212,11 +212,11 @@
 
                             <!--Opacity-->
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <local:NumberSlider x:Name="OpacitySlider" Minimum="0" Maximum="100" Unit="%" >
+                                <elements:NumberSlider x:Name="OpacitySlider" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Opacity
                                     </Slider.Header>
-                                </local:NumberSlider>
+                                </elements:NumberSlider>
                             </Border>
 
                             <!--BlendMode-->

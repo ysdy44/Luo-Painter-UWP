@@ -20,7 +20,7 @@
         <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <local:NumberPicker x:Name="NumberPicker" />
+            <elements:NumberPicker x:Name="NumberPicker" />
         </Flyout>
     </FrameworkElement.Resources>
 
@@ -85,35 +85,33 @@
                 <StackPanel>
 
                     <!--Size-->
-                    <local:NumberSlider2
+                    <elements:NumberSlider2
                         x:Name="SizeSlider" 
                         SmallChange="1000" 
                         StepFrequency="1000" 
                         Number="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"
                         NumberMinimum="{x:Bind IntConverter(SizeRange.YRange.Minimum), Mode=OneWay}"
                         NumberMaximum="{x:Bind IntConverter(SizeRange.YRange.Maximum), Mode=OneWay}"
-                        Foreground="{ThemeResource SystemColorControlAccentBrush}"
                         >
                         <Slider.Header>
                             Size
                         </Slider.Header>
-                    </local:NumberSlider2>
+                    </elements:NumberSlider2>
 
                     <!--Opacity-->
-                    <local:NumberSlider
+                    <elements:NumberSlider
                         x:Name="OpacitySlider"
                         Minimum="0"
                         Maximum="100"
                         Unit="%"
-                        Foreground="{ThemeResource SystemColorControlAccentBrush}" 
                         >
                         <Slider.Header>
                             Opacity
                         </Slider.Header>
-                    </local:NumberSlider>
+                    </elements:NumberSlider>
 
                     <!--Spacing-->
-                    <local:NumberSlider2
+                    <elements:NumberSlider2
                         x:Name="SpacingSlider"
                         SmallChange="10000" 
                         StepFrequency="10000"
@@ -121,23 +119,25 @@
                         Number="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}"
                         NumberMinimum="{x:Bind IntConverter(SpacingRange.YRange.Minimum), Mode=OneWay}"
                         NumberMaximum="{x:Bind IntConverter(SpacingRange.YRange.Maximum), Mode=OneWay}"
+                        Foreground="{ThemeResource AppForeground}" 
                         Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}" 
                         >
                         <Slider.Header>
                             Spacing
                         </Slider.Header>
-                    </local:NumberSlider2>
+                    </elements:NumberSlider2>
 
                     <!--Flow-->
-                    <local:NumberSlider
+                    <elements:NumberSlider
                         x:Name="FlowSlider" 
                         Unit="%" 
+                        Foreground="{ThemeResource AppForeground}" 
                         Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}" 
                         >
                         <Slider.Header>
                             Flow
                         </Slider.Header>
-                    </local:NumberSlider>
+                    </elements:NumberSlider>
 
                 </StackPanel>
             </Border>
@@ -199,7 +199,7 @@
 
 
             <!--Tip-->
-            <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+            <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                        Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
                     Tip Shape
             </TextBlock>
@@ -324,9 +324,9 @@
                 <TextBlock x:Name="StepTextBlock" Grid.Row="4" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                     Step of Grain
                 </TextBlock>
-                <local:NumberButton x:Name="StepButton" Grid.Column="1" Grid.Row="3" Number="1024" NumberMinimum="16" NumberMaximum="16384" Margin="12,2" HorizontalAlignment="Right" >
+                <elements:NumberButton x:Name="StepButton" Grid.Column="1" Grid.Row="3" Number="1024" NumberMinimum="16" NumberMaximum="16384" Margin="12,2" HorizontalAlignment="Right" >
                     <!--Text-->
-                </local:NumberButton>
+                </elements:NumberButton>
 
             </Grid>
 
@@ -383,7 +383,7 @@
                     Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
                 <StackPanel>
 
-                    <local:NumberSlider x:Name="MixSlider" Unit="%" >
+                    <elements:NumberSlider x:Name="MixSlider" Unit="%" >
                         <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
@@ -393,9 +393,9 @@
                         <Slider.Header>
                             Mix
                         </Slider.Header>
-                    </local:NumberSlider>
+                    </elements:NumberSlider>
 
-                    <local:NumberSlider x:Name="WetSlider" >
+                    <elements:NumberSlider x:Name="WetSlider" >
                         <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
@@ -405,9 +405,9 @@
                         <Slider.Header>
                             Wet
                         </Slider.Header>
-                    </local:NumberSlider>
+                    </elements:NumberSlider>
 
-                    <local:NumberSlider x:Name="PersistenceSlider" Unit="%" >
+                    <elements:NumberSlider x:Name="PersistenceSlider" Unit="%" >
                         <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
@@ -417,7 +417,7 @@
                         <Slider.Header>
                             Persistence
                         </Slider.Header>
-                    </local:NumberSlider>
+                    </elements:NumberSlider>
 
                 </StackPanel>
             </Border>

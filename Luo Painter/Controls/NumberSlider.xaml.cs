@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.Elements
 {
     public sealed partial class NumberSlider : NumberSliderBase
     {
@@ -49,9 +49,9 @@ namespace Luo_Painter.Controls
     }
 
     [TemplatePart(Name = nameof(HeaderButton), Type = typeof(NumberButtonBase))]
-    public abstract partial class NumberSliderBase : Slider, INumberSlider
+    public abstract partial class NumberSliderBase : Slider, INumberBase
     {
-
+      
         //@Delegate
         public event RoutedEventHandler Click;
 

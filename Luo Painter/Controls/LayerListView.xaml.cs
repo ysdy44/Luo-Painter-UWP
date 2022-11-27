@@ -28,7 +28,7 @@ namespace Luo_Painter.Controls
         public event RoutedEventHandler OpacitySliderClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
 
         //@Content
-        public INumberSlider IOpacitySlider => this.OpacitySlider;
+        public INumberBase IOpacitySlider => this.OpacitySlider;
         public FrameworkElement OpacitySliderPlacementTarget => this.OpacitySlider.PlacementTarget;
         public double OpacitySliderValue { set => this.OpacitySlider.Value = value; }
 

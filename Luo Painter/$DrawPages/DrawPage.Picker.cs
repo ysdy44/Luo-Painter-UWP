@@ -1,5 +1,5 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Controls;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using Windows.UI.Xaml.Controls;
@@ -24,12 +24,12 @@ namespace Luo_Painter
     {
 
         NumberPickerMode NumberPickerMode;
-
-        private void NumberShowAt(INumberSlider slider, NumberPickerMode mode = default)
+    
+        private void NumberShowAt(INumberBase number, NumberPickerMode mode = default)
         {
             this.NumberPickerMode = mode;
-            this.NumberFlyout.ShowAt(slider.PlacementTarget);
-            this.NumberPicker.Construct(slider);
+            this.NumberFlyout.ShowAt(number.PlacementTarget);
+            this.NumberPicker.Construct(number);
         }
 
         public void ConstructPicker()
@@ -57,6 +57,9 @@ namespace Luo_Painter
                 this.NumberFlyout.ShowAt(this.LayerListView.OpacitySliderPlacementTarget);
                 this.NumberPicker.Construct(this.LayerListView.IOpacitySlider);
             };
+
+            this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
+            this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
 
             this.NumberPicker.SecondaryButtonClick += (s, e) => this.NumberFlyout.Hide();
             this.NumberPicker.PrimaryButtonClick += (s, e) =>

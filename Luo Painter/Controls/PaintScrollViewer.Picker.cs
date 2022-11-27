@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -24,11 +25,11 @@ namespace Luo_Painter.Controls
 
         PaintNumberPickerMode NumberPickerMode;
 
-        private void NumberShowAt(INumberSlider slider, PaintNumberPickerMode mode = default)
+        private void NumberShowAt(INumberBase number, PaintNumberPickerMode mode = default)
         {
             this.NumberPickerMode = mode;
-            this.NumberFlyout.ShowAt(slider.PlacementTarget);
-            this.NumberPicker.Construct(slider);
+            this.NumberFlyout.ShowAt(number.PlacementTarget);
+            this.NumberPicker.Construct(number);
         }
 
         public void ConstructPicker()
