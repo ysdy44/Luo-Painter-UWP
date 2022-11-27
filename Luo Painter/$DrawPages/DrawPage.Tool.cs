@@ -1,16 +1,7 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
-using System;
-using System.Numerics;
-using Windows.UI;
-using Windows.UI.Input;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter
 {
@@ -35,9 +26,16 @@ namespace Luo_Painter
                     this.CropCanvas_Start();
                     break;
 
+                case OptionType.Move:
+                    this.Move_Start();
+                    break;
                 case OptionType.Transform:
                     this.Transform_Start();
                     break;
+                case OptionType.FreeTransform:
+                    this.FreeTransform_Start();
+                    break;
+
                 case OptionType.DisplacementLiquefaction:
                     break;
                 case OptionType.GradientMapping:
@@ -114,9 +112,16 @@ namespace Luo_Painter
                     this.CropCanvas_Delta();
                     break;
 
+                case OptionType.Move:
+                    this.Move_Delta();
+                    break;
                 case OptionType.Transform:
                     this.Transform_Delta();
                     break;
+                case OptionType.FreeTransform:
+                    this.FreeTransform_Delta();
+                    break;
+
                 case OptionType.DisplacementLiquefaction:
                     this.DisplacementLiquefaction_Delta();
                     break;
@@ -183,6 +188,7 @@ namespace Luo_Painter
                 case OptionType.Feather:
                     break;
                 case OptionType.MarqueeTransform:
+                    this.Transform_Complete();
                     break;
                 case OptionType.Grow:
                     break;
@@ -193,8 +199,16 @@ namespace Luo_Painter
                     this.CropCanvas_Complete();
                     break;
 
-                case OptionType.Transform:
+                case OptionType.Move:
+                    this.Move_Complete();
                     break;
+                case OptionType.Transform:
+                    this.Transform_Complete();
+                    break;
+                case OptionType.FreeTransform:
+                    this.FreeTransform_Complete();
+                    break;
+
                 case OptionType.DisplacementLiquefaction:
                     this.DisplacementLiquefaction_Complete();
                     break;
