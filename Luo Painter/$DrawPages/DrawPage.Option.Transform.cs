@@ -2,14 +2,7 @@
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using Luo_Painter.Options;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
-using Windows.UI;
-using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
@@ -17,152 +10,163 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
     {
 
-        int TransformMode => this.TransformComboBox.SelectedIndex;
-
-        Vector2 Move;
-        Vector2 StartingMove;
-
-        TransformerBorder Bounds;
-
-        Transformer BoundsFreeTransformer;
-        Matrix3x2 BoundsFreeMatrix;
-        Vector2 BoundsFreeDistance;
-
         public void ConstructTransform()
         {
-            this.TransformComboBox.SelectionChanged += (s, e) =>
-            {
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
+            this.TXButton.Click += (s, e) => this.NumberShowAt(this.TXButton, NumberPickerMode.Case0);
+            this.TYButton.Click += (s, e) => this.NumberShowAt(this.TYButton, NumberPickerMode.Case1);
+
+            this.TWButton.Click += (s, e) => this.NumberShowAt(this.TWButton, NumberPickerMode.Case2);
+            this.THButton.Click += (s, e) => this.NumberShowAt(this.THButton, NumberPickerMode.Case3);
+
+            this.TSButton.Click += (s, e) => this.NumberShowAt(this.TSButton, NumberPickerMode.Case4);
+            this.TRButton.Click += (s, e) => this.NumberShowAt(this.TRButton, NumberPickerMode.Case5);
         }
 
-        private void SetTransform(PixelBounds bounds)
+        private void SetTransform(PixelBounds bounds) => this.ResetTransform(bounds);
+        private void ResetTransform(PixelBounds bounds)
         {
-            this.Move = Vector2.Zero;
-
             this.Bounds = bounds.ToBorder();
 
             this.BoundsTransformer = this.Bounds.ToTransformer();
             this.BoundsMatrix = Matrix3x2.Identity;
 
-            this.BoundsFreeTransformer = this.BoundsTransformer;
-            this.BoundsFreeMatrix = Matrix3x2.Identity;
-            this.BoundsFreeDistance = Vector2.Zero;
+            this.SetTransformer(this.BoundsTransformer);
         }
 
-        private void DrawTransform(CanvasControl sender, CanvasDrawingSession ds, Matrix3x2 matrix)
+        private void SetTransform(NumberPickerMode mode, int e)
         {
-            switch (this.TransformMode)
+            switch (mode)
             {
-                case 0:
+                case NumberPickerMode.Case0:
+                    this.BoundsTransformer += this.BoundsTransformer.TransformX(e, IndicatorMode.LeftTop);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.TXButton.Number = e;
                     break;
-                case 1:
-                    ds.DrawBoundNodes(this.BoundsTransformer, matrix);
+                case NumberPickerMode.Case1:
+                    this.BoundsTransformer += this.BoundsTransformer.TransformY(e, IndicatorMode.LeftTop);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.TYButton.Number = e;
                     break;
-                case 2:
-                    ds.DrawBound(this.BoundsFreeTransformer, matrix);
-                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftTop, matrix));
-                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightTop, matrix));
-                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightBottom, matrix));
-                    ds.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftBottom, matrix));
+
+                case NumberPickerMode.Case2:
+                    this.BoundsTransformer *= this.BoundsTransformer.TransformWidth(e, IndicatorMode.LeftTop, this.IsRatio);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.TWButton.Number = e;
                     break;
+                case NumberPickerMode.Case3:
+                    this.BoundsTransformer *= this.BoundsTransformer.TransformHeight(e, IndicatorMode.LeftTop, this.IsRatio);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.THButton.Number = e;
+                    break;
+
+                case NumberPickerMode.Case4:
+                    this.BoundsTransformer *= this.BoundsTransformer.TransformSkew(e, IndicatorMode.Center);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.TSButton.Number = e;
+                    break;
+                case NumberPickerMode.Case5:
+                    this.BoundsTransformer *= this.BoundsTransformer.TransformRotate(e, IndicatorMode.Center);
+                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.TRButton.Number = e;
+                    break;
+
                 default:
                     break;
             }
         }
-
 
         private void Transform_Start()
         {
-            switch (this.TransformMode)
-            {
-                case 0:
-                    this.StartingMove = this.Move;
-                    break;
-                case 1:
-                    this.StartingMove = this.Move;
-                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BoundsTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                    this.IsBoundsMove = this.BoundsMode is TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
-                    this.StartingBoundsTransformer = this.BoundsTransformer;
-                    break;
-                case 2:
-                    this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BoundsFreeTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-                    break;
-                default:
-                    break;
-            }
+            this.StartingMove = this.Move;
+            this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BoundsTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+            this.IsBoundsMove = this.BoundsMode is TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
+            this.StartingBoundsTransformer = this.BoundsTransformer;
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
         private void Transform_Delta()
         {
-            switch (this.TransformMode)
+            if (this.IsBoundsMove)
             {
-                case 0:
-                    this.Move = this.Position - this.StartingPosition + this.StartingMove;
+                this.BoundsTransformer = this.StartingBoundsTransformer + (this.Position - this.StartingPosition);
+                this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-                    this.CanvasControl.Invalidate(); // Invalidate
-                    break;
-                case 1:
-                    if (this.IsBoundsMove)
-                    {
-                        this.BoundsTransformer = this.StartingBoundsTransformer + (this.Position - this.StartingPosition);
-                        this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
-                    else if (this.BoundsMode == default)
-                    {
-                    }
-                    else
-                    {
-                        this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsShift, this.IsCtrl);
-                        this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
-
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
-                    break;
-                case 2:
-                    switch (this.BoundsMode)
-                    {
-                        case TransformerMode.ScaleLeftTop:
-                            this.BoundsFreeTransformer.LeftTop = this.Position;
-                            this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-                            this.CanvasControl.Invalidate(); // Invalidate
-                            break;
-                        case TransformerMode.ScaleRightTop:
-                            this.BoundsFreeTransformer.RightTop = this.Position;
-                            this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-                            this.CanvasControl.Invalidate(); // Invalidate
-                            break;
-                        case TransformerMode.ScaleRightBottom:
-                            this.BoundsFreeTransformer.RightBottom = this.Position;
-                            this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-                            this.CanvasControl.Invalidate(); // Invalidate
-                            break;
-                        case TransformerMode.ScaleLeftBottom:
-                            this.BoundsFreeTransformer.LeftBottom = this.Position;
-                            this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
-
-                            this.CanvasVirtualControl.Invalidate(); // Invalidate
-                            this.CanvasControl.Invalidate(); // Invalidate
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
             }
+            else if (this.BoundsMode == default)
+            {
+            }
+            else
+            {
+                this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsRatio, this.IsCenter);
+                this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+            }
+        }
+
+        private void Transform_Complete()
+        {
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
+
+            this.SetTransformer(this.BoundsTransformer);
+        }
+
+        private void SetTransformer(Transformer transformer)
+        {
+            // X Y
+            Vector2 vector = transformer.GetIndicatorVector(default);
+            this.TXButton.Number = (int)vector.X;
+            this.TYButton.Number = (int)vector.Y;
+
+            // Value
+            Vector2 horizontal = transformer.Horizontal;
+            Vector2 vertical = transformer.Vertical;
+
+            //@Release: case Debug
+            // Width Height
+            //float width = horizontal.Length();
+            //float height = vertical.Length();
+
+            //@Release: case Release
+            double width = System.Math.Sqrt(horizontal.X * horizontal.X + horizontal.Y * horizontal.Y);
+            double height = System.Math.Sqrt(vertical.X * vertical.X + vertical.Y * vertical.Y);
+            this.TWButton.Number = (int)width;
+            this.THButton.Number = (int)height;
+
+            // Radians
+            float angle = FanKit.Transformers.Transformer.GetRadians(horizontal);
+            this.TRButton.Number = (int)angle;
+
+            // Skew
+            this.TSButton.Number = (int)FanKit.Transformers.Transformer.GetSkew(vertical, angle);
         }
 
     }

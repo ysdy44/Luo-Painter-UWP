@@ -56,6 +56,10 @@ namespace Luo_Painter
         private bool IsAlt => this.IsKeyDown(VirtualKey.Menu);
         private bool IsSpace => this.IsKeyDown(VirtualKey.Space);
 
+        private bool IsCenter => this.IsCtrl || this.TransformCenterButton.IsChecked is true;
+        private bool IsRatio => this.IsShift || this.TransformRatioButton.IsChecked is true;
+        private bool IsSnap => this.TransformSnapButton.IsChecked is true;
+
         //@Converter
         private bool ReverseBooleanConverter(bool value) => !value;
         private bool ReverseBooleanConverter(bool? value) => value == false;
@@ -242,11 +246,22 @@ namespace Luo_Painter
         float StartingPressure;
         float Pressure;
 
+
+        // Transform
+        TransformerBorder Bounds;
+
+        Vector2 StartingMove;
+        Vector2 Move;
+
         Transformer StartingBoundsTransformer;
         Transformer BoundsTransformer;
+        Matrix3x2 BoundsMatrix;
         TransformerMode BoundsMode;
         bool IsBoundsMove;
-        Matrix3x2 BoundsMatrix;
+
+        Transformer BoundsFreeTransformer;
+        Matrix3x2 BoundsFreeMatrix;
+        Vector2 BoundsFreeDistance;
 
 
         #region IInkParameter
@@ -277,6 +292,7 @@ namespace Luo_Painter
         }
 
         #endregion
+
 
         public bool Disabler
         {
@@ -315,8 +331,11 @@ namespace Luo_Painter
             this.ConstructThreshold();
 
             this.ConstructVector();
-            this.ConstructTransform();
             this.ConstructPen();
+
+            this.ConstructMove();
+            this.ConstructTransform();
+            this.ConstructFreeTransform();
 
 
             this.ContentGrid.SizeChanged += (s, e) =>
@@ -402,7 +421,6 @@ namespace Luo_Painter
                     this.ConstructSize((float)item.Size);
                 }
             };
-
 
             // Drag and Drop 
             base.AllowDrop = true;
