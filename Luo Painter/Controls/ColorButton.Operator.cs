@@ -13,11 +13,11 @@ namespace Luo_Painter.Controls
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.StartingPosition = this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                switch (this.Operator.Device)
+                switch (device)
                 {
                     case InkInputDevice.Pen:
                         this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
@@ -39,11 +39,11 @@ namespace Luo_Painter.Controls
                         break;
                 }
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
-                switch (this.Operator.Device)
+                switch (device)
                 {
                     case InkInputDevice.Pen:
                         this.Pressure = properties.Pressure * properties.Pressure;
@@ -65,7 +65,7 @@ namespace Luo_Painter.Controls
                         break;
                 }
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 switch (this.ToolComboBox.SelectedIndex)
                 {

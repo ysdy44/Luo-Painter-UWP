@@ -14,14 +14,14 @@ namespace Luo_Painter
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.CanvasAnimatedControl.Paused = true; // Invalidate
 
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
 
-                switch (this.Operator.Device)
+                switch (device)
                 {
                     case InkInputDevice.Pen:
                         this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
@@ -53,12 +53,12 @@ namespace Luo_Painter
 
                 this.Tool_Start();
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 this.Position = this.ToPosition(point);
                 this.Point = point;
 
-                switch (this.Operator.Device)
+                switch (device)
                 {
                     case InkInputDevice.Pen:
                         this.Pressure = properties.Pressure * properties.Pressure;
@@ -82,7 +82,7 @@ namespace Luo_Painter
                     this.CanvasControl.Invalidate();
                 }
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
 
@@ -98,20 +98,29 @@ namespace Luo_Painter
             };
 
 
-            // Right
-            this.Operator.Right_Start += (point) =>
+            // Holding
+            this.Operator.Right_Start += (point, isHolding) =>
             {
                 this.StartingPoint = this.Point = point;
-                this.View_Start();
+                if (isHolding)
+                    this.Straw_Start();
+                else
+                    this.View_Start();
             };
-            this.Operator.Right_Delta += (point) =>
+            this.Operator.Right_Delta += (point, isHolding) =>
             {
                 this.Point = point;
-                this.View_Delta();
+                if (isHolding)
+                    this.Straw_Delta();
+                else
+                    this.View_Delta();
             };
-            this.Operator.Right_Complete += (point) =>
+            this.Operator.Right_Complete += (point, isHolding) =>
             {
-                this.View_Complete();
+                if (isHolding)
+                    this.Straw_Complete();
+                else
+                    this.View_Complete();
             };
 
 

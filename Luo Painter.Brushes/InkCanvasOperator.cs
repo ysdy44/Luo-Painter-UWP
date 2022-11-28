@@ -7,6 +7,9 @@ using Windows.UI.Input;
 
 namespace Luo_Painter.Brushes
 {
+    public delegate void InkSingleHandler(Vector2 point, InkInputDevice device, PointerPointProperties properties);
+    public delegate void InkRightHandler(Vector2 point, bool isHolding);
+
     /// <summary>
     /// The touch mode of <see cref = "CanvasOperator" />.
     /// </summary>
@@ -98,19 +101,19 @@ namespace Luo_Painter.Brushes
 
         //@Delegate
         /// <summary> Occurs when the one-finger | mouse-left-button | pen event starts. </summary>
-        public event SingleHandler Single_Start = null;
+        public event InkSingleHandler Single_Start = null;
         /// <summary> Occurs when one-finger | mouse-left-button | pen event change. </summary>
-        public event SingleHandler Single_Delta = null;
+        public event InkSingleHandler Single_Delta = null;
         /// <summary> Occurs when the one-finger | mouse-left-button | pen event is complete. </summary>
-        public event SingleHandler Single_Complete = null;
+        public event InkSingleHandler Single_Complete = null;
 
 
         /// <summary> Occurs when the mouse-right-button event starts. </summary>
-        public event RightHandler Right_Start = null;
+        public event InkRightHandler Right_Start = null;
         /// <summary> Occurs when mouse-right-button event change. </summary>
-        public event RightHandler Right_Delta = null;
+        public event InkRightHandler Right_Delta = null;
         /// <summary> Occurs when the mouse-right-button event is complete. </summary>
-        public event RightHandler Right_Complete = null;
+        public event InkRightHandler Right_Complete = null;
 
 
         /// <summary> Occurs when the double-finger event starts. </summary>
@@ -186,14 +189,14 @@ namespace Luo_Painter.Brushes
                         {
                             this.Device = InkInputDevice.Eraser;
                             this.DestinationControl.CapturePointer(e.Pointer);
-                            this.Single_Start?.Invoke(point, pointerPoint.Properties); // Delegate
+                            this.Single_Start?.Invoke(point, InkInputDevice.Eraser, pointerPoint.Properties); // Delegate
                             return;
                         }
                         else
                         {
                             this.Device = InkInputDevice.Pen;
                             this.DestinationControl.CapturePointer(e.Pointer);
-                            this.Single_Start?.Invoke(point, pointerPoint.Properties); // Delegate
+                            this.Single_Start?.Invoke(point, InkInputDevice.Pen, pointerPoint.Properties); // Delegate
                             return;
                         }
                     }
@@ -214,14 +217,14 @@ namespace Luo_Painter.Brushes
                         {
                             this.Device = InkInputDevice.RightButton;
                             this.DestinationControl.CapturePointer(e.Pointer);
-                            this.Right_Start?.Invoke(point); // Delegate
+                            this.Right_Start?.Invoke(point, false); // Delegate
                             return;
                         }
                         else
                         {
                             this.Device = InkInputDevice.LeftButton;
                             this.DestinationControl.CapturePointer(e.Pointer);
-                            this.Single_Start?.Invoke(point, pointerPoint.Properties); // Delegate
+                            this.Single_Start?.Invoke(point, InkInputDevice.LeftButton, pointerPoint.Properties); // Delegate
                             return;
                         }
                     }
@@ -235,6 +238,8 @@ namespace Luo_Painter.Brushes
                     return;
             }
         }
+
+
         // Pointer Released
         private void Control_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
@@ -249,22 +254,22 @@ namespace Luo_Painter.Brushes
             switch (this.Device)
             {
                 case InkInputDevice.OneFinger:
-                    this.Single_Complete?.Invoke(point, pointerPoint.Properties); // Delegate
+                    this.Single_Complete?.Invoke(point, InkInputDevice.OneFinger, pointerPoint.Properties); // Delegate
                     break;
                 case InkInputDevice.DoubleFinger:
                     this.Double_Complete?.Invoke((this.OddPoint + this.EvenPoint) / 2, Vector2.Distance(this.OddPoint, this.EvenPoint)); // Delegate
                     break;
                 case InkInputDevice.Pen:
-                    this.Single_Complete?.Invoke(point, pointerPoint.Properties); // Delegate
+                    this.Single_Complete?.Invoke(point, InkInputDevice.Pen, pointerPoint.Properties); // Delegate
                     break;
                 case InkInputDevice.Eraser:
-                    this.Single_Complete?.Invoke(point, pointerPoint.Properties); // Delegate
+                    this.Single_Complete?.Invoke(point, InkInputDevice.Eraser, pointerPoint.Properties); // Delegate
                     break;
                 case InkInputDevice.LeftButton:
-                    this.Single_Complete?.Invoke(point, pointerPoint.Properties); // Delegate
+                    this.Single_Complete?.Invoke(point, InkInputDevice.LeftButton, pointerPoint.Properties); // Delegate
                     break;
                 case InkInputDevice.RightButton:
-                    this.Right_Complete?.Invoke(point); // Delegate
+                    this.Right_Complete?.Invoke(point, false); // Delegate
                     break;
                 default:
                     break;
@@ -296,12 +301,12 @@ namespace Luo_Painter.Brushes
                                             case InkTouchMode.Single:
                                                 this.Device = InkInputDevice.OneFinger;
                                                 this.DestinationControl.CapturePointer(e.Pointer);
-                                                this.Single_Start?.Invoke(this.EvenPoint, pointerPoint.Properties); // Delegate
+                                                this.Single_Start?.Invoke(this.StartingEvenPoint, InkInputDevice.OneFinger, pointerPoint.Properties); // Delegate
                                                 break;
                                             case InkTouchMode.Right:
                                                 this.Device = InkInputDevice.RightButton;
                                                 this.DestinationControl.CapturePointer(e.Pointer);
-                                                this.Right_Start?.Invoke(this.EvenPoint); // Delegate
+                                                this.Right_Start?.Invoke(this.StartingEvenPoint, false); // Delegate
                                                 break;
                                             default:
                                                 this.Device = InkInputDevice.None;
@@ -320,7 +325,7 @@ namespace Luo_Painter.Brushes
                                     this.EvenPoint = pointerPoint.Position.ToVector2();
                                 }
 
-                                this.Single_Delta?.Invoke(this.EvenPoint, pointerPoint.Properties); // Delegate
+                                this.Single_Delta?.Invoke(this.EvenPoint, InkInputDevice.OneFinger, pointerPoint.Properties); // Delegate
                                 return;
                             }
                         case InkInputDevice.DoubleFinger:
@@ -346,7 +351,7 @@ namespace Luo_Painter.Brushes
                                     PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                                     Vector2 point = pointerPoint.Position.ToVector2();
 
-                                    this.Right_Delta?.Invoke(point); // Delegate
+                                    this.Right_Delta?.Invoke(point, false); // Delegate
                                     break;
                                 default:
                                     break;
@@ -366,7 +371,7 @@ namespace Luo_Painter.Brushes
                                     PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                                     Vector2 point = pointerPoint.Position.ToVector2();
 
-                                    this.Single_Delta?.Invoke(point, pointerPoint.Properties); // Delegate
+                                    this.Single_Delta?.Invoke(point, InkInputDevice.Pen, pointerPoint.Properties); // Delegate
                                 }
                             }
                             return;
@@ -378,7 +383,7 @@ namespace Luo_Painter.Brushes
                                     PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                                     Vector2 point = pointerPoint.Position.ToVector2();
 
-                                    this.Single_Delta?.Invoke(point, pointerPoint.Properties); // Delegate
+                                    this.Single_Delta?.Invoke(point, InkInputDevice.Eraser, pointerPoint.Properties); // Delegate
                                 }
                             }
                             return;
@@ -396,7 +401,7 @@ namespace Luo_Painter.Brushes
                                     PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                                     Vector2 point = pointerPoint.Position.ToVector2();
 
-                                    this.Single_Delta?.Invoke(point, pointerPoint.Properties); // Delegate
+                                    this.Single_Delta?.Invoke(point, InkInputDevice.LeftButton, pointerPoint.Properties); // Delegate
                                 }
                             }
                             return;
@@ -408,7 +413,7 @@ namespace Luo_Painter.Brushes
                                     PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                                     Vector2 point = pointerPoint.Position.ToVector2();
 
-                                    this.Right_Delta?.Invoke(point); // Delegate
+                                    this.Right_Delta?.Invoke(point, false); // Delegate
                                 }
                             }
                             return;
@@ -419,6 +424,8 @@ namespace Luo_Painter.Brushes
                     return;
             }
         }
+
+
         // Wheel Changed
         private void Control_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
