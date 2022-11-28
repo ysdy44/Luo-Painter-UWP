@@ -730,14 +730,14 @@ namespace Luo_Painter
                 #region Layer
 
                 // Category
-                case OptionType.Add: break;
+                case OptionType.New: break;
                 case OptionType.Clipboard: break;
                 case OptionType.Layering: break;
                 case OptionType.Grouping: break;
                 case OptionType.Combine: break;
 
                 // Add
-                case OptionType.AddLayer:
+                case OptionType.AddBitmapLayer:
                     {
                         ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
@@ -1235,6 +1235,7 @@ namespace Luo_Painter
                                 this.ConstructAppBar(OptionType.Move);
 
                                 this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
@@ -1284,6 +1285,7 @@ namespace Luo_Painter
                                 this.ConstructAppBar(OptionType.Transform);
 
                                 this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
@@ -1333,6 +1335,7 @@ namespace Luo_Painter
                                 this.ConstructAppBar(OptionType.FreeTransform);
 
                                 this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
@@ -1364,6 +1367,7 @@ namespace Luo_Painter
                                 this.ConstructAppBar(OptionType.DisplacementLiquefaction);
 
                                 this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
@@ -1394,6 +1398,7 @@ namespace Luo_Painter
                                 this.ConstructAppBar(OptionType.GradientMapping);
 
                                 this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
@@ -1424,6 +1429,7 @@ namespace Luo_Painter
                                 this.ConstructAppBar(OptionType.RippleEffect);
 
                                 this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }

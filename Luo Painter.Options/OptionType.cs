@@ -118,7 +118,7 @@ namespace Luo_Painter.Options
         #region Layer
 
         // Category
-        Add = Layer | 1 << 16,
+        New = Layer | 1 << 16,
 
         Clipboard = Layer | 2 << 16,
         Layering = Layer | 4 << 16,
@@ -129,23 +129,24 @@ namespace Luo_Painter.Options
         Arrange = Layer | 64 << 16,
         Align = Layer | 128 << 16,
 
-        // Add
-        AddLayer = Add | 2 << 8 | ExistIcon | IsItemClickEnabled,
-        AddImageLayer = Add | 3 << 8 | ExistIcon | IsItemClickEnabled,
-        AddCurveLayer = Add | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        // New
+        AddLayer = New | 0 << 8 | ExistIcon | IsItemClickEnabled,
+        AddBitmapLayer = New | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        AddImageLayer = New | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        AddCurveLayer = New | 3 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Clipboard
-        CutLayer = Clipboard | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        CopyLayer = Clipboard | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        PasteLayer = Clipboard | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        CutLayer = Clipboard | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        CopyLayer = Clipboard | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        PasteLayer = Clipboard | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         // Layering
         Remove = Layering | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         Duplicate = Layering | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        Extract = Layering | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Merge = Layering | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Flatten = Layering | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Extract = Layering | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Merge = Layering | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Flatten = Layering | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         // Grouping
         Group = Grouping | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -199,10 +200,10 @@ namespace Luo_Painter.Options
         Pixel = Selecting | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         // Marquees
-        Feather = Marquees | 5 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        MarqueeTransform = 6 << 8 | Marquees | WithTransform | WithState | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        Grow = Marquees | 7 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        Shrink = Marquees | 8 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Feather = Marquees | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        MarqueeTransform = Marquees | 2 << 8 | WithState | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        Grow = Marquees | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Shrink = Marquees | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
