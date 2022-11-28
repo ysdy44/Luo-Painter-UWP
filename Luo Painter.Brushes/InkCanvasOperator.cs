@@ -28,6 +28,7 @@ namespace Luo_Painter.Brushes
         None,
         Indeterminacy,
 
+        Holding,
         OneFinger,
         DoubleFinger,
 
@@ -80,6 +81,7 @@ namespace Luo_Painter.Brushes
                 oldValue.PointerCanceled -= control.Control_PointerReleased;
                 oldValue.PointerMoved -= control.Control_PointerMoved;
                 oldValue.PointerWheelChanged -= control.Control_PointerWheelChanged;
+                oldValue.Holding -= control.Control_Holding;
             }
 
             if (e.NewValue is UIElement value)
@@ -89,6 +91,7 @@ namespace Luo_Painter.Brushes
                 value.PointerCanceled += control.Control_PointerReleased;
                 value.PointerMoved += control.Control_PointerMoved;
                 value.PointerWheelChanged += control.Control_PointerWheelChanged;
+                value.Holding += control.Control_Holding;
             }
         }));
 
@@ -108,11 +111,11 @@ namespace Luo_Painter.Brushes
         public event InkSingleHandler Single_Complete = null;
 
 
-        /// <summary> Occurs when the mouse-right-button event starts. </summary>
+        /// <summary> Occurs when the mouse-right-button | one-finger-holding event starts. </summary>
         public event InkRightHandler Right_Start = null;
-        /// <summary> Occurs when mouse-right-button event change. </summary>
+        /// <summary> Occurs when mouse-right-button | one-finger-holding event change. </summary>
         public event InkRightHandler Right_Delta = null;
-        /// <summary> Occurs when the mouse-right-button event is complete. </summary>
+        /// <summary> Occurs when the mouse-right-button | one-finger-holding event is complete. </summary>
         public event InkRightHandler Right_Complete = null;
 
 
@@ -253,6 +256,9 @@ namespace Luo_Painter.Brushes
             this.DestinationControl.ReleasePointerCaptures();
             switch (this.Device)
             {
+                case InkInputDevice.Holding:
+                    this.Right_Complete?.Invoke(point, true); // Delegate
+                    break;
                 case InkInputDevice.OneFinger:
                     this.Single_Complete?.Invoke(point, InkInputDevice.OneFinger, pointerPoint.Properties); // Delegate
                     break;
@@ -314,6 +320,14 @@ namespace Luo_Painter.Brushes
                                         }
                                     }
                                 }
+                                return;
+                            }
+                        case InkInputDevice.Holding:
+                            {
+                                PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
+                                Vector2 point = pointerPoint.Position.ToVector2();
+
+                                this.Right_Delta?.Invoke(point, true); // Delegate
                                 return;
                             }
                         case InkInputDevice.OneFinger:
@@ -435,6 +449,17 @@ namespace Luo_Painter.Brushes
             float space = pointerPoint.Properties.MouseWheelDelta;
 
             this.Wheel_Changed?.Invoke(point, space);//Delegate
+        }
+
+
+        // Holding
+        private void Control_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            if (this.Device is InkInputDevice.Indeterminacy)
+            {
+                this.Device = InkInputDevice.Holding;
+                this.Right_Start?.Invoke(this.StartingEvenPoint, true); // Delegate
+            }
         }
 
 
