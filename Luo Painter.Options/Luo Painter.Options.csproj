@@ -166,6 +166,10 @@
     <Content Include="Thumbnails\Vignette.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Icons\AddBitmapLayerIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Icons\AddCurveLayerIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
