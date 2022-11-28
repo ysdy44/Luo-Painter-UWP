@@ -201,6 +201,9 @@
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MovePicker.xaml.cs">
+      <DependentUpon>MovePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OffsetDialog.xaml.cs">
       <DependentUpon>OffsetDialog.xaml</DependentUpon>
     </Compile>
@@ -371,6 +374,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LayerListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MovePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
