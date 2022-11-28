@@ -379,7 +379,7 @@
 
     <ListViewBase.Footer>
         <SplitButton
-            x:Name="AddButton"
+            x:Name="NewButton"
             Margin="7"
             Height="36"
             CornerRadius="4"            
@@ -388,19 +388,19 @@
             VerticalAlignment="Stretch"   
             >
             <ToolTipService.ToolTip>
-                <ToolTip x:Name="AddToolTip" Style="{StaticResource AppToolTipStyle}">
-                    Add
+                <ToolTip x:Name="NewToolTip" Style="{StaticResource AppToolTipStyle}">
+                    New
                 </ToolTip>
             </ToolTipService.ToolTip>
             <SplitButton.Flyout>
                 <MenuFlyout Placement="TopEdgeAlignedRight">
-                    <!--Add-->
-                    <MenuFlyoutSeparator x:Name="AddHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                    <!--New-->
+                    <MenuFlyoutSeparator x:Name="NewHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                         <UIElement.AccessKey>
-                            Add
+                            New
                         </UIElement.AccessKey>
                     </MenuFlyoutSeparator>
-                    <MenuFlyoutItem options:OptionExtensions.Type="AddLayer" Command="{x:Bind Command}">
+                    <MenuFlyoutItem options:OptionExtensions.Type="AddBitmapLayer" Command="{x:Bind Command}">
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Insert"/>
                         </UIElement.KeyboardAccelerators>

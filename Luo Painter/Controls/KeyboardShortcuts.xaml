@@ -77,7 +77,7 @@
 
 
     <local:KeyboardShortcut Key="Delete" CommandParameter="Remove" />
-    <local:KeyboardShortcut Key="Insert" CommandParameter="AddLayer" />
+    <local:KeyboardShortcut Key="Insert" CommandParameter="AddBitmapLayer" />
 
     <local:KeyboardShortcut Modifiers="Control" Key="X" CommandParameter="Cut" />
     <local:KeyboardShortcut Modifiers="Control" Key="J" CommandParameter="Duplicate" />
