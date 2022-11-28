@@ -26,8 +26,8 @@ namespace Luo_Painter.Brushes
     public enum InkInputDevice
     {
         None,
+        Indeterminacy,
 
-        Holding,
         OneFinger,
         DoubleFinger,
 
@@ -158,10 +158,10 @@ namespace Luo_Painter.Brushes
                         PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                         this.StartingEvenPoint = this.EvenPoint = pointerPoint.Position.ToVector2();
 
-                        this.Device = InkInputDevice.Holding;
+                        this.Device = InkInputDevice.Indeterminacy;
                         return;
                     }
-                    else if (this.OddPointerId == default)
+                    else if (this.OddPointerId == default && this.Device is InkInputDevice.Indeterminacy)
                     {
                         this.OddPointerId = e.Pointer.PointerId;
 
@@ -287,7 +287,7 @@ namespace Luo_Painter.Brushes
                 case PointerDeviceType.Touch:
                     switch (this.Device)
                     {
-                        case InkInputDevice.Holding:
+                        case InkInputDevice.Indeterminacy:
                             {
                                 PointerPoint pointerPoint = e.GetCurrentPoint(this.DestinationControl);
                                 if (this.EvenPointerId == e.Pointer.PointerId)
