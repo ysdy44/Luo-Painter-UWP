@@ -360,24 +360,7 @@
 
 
                             <local:OptionCase Value="Move">
-                                <Grid ColumnSpacing="4" MinWidth="480" Height="60" Margin="10,4" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="4*" MinWidth="68" />
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="4*" MinWidth="68" />
-                                    </Grid.ColumnDefinitions>
-                                    <!--X-->
-                                    <TextBlock Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        X
-                                    </TextBlock>
-                                    <elements:NumberButton x:Name="MoveXButton" Grid.Column="1" Grid.Row="1" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <!--Y-->
-                                    <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Y
-                                    </TextBlock>
-                                    <elements:NumberButton x:Name="MoveYButton" Grid.Column="3" Grid.Row="4" NumberMinimum="-16384" NumberMaximum="16384" />
-                                </Grid>
+                                <controls:MovePicker x:Name="MovePicker"/>
                             </local:OptionCase>
                             <local:OptionCase Value="Transform">
                                 <StackPanel>
@@ -477,38 +460,16 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="FreeTransform">
-                                <Grid ColumnSpacing="4" RowSpacing="12" MinWidth="480" Height="72" Margin="10,4" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1" />
-                                        <ColumnDefinition Width="1*" MinWidth="68" />
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="1*" MinWidth="68" />
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="1*" MinWidth="68" />
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="1*" MinWidth="68" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <!--LT-->
-                                    <elements:NumberButton x:Name="LTXButton" Grid.Column="1" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <Line Grid.Column="2" X2="32" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
-                                    <elements:NumberButton x:Name="LTYButton" Grid.Column="3" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <!--RT-->
-                                    <elements:NumberButton x:Name="RTXButton" Grid.Column="1" Grid.Row="1" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <Line Grid.Column="2" Grid.Row="1" X2="32" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
-                                    <elements:NumberButton x:Name="RTYButton" Grid.Column="3" Grid.Row="1" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <!--RB-->
-                                    <elements:NumberButton x:Name="RBXButton" Grid.Column="5" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <Line Grid.Column="6" X2="32" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
-                                    <elements:NumberButton x:Name="RBYButton" Grid.Column="7" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <!--LB-->
-                                    <elements:NumberButton x:Name="LBXButton" Grid.Column="5" Grid.Row="1" NumberMinimum="-16384" NumberMaximum="16384" />
-                                    <Line Grid.Column="6" Grid.Row="1" X2="32" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
-                                    <elements:NumberButton x:Name="LBYButton" Grid.Column="7" Grid.Row="1" NumberMinimum="-16384" NumberMaximum="16384" />
-                                </Grid>
+                                <StackPanel>
+                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
+                                        <controls:MovePicker x:Name="LTPicker" Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" />
+                                        <controls:MovePicker x:Name="RTPicker" Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
+                                        <controls:MovePicker x:Name="LBPicker" Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" />
+                                        <controls:MovePicker x:Name="RBPicker" Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" />
+                                    </StackPanel>
+                                </StackPanel>
                             </local:OptionCase>
                             
                             

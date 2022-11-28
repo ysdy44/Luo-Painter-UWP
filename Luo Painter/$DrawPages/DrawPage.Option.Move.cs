@@ -10,8 +10,9 @@ namespace Luo_Painter
 
         public void ConstructMove()
         {
-            this.MoveXButton.Click += (s, e) => this.NumberShowAt(this.MoveXButton, NumberPickerMode.Case0);
-            this.MoveYButton.Click += (s, e) => this.NumberShowAt(this.MoveYButton, NumberPickerMode.Case1);
+            this.MovePicker.XClick += (s, e) => this.NumberShowAt(this.MovePicker.XNumber, NumberPickerMode.Case0);
+            this.MovePicker.YClick += (s, e) => this.NumberShowAt(this.MovePicker.YNumber, NumberPickerMode.Case1);
+
         }
 
         private void ResetMove()
@@ -19,8 +20,7 @@ namespace Luo_Painter
             // Move
             this.Move = Vector2.Zero;
 
-            this.MoveXButton.Number = (int)this.Move.X;
-            this.MoveYButton.Number = (int)this.Move.Y;
+            this.MovePicker.Value = this.Move;
         }
 
         private void SetMove(NumberPickerMode mode, int e)
@@ -33,7 +33,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.MoveXButton.Number = e;
+                    this.MovePicker.X = e;
                     break;
                 case NumberPickerMode.Case1:
                     this.Move.Y = e;
@@ -41,7 +41,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.MoveYButton.Number = e;
+                    this.MovePicker.Y = e;
                     break;
                 default:
                     break;
@@ -68,8 +68,7 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 
-            this.MoveXButton.Number = (int)this.Move.X;
-            this.MoveYButton.Number = (int)this.Move.Y;
+            this.MovePicker.Value = this.Move;
         }
 
     }
