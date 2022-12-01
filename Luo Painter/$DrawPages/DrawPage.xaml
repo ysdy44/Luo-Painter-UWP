@@ -1090,10 +1090,10 @@
         <!--Head-->
         <Grid Height="50" VerticalAlignment="Top" >
 
-            <Button x:Name="DockLeftButton" ClickMode="Hover" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Name="LayoutToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Layouts
+                    <ToolTip x:Name="ToolToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Tools
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
@@ -1107,23 +1107,75 @@
                 </StackPanel>
             </Button>
 
-            <Button x:Name="DockRightButton" ClickMode="Hover" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Name="ToolToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Tools
+                    <ToolTip x:Name="LayoutToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Layouts
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem options:OptionExtensions.Type="DockLeft" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="DockRight" Command="{x:Bind Command}"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="PaintMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="BrushMenu" FontWeight="Bold" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="SizeMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="EffectMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
-                        <MenuFlyoutItem options:OptionExtensions.Type="HistoryMenu" Command="{x:Bind Command}" IsEnabled="{x:Bind SplitRightView.IsPaneOpen,Mode=OneWay}" />
-                    </MenuFlyout>
+                    <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                        <StackPanel Spacing="2" Padding="6,4" Width="318">
+
+                            <TextBlock                                
+                                x:Name="LayoutTextBlock" 
+                                Margin="10,4,10,10" 
+                                IsHitTestVisible="false" 
+                                FontWeight="Medium" 
+                                TextTrimming="CharacterEllipsis" 
+                                FontSize="20" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Center" 
+                                Style="{StaticResource SubheaderTextBlockStyle}" 
+                                >                                
+                                Layouts
+                            </TextBlock>
+
+                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="136"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="DockLeftTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                        Dock Left
+                                    </TextBlock>
+                                    <ToggleSwitch x:Name="DockLeftToggleButton" Grid.Column="1" IsOn="{x:Bind SplitLeftView.IsPaneOpen, Mode=TwoWay}"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="136"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="DockRightTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                        Dock Right
+                                    </TextBlock>
+                                    <ToggleSwitch x:Name="DockRightToggleButton" Grid.Column="1" IsOn="{x:Bind SplitRightView.IsPaneOpen, Mode=TwoWay}"/>
+                                </Grid>
+                            </Border>
+
+                            <!--Menu-->
+                            <TextBlock x:Name="MenuTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                                Menus
+                            </TextBlock>
+
+                            <ListView
+                                IsEnabled="{x:Bind SplitRightView.IsPaneOpen, Mode=OneWay}"
+                                SelectedIndex="{x:Bind IndexGrid.Index, Mode=TwoWay}"
+                                Style="{StaticResource AppListViewStyle}"
+                                >
+                                <local:OptionItem Type="PaintMenu"/>
+                                <local:OptionItem Type="BrushMenu"/>
+                                <local:OptionItem Type="SizeMenu"/>
+                                <local:OptionItem Type="EffectMenu"/>
+                                <local:OptionItem Type="HistoryMenu"/>
+                            </ListView>
+                            
+                        </StackPanel>
+                    </Flyout>
                 </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
