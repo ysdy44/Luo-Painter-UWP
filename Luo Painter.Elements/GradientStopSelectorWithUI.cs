@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Numerics;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -10,11 +11,14 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Elements
 {
-    public class GradientStopSelectorWithUI : GradientStopSelector
+    public class GradientStopSelectorWithUI : GradientStopSelector, IColorBase
     {
         //@Delegate
         public event EventHandler<double> ItemRemoved;
 
+        //@Content
+        public FrameworkElement PlacementTarget => this.CurrentButton;
+        public Color Color => this.CurrentStop.Color;
         public Button CurrentButton { get; private set; }
         public GradientStop CurrentStop { get; private set; }
         public GradientStop CurrentStopUI { get; private set; }
@@ -180,6 +184,9 @@ namespace Luo_Painter.Elements
 
             };
         }
+
+        public void SetColor(Color color) => this.SetCurrentColor(color);
+        public void SetColor(Vector4 colorHdr) => this.SetColor(Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f)));
 
         public void Add(Color color, double offset)
         {
