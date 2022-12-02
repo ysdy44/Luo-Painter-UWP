@@ -314,7 +314,8 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
-            this.ConstructPicker();
+            this.ConstructColorPicker();
+            this.ConstructNumberPicker();
 
             this.ConstructAppBar();
 
@@ -326,9 +327,14 @@ namespace Luo_Painter
 
             this.ConstructSetup();
 
+            this.ConstructDisplacementLiquefaction();
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();
             this.ConstructThreshold();
+
+            this.ConstructRadian();
+            this.ConstructScale();
+            this.ConstructRemote();
 
             this.ConstructVector();
             this.ConstructPen();

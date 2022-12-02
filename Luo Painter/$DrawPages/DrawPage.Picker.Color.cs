@@ -32,5 +32,44 @@ namespace Luo_Painter
             this.ColorFlyout.ShowAt(color.PlacementTarget);
         }
 
+        public void ConstructColorPicker()
+        {
+            this.ColorPicker.ColorChanged += (s, e) =>
+            {
+                if (this.ColorFlyout.IsOpen is false) return;
+
+                switch (this.OptionType)
+                {
+                    case OptionType.GradientMapping:
+                        this.GradientMappingSelector.SetColor(e.NewColor);
+
+                        this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        break;
+                    case OptionType.Threshold:
+                        switch (this.ColorPickerMode)
+                        {
+                            case ColorPickerMode.Case0:
+                                this.ThresholdColor0Button.SetColor(e.NewColor);
+                                this.ThresholdColor0Button.SetColorHdr(e.NewColor);
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                break;
+                            case ColorPickerMode.Case1:
+                                this.ThresholdColor1Button.SetColor(e.NewColor);
+                                this.ThresholdColor1Button.SetColorHdr(e.NewColor);
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            };
+        }
+
     }
 }

@@ -34,7 +34,7 @@ namespace Luo_Painter
             this.NumberPicker.Construct(number);
         }
 
-        public void ConstructPicker()
+        public void ConstructNumberPicker()
         {
             this.LayerListView.OpacitySliderClick += (s, e) =>
             {
