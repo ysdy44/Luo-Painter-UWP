@@ -124,6 +124,9 @@
     <Compile Include="AnimationListView.cs" />
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
+    <Compile Include="ColorButton.xaml.cs">
+      <DependentUpon>ColorButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="Docker.xaml.cs">
       <DependentUpon>Docker.xaml</DependentUpon>
@@ -202,6 +205,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ColorButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Docker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
