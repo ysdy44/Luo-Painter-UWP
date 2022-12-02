@@ -90,6 +90,7 @@ namespace Luo_Painter.Options
         EffectMenu = Menu | 14 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         HistoryMenu = Menu | 15 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
+        ToolMenu = Menu | 16 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         LayerMenu = Menu | 17 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
         AddMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
@@ -212,21 +213,23 @@ namespace Luo_Painter.Options
         // Category
         Other = Effect | 1 << 16,
         Adjustment = Effect | 2 << 16,
-        Effect1 = Effect | 4 << 16,
-        Effect2 = Effect | 8 << 16,
-        Effect3 = Effect | 16 << 16,
+        Adjustment2 = Effect | 4 << 16,
+        Effect1 = Effect | 8 << 16,
+        Effect2 = Effect | 16 << 16,
+        Effect3 = Effect | 32 << 16,
 
         // Other
         Move = Other | 1 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         Transform = Other | 2 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         FreeTransform = Other | 3 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+
         DisplacementLiquefaction = Other | 4 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         GradientMapping = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
         RippleEffect = Other | 6 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
         Fill = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
         Threshold = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        // Adjustment
+        // Adjustment1
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Invert = Adjustment | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Exposure = Adjustment | 3 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -236,10 +239,12 @@ namespace Luo_Painter.Options
         Contrast = Adjustment | 7 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Temperature = Adjustment | 8 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         HighlightsAndShadows = Adjustment | 9 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        GammaTransfer = Adjustment | 10 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Vignette = Adjustment | 11 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        ColorMatrix = Adjustment | 12 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        ColorMatch = Adjustment | 13 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+
+        // Adjustment2
+        GammaTransfer = Adjustment2 | 1 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        Vignette = Adjustment2 | 2 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        ColorMatrix = Adjustment2 | 3 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
+        ColorMatch = Adjustment2 | 4 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         // Effect1
         GaussianBlur = Effect1 | 1 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -247,24 +252,25 @@ namespace Luo_Painter.Options
         Sharpen = Effect1 | 3 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Shadow = Effect1 | 4 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         EdgeDetection = Effect1 | 5 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
-        Edge = Effect1 | 5 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Morphology = Effect1 | 6 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Emboss = Effect1 | 7 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Straighten = Effect1 | 8 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
 
         // Effect2
-        ChromaKey = Effect2 | 1 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Border = Effect2 | 2 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Lighting = Effect2 | 3 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        LuminanceToAlpha = Effect2 | 4 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Fog = Effect2 | 5 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Sepia = Effect2 | 6 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Posterize = Effect2 | 7 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Colouring = Effect2 | 8 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Tint = Effect2 | 9 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        DiscreteTransfer = Effect2 | 10 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        Glass = Effect2 | 11 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
-        PinchPunch = Effect2 | 12 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Sepia = Effect2 | 1 << 8 | ExistThumbnail | IsItemClickEnabled,
+        Posterize = Effect2 | 2 << 8 | ExistThumbnail | IsItemClickEnabled,
+        LuminanceToAlpha = Effect2 | 3 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        ChromaKey = Effect2 | 4 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Border = Effect2 | 5 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Colouring = Effect2 | 6 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Tint = Effect2 | 7 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        DiscreteTransfer = Effect2 | 8 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+
+        // Effect3
+        Lighting = Effect3 | 1 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Fog = Effect3 | 2 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        Glass = Effect3 | 3 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
+        PinchPunch = Effect3 | 4 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
 
         #endregion
 
