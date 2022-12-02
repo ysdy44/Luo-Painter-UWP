@@ -150,6 +150,7 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.Selection.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
+    <Compile Include="%24DrawPages\DrawPage.View.cs" />
     <Compile Include="%24DrawPages\DrawPage.xaml.cs">
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
