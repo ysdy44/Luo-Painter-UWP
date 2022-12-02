@@ -230,8 +230,9 @@
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
             <SplitView.Pane>
-                <elements:IndexGrid x:Name="IndexGrid">
-                    <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Visible"/>
+                <elements:IndexGrid x:Name="IndexGrid" Index="0">
+                    <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
+                    <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
                     <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
                     <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
                     <controls:EffectListView x:Name="EffectListView" Visibility="Collapsed"/>
@@ -1092,17 +1093,16 @@
 
             <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Name="ToolToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Tools
+                    <ToolTip x:Name="ViewToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Views
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
                     <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                        <controls:ToolListView x:Name="ToolListView"/>
                     </Flyout>
                 </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <FontIcon Margin="8,0" Glyph="&#xE15E;" FontSize="20" FontFamily="Segoe UI Symbol"/>
+                    <FontIcon Margin="8,0" Glyph="&#xE61F;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
                 </StackPanel>
             </Button>
@@ -1120,13 +1120,13 @@
                             <TextBlock                                
                                 x:Name="LayoutTextBlock" 
                                 Margin="10,4,10,10" 
-                                IsHitTestVisible="false" 
+                                IsTextSelectionEnabled="True"
                                 FontWeight="Medium" 
                                 TextTrimming="CharacterEllipsis" 
                                 FontSize="20" 
                                 TextWrapping="Wrap" 
                                 VerticalAlignment="Center" 
-                                Style="{StaticResource SubheaderTextBlockStyle}" 
+                                OpticalMarginAlignment="TrimSideBearings"
                                 >                                
                                 Layouts
                             </TextBlock>
@@ -1167,13 +1167,14 @@
                                 SelectedIndex="{x:Bind IndexGrid.Index, Mode=TwoWay}"
                                 Style="{StaticResource AppListViewStyle}"
                                 >
+                                <local:OptionItem Type="ToolMenu"/>
                                 <local:OptionItem Type="PaintMenu"/>
                                 <local:OptionItem Type="BrushMenu"/>
                                 <local:OptionItem Type="SizeMenu"/>
                                 <local:OptionItem Type="EffectMenu"/>
                                 <local:OptionItem Type="HistoryMenu"/>
                             </ListView>
-                            
+
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
@@ -1182,7 +1183,7 @@
                     <FontIcon Margin="8,0" Glyph="&#xF246;" FontSize="20" FontFamily="Segoe MDL2 Assets"/>
                 </StackPanel>
             </Button>
-
+            
             <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
