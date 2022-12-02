@@ -36,23 +36,6 @@ namespace Luo_Painter
 
         public void ConstructPicker()
         {
-            this.ColorPicker.ColorChanged += (s, e) =>
-            {
-                if (this.ColorFlyout.IsOpen is false) return;
-
-                switch (this.OptionType)
-                {
-                    case OptionType.GradientMapping:
-                        this.GradientMappingColorChanged(e.NewColor);
-                        break;
-                    case OptionType.Threshold:
-                        this.ThresholdColorChanged(e.NewColor);
-                        break;
-                    default:
-                        break;
-                }
-            };
-
             this.LayerListView.OpacitySliderClick += (s, e) =>
             {
                 this.NumberPickerMode = NumberPickerMode.LayerOpacity;
