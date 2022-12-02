@@ -19,7 +19,7 @@ namespace Luo_Painter.Controls
 {
     internal class ColorCommand : RelayCommand<Color> { }
 
-    public sealed partial class ColorButton : Button, IInkParameter
+    public sealed partial class ColorButton : Button, IInkParameter, IColorHdrBase, IColorBase
     {
         //@Converter
         private Visibility ColorVisibilityConverter(int value) => value is 5 ? Visibility.Collapsed : Visibility.Visible;
@@ -44,6 +44,8 @@ namespace Luo_Painter.Controls
         public event TypedEventHandler<ColorPicker, ColorChangedEventArgs> ColorChanged;
 
         //@Content
+        public FrameworkElement PlacementTarget => this;
+
         public Eyedropper Eyedropper { get; set; }
         public ClickEyedropper ClickEyedropper { get; set; }
 
@@ -99,6 +101,8 @@ namespace Luo_Painter.Controls
 
             this.ConstructColor();
             this.ConstructStraw();
+
+            this.SetColor(this.ColorPicker.Color);
             this.SetColorHdr(this.ColorPicker.Color);
 
             this.ColorPicker.Loaded += (s, e) =>
@@ -138,6 +142,12 @@ namespace Luo_Painter.Controls
         public void ConstructStrings(ResourceLoader resource)
         {
         }
+
+        public void SetColor(Color color) => this.Color = color;
+        public void SetColorHdr(Vector4 colorHdr) => this.ColorHdr = colorHdr;
+
+        public void SetColor(Vector4 colorHdr) => this.Color = Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f));
+        public void SetColorHdr(Color color) => this.ColorHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f; // 0~1
 
         public void Show(Color color)
         {

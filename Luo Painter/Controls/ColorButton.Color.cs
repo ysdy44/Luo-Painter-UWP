@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -8,12 +9,13 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorButton : Button, IInkParameter
+    public sealed partial class ColorButton : Button, IInkParameter, IColorBase, IColorHdrBase
     {
 
         private void ConstructColor()
         {
             this.ColorPicker.ColorChanged += this.ColorChanged;
+            this.ColorPicker.ColorChanged += (s, e) => this.SetColor(e.NewColor);
             this.ColorPicker.ColorChanged += (s, e) => this.SetColorHdr(e.NewColor);
             this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
 
@@ -124,12 +126,6 @@ namespace Luo_Painter.Controls
         {
             this.Timer.Stop();
             this.Timer.Start();
-        }
-
-        private void SetColorHdr(Color color)
-        {
-            this.Color = color;
-            this.ColorHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
         }
 
         public UIElement GetTarget()
