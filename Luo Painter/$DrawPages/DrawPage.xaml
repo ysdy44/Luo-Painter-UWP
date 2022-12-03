@@ -277,31 +277,11 @@
 
 
                             <local:OptionCase Value="CropCanvas">
-                                <Border Margin="10,0" Style="{StaticResource AppRoundedBorderStyle}" >
-                                    <elements:NumberSlider 
-                                        x:Name="CropCanvasSlider" 
-                                        Minimum="-180" 
-                                        Maximum="180" 
-                                        Value="0" 
-                                        TickFrequency="12" 
-                                        TickPlacement="Outside" 
-                                        Background="{StaticResource SystemControlDisabledBaseLowBrush}" 
-                                        Foreground="Transparent" 
-                                        VerticalAlignment="Center"
-                                        >
-                                        <FrameworkElement.Resources>
-                                            <StaticResource x:Key="SliderThumbBackground" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
-
-                                            <StaticResource x:Key="SliderTrackFillPressed" ResourceKey="SystemControlDisabledBaseLowBrush"/>
-                                            <StaticResource x:Key="SliderThumbBackgroundPressed" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
-                                            <StaticResource x:Key="SliderTrackValueFillPressed" ResourceKey="SystemControlDisabledTransparentBrush"/>
-
-                                            <StaticResource x:Key="SliderTrackFillPointerOver" ResourceKey="SystemControlDisabledBaseLowBrush"/>
-                                            <StaticResource x:Key="SliderThumbBackgroundPointerOver" ResourceKey="SystemControlBackgroundBaseHighBrush"/>
-                                            <StaticResource x:Key="SliderTrackValueFillPointerOver" ResourceKey="SystemControlDisabledTransparentBrush"/>
-                                        </FrameworkElement.Resources>
-                                    </elements:NumberSlider>
-                                </Border>
+                                <elements:NumberSlider x:Name="CropCanvasSlider" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="12" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <Slider.Header>
+                                        Radians
+                                    </Slider.Header>
+                                </elements:NumberSlider>
                             </local:OptionCase>
 
 

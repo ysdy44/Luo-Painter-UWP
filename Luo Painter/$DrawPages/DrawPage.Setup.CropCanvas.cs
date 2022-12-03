@@ -1,5 +1,4 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
@@ -8,13 +7,11 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Linq;
 using System.Numerics;
-using Windows.Graphics.Imaging;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         Vector2 StartingPositionWithoutRadian;
@@ -144,10 +141,6 @@ namespace Luo_Painter
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
                     new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                 }));
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                this.RaiseHistoryCanExecuteChanged();
             }
             else
             {
@@ -168,15 +161,21 @@ namespace Luo_Painter
                     new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                 }));
 
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                this.RaiseHistoryCanExecuteChanged();
-
-
                 this.Transformer.Radian = 0f;
                 this.Transformer.ReloadMatrix();
                 this.CropCanvasSlider.Value = 0;
             }
+
+
+            this.BitmapLayer = null;
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
+
+            this.RaiseHistoryCanExecuteChanged();
         }
 
     }
