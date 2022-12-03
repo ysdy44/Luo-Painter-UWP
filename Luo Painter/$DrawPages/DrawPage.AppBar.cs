@@ -1,16 +1,14 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Layers;
+﻿using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         public void ConstructAppBar(OptionType type)
@@ -26,18 +24,25 @@ namespace Luo_Painter
                 VisualStateManager.GoToState(this, nameof(AppBarNormal), false);
             }
 
-            if (type is OptionType.MarqueeTransform) this.SwitchPresenter.Value = OptionType.Transform;
-            else if (type.IsMarquee()) this.SwitchPresenter.Value = OptionType.Marquee;
-            else if (type.IsSelection()) this.SwitchPresenter.Value = OptionType.Selection;
-            else if (type.IsGeometry()) this.SwitchPresenter.Value = type.ToGeometryTransform();
+            switch (type)
+            {
+                case OptionType.MarqueeTransform:
+                    this.SwitchPresenter.Value = OptionType.Transform;
+                    break;
 
-            //@Debug
-            //else if (type.IsPaint()) this.SwitchPresenter.Value = OptionType.Paint;
-            else if (type is OptionType.PaintBrush) this.SwitchPresenter.Value = OptionType.Paint;
-            else if (type is OptionType.PaintLine) this.SwitchPresenter.Value = OptionType.Paint;
-            else if (type is OptionType.PaintBrushForce) this.SwitchPresenter.Value = OptionType.Paint;
+                case OptionType.PaintBrush:
+                case OptionType.PaintLine:
+                case OptionType.PaintBrushForce:
+                    this.SwitchPresenter.Value = OptionType.Paint;
+                    break;
 
-            else this.SwitchPresenter.Value = type;
+                default:
+                    if (type.IsMarquee()) this.SwitchPresenter.Value = OptionType.Marquee;
+                    else if (type.IsSelection()) this.SwitchPresenter.Value = OptionType.Selection;
+                    else if (type.IsGeometry()) this.SwitchPresenter.Value = type.ToGeometryTransform();
+                    else this.SwitchPresenter.Value = type;
+                    break;
+            }
         }
 
 
@@ -54,13 +59,7 @@ namespace Luo_Painter
                     this.CancelGeometryTransform();
                 }
 
-                this.BitmapLayer = null;
-                this.OptionType = this.ToolListView.SelectedType;
-                this.ConstructAppBar(this.OptionType);
-
-                this.CanvasAnimatedControl.Invalidate(false); // Invalidate
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Secondary();
             };
 
             this.AppBarBackButton.Click += (s, e) =>
@@ -74,13 +73,7 @@ namespace Luo_Painter
                     this.CancelGeometryTransform();
                 }
 
-                this.BitmapLayer = null;
-                this.OptionType = this.ToolListView.SelectedType;
-                this.ConstructAppBar(this.OptionType);
-
-                this.CanvasAnimatedControl.Invalidate(false); // Invalidate
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
+                this.Secondary();
             };
 
             this.AppBarPrimaryButton.Click += (s, e) =>
@@ -108,15 +101,18 @@ namespace Luo_Painter
                         this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
                     }
                 }
-
-                this.BitmapLayer = null;
-                this.OptionType = this.ToolListView.SelectedType;
-                this.ConstructAppBar(this.OptionType);
-
-                this.CanvasAnimatedControl.Invalidate(false); // Invalidate
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
             };
+        }
+
+        private void Secondary()
+        {
+            this.BitmapLayer = null;
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private void Primary(BitmapLayer bitmapLayer, ICanvasImage source)
@@ -156,7 +152,13 @@ namespace Luo_Painter
                     break;
             }
 
+            this.BitmapLayer = null;
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(false); // Invalidate
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
 
             this.RaiseHistoryCanExecuteChanged();
         }
@@ -229,7 +231,13 @@ namespace Luo_Painter
                 }
             }
 
+            this.BitmapLayer = null;
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(false); // Invalidate
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
 
             this.RaiseHistoryCanExecuteChanged();
         }
