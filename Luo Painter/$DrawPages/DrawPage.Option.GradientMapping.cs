@@ -1,6 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Layers;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Collections.Generic;
@@ -53,7 +51,7 @@ namespace Luo_Painter
         }
     }
 
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
         readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>
         {
@@ -63,7 +61,6 @@ namespace Luo_Painter
             [1] = Colors.PaleVioletRed,
         };
 
-        private void SetGradientMapping() => this.ResetGradientMapping();
         private void ResetGradientMapping()
         {
             this.GradientMappingSelector.Reset(this.Stops);
@@ -75,10 +72,9 @@ namespace Luo_Painter
             this.GradientMappingSelector.ItemClick += (s, e) =>
             {
                 this.GradientMappingSelector.SetCurrent(s);
-                if (this.GradientMappingSelector.CurrentStop == null) return;
+                if (this.GradientMappingSelector.CurrentStop is null) return;
 
-                this.ColorPicker.Color = this.GradientMappingSelector.CurrentStop.Color;
-                this.ColorFlyout.ShowAt(this.GradientMappingSelector.CurrentButton);
+                this.ColorShowAt(this.GradientMappingSelector);
             };
 
             this.GradientMappingSelector.ItemManipulationStarted += (s, e) =>
