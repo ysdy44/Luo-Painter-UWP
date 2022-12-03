@@ -240,13 +240,6 @@
                         </ToolTip>
                     </ToolTipService.ToolTip>
                 </Slider>
-                <Slider Style="{StaticResource AppSliderStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            AppSliderStyle
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </Slider>
 
                 <TextBlock>
                     Flyout
