@@ -53,7 +53,7 @@
                 </Border>
             </Grid>
         </Border>
-        
+
         <Grid ColumnSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -63,7 +63,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-         
+
             <!--DPI-->
             <TextBlock x:Name="DPITextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
                 DPI
@@ -77,44 +77,28 @@
                 <ComboBoxItem>400</ComboBoxItem>
             </ComboBox>
 
-            <!--Format-->
-            <TextBlock x:Name="FormatTextBlock" Grid.Column="1" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
-                File Format
+            <!--Export-->
+            <TextBlock x:Name="ExportTextBlock" Grid.Column="1" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+                Export
             </TextBlock>
-            <ComboBox x:Name="FormatComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" >
-                <ComboBoxItem FontWeight="Bold">JPEG</ComboBoxItem>
-                <ComboBoxItem FontWeight="Bold">PNG</ComboBoxItem>
-                <ComboBoxItem>BMP</ComboBoxItem>
-                <ComboBoxItem>GIF</ComboBoxItem>
-                <ComboBoxItem>TIFF</ComboBoxItem>
-            </ComboBox>
-
-        </Grid>
-
-        <MenuFlyoutSeparator Margin="0,4"/>
-
-        <Grid ColumnSpacing="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-          
-            <ComboBox x:Name="ComboBox" SelectedIndex="0" >
+            <ComboBox x:Name="ComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" >
                 <ComboBoxItem x:Name="NoneItem" FontWeight="Bold">Export</ComboBoxItem>
                 <ComboBoxItem x:Name="AllItem">Export All Layers</ComboBoxItem>
                 <ComboBoxItem x:Name="CurrentItem">Export Current Layer</ComboBoxItem>
             </ComboBox>
-
-            <ToggleButton x:Name="CheckBox" Grid.Column="1" >
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="ToolTip">
-                        Open in File Explorer after Export
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Folder"/>
-            </ToggleButton>
-            
         </Grid>
+
+        <!--Format-->
+        <TextBlock x:Name="FormatTextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
+            File Format
+        </TextBlock>
+        <ListView x:Name="FormatComboBox" SelectedIndex="0" Style="{StaticResource AppListViewStyle}">
+            <ListViewItem FontWeight="Bold">JPEG</ListViewItem>
+            <ListViewItem FontWeight="Bold">PNG</ListViewItem>
+            <ListViewItem>BMP</ListViewItem>
+            <ListViewItem>GIF</ListViewItem>
+            <ListViewItem>TIFF</ListViewItem>
+        </ListView>
 
     </StackPanel>
 </ContentDialog>

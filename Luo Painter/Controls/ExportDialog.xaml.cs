@@ -79,7 +79,6 @@ namespace Luo_Painter.Controls
         }
 
         //@Content
-        public bool IsOpenFileExplorer => this.CheckBox.IsChecked is true;
         public ExportMode Mode
         {
             get
