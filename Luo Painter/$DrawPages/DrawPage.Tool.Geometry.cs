@@ -51,7 +51,18 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
-        private void CancelGeometryTransform() { }
+        private void CancelGeometryTransform()
+        {
+            this.BitmapLayer = null;
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
+
+            this.RaiseHistoryCanExecuteChanged();
+        }
         private void PrimaryGeometryTransform()
         {
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
@@ -64,6 +75,15 @@ namespace Luo_Painter
             int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
             this.BitmapLayer.Flush();
             this.BitmapLayer.RenderThumbnail();
+
+
+            this.BitmapLayer = null;
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
 
             this.RaiseHistoryCanExecuteChanged();
         }
@@ -125,8 +145,12 @@ namespace Luo_Painter
 
             this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
+
             this.OptionType = this.OptionType.ToGeometryTransform();
             this.ConstructAppBar(this.OptionType);
+
+            this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
         public CanvasGeometry CreateGeometry(ICanvasResourceCreator resourceCreator, OptionType type, ITransformerLTRB transformerLTRB)
