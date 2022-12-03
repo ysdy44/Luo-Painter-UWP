@@ -16,7 +16,7 @@
         <luo_painter:OptionTypeCommand x:Name="Command"/>
     </FrameworkElement.Resources>
 
-    <Button ClickMode="Hover" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <ToolTipService.ToolTip>
             <ToolTip x:Name="EditToolTip" Style="{StaticResource AppToolTipStyle}">
                 Edit
@@ -51,11 +51,14 @@
                     </UIElement.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <!--Select-->
+                <!--
                 <MenuFlyoutSeparator x:Name="SelectHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                     <UIElement.AccessKey>
                         Select
                     </UIElement.AccessKey>
                 </MenuFlyoutSeparator>
+                -->
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem options:OptionExtensions.Type="All" Command="{x:Bind Command}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="A"/>
@@ -85,7 +88,7 @@
         </Button.Flyout>
         <luo_painter:OptionIcon Type="EditMenu"/>
     </Button>
-    <Button ClickMode="Hover" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <ToolTipService.ToolTip>
             <ToolTip x:Name="AdjustmentToolTip" Style="{StaticResource AppToolTipStyle}">
                 Adjustments
@@ -111,11 +114,14 @@
                 <MenuFlyoutItem options:OptionExtensions.Type="Temperature" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="HighlightsAndShadows" Command="{x:Bind Command}"/>
                 <!--Effect-->
+                <!--
                 <MenuFlyoutSeparator x:Name="EffectHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                     <UIElement.AccessKey>
                         Effects
                     </UIElement.AccessKey>
                 </MenuFlyoutSeparator>
+                -->
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem options:OptionExtensions.Type="GaussianBlur" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="DirectionalBlur" Command="{x:Bind Command}"/>
                 <MenuFlyoutSeparator/>
@@ -133,7 +139,7 @@
         </Button.Flyout>
         <luo_painter:OptionIcon Type="AdjustmentMenu"/>
     </Button>
-    <Button ClickMode="Hover" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <ToolTipService.ToolTip>
             <ToolTip x:Name="MoreToolTip" Style="{StaticResource AppToolTipStyle}">
                 More
@@ -141,35 +147,57 @@
         </ToolTipService.ToolTip>
         <Button.Flyout>
             <MenuFlyout Placement="Bottom">
-                <!--Setup-->
-                <MenuFlyoutSeparator x:Name="SetupHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                <!--More-->
+                <MenuFlyoutSeparator x:Name="MoreHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                     <UIElement.AccessKey>
-                        Setup
+                        More
                     </UIElement.AccessKey>
                 </MenuFlyoutSeparator>
                 <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
+                <MenuFlyoutSubItem>
+                    <MenuFlyoutSubItem.Text>
+                        Stretch
+                    </MenuFlyoutSubItem.Text>
+                    <!--Stretch-->
+                    <MenuFlyoutSeparator x:Name="StretchHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                        <UIElement.AccessKey>
+                            Stretch
+                        </UIElement.AccessKey>
+                    </MenuFlyoutSeparator>
+                    <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
+                </MenuFlyoutSubItem>
+                <MenuFlyoutSubItem>
+                    <MenuFlyoutSubItem.Text>
+                        Rotate
+                    </MenuFlyoutSubItem.Text>
+                    <!--Rotate-->
+                    <MenuFlyoutSeparator x:Name="RotateHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                        <UIElement.AccessKey>
+                            Rotate
+                        </UIElement.AccessKey>
+                    </MenuFlyoutSeparator>
+                    <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
+                </MenuFlyoutSubItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
-                <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
-                <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
-                <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
-                <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
-                <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
-                <!--Other-->
-                <MenuFlyoutSeparator x:Name="OtherHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                    <UIElement.AccessKey>
-                        Others
-                    </UIElement.AccessKey>
-                </MenuFlyoutSeparator>
+                <MenuFlyoutItem options:OptionExtensions.Type="Move" Command="{x:Bind Command}">
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="M"/>
+                    </UIElement.KeyboardAccelerators>
+                </MenuFlyoutItem>
                 <MenuFlyoutItem options:OptionExtensions.Type="Transform" Command="{x:Bind Command}">
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="T"/>
                     </UIElement.KeyboardAccelerators>
                 </MenuFlyoutItem>
+                <MenuFlyoutItem options:OptionExtensions.Type="FreeTransform" Command="{x:Bind Command}"/>
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem options:OptionExtensions.Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="GradientMapping" Command="{x:Bind Command}"/>
                 <MenuFlyoutItem options:OptionExtensions.Type="RippleEffect" Command="{x:Bind Command}"/>
