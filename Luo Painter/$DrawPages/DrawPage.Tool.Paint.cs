@@ -3,16 +3,14 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private void PaintCapAsync(StrokeCap cap) => this.PaintCapAsync(cap, this.ToPoint(cap.StartingPosition));
@@ -40,8 +38,8 @@ namespace Luo_Painter
                         continue;
                     case PaintTaskBehavior.Working:
                     case PaintTaskBehavior.WorkingBeforeDead:
-                        StrokeSegment segment = this.Tasks.First();
-                        this.Tasks.Remove(segment);
+                        StrokeSegment segment = this.Tasks[0];
+                        this.Tasks.RemoveAt(0);
 
                         //@Task
                         lock (this.Locker)
@@ -50,14 +48,14 @@ namespace Luo_Painter
                             this.PaintSegment(segment);
                         }
 
-                        Rect? region = RectExtensions.TryGetRect(this.ToPoint(segment.StartingPosition), this.ToPoint(segment.Position), this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(segment.Size * this.Transformer.Scale));
-                        if (region.HasValue)
+                        await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                         {
-                            await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                            Rect? region = RectExtensions.TryGetRect(this.ToPoint(segment.StartingPosition), this.ToPoint(segment.Position), this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(segment.Size * this.Transformer.Scale));
+                            if (region.HasValue)
                             {
-                                this.CanvasVirtualControl.Invalidate(region.Value);
-                            });
-                        }
+                                this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
+                            }
+                        });
                         break;
                     default:
                         //@Paint
