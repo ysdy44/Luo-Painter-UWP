@@ -76,7 +76,9 @@ namespace Luo_Painter
         protected override void OnTypeChanged(OptionType value)
         {
             base.Content = value.ToString();
+
             // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
+            if (value.ExistThumbnail())
             {
                 BitmapImage bitmap = new BitmapImage();
                 base.Background = new ImageBrush
@@ -92,9 +94,6 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(ElementType value)
         {
-            base.Width = double.NaN;
-            base.VerticalContentAlignment = VerticalAlignment.Center;
-            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
@@ -135,9 +134,6 @@ namespace Luo_Painter
         }
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Width = 32;
-            base.VerticalContentAlignment = VerticalAlignment.Center;
-            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
@@ -149,9 +145,6 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(InkType value)
         {
-            base.Width = 32;
-            base.VerticalContentAlignment = VerticalAlignment.Center;
-            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
@@ -189,7 +182,7 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(BlendEffectMode value)
         {
-            base.Content = value.GetTitle();
+            base.Content = Element.GetGrid2(value.GetTitle(), value.IsDefined() ? value.ToString().First().ToString() : "N");
         }
     }
 
@@ -197,9 +190,6 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Width = 32;
-            base.VerticalContentAlignment = VerticalAlignment.Center;
-            base.HorizontalContentAlignment = HorizontalAlignment.Center;
             base.Content = value;
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
@@ -247,8 +237,6 @@ namespace Luo_Painter
     [ContentProperty(Name = nameof(SwitchCases))]
     internal sealed class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
 
-    internal class OptionTypeCommand : RelayCommand<OptionType> { }
-
     internal static class Element
     {
 
@@ -278,6 +266,26 @@ namespace Luo_Painter
                 Element.GetFontIcon(2),
             }
         };
+        public static Grid GetGrid2(string text, string text2) => new Grid
+        {
+            ColumnSpacing = 12,
+            ColumnDefinitions =
+            {
+                new ColumnDefinition
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                },
+                new ColumnDefinition
+                {
+                    Width = new GridLength (32)
+                },
+            },
+            Children =
+            {
+                Element.GetTextBlock(text),
+                Element.GetTextBlock2(text2, 1),
+            }
+        };
 
         public static StackPanel GetStackPanel(UIElement icon, string text) => new StackPanel
         {
@@ -297,6 +305,18 @@ namespace Luo_Painter
                 Text = text,
                 VerticalAlignment = VerticalAlignment.Center,
                 TextTrimming = TextTrimming.CharacterEllipsis,
+            };
+            if (column != 0) Grid.SetColumn(textBlock, column);
+            return textBlock;
+        }
+        public static FrameworkElement GetTextBlock2(string text, int column = 0)
+        {
+            TextBlock textBlock = new TextBlock
+            {
+                Text = text,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Style = App.Current.Resources["BaseTextBlockStyle"] as Style
             };
             if (column != 0) Grid.SetColumn(textBlock, column);
             return textBlock;
