@@ -36,6 +36,53 @@
     <FrameworkElement.Resources>
         <!--Command-->
         <luo_painter:OptionTypeCommand x:Name="Command"/>
+        <!--Flyout-->
+        <Flyout x:Name="RenameFlyout" Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <Grid RowSpacing="2" Padding="6,4" Width="318" Height="151">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBox x:Name="RenameTextBox" Grid.Row="1">
+                    <TextBox.PlaceholderText>
+                        Input Text...
+                    </TextBox.PlaceholderText>
+                </TextBox>
+
+                <StackPanel Grid.Row="2" Margin="0,4" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="OKButton" Canvas.Left="62" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" FontSize="20" Content="&#xEC61;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Enter"/>
+                        </UIElement.KeyboardAccelerators>
+                    </Button>
+                    <Button x:Name="CancelButton" Canvas.Left="152" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" FontSize="20" Content="&#xEB90;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                        </UIElement.KeyboardAccelerators>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock
+                    x:Name="RenameTextBlock" 
+                    Margin="10,4,10,10" 
+                    IsTextSelectionEnabled="True"
+                    FontWeight="Medium" 
+                    TextTrimming="CharacterEllipsis" 
+                    FontSize="20" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Center" 
+                    OpticalMarginAlignment="TrimSideBearings"
+                    >      
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator x:Name="KeyboardAccelerator" Modifiers="None" Key="F2"/>
+                    </UIElement.KeyboardAccelerators>
+                    Rename
+                </TextBlock>
+
+            </Grid>
+        </Flyout>
     </FrameworkElement.Resources>
 
     <ItemsControl.ItemsPanel>
@@ -172,13 +219,13 @@
             <TextBlock
                 x:Name="TitleTextBlock"
                 Margin="16,0,0,0"
-                IsHitTestVisible="false" 
+                IsTextSelectionEnabled="True"
                 FontWeight="Medium" 
                 TextTrimming="CharacterEllipsis" 
                 FontSize="20" 
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
-                Style="{StaticResource SubheaderTextBlockStyle}"
+                OpticalMarginAlignment="TrimSideBearings"
                 >
                 Layers
             </TextBlock>
@@ -199,20 +246,20 @@
                             <TextBlock                                
                                 x:Name="PropertyTextBlock" 
                                 Margin="10,4,10,10" 
-                                IsHitTestVisible="false" 
+                                IsTextSelectionEnabled="True"
                                 FontWeight="Medium" 
                                 TextTrimming="CharacterEllipsis" 
                                 FontSize="20" 
                                 TextWrapping="Wrap" 
                                 VerticalAlignment="Center" 
-                                Style="{StaticResource SubheaderTextBlockStyle}" 
+                                OpticalMarginAlignment="TrimSideBearings"
                                 >                                
                                 Properties
                             </TextBlock>
 
                             <!--Opacity-->
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <elements:NumberSlider x:Name="OpacitySlider" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="OpacitySlider" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Opacity
                                     </Slider.Header>
@@ -279,6 +326,7 @@
                             </ComboBox>
 
                             <!--Name-->
+                            <!--
                             <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                                 Name
                             </TextBlock>
@@ -287,6 +335,7 @@
                                     Input Text...
                                 </TextBox.PlaceholderText>
                             </TextBox>
+                            -->
 
                             <!--TagType-->
                             <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
@@ -345,6 +394,14 @@
                                 <KeyboardAccelerator Modifiers="Control" Key="F"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
+                        <!--Group-->
+                        <!--
+                        <MenuFlyoutSeparator x:Name="GroupHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                            <UIElement.AccessKey>
+                                Group
+                            </UIElement.AccessKey>
+                        </MenuFlyoutSeparator>
+                        -->
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem x:Name="GroupItem" options:OptionExtensions.Type="Group" Command="{x:Bind Command}">
                             <UIElement.KeyboardAccelerators>

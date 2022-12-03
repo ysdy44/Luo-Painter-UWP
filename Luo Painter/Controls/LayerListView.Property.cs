@@ -13,7 +13,7 @@ namespace Luo_Painter.Controls
     public sealed partial class LayerListView : XamlListView
     {
 
-        string NameValue => this.NameTextBox.Text;
+        //string NameValue => this.NameTextBox.Text;
         float OpacityValue => (float)(this.OpacitySlider.Value / 100);
         BlendEffectMode? BlendModeValue
         {
@@ -73,6 +73,7 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
+                /*
                 switch (this.NameCount)
                 {
                     case 0:
@@ -91,6 +92,7 @@ namespace Luo_Painter.Controls
                         this.History(this, new CompositeHistory(this.GetNameHistory().ToArray()));
                         break;
                 }
+                */
             };
 
             this.Flyout.Opened += (s, e) =>
@@ -98,8 +100,8 @@ namespace Luo_Painter.Controls
                 this.IsPropertyEnabled = false;
                 if (base.SelectedItem is ILayer layer)
                 {
-                    this.NameTextBox.IsEnabled = true;
-                    this.NameTextBox.Text = layer.Name ?? string.Empty;
+                    //this.NameTextBox.IsEnabled = true;
+                    //this.NameTextBox.Text = layer.Name ?? string.Empty;
                     this.OpacitySlider.IsEnabled = true;
                     this.OpacitySlider.Value = layer.Opacity * 100;
                     this.BlendModeComboBox.IsEnabled = true;
@@ -108,8 +110,8 @@ namespace Luo_Painter.Controls
                 }
                 else
                 {
-                    this.NameTextBox.IsEnabled = false;
-                    this.NameTextBox.Text = string.Empty;
+                    //this.NameTextBox.IsEnabled = false;
+                    //this.NameTextBox.Text = string.Empty;
                     this.OpacitySlider.Value = 100;
                     this.OpacitySlider.IsEnabled = false;
                     this.BlendModeComboBox.IsEnabled = false;
@@ -176,6 +178,7 @@ namespace Luo_Painter.Controls
 
                 this.Invalidate(s, e); // Invalidate
             };
+            /*
             this.NameTextBox.TextChanged += (s, e) =>
             {
                 if (this.IsPropertyEnabled is false) return;
@@ -199,6 +202,7 @@ namespace Luo_Painter.Controls
                     }
                 }
             };
+            */
         }
 
         private IEnumerable<IHistory> GetOpacityHistory()
@@ -223,6 +227,7 @@ namespace Luo_Painter.Controls
                 yield return new PropertyHistory<BlendEffectMode?>(HistoryType.BlendMode, item.Id, item.StartingBlendMode, redo);
             }
         }
+        /*
         private IEnumerable<IHistory> GetNameHistory()
         {
             string redo = this.NameValue;
@@ -234,6 +239,7 @@ namespace Luo_Painter.Controls
                 yield return new PropertyHistory<string>(HistoryType.Name, item.Id, item.StartingName, redo);
             }
         }
+        */
 
     }
 }
