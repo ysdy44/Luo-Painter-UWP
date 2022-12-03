@@ -442,7 +442,7 @@
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
                     </TransitionCollection>
                 </ContentControl.ContentTransitions>
-                <FontIcon FontSize="20" Glyph="&#xE11B;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                <SymbolIcon Symbol="Important"/>
             </Button>
 
             <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
@@ -458,7 +458,7 @@
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
                     </TransitionCollection>
                 </ContentControl.ContentTransitions>
-                <FontIcon FontSize="22" Glyph="&#xE115;" FontWeight="Bold" FontFamily="Segoe UI Symbol" />
+                <SymbolIcon Symbol="Setting"/>
             </Button>
 
 
