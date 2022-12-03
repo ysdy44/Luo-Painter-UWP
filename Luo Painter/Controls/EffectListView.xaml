@@ -7,20 +7,12 @@
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:options="using:Luo_Painter.Options"
     mc:Ignorable="d"
-    IsItemClickEnabled="True"            
+    IsItemClickEnabled="True"      
     SelectionMode="None"
     ScrollViewer.VerticalScrollBarVisibility="Hidden"
     ItemsSource="{x:Bind CollectionViewSource.View}" 
     FooterTemplate="{StaticResource AppListViewBaseFooter}"     
     >
-
-    <FrameworkElement.Tag>
-        <Button x:Name="Button" CommandParameter="{x:Null}" Style="{x:Null}" >
-            <ButtonBase.Command>
-                <luo_painter:OptionTypeCommand x:Name="Command"/>
-            </ButtonBase.Command>
-        </Button>
-    </FrameworkElement.Tag>
 
     <FrameworkElement.Resources>
         <!--CollectionViewSource-->
@@ -39,33 +31,37 @@
                         <options:OptionType>Temperature</options:OptionType>
                         <options:OptionType>HighlightsAndShadows</options:OptionType>
                     </luo_painter:AdjustmentGrouping>
+                    <luo_painter:AdjustmentGrouping Key="Adjustment2">
+                        <options:OptionType>GammaTransfer</options:OptionType>
+                        <options:OptionType>Vignette</options:OptionType>
+                        <options:OptionType>ColorMatrix</options:OptionType>
+                        <options:OptionType>ColorMatch</options:OptionType>
+                    </luo_painter:AdjustmentGrouping>
                     <luo_painter:AdjustmentGrouping Key="Effect1">
                         <options:OptionType>GaussianBlur</options:OptionType>
                         <options:OptionType>DirectionalBlur</options:OptionType>
                         <options:OptionType>Sharpen</options:OptionType>
                         <options:OptionType>Shadow</options:OptionType>
-                        <options:OptionType>ChromaKey</options:OptionType>
                         <options:OptionType>EdgeDetection</options:OptionType>
-                        <options:OptionType>Border</options:OptionType>
+                        <options:OptionType>Morphology</options:OptionType>
                         <options:OptionType>Emboss</options:OptionType>
-                        <options:OptionType>Lighting</options:OptionType>
+                        <options:OptionType>Straighten</options:OptionType>
                     </luo_painter:AdjustmentGrouping>
                     <luo_painter:AdjustmentGrouping Key="Effect2">
-                        <options:OptionType>LuminanceToAlpha</options:OptionType>
-                        <options:OptionType>Fog</options:OptionType>
                         <options:OptionType>Sepia</options:OptionType>
                         <options:OptionType>Posterize</options:OptionType>
+                        <options:OptionType>LuminanceToAlpha</options:OptionType>
+                        <options:OptionType>ChromaKey</options:OptionType>
+                        <options:OptionType>Border</options:OptionType>
                         <options:OptionType>Colouring</options:OptionType>
                         <options:OptionType>Tint</options:OptionType>
                         <options:OptionType>DiscreteTransfer</options:OptionType>
-                        <options:OptionType>Vignette</options:OptionType>
-                        <options:OptionType>GammaTransfer</options:OptionType>
                     </luo_painter:AdjustmentGrouping>
                     <luo_painter:AdjustmentGrouping Key="Effect3">
+                        <options:OptionType>Lighting</options:OptionType>
+                        <options:OptionType>Fog</options:OptionType>
                         <options:OptionType>Glass</options:OptionType>
                         <options:OptionType>PinchPunch</options:OptionType>
-                        <options:OptionType>Morphology</options:OptionType>
-                        <options:OptionType>Straighten</options:OptionType>
                     </luo_painter:AdjustmentGrouping>
                 </luo_painter:AdjustmentGroupingList>
             </CollectionViewSource.Source>
@@ -163,13 +159,13 @@
             <TextBlock
                 x:Name="TitleTextBlock"
                 Margin="16,0"
-                IsHitTestVisible="false" 
+                IsTextSelectionEnabled="True"
                 FontWeight="Medium" 
                 TextTrimming="CharacterEllipsis" 
                 FontSize="20" 
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
-                Style="{StaticResource SubheaderTextBlockStyle}"
+                OpticalMarginAlignment="TrimSideBearings"
                 >
                 Effects
             </TextBlock>
