@@ -60,6 +60,7 @@ namespace Luo_Painter
 
                 #region File
 
+                case OptionType.Home:
                 case OptionType.Close:
                     if (this.IsFullScreen)
                     {
@@ -75,7 +76,10 @@ namespace Luo_Painter
                     this.OptionType = this.ToolListView.SelectedType;
                     this.ConstructAppBar(this.ToolListView.SelectedType);
 
-                    await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
+                    if (type is OptionType.Home)
+                    {
+                        await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
+                    }
 
                     if (base.Frame.CanGoBack)
                     {
@@ -430,13 +434,9 @@ namespace Luo_Painter
 
                 #region Menu
 
-                case OptionType.DockLeft:
-                    this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
+                case OptionType.FileMenu:
+                    this.FileFlyout.ShowAt(this.HomeButton);
                     break;
-                case OptionType.DockRight:
-                    this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
-                    break;
-
                 case OptionType.ExportMenu:
                     {
                         ContentDialogResult result = await this.ExportDialog.ShowInstance();
@@ -466,24 +466,32 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintMenu:
-                    this.IndexGrid.Index = 0;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
-                case OptionType.BrushMenu:
                     this.IndexGrid.Index = 1;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
-                case OptionType.SizeMenu:
+                case OptionType.BrushMenu:
                     this.IndexGrid.Index = 2;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
-                case OptionType.EffectMenu:
+                case OptionType.SizeMenu:
                     this.IndexGrid.Index = 3;
                     this.SplitRightView.IsPaneOpen = true;
                     break;
-                case OptionType.HistoryMenu:
+                case OptionType.EffectMenu:
                     this.IndexGrid.Index = 4;
                     this.SplitRightView.IsPaneOpen = true;
+                    break;
+                case OptionType.HistoryMenu:
+                    this.IndexGrid.Index = 5;
+                    this.SplitRightView.IsPaneOpen = true;
+                    break;
+
+                case OptionType.ToolMenu:
+                    this.IndexGrid.Index = 0;
+                    this.SplitRightView.IsPaneOpen = true;
+                    break;
+                case OptionType.LayerMenu:
+                    this.SplitLeftView.IsPaneOpen = true;
                     break;
 
                 case OptionType.AddMenu:
@@ -1217,8 +1225,10 @@ namespace Luo_Painter
                 // Category
                 case OptionType.Other: break;
                 case OptionType.Adjustment: break;
+                case OptionType.Adjustment2: break;
                 case OptionType.Effect1: break;
                 case OptionType.Effect2: break;
+                case OptionType.Effect3: break;
 
                 // Other
                 case OptionType.Move:
@@ -1471,10 +1481,11 @@ namespace Luo_Painter
                 case OptionType.Contrast:
                 case OptionType.Temperature:
                 case OptionType.HighlightsAndShadows:
-                case OptionType.GammaTransfer:
-                case OptionType.Vignette:
-                case OptionType.ColorMatrix:
-                case OptionType.ColorMatch:
+
+                //case OptionType.GammaTransfer:
+                //case OptionType.Vignette:
+                //case OptionType.ColorMatrix:
+                //case OptionType.ColorMatch:
 
                 case OptionType.Threshold:
 
@@ -1489,9 +1500,8 @@ namespace Luo_Painter
                 //case OptionType.Straighten:
 
                 // Effect2
-                //case OptionType.ChromaKey: 
-                //case OptionType.Border:
-                //case OptionType.Lighting: 
+                //case OptionType.Sepia:
+                //case OptionType.Posterize:
                 case OptionType.LuminanceToAlpha:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
@@ -1519,12 +1529,14 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
-                //case OptionType.Fog:
-                //case OptionType.Sepia:
-                //case OptionType.Posterize:
+                //case OptionType.ChromaKey: 
+                //case OptionType.Border:
                 //case OptionType.Colouring:
                 //case OptionType.Tint:
                 //case OptionType.DiscreteTransfer:
+
+                //case OptionType.Lighting: 
+                //case OptionType.Fog:
                 //case OptionType.Glass:
                 //case OptionType.PinchPunch:
 

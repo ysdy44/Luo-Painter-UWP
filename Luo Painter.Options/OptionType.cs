@@ -46,18 +46,19 @@ namespace Luo_Painter.Options
 
         #region File
 
-        Close = File | 1 << 8 | IsItemClickEnabled,
-        Save = File | 2 << 8 | IsItemClickEnabled,
+        Home = File | 1 << 8 | IsItemClickEnabled,
+        Close = File | 2 << 8 | IsItemClickEnabled,
+        Save = File | 3 << 8 | IsItemClickEnabled,
 
-        Export = File | 3 << 8 | IsItemClickEnabled,
-        ExportAll = File | 4 << 8 | IsItemClickEnabled,
-        ExportCurrent = File | 5 << 8 | IsItemClickEnabled,
+        Export = File | 5 << 8 | IsItemClickEnabled,
+        ExportAll = File | 6 << 8 | IsItemClickEnabled,
+        ExportCurrent = File | 7 << 8 | IsItemClickEnabled,
 
-        Undo = File | 6 << 8 | IsItemClickEnabled,
-        Redo = File | 7 << 8 | IsItemClickEnabled,
+        Undo = File | 9 << 8 | IsItemClickEnabled,
+        Redo = File | 10 << 8 | IsItemClickEnabled,
 
-        FullScreen = File | 8 << 8 | IsItemClickEnabled,
-        UnFullScreen = File | 9 << 8 | IsItemClickEnabled,
+        FullScreen = File | 11 << 8 | IsItemClickEnabled,
+        UnFullScreen = File | 12 << 8 | IsItemClickEnabled,
 
         #endregion
 
@@ -73,10 +74,9 @@ namespace Luo_Painter.Options
 
         #region Menu
 
-        DockLeft = Menu | 1 << 8 | ExistIcon | IsItemClickEnabled,
-        DockRight = Menu | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        FileMenu = Menu | 1 << 8 | HasMenu | IsItemClickEnabled,
+        ExportMenu = Menu | 2 << 8 | HasMenu | IsItemClickEnabled,
 
-        ExportMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
         ColorMenu = Menu | 6 << 8 | HasMenu | IsItemClickEnabled,
         PaletteMenu = Menu | 7 << 8 | HasMenu | IsItemClickEnabled,
 

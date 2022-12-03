@@ -442,8 +442,8 @@
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
-                            
-                            
+
+
                             <local:OptionCase Value="DisplacementLiquefaction">
                                 <StackPanel>
                                     <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
@@ -1218,7 +1218,7 @@
                     <FontIcon Margin="8,0" Glyph="&#xF246;" FontSize="20" FontFamily="Segoe MDL2 Assets"/>
                 </StackPanel>
             </Button>
-            
+
             <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
@@ -1228,6 +1228,34 @@
                                 Home
                             </ToolTip>
                         </ToolTipService.ToolTip>
+                        <UIElement.ContextFlyout>
+                            <MenuFlyout x:Name="FileFlyout" Placement="Bottom">
+                                <!--File-->
+                                <MenuFlyoutSeparator x:Name="FileHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                    <UIElement.AccessKey>
+                                        Files
+                                    </UIElement.AccessKey>
+                                </MenuFlyoutSeparator>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Home" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem.Tag>
+                                        <SymbolIcon Symbol="Home"/>
+                                    </MenuFlyoutItem.Tag>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Save" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                                    </UIElement.KeyboardAccelerators>
+                                    <MenuFlyoutItem.Tag>
+                                        <SymbolIcon Symbol="Save"/>
+                                    </MenuFlyoutItem.Tag>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Close" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem.Tag>
+                                        <SymbolIcon Symbol="Cancel"/>
+                                    </MenuFlyoutItem.Tag>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </UIElement.ContextFlyout>
                         <SymbolIcon Symbol="Home"/>
                     </Button>
                     <Button x:Name="ExportButton" Width="70" Height="50" Foreground="#FFC003" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
