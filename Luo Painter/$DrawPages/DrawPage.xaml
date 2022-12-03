@@ -286,21 +286,21 @@
 
 
                             <local:OptionCase Value="Feather">
-                                <elements:NumberSlider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" TickFrequency="49" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Feather
                                     </Slider.Header>
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Grow">
-                                <elements:NumberSlider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Grow
                                     </Slider.Header>
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Shrink">
-                                <elements:NumberSlider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Shrink
                                     </Slider.Header>
@@ -313,15 +313,13 @@
                             </local:OptionCase>
                             <local:OptionCase Value="Transform">
                                 <StackPanel>
-                                    <Grid Height="50" ColumnSpacing="2">
+                                    <Grid ColumnSpacing="2" Height="50" MinWidth="280" MaxWidth="360">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="1*" />
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="TransformSnapButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformSnapButton" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE2AC;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock x:Name="TransformSnapTextBlock" VerticalAlignment="Center">
@@ -329,7 +327,7 @@
                                                 </TextBlock>
                                             </StackPanel>
                                         </ToggleButton>
-                                        <ToggleButton x:Name="TransformRatioButton" Grid.Column="2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformRatioButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xEA5F;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock x:Name="TransformRatioTextBlock" VerticalAlignment="Center">
@@ -337,7 +335,7 @@
                                                 </TextBlock>
                                             </StackPanel>
                                         </ToggleButton>
-                                        <ToggleButton x:Name="TransformCenterButton"  Grid.Column="3" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformCenterButton" Grid.Column="2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE958;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock x:Name="TransformCenterTextBlock" VerticalAlignment="Center">
@@ -433,13 +431,13 @@
                                         <ListBoxItem x:Name="DisplacementLiquefactionResetItem">Reset</ListBoxItem>
                                     </ListBox>
                                     <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}" >
-                                        <elements:NumberSlider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" TickFrequency="99" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Size
                                             </Slider.Header>
                                         </elements:NumberSlider>
-                                        <elements:NumberSlider x:Name="DisplacementLiquefactionPressureSlider" Value="12" Minimum="10" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="DisplacementLiquefactionPressureSlider" Value="12" Minimum="10" Maximum="100" Unit="%" TickFrequency="30" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Pressure
@@ -478,19 +476,19 @@
                             </local:OptionCase>
                             <local:OptionCase Value="RippleEffect">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <elements:NumberSlider x:Name="FrequencySlider" Value="140" Minimum="0" Maximum="300" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="FrequencySlider" Value="140" Minimum="0" Maximum="300" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Frequency
                                         </Slider.Header>
                                     </elements:NumberSlider>
-                                    <elements:NumberSlider x:Name="PhaseSlider" Minimum="-100" Maximum="0" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="PhaseSlider" Minimum="-100" Maximum="0" Unit="º" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Phase
                                         </Slider.Header>
                                     </elements:NumberSlider>
-                                    <elements:NumberSlider x:Name="AmplitudeSlider" Value="60" Minimum="0" Maximum="200" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="AmplitudeSlider" Value="60" Minimum="0" Maximum="200" TickFrequency="40" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Amplitude
@@ -544,7 +542,7 @@
 
 
                             <local:OptionCase Value="Exposure">
-                                <elements:NumberSlider x:Name="ExposureSlider" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="ExposureSlider" Minimum="-200" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
@@ -557,7 +555,7 @@
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Brightness">
-                                <elements:NumberSlider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
@@ -571,7 +569,7 @@
 
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
-                                <elements:NumberSlider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Gray" Offset="0"/>
@@ -584,7 +582,7 @@
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="HueRotation">
-                                <elements:NumberSlider x:Name="HueRotationSlider" Minimum="0" Maximum="360" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="HueRotationSlider" Minimum="0" Maximum="360" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#FFCE3B" Offset="0"/>
@@ -604,7 +602,7 @@
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Contrast">
-                                <elements:NumberSlider x:Name="ContrastSlider" Minimum="-100" Maximum="100" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="ContrastSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#888888" Offset="0"/>
@@ -627,7 +625,7 @@
                             </local:OptionCase>
                             <local:OptionCase Value="Temperature">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <elements:NumberSlider x:Name="TemperatureSlider" Minimum="-100" Maximum="100" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="TemperatureSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -640,7 +638,7 @@
                                             Temperature
                                         </Slider.Header>
                                     </elements:NumberSlider>
-                                    <elements:NumberSlider x:Name="TintSlider" Minimum="-100" Maximum="100" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="TintSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -658,7 +656,7 @@
                             <local:OptionCase Value="HighlightsAndShadows">
                                 <StackPanel Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <elements:NumberSlider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -670,7 +668,7 @@
                                                 Shadows
                                             </Slider.Header>
                                         </elements:NumberSlider>
-                                        <elements:NumberSlider x:Name="HighlightsSlider" Minimum="-100" Maximum="100" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="HighlightsSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -684,13 +682,13 @@
                                         </elements:NumberSlider>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <elements:NumberSlider x:Name="ClaritySlider" Minimum="-100" Maximum="100" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="ClaritySlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Clarity
                                             </Slider.Header>
                                         </elements:NumberSlider>
-                                        <elements:NumberSlider x:Name="BlurSlider" Value="125" Minimum="0" Maximum="1000" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="BlurSlider" Value="125" Minimum="0" Maximum="1000" TickFrequency="250" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Blur
@@ -777,7 +775,7 @@
                                         <local:ElementItem Type="SymmetryRadial"/>
                                         <local:ElementItem Type="MirrorRadial"/>
                                     </ListBox>
-                                    <elements:NumberSlider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                               Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
                                         <Slider.Header>
                                             Sectors
@@ -850,28 +848,28 @@
                             <local:OptionCase Value="GeometryEllipseTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryRoundRectTransform">
-                                <elements:NumberSlider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Unit="%" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Unit="%" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Corner
                                     </Slider.Header>
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryTriangleTransform">
-                                <elements:NumberSlider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Center Point
                                     </Slider.Header>
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDiamondTransform">
-                                <elements:NumberSlider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Mid Point
                                     </Slider.Header>
                                 </elements:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPentagonTransform">
-                                <elements:NumberSlider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Points
                                     </Slider.Header>
@@ -879,13 +877,13 @@
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryStarTransform">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <elements:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Points
                                         </Slider.Header>
                                     </elements:NumberSlider>
-                                    <elements:NumberSlider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Inner Radius
@@ -894,7 +892,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDountTransform">
-                                <elements:NumberSlider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Hole Radius
                                     </Slider.Header>
@@ -903,13 +901,13 @@
                             <local:OptionCase Value="GeometryCogTransform">
                                 <StackPanel Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <elements:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Count
                                             </Slider.Header>
                                         </elements:NumberSlider>
-                                        <elements:NumberSlider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Inner Radius
@@ -917,13 +915,13 @@
                                         </elements:NumberSlider>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <elements:NumberSlider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Tooth
                                             </Slider.Header>
                                         </elements:NumberSlider>
-                                        <elements:NumberSlider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}"
+                                        <elements:NumberSlider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Notch
@@ -933,7 +931,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPieTransform">
-                                <elements:NumberSlider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Sweep Angle
                                     </Slider.Header>
@@ -941,13 +939,13 @@
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCookieTransform">
                                 <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <elements:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Inner Radius
                                         </Slider.Header>
                                     </elements:NumberSlider>
-                                    <elements:NumberSlider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" Foreground="{ThemeResource AppForeground}"
+                                    <elements:NumberSlider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Sweep Angle
@@ -987,7 +985,7 @@
                             <local:OptionCase Value="GeometryCapsuleTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryHeartTransform">
-                                <elements:NumberSlider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" Foreground="{ThemeResource AppForeground}">
+                                <elements:NumberSlider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Spread
                                     </Slider.Header>
@@ -1103,8 +1101,6 @@
                                     <SymbolIcon Symbol="Add"/>
                                 </Button>
                             </Grid>
-
-                            <MenuFlyoutSeparator Margin="0,4" Visibility="Collapsed"/>
 
                             <transformers:RemoteControl 
                                 x:Name="RemoteControl"
@@ -1323,13 +1319,13 @@
                     x:Name="TitleTextBlock"
                     Grid.Column="1" 
                     Margin="16,0"
-                    IsHitTestVisible="false" 
+                    IsTextSelectionEnabled="True"
                     FontWeight="Medium" 
                     TextTrimming="CharacterEllipsis" 
                     FontSize="20" 
                     TextWrapping="Wrap" 
                     VerticalAlignment="Center" 
-                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    OpticalMarginAlignment="TrimSideBearings"
                     >   
                     <!--Title-->
                 </TextBlock>
