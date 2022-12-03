@@ -51,44 +51,5 @@ namespace Luo_Painter.Elements
             }
         }
 
-        //@Attached
-        public static int GetDepth(DependencyObject dp) => (int)dp.GetValue(DepthProperty);
-        public static void SetDepth(DependencyObject dp, int value) => dp.SetValue(DepthProperty, value);
-        public static readonly DependencyProperty DepthProperty = DependencyProperty.RegisterAttached("Depth", typeof(int), typeof(ColumnDefinition), new PropertyMetadata(0, (sender, e) =>
-        {
-            ColumnDefinition control = (ColumnDefinition)sender;
-
-            if (e.NewValue is int value)
-            {
-                control.Width = new GridLength(value * 20);
-            }
-        }));
-
-        //@Attached
-        public static bool GetIsExpand(DependencyObject dp) => (bool)dp.GetValue(IsExpandProperty);
-        public static void SetIsExpand(DependencyObject dp, bool value) => dp.SetValue(IsExpandProperty, value);
-        public static readonly DependencyProperty IsExpandProperty = DependencyProperty.RegisterAttached("IsExpand", typeof(bool), typeof(ColumnDefinition), new PropertyMetadata(false, (sender, e) =>
-        {
-            RotateTransform control = (RotateTransform)sender;
-
-            if (e.NewValue is bool value)
-            {
-                control.Angle = value ? 90 : 0;
-            }
-        }));
-
-        //@Attached
-        public static Visibility GetVisible(DependencyObject dp) => (Visibility)dp.GetValue(VisibleProperty);
-        public static void SetVisible(DependencyObject dp, Visibility value) => dp.SetValue(VisibleProperty, value);
-        public static readonly DependencyProperty VisibleProperty = DependencyProperty.RegisterAttached("Visible", typeof(Visibility), typeof(UIElement), new PropertyMetadata(Visibility.Visible, (sender, e) =>
-        {
-            UIElement control = (UIElement)sender;
-
-            if (e.NewValue is Visibility value)
-            {
-                control.Opacity = value == Visibility.Visible ? 1 : 0.4;
-            }
-        }));
-
     }
 }
