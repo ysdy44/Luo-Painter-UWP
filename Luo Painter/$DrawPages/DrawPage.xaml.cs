@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -46,7 +47,7 @@ namespace Luo_Painter
         Hub,
     }
 
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, ICommand
     {
 
         //@Key
@@ -357,9 +358,6 @@ namespace Luo_Painter
             };
 
 
-            this.Command.Click += (s, type) => this.Click(type);
-            this.LayerListView.ItemClick2 += (s, type) => this.Click(type);
-            this.HeadButton.ItemClick += (s, type) => this.Click(type);
             this.LayerListView.Invalidate += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.LayerListView.History += (s, e) =>
             {
@@ -371,8 +369,7 @@ namespace Luo_Painter
 
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
-            this.HomeButton.Click += (s, e) => this.Click(OptionType.Close);
-            //this.SaveButton.Click += (s, e) => this.Click(OptionType.Save);
+            this.HomeButton.Click += (s, e) => this.Click(OptionType.Home);
             this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
             this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
             this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
@@ -533,7 +530,7 @@ namespace Luo_Painter
             e.Handled = true;
 
             if (this.Disabler) return;
-            this.Click(OptionType.Close);
+            this.Click(OptionType.Home);
         }
 
     }

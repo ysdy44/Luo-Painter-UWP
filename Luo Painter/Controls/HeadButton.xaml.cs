@@ -1,15 +1,14 @@
 ﻿using Luo_Painter.Options;
-using System;
+using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class HeadButton : StackPanel
     {
-        //@Delegate
-        public event EventHandler<OptionType> ItemClick { remove => this.Command.Click -= value; add => this.Command.Click += value; }
+        //@Command
+        public ICommand Command { get; set; }
 
         //@Content
         public bool PasteIsEnabled { get; set; }

@@ -13,7 +13,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -26,9 +26,23 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, ICommand
     {
 
+        //@Delegate
+        public event EventHandler CanExecuteChanged;
+
+        //@Command
+        public bool CanExecute(object parameter) => parameter != default;
+        public void Execute(object parameter)
+        {
+            if (parameter is OptionType item)
+            {
+                this.Click(item);
+            }
+        }
+
+        public ICommand Command => this;
         public async void Click(OptionType type)
         {
             if (this.LayerListView.IsOpen) return;

@@ -24,8 +24,6 @@
         <transformers:CanvasTransformer x:Name="Transformer" />
         <!--Extension-->
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
-        <!--Command-->
-        <local:OptionTypeCommand x:Name="Command"/>
         <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:ScaleRange x:Name="ScaleRange"/>
@@ -217,7 +215,7 @@
                 PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}" 
                 >
                 <SplitView.Pane>
-                    <controls:LayerListView x:Name="LayerListView" ItemsSource="{x:Bind ObservableCollection}" />
+                    <controls:LayerListView x:Name="LayerListView" Command="{x:Bind Command}" ItemsSource="{x:Bind ObservableCollection}" />
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">
 
@@ -1310,7 +1308,7 @@
                     <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
                 </StackPanel>
 
-                <controls:HeadButton x:Name="HeadButton"/>
+                <controls:HeadButton x:Name="HeadButton" Command="{x:Bind Command}"/>
 
             </Grid>
 

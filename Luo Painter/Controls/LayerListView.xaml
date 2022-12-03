@@ -34,8 +34,6 @@
     </FrameworkElement.Tag>
 
     <FrameworkElement.Resources>
-        <!--Command-->
-        <luo_painter:OptionTypeCommand x:Name="Command"/>
         <!--Flyout-->
         <Flyout x:Name="RenameFlyout" Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <Grid RowSpacing="2" Padding="6,4" Width="318" Height="151">
@@ -192,13 +190,15 @@
                         IsHitTestVisible="False" 
                         BorderThickness="1"
                         BorderBrush="Black" 
-                        Background="White" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Opacity="{x:Bind UIVisibility, Mode=OneWay}"  
                         >
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="{x:Bind Opacity, Mode=OneWay}"/>
+                        </Border.Background>
                         <Image 
-                            Source="{x:Bind Thumbnail, Mode=OneWay}"
+                            Source="{x:Bind Thumbnail, Mode=OneWay}" 
                             Opacity="{x:Bind Opacity, Mode=OneWay}"
                             />
                     </Border>
@@ -324,18 +324,6 @@
                                 </ItemsControl.ItemsSource>
 
                             </ComboBox>
-
-                            <!--Name-->
-                            <!--
-                            <TextBlock x:Name="NameTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                                Name
-                            </TextBlock>
-                            <TextBox x:Name="NameTextBox" >
-                                <TextBox.PlaceholderText>
-                                    Input Text...
-                                </TextBox.PlaceholderText>
-                            </TextBox>
-                            -->
 
                             <!--TagType-->
                             <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >

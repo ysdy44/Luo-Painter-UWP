@@ -9,12 +9,9 @@
     mc:Ignorable="d"
     Orientation="Horizontal" 
     HorizontalAlignment="Center" 
+    d:DesignHeight="50"
+    d:DesignWidth="200"
     >
-
-    <FrameworkElement.Resources>
-        <!--Command-->
-        <luo_painter:OptionTypeCommand x:Name="Command"/>
-    </FrameworkElement.Resources>
 
     <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
         <ToolTipService.ToolTip>

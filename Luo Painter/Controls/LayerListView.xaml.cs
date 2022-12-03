@@ -3,6 +3,7 @@ using Luo_Painter.Historys;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using System;
+using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -15,13 +16,15 @@ namespace Luo_Painter.Controls
     {
         //@Delegate
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
-        public event EventHandler<OptionType> ItemClick2 { remove => this.Command.Click -= value; add => this.Command.Click += value; }
         public event EventHandler<IHistory> History;
         public event EventHandler<object> Invalidate;
 
+        //@Command
+        public ICommand Command { get; set; }
+
         //@Content
         public bool PasteLayerIsEnabled { get; set; }
-        public bool IsOpen => this.Flyout.IsOpen;
+        public bool IsOpen => this.RenameFlyout.IsOpen;
         public ImageSource Source { get; set; }
 
         //@Delegate
