@@ -13,19 +13,27 @@ using Luo_Painter.Elements;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         bool SelectionIsSubtract => this.SelectionComboBox.SelectedIndex is 0 is false;
 
         private void SelectionBrush_Start()
         {
+            this.Marquee.Marquee(this.StartingPosition, this.StartingPosition, 32, this.SelectionIsSubtract);
+            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, 32));
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
         private void SelectionBrush_Delta()
         {
             this.Marquee.Marquee(this.StartingPosition, this.Position, 32, this.SelectionIsSubtract);
             this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, this.Position, 32));
+
             this.CanvasControl.Invalidate(); // Invalidate
+            this.CanvasAnimatedControl.Invalidate(); // Invalidate
+
+            this.StartingPosition = this.Position;
         }
         private void SelectionBrush_Complete()
         {
