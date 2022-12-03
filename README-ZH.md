@@ -19,11 +19,11 @@
 
 |Key|Value|
 |:-|:-|
-|系统要求| Windows10 1803 或更高|
+|系统要求| Windows 10 1803 或更高|
 |开发工具|Visual Studio 2022|
 |图形库|Win2D|
 |编程语言|C#|
-|显示语言|中文 and English|
+|显示语言|中文 英文|
 |评论语言|中文|
 
 
@@ -31,4 +31,4 @@
 
 ## 部署说明
 
-> 下载整个工程，运行`Luo Painter.sln`，启动工程`Luo Painter`，试试看是否可以工作。
+> 下载整个工程，打开`Luo Painter.sln`文件，启动工程`Luo Painter`，试试看是否可以工作。
