@@ -200,6 +200,7 @@
       <DependentUpon>LayerButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LayerListView.Property.cs" />
+    <Compile Include="Controls\LayerListView.Rename.cs" />
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
     </Compile>

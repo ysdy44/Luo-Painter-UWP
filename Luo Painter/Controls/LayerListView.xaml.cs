@@ -38,6 +38,10 @@ namespace Luo_Painter.Controls
             this.InitializeComponent();
             this.ConstructPropertys();
             this.ConstructProperty();
+
+            this.ConstructRenames();
+            this.ConstructRename();
+
             base.RightTapped += (s, e) =>
             {
                 if (e.OriginalSource is FrameworkElement element)
@@ -49,14 +53,16 @@ namespace Luo_Painter.Controls
                     }
                 }
             };
-            base.DoubleTapped += (s, e) =>
+            base.DoubleTapped += async (s, e) =>
             {
+                await System.Threading.Tasks.Task.Delay(100);
+        
                 if (e.OriginalSource is FrameworkElement element)
                 {
                     if (element.DataContext is ILayer item)
                     {
                         base.SelectedItem = item;
-                        this.Flyout.ShowAt(element);
+                        this.RenameFlyout.ShowAt(element);
                     }
                 }
             };
