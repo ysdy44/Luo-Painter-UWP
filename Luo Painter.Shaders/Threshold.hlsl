@@ -9,12 +9,26 @@ float4 color1;
 
 D2D_PS_ENTRY(main) 
 {
-	float3 color = D2DGetInput(0).rgb;
+	float4 color = D2DGetInput(0);
+	float a = color.a;
+    
+    if(a == 0)
+        return float4(0, 0, 0, 0);
 
-	float gray= color.r+color.g+color.b;
-
-	if(gray<=threshold)
-		return color1;
-	
-	return color0;
+	float gray= color.r + color.g + color.b;
+    
+    if(a == 1)
+    {
+    	if(gray <= threshold)
+	    	return color1;
+	    else
+	    	return color0;
+    }
+    else
+    {
+    	if(gray <= threshold)
+            return float4(color1.r, color1.g, color1.b, a);
+	    else
+            return float4(color0.r, color0.g, color0.b, a);
+    }
 }
