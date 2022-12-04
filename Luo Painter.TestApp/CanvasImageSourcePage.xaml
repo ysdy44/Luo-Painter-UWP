@@ -4,42 +4,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
     <Grid>
-        <GridView HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
-                <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
-            </Border>
-            <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
-                <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
-            </Border>
-            <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
-                <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
-            </Border>
-            <Border Grid.Column="1" Width="40" Height="40" BorderThickness="1" BorderBrush="Black" Background="White" >
-                <Image Width="40" Height="40" Source="{x:Bind Thumbnail, Mode=OneWay}" />
-            </Border>
-        </GridView>
+
+        <elements:TricolorPicker x:Name="TricolorPicker">
+            <Control.Background>
+                <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+            </Control.Background>
+        </elements:TricolorPicker>
+
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
-                <TextBlock Margin="12,10,2,0">
-                    CanvasBitmap > CanvasImageSource
-                </TextBlock>
+                <Rectangle Margin="12,6,2,0" RadiusX="4" RadiusY="4" Width="80" Height="30" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}">
+                    <Shape.Fill>
+                        <SolidColorBrush x:Name="SolidColorBrush" Color="Black"/>
+                    </Shape.Fill>
+                </Rectangle>
             </ContentControl.Content>
-            
+
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="N"/>
+                    <KeyboardAccelerator Modifiers="None" Key="Up"/>
+                    <KeyboardAccelerator Modifiers="None" Key="Right"/>
                 </UIElement.KeyboardAccelerators>
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Add"/>
                 </AppBarButton.Icon>
                 <AppBarButton.Label>
                     Add
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="RemoveButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Down"/>
+                    <KeyboardAccelerator Modifiers="None" Key="Left"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Remove"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Remove
                 </AppBarButton.Label>
             </AppBarButton>
 
