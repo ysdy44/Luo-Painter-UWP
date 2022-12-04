@@ -197,6 +197,9 @@
     <Compile Include="ToastAudioType.cs" />
     <Compile Include="ToastExtensions.cs" />
     <Compile Include="ToastExtensions.LaunchFile.cs" />
+    <Compile Include="TricolorPicker.xaml.cs">
+      <DependentUpon>TricolorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TSelector.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
@@ -409,6 +412,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TricolorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
