@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private void ConstructOperator()
@@ -16,8 +16,6 @@ namespace Luo_Painter
             // Single
             this.Operator.Single_Start += (point, device, properties) =>
             {
-                this.CanvasAnimatedControl.Paused = true; // Invalidate
-
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
 
@@ -84,8 +82,6 @@ namespace Luo_Painter
             };
             this.Operator.Single_Complete += (point, device, properties) =>
             {
-                this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
-
                 if (this.ReferenceImage is null)
                 {
                     this.Tool_Complete();

@@ -3,6 +3,7 @@ using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Linq;
@@ -14,7 +15,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private async void PaintBrushForce_Start()
@@ -57,6 +58,7 @@ namespace Luo_Painter
 
             //@Paint
             this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
@@ -87,6 +89,7 @@ namespace Luo_Painter
             this.Tasks.StopForce();
             this.Tasks.State = PaintTaskState.Painted;
 
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
         }
 

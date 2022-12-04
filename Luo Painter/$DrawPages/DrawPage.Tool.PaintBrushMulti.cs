@@ -1,17 +1,16 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         int SymmetryCount => (int)this.SymmetrySlider.Value;
@@ -61,6 +60,7 @@ namespace Luo_Painter
             }
 
             //@Paint
+            this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.Symmetryer.Construct(count, this.BitmapLayer.Center);
             foreach (StrokeCap cap in this.Symmetryer.GetCaps(this.SymmetryType, new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size), this.BitmapLayer.Center))
             {
@@ -96,6 +96,8 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.SymmetryMode == default) return;
             if (this.BitmapLayer is null) return;
+
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
 
             //@Paint
             this.Tasks.State = PaintTaskState.Painted;

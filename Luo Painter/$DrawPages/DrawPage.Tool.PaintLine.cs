@@ -3,14 +3,14 @@ using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private void PaintLine_Start()
@@ -32,6 +32,7 @@ namespace Luo_Painter
                 return;
             }
 
+            this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
@@ -64,6 +65,7 @@ namespace Luo_Painter
                 if (this.InkType is InkType.Liquefy is false)
                 {
                     using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                    using (ds.CreateLayer(1f, segment.Bounds))
                     {
                         ds.Clear(Colors.Transparent);
                         this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
@@ -78,6 +80,7 @@ namespace Luo_Painter
             this.BitmapLayer.RenderThumbnail();
 
             this.BitmapLayer = null;
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.Point, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(segment.Size * this.Transformer.Scale));
             if (region.HasValue)
             {

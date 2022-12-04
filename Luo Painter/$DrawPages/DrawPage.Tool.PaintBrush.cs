@@ -1,13 +1,12 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private async void PaintBrush_Start()
@@ -29,6 +28,7 @@ namespace Luo_Painter
                 return;
             }
 
+            this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
@@ -65,6 +65,7 @@ namespace Luo_Painter
             if (this.InkType == default) return;
             if (this.BitmapLayer is null) return;
 
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint

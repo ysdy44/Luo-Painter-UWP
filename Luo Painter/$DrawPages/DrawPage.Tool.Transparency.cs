@@ -1,17 +1,16 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         int TransparencyMode => this.TransparencyComboBox.SelectedIndex;
@@ -106,6 +105,7 @@ namespace Luo_Painter
                     break;
             }
 
+            this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
 
@@ -184,6 +184,7 @@ namespace Luo_Painter
             this.BitmapLayer.RenderThumbnail();
             this.BitmapLayer = null;
 
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
             this.RaiseHistoryCanExecuteChanged();

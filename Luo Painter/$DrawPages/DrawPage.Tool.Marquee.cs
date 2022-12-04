@@ -1,19 +1,11 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Options;
-using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
-using System.Numerics;
 using Windows.Foundation;
-using Windows.UI;
-using Windows.UI.Xaml.Controls;
-using Luo_Painter.Layers;
-using Luo_Painter.Brushes;
-using Luo_Painter.Blends;
-using Luo_Painter.Elements;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         MarqueeCompositeMode MarqueeCompositeMode
@@ -39,6 +31,7 @@ namespace Luo_Painter
             this.MarqueeToolType = this.GetMarqueeToolType(this.OptionType);
             this.MarqueeTool.Start(this.StartingPosition, this.MarqueeToolType, this.IsCtrl, this.IsShift);
 
+            this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
         }
         private void Marquee_Delta()
@@ -65,7 +58,9 @@ namespace Luo_Painter
             this.Marquee.Flush();
             this.Marquee.RenderThumbnail();
 
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
+
             this.MarqueeToolType = MarqueeToolType.None;
         }
 
