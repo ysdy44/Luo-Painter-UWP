@@ -3,6 +3,7 @@ using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
 using Windows.UI;
+using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -39,15 +40,38 @@ namespace Luo_Painter.TestApp
     public sealed partial class CanvasImageSourcePage : Page
     {
         readonly WheelImageSource WheelImageSource = new WheelImageSource(new WheelSizeF(320, 0.87f));
-
+    
         public CanvasImageSourcePage()
         {
             this.InitializeComponent();
             base.Unloaded += (s, e) => CompositionTarget.SurfaceContentsLost -= this.WheelImageSource.SurfaceContentsLost;
             base.Loaded += (s, e) => CompositionTarget.SurfaceContentsLost += this.WheelImageSource.SurfaceContentsLost;
-            this.AddButton.Click += (s, e) => this.TricolorPicker.Up();
-            this.RemoveButton.Click += (s, e) => this.TricolorPicker.Down();
+
+            this.AddButton.Click += (s, e) => this.TricolorPicker.ZoomOut();
+            this.RemoveButton.Click += (s, e) => this.TricolorPicker.ZoomIn();
+
+            this.LeftButton.Click += (s, e) => this.TricolorPicker.Left();
+            this.RightButton.Click += (s, e) => this.TricolorPicker.Right();
+
+            this.DownButton.Click += (s, e) => this.TricolorPicker.Down();
+            this.UpButton.Click += (s, e) => this.TricolorPicker.Up();
+
             this.TricolorPicker.ColorChanged += (s, e) => this.SolidColorBrush.Color = e;
+            this.TricolorPicker.PointerWheelChanged += (s, e) =>
+            {
+                PointerPoint pointerPoint = e.GetCurrentPoint(this.TricolorPicker);
+
+                float space = pointerPoint.Properties.MouseWheelDelta;
+
+                if (space > 0)
+                {
+                    this.TricolorPicker.ZoomOut();
+                }
+                else if (space < 0)
+                {
+                    this.TricolorPicker.ZoomIn();
+                }
+            };
         }
     }
 }

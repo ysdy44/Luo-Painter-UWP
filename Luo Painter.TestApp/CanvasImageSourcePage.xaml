@@ -17,7 +17,7 @@
             </Control.Background>
         </elements:TricolorPicker>
 
-        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
                 <Rectangle Margin="12,6,2,0" RadiusX="4" RadiusY="4" Width="80" Height="30" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}">
@@ -29,8 +29,7 @@
 
             <AppBarButton x:Name="AddButton" >
                 <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Up"/>
-                    <KeyboardAccelerator Modifiers="None" Key="Right"/>
+                    <KeyboardAccelerator Modifiers="None" Key="PageUp"/>
                 </UIElement.KeyboardAccelerators>
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Add"/>
@@ -42,8 +41,7 @@
 
             <AppBarButton x:Name="RemoveButton" >
                 <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Down"/>
-                    <KeyboardAccelerator Modifiers="None" Key="Left"/>
+                    <KeyboardAccelerator Modifiers="None" Key="PageDown"/>
                 </UIElement.KeyboardAccelerators>
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Remove"/>
@@ -54,6 +52,58 @@
             </AppBarButton>
 
         </CommandBar>
-    </Grid>
 
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+
+            <AppBarButton x:Name="LeftButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Left"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Back"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Left
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="RightButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Right"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Forward"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Right
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="DownButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Down"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Download"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Down
+                </AppBarButton.Label>
+            </AppBarButton>
+
+            <AppBarButton x:Name="UpButton" >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="None" Key="Up"/>
+                </UIElement.KeyboardAccelerators>
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Upload"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Label>
+                    Up
+                </AppBarButton.Label>
+            </AppBarButton>
+
+        </CommandBar>
+
+    </Grid>
 </Page>
