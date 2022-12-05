@@ -154,6 +154,7 @@
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="HSVExtensions.cs" />
+    <Compile Include="IColorPicker.cs" />
     <Compile Include="IndexGrid.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="MetadataObservableCollection.cs" />
