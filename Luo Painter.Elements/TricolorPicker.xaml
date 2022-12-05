@@ -4,17 +4,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    UseSystemFocusVisuals="True"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
     d:DesignWidth="400"
     d:DesignHeight="400"
+    IsTabStop="True"
+    mc:Ignorable="d"
     >
 
-    <Canvas Width="{x:Bind W.D}" Height="{x:Bind W.D}">
-        <ToolTipService.ToolTip>
-            <ToolTip x:Name="ToolTip" Placement="Top">
-                <!--Content-->
-            </ToolTip>
-        </ToolTipService.ToolTip>
+    <Canvas Margin="10" Width="{x:Bind W.D}" Height="{x:Bind W.D}" Background="Transparent">
+        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind T.AL}" Canvas.Top="{x:Bind T.AB}" Width="{x:Bind T.AW}" Height="{x:Bind T.AL}" >
+            <TextBlock x:Name="TextBlock" Visibility="Visible" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+                <!--Text-->
+            </TextBlock>
+        </Border>
 
         <Path IsHitTestVisible="False" Width="{x:Bind W.D}" Height="{x:Bind W.D}">
             <Shape.Fill>
@@ -61,11 +65,19 @@
             </Path.Data>
         </Path>
 
-        <Line x:Name="BlackLine" IsHitTestVisible="False"  StrokeThickness="4" Stroke="Black"/>
-        <Line x:Name="WhiteLine" IsHitTestVisible="False" StrokeThickness="2" Stroke="White"/>
+        <Line x:Name="BlackLine" IsHitTestVisible="False" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="White"/>
+        <Line x:Name="WhiteLine" IsHitTestVisible="False" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="14" >
+            <Shape.Stroke>
+                <SolidColorBrush x:Name="LineSolidColorBrush" Color="Red"/>
+            </Shape.Stroke>
+        </Line>
 
-        <Ellipse x:Name="BlackEllipse" IsHitTestVisible="False" Width="22" Height="22" StrokeThickness="4" Stroke="Black"/>
-        <Ellipse x:Name="WhiteEllipse" IsHitTestVisible="False" Width="20" Height="20" StrokeThickness="2" Stroke="White"/>
+        <Ellipse x:Name="BlackEllipse" IsHitTestVisible="False" Width="28" Height="28" StrokeThickness="2" Stroke="Black"/>
+        <Ellipse x:Name="WhiteEllipse" IsHitTestVisible="False" Width="26" Height="26" StrokeThickness="1" Stroke="White">
+            <Shape.Fill>
+                <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
+            </Shape.Fill>
+        </Ellipse>
 
     </Canvas>
 </UserControl>

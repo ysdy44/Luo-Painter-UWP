@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Numerics;
 using Windows.Foundation;
-using Windows.System;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
@@ -97,13 +97,13 @@ namespace Luo_Painter.Elements
 
         public Point Triangle(Point position) => new Point(position.X - this.AL, position.Y - this.AT);
 
-        public double V(Point triangle) => Math.Clamp(triangle.Y / this.AH, 0, 1);
+        public double V(Point triangle) => Math.Clamp(triangle.Y / this.AH, 0d, 1d);
         public double S(Point triangle, double v)
         {
-            if (triangle.Y == 0) return 0.5;
+            if (triangle.Y == 0d) return 0.5d;
 
-            double vh = v / 2;
-            return Math.Clamp(triangle.X / this.AW, 0.5 - vh, 0.5 + vh);
+            double vh = v / 2d;
+            return Math.Clamp(triangle.X / this.AW, 0.5d - vh, 0.5d + vh);
         }
     }
 
@@ -132,86 +132,56 @@ namespace Luo_Painter.Elements
             this.TrianglePath.ManipulationStarted += (_, e) =>
             {
                 this.Triangle = this.T.Triangle(e.Position);
+                this.Move();
 
-                double v = this.T.V(this.Triangle);
-                double s = this.T.S(this.Triangle, v);
-
-                this.HSV.X = (float)s;
-                this.HSV.Y = (float)v;
-                Color color = this.HSV.ToColor();
-                this.ColorChanged?.Invoke(this, color); // Delegate
-
-                this.Ellipse(s, v);
-                this.ToolTip.Content = ColorHelper.ToDisplayName(color);
-                this.ToolTip.IsOpen = true;
+                //this.TextBlock.Text = ColorHelper.ToDisplayName(this.HSV.ToColor());
+                //this.TextBlock.Visibility = Visibility.Visible;
             };
             this.TrianglePath.ManipulationDelta += (_, e) =>
             {
                 this.Triangle.X += e.Delta.Translation.X;
                 this.Triangle.Y += e.Delta.Translation.Y;
+                this.Move();
 
-                double v = this.T.V(this.Triangle);
-                double s = this.T.S(this.Triangle, v);
-
-                this.HSV.X = (float)s;
-                this.HSV.Y = (float)v;
-                Color color = this.HSV.ToColor();
-                this.ColorChanged?.Invoke(this, color); // Delegate
-
-                this.Ellipse(s, v);
-                this.ToolTip.Content = ColorHelper.ToDisplayName(color);
+                //this.TextBlock.Text = ColorHelper.ToDisplayName(this.HSV.ToColor());
             };
             this.TrianglePath.ManipulationCompleted += (_, e) =>
             {
                 Color color = this.HSV.ToColor();
-                this.ColorChanged?.Invoke(this, color); // Delegate
+                this.Color(color);
 
-                this.ToolTip.IsOpen = false;
+                //this.TextBlock.Text = ColorHelper.ToDisplayName(this.HSV.ToColor());
+                //this.TextBlock.Visibility = Visibility.Collapsed;
             };
 
             this.WheelPath.ManipulationMode = ManipulationModes.All;
             this.WheelPath.ManipulationStarted += (_, e) =>
             {
                 this.Wheel = this.W.Wheel(e.Position);
+                this.Zoom();
 
-                double h = this.VectorToH(this.Wheel);
-
-                this.HSV.Z = (float)h;
-                this.HSV.Z += 360f;
-                this.HSV.Z %= 360f;
-                Color color = this.HSV.ToColor();
-                this.ColorChanged?.Invoke(this, color); // Delegate
-
-                Vector2 v = Vector2.Normalize(this.Wheel.ToVector2());
-                this.Line(v.X, v.Y);
-                this.ToolTip.Content = ColorHelper.ToDisplayName(color);
-                this.ToolTip.IsOpen = true;
+                this.TextBlock.Text = $"{(int)this.HSV.Z} °";
+                this.TextBlock.Visibility = Visibility.Visible;
             };
             this.WheelPath.ManipulationDelta += (_, e) =>
             {
                 this.Wheel.X += e.Delta.Translation.X;
                 this.Wheel.Y += e.Delta.Translation.Y;
+                this.Zoom();
 
-                double h = this.VectorToH(this.Wheel);
-
-                this.HSV.Z = (float)h;
-                this.HSV.Z += 360f;
-                this.HSV.Z %= 360f;
-                Color color = this.HSV.ToColor();
-                this.ColorChanged?.Invoke(this, color); // Delegate
-
-                Vector2 v = Vector2.Normalize(this.Wheel.ToVector2());
-                this.Line(v.X, v.Y);
-                this.ToolTip.Content = ColorHelper.ToDisplayName(color);
+                this.TextBlock.Text = $"{(int)this.HSV.Z} °";
             };
             this.WheelPath.ManipulationCompleted += (_, e) =>
             {
-                Color color = this.HSV.ToColor();
-                this.ColorChanged?.Invoke(this, color); // Delegate
+                Color color = HSVExtensions.ToColor(this.HSV.Z);
+                this.Stop(color);
+                this.Color(this.HSV.ToColor());
 
-                this.ToolTip.IsOpen = false;
+                this.TextBlock.Text = $"{(int)this.HSV.Z} °";
+                this.TextBlock.Visibility = Visibility.Collapsed;
             };
         }
+
 
         public void Recolor(Color color)
         {
@@ -220,25 +190,97 @@ namespace Luo_Painter.Elements
             this.Ellipse(this.HSV.X == 0f ? 0.5 : this.HSV.X, this.HSV.Y);
         }
 
+        private void Move()
+        {
+            double v = this.T.V(this.Triangle);
+            double s = this.T.S(this.Triangle, v);
+            this.HSV.X = (float)s;
+            this.HSV.Y = (float)v;
+
+            this.Ellipse(s, v);
+
+            Color color = this.HSV.ToColor();
+            this.Color(color);
+        }
+
+        private void Zoom()
+        {
+            double h = this.VectorToH(this.Wheel);
+            h += 360d;
+            h %= 360d;
+            this.HSV.Z = (float)h;
+
+            Vector2 v = Vector2.Normalize(this.Wheel.ToVector2());
+            this.Line(v.X, v.Y);
+
+            Color color = HSVExtensions.ToColor(this.HSV.Z);
+            this.Stop(color);
+            this.Color(this.HSV.ToColor());
+        }
+
+
+        public void Left()
+        {
+            this.Triangle.X -= 1;
+            this.Move();
+        }
+        public void Right()
+        {
+            this.Triangle.X += 1;
+            this.Move();
+        }
+
         public void Down()
         {
-            this.HSV.Z -= MathF.PI / 180;
-            this.HSV.Z += 360f;
-            this.HSV.Z %= 360f;
-            Color color = this.HSV.ToColor();
-            this.ColorChanged?.Invoke(this, color); // Delegate
-
-            this.Line(this.HSV.Z);
+            this.Triangle.Y += 1;
+            this.Move();
         }
         public void Up()
         {
-            this.HSV.Z += MathF.PI / 180;
+            this.Triangle.Y -= 1;
+            this.Move();
+        }
+
+        public void ZoomOut()
+        {
+            this.HSV.Z -= 1;
             this.HSV.Z += 360f;
             this.HSV.Z %= 360f;
-            Color color = this.HSV.ToColor();
+
+            this.Line(this.HSV.Z * MathF.PI / 180d);
+
+            Color color = HSVExtensions.ToColor(this.HSV.Z);
+            this.Stop(color);
+            this.Color(this.HSV.ToColor());
+        }
+        public void ZoomIn()
+        {
+            this.HSV.Z += 1;
+            this.HSV.Z += 360f;
+            this.HSV.Z %= 360f;
+
+            this.Line(this.HSV.Z * MathF.PI / 180d);
+
+            Color color = HSVExtensions.ToColor(this.HSV.Z);
+            this.Stop(color);
+            this.Color(this.HSV.ToColor());
+        }
+
+
+        private void Color(Color color)
+        {
             this.ColorChanged?.Invoke(this, color); // Delegate
 
-            this.Line(this.HSV.Z);
+            this.EllipseSolidColorBrush.Color = color;
+        }
+
+        private void Stop(Color color)
+        {
+            this.LineSolidColorBrush.Color = color;
+
+            this.EndStop.Color = color;
+            color.A = 0;
+            this.StartStop.Color = color;
         }
 
         private void Line(double h) => this.Line(Math.Cos(h), Math.Sin(h));
@@ -256,10 +298,10 @@ namespace Luo_Painter.Elements
             double x = this.T.X(s);
             double y = this.T.Y(v);
 
-            Canvas.SetLeft(this.BlackEllipse, x - 11);
-            Canvas.SetTop(this.BlackEllipse, y - 11);
-            Canvas.SetLeft(this.WhiteEllipse, x - 10);
-            Canvas.SetTop(this.WhiteEllipse, y - 10);
+            Canvas.SetLeft(this.BlackEllipse, x - 14);
+            Canvas.SetTop(this.BlackEllipse, y - 14);
+            Canvas.SetLeft(this.WhiteEllipse, x - 13);
+            Canvas.SetTop(this.WhiteEllipse, y - 13);
         }
     }
 }
