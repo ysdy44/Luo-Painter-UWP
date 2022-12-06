@@ -154,6 +154,9 @@
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="HSVExtensions.cs" />
+    <Compile Include="HSVPicker.xaml.cs">
+      <DependentUpon>HSVPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IColorPicker.cs" />
     <Compile Include="IndexGrid.cs" />
     <Compile Include="InverseProportionRange.cs" />
@@ -231,6 +234,10 @@
     <Page Include="Eyedropper.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HSVPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Icons\AddIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
