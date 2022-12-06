@@ -5,13 +5,16 @@ using Windows.UI;
 
 namespace Luo_Painter.Elements
 {
-    public interface IColorPicker
+    public interface IColorPickerBase
     {
         //@Delegate
         event EventHandler<Color> ColorChanged;
 
         void Recolor(Color color);
+    }
 
+    public interface IColorPicker : IColorPickerBase
+    {
         void Left();
         void Right();
 
