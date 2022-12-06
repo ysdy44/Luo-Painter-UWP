@@ -170,6 +170,9 @@
     <Compile Include="RectcolorPicker.xaml.cs">
       <DependentUpon>RectcolorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RGBPicker.xaml.cs">
+      <DependentUpon>RGBPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
@@ -400,6 +403,10 @@
     <Page Include="RectcolorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RGBPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectedButton.xaml">
       <SubType>Designer</SubType>
