@@ -170,8 +170,8 @@
     <Compile Include="NumberSlider.xaml.cs">
       <DependentUpon>NumberSlider.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RectcolorPicker.xaml.cs">
-      <DependentUpon>RectcolorPicker.xaml</DependentUpon>
+    <Compile Include="HuePicker.xaml.cs">
+      <DependentUpon>HuePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="RGBPicker.xaml.cs">
       <DependentUpon>RGBPicker.xaml</DependentUpon>
@@ -407,7 +407,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RectcolorPicker.xaml">
+    <Page Include="HuePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Input;
 
 namespace Luo_Painter.Elements
 {
-    public sealed partial class RectcolorPicker : UserControl, IColorPicker
+    public sealed partial class HuePicker : UserControl, IColorPicker
     {
         //@Delegate
         public event EventHandler<Color> ColorChanged;
@@ -24,7 +24,7 @@ namespace Luo_Painter.Elements
         Vector4 HSV;
 
         //@Construct
-        public RectcolorPicker()
+        public HuePicker()
         {
             this.InitializeComponent();
             this.Recolor(Colors.Black);
@@ -67,7 +67,7 @@ namespace Luo_Painter.Elements
         }
     }
 
-    public sealed partial class RectcolorPicker
+    public sealed partial class HuePicker
     {
         public void Recolor(Color color)
         {
@@ -151,7 +151,7 @@ namespace Luo_Painter.Elements
         }
     }
 
-    public sealed partial class RectcolorPicker
+    public sealed partial class HuePicker
     {
         private void Color(Color color)
         {
