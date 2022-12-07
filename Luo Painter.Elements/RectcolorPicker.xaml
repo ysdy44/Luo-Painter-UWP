@@ -11,14 +11,14 @@
     mc:Ignorable="d"
     >
 
-    <Canvas Width="{x:Bind W.D}" Height="{x:Bind W.D}" Background="Transparent">
-        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT}" Canvas.Top="{x:Bind R.RB}" Width="{x:Bind R.RD}" Height="32" >
+    <Canvas Width="{x:Bind R.Size.D, Mode=OneWay}" Height="{x:Bind R.Size.D, Mode=OneWay}" Background="Transparent">
+        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT, Mode=OneWay}" Canvas.Top="{x:Bind R.RB, Mode=OneWay}" Width="{x:Bind R.RD, Mode=OneWay}" Height="32" >
             <TextBlock x:Name="TextBlock" Visibility="Visible" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
                 <!--Text-->
             </TextBlock>
         </Border>
 
-        <Rectangle IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT}" Canvas.Top="{x:Bind R.RT}" Width="{x:Bind R.RD}" Height="{x:Bind R.RD}">
+        <Rectangle IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT, Mode=OneWay}" Canvas.Top="{x:Bind R.RT, Mode=OneWay}" Width="{x:Bind R.RD, Mode=OneWay}" Height="{x:Bind R.RD, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="White" Offset="0"/>
@@ -27,7 +27,7 @@
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle x:Name="RectangleRectangle" Canvas.Left="{x:Bind R.RT}" Canvas.Top="{x:Bind R.RT}" Width="{x:Bind R.RD}" Height="{x:Bind R.RD}">
+        <Rectangle x:Name="RectangleRectangle" Canvas.Left="{x:Bind R.RT, Mode=OneWay}" Canvas.Top="{x:Bind R.RT, Mode=OneWay}" Width="{x:Bind R.RD, Mode=OneWay}" Height="{x:Bind R.RD, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="Transparent" Offset="0"/>
@@ -36,11 +36,11 @@
             </Shape.Fill>
         </Rectangle>
 
-        <Path x:Name="WheelPath" Width="{x:Bind W.D}" Height="{x:Bind W.D}" ManipulationMode="All" Fill="{x:Bind Background}">
+        <Path x:Name="WheelPath" Width="{x:Bind R.Size.D, Mode=OneWay}" Height="{x:Bind R.Size.D, Mode=OneWay}" ManipulationMode="All" Fill="{x:Bind Background, Mode=OneWay}">
             <Path.Data>
                 <GeometryGroup>
-                    <EllipseGeometry RadiusY="{x:Bind W.R}" RadiusX="{x:Bind W.R}" Center="{x:Bind W.C}"/>
-                    <EllipseGeometry RadiusY="{x:Bind W.HR}" RadiusX="{x:Bind W.HR}" Center="{x:Bind W.C}"/>
+                    <EllipseGeometry RadiusY="{x:Bind R.Size.R, Mode=OneWay}" RadiusX="{x:Bind R.Size.R, Mode=OneWay}" Center="{x:Bind R.Size.C, Mode=OneWay}"/>
+                    <EllipseGeometry RadiusY="{x:Bind R.Size.HR, Mode=OneWay}" RadiusX="{x:Bind R.Size.HR, Mode=OneWay}" Center="{x:Bind R.Size.C, Mode=OneWay}"/>
                 </GeometryGroup>
             </Path.Data>
         </Path>
