@@ -2,6 +2,7 @@
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
@@ -12,19 +13,42 @@ namespace Luo_Painter.Elements
         //@Delegate
         public event EventHandler<Color> ColorChanged;
 
-        readonly BoxSize B;
-
         Point Box;
         double Slider;
-        Vector4 HSV;
+        Vector4 HSV = Vector4.UnitW;
+
+        #region DependencyProperty
+
+        /// <summary> Gets or set the size for <see cref="HuePicker"/>. </summary>
+        private BoxSize B
+        {
+            get => (BoxSize)base.GetValue(BProperty);
+            set => base.SetValue(BProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "HuePicker.B" /> dependency property. </summary>
+        private static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(BoxSize), typeof(HuePicker), new PropertyMetadata(new BoxSize(320), (sender, e) =>
+        {
+            HuePicker control = (HuePicker)sender;
+
+            if (e.NewValue is BoxSize value)
+            {
+                control.Reset(value);
+            }
+        }));
+
+        #endregion
 
         //@Construct
-        public HuePicker() : this(new BoxSize(320)) { }
-        public HuePicker(BoxSize size)
+        public HuePicker()
         {
-            this.B = size;
             this.InitializeComponent();
-            this.Recolor(Colors.Black);
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                this.B = new BoxSize(e.NewSize.Width, e.NewSize.Height);
+            };
 
             this.BoxRectangle.ManipulationMode = ManipulationModes.All;
             this.BoxRectangle.ManipulationStarted += (_, e) =>
@@ -73,6 +97,15 @@ namespace Luo_Painter.Elements
             this.Slider = this.HSV.Z * this.B.W / 360d;
             this.Box.X = this.HSV.X * this.B.W;
             this.Box.Y = this.B.H - this.HSV.Y * this.B.H;
+
+            this.Line(this.Slider);
+            this.Ellipse(this.Box.X, this.Box.Y);
+        }
+        private void Reset(BoxSize b)
+        {
+            this.Slider = this.HSV.Z * b.W / 360d;
+            this.Box.X = this.HSV.X * b.W;
+            this.Box.Y = b.H - this.HSV.Y * b.H;
 
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
