@@ -1,0 +1,63 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Elements.RectcolorPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    UseSystemFocusVisuals="True"
+    d:DesignWidth="400"
+    d:DesignHeight="400"
+    IsTabStop="True"
+    mc:Ignorable="d"
+    >
+
+    <Canvas Width="{x:Bind W.D}" Height="{x:Bind W.D}" Background="Transparent">
+        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT}" Canvas.Top="{x:Bind R.RB}" Width="{x:Bind R.RD}" Height="32" >
+            <TextBlock x:Name="TextBlock" Visibility="Visible" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
+                <!--Text-->
+            </TextBlock>
+        </Border>
+
+        <Rectangle IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT}" Canvas.Top="{x:Bind R.RT}" Width="{x:Bind R.RD}" Height="{x:Bind R.RD}">
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop x:Name="EndStop" Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
+        </Rectangle>
+
+        <Rectangle x:Name="RectangleRectangle" Canvas.Left="{x:Bind R.RT}" Canvas.Top="{x:Bind R.RT}" Width="{x:Bind R.RD}" Height="{x:Bind R.RD}">
+            <Shape.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                </LinearGradientBrush>
+            </Shape.Fill>
+        </Rectangle>
+
+        <Path x:Name="WheelPath" Width="{x:Bind W.D}" Height="{x:Bind W.D}" ManipulationMode="All" Fill="{x:Bind Background}">
+            <Path.Data>
+                <GeometryGroup>
+                    <EllipseGeometry RadiusY="{x:Bind W.R}" RadiusX="{x:Bind W.R}" Center="{x:Bind W.C}"/>
+                    <EllipseGeometry RadiusY="{x:Bind W.HR}" RadiusX="{x:Bind W.HR}" Center="{x:Bind W.C}"/>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+
+        <Line x:Name="BlackLine" IsHitTestVisible="False" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="White"/>
+        <Line x:Name="WhiteLine" IsHitTestVisible="False" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="14" >
+            <Shape.Stroke>
+                <SolidColorBrush x:Name="LineSolidColorBrush" Color="Red"/>
+            </Shape.Stroke>
+        </Line>
+
+        <Ellipse x:Name="BlackEllipse" IsHitTestVisible="False" Width="28" Height="28" StrokeThickness="2" Stroke="Black"/>
+        <Ellipse x:Name="WhiteEllipse" IsHitTestVisible="False" Width="26" Height="26" StrokeThickness="1" Stroke="White">
+            <Shape.Fill>
+                <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
+            </Shape.Fill>
+        </Ellipse>
+
+    </Canvas>
+</UserControl>
