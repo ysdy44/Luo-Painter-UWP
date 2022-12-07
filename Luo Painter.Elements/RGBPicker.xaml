@@ -11,7 +11,7 @@
     >
 
     <StackPanel>
-        <local:NumberSlider x:Name="RedSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground}">
+        <local:NumberSlider x:Name="RedSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Red
             </Slider.Header>
@@ -22,7 +22,7 @@
                 </LinearGradientBrush>
             </Control.Background>
         </local:NumberSlider>
-        <local:NumberSlider x:Name="GreenSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground}">
+        <local:NumberSlider x:Name="GreenSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Green
             </Slider.Header>
@@ -33,7 +33,7 @@
                 </LinearGradientBrush>
             </Control.Background>
         </local:NumberSlider>
-        <local:NumberSlider x:Name="BlueSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground}">
+        <local:NumberSlider x:Name="BlueSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Blue
             </Slider.Header>
@@ -43,6 +43,11 @@
                     <GradientStop x:Name="BlueEndStop" Color="Fuchsia" Offset="1"/>
                 </LinearGradientBrush>
             </Control.Background>
+        </local:NumberSlider>
+        <local:NumberSlider x:Name="AlphaSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
+            <Slider.Header>
+                Alpha
+            </Slider.Header>
         </local:NumberSlider>
     </StackPanel>
 </UserControl>

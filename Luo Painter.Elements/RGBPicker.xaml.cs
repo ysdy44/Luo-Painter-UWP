@@ -12,18 +12,21 @@ namespace Luo_Painter.Elements
         public event RoutedEventHandler RedClick { remove => this.RedSlider.Click -= value; add => this.RedSlider.Click += value; }
         public event RoutedEventHandler GreenClick { remove => this.GreenSlider.Click -= value; add => this.GreenSlider.Click += value; }
         public event RoutedEventHandler BlueClick { remove => this.BlueSlider.Click -= value; add => this.BlueSlider.Click += value; }
+        public event RoutedEventHandler AlphaClick { remove => this.AlphaSlider.Click -= value; add => this.AlphaSlider.Click += value; }
 
         //@Content
         public INumberBase RedNumber => this.RedSlider;
         public INumberBase GreenNumber => this.GreenSlider;
         public INumberBase BlueNumber => this.BlueSlider;
-        public FrameworkElement RedPlacementTarget => this.RedSlider.PlacementTarget;
-        public FrameworkElement GreenPlacementTarget => this.GreenSlider.PlacementTarget;
-        public FrameworkElement BluePlacementTarget => this.BlueSlider.PlacementTarget;
+        public INumberBase AlphaNumber => this.AlphaSlider;
+        public object RedHeader { get => this.RedSlider.Header; set => this.RedSlider.Header = value; }
+        public object GreenHeader { get => this.GreenSlider.Header; set => this.GreenSlider.Header = value; }
+        public object BlueHeader { get => this.BlueSlider.Header; set => this.BlueSlider.Header = value; }
+        public object AlphaHeader { get => this.AlphaSlider.Header; set => this.AlphaSlider.Header = value; }
 
         bool IsSetEnabled = true;
 
-        Color RGB;
+        Color RGB = Colors.Black;
 
         //@Construct
         public RGBPicker()
@@ -58,6 +61,14 @@ namespace Luo_Painter.Elements
                 this.Stop(this.RGB);
                 this.Color(this.RGB);
             };
+            this.AlphaSlider.ValueChanged += (s, e) =>
+            {
+                if (this.IsSetEnabled is false) return;
+
+                this.RGB.A = (byte)e.NewValue;
+
+                this.Color(this.RGB);
+            };
         }
     }
 
@@ -69,7 +80,7 @@ namespace Luo_Painter.Elements
 
             this.Stop(this.RGB);
 
-            this.Reset(this.RGB);
+            this.ResetRGB(this.RGB);
         }
 
         public void ResetRed(byte r)
@@ -105,13 +116,24 @@ namespace Luo_Painter.Elements
             this.BlueSlider.Value = b;
             this.IsSetEnabled = true;
         }
+        public void ResetAlpha(byte a)
+        {
+            this.RGB.A = a;
 
-        private void Reset(Color rgb)
+            this.Color(this.RGB);
+
+            this.IsSetEnabled = false;
+            this.AlphaSlider.Value = a;
+            this.IsSetEnabled = true;
+        }
+
+        private void ResetRGB(Color rgb)
         {
             this.IsSetEnabled = false;
             this.RedSlider.Value = rgb.R;
             this.GreenSlider.Value = rgb.G;
             this.BlueSlider.Value = rgb.B;
+            this.AlphaSlider.Value = rgb.A;
             this.IsSetEnabled = true;
         }
     }
