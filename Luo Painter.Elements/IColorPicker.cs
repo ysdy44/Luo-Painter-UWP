@@ -28,26 +28,35 @@ namespace Luo_Painter.Elements
     public readonly struct BoxSize
     {
         public readonly double S; // = 20;
-
+     
         public readonly double W; // = 320;
         public readonly double H; // = 280;
         public readonly double O; // = 40;
 
-        public double Y1 => (this.H + this.W + this.S) / 2;
-        public double Y2 => (this.H + this.W - this.S) / 2;
+        public readonly double Y1; // = 310;
+        public readonly double Y2; // = 290;
 
-        public BoxSize(double size, double slider = 20)
+        public BoxSize(double size) : this(size, size) { }
+        public BoxSize(double width, double height)
         {
-            this.W = size; // Width
-            this.H = size - 10 - slider - 10; // Height
-            this.O = this.W - this.H; // Other
+            width = Math.Max(40, width);
+            height = Math.Max(40, height);
+            this.S = 20; // Slider
 
-            this.S = slider; // Slider
+            this.O = 10 + this.S + 10; // Other
+            this.H = height - this.O; // Height
+            this.W = width; // Width
+
+            this.Y2 = this.H + 10;
+            this.Y1 = this.Y2 + this.S;
         }
     }
 
     public readonly struct WheelSize
     {
+        //@Static
+        public static double VectorToH(Point vector) => ((Math.Atan2(vector.Y, vector.X) * 180d / Math.PI) + 360d) % 360d;
+
         public readonly double R; // = 100;
         public readonly double D; // = 200;
 
@@ -58,9 +67,11 @@ namespace Luo_Painter.Elements
 
         public WheelSize(double size, double hole = 0.87d)
         {
+            size = Math.Max(80, size);
             this.R = size / 2; // Radius
             this.D = size; // Diameter
 
+            hole = 1d - 20 / this.R;
             this.HR = hole * this.R; // HoleRadius
             this.HD = hole * this.D; // HoleDiameter
         }
@@ -73,19 +84,24 @@ namespace Luo_Painter.Elements
 
     public readonly struct WheelSizeF
     {
+        //@Static
+        public static float VectorToH(Vector2 vector) => ((MathF.Atan2(vector.Y, vector.X) * 180f / MathF.PI) + 360f) % 360f;
+
         public readonly float R; // = 100;
         public readonly float D; // = 200;
 
         public readonly float HR; // = 80;
         public readonly float HD; // = 160;
 
-        public Vector2 C => new Vector2(this.R, this.R); // = new Point(100, 100);
+        public Vector2 C => new Vector2(this.R, this.R); // = new Vector2(100, 100);
 
         public WheelSizeF(float size, float hole = 0.87f)
         {
+            size = Math.Max(80, size);
             this.R = size / 2; // Radius
             this.D = size; // Diameter
 
+            hole = 1f - 20 / this.R;
             this.HR = hole * this.R; // HoleRadius
             this.HD = hole * this.D; // HoleDiameter
         }
