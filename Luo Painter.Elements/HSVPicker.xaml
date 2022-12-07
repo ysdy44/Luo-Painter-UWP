@@ -11,7 +11,7 @@
     >
 
     <StackPanel>
-        <local:NumberSlider x:Name="HueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground}">
+        <local:NumberSlider x:Name="HueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Hue
             </Slider.Header>
@@ -27,7 +27,7 @@
                 </LinearGradientBrush>
             </Control.Background>
         </local:NumberSlider>
-        <local:NumberSlider x:Name="SaturationSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground}">
+        <local:NumberSlider x:Name="SaturationSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Saturation
             </Slider.Header>
@@ -38,7 +38,7 @@
                 </LinearGradientBrush>
             </Control.Background>
         </local:NumberSlider>
-        <local:NumberSlider x:Name="ValueSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground}">
+        <local:NumberSlider x:Name="ValueSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Value
             </Slider.Header>
@@ -48,6 +48,11 @@
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </Control.Background>
+        </local:NumberSlider>
+        <local:NumberSlider x:Name="OpacitySlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
+            <Slider.Header>
+                Opacity
+            </Slider.Header>
         </local:NumberSlider>
     </StackPanel>
 </UserControl>

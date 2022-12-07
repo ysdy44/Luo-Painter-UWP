@@ -13,18 +13,21 @@ namespace Luo_Painter.Elements
         public event RoutedEventHandler HueClick { remove => this.HueSlider.Click -= value; add => this.HueSlider.Click += value; }
         public event RoutedEventHandler SaturationClick { remove => this.SaturationSlider.Click -= value; add => this.SaturationSlider.Click += value; }
         public event RoutedEventHandler ValueClick { remove => this.ValueSlider.Click -= value; add => this.ValueSlider.Click += value; }
+        public event RoutedEventHandler OpacityClick { remove => this.ValueSlider.Click -= value; add => this.ValueSlider.Click += value; }
 
         //@Content
         public INumberBase HueNumber => this.HueSlider;
         public INumberBase SaturationNumber => this.SaturationSlider;
         public INumberBase ValueNumber => this.ValueSlider;
-        public FrameworkElement HuePlacementTarget => this.HueSlider.PlacementTarget;
-        public FrameworkElement SaturationPlacementTarget => this.SaturationSlider.PlacementTarget;
-        public FrameworkElement ValuePlacementTarget => this.ValueSlider.PlacementTarget;
+        public INumberBase OpacityNumber => this.OpacitySlider;
+        public object HueHeader { get => this.HueSlider.Header; set => this.HueSlider.Header = value; }
+        public object SaturationHeader { get => this.SaturationSlider.Header; set => this.SaturationSlider.Header = value; }
+        public object ValueHeader { get => this.ValueSlider.Header; set => this.ValueSlider.Header = value; }
+        public object OpacityHeader { get => this.OpacitySlider.Header; set => this.OpacitySlider.Header = value; }
 
         bool IsSetEnabled = true;
 
-        Vector4 HSV;
+        Vector4 HSV = Vector4.UnitW;
 
         //@Construct
         public HSVPicker()
@@ -47,7 +50,6 @@ namespace Luo_Painter.Elements
 
                 this.HSV.X = (float)(e.NewValue / 100d);
 
-                this.Stop(this.HSV.Z);
                 this.Color(this.HSV.ToColor());
             };
             this.ValueSlider.ValueChanged += (s, e) =>
@@ -56,7 +58,14 @@ namespace Luo_Painter.Elements
 
                 this.HSV.Y = (float)(e.NewValue / 100d);
 
-                this.Stop(this.HSV.Z);
+                this.Color(this.HSV.ToColor());
+            };
+            this.OpacitySlider.ValueChanged += (s, e) =>
+            {
+                if (this.IsSetEnabled is false) return;
+
+                this.HSV.W = (float)(e.NewValue / 100d);
+
                 this.Color(this.HSV.ToColor());
             };
         }
@@ -104,6 +113,16 @@ namespace Luo_Painter.Elements
             this.ValueSlider.Value = v * 100d;
             this.IsSetEnabled = true;
         }
+        public void ResetOpacity(float o)
+        {
+            this.HSV.W = o;
+
+            this.Color(this.HSV.ToColor());
+
+            this.IsSetEnabled = false;
+            this.OpacitySlider.Value = o * 100d;
+            this.IsSetEnabled = true;
+        }
 
         private void Reset(Vector4 hsv)
         {
@@ -111,6 +130,7 @@ namespace Luo_Painter.Elements
             this.HueSlider.Value = hsv.Z;
             this.SaturationSlider.Value = hsv.X * 100d;
             this.ValueSlider.Value = hsv.Y * 100d;
+            this.OpacitySlider.Value = hsv.W * 100d;
             this.IsSetEnabled = true;
         }
     }
