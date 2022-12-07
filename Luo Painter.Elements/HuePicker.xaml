@@ -5,44 +5,33 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     UseSystemFocusVisuals="True"
-    HorizontalAlignment="Center"
-    VerticalAlignment="Center"
     d:DesignWidth="400"
     d:DesignHeight="400"
     IsTabStop="True"
     mc:Ignorable="d"
     >
 
-    <Canvas Width="{x:Bind W}" Height="{x:Bind H}" Background="Transparent">
+    <Canvas Width="{x:Bind B.W}" Height="{x:Bind B.W}" Background="Transparent">
 
-        <Rectangle IsHitTestVisible="False" Width="{x:Bind W}" Height="{x:Bind W}">
-            <Shape.Fill>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Shape.Fill>
-        </Rectangle>
-
-        <Rectangle IsHitTestVisible="False" Width="{x:Bind W}" Height="{x:Bind W}">
+        <Rectangle IsHitTestVisible="False" Width="{x:Bind B.W}" Height="{x:Bind B.H}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop x:Name="StartStop" Color="#00FF0000" Offset="0"/>
+                    <GradientStop Color="White" Offset="0"/>
                     <GradientStop x:Name="EndStop" Color="Red" Offset="1"/>
                 </LinearGradientBrush>
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle x:Name="BoxRectangle" Width="{x:Bind W}" Height="{x:Bind W}">
+        <Rectangle x:Name="BoxRectangle" Width="{x:Bind B.W}" Height="{x:Bind B.H}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="Transparent" Offset="0"/>
-                    <GradientStop Color="Black" Offset="1"/> 
+                    <GradientStop Color="Black" Offset="1"/>
                 </LinearGradientBrush>
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle IsHitTestVisible="False" Width="{x:Bind W}" Height="{x:Bind L}" Canvas.Top="{x:Bind Y2}" >
+        <Rectangle IsHitTestVisible="False" Width="{x:Bind B.W}" Height="{x:Bind B.S}" Canvas.Top="{x:Bind B.Y2}" >
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="#FF0000" Offset="0"/>
@@ -56,10 +45,10 @@
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle x:Name="SliderRectangle" Width="{x:Bind W}" Height="{x:Bind D}" Canvas.Top="{x:Bind W}" Fill="Transparent"/>
+        <Rectangle x:Name="SliderRectangle" Width="{x:Bind B.W}" Height="{x:Bind B.O}" Canvas.Top="{x:Bind B.H}" Fill="Transparent"/>
 
-        <Line x:Name="BlackLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind Y1}" X2="0" Y2="{x:Bind Y2}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="White"/>
-        <Line x:Name="WhiteLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind Y1}" X2="0" Y2="{x:Bind Y2}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="14" >
+        <Line x:Name="BlackLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind B.Y1}" X2="0" Y2="{x:Bind B.Y2}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="White"/>
+        <Line x:Name="WhiteLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind B.Y1}" X2="0" Y2="{x:Bind B.Y2}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="14" >
             <Shape.Stroke>
                 <SolidColorBrush x:Name="LineSolidColorBrush" Color="Red"/>
             </Shape.Stroke>

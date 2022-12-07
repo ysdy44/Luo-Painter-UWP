@@ -12,20 +12,17 @@ namespace Luo_Painter.Elements
         //@Delegate
         public event EventHandler<Color> ColorChanged;
 
-        double L => 20;
-        double W => 320d;
-        double H => 358d;
-        double D => this.H - this.W;
-        double Y1 => (this.H + this.W + this.L) / 2;
-        double Y2 => (this.H + this.W - this.L) / 2;
+        readonly BoxSize B;
 
         Point Box;
         double Slider;
         Vector4 HSV;
 
         //@Construct
-        public HuePicker()
+        public HuePicker() : this(new BoxSize(320)) { }
+        public HuePicker(BoxSize size)
         {
+            this.B = size;
             this.InitializeComponent();
             this.Recolor(Colors.Black);
 
@@ -73,9 +70,9 @@ namespace Luo_Painter.Elements
         {
             this.HSV = color.ToHSV();
 
-            this.Slider = this.HSV.Z * this.W / 360d;
-            this.Box.X = this.HSV.X * this.W;
-            this.Box.Y = this.W - this.HSV.Y * this.W;
+            this.Slider = this.HSV.Z * this.B.W / 360d;
+            this.Box.X = this.HSV.X * this.B.W;
+            this.Box.Y = this.B.H - this.HSV.Y * this.B.H;
 
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
@@ -84,9 +81,9 @@ namespace Luo_Painter.Elements
 
         private void Move()
         {
-            this.HSV.X = (float)Math.Clamp(this.Box.X / this.W, 0d, 1d);
-            this.HSV.Y = (float)Math.Clamp((this.W - this.Box.Y) / this.W, 0d, 1d);
-            this.Ellipse(this.HSV.X * this.W, this.W - this.HSV.Y * this.W);
+            this.HSV.X = (float)Math.Clamp(this.Box.X / this.B.W, 0d, 1d);
+            this.HSV.Y = (float)Math.Clamp((this.B.H - this.Box.Y) / this.B.H, 0d, 1d);
+            this.Ellipse(Math.Clamp(this.Box.X, 0d, this.B.W), Math.Clamp(this.Box.Y, 0d, this.B.H));
 
             Color color = this.HSV.ToColor();
             this.Color(color);
@@ -94,8 +91,8 @@ namespace Luo_Painter.Elements
 
         private void Zoom()
         {
-            this.HSV.Z = (float)Math.Clamp(this.Slider * 360d / this.W, 0d, 360d);
-            this.Line(this.HSV.Z * this.W / 360d);
+            this.HSV.Z = (float)Math.Clamp(this.Slider * 360d / this.B.W, 0d, 360d);
+            this.Line(this.HSV.Z * this.B.W / 360d);
 
             Color color = HSVExtensions.ToColor(this.HSV.Z);
             this.Stop(color);
@@ -131,7 +128,7 @@ namespace Luo_Painter.Elements
             this.HSV.Z += 360f;
             this.HSV.Z %= 360f;
 
-            this.Line(this.HSV.Z * this.W / 360d);
+            this.Line(this.HSV.Z * this.B.W / 360d);
 
             Color color = HSVExtensions.ToColor(this.HSV.Z);
             this.Stop(color);
@@ -143,7 +140,7 @@ namespace Luo_Painter.Elements
             this.HSV.Z += 360f;
             this.HSV.Z %= 360f;
 
-            this.Line(this.HSV.Z * this.W / 360d);
+            this.Line(this.HSV.Z * this.B.W / 360d);
 
             Color color = HSVExtensions.ToColor(this.HSV.Z);
             this.Stop(color);
@@ -165,8 +162,6 @@ namespace Luo_Painter.Elements
             this.LineSolidColorBrush.Color = color;
 
             this.EndStop.Color = color;
-            color.A = 0;
-            this.StartStop.Color = color;
         }
 
         private void Line(double z)
