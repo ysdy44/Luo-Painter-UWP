@@ -217,6 +217,9 @@
       <DependentUpon>TricolorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="TSelector.cs" />
+    <Compile Include="ValuePicker.xaml.cs">
+      <DependentUpon>ValuePicker.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -452,6 +455,10 @@
     <Page Include="TricolorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ValuePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
