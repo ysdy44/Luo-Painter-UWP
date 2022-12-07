@@ -13,21 +13,42 @@ namespace Luo_Painter.Elements
         //@Delegate
         public event EventHandler<Color> ColorChanged;
 
-        //@Converter
-        public double VectorToH(Point vector) => ((Math.Atan2(vector.Y, vector.X) * 180d / Math.PI) + 360d) % 360d;
-
-        readonly TriangleSize T = new TriangleSize(new WheelSize(320, 0.87));
-        WheelSize W => this.T.Size;
-
         Point Triangle;
         Point Wheel;
-        Vector4 HSV;
+        Vector4 HSV = Vector4.UnitW;
+
+        #region DependencyProperty
+
+        /// <summary> Gets or set the size for <see cref="TricolorPicker"/>. </summary>
+        private TriangleSize T
+        {
+            get => (TriangleSize)base.GetValue(TProperty);
+            set => base.SetValue(TProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "TricolorPicker.T" /> dependency property. </summary>
+        private static readonly DependencyProperty TProperty = DependencyProperty.Register(nameof(T), typeof(TriangleSize), typeof(TricolorPicker), new PropertyMetadata(new TriangleSize(new WheelSize(320)), (sender, e) =>
+        {
+            TricolorPicker control = (TricolorPicker)sender;
+
+            if (e.NewValue is TriangleSize value)
+            {
+                control.Reset(value);
+            }
+        }));
+
+        #endregion
 
         //@Construct
         public TricolorPicker()
         {
             this.InitializeComponent();
-            this.Recolor(Colors.Black);
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                this.T = new TriangleSize(new WheelSize(Math.Min(e.NewSize.Width, e.NewSize.Height)));
+            };
 
             this.TrianglePath.ManipulationMode = ManipulationModes.All;
             this.TrianglePath.ManipulationStarted += (_, e) =>
@@ -58,7 +79,7 @@ namespace Luo_Painter.Elements
             this.WheelPath.ManipulationMode = ManipulationModes.All;
             this.WheelPath.ManipulationStarted += (_, e) =>
             {
-                this.Wheel = this.W.Wheel(e.Position);
+                this.Wheel = this.T.Size.Wheel(e.Position);
                 this.Zoom();
 
                 this.TextBlock.Text = $"{(int)this.HSV.Z} °";
@@ -90,9 +111,14 @@ namespace Luo_Painter.Elements
         {
             this.HSV = color.ToHSV();
 
-            this.Triangle.Y = this.T.AT + this.T.AH * this.HSV.Y;
-            if (this.HSV.Y == 0d) this.Triangle.X = this.W.R;
-            else this.Triangle.X = Math.Clamp(this.T.AL + this.T.AW * this.HSV.X, this.T.AL, this.T.AR);
+            this.Triangle = this.T.Triangle(this.HSV);
+
+            this.Line(Math.PI * this.HSV.Z / 180f);
+            this.Ellipse(this.HSV.X == 0f ? 0.5 : this.HSV.X, this.HSV.Y);
+        }
+        private void Reset(TriangleSize t)
+        {
+            this.Triangle = t.Triangle(this.HSV);
 
             this.Line(Math.PI * this.HSV.Z / 180f);
             this.Ellipse(this.HSV.X == 0f ? 0.5 : this.HSV.X, this.HSV.Y);
@@ -114,7 +140,7 @@ namespace Luo_Painter.Elements
 
         private void Zoom()
         {
-            double h = this.VectorToH(this.Wheel);
+            double h = WheelSize.VectorToH(this.Wheel);
             h += 360d;
             h %= 360d;
             this.HSV.Z = (float)h;
@@ -197,11 +223,11 @@ namespace Luo_Painter.Elements
         private void Line(double h) => this.Line(Math.Cos(h), Math.Sin(h));
         private void Line(double cos, double sin)
         {
-            this.BlackLine.X1 = this.WhiteLine.X1 = this.W.XY1(cos);
-            this.BlackLine.Y1 = this.WhiteLine.Y1 = this.W.XY1(sin);
+            this.BlackLine.X1 = this.WhiteLine.X1 = this.T.Size.XY1(cos);
+            this.BlackLine.Y1 = this.WhiteLine.Y1 = this.T.Size.XY1(sin);
 
-            this.BlackLine.X2 = this.WhiteLine.X2 = this.W.XY2(cos);
-            this.BlackLine.Y2 = this.WhiteLine.Y2 = this.W.XY2(sin);
+            this.BlackLine.X2 = this.WhiteLine.X2 = this.T.Size.XY2(cos);
+            this.BlackLine.Y2 = this.WhiteLine.Y2 = this.T.Size.XY2(sin);
         }
 
         private void Ellipse(double s, double v)

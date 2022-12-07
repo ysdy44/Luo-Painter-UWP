@@ -5,22 +5,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     UseSystemFocusVisuals="True"
-    HorizontalAlignment="Center"
-    VerticalAlignment="Center"
     d:DesignWidth="400"
     d:DesignHeight="400"
     IsTabStop="True"
     mc:Ignorable="d"
     >
 
-    <Canvas Margin="10" Width="{x:Bind W.D}" Height="{x:Bind W.D}" Background="Transparent">
-        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind T.AL}" Canvas.Top="{x:Bind T.AB}" Width="{x:Bind T.AW}" Height="{x:Bind T.AL}" >
+    <Canvas Width="{x:Bind T.Size.D, Mode=OneWay}" Height="{x:Bind T.Size.D, Mode=OneWay}" Background="Transparent">
+        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind T.AL, Mode=OneWay}" Canvas.Top="{x:Bind T.AB, Mode=OneWay}" Width="{x:Bind T.AW, Mode=OneWay}" Height="32" >
             <TextBlock x:Name="TextBlock" Visibility="Visible" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
                 <!--Text-->
             </TextBlock>
         </Border>
 
-        <Path IsHitTestVisible="False" Width="{x:Bind W.D}" Height="{x:Bind W.D}">
+        <Path IsHitTestVisible="False" Width="{x:Bind T.Size.D, Mode=OneWay}" Height="{x:Bind T.Size.D, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0,1">
                     <GradientStop Color="Black" Offset="0"/>
@@ -29,16 +27,16 @@
             </Shape.Fill>
             <Path.Data>
                 <PathGeometry>
-                    <PathFigure StartPoint="{x:Bind T.Angle0}">
-                        <LineSegment Point="{x:Bind T.Angle1}"/>
-                        <LineSegment Point="{x:Bind T.Angle2}"/>
-                        <LineSegment Point="{x:Bind T.Angle0}"/>
+                    <PathFigure StartPoint="{x:Bind T.Angle0, Mode=OneWay}">
+                        <LineSegment Point="{x:Bind T.Angle1, Mode=OneWay}"/>
+                        <LineSegment Point="{x:Bind T.Angle2, Mode=OneWay}"/>
+                        <LineSegment Point="{x:Bind T.Angle0, Mode=OneWay}"/>
                     </PathFigure>
                 </PathGeometry>
             </Path.Data>
         </Path>
 
-        <Path x:Name="TrianglePath" Width="{x:Bind W.D}" Height="{x:Bind W.D}">
+        <Path x:Name="TrianglePath" Width="{x:Bind T.Size.D, Mode=OneWay}" Height="{x:Bind T.Size.D, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0.25,0.5" EndPoint="1,1">
                     <GradientStop x:Name="StartStop" Color="#00FF0000" Offset="0"/>
@@ -47,20 +45,20 @@
             </Shape.Fill>
             <Path.Data>
                 <PathGeometry>
-                    <PathFigure StartPoint="{x:Bind T.Angle0}">
-                        <LineSegment Point="{x:Bind T.Angle1}"/>
-                        <LineSegment Point="{x:Bind T.Angle2}"/>
-                        <LineSegment Point="{x:Bind T.Angle0}"/>
+                    <PathFigure StartPoint="{x:Bind T.Angle0, Mode=OneWay}">
+                        <LineSegment Point="{x:Bind T.Angle1, Mode=OneWay}"/>
+                        <LineSegment Point="{x:Bind T.Angle2, Mode=OneWay}"/>
+                        <LineSegment Point="{x:Bind T.Angle0, Mode=OneWay}"/>
                     </PathFigure>
                 </PathGeometry>
             </Path.Data>
         </Path>
 
-        <Path x:Name="WheelPath" Width="{x:Bind W.D}" Height="{x:Bind W.D}" ManipulationMode="All" Fill="{x:Bind Background}">
+        <Path x:Name="WheelPath" Width="{x:Bind T.Size.D, Mode=OneWay}" Height="{x:Bind T.Size.D, Mode=OneWay}" ManipulationMode="All" Fill="{x:Bind Background, Mode=OneWay}">
             <Path.Data>
                 <GeometryGroup>
-                    <EllipseGeometry RadiusY="{x:Bind W.R}" RadiusX="{x:Bind W.R}" Center="{x:Bind W.C}"/>
-                    <EllipseGeometry RadiusY="{x:Bind W.HR}" RadiusX="{x:Bind W.HR}" Center="{x:Bind W.C}"/>
+                    <EllipseGeometry RadiusY="{x:Bind T.Size.R, Mode=OneWay}" RadiusX="{x:Bind T.Size.R, Mode=OneWay}" Center="{x:Bind T.Size.C, Mode=OneWay}"/>
+                    <EllipseGeometry RadiusY="{x:Bind T.Size.HR, Mode=OneWay}" RadiusX="{x:Bind T.Size.HR, Mode=OneWay}" Center="{x:Bind T.Size.C, Mode=OneWay}"/>
                 </GeometryGroup>
             </Path.Data>
         </Path>
