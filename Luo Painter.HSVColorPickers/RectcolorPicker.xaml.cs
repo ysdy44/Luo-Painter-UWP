@@ -20,17 +20,17 @@ namespace Luo_Painter.HSVColorPickers
         #region DependencyProperty
 
         /// <summary> Gets or set the size for <see cref="RectcolorPicker"/>. </summary>
-        private RectangleSize R
+        private RectangleTemplateSettings RectangleSize
         {
-            get => (RectangleSize)base.GetValue(RProperty);
-            set => base.SetValue(RProperty, value);
+            get => (RectangleTemplateSettings)base.GetValue(RectangleSizeProperty);
+            set => base.SetValue(RectangleSizeProperty, value);
         }
-        /// <summary> Identifies the <see cref = "RectcolorPicker.R" /> dependency property. </summary>
-        private static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(RectangleSize), typeof(RectcolorPicker), new PropertyMetadata(new RectangleSize(new WheelSize(320)), (sender, e) =>
+        /// <summary> Identifies the <see cref = "RectcolorPicker.RectangleSize" /> dependency property. </summary>
+        private static readonly DependencyProperty RectangleSizeProperty = DependencyProperty.Register(nameof(RectangleSize), typeof(RectangleTemplateSettings), typeof(RectcolorPicker), new PropertyMetadata(new RectangleTemplateSettings(new WheelTemplateSettings(new CircleTemplateSettings(320))), (sender, e) =>
         {
             RectcolorPicker control = (RectcolorPicker)sender;
 
-            if (e.NewValue is RectangleSize value)
+            if (e.NewValue is RectangleTemplateSettings value)
             {
                 control.Reset(value);
             }
@@ -47,7 +47,7 @@ namespace Luo_Painter.HSVColorPickers
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                this.R = new RectangleSize(new WheelSize(Math.Min(e.NewSize.Width, e.NewSize.Height)));
+                this.RectangleSize = new RectangleTemplateSettings(new WheelTemplateSettings(new CircleTemplateSettings(Math.Min(e.NewSize.Width, e.NewSize.Height))));
             };
 
             this.RectangleRectangle.ManipulationMode = ManipulationModes.All;
@@ -79,7 +79,7 @@ namespace Luo_Painter.HSVColorPickers
             this.WheelPath.ManipulationMode = ManipulationModes.All;
             this.WheelPath.ManipulationStarted += (_, e) =>
             {
-                this.Wheel = this.R.Size.Wheel(e.Position);
+                this.Wheel = this.RectangleSize.WheelSize.CircleSize.Offset(e.Position);
                 this.Zoom();
 
                 this.TextBlock.Text = $"{(int)this.HSV.Z} °";
@@ -111,14 +111,14 @@ namespace Luo_Painter.HSVColorPickers
         {
             this.HSV = color.ToHSV();
 
-            this.Rectangle = this.R.Rectangle(this.HSV);
+            this.Rectangle = this.RectangleSize.Offset(this.HSV);
 
             this.Line(Math.PI * this.HSV.Z / 180f);
             this.Ellipse(this.HSV.X == 0f ? 0.5 : this.HSV.X, this.HSV.Y);
         }
-        private void Reset(RectangleSize t)
+        private void Reset(RectangleTemplateSettings t)
         {
-            this.Rectangle = t.Rectangle(this.HSV);
+            this.Rectangle = t.Offset(this.HSV);
 
             this.Line(Math.PI * this.HSV.Z / 180f);
             this.Ellipse(this.HSV.X == 0f ? 0.5 : this.HSV.X, this.HSV.Y);
@@ -127,8 +127,8 @@ namespace Luo_Painter.HSVColorPickers
 
         private void Move()
         {
-            double v = this.R.V(this.Rectangle);
-            double s = this.R.S(this.Rectangle);
+            double v = this.RectangleSize.Value(this.Rectangle);
+            double s = this.RectangleSize.Saturation(this.Rectangle);
             this.HSV.X = (float)s;
             this.HSV.Y = (float)v;
 
@@ -140,13 +140,9 @@ namespace Luo_Painter.HSVColorPickers
 
         private void Zoom()
         {
-            double h = WheelSize.VectorToH(this.Wheel);
-            h += 360d;
-            h %= 360d;
-            this.HSV.Z = (float)h;
-
-            Vector2 v = Vector2.Normalize(this.Wheel.ToVector2());
-            this.Line(v.X, v.Y);
+            double h = WheelTemplateSettings.Atan2(this.Wheel);
+            this.HSV.Z = (float)((h * 180d / Math.PI + 360d) % 360d);
+            this.Line(h);
 
             Color color = HSVExtensions.ToColor(this.HSV.Z);
             this.Stop(color);
@@ -181,7 +177,6 @@ namespace Luo_Painter.HSVColorPickers
             this.HSV.Z -= 1;
             this.HSV.Z += 360f;
             this.HSV.Z %= 360f;
-
             this.Line(this.HSV.Z * MathF.PI / 180d);
 
             Color color = HSVExtensions.ToColor(this.HSV.Z);
@@ -193,7 +188,6 @@ namespace Luo_Painter.HSVColorPickers
             this.HSV.Z += 1;
             this.HSV.Z += 360f;
             this.HSV.Z %= 360f;
-
             this.Line(this.HSV.Z * MathF.PI / 180d);
 
             Color color = HSVExtensions.ToColor(this.HSV.Z);
@@ -218,20 +212,21 @@ namespace Luo_Painter.HSVColorPickers
             this.EndStop.Color = color;
         }
 
-        private void Line(double h) => this.Line(Math.Cos(h), Math.Sin(h));
-        private void Line(double cos, double sin)
+        private void Line(double h)
         {
-            this.BlackLine.X1 = this.WhiteLine.X1 = this.R.Size.XY1(cos);
-            this.BlackLine.Y1 = this.WhiteLine.Y1 = this.R.Size.XY1(sin);
+            Point xy1 = this.RectangleSize.WheelSize.CircleSize.XY(h, 1);
+            this.BlackLine.X1 = this.WhiteLine.X1 = xy1.X;
+            this.BlackLine.Y1 = this.WhiteLine.Y1 = xy1.Y;
 
-            this.BlackLine.X2 = this.WhiteLine.X2 = this.R.Size.XY2(cos);
-            this.BlackLine.Y2 = this.WhiteLine.Y2 = this.R.Size.XY2(sin);
+            Point xy2 = this.RectangleSize.WheelSize.XY(h, 1);
+            this.BlackLine.X2 = this.WhiteLine.X2 = xy2.X;
+            this.BlackLine.Y2 = this.WhiteLine.Y2 = xy2.Y;
         }
 
         private void Ellipse(double s, double v)
         {
-            double x = this.R.X(s);
-            double y = this.R.Y(v);
+            double x = this.RectangleSize.X(s);
+            double y = this.RectangleSize.Y(v);
 
             Canvas.SetLeft(this.BlackEllipse, x - 14);
             Canvas.SetTop(this.BlackEllipse, y - 14);

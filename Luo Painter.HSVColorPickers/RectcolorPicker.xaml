@@ -11,14 +11,14 @@
     mc:Ignorable="d"
     >
 
-    <Canvas Width="{x:Bind R.Size.D, Mode=OneWay}" Height="{x:Bind R.Size.D, Mode=OneWay}" Background="Transparent">
-        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT, Mode=OneWay}" Canvas.Top="{x:Bind R.RB, Mode=OneWay}" Width="{x:Bind R.RD, Mode=OneWay}" Height="32" >
+    <Canvas Width="{x:Bind RectangleSize.WheelSize.CircleSize.Diameter, Mode=OneWay}" Height="{x:Bind RectangleSize.WheelSize.CircleSize.Diameter, Mode=OneWay}" Background="Transparent">
+        <Border IsHitTestVisible="False" Canvas.Left="{x:Bind RectangleSize.RectangleTop, Mode=OneWay}" Canvas.Top="{x:Bind RectangleSize.RectangleBottom, Mode=OneWay}" Width="{x:Bind RectangleSize.RectangleDiameter, Mode=OneWay}" Height="32" >
             <TextBlock x:Name="TextBlock" Visibility="Visible" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}">
                 <!--Text-->
             </TextBlock>
         </Border>
 
-        <Rectangle IsHitTestVisible="False" Canvas.Left="{x:Bind R.RT, Mode=OneWay}" Canvas.Top="{x:Bind R.RT, Mode=OneWay}" Width="{x:Bind R.RD, Mode=OneWay}" Height="{x:Bind R.RD, Mode=OneWay}">
+        <Rectangle IsHitTestVisible="False" Canvas.Left="{x:Bind RectangleSize.RectangleTop, Mode=OneWay}" Canvas.Top="{x:Bind RectangleSize.RectangleTop, Mode=OneWay}" Width="{x:Bind RectangleSize.RectangleDiameter, Mode=OneWay}" Height="{x:Bind RectangleSize.RectangleDiameter, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="White" Offset="0"/>
@@ -27,20 +27,20 @@
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle x:Name="RectangleRectangle" Canvas.Left="{x:Bind R.RT, Mode=OneWay}" Canvas.Top="{x:Bind R.RT, Mode=OneWay}" Width="{x:Bind R.RD, Mode=OneWay}" Height="{x:Bind R.RD, Mode=OneWay}">
+        <Rectangle x:Name="RectangleRectangle" Canvas.Left="{x:Bind RectangleSize.RectangleTop, Mode=OneWay}" Canvas.Top="{x:Bind RectangleSize.RectangleTop, Mode=OneWay}" Width="{x:Bind RectangleSize.RectangleDiameter, Mode=OneWay}" Height="{x:Bind RectangleSize.RectangleDiameter, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Offset="0"/>
                     <GradientStop Color="Black" Offset="1"/>
                 </LinearGradientBrush>
             </Shape.Fill>
         </Rectangle>
 
-        <Path x:Name="WheelPath" Width="{x:Bind R.Size.D, Mode=OneWay}" Height="{x:Bind R.Size.D, Mode=OneWay}" ManipulationMode="All" Fill="{x:Bind Background, Mode=OneWay}">
+        <Path x:Name="WheelPath" Width="{x:Bind RectangleSize.WheelSize.CircleSize.Diameter, Mode=OneWay}" Height="{x:Bind RectangleSize.WheelSize.CircleSize.Diameter, Mode=OneWay}" Fill="{x:Bind Background, Mode=OneWay}">
             <Path.Data>
                 <GeometryGroup>
-                    <EllipseGeometry RadiusY="{x:Bind R.Size.R, Mode=OneWay}" RadiusX="{x:Bind R.Size.R, Mode=OneWay}" Center="{x:Bind R.Size.C, Mode=OneWay}"/>
-                    <EllipseGeometry RadiusY="{x:Bind R.Size.HR, Mode=OneWay}" RadiusX="{x:Bind R.Size.HR, Mode=OneWay}" Center="{x:Bind R.Size.C, Mode=OneWay}"/>
+                    <EllipseGeometry RadiusY="{x:Bind RectangleSize.WheelSize.CircleSize.Radius, Mode=OneWay}" RadiusX="{x:Bind RectangleSize.WheelSize.CircleSize.Radius, Mode=OneWay}" Center="{x:Bind RectangleSize.WheelSize.CircleSize.Center, Mode=OneWay}"/>
+                    <EllipseGeometry RadiusY="{x:Bind RectangleSize.WheelSize.HoleCircleSize.Radius, Mode=OneWay}" RadiusX="{x:Bind RectangleSize.WheelSize.HoleCircleSize.Radius, Mode=OneWay}" Center="{x:Bind RectangleSize.WheelSize.CircleSize.Center, Mode=OneWay}"/>
                 </GeometryGroup>
             </Path.Data>
         </Path>
