@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public sealed partial class TricolorPicker : UserControl, IColorPicker
     {

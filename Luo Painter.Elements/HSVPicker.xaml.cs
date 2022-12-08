@@ -1,11 +1,10 @@
-﻿using Luo_Painter.HSVColorPickers;
-using System;
+﻿using System;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public sealed partial class HSVPicker : UserControl, IColorPickerBase
     {
@@ -14,7 +13,7 @@ namespace Luo_Painter.Elements
         public event RoutedEventHandler HueClick { remove => this.HueSlider.Click -= value; add => this.HueSlider.Click += value; }
         public event RoutedEventHandler SaturationClick { remove => this.SaturationSlider.Click -= value; add => this.SaturationSlider.Click += value; }
         public event RoutedEventHandler ValueClick { remove => this.ValueSlider.Click -= value; add => this.ValueSlider.Click += value; }
-        public event RoutedEventHandler OpacityClick { remove => this.ValueSlider.Click -= value; add => this.ValueSlider.Click += value; }
+        public event RoutedEventHandler OpacityClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
 
         //@Content
         public INumberBase HueNumber => this.HueSlider;

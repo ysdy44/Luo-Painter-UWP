@@ -3,7 +3,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public interface IColorPickerBase
     {

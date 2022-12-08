@@ -1,10 +1,9 @@
-﻿using Luo_Painter.HSVColorPickers;
-using System;
+﻿using System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public sealed partial class RGBPicker : UserControl, IColorPickerBase
     {

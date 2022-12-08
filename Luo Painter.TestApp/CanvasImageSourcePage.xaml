@@ -4,18 +4,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
     <Grid>
 
-        <elements:TricolorPicker x:Name="TricolorPicker">
+        <hsvColorPickers:TricolorPicker x:Name="TricolorPicker">
             <Control.Background>
                 <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
             </Control.Background>
-        </elements:TricolorPicker>
+        </hsvColorPickers:TricolorPicker>
 
         <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 

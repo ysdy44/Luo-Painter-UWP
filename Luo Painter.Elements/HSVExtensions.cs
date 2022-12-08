@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     /// <summary>
     /// Provides extended methods for color to convert HSV to color.
     /// <para/>
-    /// <see cref="Vector4.W"/> = A, Alpha. Default value 0, range 0 to 1. <para/>
-    /// <see cref="Vector4.Z"/> = H, Hue. Default value 0, range 0 to 360. <para/>
-    /// <see cref="Vector4.X"/> = S, Saturation. Default value 0, range 0 to 1. <para/>
-    /// <see cref="Vector4.Y"/> = V, Value. Default value 0, range 0 to 1. <para/>
+    /// <see cref="Vector4.W"/> = <see cref="ColorPickerHsvChannel.Alpha"/>. Default value 0, range 0 to 1. <para/>
+    /// <see cref="Vector4.Z"/> = <see cref="ColorPickerHsvChannel.Hue"/>. Default value 0, range 0 to 360. <para/>
+    /// <see cref="Vector4.X"/> = <see cref="ColorPickerHsvChannel.Saturation"/>. Default value 0, range 0 to 1. <para/>
+    /// <see cref="Vector4.Y"/> = <see cref="ColorPickerHsvChannel.Value"/>. Default value 0, range 0 to 1. <para/>
     /// </summary>
     public static class HSVExtensions
     {
@@ -45,11 +46,12 @@ namespace Luo_Painter.Elements
                 return Color.FromArgb((byte)(hsv.W * 255), ll, ll, ll);
             }
 
+            float h = hsv.Z == 360f ? 0f : hsv.Z;
             float s = hsv.X;
             float v = hsv.Y;
 
-            int h1 = (int)(hsv.Z / 60f);
-            float F = hsv.Z / 60 - h1;
+            int h1 = (int)(h / 60f);
+            float F = h / 60 - h1;
 
             float P = v * (1f - s);
             float Q = v * (1f - F * s);
@@ -58,7 +60,7 @@ namespace Luo_Painter.Elements
             float r = 0;
             float g = 0;
             float b = 0;
-    
+
             switch (h1)
             {
                 case 0: r = v; g = T; b = P; break;
