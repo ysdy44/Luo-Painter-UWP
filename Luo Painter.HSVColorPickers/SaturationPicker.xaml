@@ -13,7 +13,7 @@
 
     <Canvas Background="Transparent">
 
-        <Rectangle IsHitTestVisible="False" Width="{x:Bind B.W, Mode=OneWay}" Height="{x:Bind B.H, Mode=OneWay}">
+        <Rectangle IsHitTestVisible="False" Width="{x:Bind BoxSize.Width, Mode=OneWay}" Height="{x:Bind BoxSize.Height, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="Red" Offset="0"/>
@@ -27,16 +27,16 @@
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle x:Name="BoxRectangle" Width="{x:Bind B.W, Mode=OneWay}" Height="{x:Bind B.H, Mode=OneWay}">
+        <Rectangle x:Name="BoxRectangle" Width="{x:Bind BoxSize.Width, Mode=OneWay}" Height="{x:Bind BoxSize.Height, Mode=OneWay}">
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Offset="0"/>
                     <GradientStop Color="Black" Offset="1"/>
                 </LinearGradientBrush>
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle IsHitTestVisible="False" Width="{x:Bind B.W, Mode=OneWay}" Height="{x:Bind B.S, Mode=OneWay}" Canvas.Top="{x:Bind B.Y2, Mode=OneWay}" >
+        <Rectangle IsHitTestVisible="False" Width="{x:Bind BoxSize.Width, Mode=OneWay}" Height="{x:Bind BoxSize.Slider, Mode=OneWay}" Canvas.Top="{x:Bind BoxSize.Y2, Mode=OneWay}" >
             <Shape.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="Gray" Offset="0"/>
@@ -45,10 +45,10 @@
             </Shape.Fill>
         </Rectangle>
 
-        <Rectangle x:Name="SliderRectangle" Width="{x:Bind B.W, Mode=OneWay}" Height="{x:Bind B.O, Mode=OneWay}" Canvas.Top="{x:Bind B.H, Mode=OneWay}" Fill="Transparent"/>
+        <Rectangle x:Name="SliderRectangle" Width="{x:Bind BoxSize.Width, Mode=OneWay}" Height="{x:Bind BoxSize.Other, Mode=OneWay}" Canvas.Top="{x:Bind BoxSize.Height, Mode=OneWay}" Fill="Transparent"/>
 
-        <Line x:Name="BlackLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind B.Y1, Mode=OneWay}" X2="0" Y2="{x:Bind B.Y2, Mode=OneWay}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="Gray"/>
-        <Line x:Name="WhiteLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind B.Y1, Mode=OneWay}" X2="0" Y2="{x:Bind B.Y2, Mode=OneWay}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="14" >
+        <Line x:Name="BlackLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind BoxSize.Y1, Mode=OneWay}" X2="0" Y2="{x:Bind BoxSize.Y2, Mode=OneWay}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="White"/>
+        <Line x:Name="WhiteLine" IsHitTestVisible="False" X1="0" Y1="{x:Bind BoxSize.Y1, Mode=OneWay}" X2="0" Y2="{x:Bind BoxSize.Y2, Mode=OneWay}" StrokeStartLineCap="Square" StrokeEndLineCap="Triangle" StrokeThickness="14" >
             <Shape.Stroke>
                 <SolidColorBrush x:Name="LineSolidColorBrush" Opacity="0" Color="Red"/>
             </Shape.Stroke>
