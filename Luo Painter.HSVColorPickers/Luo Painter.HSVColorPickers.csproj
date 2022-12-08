@@ -121,6 +121,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CanvasImageSource.cs" />
+    <Compile Include="CirclePicker.xaml.cs">
+      <DependentUpon>CirclePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HSVExtensions.cs" />
     <Compile Include="HSVPicker.xaml.cs">
       <DependentUpon>HSVPicker.xaml</DependentUpon>
@@ -166,6 +169,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CirclePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="HSVPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
