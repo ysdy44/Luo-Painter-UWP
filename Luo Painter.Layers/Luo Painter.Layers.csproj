@@ -129,7 +129,6 @@
     <Compile Include="Anchors\Anchor.Segment.cs" />
     <Compile Include="BitmapType.cs" />
     <Compile Include="CanvasDrawingSessionExtensions.cs" />
-    <Compile Include="CanvasImageSourceExtensions.cs" />
     <Compile Include="ILayer.cs" />
     <Compile Include="ILayer.Drag.cs" />
     <Compile Include="ILayer.Render.cs" />
