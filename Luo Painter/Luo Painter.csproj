@@ -484,6 +484,10 @@
       <Project>{3f41d818-7a96-4a18-94d2-0c440a3108de}</Project>
       <Name>Luo Painter.Historys</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.HSVColorPickers\Luo Painter.HSVColorPickers.csproj">
+      <Project>{af5c8dd0-b9cb-415a-a06c-9d5cf9f21cb0}</Project>
+      <Name>Luo Painter.HSVColorPickers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Layers\Luo Painter.Layers.csproj">
       <Project>{e8193f9b-9c7c-483f-aafb-600011619d5a}</Project>
       <Name>Luo Painter.Layers</Name>
