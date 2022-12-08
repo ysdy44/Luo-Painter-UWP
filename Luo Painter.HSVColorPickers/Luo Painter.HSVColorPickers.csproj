@@ -147,6 +147,7 @@
     <Compile Include="SaturationPicker.xaml.cs">
       <DependentUpon>SaturationPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TemplateSettings.cs" />
     <Compile Include="TricolorPicker.xaml.cs">
       <DependentUpon>TricolorPicker.xaml</DependentUpon>
     </Compile>
