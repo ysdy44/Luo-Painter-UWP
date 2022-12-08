@@ -153,35 +153,9 @@
     <Compile Include="Grid2x2Panel.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
-    <Compile Include="HSVExtensions.cs" />
-    <Compile Include="HSVPicker.xaml.cs">
-      <DependentUpon>HSVPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="IColorPicker.cs" />
     <Compile Include="IndexGrid.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="MetadataObservableCollection.cs" />
-    <Compile Include="NumberButton.xaml.cs">
-      <DependentUpon>NumberButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NumberPicker.xaml.cs">
-      <DependentUpon>NumberPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NumberSlider.xaml.cs">
-      <DependentUpon>NumberSlider.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HuePicker.xaml.cs">
-      <DependentUpon>HuePicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RectcolorPicker.xaml.cs">
-      <DependentUpon>RectcolorPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RGBPicker.xaml.cs">
-      <DependentUpon>RGBPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SaturationPicker.xaml.cs">
-      <DependentUpon>SaturationPicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
@@ -213,13 +187,7 @@
     <Compile Include="ToastAudioType.cs" />
     <Compile Include="ToastExtensions.cs" />
     <Compile Include="ToastExtensions.LaunchFile.cs" />
-    <Compile Include="TricolorPicker.xaml.cs">
-      <DependentUpon>TricolorPicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TSelector.cs" />
-    <Compile Include="ValuePicker.xaml.cs">
-      <DependentUpon>ValuePicker.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -243,10 +211,6 @@
     <Page Include="Eyedropper.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HSVPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Icons\AddIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -404,34 +368,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NumberButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NumberPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NumberSlider.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HuePicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RectcolorPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RGBPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SaturationPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="SelectedButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -449,14 +385,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TricolorPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ValuePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
