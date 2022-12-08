@@ -2,13 +2,13 @@
 
 ![](ScreenShot/logo.png)
 
- In development, please look forward to......
+ In development, please stay tuned......
 
 <br/>
 
 ## Function description
 
-Painting Tool. If you need to paint might as well try.
+Painting Tool. You can give it a try if you need to paint something.
 
 
 <br/>
@@ -17,7 +17,7 @@ Painting Tool. If you need to paint might as well try.
 
 |Key|Value|
 |:-|:-|
-|System requirements| Windows10 1803 or upper|
+|System requirements| Windows 10 1803 or upper|
 |Development tool|Visual Studio 2022|
 |Graphics library|Win2D|
 |Programing language|C#|
@@ -29,4 +29,4 @@ Painting Tool. If you need to paint might as well try.
 
 ## Deployment instructions
 
-> Download the whole project, run `Luo Painter.sln`, start the project `Luo Painter`, and try to see if it works.
+> Download the whole project, open `Luo Painter.sln`, start the project `Luo Painter`, and try to see if it works.
