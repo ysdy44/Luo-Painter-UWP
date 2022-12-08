@@ -1,5 +1,5 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using Windows.UI.Xaml.Controls;
@@ -22,7 +22,7 @@ namespace Luo_Painter
         LayerOpacity,
     }
 
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         NumberPickerMode NumberPickerMode;

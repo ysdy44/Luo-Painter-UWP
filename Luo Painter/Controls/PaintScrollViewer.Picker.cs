@@ -1,5 +1,5 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -20,7 +20,7 @@ namespace Luo_Painter.Controls
         Step,
     }
 
-    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
+    public sealed partial class PaintScrollViewer
     {
 
         PaintNumberPickerMode NumberPickerMode;

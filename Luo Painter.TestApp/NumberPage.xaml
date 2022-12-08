@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -12,7 +12,7 @@
     <FrameworkElement.Resources>
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="Top" >
-            <elements:NumberPicker x:Name="NumberPicker" />
+            <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
         </Flyout>
     </FrameworkElement.Resources>
 
@@ -33,14 +33,14 @@
         <TextBlock Margin="10,0" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}">
             Button
         </TextBlock>
-        <elements:NumberButton x:Name="NumberButton" Margin="8,0" Number="0" NumberMinimum="0" NumberMaximum="100" Unit="º"/>
+        <hsvColorPickers:NumberButton x:Name="NumberButton" Margin="8,0" Number="0" NumberMinimum="0" NumberMaximum="100" Unit="º"/>
       
         <!--Slider-->
-        <elements:NumberSlider x:Name="NumberSlider" Minimum="0" Maximum="100" Unit="º">
+        <hsvColorPickers:NumberSlider x:Name="NumberSlider" Minimum="0" Maximum="100" Unit="º">
             <Slider.Header>
                 Slider
             </Slider.Header>
-        </elements:NumberSlider>
+        </hsvColorPickers:NumberSlider>
 
     </StackPanel>
 </Page>

@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="200"
@@ -12,8 +12,8 @@
     >
 
     <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <elements:NumberButton x:Name="XButton" NumberMinimum="-16384" NumberMaximum="16384" />
+        <hsvColorPickers:NumberButton x:Name="XButton" NumberMinimum="-16384" NumberMaximum="16384" />
         <Line X2="32" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
-        <elements:NumberButton x:Name="YButton" NumberMinimum="-16384" NumberMaximum="16384" />
+        <hsvColorPickers:NumberButton x:Name="YButton" NumberMinimum="-16384" NumberMaximum="16384" />
     </StackPanel>
 </UserControl>

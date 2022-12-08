@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public sealed class NumberButton : NumberButtonBase, INumberBase
     {
@@ -15,7 +15,7 @@ namespace Luo_Painter.Elements
             {
                 this.number = value;
                 if (string.IsNullOrEmpty(this.Unit)) base.Content = value;
-                else base.Content = $"{value} {this.Unit}";
+                else base.Content = $"{value}{this.Unit}";
             }
         }
         private int number;
@@ -29,7 +29,7 @@ namespace Luo_Painter.Elements
             {
                 this.unit = value;
                 if (string.IsNullOrEmpty(this.Unit)) base.Content = this.Number;
-                else base.Content = $"{this.Number} {value}";
+                else base.Content = $"{this.Number}{value}";
             }
         }
         private string unit = string.Empty;

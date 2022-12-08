@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
-    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
@@ -19,7 +19,7 @@
         <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <elements:NumberPicker x:Name="NumberPicker" />
+            <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
         </Flyout>
     </FrameworkElement.Resources>
 
@@ -84,7 +84,7 @@
                 <StackPanel>
 
                     <!--Size-->
-                    <elements:NumberSlider2
+                    <hsvColorPickers:NumberSlider2
                         x:Name="SizeSlider" 
                         SmallChange="1000" 
                         StepFrequency="1000" 
@@ -97,10 +97,10 @@
                         <Slider.Header>
                             Size
                         </Slider.Header>
-                    </elements:NumberSlider2>
+                    </hsvColorPickers:NumberSlider2>
 
                     <!--Opacity-->
-                    <elements:NumberSlider
+                    <hsvColorPickers:NumberSlider
                         x:Name="OpacitySlider"
                         Minimum="0"
                         Maximum="100"
@@ -111,10 +111,10 @@
                         <Slider.Header>
                             Opacity
                         </Slider.Header>
-                    </elements:NumberSlider>
+                    </hsvColorPickers:NumberSlider>
 
                     <!--Spacing-->
-                    <elements:NumberSlider2
+                    <hsvColorPickers:NumberSlider2
                         x:Name="SpacingSlider"
                         SmallChange="10000" 
                         StepFrequency="10000"
@@ -130,10 +130,10 @@
                         <Slider.Header>
                             Spacing
                         </Slider.Header>
-                    </elements:NumberSlider2>
+                    </hsvColorPickers:NumberSlider2>
 
                     <!--Flow-->
-                    <elements:NumberSlider
+                    <hsvColorPickers:NumberSlider
                         x:Name="FlowSlider" 
                         Unit="%" 
                         TickFrequency="25" 
@@ -144,7 +144,7 @@
                         <Slider.Header>
                             Flow
                         </Slider.Header>
-                    </elements:NumberSlider>
+                    </hsvColorPickers:NumberSlider>
 
                 </StackPanel>
             </Border>
@@ -331,9 +331,9 @@
                 <TextBlock x:Name="StepTextBlock" Grid.Row="4" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                     Step of Grain
                 </TextBlock>
-                <elements:NumberButton x:Name="StepButton" Grid.Column="1" Grid.Row="3" Number="1024" NumberMinimum="16" NumberMaximum="16384" Margin="12,2" HorizontalAlignment="Right" >
+                <hsvColorPickers:NumberButton x:Name="StepButton" Grid.Column="1" Grid.Row="3" Number="1024" NumberMinimum="16" NumberMaximum="16384" Margin="12,2" HorizontalAlignment="Right" >
                     <!--Text-->
-                </elements:NumberButton>
+                </hsvColorPickers:NumberButton>
 
             </Grid>
 
@@ -390,7 +390,7 @@
                     Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
                 <StackPanel>
 
-                    <elements:NumberSlider x:Name="MixSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                    <hsvColorPickers:NumberSlider x:Name="MixSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
@@ -400,9 +400,9 @@
                         <Slider.Header>
                             Mix
                         </Slider.Header>
-                    </elements:NumberSlider>
+                    </hsvColorPickers:NumberSlider>
 
-                    <elements:NumberSlider x:Name="WetSlider" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                    <hsvColorPickers:NumberSlider x:Name="WetSlider" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
@@ -412,9 +412,9 @@
                         <Slider.Header>
                             Wet
                         </Slider.Header>
-                    </elements:NumberSlider>
+                    </hsvColorPickers:NumberSlider>
 
-                    <elements:NumberSlider x:Name="PersistenceSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                    <hsvColorPickers:NumberSlider x:Name="PersistenceSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Gray" Offset="0"/>
@@ -424,7 +424,7 @@
                         <Slider.Header>
                             Persistence
                         </Slider.Header>
-                    </elements:NumberSlider>
+                    </hsvColorPickers:NumberSlider>
 
                 </StackPanel>
             </Border>
