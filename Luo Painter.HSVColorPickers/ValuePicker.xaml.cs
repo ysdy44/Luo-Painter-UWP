@@ -20,17 +20,17 @@ namespace Luo_Painter.HSVColorPickers
         #region DependencyProperty
 
         /// <summary> Gets or set the size for <see cref="ValuePicker"/>. </summary>
-        private BoxSize B
+        private BoxTemplateSettings BoxSize
         {
-            get => (BoxSize)base.GetValue(BProperty);
-            set => base.SetValue(BProperty, value);
+            get => (BoxTemplateSettings)base.GetValue(BoxSizeProperty);
+            set => base.SetValue(BoxSizeProperty, value);
         }
-        /// <summary> Identifies the <see cref = "ValuePicker.B" /> dependency property. </summary>
-        private static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(BoxSize), typeof(ValuePicker), new PropertyMetadata(new BoxSize(320), (sender, e) =>
+        /// <summary> Identifies the <see cref = "ValuePicker.BoxSize" /> dependency property. </summary>
+        private static readonly DependencyProperty BoxSizeProperty = DependencyProperty.Register(nameof(BoxSize), typeof(BoxTemplateSettings), typeof(ValuePicker), new PropertyMetadata(new BoxTemplateSettings(320), (sender, e) =>
         {
             ValuePicker control = (ValuePicker)sender;
 
-            if (e.NewValue is BoxSize value)
+            if (e.NewValue is BoxTemplateSettings value)
             {
                 control.Reset(value);
             }
@@ -47,7 +47,7 @@ namespace Luo_Painter.HSVColorPickers
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                this.B = new BoxSize(e.NewSize.Width, e.NewSize.Height);
+                this.BoxSize = new BoxTemplateSettings(e.NewSize.Width, e.NewSize.Height);
             };
 
             this.BoxRectangle.ManipulationMode = ManipulationModes.All;
@@ -92,18 +92,18 @@ namespace Luo_Painter.HSVColorPickers
         {
             this.HSV = color.ToHSV();
 
-            this.Slider = this.HSV.Y * this.B.W;
-            this.Box.X = this.HSV.Z * this.B.W / 360d;
-            this.Box.Y = this.B.H - this.HSV.X * this.B.H;
+            this.Slider = this.HSV.Y * this.BoxSize.Width;
+            this.Box.X = this.HSV.Z * this.BoxSize.Width / 360d;
+            this.Box.Y = this.BoxSize.Height - this.HSV.X * this.BoxSize.Height;
 
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
         }
-        private void Reset(BoxSize b)
+        private void Reset(BoxTemplateSettings size)
         {
-            this.Slider = this.HSV.Y * b.W;
-            this.Box.X = this.HSV.Z * b.W / 360d;
-            this.Box.Y = b.H - this.HSV.X * b.H;
+            this.Slider = this.HSV.Y * size.Width;
+            this.Box.X = this.HSV.Z * size.Width / 360d;
+            this.Box.Y = size.Height - this.HSV.X * size.Height;
 
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
@@ -112,9 +112,9 @@ namespace Luo_Painter.HSVColorPickers
 
         private void Move()
         {
-            this.HSV.Z = (float)Math.Clamp(this.Box.X * 360d / this.B.W, 0d, 360d);
-            this.HSV.X = (float)Math.Clamp((this.B.H - this.Box.Y) / this.B.H, 0d, 1d);
-            this.Ellipse(Math.Clamp(this.Box.X, 0d, this.B.W), Math.Clamp(this.Box.Y, 0d, this.B.H));
+            this.HSV.Z = (float)Math.Clamp(this.Box.X * 360d / this.BoxSize.Width, 0d, 360d);
+            this.HSV.X = (float)Math.Clamp((this.BoxSize.Height - this.Box.Y) / this.BoxSize.Height, 0d, 1d);
+            this.Ellipse(Math.Clamp(this.Box.X, 0d, this.BoxSize.Width), Math.Clamp(this.Box.Y, 0d, this.BoxSize.Height));
 
             Color color = this.HSV.ToColor();
             this.Color(color);
@@ -122,8 +122,8 @@ namespace Luo_Painter.HSVColorPickers
 
         private void Zoom()
         {
-            this.HSV.Y = (float)Math.Clamp(this.Slider / this.B.W, 0d, 1d);
-            this.Line(this.HSV.Y * this.B.W);
+            this.HSV.Y = (float)Math.Clamp(this.Slider / this.BoxSize.Width, 0d, 1d);
+            this.Line(this.HSV.Y * this.BoxSize.Width);
 
             Color color = this.HSV.ToColor();
             this.Color(color);
@@ -155,14 +155,14 @@ namespace Luo_Painter.HSVColorPickers
         public void ZoomOut()
         {
             this.HSV.Y = (float)Math.Clamp(this.HSV.Y - 0.01d, 0d, 1d);
-            this.Line(this.HSV.Y * this.B.W);
+            this.Line(this.HSV.Y * this.BoxSize.Width);
 
             this.Color(this.HSV.ToColor());
         }
         public void ZoomIn()
         {
             this.HSV.Y = (float)Math.Clamp(this.HSV.Y + 0.01d, 0d, 1d);
-            this.Line(this.HSV.Y * this.B.W);
+            this.Line(this.HSV.Y * this.BoxSize.Width);
 
             this.Color(this.HSV.ToColor());
         }
