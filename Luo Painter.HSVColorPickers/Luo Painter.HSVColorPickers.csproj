@@ -125,6 +125,7 @@
       <DependentUpon>CirclePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="ColorType.cs" />
+    <Compile Include="HarmonyMode.cs" />
     <Compile Include="HSVExtensions.cs" />
     <Compile Include="HSVPicker.xaml.cs">
       <DependentUpon>HSVPicker.xaml</DependentUpon>
