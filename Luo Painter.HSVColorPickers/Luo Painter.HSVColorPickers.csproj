@@ -126,6 +126,9 @@
     </Compile>
     <Compile Include="ColorType.cs" />
     <Compile Include="HarmonyMode.cs" />
+    <Compile Include="HarmonyPicker.xaml.cs">
+      <DependentUpon>HarmonyPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HSVExtensions.cs" />
     <Compile Include="HSVPicker.xaml.cs">
       <DependentUpon>HSVPicker.xaml</DependentUpon>
@@ -172,6 +175,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CirclePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HarmonyPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
