@@ -104,6 +104,8 @@ namespace Luo_Painter.HSVColorPickers
         public readonly double Left; // = 20;
         public readonly double Top; // = 0;
 
+        public readonly Point Center; // = new Point(120, 100);
+
         public RingTemplateSettings(BoxTemplateSettings size)
         {
             this.BoxSize = size;
@@ -111,6 +113,16 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Left = this.BoxSize.Width / 2 - this.CircleSize.Radius;
             this.Top = this.BoxSize.Height / 2 - this.CircleSize.Radius;
+
+            this.Center = this.CircleSize.Center;
+            this.Center.X += this.Left;
+            this.Center.Y += this.Top;
+        }
+        public Point XY(double radians, double scale)
+        {
+            double cos = Math.Cos(radians) * scale;
+            double sin = Math.Sin(radians) * scale;
+            return new Point(cos * this.CircleSize.Radius + this.BoxSize.Width / 2, sin * this.CircleSize.Radius + this.BoxSize.Height / 2);
         }
     }
 
