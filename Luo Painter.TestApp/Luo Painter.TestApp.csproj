@@ -273,8 +273,8 @@
     <Compile Include="ScrollerPage.xaml.cs">
       <DependentUpon>ScrollerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CanvasImageSourcePage.xaml.cs">
-      <DependentUpon>CanvasImageSourcePage.xaml</DependentUpon>
+    <Compile Include="ColorPickerPage.xaml.cs">
+      <DependentUpon>ColorPickerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectedButtonPage.xaml.cs">
       <DependentUpon>SelectedButtonPage.xaml</DependentUpon>
@@ -540,7 +540,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CanvasImageSourcePage.xaml">
+    <Page Include="ColorPickerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

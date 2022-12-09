@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.TestApp
 {
-    public sealed partial class CanvasImageSourcePage : Page
+    public sealed partial class ColorPickerPage : Page
     {
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
         readonly float Dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
@@ -15,7 +15,7 @@ namespace Luo_Painter.TestApp
         readonly AlphaImageSource AlphaImageSource;
         readonly WheelImageSource WheelImageSource;
 
-        public CanvasImageSourcePage()
+        public ColorPickerPage()
         {
             this.InitializeComponent();
             this.AlphaImageSource = new AlphaImageSource(this.CanvasDevice, 320, 4, this.Dpi);
