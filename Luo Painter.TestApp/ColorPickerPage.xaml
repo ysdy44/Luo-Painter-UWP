@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -11,11 +12,28 @@
 
     <Grid>
 
-        <hsvColorPickers:TricolorPicker x:Name="TricolorPicker">
-            <Control.Background>
-                <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
-            </Control.Background>
-        </hsvColorPickers:TricolorPicker>
+        <elements:IndexGrid x:Name="IndexGrid" Width="320" MinHeight="320" MaxHeight="360" Index="{x:Bind ListView.SelectedIndex, Mode=OneWay}">
+            <hsvColorPickers:RectcolorPicker ColorChanged="ColorChanged">
+                <Control.Background>
+                    <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+                </Control.Background>
+            </hsvColorPickers:RectcolorPicker>
+            <hsvColorPickers:TricolorPicker ColorChanged="ColorChanged">
+                <Control.Background>
+                    <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+                </Control.Background>
+            </hsvColorPickers:TricolorPicker>
+
+            <hsvColorPickers:HuePicker ColorChanged="ColorChanged"/>
+            <hsvColorPickers:SaturationPicker ColorChanged="ColorChanged"/>
+            <hsvColorPickers:ValuePicker ColorChanged="ColorChanged"/>
+
+            <hsvColorPickers:CirclePicker ColorChanged="ColorChanged">
+                <Control.Background>
+                    <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+                </Control.Background>
+            </hsvColorPickers:CirclePicker>
+        </elements:IndexGrid>
 
         <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
@@ -55,6 +73,25 @@
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
+            <ContentControl.Content>
+                <Button Margin="12,6,2,0" Content="{x:Bind ListView.SelectedItem, Mode=OneWay}">
+                    <Button.Flyout>
+                        <Flyout>
+                            <ListView x:Name="ListView" SelectedIndex="0">
+                                <x:String>RectcolorPicker</x:String>
+                                <x:String>TricolorPicker</x:String>
+
+                                <x:String>HuePicker</x:String>
+                                <x:String>SaturationPicker</x:String>
+                                <x:String>ValuePicker</x:String>
+
+                                <x:String>CirclePicker</x:String>
+                            </ListView>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </ContentControl.Content>
+            
             <AppBarButton x:Name="LeftButton" >
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="Left"/>
