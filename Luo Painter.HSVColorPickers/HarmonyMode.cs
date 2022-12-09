@@ -4,14 +4,14 @@
     {
         None,
 
-        HasPoint1 = 16 | 4,
-        HasPoint2 = 32 | 4,
-        HasPoint3 = 64 | 4,
+        HasPoint1 = 8,
+        HasPoint2 = 16,
+        HasPoint3 = 32,
 
-        HasPointToPoint1 = 16 | 8,
-        HasPointToPoint2 = 32 | 8,
-        HasPointToPoint3 = 64 | 8,
-        HasPointToPoint4 = 128 | 8,
+        HasPointToPoint1 = HasPoint1,
+        HasPointToPoint2 = HasPoint2,
+        HasPointToPoint3 = HasPoint2,
+        HasPointToPoint4 = HasPoint3,
 
         Complementary = 1 | HasPoint1 | HasPointToPoint1,
 
