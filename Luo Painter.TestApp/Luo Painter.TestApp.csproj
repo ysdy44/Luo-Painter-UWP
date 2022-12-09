@@ -131,6 +131,9 @@
     <Compile Include="BrushEdgeHardnessPage.xaml.cs">
       <DependentUpon>BrushEdgeHardnessPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ColorValuePickerPage.xaml.cs">
+      <DependentUpon>ColorValuePickerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomEditorPage.xaml.cs">
       <DependentUpon>CustomEditorPage.xaml</DependentUpon>
     </Compile>
@@ -349,6 +352,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BrushEdgeHardnessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ColorValuePickerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
