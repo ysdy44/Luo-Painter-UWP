@@ -13,6 +13,8 @@ namespace Luo_Painter.HSVColorPickers
         //@Delegate
         public event EventHandler<Color> ColorChanged;
 
+        public ColorType Type => ColorType.Hue;
+
         Point Box;
         double Slider;
         Vector4 HSV = Vector4.UnitW;

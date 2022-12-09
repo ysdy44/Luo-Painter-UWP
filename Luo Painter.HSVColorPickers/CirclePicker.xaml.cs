@@ -12,7 +12,9 @@ namespace Luo_Painter.HSVColorPickers
     {
         //@Delegate
         public event EventHandler<Color> ColorChanged;
-        
+
+        public ColorType Type => ColorType.Circle;
+
         Point Ring;
         double Slider;
         Vector4 HSV = Vector4.UnitW;
@@ -187,10 +189,7 @@ namespace Luo_Painter.HSVColorPickers
 
         private void Ellipse(double h, double s)
         {
-            var xy = this.RingSize.CircleSize.XY(h, s);
-            xy.X += this.RingSize.Left;
-            xy.Y += this.RingSize.Top;
-
+            Point xy = this.RingSize.XY(h, s);
             Canvas.SetLeft(this.BlackEllipse, xy.X - 14);
             Canvas.SetTop(this.BlackEllipse, xy.Y - 14);
             Canvas.SetLeft(this.WhiteEllipse, xy.X - 13);

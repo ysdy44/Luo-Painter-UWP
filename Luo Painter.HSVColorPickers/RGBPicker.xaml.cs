@@ -15,6 +15,7 @@ namespace Luo_Painter.HSVColorPickers
         public event RoutedEventHandler AlphaClick { remove => this.AlphaSlider.Click -= value; add => this.AlphaSlider.Click += value; }
 
         //@Content
+        public ColorType Type => ColorType.RGB;
         public INumberBase RedNumber => this.RedSlider;
         public INumberBase GreenNumber => this.GreenSlider;
         public INumberBase BlueNumber => this.BlueSlider;

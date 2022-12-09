@@ -13,6 +13,8 @@ namespace Luo_Painter.HSVColorPickers
         //@Delegate
         public event EventHandler<Color> ColorChanged;
 
+        public ColorType Type => ColorType.Tricolor;
+
         Point Triangle;
         Point Wheel;
         Vector4 HSV = Vector4.UnitW;

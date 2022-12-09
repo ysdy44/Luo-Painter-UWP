@@ -16,6 +16,7 @@ namespace Luo_Painter.HSVColorPickers
         public event RoutedEventHandler OpacityClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
 
         //@Content
+        public ColorType Type => ColorType.HSV;
         public INumberBase HueNumber => this.HueSlider;
         public INumberBase SaturationNumber => this.SaturationSlider;
         public INumberBase ValueNumber => this.ValueSlider;
