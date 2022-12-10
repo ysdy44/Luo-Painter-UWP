@@ -3,9 +3,9 @@ using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.HSVColorPickers
 {
-    public sealed partial class StrawViewer : Canvas
+    public sealed partial class Strawer : Canvas
     {
 
         CanvasRenderTarget StrawRender;
@@ -14,9 +14,9 @@ namespace Luo_Painter.Controls
         public ICanvasImage StrawImage => this.StrawRender;
         public int StrawCenterX { get; private set; }
         public int StrawCenterY { get; private set; }
-     
+
         //@Construct
-        public StrawViewer()
+        public Strawer()
         {
             this.InitializeComponent();
         }
@@ -26,8 +26,8 @@ namespace Luo_Painter.Controls
         public void CreateResources(ICanvasResourceCreatorWithDpi resourceCreator)
         {
             this.StrawRender = new CanvasRenderTarget(resourceCreator, 112, 90);
-            this.StrawCenterX = (int)StrawRender.SizeInPixels.Width / 2;
-            this.StrawCenterY = (int)StrawRender.SizeInPixels.Height / 2;
+            this.StrawCenterX = (int)this.StrawRender.SizeInPixels.Width / 2;
+            this.StrawCenterY = (int)this.StrawRender.SizeInPixels.Height / 2;
         }
 
         public void Show() => this.StrawStoryboard.Begin(); // Storyboard

@@ -156,6 +156,9 @@
     <Compile Include="SaturationPicker.xaml.cs">
       <DependentUpon>SaturationPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Strawer.xaml.cs">
+      <DependentUpon>Strawer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TemplateSettings.cs" />
     <Compile Include="TricolorPicker.xaml.cs">
       <DependentUpon>TricolorPicker.xaml</DependentUpon>
@@ -211,6 +214,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SaturationPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Strawer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
