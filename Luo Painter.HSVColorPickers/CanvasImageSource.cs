@@ -12,7 +12,7 @@ namespace Luo_Painter.HSVColorPickers
     {
         //@Content
         public ImageSource ImageSource => this.CanvasImageSource;
-        
+
         protected readonly CanvasDevice CanvasDevice;
         protected readonly CanvasImageSource CanvasImageSource;
 
@@ -54,39 +54,58 @@ namespace Luo_Painter.HSVColorPickers
         }
     }
 
-    public sealed class AlphaImageSource : CanvasImageSourceBase
+    public abstract class GrayAndWhiteImageSource : CanvasImageSourceBase
     {
-        readonly int Length;
-        readonly int Square;
+        protected readonly int Count;
+        protected readonly int Length;
+        protected readonly int Square;
 
-        public AlphaImageSource(CanvasDevice canvasDevice, int length, int square, float dpi) : base(canvasDevice, length, square * 2, dpi)
+        internal GrayAndWhiteImageSource(CanvasDevice canvasDevice, int length, int square, float dpi) : base(canvasDevice, length, square * 2, dpi)
         {
+            this.Count = length / square;
             this.Length = length;
             this.Square = square;
             this.Draw();
         }
+    }
 
+    public sealed class OpacityImageSource : GrayAndWhiteImageSource
+    {
+        public OpacityImageSource(CanvasDevice canvasDevice, int length, int square, float dpi) : base(canvasDevice, length, square, dpi) { }
         protected override void Draw()
         {
-            int count = this.Length / this.Square;
-            Color color0 = Colors.DarkGray;
-            Color color1 = Colors.DimGray;
+            using (CanvasDrawingSession ds = base.CreateDrawingSession(Colors.White))
+            {
+                for (int i = 0; i < base.Count; i++)
+                {
+                    ds.FillRectangle(i * this.Square, i % 2 * this.Square, this.Square, this.Square, Colors.LightGray);
+                }
+            }
+        }
+    }
 
+    public sealed class AlphaImageSource : GrayAndWhiteImageSource
+    {
+        Color Color0 = Colors.DarkGray;
+        Color Color1 = Colors.DimGray;
+        public AlphaImageSource(CanvasDevice canvasDevice, int length, int square, float dpi) : base(canvasDevice, length, square, dpi) { }
+        protected override void Draw()
+        {
             using (CanvasDrawingSession ds = base.CreateDrawingSession(Colors.DodgerBlue))
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < base.Count; i++)
                 {
-                    color0.A = color1.A = (byte)(255f - 255f * i / count);
+                    this.Color0.A = this.Color1.A = (byte)(255f - 255f * i / base.Count);
 
                     if (i % 2 is 0)
                     {
-                        ds.FillRectangle(i * this.Square, 0, this.Square, this.Square, color0);
-                        ds.FillRectangle(i * this.Square, this.Square, this.Square, this.Square, color1);
+                        ds.FillRectangle(i * this.Square, 0, this.Square, this.Square, this.Color0);
+                        ds.FillRectangle(i * this.Square, this.Square, this.Square, this.Square, this.Color1);
                     }
                     else
                     {
-                        ds.FillRectangle(i * this.Square, 0, this.Square, this.Square, color1);
-                        ds.FillRectangle(i * this.Square, this.Square, this.Square, this.Square, color0);
+                        ds.FillRectangle(i * this.Square, 0, this.Square, this.Square, this.Color1);
+                        ds.FillRectangle(i * this.Square, this.Square, this.Square, this.Square, this.Color0);
                     }
                 }
             }
