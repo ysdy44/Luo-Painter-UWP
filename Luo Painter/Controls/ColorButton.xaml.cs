@@ -25,23 +25,6 @@ namespace Luo_Painter.Controls
     public sealed partial class ColorButton : Button, IInkParameter, IColorHdrBase, IColorBase
     {
         //@Converter
-        private Visibility ColorVisibilityConverter(int value) => value is 5 ? Visibility.Collapsed : Visibility.Visible;
-        private Visibility PaletteVisibilityConverter(int value) => value is 5 ? Visibility.Visible : Visibility.Collapsed;
-        private ColorSpectrumShape ColorSpectrumShapeConverter(int value) => value is 3 || value is 4 ? ColorSpectrumShape.Ring : ColorSpectrumShape.Box;
-        private ColorSpectrumComponents ColorSpectrumComponentsConverter(int value)
-        {
-            switch (value)
-            {
-                case 0: return ColorSpectrumComponents.SaturationValue; // Hue
-                case 1: return ColorSpectrumComponents.HueSaturation; // Saturation
-                case 2: return ColorSpectrumComponents.HueValue; // Value
-
-                case 3: return ColorSpectrumComponents.HueSaturation; // Saturation
-                case 4: return ColorSpectrumComponents.HueValue; // Value
-
-                default: return ColorSpectrumComponents.SaturationValue;
-            }
-        }
         private HarmonyMode ModeConverter(int value)
         {
             switch (value)
@@ -136,6 +119,12 @@ namespace Luo_Painter.Controls
 
             this.ConstructCanvas();
             this.ConstructOperator();
+            
+            this.ConstructPicker();
+
+            this.ConstructColor();
+            this.ConstructColorHarmony();
+            this.ConstructColorValue();
 
             this.ConstructInk();
             this.ConstructStraw();
@@ -154,7 +143,13 @@ namespace Luo_Painter.Controls
 
         public void Show(Color color)
         {
-            this.ColorPicker.Color = color;
+            if (this.TricolorPicker.Visibility == default) this.TricolorPicker.Recolor(color);
+            if (this.HuePicker.Visibility == default) this.HuePicker.Recolor(color);
+
+            if (this.RGBPicker.Visibility == default) this.RGBPicker.Recolor(color);
+            if (this.HSVPicker.Visibility == default) this.HSVPicker.Recolor(color);
+
+            this.HexPicker.Recolor(color);
         }
         public void ShowAt(Color color, FrameworkElement placementTarget)
         {
