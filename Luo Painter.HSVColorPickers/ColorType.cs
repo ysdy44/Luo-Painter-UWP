@@ -7,6 +7,7 @@
         Slider = 8,
         Box = 16,
         Ring = 32,
+        Hex = 64,
 
         Rectcolor = 1 | Wheel,
         Tricolor = 2 | Wheel,
