@@ -42,6 +42,31 @@ namespace Luo_Painter.Controls
                 default: return ColorSpectrumComponents.SaturationValue;
             }
         }
+        private HarmonyMode ModeConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: return HarmonyMode.None;
+                case 1: return HarmonyMode.Complementary;
+                case 2: return HarmonyMode.SplitComplementary;
+                case 3: return HarmonyMode.Analogous;
+                case 4: return HarmonyMode.Triadic;
+                case 5: return HarmonyMode.Tetradic;
+                default: return default;
+            }
+        }
+        private int IndexConverter(int value)
+        {
+            switch (value)
+            {
+                case 0: case 1: return 0;
+                case 2: return 1;
+                case 3: case 4: return 2;
+                case 5: return 3;
+                case 6: return 4;
+                default: return default;
+            }
+        }
 
         //@Delegate
         public event EventHandler<Color> ColorChanged;
@@ -53,22 +78,22 @@ namespace Luo_Painter.Controls
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         BitmapLayer BitmapLayer { get; set; }
+        ObservableCollection<Color> ObservableCollection { get; } = new ObservableCollection<Color>();
 
         //@Task
         readonly object Locker = new object();
         //@ Paint
         readonly PaintTaskCollection Tasks = new PaintTaskCollection();
 
+        OpacityImageSource OpacityImageSource;
+        AlphaImageSource AlphaImageSource;
+        WheelImageSource WheelImageSource;
+
         Vector2 StartingPosition;
         Vector2 Position;
         float StartingPressure;
         float Pressure;
-
-        ObservableCollection<Color> ObservableCollection { get; } = new ObservableCollection<Color>();
-        readonly DispatcherTimer Timer = new DispatcherTimer
-        {
-            Interval = System.TimeSpan.FromSeconds(1)
-        };
+        Point StartingStraw;
 
         #region IInkParameter
 
@@ -86,16 +111,29 @@ namespace Luo_Painter.Controls
         public void Construct(IInkParameter item)
         {
             this.InkParameter = item;
+
+            float dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
+            this.OpacityImageSource = new OpacityImageSource(this.CanvasDevice, 90, 15, dpi);
+            this.AlphaImageSource = new AlphaImageSource(this.CanvasDevice, 300, 4, dpi);
+            this.WheelImageSource = new WheelImageSource(this.CanvasDevice, new CircleTemplateSettingsF(300), dpi);
+        }
+        private void SurfaceContentsLost(object sender, object e)
+        {
+            this.OpacityImageSource.Redraw();
+            this.AlphaImageSource.Redraw();
+            this.WheelImageSource.Redraw();
         }
 
         #endregion
-
-        Point StartingStraw;
 
         //@Construct
         public ColorButton()
         {
             this.InitializeComponent();
+            base.Unloaded += (s, e) => CompositionTarget.SurfaceContentsLost -= this.SurfaceContentsLost;
+            base.Loaded += (s, e) => CompositionTarget.SurfaceContentsLost += this.SurfaceContentsLost;
+            this.ComboBox.SelectionChanged += (s, e) => this.Show(this.Color);
+
             this.ConstructCanvas();
             this.ConstructOperator();
 
