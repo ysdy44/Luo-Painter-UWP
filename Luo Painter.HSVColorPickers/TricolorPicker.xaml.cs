@@ -55,6 +55,12 @@ namespace Luo_Painter.HSVColorPickers
             this.TrianglePath.ManipulationMode = ManipulationModes.All;
             this.TrianglePath.ManipulationStarted += (_, e) =>
             {
+                if (e.PointerDeviceType == default)
+                {
+                    this.Transform.ScaleX = 1.8;
+                    this.Transform.ScaleY = 1.8;
+                }
+
                 this.Triangle = this.TriangleSize.Offset(e.Position);
                 this.Move();
 
@@ -73,6 +79,12 @@ namespace Luo_Painter.HSVColorPickers
             {
                 Color color = this.HSV.ToColor();
                 this.Color(color);
+
+                if (e.PointerDeviceType == default)
+                {
+                    this.Transform.ScaleX = 1;
+                    this.Transform.ScaleY = 1;
+                }
 
                 //this.TextBlock.Text = ColorHelper.ToDisplayName(this.HSV.ToColor());
                 //this.TextBlock.Visibility = Visibility.Collapsed;

@@ -55,6 +55,12 @@ namespace Luo_Painter.HSVColorPickers
             this.BoxRectangle.ManipulationMode = ManipulationModes.All;
             this.BoxRectangle.ManipulationStarted += (_, e) =>
             {
+                if (e.PointerDeviceType == default)
+                {
+                    this.Transform.ScaleX = 1.8;
+                    this.Transform.ScaleY = 1.8;
+                }
+
                 this.Box = e.Position;
                 this.Move();
             };
@@ -68,6 +74,12 @@ namespace Luo_Painter.HSVColorPickers
             {
                 Color color = this.HSV.ToColor();
                 this.Color(color);
+
+                if (e.PointerDeviceType == default)
+                {
+                    this.Transform.ScaleX = 1;
+                    this.Transform.ScaleY = 1;
+                }
             };
 
             this.SliderRectangle.ManipulationMode = ManipulationModes.TranslateX;

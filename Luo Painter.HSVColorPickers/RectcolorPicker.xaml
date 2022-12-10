@@ -54,6 +54,12 @@
 
         <Ellipse x:Name="BlackEllipse" IsHitTestVisible="False" Width="28" Height="28" StrokeThickness="2" Stroke="Black"/>
         <Ellipse x:Name="WhiteEllipse" IsHitTestVisible="False" Width="26" Height="26" StrokeThickness="1" Stroke="White">
+            <UIElement.RenderTransformOrigin>
+                0.5,0.5
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <ScaleTransform x:Name="Transform" ScaleX="1" ScaleY="1"/>
+            </UIElement.RenderTransform>
             <Shape.Fill>
                 <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
             </Shape.Fill>
