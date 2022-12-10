@@ -170,7 +170,7 @@
       <DependentUpon>BrushListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorButton.Canvas.cs" />
-    <Compile Include="Controls\ColorButton.Color.cs" />
+    <Compile Include="Controls\ColorButton.Straw.cs" />
     <Compile Include="Controls\ColorButton.CreateResources.cs" />
     <Compile Include="Controls\ColorButton.Ink.cs" />
     <Compile Include="Controls\ColorButton.Operator.cs" />
