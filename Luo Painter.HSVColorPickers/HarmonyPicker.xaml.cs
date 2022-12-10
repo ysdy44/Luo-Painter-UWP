@@ -12,6 +12,8 @@ namespace Luo_Painter.HSVColorPickers
     {
         //@Delegate
         public event EventHandler<Color> ColorChanged;
+        public event EventHandler<Color> ColorChangedCompleted;
+
         public event EventHandler<Color> Color1Changed;
         public event EventHandler<Color> Color2Changed;
         public event EventHandler<Color> Color3Changed;
@@ -82,7 +84,7 @@ namespace Luo_Painter.HSVColorPickers
             this.RingEllipse.ManipulationCompleted += (_, e) =>
             {
                 Color color = this.HSV.ToColor();
-                this.Color(color);
+                this.ColorChangedCompleted?.Invoke(this, color); // Delegate
 
                 if (e.PointerDeviceType == default)
                 {
@@ -103,8 +105,9 @@ namespace Luo_Painter.HSVColorPickers
                 this.Zoom();
             };
             this.SliderRectangle.ManipulationCompleted += (_, e) =>
-            {
-                this.Color(this.HSV.ToColor());
+            {              
+                Color color = this.HSV.ToColor();
+                this.ColorChangedCompleted?.Invoke(this, color); // Delegate
             };
         }
     }
@@ -119,6 +122,8 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Line(this.Slider);
             this.Ellipse(this.HSV.Z * Math.PI / 180d, this.HSV.X);
+
+            this.EllipseSolidColorBrush.Color = color;
 
             this.Point();
             this.PointToPoint();
@@ -144,8 +149,7 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Ellipse(h, s);
 
-            Color color = this.HSV.ToColor();
-            this.Color(color);
+            this.Color(this.HSV.ToColor());
 
             this.Point();
             this.PointToPoint();
@@ -156,8 +160,7 @@ namespace Luo_Painter.HSVColorPickers
             this.HSV.Y = (float)Math.Clamp(this.Slider / this.RingSize.BoxSize.Width, 0d, 1d);
             this.Line(this.HSV.Y * this.RingSize.BoxSize.Width);
 
-            Color color = this.HSV.ToColor();
-            this.Color(color);
+            this.Color(this.HSV.ToColor());
 
             this.Point();
             this.PointToPoint();

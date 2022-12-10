@@ -12,6 +12,7 @@ namespace Luo_Painter.HSVColorPickers
     {
         //@Delegate
         public event EventHandler<Color> ColorChanged;
+        public event EventHandler<Color> ColorChangedCompleted;
 
         public ColorType Type => ColorType.Value;
 
@@ -73,7 +74,7 @@ namespace Luo_Painter.HSVColorPickers
             this.BoxRectangle.ManipulationCompleted += (_, e) =>
             {
                 Color color = this.HSV.ToColor();
-                this.Color(color);
+                this.ColorChangedCompleted?.Invoke(this, color); // Delegate
 
                 if (e.PointerDeviceType == default)
                 {
@@ -95,7 +96,8 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.SliderRectangle.ManipulationCompleted += (_, e) =>
             {
-                this.Color(this.HSV.ToColor());
+                Color color = this.HSV.ToColor();
+                this.ColorChangedCompleted?.Invoke(this, color); // Delegate
             };
         }
     }
@@ -112,6 +114,8 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
+
+            this.EllipseSolidColorBrush.Color = color;
         }
         private void Reset(BoxTemplateSettings size)
         {

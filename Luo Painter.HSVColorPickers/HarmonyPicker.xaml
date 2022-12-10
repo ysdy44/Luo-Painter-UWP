@@ -24,23 +24,23 @@
             </Shape.Fill>
         </Rectangle>
 
-        
-        <Line x:Name="BlackLine4" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
-        <Line x:Name="BlackLine3" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
-        <Line x:Name="BlackLine2" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
-        <Line x:Name="BlackLine1" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
 
-        <Ellipse x:Name="BlackEllipse3" IsHitTestVisible="False" Width="18" Height="18" StrokeThickness="1" Stroke="Black">
+        <Line x:Name="BlackLine4" IsHitTestVisible="False" Visibility="Collapsed" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
+        <Line x:Name="BlackLine3" IsHitTestVisible="False" Visibility="Collapsed" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
+        <Line x:Name="BlackLine2" IsHitTestVisible="False" Visibility="Collapsed" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
+        <Line x:Name="BlackLine1" IsHitTestVisible="False" Visibility="Collapsed" StrokeDashArray="8 4" StrokeThickness="1" Stroke="Black"/>
+
+        <Ellipse x:Name="BlackEllipse3" IsHitTestVisible="False" Visibility="Collapsed" Width="18" Height="18" StrokeThickness="1" Stroke="Black">
             <Shape.Fill>
                 <SolidColorBrush x:Name="Ellipse3SolidColorBrush" Color="Black"/>
             </Shape.Fill>
         </Ellipse>
-        <Ellipse x:Name="BlackEllipse2" IsHitTestVisible="False" Width="18" Height="18" StrokeThickness="1" Stroke="Black">
+        <Ellipse x:Name="BlackEllipse2" IsHitTestVisible="False" Visibility="Collapsed" Width="18" Height="18" StrokeThickness="1" Stroke="Black">
             <Shape.Fill>
                 <SolidColorBrush x:Name="Ellipse2SolidColorBrush" Color="Black"/>
             </Shape.Fill>
         </Ellipse>
-        <Ellipse x:Name="BlackEllipse1" IsHitTestVisible="False" Width="18" Height="18" StrokeThickness="1" Stroke="Black">
+        <Ellipse x:Name="BlackEllipse1" IsHitTestVisible="False" Visibility="Collapsed" Width="18" Height="18" StrokeThickness="1" Stroke="Black">
             <Shape.Fill>
                 <SolidColorBrush x:Name="Ellipse1SolidColorBrush" Color="Black"/>
             </Shape.Fill>

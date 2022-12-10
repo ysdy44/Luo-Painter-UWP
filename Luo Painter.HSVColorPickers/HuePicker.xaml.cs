@@ -12,6 +12,7 @@ namespace Luo_Painter.HSVColorPickers
     {
         //@Delegate
         public event EventHandler<Color> ColorChanged;
+        public event EventHandler<Color> ColorChangedCompleted;
 
         public ColorType Type => ColorType.Hue;
 
@@ -73,7 +74,7 @@ namespace Luo_Painter.HSVColorPickers
             this.BoxRectangle.ManipulationCompleted += (_, e) =>
             {
                 Color color = this.HSV.ToColor();
-                this.Color(color);
+                this.ColorChangedCompleted?.Invoke(this, color); // Delegate
 
                 if (e.PointerDeviceType == default)
                 {
@@ -95,9 +96,10 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.SliderRectangle.ManipulationCompleted += (_, e) =>
             {
-                Color color = HSVExtensions.ToColor(this.HSV.Z);
-                this.Stop(color);
-                this.Color(this.HSV.ToColor());
+                this.Stop(HSVExtensions.ToColor(this.HSV.Z));
+
+                Color color = this.HSV.ToColor();
+                this.ColorChangedCompleted?.Invoke(this, color); // Delegate
             };
         }
     }
@@ -114,6 +116,8 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
+
+            this.EllipseSolidColorBrush.Color = color;
         }
         private void Reset(BoxTemplateSettings b)
         {
@@ -131,9 +135,8 @@ namespace Luo_Painter.HSVColorPickers
             this.HSV.X = (float)Math.Clamp(this.Box.X / this.BoxSize.Width, 0d, 1d);
             this.HSV.Y = (float)Math.Clamp((this.BoxSize.Height - this.Box.Y) / this.BoxSize.Height, 0d, 1d);
             this.Ellipse(Math.Clamp(this.Box.X, 0d, this.BoxSize.Width), Math.Clamp(this.Box.Y, 0d, this.BoxSize.Height));
-
-            Color color = this.HSV.ToColor();
-            this.Color(color);
+        
+            this.Color(this.HSV.ToColor());
         }
 
         private void Zoom()
@@ -141,9 +144,8 @@ namespace Luo_Painter.HSVColorPickers
             this.HSV.Z = (float)Math.Clamp(this.Slider * 360d / this.BoxSize.Width, 0d, 360d);
             this.Line(this.HSV.Z * this.BoxSize.Width / 360d);
 
-            Color color = HSVExtensions.ToColor(this.HSV.Z);
-            this.Stop(color);
-            this.Color(color);
+            this.Stop(HSVExtensions.ToColor(this.HSV.Z));
+            this.Color(this.HSV.ToColor());
         }
 
 
@@ -177,8 +179,7 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Line(this.HSV.Z * this.BoxSize.Width / 360d);
 
-            Color color = HSVExtensions.ToColor(this.HSV.Z);
-            this.Stop(color);
+            this.Stop(HSVExtensions.ToColor(this.HSV.Z));
             this.Color(this.HSV.ToColor());
         }
         public void ZoomIn()
@@ -189,8 +190,7 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Line(this.HSV.Z * this.BoxSize.Width / 360d);
 
-            Color color = HSVExtensions.ToColor(this.HSV.Z);
-            this.Stop(color);
+            this.Stop(HSVExtensions.ToColor(this.HSV.Z));
             this.Color(this.HSV.ToColor());
         }
     }
