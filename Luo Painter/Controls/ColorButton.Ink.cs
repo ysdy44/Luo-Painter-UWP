@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorButton : Button, IInkParameter
+    public sealed partial class ColorButton
     {
 
         private void ConstructInk()

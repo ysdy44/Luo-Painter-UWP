@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
@@ -7,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorButton : Button, IInkParameter
+    public sealed partial class ColorButton
     {
 
         private void ConstructCanvas()
@@ -15,7 +14,7 @@ namespace Luo_Painter.Controls
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 float width = sender.Dpi.ConvertDipsToPixels(320);
-                float height = sender.Dpi.ConvertDipsToPixels(358);
+                float height = sender.Dpi.ConvertDipsToPixels(350);
                 this.CreateResources((int)width, (int)height);
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
