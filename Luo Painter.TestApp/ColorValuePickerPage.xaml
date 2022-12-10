@@ -12,28 +12,39 @@
 
     <Grid>
 
-        <elements:IndexGrid x:Name="IndexGrid" Width="320" MinHeight="320" MaxHeight="360" Index="{x:Bind ListView.SelectedIndex, Mode=OneWay}">
-            <hsvColorPickers:RGBPicker ColorChanged="ColorChanged">
+        <elements:IndexGrid x:Name="IndexGrid" Width="320" Height="320" Index="{x:Bind ListView.SelectedIndex, Mode=OneWay}">
+            <hsvColorPickers:RGBPicker x:Name="RGBPicker">
                 <Control.Background>
                     <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
                 </Control.Background>
             </hsvColorPickers:RGBPicker>
-            <hsvColorPickers:HSVPicker ColorChanged="ColorChanged">
+            <hsvColorPickers:HSVPicker x:Name="HSVPicker">
                 <Control.Background>
                     <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
                 </Control.Background>
             </hsvColorPickers:HSVPicker>
-            <hsvColorPickers:HexPicker MinWidth="100" Height="32" ColorChanged="ColorChanged"/>
+            <hsvColorPickers:HexPicker x:Name="HexPicker" MinWidth="100" MinHeight="32" VerticalAlignment="Center">
+                <TextBox.Header>
+                    <TextBlock>
+                        <Run>#</Run><Run Text="{x:Bind HexPicker.Text, Mode=OneWay}"/>
+                    </TextBlock>
+                </TextBox.Header>
+            </hsvColorPickers:HexPicker>
         </elements:IndexGrid>
 
         <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
-                <Rectangle Margin="12,6,2,0" RadiusX="4" RadiusY="4" Width="80" Height="30" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}">
-                    <Shape.Fill>
-                        <SolidColorBrush x:Name="SolidColorBrush" Color="Black"/>
-                    </Shape.Fill>
-                </Rectangle>
+                <Border Margin="12,6,2,0" CornerRadius="4" Width="90" Height="30" BorderThickness="1" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{x:Bind OpacityImageSource.ImageSource}"/>
+                    </Border.Background>
+                    <Rectangle RadiusX="4" RadiusY="4" Width="90" Height="30">
+                        <Shape.Fill>
+                            <SolidColorBrush x:Name="SolidColorBrush" Color="DodgerBlue"/>
+                        </Shape.Fill>
+                    </Rectangle>
+                </Border>
             </ContentControl.Content>
 
         </CommandBar>

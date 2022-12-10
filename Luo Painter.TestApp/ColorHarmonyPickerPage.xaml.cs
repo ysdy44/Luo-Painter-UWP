@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.HSVColorPickers;
 using Microsoft.Graphics.Canvas;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,8 +30,7 @@ namespace Luo_Painter.TestApp
         }
 
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
-        readonly float Dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
-
+        readonly OpacityImageSource OpacityImageSource;
         readonly AlphaImageSource AlphaImageSource;
         readonly WheelImageSource WheelImageSource;
 
@@ -60,16 +60,22 @@ namespace Luo_Painter.TestApp
         public ColorHarmonyPickerPage()
         {
             this.InitializeComponent();
-            this.AlphaImageSource = new AlphaImageSource(this.CanvasDevice, 320, 4, this.Dpi);
-            this.WheelImageSource = new WheelImageSource(this.CanvasDevice, new CircleTemplateSettingsF(320), this.Dpi);
+            float dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
+            this.OpacityImageSource = new OpacityImageSource(this.CanvasDevice, 90, 15, dpi);
+            this.AlphaImageSource = new AlphaImageSource(this.CanvasDevice, 300, 4, dpi);
+            this.WheelImageSource = new WheelImageSource(this.CanvasDevice, new CircleTemplateSettingsF(300), dpi);
 
             base.Unloaded += (s, e) => CompositionTarget.SurfaceContentsLost -= this.SurfaceContentsLost;
             base.Loaded += (s, e) => CompositionTarget.SurfaceContentsLost += this.SurfaceContentsLost;
 
-            this.HarmonyPicker.ColorChanged += (s, e) => this.SolidColorBrush.Color =  this.EllipseSolidColorBrush.Color = e;
+            this.HarmonyPicker.ColorChanged += (s, e) => this.SolidColorBrush.Color = this.EllipseSolidColorBrush.Color = e;
             this.HarmonyPicker.Color1Changed += (s, e) => this.Ellipse1SolidColorBrush.Color = e;
             this.HarmonyPicker.Color2Changed += (s, e) => this.Ellipse2SolidColorBrush.Color = e;
             this.HarmonyPicker.Color3Changed += (s, e) => this.Ellipse3SolidColorBrush.Color = e;
+
+            this.HarmonyPicker.Recolor(Colors.DodgerBlue);
+            this.HarmonyPicker.Remode(HarmonyMode.Triadic);
+            this.Mode = HarmonyMode.Triadic;
 
             this.ListView.SelectionChanged += (s, e) => this.Mode = this.ModeConverter(this.ListView.SelectedIndex);
 
@@ -100,6 +106,7 @@ namespace Luo_Painter.TestApp
         }
         private void SurfaceContentsLost(object sender, object e)
         {
+            this.OpacityImageSource.Redraw();
             this.AlphaImageSource.Redraw();
             this.WheelImageSource.Redraw();
         }

@@ -12,7 +12,7 @@
 
     <Grid>
 
-        <elements:IndexGrid x:Name="IndexGrid" Width="320" MinHeight="320" MaxHeight="360" Index="{x:Bind ListView.SelectedIndex, Mode=OneWay}">
+        <elements:IndexGrid x:Name="IndexGrid" Width="300" MinHeight="300" MaxHeight="340" Index="{x:Bind ListView.SelectedIndex, Mode=OneWay}">
             <hsvColorPickers:RectcolorPicker ColorChanged="ColorChanged">
                 <Control.Background>
                     <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
@@ -38,11 +38,16 @@
         <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
-                <Rectangle Margin="12,6,2,0" RadiusX="4" RadiusY="4" Width="80" Height="30" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}">
-                    <Shape.Fill>
-                        <SolidColorBrush x:Name="SolidColorBrush" Color="Black"/>
-                    </Shape.Fill>
-                </Rectangle>
+                <Border Margin="12,6,2,0" CornerRadius="4" Width="90" Height="30" BorderThickness="1" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{x:Bind OpacityImageSource.ImageSource}"/>
+                    </Border.Background>
+                    <Rectangle RadiusX="4" RadiusY="4" Width="90" Height="30">
+                        <Shape.Fill>
+                            <SolidColorBrush x:Name="SolidColorBrush" Color="Black"/>
+                        </Shape.Fill>
+                    </Rectangle>
+                </Border>
             </ContentControl.Content>
 
             <AppBarButton x:Name="AddButton" >
