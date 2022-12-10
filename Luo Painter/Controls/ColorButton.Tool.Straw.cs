@@ -1,36 +1,43 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Layers;
+﻿using Luo_Painter.Layers;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorButton : Button, IInkParameter
+    public sealed partial class ColorButton
     {
 
         private void Straw_Start()
         {
             int x = (int)this.StartingPosition.X;
             int y = (int)this.StartingPosition.Y;
-            this.SolidColorBrush.Color = this.Straw(x, y);
+
+            Color color = this.Straw(x, y);
+            this.SecondarySolidColorBrush.Color = color;
+            this.SolidColorBrush.Color = color;
         }
         private void Straw_Delta()
         {
             int x = (int)this.Position.X;
             int y = (int)this.Position.Y;
-            this.SolidColorBrush.Color = this.Straw(x, y);
+
+            Color color = this.Straw(x, y);
+            this.SecondarySolidColorBrush.Color = color;
+            this.SolidColorBrush.Color = color;
         }
         private void Straw_Complete()
         {
             int x = (int)this.Position.X;
             int y = (int)this.Position.Y;
 
-            this.ColorPicker.ColorChanged -= this.ColorPicker_ColorChanged;
-            {
-                this.SolidColorBrush.Color = this.ColorPicker.Color = this.Straw(x, y);
-            }
-            this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
+            Color color = this.Straw(x, y);
+            this.SecondarySolidColorBrush.Color = color;
+            this.SolidColorBrush.Color = color;
+
+            this.SetColor(color);
+            this.SetColorHdr(color);
+            this.ColorChanged?.Invoke(this, color); // Delegate
         }
 
         private Color Straw(int x, int y)

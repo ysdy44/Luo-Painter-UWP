@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     d:DesignHeight="400"
@@ -30,11 +32,15 @@
     <FrameworkElement.Resources>
         <!--Transformer-->
         <brushes:InkCanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <!--Flyout-->
+        <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
+        </Flyout>
     </FrameworkElement.Resources>
 
     <Button.Flyout>
         <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <StackPanel Width="320" Height="512" >
+            <StackPanel Width="320" Height="504">
 
                 <!--Title-->
                 <Grid Padding="6,0" Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
@@ -68,70 +74,28 @@
                         </UIElement.ManipulationMode>
                         <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
                     </Button>
+                    <Rectangle Grid.Column="2" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7" Width="90" Height="32">
+                    </Rectangle>
                     <Border Grid.Column="2" CornerRadius="6,0,0,6" Width="45" Height="32" >
                         <Border.Background>
-                            <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
+                            <SolidColorBrush x:Name="PrimarySolidColorBrush" Color="Black"/>
                         </Border.Background>
                     </Border>
                     <Border Grid.Column="3" CornerRadius="0,6,6,0" Width="45" Height="32" >
                         <Border.Background>
-                            <SolidColorBrush x:Name="SolidColorBrush" Color="Black"/>
+                            <SolidColorBrush x:Name="SecondarySolidColorBrush" Color="Black"/>
                         </Border.Background>
                     </Border>
                 </Grid>
 
                 <!--Type-->
                 <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
-                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="BoxHueToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Hue
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <luo_painter:ElementIcon Type="ColorBoxHue"/>
-                    </ListBoxItem>
-                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="BoxSaturationToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Saturation
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <luo_painter:ElementIcon Type="ColorBoxSaturation"/>
-                    </ListBoxItem>
-                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="BoxValueToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Value
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <luo_painter:ElementIcon Type="ColorBoxValue"/>
-                    </ListBoxItem>
-
-                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="RingSaturationToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Saturation
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <luo_painter:ElementIcon Type="ColorRingSaturation"/>
-                    </ListBoxItem>
-                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="RingValueToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Value
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <luo_painter:ElementIcon Type="ColorRingValue"/>
-                    </ListBoxItem>
-
-                    <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="PaletteItemToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Palette
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <luo_painter:ElementIcon Type="ColorPalette"/>
-                    </ListBoxItem>
+                    <FontIcon Glyph="&#xF157;" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
+                    <x:String>RGB</x:String>
+                    <x:String>HSV</x:String>
+                    <FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>
                 </ListBox>
 
                 <!--Color-->
@@ -151,20 +115,28 @@
                     IsAlphaEnabled="False" 
                     ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
                     ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
-                    Visibility="{x:Bind ColorVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
+                    />
+
+                <!--Palette-->
+                <canvas:CanvasControl 
+                    x:Name="CanvasControl" 
+                    Width="320"
+                    Height="350"
+                    ClearColor="White" 
+                    UseSharedDevice="True" 
+                    CustomDevice="{x:Bind CanvasDevice}" 
+                    Visibility="Collapsed"
                     />
 
                 <!--Swatches-->
                 <ListView 
                     x:Name="ListView"
-                    Margin="8,11"
-                    Padding="0"
-                    Height="28"
+                    Width="300"
+                    Height="30"
                     IsItemClickEnabled="True"
                     SelectionMode="None" 
-                    Background="{ThemeResource AppBackground}"
+                    Background="{ThemeResource SystemAltLowColor}"
                     ItemsSource="{x:Bind ObservableCollection}"          
-                    Visibility="{x:Bind ColorVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
                     ScrollViewer.HorizontalScrollMode="Enabled"
                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                     ScrollViewer.VerticalScrollMode="Disabled"
@@ -208,19 +180,8 @@
 
                 </ListView>
 
-                <!--Palette-->
-                <canvas:CanvasControl 
-                    x:Name="CanvasControl" 
-                    Width="320"
-                    Height="358"
-                    ClearColor="White" 
-                    UseSharedDevice="True" 
-                    CustomDevice="{x:Bind CanvasDevice}" 
-                    Visibility="{x:Bind PaletteVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
-                    />
-
                 <!--Tool-->
-                <Grid Padding="6,0" Height="50" Visibility="{x:Bind PaletteVisibilityConverter(ComboBox.SelectedIndex),Mode=OneWay}" >
+                <Grid Padding="6,0" Height="50" Visibility="Collapsed" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
@@ -251,7 +212,7 @@
         <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" />
         <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Shape.Fill>
-                <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}" />
+                <SolidColorBrush x:Name="SolidColorBrush" Color="Black"/>
             </Shape.Fill>
         </Ellipse>
     </Grid>

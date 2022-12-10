@@ -9,46 +9,8 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorButton : Button, IInkParameter, IColorBase, IColorHdrBase
+    public sealed partial class ColorButton
     {
-
-        private void ConstructColor()
-        {
-            this.ColorPicker.ColorChanged += this.ColorChanged;
-            this.ColorPicker.ColorChanged += (s, e) => this.SetColor(e.NewColor);
-            this.ColorPicker.ColorChanged += (s, e) => this.SetColorHdr(e.NewColor);
-            this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
-
-            this.Timer.Tick += (s, e) =>
-            {
-                this.Timer.Stop();
-
-                this.SolidColorBrush.Color = this.ColorPicker.Color;
-
-                foreach (Color item in this.ObservableCollection)
-                {
-                    if (item == this.Color) return;
-                }
-
-                while (this.ObservableCollection.Count > 10)
-                {
-                    this.ObservableCollection.RemoveAt(0);
-                }
-                this.ObservableCollection.Add(this.Color);
-            };
-
-            this.ListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is Color item)
-                {
-                    this.ColorPicker.ColorChanged -= this.ColorPicker_ColorChanged;
-                    {
-                        this.ColorPicker.Color = item;
-                    }
-                    this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
-                }
-            };
-        }
 
         private void ConstructStraw()
         {
@@ -56,8 +18,9 @@ namespace Luo_Painter.Controls
             {
                 if (this.Eyedropper is null) return;
 
-                this.StartingStraw.X = Window.Current.Bounds.Width - 35;
-                this.StartingStraw.Y = 25;
+                Point position = base.TransformToVisual(Window.Current.Content).TransformPoint(default);
+                this.StartingStraw.X = position.X + base.ActualWidth / 2;
+                this.StartingStraw.Y = position.Y + base.ActualHeight / 2;
 
                 bool result = await this.Eyedropper.RenderAsync(this.GetTarget());
             };
@@ -93,7 +56,10 @@ namespace Luo_Painter.Controls
                         Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
                         this.Eyedropper.Visibility = Visibility.Collapsed;
 
-                        this.ColorPicker.Color = this.Eyedropper.Color;
+                        Color color = this.Eyedropper.Color;
+                        this.SetColor(color);
+                        this.SetColorHdr(color);
+                        this.ColorChanged?.Invoke(this, color); // Delegate
                         break;
                     default:
                         break;
@@ -115,17 +81,14 @@ namespace Luo_Painter.Controls
                 Window.Current.CoreWindow.PointerCursor = null;
                 this.ClickEyedropper.Visibility = Visibility.Visible;
 
-                this.ColorPicker.Color = await this.ClickEyedropper.OpenAsync();
+                Color color = await this.ClickEyedropper.OpenAsync();
+                this.SetColor(color);
+                this.SetColorHdr(color);
+                this.ColorChanged?.Invoke(this, color); // Delegate
 
                 Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
                 this.ClickEyedropper.Visibility = Visibility.Collapsed;
             };
-        }
-
-        private void ColorPicker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
-        {
-            this.Timer.Stop();
-            this.Timer.Start();
         }
 
         public UIElement GetTarget()

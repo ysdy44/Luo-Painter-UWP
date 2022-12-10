@@ -1,14 +1,17 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,11 +44,10 @@ namespace Luo_Painter.Controls
         }
 
         //@Delegate
-        public event TypedEventHandler<ColorPicker, ColorChangedEventArgs> ColorChanged;
+        public event EventHandler<Color> ColorChanged;
 
         //@Content
         public FrameworkElement PlacementTarget => this;
-
         public Eyedropper Eyedropper { get; set; }
         public ClickEyedropper ClickEyedropper { get; set; }
 
@@ -73,8 +75,8 @@ namespace Luo_Painter.Controls
         public InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
         public InkPresenter InkPresenter => this.InkParameter.InkPresenter;
 
-        public Color Color { get; private set; }
-        public Vector4 ColorHdr { get; private set; }
+        public Color Color { get; private set; } = Colors.Black;
+        public Vector4 ColorHdr { get; private set; } = Vector4.UnitW;
 
         public string TextureSelectedItem => this.InkParameter.TextureSelectedItem;
         public void ConstructTexture(string path) => this.InkParameter.ConstructTexture(path);
@@ -98,44 +100,7 @@ namespace Luo_Painter.Controls
             this.ConstructOperator();
 
             this.ConstructInk();
-
-            this.ConstructColor();
             this.ConstructStraw();
-
-            this.SetColor(this.ColorPicker.Color);
-            this.SetColorHdr(this.ColorPicker.Color);
-
-            this.ColorPicker.Loaded += (s, e) =>
-            {
-                if (s is DependencyObject reference)
-                {
-                    DependencyObject grid = VisualTreeHelper.GetChild(reference, 0); // Grid
-                    DependencyObject stackPanel = VisualTreeHelper.GetChild(grid, 0); // StackPanel
-
-                    // 1. Slider
-                    DependencyObject thirdDimensionSliderGrid = VisualTreeHelper.GetChild(stackPanel, 1); // Grid ThirdDimensionSliderGrid Margin 0,12,0,0
-                    DependencyObject rectangle = VisualTreeHelper.GetChild(thirdDimensionSliderGrid, 0); // Rectangle Height 11
-
-                    if (thirdDimensionSliderGrid is FrameworkElement thirdDimensionSliderGrid1)
-                    {
-                        thirdDimensionSliderGrid1.Margin = new Thickness(0);
-                    }
-                    if (rectangle is FrameworkElement rectangle1)
-                    {
-                        rectangle1.Height = 22;
-                    }
-
-                    // 2. ColorSpectrum
-                    DependencyObject colorSpectrumGrid = VisualTreeHelper.GetChild(stackPanel, 0); // Grid ColorSpectrumGrid 
-                    DependencyObject colorSpectrum = VisualTreeHelper.GetChild(colorSpectrumGrid, 0); // ColorSpectrum ColorSpectrum MaxWidth="336" MaxHeight="336" MinWidth="256" MinHeight="256" 
-
-                    if (colorSpectrum is ColorSpectrum colorSpectrum1)
-                    {
-                        colorSpectrum1.MaxWidth = 1200;
-                        colorSpectrum1.MaxHeight = 1200;
-                    }
-                }
-            };
         }
 
         //@Strings
@@ -151,24 +116,12 @@ namespace Luo_Painter.Controls
 
         public void Show(Color color)
         {
-            this.ColorPicker.ColorChanged -= this.ColorChanged;
-            this.ColorPicker.ColorChanged -= this.ColorPicker_ColorChanged;
-            {
-                this.ColorPicker.Color = color;
-            }
-            this.ColorPicker.ColorChanged += this.ColorChanged;
-            this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
+            this.ColorPicker.Color = color;
         }
         public void ShowAt(Color color, FrameworkElement placementTarget)
         {
-            this.ColorPicker.ColorChanged -= this.ColorChanged;
-            this.ColorPicker.ColorChanged -= this.ColorPicker_ColorChanged;
-            {
-                this.ColorPicker.Color = color;
-                base.Flyout.ShowAt(placementTarget);
-            }
-            this.ColorPicker.ColorChanged += this.ColorChanged;
-            this.ColorPicker.ColorChanged += this.ColorPicker_ColorChanged;
+            this.Show(color);
+            base.Flyout.ShowAt(placementTarget);
         }
 
     }
