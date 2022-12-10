@@ -23,6 +23,7 @@
                     <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
                 </Control.Background>
             </hsvColorPickers:HSVPicker>
+            <hsvColorPickers:HexPicker MinWidth="100" Height="32" ColorChanged="ColorChanged"/>
         </elements:IndexGrid>
 
         <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
@@ -46,6 +47,7 @@
                             <ListView x:Name="ListView" SelectedIndex="0">
                                 <x:String>RGBPicker</x:String>
                                 <x:String>HSVPicker</x:String>
+                                <x:String>HexPicker</x:String>
                             </ListView>
                         </Flyout>
                     </Button.Flyout>
