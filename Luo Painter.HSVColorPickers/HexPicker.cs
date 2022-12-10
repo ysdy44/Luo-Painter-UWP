@@ -17,17 +17,11 @@ namespace Luo_Painter.HSVColorPickers
         //@Construct
         public HexPicker()
         {
-            this.GotFocus += (s, e) => base.Text = this.Hex;
-            this.LostFocus += (s, e) =>
+            base.LostFocus += (s, e) => this.Ok();
+            base.GotFocus += (s, e) =>
             {
-                string text = base.Text.ToUpper();
-                base.Text = text;
-
-                if (this.Hex == text) return;
-                this.Hex = text;
-
-                if (this.Color(text)) return;
                 base.Text = this.Hex;
+                base.SelectAll();
             };
             base.KeyDown += (s, e) =>
             {
@@ -49,6 +43,19 @@ namespace Luo_Painter.HSVColorPickers
             string b = color.B.ToString("x2");
 
             this.Hex = $"{r}{g}{b}".ToUpper();
+            base.Text = this.Hex;
+        }
+
+        public void Cancel() => base.Text = this.Hex;
+        public void Ok()
+        {
+            string text = base.Text.ToUpper();
+            base.Text = text;
+
+            if (this.Hex == text) return;
+            this.Hex = text;
+
+            if (this.Color(text)) return;
             base.Text = this.Hex;
         }
 
