@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
+    xmlns:local="using:Luo_Painter.TestApp"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
@@ -12,78 +13,43 @@
 
     <Grid>
 
-        <GridView IsHitTestVisible="False" IsEnabled="False">
-            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="Width" Value="100"/>
-                    <Setter Property="Height" Value="100"/>
-                </Style>
-            </GridView.ItemContainerStyle>
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <Image>
-                        <Image.Source>
-                            ms-appx:///Assets/LockScreenLogo.scale-200.png
-                        </Image.Source>
-                    </Image>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-            <x:Int32>0</x:Int32>
-            <x:Int32>1</x:Int32>
-            <x:Int32>2</x:Int32>
-            <x:Int32>3</x:Int32>
-            <x:Int32>4</x:Int32>
-        </GridView>
+        <local:EyedropperColorButton 
+            x:Name="ColorButton"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center"
+            Eyedropper="{x:Bind Eyedropper}" 
+            ClickEyedropper="{x:Bind ClickEyedropper}"
+            Command="{x:Bind ColorButton}"
+            >
+            <UIElement.ManipulationMode>
+                TranslateX, TranslateY
+            </UIElement.ManipulationMode>
+            <Control.Foreground>
+                <SolidColorBrush Color="DodgerBlue"/>
+            </Control.Foreground>
+            <StackPanel Spacing="12" Padding="4" Orientation="Horizontal">
+                <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                <SymbolIcon Symbol="MailFilled"/>
+            </StackPanel>
+        </local:EyedropperColorButton>
 
         <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-
-            <AppBarButton x:Name="ColorButton" >
-                <Button.ManipulationMode>
-                    TranslateX, TranslateY
-                </Button.ManipulationMode>
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="C"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Placeholder"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Color
-                </AppBarButton.Label>
-            </AppBarButton>
-
-            <AppBarButton x:Name="StrawButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="S"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Pin"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Straw
-                </AppBarButton.Label>
-            </AppBarButton>
-
-            <AppBarButton>
-                <AppBarButton.Flyout>
-                    <Flyout x:Name="ColorFlyout">
-                        <ColorPicker x:Name="ColorPicker" />
-                    </Flyout>
-                </AppBarButton.Flyout>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="MailFilled" >
-                        <IconElement.Foreground>
-                            <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
-                        </IconElement.Foreground>
-                    </SymbolIcon>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Color
-                </AppBarButton.Label>
-            </AppBarButton>
-
+            <Control.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="Yellow" Offset="0.16666667"/>
+                    <GradientStop Color="Lime" Offset="0.33333333"/>
+                    <GradientStop Color="Cyan" Offset="0.5"/>
+                    <GradientStop Color="Blue" Offset="0.66666667"/>
+                    <GradientStop Color="Fuchsia" Offset="0.83333333"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </Control.Background>
+            <AppBarButton IsEnabled="False"/>
+            <AppBarButton IsEnabled="False"/>
+            <AppBarButton IsEnabled="False"/>
         </CommandBar>
-      
+
         <hsvColorPickers:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
         <hsvColorPickers:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
 
