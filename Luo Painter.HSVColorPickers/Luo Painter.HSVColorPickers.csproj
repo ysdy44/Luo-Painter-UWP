@@ -128,6 +128,7 @@
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EyedropperButton.cs" />
     <Compile Include="HarmonyMode.cs" />
     <Compile Include="HarmonyPicker.xaml.cs">
       <DependentUpon>HarmonyPicker.xaml</DependentUpon>
