@@ -118,6 +118,7 @@ namespace Luo_Painter.HSVColorPickers
             this.Line(this.Slider);
             this.Ellipse(this.Box.X, this.Box.Y);
 
+            this.Stop(HSVExtensions.ToColor(this.HSV.Z));
             this.EllipseSolidColorBrush.Color = color;
         }
         private void Reset(BoxTemplateSettings b)

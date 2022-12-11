@@ -34,8 +34,6 @@ namespace Luo_Painter.HSVColorPickers
         public HSVPicker()
         {
             this.InitializeComponent();
-            this.Recolor(Colors.Black);
-
             this.HueSlider.ValueChanged += (s, e) =>
             {
                 if (this.IsSetEnabled is false) return;

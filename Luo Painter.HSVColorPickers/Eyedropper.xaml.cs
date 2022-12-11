@@ -12,6 +12,7 @@ namespace Luo_Painter.HSVColorPickers
 {
     public sealed class ClickEyedropper : Eyedropper
     {
+        //@Task
         private TaskCompletionSource<Color> TaskSource;
         public ClickEyedropper() : base()
         {

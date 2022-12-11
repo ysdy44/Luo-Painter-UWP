@@ -33,8 +33,6 @@ namespace Luo_Painter.HSVColorPickers
         public RGBPicker()
         {
             this.InitializeComponent();
-            this.Recolor(Colors.Black);
-
             this.RedSlider.ValueChanged += (s, e) =>
             {
                 if (this.IsSetEnabled is false) return;

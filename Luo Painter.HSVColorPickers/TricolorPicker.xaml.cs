@@ -132,6 +132,7 @@ namespace Luo_Painter.HSVColorPickers
             this.Line(Math.PI * this.HSV.Z / 180f);
             this.Ellipse(this.HSV.X == 0f ? 0.5 : this.HSV.X, this.HSV.Y);
 
+            this.Stop(HSVExtensions.ToColor(this.HSV.Z));
             this.EllipseSolidColorBrush.Color = color;
         }
         private void Reset(TriangleTemplateSettings size)

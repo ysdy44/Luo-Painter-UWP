@@ -85,7 +85,7 @@ namespace Luo_Painter.HSVColorPickers
             this.StartingStraw.X = -200;
             this.StartingStraw.Y = -200;
 
-            base.Flyout.Hide();
+            base.Flyout?.Hide();
             {
                 bool result = await this.ClickEyedropper.RenderAsync();
                 if (result is false) return;
@@ -101,7 +101,7 @@ namespace Luo_Painter.HSVColorPickers
                 Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
                 this.ClickEyedropper.Visibility = Visibility.Collapsed;
             }
-            base.Flyout.ShowAt(this);
+            base.Flyout?.ShowAt(this);
         }
     }
 }
