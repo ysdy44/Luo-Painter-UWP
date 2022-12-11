@@ -10,15 +10,12 @@
 
         ConvertToCurves,
 
-        // Color
-        ColorBoxHue,
-        ColorBoxSaturation,
-        ColorBoxValue,
-
-        ColorRingSaturation,
-        ColorRingValue,
-
-        ColorPalette,
+        // Harmony
+        Complementary,
+        SplitComplementary,
+        Analogous,
+        Triadic,
+        Tetradic,
 
         // CompositeModes
         New,
@@ -59,8 +56,8 @@
         BrushEdgeHardnessQuartic,
 
         // SymmetryModes
-        SymmetryX, 
-        SymmetryY, 
+        SymmetryX,
+        SymmetryY,
         SymmetryRadial,
         MirrorRadial
     }
