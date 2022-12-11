@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -15,6 +16,48 @@ namespace Luo_Painter.HSVColorPickers
     /// </summary>
     public static class HSVExtensions
     {
+        /// <summary>
+        /// Color to Hex.
+        /// </summary>
+        /// <param name="color"> Color. </param>
+        /// <returns> Hex. </returns>
+        public static string ToHex(this Color color)
+        {
+            string r = color.R.ToString("x2");
+            string g = color.G.ToString("x2");
+            string b = color.B.ToString("x2");
+
+            return $"{r}{g}{b}".ToUpper();
+        }
+        /// <summary>
+        /// Hex to Color.
+        /// </summary>
+        /// <param name="hex"> Hex. </param>
+        /// <returns> Color. </returns>
+        public static Color? ToColor(string hex)
+        {
+            if (string.IsNullOrEmpty(hex)) return null;
+
+            int length = hex.Length;
+            if (length < 6) return null;
+            else if (length > 6) hex = hex.Substring(length - 6, 6);
+
+            int hexNumber;
+            try
+            {
+                hexNumber = int.Parse(hex, NumberStyles.HexNumber);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            int r = (hexNumber >> 16) & 255;
+            int g = (hexNumber >> 8) & 255;
+            int b = (hexNumber >> 0) & 255;
+            return Color.FromArgb(255, (byte)r, (byte)g, (byte)b);
+        }
+
         /// <summary>
         /// HSV to Color.
         /// </summary>
