@@ -1,17 +1,18 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
+using Luo_Painter.Controls;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using System.Numerics;
-using Windows.UI.Xaml;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         int StrawMode => this.StrawComboBox.SelectedIndex;
@@ -57,6 +58,14 @@ namespace Luo_Painter
 
             this.Straw();
             this.StrawCanvasControl.Invalidate();
+
+            switch (this.StrawMode)
+            {
+                case 0:
+                    Color color1 = this.StrawViewer.GetStraw();
+                    this.ColorButton.OnColorChanged(color1, ColorChangedMode.WithPrimaryBrush);
+                    break;
+            }
         }
         private void Straw_Complete()
         {
@@ -65,7 +74,10 @@ namespace Luo_Painter
             {
                 case 0:
                     this.Straw();
-                    this.ColorButton.Show(this.StrawViewer.GetStraw());
+
+                    Color color1 = this.StrawViewer.GetStraw();
+                    this.ColorButton.Recolor(color1);
+                    this.ColorButton.OnColorChanged(color1);
                     break;
                 default:
                     if (this.LayerSelectedItem is null)
@@ -84,7 +96,12 @@ namespace Luo_Painter
                     int y = (int)this.Position.Y;
 
                     if (bitmapLayer.Contains(x, y) is false) break;
-                    this.ColorButton.Show(bitmapLayer.GetPixelColor(x, y, BitmapType.Source));
+
+                    Color color2 = bitmapLayer.GetPixelColor(x, y, BitmapType.Source);
+                    if (color2 == default) break;
+
+                    this.ColorButton.Recolor(color2);
+                    this.ColorButton.OnColorChanged(color2);
                     break;
             }
         }

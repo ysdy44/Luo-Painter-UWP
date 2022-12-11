@@ -21,6 +21,15 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
+    [Flags]
+    public enum ColorChangedMode
+    {
+        WithPrimaryBrush = 1,
+        WithSecondaryBrush = 2,
+        WithColor = 4,
+        All = WithPrimaryBrush | WithSecondaryBrush | WithColor
+    }
+
     internal class ColorCommand : RelayCommand<Color> { }
 
     public sealed partial class ColorButton : EyedropperButton, IInkParameter, IColorHdrBase, IColorBase
@@ -108,16 +117,13 @@ namespace Luo_Painter.Controls
 
         #endregion
 
-        //@Override
-        public override void OnColorChanged(Color color) => this.Color3(color);
-
         //@Construct
         public ColorButton()
         {
             this.InitializeComponent();
             base.Unloaded += (s, e) => CompositionTarget.SurfaceContentsLost -= this.SurfaceContentsLost;
             base.Loaded += (s, e) => CompositionTarget.SurfaceContentsLost += this.SurfaceContentsLost;
-            this.ComboBox.SelectionChanged += (s, e) => this.Show(this.Color);
+            this.ComboBox.SelectionChanged += (s, e) => this.Recolor(this.Color);
 
             this.ConstructCanvas();
             this.ConstructOperator();
@@ -142,7 +148,8 @@ namespace Luo_Painter.Controls
         public void SetColor(Vector4 colorHdr) => this.Color = Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f));
         public void SetColorHdr(Color color) => this.ColorHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f; // 0~1
 
-        public void Show(Color color)
+        //@Override
+        public override void Recolor(Color color)
         {
             if (this.TricolorPicker.Visibility == default) this.TricolorPicker.Recolor(color);
             if (this.HuePicker.Visibility == default) this.HuePicker.Recolor(color);
@@ -152,10 +159,24 @@ namespace Luo_Painter.Controls
 
             this.HexPicker.Recolor(color);
         }
-        public void ShowAt(Color color, FrameworkElement placementTarget)
+        public override void OnColorChanged(Color color) => this.OnColorChanged(color, ColorChangedMode.All);
+        public void OnColorChanged(Color color, ColorChangedMode mode)
         {
-            this.Show(color);
-            base.Flyout.ShowAt(placementTarget);
+            if (mode.HasFlag(ColorChangedMode.WithPrimaryBrush))
+            {
+                this.PrimarySolidColorBrush.Color = color;
+                this.SolidColorBrush.Color = color;
+            }
+            if (mode.HasFlag(ColorChangedMode.WithSecondaryBrush))
+            {
+                this.SecondarySolidColorBrush.Color = color;
+            }
+            if (mode.HasFlag(ColorChangedMode.WithColor))
+            {
+                this.SetColor(color);
+                this.SetColorHdr(color);
+                this.ColorChanged?.Invoke(this, color); // Delegate
+            }
         }
 
     }

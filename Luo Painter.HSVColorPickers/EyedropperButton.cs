@@ -16,6 +16,7 @@ namespace Luo_Painter.HSVColorPickers
         public ClickEyedropper ClickEyedropper { get; set; }
 
         //@Abstract
+        public abstract void Recolor(Color color);
         public abstract void OnColorChanged(Color color);
 
         Point StartingStraw;
@@ -67,6 +68,7 @@ namespace Luo_Painter.HSVColorPickers
                         this.Eyedropper.Visibility = Visibility.Collapsed;
 
                         Color color = this.Eyedropper.Color;
+                        this.Recolor(color);
                         this.OnColorChanged(color);
                         break;
                     default:
@@ -96,6 +98,7 @@ namespace Luo_Painter.HSVColorPickers
                 this.ClickEyedropper.Visibility = Visibility.Visible;
                 {
                     Color color = await this.ClickEyedropper.OpenAsync();
+                    this.Recolor(color);
                     this.OnColorChanged(color);
                 }
                 Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);

@@ -7,12 +7,16 @@ namespace Luo_Painter.TestApp
 {
     public class EyedropperColorButton : EyedropperButton
     {
-        public override void OnColorChanged(Color color)
+        public override void Recolor(Color color)
         {
             if (base.Foreground is SolidColorBrush brush)
             {
                 brush.Color = color;
             }
+        }
+        public override void OnColorChanged(Color color)
+        {
+            // Do what ?
         }
     }
 
