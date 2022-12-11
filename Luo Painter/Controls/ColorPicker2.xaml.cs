@@ -1,78 +1,57 @@
-﻿using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
+﻿using Luo_Painter.Elements;
+using System;
+using System.Numerics;
+using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorPicker2 : UserControl
+    public sealed partial class ColorPicker2 : UserControl, IColorBase
     {
-        //@Converter
-        private ColorSpectrumShape ColorSpectrumShapeConverter(int value) => value is 3 || value is 4 ? ColorSpectrumShape.Ring : ColorSpectrumShape.Box;
-        private ColorSpectrumComponents ColorSpectrumComponentsConverter(int value)
-        {
-            switch (value)
-            {
-                case 0: return ColorSpectrumComponents.SaturationValue; // Hue
-                case 1: return ColorSpectrumComponents.HueSaturation; // Saturation
-                case 2: return ColorSpectrumComponents.HueValue; // Value
-
-                case 3: return ColorSpectrumComponents.HueSaturation; // Saturation
-                case 4: return ColorSpectrumComponents.HueValue; // Value
-
-                default: return ColorSpectrumComponents.SaturationValue;
-            }
-        }
-
         //@Delegate
-        public event TypedEventHandler<ColorPicker, ColorChangedEventArgs> ColorChanged { remove => this.ColorPicker.ColorChanged -= value; add => this.ColorPicker.ColorChanged += value; }
+        public event EventHandler<Color> ColorChanged;
+        public event RoutedEventHandler StrawClick { remove => this.StrawButton.Click -= value; add => this.StrawButton.Click += value; }
 
         //@Content
-        public Color Color { get => this.ColorPicker.Color; set => this.ColorPicker.Color = value; }
+        public FrameworkElement PlacementTarget => this;
+
+        public Color Color { get; private set; } = Colors.Black;
 
         //@Construct
         public ColorPicker2()
         {
             this.InitializeComponent();
-            this.ColorPicker.Loaded += (s, e) =>
-            {
-                if (s is DependencyObject reference)
-                {
-                    DependencyObject grid = VisualTreeHelper.GetChild(reference, 0); // Grid
-                    DependencyObject stackPanel = VisualTreeHelper.GetChild(grid, 0); // StackPanel
+            this.ComboBox.SelectionChanged += (s, e) => this.Recolor(this.Color);
 
-                    // 1. Slider
-                    DependencyObject thirdDimensionSliderGrid = VisualTreeHelper.GetChild(stackPanel, 1); // Grid ThirdDimensionSliderGrid Margin 0,12,0,0
-                    DependencyObject rectangle = VisualTreeHelper.GetChild(thirdDimensionSliderGrid, 0); // Rectangle Height 11
+            this.HuePicker.ColorChanged += (s, color) => this.OnColorChanged(color);
 
-                    if (thirdDimensionSliderGrid is FrameworkElement thirdDimensionSliderGrid1)
-                    {
-                        thirdDimensionSliderGrid1.Margin = new Thickness(0);
-                    }
-                    if (rectangle is FrameworkElement rectangle1)
-                    {
-                        rectangle1.Height = 22;
-                    }
+            this.RGBPicker.ColorChanged += (s, color) => this.OnColorChanged(color);
+            this.HSVPicker.ColorChanged += (s, color) => this.OnColorChanged(color);
 
-                    // 2. ColorSpectrum
-                    DependencyObject colorSpectrumGrid = VisualTreeHelper.GetChild(stackPanel, 0); // Grid ColorSpectrumGrid 
-                    DependencyObject colorSpectrum = VisualTreeHelper.GetChild(colorSpectrumGrid, 0); // ColorSpectrum ColorSpectrum MaxWidth="336" MaxHeight="336" MinWidth="256" MinHeight="256" 
-
-                    if (colorSpectrum is ColorSpectrum colorSpectrum1)
-                    {
-                        colorSpectrum1.MaxWidth = 1200;
-                        colorSpectrum1.MaxHeight = 1200;
-                    }
-                }
-            };
+            this.ConstructPicker();
         }
 
         //@Strings
         public void ConstructStrings(ResourceLoader resource)
         {
+        }
+
+        public void SetColor(Color color) => this.Color = color;
+        public void SetColor(Vector4 colorHdr) => this.Color = Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f));
+
+        public void OnColorChanged(Color color)
+        {
+            this.SetColor(color);
+            this.ColorChanged?.Invoke(this, color); // Delegate
+        }
+        public void Recolor(Color color)
+        {
+            if (this.HuePicker.Visibility == default) this.HuePicker.Recolor(color);
+
+            if (this.RGBPicker.Visibility == default) this.RGBPicker.Recolor(color);
+            if (this.HSVPicker.Visibility == default) this.HSVPicker.Recolor(color);
         }
 
     }

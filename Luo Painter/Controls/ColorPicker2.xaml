@@ -3,79 +3,71 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
-    d:DesignHeight="400"
     d:DesignWidth="400" 
+    d:DesignHeight="400"
     >
 
-    <StackPanel Width="320" >
+    <FrameworkElement.Resources>
+        <!--Flyout-->
+        <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
+        </Flyout>
+    </FrameworkElement.Resources>
 
-        <!--Type-->
-        <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
-            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="BoxHueToolTip">
-                        Hue
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <luo_painter:ElementIcon Type="ColorBoxHue"/>
-            </ListBoxItem>
-            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="BoxSaturationToolTip">
-                        Saturation
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <luo_painter:ElementIcon Type="ColorBoxSaturation"/>
-            </ListBoxItem>
-            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="BoxValueToolTip">
-                        Value
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <luo_painter:ElementIcon Type="ColorBoxValue"/>
-            </ListBoxItem>
-
-            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="RingSaturationToolTip">
-                        Saturation
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <luo_painter:ElementIcon Type="ColorRingSaturation"/>
-            </ListBoxItem>
-            <ListBoxItem Width="51" HorizontalContentAlignment="Center">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="RingValueToolTip">
-                        Value
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <luo_painter:ElementIcon Type="ColorRingValue"/>
-            </ListBoxItem>
-        </ListBox>
+    <StackPanel Orientation="Horizontal" Width="322" Height="240">
 
         <!--Color-->
-        <ColorPicker
-            x:Name="ColorPicker" 
-            Width="320"
-            Height="358"
-            Color="Black" 
-            IsMoreButtonVisible="False" 
-            IsHexInputVisible="False" 
-            IsColorSpectrumVisible="True" 
-            IsColorSliderVisible="True" 
-            IsColorPreviewVisible="False" 
-            IsColorChannelTextInputVisible="False" 
-            IsAlphaTextInputVisible="False" 
-            IsAlphaSliderVisible="False" 
-            IsAlphaEnabled="False" 
-            ColorSpectrumShape="{x:Bind ColorSpectrumShapeConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
-            ColorSpectrumComponents="{x:Bind ColorSpectrumComponentsConverter(ComboBox.SelectedIndex),Mode=OneWay}" 
-            />
+        <elements:IndexGrid Width="272" Height="240" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
+            <hsvColorPickers:HuePicker x:Name="HuePicker" Visibility="Collapsed" Margin="5,5,5,0" />
+            <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Foreground="{ThemeResource AppForeground}"/>
+            <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Foreground="{ThemeResource AppForeground}"/>
+        </elements:IndexGrid>
+
+        <!--Type-->
+        <Grid Margin="0,6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ListBox 
+                x:Name="ComboBox" 
+                SelectedIndex="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" 
+                Background="{ThemeResource SystemAltLowColor}"
+                Style="{x:Null}"
+                >
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="FontWeight" Value="Medium"/>
+                        <Setter Property="MinWidth" Value="44"/>
+                        <Setter Property="MinHeight" Value="46"/>
+                        <Setter Property="Width" Value="Auto"/>
+                        <Setter Property="Height" Value="Auto"/>
+                        <Setter Property="Padding" Value="4" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
+                <x:String>RGB</x:String>
+                <x:String>HSV</x:String>
+            </ListBox>
+
+            <Button x:Name="StrawButton" Grid.Row="1" Width="44" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                <UIElement.ManipulationMode>
+                    TranslateX, TranslateY
+                </UIElement.ManipulationMode>
+                <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
+            </Button>
+
+        </Grid>
 
     </StackPanel>
-
 </UserControl>
