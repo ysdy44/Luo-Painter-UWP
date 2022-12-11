@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -22,7 +23,7 @@ namespace Luo_Painter.Controls
 {
     internal class ColorCommand : RelayCommand<Color> { }
 
-    public sealed partial class ColorButton : Button, IInkParameter, IColorHdrBase, IColorBase
+    public sealed partial class ColorButton : EyedropperButton, IInkParameter, IColorHdrBase, IColorBase
     {
         //@Converter
         private HarmonyMode ModeConverter(int value)
@@ -56,8 +57,7 @@ namespace Luo_Painter.Controls
 
         //@Content
         public FrameworkElement PlacementTarget => this;
-        public Eyedropper Eyedropper { get; set; }
-        public ClickEyedropper ClickEyedropper { get; set; }
+        public ICommand OpenCommand => this;
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         BitmapLayer BitmapLayer { get; set; }
@@ -76,7 +76,6 @@ namespace Luo_Painter.Controls
         Vector2 Position;
         float StartingPressure;
         float Pressure;
-        Point StartingStraw;
 
         #region IInkParameter
 
@@ -109,6 +108,9 @@ namespace Luo_Painter.Controls
 
         #endregion
 
+        //@Override
+        public override void OnColorChanged(Color color) => this.Color3(color);
+
         //@Construct
         public ColorButton()
         {
@@ -119,7 +121,7 @@ namespace Luo_Painter.Controls
 
             this.ConstructCanvas();
             this.ConstructOperator();
-            
+
             this.ConstructPicker();
 
             this.ConstructColor();
@@ -127,7 +129,6 @@ namespace Luo_Painter.Controls
             this.ConstructColorValue();
 
             this.ConstructInk();
-            this.ConstructStraw();
         }
 
         //@Strings
