@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public sealed class ClickEyedropper : Eyedropper
     {
@@ -57,7 +57,7 @@ namespace Luo_Painter.Elements
     {
 
         //@Converter
-        private string ColorToStringConverter(Color color) => $"#{color.R:x2}{color.G:x2}{color.B:x2}".ToUpper();
+        private string ColorToStringConverter(Color color) => HSVExtensions.ToHex(color);
 
         //@Content
         protected readonly RenderTargetBitmap RenderTargetBitmap = new RenderTargetBitmap();
@@ -70,8 +70,10 @@ namespace Luo_Painter.Elements
             this.InitializeComponent();
         }
 
-        public async Task<bool> RenderAsync(UIElement element)
+        public async Task<bool> RenderAsync(UIElement element = null)
         {
+            if (element is null) element = Eyedropper.GetWindow();
+
             try
             {
                 await this.RenderTargetBitmap.RenderAsync(element);
@@ -110,5 +112,22 @@ namespace Luo_Painter.Elements
             };
         }
 
+        //@Static
+        public static UIElement GetWindow()
+        {
+            if (Window.Current.Content is FrameworkElement frame)
+            {
+                if (frame.Parent is FrameworkElement border)
+                {
+                    if (border.Parent is FrameworkElement rootScrollViewer)
+                        return rootScrollViewer;
+                    else
+                        return border;
+                }
+                else
+                    return frame;
+            }
+            else return Window.Current.Content;
+        }
     }
 }

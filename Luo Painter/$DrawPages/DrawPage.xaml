@@ -1358,8 +1358,8 @@
         </Border>
 
 
-        <elements:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
-        <elements:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
+        <hsvColorPickers:Eyedropper x:Name="Eyedropper" Visibility="Collapsed"/>
+        <hsvColorPickers:ClickEyedropper x:Name="ClickEyedropper" Visibility="Collapsed"/>
 
     </Grid>
 </Page>
