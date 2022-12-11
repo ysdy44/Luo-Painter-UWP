@@ -36,54 +36,21 @@ namespace Luo_Painter.HSVColorPickers
             };
         }
 
-        public void Recolor(Color color)
-        {
-            string r = color.R.ToString("x2");
-            string g = color.G.ToString("x2");
-            string b = color.B.ToString("x2");
-
-            this.Hex = $"{r}{g}{b}".ToUpper();
-            base.Text = this.Hex;
-        }
+        public void Recolor(Color color) => base.Text = this.Hex = color.ToHex();
 
         public void Cancel() => base.Text = this.Hex;
         public void Ok()
         {
             string text = base.Text.ToUpper();
-            base.Text = text;
-
             if (this.Hex == text) return;
-            this.Hex = text;
 
-            if (this.Color(text)) return;
+            if (HSVExtensions.ToColor(text) is Color color)
+            {
+                this.Hex = text;
+                this.ColorChanged?.Invoke(this, color); // Delegate
+            }
+
             base.Text = this.Hex;
-        }
-
-        private bool Color(string text)
-        {
-            if (string.IsNullOrEmpty(text)) return false;
-
-            int length = text.Length;
-            if (length < 6) return false;
-            else if (length > 6) text = text.Substring(length - 6, 6);
-
-            int hexNumber;
-            try
-            {
-                hexNumber = int.Parse(text, NumberStyles.HexNumber);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            int r = (hexNumber >> 16) & 255;
-            int g = (hexNumber >> 8) & 255;
-            int b = (hexNumber >> 0) & 255;
-
-            Color color = Windows.UI.Color.FromArgb(255, (byte)r, (byte)g, (byte)b);
-            this.ColorChanged?.Invoke(this, color); // Delegate
-            return true;
         }
     }
 }
