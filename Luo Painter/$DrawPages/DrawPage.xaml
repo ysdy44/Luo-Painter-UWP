@@ -204,7 +204,6 @@
                     <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
                     <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
                     <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
-                    <controls:EffectListView x:Name="EffectListView" Visibility="Collapsed"/>
                     <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
                 </elements:IndexGrid>
             </SplitView.Pane>
@@ -1185,7 +1184,6 @@
                                 <local:OptionItem Type="PaintMenu"/>
                                 <local:OptionItem Type="BrushMenu"/>
                                 <local:OptionItem Type="SizeMenu"/>
-                                <local:OptionItem Type="EffectMenu"/>
                                 <local:OptionItem Type="HistoryMenu"/>
                             </ListView>
 
@@ -1289,7 +1287,162 @@
                     <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
                 </StackPanel>
 
-                <controls:HeadButton x:Name="HeadButton" Command="{x:Bind Command}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="EditToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Edit
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <Button.Flyout>
+                            <MenuFlyout x:Name="EditMenuFlyout" Placement="Bottom">
+                                <!--Edit-->
+                                <MenuFlyoutSeparator x:Name="EditHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                    <UIElement.AccessKey>
+                                        Edit
+                                    </UIElement.AccessKey>
+                                </MenuFlyoutSeparator>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Cut" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="X"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Copy" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="C"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="PasteItem" options:OptionExtensions.Type="Paste" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="V"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="ClearItem" options:OptionExtensions.Type="Clear" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="Back"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <!--Select-->
+                                <!--
+                                <MenuFlyoutSeparator x:Name="SelectHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                    <UIElement.AccessKey>
+                                        Select
+                                    </UIElement.AccessKey>
+                                </MenuFlyoutSeparator>
+                                -->
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="All" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Deselect" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="D"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="MarqueeInvert" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="I"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Pixel" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="P"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Feather" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="MarqueeTransform" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Grow" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Shrink" Command="{x:Bind Command}"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <local:OptionIcon Type="EditMenu"/>
+                    </Button>
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="AdjustmentToolTip" Style="{StaticResource AppToolTipStyle}">
+                                Adjustments
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <Button.Flyout>
+                            <Flyout Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                <controls:EffectListView x:Name="EffectListView"/>
+                            </Flyout>
+                        </Button.Flyout>
+                        <local:OptionIcon Type="AdjustmentMenu"/>
+                    </Button>
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="MoreToolTip" Style="{StaticResource AppToolTipStyle}">
+                                More
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <!--More-->
+                                <MenuFlyoutSeparator x:Name="MoreHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                    <UIElement.AccessKey>
+                                        More
+                                    </UIElement.AccessKey>
+                                </MenuFlyoutSeparator>
+                                <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
+                                <MenuFlyoutSubItem>
+                                    <MenuFlyoutSubItem.Text>
+                                        Stretch
+                                    </MenuFlyoutSubItem.Text>
+                                    <!--Stretch-->
+                                    <MenuFlyoutSeparator x:Name="StretchHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                        <UIElement.AccessKey>
+                                            Stretch
+                                        </UIElement.AccessKey>
+                                    </MenuFlyoutSeparator>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSubItem>
+                                    <MenuFlyoutSubItem.Text>
+                                        Rotate
+                                    </MenuFlyoutSubItem.Text>
+                                    <!--Rotate-->
+                                    <MenuFlyoutSeparator x:Name="RotateHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                        <UIElement.AccessKey>
+                                            Rotate
+                                        </UIElement.AccessKey>
+                                    </MenuFlyoutSeparator>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Move" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="M"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Transform" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="T"/>
+                                    </UIElement.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="FreeTransform" Command="{x:Bind Command}"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="GradientMapping" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="RippleEffect" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="Threshold" Command="{x:Bind Command}"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <SymbolIcon Symbol="More"/>
+                    </Button>
+
+                </StackPanel>
 
             </Grid>
 

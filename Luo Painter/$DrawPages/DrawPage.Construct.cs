@@ -13,14 +13,24 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
+
+        //@Content
+        public bool PasteIsEnabled { get; set; }
 
         //@Strings
         public void ConstructStrings(ResourceLoader resource)
         {
         }
 
+        private void ConstructDraw()
+        {
+            this.EditMenuFlyout.Opened += (s, e) =>
+            {
+                this.PasteItem.GoToState(this.PasteIsEnabled);
+            };
+        }
 
         public void RaiseHistoryCanExecuteChanged()
         {
@@ -29,7 +39,7 @@ namespace Luo_Painter
         }
         public void RaiseEditCanExecuteChanged()
         {
-            this.HeadButton.PasteIsEnabled = true;
+            this.PasteIsEnabled = true;
         }
         public void RaiseLayerCanExecuteChanged()
         {
