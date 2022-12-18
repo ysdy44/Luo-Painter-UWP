@@ -34,6 +34,36 @@ namespace Luo_Painter.Elements
         #endregion
     }
 
+    public abstract class TItem<T> : TIcon<T>
+        where T : Enum
+    {
+        protected readonly TextBlock TextBlock = new TextBlock
+        {
+            VerticalAlignment = VerticalAlignment.Center,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+        };
+        protected readonly ContentControl Icon = new ContentControl
+        {
+            Width = 32,
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalContentAlignment = VerticalAlignment.Center,
+            HorizontalContentAlignment = HorizontalAlignment.Center,
+        };
+        public TItem()
+        {
+            base.HorizontalAlignment = HorizontalAlignment.Stretch;
+            base.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+            base.Content = new Grid
+            {
+                Children =
+                {
+                    this.TextBlock,
+                    this.Icon,
+                }
+            };
+        }
+    }
+
     public abstract class TButton<T> : Button
         where T : Enum
     {

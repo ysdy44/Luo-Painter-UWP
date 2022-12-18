@@ -99,19 +99,14 @@ namespace Luo_Painter
             base.Template = value.GetTemplate(base.Resources);
         }
     }
-    internal sealed class ElementItem : TIcon<ElementType>
+    internal sealed class ElementItem : TItem<ElementType>
     {
         protected override void OnTypeChanged(ElementType value)
         {
             base.Resources.Source = new Uri(value.GetResource());
-            base.Content = Element.GetStackPanel(new ContentControl
-            {
-                Width = 32,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(base.Resources),
-            }, value.ToString());
+            base.TextBlock.Text = value.ToString();
+            base.Icon.Content = value;
+            base.Icon.Template = value.GetTemplate(base.Resources);
         }
     }
 
@@ -150,19 +145,14 @@ namespace Luo_Painter
             base.Template = value.GetTemplate(base.Resources);
         }
     }
-    internal sealed class InkItem : TIcon<InkType>
+    internal sealed class InkItem : TItem<InkType>
     {
         protected override void OnTypeChanged(InkType value)
         {
             base.Resources.Source = new Uri(value.GetResource());
-            base.Content = Element.GetStackPanel(new ContentControl
-            {
-                Width = 32,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(base.Resources),
-            }, value.ToString());
+            base.TextBlock.Text = value.ToString();
+            base.Icon.Content = value;
+            base.Icon.Template = value.GetTemplate(base.Resources);
         }
     }
 
@@ -178,11 +168,20 @@ namespace Luo_Painter
 
     internal sealed class BlendList : List<BlendEffectMode> { }
     internal sealed class BlendGroupingList : List<BlendEffectMode> { }
+    internal class BlendItem : TItem<BlendEffectMode>
+    {
+        protected override void OnTypeChanged(BlendEffectMode value)
+        {
+            base.Resources.Source = new Uri(value.GetResource());
+            base.TextBlock.Text = value.GetTitle();
+            base.Icon.Content = value.GetIcon();
+        }
+    }
     internal sealed class BlendIcon : TIcon<BlendEffectMode>
     {
         protected override void OnTypeChanged(BlendEffectMode value)
         {
-            base.Content = Element.GetGrid2(value.GetTitle(), value.IsDefined() ? value.ToString().First().ToString() : "N");
+            base.Content = value.GetIcon();
         }
     }
 
@@ -195,19 +194,14 @@ namespace Luo_Painter
             base.Template = value.GetTemplate(base.Resources);
         }
     }
-    internal class OptionItem : TIcon<OptionType>
+    internal class OptionItem : TItem<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {
             base.Resources.Source = new Uri(value.GetResource());
-            base.Content = Element.GetStackPanel(new ContentControl
-            {
-                Width = 32,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = value,
-                Template = value.GetTemplate(base.Resources),
-            }, value.ToString());
+            base.TextBlock.Text = value.ToString();
+            base.Icon.Content = value;
+            base.Icon.Template = value.GetTemplate(base.Resources);
         }
     }
 
@@ -236,103 +230,4 @@ namespace Luo_Painter
     }
     [ContentProperty(Name = nameof(SwitchCases))]
     internal sealed class OptionSwitchPresenter : SwitchPresenter<OptionType> { }
-
-    internal static class Element
-    {
-
-        //@Static
-        public static Grid GetGrid(UIElement icon, string text) => new Grid
-        {
-            ColumnSpacing = 12,
-            ColumnDefinitions =
-            {
-                new ColumnDefinition
-                {
-                    Width = GridLength.Auto
-                },
-                new ColumnDefinition
-                {
-                    Width =new GridLength(1, GridUnitType.Star)
-                },
-                new ColumnDefinition
-                {
-                    Width = GridLength.Auto
-                },
-            },
-            Children =
-            {
-                icon,
-                Element.GetTextBlock(text, 1),
-                Element.GetFontIcon(2),
-            }
-        };
-        public static Grid GetGrid2(string text, string text2) => new Grid
-        {
-            ColumnSpacing = 12,
-            ColumnDefinitions =
-            {
-                new ColumnDefinition
-                {
-                    Width = new GridLength(1, GridUnitType.Star)
-                },
-                new ColumnDefinition
-                {
-                    Width = new GridLength (32)
-                },
-            },
-            Children =
-            {
-                Element.GetTextBlock(text),
-                Element.GetTextBlock2(text2, 1),
-            }
-        };
-
-        public static StackPanel GetStackPanel(UIElement icon, string text) => new StackPanel
-        {
-            Spacing = 12,
-            Orientation = Orientation.Horizontal,
-            Children =
-            {
-                icon,
-                Element.GetTextBlock(text)
-            }
-        };
-
-        public static FrameworkElement GetTextBlock(string text, int column = 0)
-        {
-            TextBlock textBlock = new TextBlock
-            {
-                Text = text,
-                VerticalAlignment = VerticalAlignment.Center,
-                TextTrimming = TextTrimming.CharacterEllipsis,
-            };
-            if (column != 0) Grid.SetColumn(textBlock, column);
-            return textBlock;
-        }
-        public static FrameworkElement GetTextBlock2(string text, int column = 0)
-        {
-            TextBlock textBlock = new TextBlock
-            {
-                Text = text,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Style = App.Current.Resources["BaseTextBlockStyle"] as Style
-            };
-            if (column != 0) Grid.SetColumn(textBlock, column);
-            return textBlock;
-        }
-
-        public static FrameworkElement GetFontIcon(int column = 0)
-        {
-            FontIcon fontIcon = new FontIcon
-            {
-                FontSize = 12,
-                FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                Glyph = "\uE00F"
-            };
-            if (column != 0) Grid.SetColumn(fontIcon, column);
-            return fontIcon;
-        }
-
-    }
 }
