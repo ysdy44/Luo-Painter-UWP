@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.Layers;
 using System.Numerics;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
@@ -12,32 +11,28 @@ namespace Luo_Painter.Controls
         {
             int x = (int)this.StartingPosition.X;
             int y = (int)this.StartingPosition.Y;
+            if (this.BitmapLayer.Contains(x, y) is false) return;
 
             Color color = this.Straw(x, y);
-            this.SecondarySolidColorBrush.Color = color;
-            this.SolidColorBrush.Color = color;
+            this.OnColorChanged(color, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithSecondaryBrush);
         }
         private void Straw_Delta()
         {
             int x = (int)this.Position.X;
             int y = (int)this.Position.Y;
+            if (this.BitmapLayer.Contains(x, y) is false) return;
 
             Color color = this.Straw(x, y);
-            this.SecondarySolidColorBrush.Color = color;
-            this.SolidColorBrush.Color = color;
+            this.OnColorChanged(color, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithSecondaryBrush);
         }
         private void Straw_Complete()
         {
             int x = (int)this.Position.X;
             int y = (int)this.Position.Y;
+            if (this.BitmapLayer.Contains(x, y) is false) return;
 
             Color color = this.Straw(x, y);
-            this.SecondarySolidColorBrush.Color = color;
-            this.SolidColorBrush.Color = color;
-
-            this.SetColor(color);
-            this.SetColorHdr(color);
-            this.ColorChanged?.Invoke(this, color); // Delegate
+            this.OnColorChanged(color, ColorChangedMode.All);
         }
 
         private Color Straw(int x, int y)

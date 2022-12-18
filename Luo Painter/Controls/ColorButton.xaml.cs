@@ -39,12 +39,11 @@ namespace Luo_Painter.Controls
         {
             switch (value)
             {
-                case 0: return HarmonyMode.None;
-                case 1: return HarmonyMode.Complementary;
-                case 2: return HarmonyMode.SplitComplementary;
-                case 3: return HarmonyMode.Analogous;
-                case 4: return HarmonyMode.Triadic;
-                case 5: return HarmonyMode.Tetradic;
+                case 0: return HarmonyMode.Complementary;
+                case 1: return HarmonyMode.SplitComplementary;
+                case 2: return HarmonyMode.Analogous;
+                case 3: return HarmonyMode.Triadic;
+                case 4: return HarmonyMode.Tetradic;
                 default: return default;
             }
         }
@@ -153,7 +152,7 @@ namespace Luo_Painter.Controls
         {
             if (this.TricolorPicker.Visibility == default) this.TricolorPicker.Recolor(color);
             if (this.HuePicker.Visibility == default) this.HuePicker.Recolor(color);
-
+       
             if (this.RGBPicker.Visibility == default) this.RGBPicker.Recolor(color);
             if (this.HSVPicker.Visibility == default) this.HSVPicker.Recolor(color);
 

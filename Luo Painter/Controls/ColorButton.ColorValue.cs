@@ -10,18 +10,18 @@ namespace Luo_Painter.Controls
         {
             this.RGBPicker.ColorChanged += (s, color) =>
             {
-                this.Color3(color);
+                this.OnColorChanged(color, ColorChangedMode.All);
                 this.HexPicker.Recolor(color);
             };
             this.HSVPicker.ColorChanged += (s, color) =>
             {
-                this.Color3(color);
+                this.OnColorChanged(color, ColorChangedMode.All);
                 this.HexPicker.Recolor(color);
             };
 
             this.HexPicker.ColorChanged += (s, color) =>
             {
-                this.Color3(color);
+                this.OnColorChanged(color, ColorChangedMode.All);
                 if (this.RGBPicker.Visibility == default) this.RGBPicker.Recolor(color);
                 if (this.HSVPicker.Visibility == default) this.HSVPicker.Recolor(color);
             };

@@ -7,8 +7,8 @@ namespace Luo_Painter.Controls
 
         private void ConstructColor()
         {
-            this.TricolorPicker.ColorChanged += (s, color) => this.Color2(color);
-            this.HuePicker.ColorChanged += (s, color) => this.Color2(color);
+            this.TricolorPicker.ColorChanged += (s, color) => this.OnColorChanged(color, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithColor);
+            this.HuePicker.ColorChanged += (s, color) => this.OnColorChanged(color, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithColor);
 
             this.TricolorPicker.ColorChangedCompleted += (s, color) => this.Swatches(color);
             this.HuePicker.ColorChangedCompleted += (s, color) => this.Swatches(color);
@@ -17,29 +17,9 @@ namespace Luo_Painter.Controls
             {
                 if (e.ClickedItem is Color item)
                 {
-                    this.Color2(item);
+                    this.OnColorChanged(item, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithColor);
                 }
             };
-        }
-
-        private void Color2(Color color)
-        {
-            this.PrimarySolidColorBrush.Color = color;
-            this.SolidColorBrush.Color = color;
-
-            this.SetColor(color);
-            this.SetColorHdr(color);
-            this.ColorChanged?.Invoke(this, color); // Delegate
-        }
-        private void Color3(Color color)
-        {
-            this.PrimarySolidColorBrush.Color = color;
-            this.SecondarySolidColorBrush.Color = color;
-            this.SolidColorBrush.Color = color;
-
-            this.SetColor(color);
-            this.SetColorHdr(color);
-            this.ColorChanged?.Invoke(this, color); // Delegate
         }
 
         private void Swatches(Color color)
@@ -49,11 +29,11 @@ namespace Luo_Painter.Controls
                 if (item == color) return;
             }
 
-            while (this.ObservableCollection.Count > 10)
+            while (this.ObservableCollection.Count > 9)
             {
-                this.ObservableCollection.RemoveAt(0);
+                this.ObservableCollection.RemoveAt(9);
             }
-            this.ObservableCollection.Add(color);
+            this.ObservableCollection.Insert(0, color);
         }
 
     }

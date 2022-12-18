@@ -11,8 +11,8 @@
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
-    d:DesignHeight="400"
-    d:DesignWidth="400" 
+    d:DesignWidth="50" 
+    d:DesignHeight="50"
     Width="70" 
     Height="50" 
     Foreground="{ThemeResource AppForeground}" 
@@ -40,7 +40,7 @@
 
     <Button.Flyout>
         <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <StackPanel Width="320" Height="504">
+            <StackPanel Width="320" >
 
                 <!--Title-->
                 <Grid Padding="6,0" Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
@@ -93,34 +93,35 @@
                 </Grid>
 
                 <!--Type-->
-                <ListBox x:Name="ComboBox" Margin="6" SelectedIndex="0" >
+                <ListBox x:Name="ComboBox" SelectedIndex="0" Visibility="Visible">
                     <FontIcon Glyph="&#xF157;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
                     <x:String>RGB</x:String>
                     <x:String>HSV</x:String>
-                    <FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xE929;" FontFamily="Segoe MDL2 Assets"/>
+                    <!--<FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>-->
                 </ListBox>
 
                 <!--Color-->
-                <elements:IndexGrid Width="320" Height="350" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
-                    <hsvColorPickers:TricolorPicker x:Name="TricolorPicker" Visibility="Visible" Margin="0,25" Width="300" Height="300">
+                <elements:IndexGrid Width="320" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
+                    <hsvColorPickers:TricolorPicker x:Name="TricolorPicker" Visibility="Visible" Margin="10,20,10,0" Width="300" Height="300">
                         <Control.Background>
                             <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
                         </Control.Background>
                     </hsvColorPickers:TricolorPicker>
-                    <hsvColorPickers:HuePicker x:Name="HuePicker" Visibility="Collapsed" Margin="0,10,0,0" Width="300" Height="340"/>
-                    <hsvColorPickers:HarmonyPicker x:Name="HarmonyPicker" Visibility="Collapsed" Margin="0,10,0,0" Width="300" Height="340">
+                    <hsvColorPickers:HuePicker x:Name="HuePicker" Visibility="Collapsed" Margin="10,10,10,0" Width="300" Height="340"/>
+                    <hsvColorPickers:HarmonyPicker x:Name="HarmonyPicker" Visibility="Collapsed" Margin="10,20,10,0" Width="300" Height="340">
                         <Control.Background>
                             <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
                         </Control.Background>
                     </hsvColorPickers:HarmonyPicker>
-                    <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Margin="0,15" Width="320" Height="320" Foreground="{ThemeResource AppForeground}">
+                    <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Width="320" Height="320" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
                             <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
                         </Control.Background>
                     </hsvColorPickers:RGBPicker>
-                    <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Margin="0,15" Width="320" Height="320" Foreground="{ThemeResource AppForeground}">
+                    <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Width="320" Height="320" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
                             <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
                         </Control.Background>
@@ -129,7 +130,7 @@
                     <canvas:CanvasControl 
                         x:Name="CanvasControl" 
                         Width="320"
-                        Height="350"
+                        Height="320"
                         ClearColor="White" 
                         UseSharedDevice="True" 
                         CustomDevice="{x:Bind CanvasDevice}" 
@@ -137,9 +138,9 @@
                        />
                 </elements:IndexGrid>
 
-                <elements:IndexGrid Width="320" Height="50" Index="{x:Bind IndexConverter(ComboBox.SelectedIndex), Mode=OneWay}">
+                <!--Tool-->
+                <elements:IndexGrid Width="320" MinHeight="50" Index="{x:Bind IndexConverter(ComboBox.SelectedIndex), Mode=OneWay}">
 
-                    <!--Swatches-->
                     <ListView 
                         x:Name="ListView"
                         Width="300"
@@ -152,6 +153,7 @@
                         ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                         ScrollViewer.VerticalScrollMode="Disabled"
                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        Style="{x:Null}"
                         >
 
                         <ItemsControl.ItemsPanel>
@@ -164,10 +166,10 @@
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Padding" Value="0"/>
                                 <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Width" Value="28"/>
-                                <Setter Property="MinWidth" Value="28"/>
-                                <Setter Property="Height" Value="28"/>
-                                <Setter Property="MinHeight" Value="28"/>
+                                <Setter Property="Width" Value="30"/>
+                                <Setter Property="MinWidth" Value="30"/>
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="MinHeight" Value="30"/>
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                             </Style>
@@ -181,7 +183,7 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Rectangle Width="28" Height="28" >
+                                <Rectangle Width="30" Height="30" >
                                     <Shape.Fill>
                                         <SolidColorBrush Color="{Binding}"/>
                                     </Shape.Fill>
@@ -191,120 +193,97 @@
 
                     </ListView>
 
-                    <Grid Margin="10,0" Visibility="Collapsed" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                    <ListView
+                        x:Name="ModeListView"
+                        Visibility="Collapsed" 
+                        Margin="8,4"
+                        SelectedIndex="3"
+                        IsItemClickEnabled="True" 
+                        Style="{StaticResource AppListViewStyle}"
+                        >
+                        <ListViewBase.Header>
+                            <ListView 
+                                x:Name="HarmonyListView"
+                                IsItemClickEnabled="True"
+                                SelectionMode="None" 
+                                ScrollViewer.HorizontalScrollMode="Enabled"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                ScrollViewer.VerticalScrollMode="Disabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                BorderThickness="0,0,0,1"
+                                BorderBrush="{ThemeResource AppStroke}"
+                                Style="{x:Null}"
+                                >
 
-                        <ListView 
-                            x:Name="HarmonyListView"
-                            Width="240"
-                            Height="32"
-                            IsItemClickEnabled="True"
-                            SelectionMode="None" 
-                            HorizontalAlignment="Left"
-                            ScrollViewer.HorizontalScrollMode="Enabled"
-                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                            ScrollViewer.VerticalScrollMode="Disabled"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
 
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Setter Property="Width" Value="76"/>
+                                        <Setter Property="MinWidth" Value="76"/>
+                                        <Setter Property="Height" Value="36"/>
+                                        <Setter Property="MinHeight" Value="36"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
 
-                            <ItemsControl.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="Margin" Value="0"/>
-                                    <Setter Property="Width" Value="56"/>
-                                    <Setter Property="MinWidth" Value="56"/>
-                                    <Setter Property="Height" Value="32"/>
-                                    <Setter Property="MinHeight" Value="32"/>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemContainerTransitions>
+                                    <TransitionCollection>
 
-                            <ItemsControl.ItemContainerTransitions>
-                                <TransitionCollection>
+                                    </TransitionCollection>
+                                </ItemsControl.ItemContainerTransitions>
 
-                                </TransitionCollection>
-                            </ItemsControl.ItemContainerTransitions>
-
-                            <ListViewItem>
-                                <Rectangle Width="56" Height="32">
-                                    <Shape.Fill>
-                                        <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
-                                    </Shape.Fill>
-                                </Rectangle>
-                            </ListViewItem>
-                            <ListViewItem x:Name="Ellipse1Item" Visibility="Visible">
-                                <Rectangle Width="56" Height="32">
-                                    <Shape.Fill>
-                                        <SolidColorBrush x:Name="Ellipse1SolidColorBrush" Color="Black"/>
-                                    </Shape.Fill>
-                                </Rectangle>
-                            </ListViewItem>
-                            <ListViewItem x:Name="Ellipse2Item" Visibility="Visible">
-                                <Rectangle Width="56" Height="32">
-                                    <Shape.Fill>
-                                        <SolidColorBrush x:Name="Ellipse2SolidColorBrush" Color="Black"/>
-                                    </Shape.Fill>
-                                </Rectangle>
-                            </ListViewItem>
-                            <ListViewItem x:Name="Ellipse3Item" Visibility="Collapsed">
-                                <Rectangle Width="56" Height="32">
-                                    <Shape.Fill>
-                                        <SolidColorBrush x:Name="Ellipse3SolidColorBrush" Color="Black"/>
-                                    </Shape.Fill>
-                                </Rectangle>
-                            </ListViewItem>
-                        </ListView>
-
-                        <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
-                            <Button.Flyout>
-                                <Flyout Placement="TopEdgeAlignedRight" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                                    <StackPanel Spacing="2" Padding="6,4" Width="318">
-
-                                        <TextBlock
-                                            x:Name="SizeTextBlock" 
-                                            Margin="10,4,10,10" 
-                                            IsTextSelectionEnabled="True" 
-                                            FontWeight="Medium" 
-                                            TextTrimming="CharacterEllipsis" 
-                                            FontSize="20" 
-                                            TextWrapping="Wrap" 
-                                            VerticalAlignment="Center" 
-                                            OpticalMarginAlignment="TrimSideBearings"
-                                            >
-                                            Modes
-                                        </TextBlock>
-
-                                        <ListView
-                                            x:Name="ModeListView"
-                                            SelectedIndex="2"
-                                            IsItemClickEnabled="True" 
-                                            Style="{StaticResource AppListViewStyle}"
-                                            >
-                                            <x:String>None</x:String>
-                                            <x:String>Complementary</x:String>
-                                            <x:String>SplitComplementary</x:String>
-                                            <x:String>Analogous</x:String>
-                                            <x:String>Triadic</x:String>
-                                            <x:String>Tetradic</x:String>
-                                        </ListView>
-
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.Flyout>
-                            <SymbolIcon Symbol="ShowBcc"/>
-                        </Button>
-
-                    </Grid>
+                                <ListViewItem>
+                                    <Rectangle Width="76" Height="36">
+                                        <Shape.Fill>
+                                            <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
+                                        </Shape.Fill>
+                                    </Rectangle>
+                                </ListViewItem>
+                                <ListViewItem x:Name="Ellipse1Item" Visibility="Visible">
+                                    <Rectangle Width="76" Height="36">
+                                        <Shape.Fill>
+                                            <SolidColorBrush x:Name="Ellipse1SolidColorBrush" Color="Black"/>
+                                        </Shape.Fill>
+                                    </Rectangle>
+                                </ListViewItem>
+                                <ListViewItem x:Name="Ellipse2Item" Visibility="Visible">
+                                    <Rectangle Width="76" Height="36">
+                                        <Shape.Fill>
+                                            <SolidColorBrush x:Name="Ellipse2SolidColorBrush" Color="Black"/>
+                                        </Shape.Fill>
+                                    </Rectangle>
+                                </ListViewItem>
+                                <ListViewItem x:Name="Ellipse3Item" Visibility="Collapsed">
+                                    <Rectangle Width="76" Height="36">
+                                        <Shape.Fill>
+                                            <SolidColorBrush x:Name="Ellipse3SolidColorBrush" Color="Black"/>
+                                        </Shape.Fill>
+                                    </Rectangle>
+                                </ListViewItem>
+                            </ListView>
+                        </ListViewBase.Header>
+                        <!--
+                        <x:String>None</x:String>
+                        <x:String>Complementary</x:String>
+                        <x:String>SplitComplementary</x:String>
+                        <x:String>Analogous</x:String>
+                        <x:String>Triadic</x:String>
+                        <x:String>Tetradic</x:String>
+                        -->
+                        <luo_painter:ElementItem Type="Complementary"/>
+                        <luo_painter:ElementItem Type="SplitComplementary"/>
+                        <luo_painter:ElementItem Type="Analogous"/>
+                        <luo_painter:ElementItem Type="Triadic"/>
+                        <luo_painter:ElementItem Type="Tetradic"/>
+                    </ListView>
 
                     <Grid Margin="10,4" Height="32" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
@@ -320,7 +299,6 @@
                         <hsvColorPickers:HexPicker x:Name="HexPicker" Grid.Column="2" CornerRadius="4" BorderThickness="1" FontSize="15" Text="000000"/>
                     </Grid>
 
-                    <!--Tool-->
                     <Grid Padding="6,0" Height="50" Visibility="Collapsed" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
