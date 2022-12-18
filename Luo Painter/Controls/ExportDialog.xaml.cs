@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using Luo_Painter.Blends;
+using Microsoft.Graphics.Canvas;
 using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -16,42 +17,9 @@ namespace Luo_Painter.Controls
     {
 
         //@Converter
-        private Color FileColorConverter(int value)
-        {
-            switch (value)
-            {
-                case 0: return Colors.SeaGreen;
-                case 1: return Colors.DodgerBlue;
-                case 2: return Colors.DarkTurquoise;
-                case 3: return Colors.MediumOrchid;
-                case 4: return Colors.DeepPink;
-                default: return Colors.Green;
-            }
-        }
-        private string FileTitleConverter(int value)
-        {
-            switch (value)
-            {
-                case 0: return "JPEG";
-                case 1: return "PNG";
-                case 2: return "BMP";
-                case 3: return "GIF";
-                case 4: return "TIFF";
-                default: return "JPEG";
-            }
-        }
-        private string FileChoicesConverter(int value)
-        {
-            switch (value)
-            {
-                case 0: return ".jpeg";
-                case 1: return ".png";
-                case 2: return ".bmp";
-                case 3: return ".gif";
-                case 4: return ".tiff";
-                default: return ".jpeg";
-            }
-        }
+        private Color FileColorConverter(int value) => this.FileFormatConverter(value).ToColor();
+        private string FileTitleConverter(int value) => this.FileFormatConverter(value).GetTitle();
+        private string FileChoicesConverter(int value) => this.FileFormatConverter(value).GetChoices();
         private CanvasBitmapFileFormat FileFormatConverter(int value)
         {
             switch (value)

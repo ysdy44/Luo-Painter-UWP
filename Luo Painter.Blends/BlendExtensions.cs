@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Linq;
 using Windows.UI;
@@ -29,9 +30,9 @@ namespace Luo_Painter.Blends
             return resource[$"{title}Icon"] as ControlTemplate;
         }
 
-        public static Color ToColor(this TagType tagType)
+        public static Color ToColor(this TagType type)
         {
-            switch (tagType)
+            switch (type)
             {
                 case TagType.None: return Colors.Transparent;
                 case TagType.Red: return Colors.LightCoral;
@@ -42,6 +43,43 @@ namespace Luo_Painter.Blends
                 case TagType.Purple: return Colors.Plum;
 
                 default: return Colors.LightGray;
+            }
+        }
+
+        public static Color ToColor(this CanvasBitmapFileFormat type)
+        {
+            switch (type)
+            {
+                case CanvasBitmapFileFormat.Jpeg: return Colors.SeaGreen;
+                case CanvasBitmapFileFormat.Png: return Colors.DodgerBlue;
+                case CanvasBitmapFileFormat.Bmp: return Colors.DarkTurquoise;
+                case CanvasBitmapFileFormat.Gif: return Colors.MediumOrchid;
+                case CanvasBitmapFileFormat.Tiff: return Colors.DeepPink;
+                default: return Colors.Green;
+            }
+        }
+        public static string GetTitle(this CanvasBitmapFileFormat value)
+        {
+            switch (value)
+            {
+                case CanvasBitmapFileFormat.Jpeg: return "JPEG";
+                case CanvasBitmapFileFormat.Png: return "PNG";
+                case CanvasBitmapFileFormat.Bmp: return "BMP";
+                case CanvasBitmapFileFormat.Gif: return "GIF";
+                case CanvasBitmapFileFormat.Tiff: return "TIFF";
+                default: return "JPEG";
+            }
+        }
+        public static string GetChoices(this CanvasBitmapFileFormat value)
+        {
+            switch (value)
+            {
+                case CanvasBitmapFileFormat.Jpeg: return ".jpeg";
+                case CanvasBitmapFileFormat.Png: return ".png";
+                case CanvasBitmapFileFormat.Bmp: return ".bmp";
+                case CanvasBitmapFileFormat.Gif: return ".gif";
+                case CanvasBitmapFileFormat.Tiff: return ".tiff";
+                default: return ".jpeg";
             }
         }
 
