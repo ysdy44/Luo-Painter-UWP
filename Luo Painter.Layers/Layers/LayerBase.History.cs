@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Historys;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -37,7 +38,7 @@ namespace Luo_Painter.Layers
                     }
                     else
                     {
-                        this.BlendMode = null;
+                        this.BlendMode = BlendExtensions.None;
                         return true;
                     }
                 case HistoryType.Visibility:

@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
+﻿using Luo_Painter.Blends;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Xml.Linq;
 using Windows.UI.Xaml;
@@ -13,7 +14,7 @@ namespace Luo_Painter.Layers
                 new XAttribute("Type", type),
                 new XAttribute("Name", this.Name is null ? string.Empty : this.Name),
                 new XAttribute("Opacity", this.Opacity),
-                new XAttribute("BlendMode", this.BlendMode is null ? "None" : $"{this.BlendMode}"),
+                new XAttribute("BlendMode", this.BlendMode.GetTitle()),
                 new XAttribute("Visibility", this.Visibility),
                 new XAttribute("IsExpand", this.IsExpand));
 

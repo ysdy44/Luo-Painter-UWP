@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Brushes;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
 using Luo_Painter.Historys;
 using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
@@ -15,12 +16,12 @@ namespace Luo_Painter.Controls
 
         //string NameValue => this.NameTextBox.Text;
         float OpacityValue => (float)(this.OpacitySlider.Value / 100);
-        BlendEffectMode? BlendModeValue
+        BlendEffectMode BlendModeValue
         {
             get
             {
                 int index = this.BlendModeComboBox.SelectedIndex;
-                if (index is 0) return null;
+                if (index is 0) return BlendExtensions.None;
                 else return this.BlendCollection[index];
             }
         }
@@ -105,7 +106,7 @@ namespace Luo_Painter.Controls
                     this.OpacitySlider.IsEnabled = true;
                     this.OpacitySlider.Value = layer.Opacity * 100;
                     this.BlendModeComboBox.IsEnabled = true;
-                    this.BlendModeComboBox.SelectedIndex = layer.BlendMode.HasValue ? this.BlendCollection.IndexOf(layer.BlendMode.Value) : 0;
+                    this.BlendModeComboBox.SelectedIndex = layer.BlendMode.IsDefined() ? this.BlendCollection.IndexOf(layer.BlendMode) : 0;
                     this.TagTypeSegmented.IsEnabled = true;
                 }
                 else
@@ -157,7 +158,7 @@ namespace Luo_Painter.Controls
             {
                 if (this.IsPropertyEnabled is false) return;
 
-                BlendEffectMode? redo = this.BlendModeValue;
+                BlendEffectMode redo = this.BlendModeValue;
 
                 if (this.BlendModeCount is 0)
                 {

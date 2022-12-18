@@ -18,8 +18,8 @@ namespace Luo_Painter.Layers
         float StartingOpacity { get; }
         void CacheOpacity();
 
-        BlendEffectMode? BlendMode { get; set; }
-        BlendEffectMode? StartingBlendMode { get; }
+        BlendEffectMode BlendMode { get; set; }
+        BlendEffectMode StartingBlendMode { get; }
         void CacheBlendMode();
 
         void CopyWith(LayerBase layerBase);

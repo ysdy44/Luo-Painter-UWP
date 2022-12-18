@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using Luo_Painter.Blends;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using Windows.UI.Xaml;
@@ -48,7 +49,7 @@ namespace Luo_Painter.Layers
         public void CacheOpacity() => this.StartingOpacity = this.Opacity;
 
 
-        public BlendEffectMode? BlendMode
+        public BlendEffectMode BlendMode
         {
             get => this.blendMode;
             set
@@ -56,11 +57,10 @@ namespace Luo_Painter.Layers
                 this.blendMode = value;
                 this.RenderMode = this.GetRenderMode();
                 this.OnPropertyChanged(nameof(BlendMode)); // Notify 
-                this.OnPropertyChanged(nameof(UIBlendMode)); // Notify 
             }
         }
-        private BlendEffectMode? blendMode;
-        public BlendEffectMode? StartingBlendMode { get; private set; }
+        private BlendEffectMode blendMode = BlendExtensions.None;
+        public BlendEffectMode StartingBlendMode { get; private set; } = BlendExtensions.None;
         public void CacheBlendMode() => this.StartingBlendMode = this.BlendMode;
 
 
@@ -86,9 +86,9 @@ namespace Luo_Painter.Layers
             else if (this.Opacity == 0)
                 return RenderMode.Transparent;
             else if (this.Opacity == 1)
-                return this.BlendMode.HasValue ? RenderMode.NoneWithBlendMode : RenderMode.None;
+                return this.BlendMode.IsDefined() ? RenderMode.NoneWithBlendMode : RenderMode.None;
             else
-                return this.BlendMode.HasValue ? RenderMode.NoneWithOpacityAndBlendMode : RenderMode.NoneWithOpacity;
+                return this.BlendMode.IsDefined() ? RenderMode.NoneWithOpacityAndBlendMode : RenderMode.NoneWithOpacity;
         }
         public ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage)
         {
@@ -121,7 +121,7 @@ namespace Luo_Painter.Layers
                     {
                         Background = currentImage,
                         Foreground = previousImage,
-                        Mode = this.BlendMode.Value
+                        Mode = this.BlendMode
                     };
                 case RenderMode.NoneWithOpacityAndBlendMode:
                     return new BlendEffect
@@ -132,7 +132,7 @@ namespace Luo_Painter.Layers
                             Source = currentImage
                         },
                         Foreground = previousImage,
-                        Mode = this.BlendMode.Value
+                        Mode = this.BlendMode
                     };
                 default:
                     return previousImage;
