@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
@@ -93,11 +94,11 @@
             File Format
         </TextBlock>
         <ListView x:Name="FormatComboBox" SelectedIndex="0" Style="{StaticResource AppListViewStyle}">
-            <ListViewItem FontWeight="Bold">JPEG</ListViewItem>
-            <ListViewItem FontWeight="Bold">PNG</ListViewItem>
-            <ListViewItem>BMP</ListViewItem>
-            <ListViewItem>GIF</ListViewItem>
-            <ListViewItem>TIFF</ListViewItem>
+            <luo_painter:FormatItem FontWeight="Bold" Type="Jpeg"/>
+            <luo_painter:FormatItem FontWeight="Bold" Type="Png"/>
+            <luo_painter:FormatItem Type="Bmp"/>
+            <luo_painter:FormatItem Type="Gif"/>
+            <luo_painter:FormatItem Type="Tiff"/>
         </ListView>
 
     </StackPanel>

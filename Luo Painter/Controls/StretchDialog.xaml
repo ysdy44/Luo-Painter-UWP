@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
     mc:Ignorable="d"
     FullSizeDesired="False" 
@@ -38,13 +39,13 @@
             Interpolation
         </TextBlock>
 
-        <ListView x:Name="InterpolationListView" Style="{StaticResource AppListViewStyle}">
-            <ListViewItem>NearestNeighbor</ListViewItem>
-            <ListViewItem FontWeight="Bold">Linear</ListViewItem>
-            <ListViewItem>Cubic</ListViewItem>
-            <ListViewItem>MultiSampleLinear</ListViewItem>
-            <ListViewItem>Anisotropic</ListViewItem>
-            <ListViewItem>HighQualityCubic</ListViewItem>
+        <ListView x:Name="InterpolationListView" SelectedIndex="1" Style="{StaticResource AppListViewStyle}">
+            <luo_painter:InterpolationItem Type="NearestNeighbor"/>
+            <luo_painter:InterpolationItem FontWeight="Bold" Type="Linear"/>
+            <luo_painter:InterpolationItem Type="Cubic"/>
+            <luo_painter:InterpolationItem Type="MultiSampleLinear"/>
+            <luo_painter:InterpolationItem Type="Anisotropic"/>
+            <luo_painter:InterpolationItem Type="HighQualityCubic"/>
         </ListView>
 
     </StackPanel>

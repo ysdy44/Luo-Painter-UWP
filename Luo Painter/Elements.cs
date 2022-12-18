@@ -2,6 +2,7 @@
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Options;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
@@ -172,7 +173,6 @@ namespace Luo_Painter
     {
         protected override void OnTypeChanged(BlendEffectMode value)
         {
-            base.Resources.Source = new Uri(value.GetResource());
             base.TextBlock.Text = value.GetTitle();
             base.Icon.Content = value.GetIcon();
         }
@@ -182,6 +182,24 @@ namespace Luo_Painter
         protected override void OnTypeChanged(BlendEffectMode value)
         {
             base.Content = value.GetIcon();
+        }
+    }
+
+    internal sealed class FormatItem : TItem<CanvasBitmapFileFormat>
+    {
+        protected override void OnTypeChanged(CanvasBitmapFileFormat value)
+        {
+            base.TextBlock.Text = value.GetTitle();
+            base.Icon.Content = value.ToString().First().ToString();
+        }
+    }
+
+    internal sealed class InterpolationItem : TItem<CanvasImageInterpolation>
+    {
+        protected override void OnTypeChanged(CanvasImageInterpolation value)
+        {
+            base.TextBlock.Text = value.ToString();
+            base.Icon.Content = value.ToString().First().ToString();
         }
     }
 
