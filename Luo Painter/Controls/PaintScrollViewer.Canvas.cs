@@ -1,10 +1,9 @@
 ﻿using Luo_Painter.Brushes;
 using System;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
+    public sealed partial class PaintScrollViewer
     {
 
         private void ConstructCanvas()

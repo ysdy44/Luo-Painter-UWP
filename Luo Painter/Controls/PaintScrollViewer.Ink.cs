@@ -2,11 +2,10 @@
 using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
+    public sealed partial class PaintScrollViewer
     {
 
         public void TryInkAsync()

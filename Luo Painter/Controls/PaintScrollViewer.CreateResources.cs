@@ -2,11 +2,10 @@
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
+    public sealed partial class PaintScrollViewer
     {
 
         byte[] BrushEdgeHardnessShaderCodeBytes;

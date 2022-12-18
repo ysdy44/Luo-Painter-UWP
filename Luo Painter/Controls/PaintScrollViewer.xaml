@@ -11,6 +11,8 @@
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
+    d:DesignWidth="400"   
+    d:DesignHeight="400"
     >
 
     <FrameworkElement.Resources>
@@ -28,6 +30,7 @@
 
             <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
                 <TextBlock 
+                    x:Name="TitleTextBlock"
                     Margin="12,0"
                     IsTextSelectionEnabled="True"
                     FontWeight="Medium" 
@@ -351,7 +354,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="effects:BlendEffectMode">
-                        <luo_painter:BlendIcon Type="{x:Bind}" HorizontalContentAlignment="Stretch"/>
+                        <luo_painter:BlendItem Type="{x:Bind}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
