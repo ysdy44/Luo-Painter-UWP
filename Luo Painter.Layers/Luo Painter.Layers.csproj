@@ -187,6 +187,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Luo Painter.Blends\Luo Painter.Blends.csproj">
+      <Project>{113BDC6D-952F-477E-9451-4E9D2475B7B7}</Project>
+      <Name>Luo Painter.Blends</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Luo Painter.Historys\Luo Painter.Historys.csproj">
       <Project>{3F41D818-7A96-4A18-94D2-0C440A3108DE}</Project>
       <Name>Luo Painter.Historys</Name>
