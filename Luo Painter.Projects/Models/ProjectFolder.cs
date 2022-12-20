@@ -14,8 +14,13 @@ namespace Luo_Painter.Projects.Models
         public string ThumbnailLeft { get; private set; }
         public string ThumbnailRight { get; private set; }
 
-        public ProjectFolder(StorageFolder item, IReadOnlyList<StorageFile> images = null) : base(StorageItemTypes.Folder, item)
+        public ProjectFolder(StorageFolder item, IReadOnlyList<StorageFile> images = null) : base(StorageItemTypes.Folder)
         {
+            base.Path = item.Path;
+            base.Name = item.Name;
+            base.DisplayName = item.DisplayName;
+            base.DateCreated = item.DateCreated;
+
             if (images is null)
             {
                 base.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = ProjectFolder.LoadFaill;
@@ -47,7 +52,10 @@ namespace Luo_Painter.Projects.Models
             StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(base.Path);
             await zipFolder.RenameAsync(name, NameCollisionOption.GenerateUniqueName);
 
-            base.Rename(zipFolder);
+            base.Path = zipFolder.Path;
+            base.Name = zipFolder.Name;
+            base.DisplayName = zipFolder.DisplayName;
+            base.DateCreated = zipFolder.DateCreated;
             this.OnPropertyChanged(nameof(Name)); // Notify 
             this.OnPropertyChanged(nameof(DisplayName)); // Notify 
             this.OnPropertyChanged(nameof(DateCreated)); // Notify 
@@ -56,6 +64,12 @@ namespace Luo_Painter.Projects.Models
             this.Thumbnail = thumbnail;
             this.ThumbnailLeft = thumbnail;
             this.ThumbnailRight = thumbnail;
+        }
+
+        public async Task DeleteAsync()
+        {
+            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(this.Path);
+            await item.DeleteAsync();
         }
 
     }

@@ -1,54 +1,23 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace Luo_Painter.Projects
 {
     public abstract partial class Project : INotifyPropertyChanged
     {
+        //@Content
         public StorageItemTypes Type { get; }
-
-        public bool isEnabled = true;
-        public bool IsEnabled
-        {
-            get => this.isEnabled;
-            set
-            {
-                this.isEnabled = value;
-                this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
-            }
-        }
-
+        public bool IsEnabled { get; private set; } = true;
         public string Path { get; protected set; }
         public string Name { get; protected set; }
         public string DisplayName { get; protected set; }
         public DateTimeOffset DateCreated { get; protected set; }
-
+   
         public string Thumbnail { get; protected set; }
 
-        internal Project(StorageItemTypes type) => this.Type = type;
-        protected Project(StorageItemTypes type, StorageFolder item) : this(type)
-        {
-            this.Path = item.Path;
-            this.Name = item.Name;
-            this.DisplayName = item.DisplayName.Replace(".luo", string.Empty);
-            this.DateCreated = item.DateCreated;
-        }
-
-        protected void Rename(StorageFolder zipFolder)
-        {
-            this.Path = zipFolder.Path;
-            this.Name = zipFolder.Name;
-            this.DisplayName = zipFolder.DisplayName.Replace(".luo", string.Empty);
-            this.DateCreated = zipFolder.DateCreated;
-        }
-
-        public async Task DeleteAsync()
-        {
-            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(this.Path);
-            await item.DeleteAsync();
-        }
+        //@Construct
+        protected Project(StorageItemTypes type) => this.Type = type;
 
         public void Enable() => this.IsEnabled = true;
         public void Enable(StorageItemTypes types)
@@ -57,12 +26,15 @@ namespace Luo_Painter.Projects
             {
                 case StorageItemTypes.None:
                     this.IsEnabled = types is StorageItemTypes.None;
+                    this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
                 case StorageItemTypes.File:
                     this.IsEnabled = types.HasFlag(StorageItemTypes.File);
+                    this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
                 case StorageItemTypes.Folder:
                     this.IsEnabled = types.HasFlag(StorageItemTypes.Folder);
+                    this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
             }
         }

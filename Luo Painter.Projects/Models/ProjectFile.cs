@@ -5,14 +5,19 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Projects.Models
 {
-    public sealed class ProjectFile : Project
+    public sealed partial class ProjectFile : Project
     {
 
         public ImageSource ImageSource => this.FileImageSource.ImageSource;
         readonly FileImageSource FileImageSource;
 
-        public ProjectFile(StorageFolder item) : base(StorageItemTypes.File, item)
+        public ProjectFile(StorageFolder item) : base(StorageItemTypes.File)
         {
+            this.Path = item.Path;
+            this.Name = item.Name;
+            this.DisplayName = item.DisplayName.Replace(".luo", string.Empty);
+            this.DateCreated = item.DateCreated;
+
             string thumbnail = System.IO.Path.Combine(item.Path, "Thumbnail.png");
             base.Thumbnail = thumbnail;
             this.FileImageSource = new FileImageSource(thumbnail);
@@ -31,12 +36,21 @@ namespace Luo_Painter.Projects.Models
             }
         }
 
+        public async Task DeleteAsync()
+        {
+            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(this.Path);
+            await item.DeleteAsync();
+        }
+
         public async Task RenameAsync(string name)
         {
             StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(base.Path);
             await zipFolder.RenameAsync($"{name}.luo", NameCollisionOption.ReplaceExisting);
 
-            base.Rename(zipFolder);
+            this.Path = zipFolder.Path;
+            this.Name = zipFolder.Name;
+            this.DisplayName = zipFolder.DisplayName.Replace(".luo", string.Empty);
+            this.DateCreated = zipFolder.DateCreated;
             this.OnPropertyChanged(nameof(Name)); // Notify 
             this.OnPropertyChanged(nameof(DisplayName)); // Notify 
             this.OnPropertyChanged(nameof(DateCreated)); // Notify 
@@ -65,6 +79,6 @@ namespace Luo_Painter.Projects.Models
                     return null;
             }
         }
-   
+
     }
 }
