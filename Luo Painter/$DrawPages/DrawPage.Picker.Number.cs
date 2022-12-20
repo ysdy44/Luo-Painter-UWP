@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
@@ -20,6 +21,9 @@ namespace Luo_Painter
         Case7,
 
         LayerOpacity,
+
+        ViewRadian,
+        ViewScale,
     }
 
     public sealed partial class DrawPage
@@ -43,6 +47,9 @@ namespace Luo_Painter
                 this.NumberPicker.Construct(this.LayerListView.OpacityNumber);
             };
 
+            this.RadianSlider.Click += (s, e) => this.NumberShowAt(this.RadianSlider, NumberPickerMode.ViewRadian);
+            this.ScaleSlider.Click += (s, e) => this.NumberShowAt(this.ScaleSlider, NumberPickerMode.ViewScale);
+
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
             this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
 
@@ -57,6 +64,13 @@ namespace Luo_Painter
                 {
                     case NumberPickerMode.LayerOpacity:
                         this.LayerListView.OpacitySliderValue = e;
+                        break;
+
+                    case NumberPickerMode.ViewRadian:
+                        this.RadianSlider.Value = e;
+                        break;
+                    case NumberPickerMode.ViewScale:
+                        this.ScaleSlider.Value = e;
                         break;
 
                     default:
@@ -160,6 +174,86 @@ namespace Luo_Painter
                                 this.ThresholdSlider.Value = e;
                                 break;
 
+                            case OptionType.GeometryRoundRect:
+                            case OptionType.GeometryRoundRectTransform:
+                                this.RoundRectCornerSlider.Value = e;
+                                break;
+                            case OptionType.GeometryTriangle:
+                            case OptionType.GeometryTriangleTransform:
+                                this.TriangleCenterSlider.Value = e;
+                                break;
+                            case OptionType.GeometryDiamond:
+                            case OptionType.GeometryDiamondTransform:
+                                this.DiamondMidSlider.Value = e;
+                                break;
+                            case OptionType.GeometryPentagon:
+                            case OptionType.GeometryPentagonTransform:
+                                this.PentagonPointsSlider.Value = e;
+                                break;
+                            case OptionType.GeometryStar:
+                            case OptionType.GeometryStarTransform:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.StarPointsSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.StarInnerRadiusSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.GeometryCog:
+                            case OptionType.GeometryCogTransform:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.CogCountSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.CogInnerRadiusSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.CogToothSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case3:
+                                        this.CogNotchSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.GeometryDount:
+                            case OptionType.GeometryDountTransform:
+                                this.DountHoleRadiusSlider.Value = e;
+                                break;
+                            case OptionType.GeometryPie:
+                            case OptionType.GeometryPieTransform:
+                                this.PieSweepAngleSlider.Value = e;
+                                break;
+                            case OptionType.GeometryCookie:
+                            case OptionType.GeometryCookieTransform:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.CookieInnerRadiusSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.CookieSweepAngleSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.GeometryArrow:
+                            case OptionType.GeometryArrowTransform:
+                                this.ArrowWidthSlider.Value = e;
+                                break;
+                            case OptionType.GeometryHeart:
+                            case OptionType.GeometryHeartTransform:
+                                this.HeartSpreadSlider.Value = e;
+                                break;
 
                             default:
                                 break;

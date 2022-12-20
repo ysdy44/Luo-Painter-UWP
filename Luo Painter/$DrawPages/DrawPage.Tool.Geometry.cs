@@ -1,41 +1,74 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Geometry;
-using System.Numerics;
-using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         public void ConstructGeometry()
         {
+            // RoundRect
             this.RoundRectCornerSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.RoundRectCornerSlider.Click += (s, e) => this.NumberShowAt(this.RoundRectCornerSlider);
+
+            // Triangle
             this.TriangleCenterSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.TriangleCenterSlider.Click += (s, e) => this.NumberShowAt(this.TriangleCenterSlider);
+
+            // Diamond
             this.DiamondMidSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.DiamondMidSlider.Click += (s, e) => this.NumberShowAt(this.DiamondMidSlider);
+
+            // Pentagon
             this.PentagonPointsSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.PentagonPointsSlider.Click += (s, e) => this.NumberShowAt(this.PentagonPointsSlider);
+
+            // Star
             this.StarPointsSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.StarPointsSlider.Click += (s, e) => this.NumberShowAt(this.StarPointsSlider, NumberPickerMode.Case0);
             this.StarInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.StarInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.StarInnerRadiusSlider, NumberPickerMode.Case1);
+
+            // Cog
             this.CogCountSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.CogCountSlider.Click += (s, e) => this.NumberShowAt(this.CogCountSlider, NumberPickerMode.Case0);
             this.CogInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.CogInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.CogInnerRadiusSlider, NumberPickerMode.Case1);
             this.CogToothSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.CogToothSlider.Click += (s, e) => this.NumberShowAt(this.CogToothSlider, NumberPickerMode.Case2);
             this.CogNotchSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.CogNotchSlider.Click += (s, e) => this.NumberShowAt(this.CogNotchSlider, NumberPickerMode.Case3);
+
+            // Dount
             this.DountHoleRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.DountHoleRadiusSlider.Click += (s, e) => this.NumberShowAt(this.DountHoleRadiusSlider);
+
+            // Pie
             this.PieSweepAngleSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.PieSweepAngleSlider.Click += (s, e) => this.NumberShowAt(this.PieSweepAngleSlider);
+
+            // Cookie
             this.CookieInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.CookieInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.CookieInnerRadiusSlider, NumberPickerMode.Case0);
             this.CookieSweepAngleSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.CookieSweepAngleSlider.Click += (s, e) => this.NumberShowAt(this.CookieSweepAngleSlider, NumberPickerMode.Case1);
+
+            // Arrow
             this.ArrowWidthSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.ArrowWidthSlider.Click += (s, e) => this.NumberShowAt(this.ArrowWidthSlider);
             this.ArrowLeftTailComboBox.SelectionChanged += (s, e) => this.GeometryInvalidate();
             this.ArrowRightTailComboBox.SelectionChanged += (s, e) => this.GeometryInvalidate();
+
+            // Heart
             this.HeartSpreadSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.HeartSpreadSlider.Click += (s, e) => this.NumberShowAt(this.HeartSpreadSlider);
         }
 
         private void GeometryInvalidate()
