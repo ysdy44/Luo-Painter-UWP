@@ -710,16 +710,16 @@
 
                             <local:OptionCase Value="Marquee">
                                 <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <local:ElementItem Type="New"/>
-                                    <local:ElementItem Type="Union"/>
-                                    <local:ElementItem Type="Exclude"/>
-                                    <local:ElementItem Type="Simultaneously"/>
+                                    <local:ElementIconWithToolTip Type="New"/>
+                                    <local:ElementIconWithToolTip Type="Union"/>
+                                    <local:ElementIconWithToolTip Type="Exclude"/>
+                                    <local:ElementIconWithToolTip Type="Simultaneously"/>
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="Selection">
                                 <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <local:ElementItem Type="Add"/>
-                                    <local:ElementItem Type="Subtract"/>
+                                    <local:ElementIconWithToolTip Type="Add"/>
+                                    <local:ElementIconWithToolTip Type="Subtract"/>
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="Paint">
@@ -770,10 +770,10 @@
                             <local:OptionCase Value="PaintBrushMulti">
                                 <StackPanel>
                                     <ListBox x:Name="SymmetryComboBox" SelectedIndex="0" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                        <local:ElementItem Type="SymmetryX"/>
-                                        <local:ElementItem Type="SymmetryY"/>
-                                        <local:ElementItem Type="SymmetryRadial"/>
-                                        <local:ElementItem Type="MirrorRadial"/>
+                                        <local:ElementIconWithToolTip Type="SymmetryX"/>
+                                        <local:ElementIconWithToolTip Type="SymmetryY"/>
+                                        <local:ElementIconWithToolTip Type="SymmetryRadial"/>
+                                        <local:ElementIconWithToolTip Type="MirrorRadial"/>
                                     </ListBox>
                                     <hsvColorPickers:NumberSlider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                               Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
@@ -1368,7 +1368,7 @@
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <Button.Flyout>
-                            <Flyout Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                            <Flyout x:Name="AdjustmentFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                                 <controls:EffectListView x:Name="EffectListView"/>
                             </Flyout>
                         </Button.Flyout>
