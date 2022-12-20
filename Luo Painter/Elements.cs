@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Luo_Painter.Projects;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
@@ -91,7 +92,7 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class ElementIcon : TIcon<ElementType>
+    internal class ElementIcon : TIcon<ElementType>
     {
         protected override void OnTypeChanged(ElementType value)
         {
@@ -99,6 +100,19 @@ namespace Luo_Painter
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
         }
+    }
+    internal sealed class ElementIconWithToolTip : ElementIcon
+    {
+        public ElementIconWithToolTip() => base.Loaded += (s, e) =>
+        {
+            SelectorItem parent = this.FindAncestor<SelectorItem>();
+            if (parent is null) return;
+            ToolTipService.SetToolTip(parent, new ToolTip
+            {
+                Content = this.Type,
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        };
     }
     internal sealed class ElementItem : TItem<ElementType>
     {
@@ -113,27 +127,27 @@ namespace Luo_Painter
 
     internal sealed class ToolGroupingList : GroupingList<ToolGrouping, OptionType, OptionType> { }
     internal class ToolGrouping : Grouping<OptionType, OptionType> { }
-    internal sealed class ToolIcon : TIcon<OptionType>
+    internal class ToolIcon : TIcon<OptionType>
     {
-        public ToolIcon()
-        {
-            base.Loaded += (s, e) =>
-            {
-                ListViewItem parent = this.FindAncestor<ListViewItem>();
-                if (parent is null) return;
-                ToolTipService.SetToolTip(parent, new ToolTip
-                {
-                    Content = this.Type,
-                    Style = App.Current.Resources["AppToolTipStyle"] as Style
-                });
-            };
-        }
         protected override void OnTypeChanged(OptionType value)
         {
             base.Content = value;
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
         }
+    }
+    internal sealed class ToolIconWithToolTip : ToolIcon
+    {
+        public ToolIconWithToolTip() => base.Loaded += (s, e) =>
+        {
+            SelectorItem parent = this.FindAncestor<SelectorItem>();
+            if (parent is null) return;
+            ToolTipService.SetToolTip(parent, new ToolTip
+            {
+                Content = this.Type,
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        };
     }
 
     internal sealed class InkList : List<InkType> { }
