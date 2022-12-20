@@ -103,6 +103,19 @@
                     <!--<FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>-->
                 </ListBox>
 
+                <ComboBox
+                    x:Name="ModeListView"
+                    Margin="6,6,6,-6"
+                    SelectedIndex="3"
+                    Visibility="{x:Bind HarmonyListView.Visibility,Mode=OneWay}"
+                    >
+                    <luo_painter:ElementItem Type="Complementary"/>
+                    <luo_painter:ElementItem Type="SplitComplementary"/>
+                    <luo_painter:ElementItem Type="Analogous"/>
+                    <luo_painter:ElementItem Type="Triadic"/>
+                    <luo_painter:ElementItem Type="Tetradic"/>
+                </ComboBox>
+
                 <!--Color-->
                 <elements:IndexGrid Width="320" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
                     <hsvColorPickers:TricolorPicker x:Name="TricolorPicker" Visibility="Visible" Margin="10,20,10,0" Width="300" Height="300">
@@ -193,96 +206,71 @@
 
                     </ListView>
 
-                    <ListView
-                        x:Name="ModeListView"
-                        Visibility="Collapsed" 
-                        Margin="8,4"
-                        SelectedIndex="3"
-                        IsItemClickEnabled="True" 
-                        Style="{StaticResource AppListViewStyle}"
+                    <ListView 
+                        x:Name="HarmonyListView"
+                        Margin="12,4"
+                        IsItemClickEnabled="True"
+                        SelectionMode="None" 
+                        ScrollViewer.HorizontalScrollMode="Enabled"
+                        ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        Style="{x:Null}"
                         >
-                        <ListViewBase.Header>
-                            <ListView 
-                                x:Name="HarmonyListView"
-                                IsItemClickEnabled="True"
-                                SelectionMode="None" 
-                                ScrollViewer.HorizontalScrollMode="Enabled"
-                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                ScrollViewer.VerticalScrollMode="Disabled"
-                                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                BorderThickness="0,0,0,1"
-                                BorderBrush="{ThemeResource AppStroke}"
-                                Style="{x:Null}"
-                                >
 
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                                <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="Padding" Value="0"/>
-                                        <Setter Property="Margin" Value="0"/>
-                                        <Setter Property="Width" Value="76"/>
-                                        <Setter Property="MinWidth" Value="76"/>
-                                        <Setter Property="Height" Value="36"/>
-                                        <Setter Property="MinHeight" Value="36"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                    </Style>
-                                </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Width" Value="74"/>
+                                <Setter Property="MinWidth" Value="74"/>
+                                <Setter Property="Height" Value="36"/>
+                                <Setter Property="MinHeight" Value="36"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
 
-                                <ItemsControl.ItemContainerTransitions>
-                                    <TransitionCollection>
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection>
 
-                                    </TransitionCollection>
-                                </ItemsControl.ItemContainerTransitions>
+                            </TransitionCollection>
+                        </ItemsControl.ItemContainerTransitions>
 
-                                <ListViewItem>
-                                    <Rectangle Width="76" Height="36">
-                                        <Shape.Fill>
-                                            <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
-                                        </Shape.Fill>
-                                    </Rectangle>
-                                </ListViewItem>
-                                <ListViewItem x:Name="Ellipse1Item" Visibility="Visible">
-                                    <Rectangle Width="76" Height="36">
-                                        <Shape.Fill>
-                                            <SolidColorBrush x:Name="Ellipse1SolidColorBrush" Color="Black"/>
-                                        </Shape.Fill>
-                                    </Rectangle>
-                                </ListViewItem>
-                                <ListViewItem x:Name="Ellipse2Item" Visibility="Visible">
-                                    <Rectangle Width="76" Height="36">
-                                        <Shape.Fill>
-                                            <SolidColorBrush x:Name="Ellipse2SolidColorBrush" Color="Black"/>
-                                        </Shape.Fill>
-                                    </Rectangle>
-                                </ListViewItem>
-                                <ListViewItem x:Name="Ellipse3Item" Visibility="Collapsed">
-                                    <Rectangle Width="76" Height="36">
-                                        <Shape.Fill>
-                                            <SolidColorBrush x:Name="Ellipse3SolidColorBrush" Color="Black"/>
-                                        </Shape.Fill>
-                                    </Rectangle>
-                                </ListViewItem>
-                            </ListView>
-                        </ListViewBase.Header>
-                        <!--
-                        <x:String>None</x:String>
-                        <x:String>Complementary</x:String>
-                        <x:String>SplitComplementary</x:String>
-                        <x:String>Analogous</x:String>
-                        <x:String>Triadic</x:String>
-                        <x:String>Tetradic</x:String>
-                        -->
-                        <luo_painter:ElementItem Type="Complementary"/>
-                        <luo_painter:ElementItem Type="SplitComplementary"/>
-                        <luo_painter:ElementItem Type="Analogous"/>
-                        <luo_painter:ElementItem Type="Triadic"/>
-                        <luo_painter:ElementItem Type="Tetradic"/>
+                        <ListViewItem>
+                            <Rectangle Width="74" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </ListViewItem>
+                        <ListViewItem x:Name="Ellipse1Item" Visibility="Visible">
+                            <Rectangle Width="74" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="Ellipse1SolidColorBrush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </ListViewItem>
+                        <ListViewItem x:Name="Ellipse2Item" Visibility="Visible">
+                            <Rectangle Width="74" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="Ellipse2SolidColorBrush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </ListViewItem>
+                        <ListViewItem x:Name="Ellipse3Item" Visibility="Collapsed">
+                            <Rectangle Width="74" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="Ellipse3SolidColorBrush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </ListViewItem>
                     </ListView>
 
                     <Grid Margin="10,4" Height="32" VerticalAlignment="Top">
