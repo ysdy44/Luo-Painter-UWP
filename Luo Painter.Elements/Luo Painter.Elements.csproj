@@ -141,7 +141,6 @@
       <DependentUpon>Expander.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExpanderLightDismissOverlay.cs" />
-    <Compile Include="FileImageSource.cs" />
     <Compile Include="FlexPanel.cs" />
     <Compile Include="FrameworkElementExtensions.cs" />
     <Compile Include="GradientStops.cs" />

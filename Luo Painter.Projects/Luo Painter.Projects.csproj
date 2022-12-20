@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FileImageSource.cs" />
     <Compile Include="Models\ProjectFile.cs" />
     <Compile Include="Models\ProjectFolder.cs" />
     <Compile Include="Models\ProjectNone.cs" />
@@ -138,12 +139,6 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Luo Painter.Elements\Luo Painter.Elements.csproj">
-      <Project>{DF0FE13F-3D6D-432D-ACA9-1D2B6009C843}</Project>
-      <Name>Luo Painter.Elements</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
