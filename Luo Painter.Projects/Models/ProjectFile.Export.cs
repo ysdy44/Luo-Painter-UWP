@@ -10,15 +10,15 @@ using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Projects.Models
 {
-    public abstract partial class Project : INotifyPropertyChanged
+    public sealed partial class ProjectFile
     {
 
-        public async Task<ProjectParameter> SaveAsync(StorageFolder item, System.Drawing.Size size)
+        public async Task<ProjectParameter> SaveAsync(System.Drawing.Size size)
         {
             // Save Project.xml
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 new XDocument(new XElement("Root",
                     new XElement("Width", size.Width),
@@ -34,12 +34,12 @@ namespace Luo_Painter.Projects
                 Name = this.Name,
                 DisplayName = this.DisplayName,
 
-                Width = (int)size.Width,
-                Height = (int)size.Height,
+                Width = size.Width,
+                Height = size.Height,
             };
         }
 
-        public async Task<ProjectParameter> SaveAsync(StorageFolder item, BitmapSize size, IBuffer bytes, StorageItemThumbnail thumbnail)
+        public async Task<ProjectParameter> SaveAsync(BitmapSize size, IBuffer bytes, StorageItemThumbnail thumbnail)
         {
             // 1. ?
             string id = "0";
@@ -48,11 +48,11 @@ namespace Luo_Painter.Projects
             string type = "Bitmap";
 
             // Write Buffer
-            StorageFile file2 = await item.CreateFileAsync(id, CreationCollisionOption.ReplaceExisting);
+            StorageFile file2 = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(id, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteBufferAsync(file2, bytes);
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 XDocument docLayers = new XDocument(new XElement("Root", new XElement[]
                 {
@@ -62,7 +62,7 @@ namespace Luo_Painter.Projects
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 XDocument docProject = new XDocument(new XElement("Root",
                 new XElement("Width", size.Width),
@@ -76,7 +76,7 @@ namespace Luo_Painter.Projects
             }
 
             // 5. Save Thumbnail.png
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 await RandomAccessStream.CopyAsync(thumbnail, stream);
             }
@@ -102,10 +102,16 @@ namespace Luo_Painter.Projects
             try { item = await StorageFolder.GetFolderFromPathAsync(this.Path); }
             catch (Exception) { return null; }
 
+            // Copy
+            foreach (StorageFile item2 in await item.GetFilesAsync())
+            {
+                await item2.CopyAsync(ApplicationData.Current.TemporaryFolder, item2.Name, NameCollisionOption.ReplaceExisting);
+            }
+          
             string docProject = null;
             string docLayers = null;
 
-            IReadOnlyList<StorageFile> files = await item.GetFilesAsync();
+            IReadOnlyList<StorageFile> files = await ApplicationData.Current.TemporaryFolder.GetFilesAsync();
             foreach (StorageFile file in files)
             {
                 string id = file.Name;

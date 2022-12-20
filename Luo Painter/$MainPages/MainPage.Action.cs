@@ -57,7 +57,7 @@ namespace Luo_Painter
             {
                 case ProjectAction.File:
                     {
-                        if (obj is Project project)
+                        if (obj is ProjectFile project)
                         {
                             ProjectParameter parameter = await project.LoadAsync();
                             if (parameter is null)
@@ -94,7 +94,7 @@ namespace Luo_Painter
 
                                 StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
                                 ProjectFile project = new ProjectFile(item);
-                                ProjectParameter parameter = await project.SaveAsync(item, size);
+                                ProjectParameter parameter = await project.SaveAsync(size);
 
                                 this.ObservableCollection.Insert(project);
                                 base.Frame.Navigate(typeof(DrawPage), parameter);
@@ -116,7 +116,7 @@ namespace Luo_Painter
                         {
                             StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
                             ProjectFile project = new ProjectFile(item);
-                            ProjectParameter parameter = await project.SaveAsync(item, bitmap.SizeInPixels, bitmap.GetPixelBytes().AsBuffer(), thumbnail);
+                            ProjectParameter parameter = await project.SaveAsync(bitmap.SizeInPixels, bitmap.GetPixelBytes().AsBuffer(), thumbnail);
 
                             this.ObservableCollection.Insert(project);
                             base.Frame.Navigate(typeof(DrawPage), parameter);

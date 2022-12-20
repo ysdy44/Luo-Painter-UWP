@@ -25,7 +25,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         [MainPageToDrawPage(NavigationMode.Back)]
@@ -44,12 +44,6 @@ namespace Luo_Painter
 
             StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
-            // 1. Delete
-            foreach (StorageFile item2 in await item.GetFilesAsync())
-            {
-                await item2.DeleteAsync();
-            }
-
             // 2. Save Bitmaps 
             foreach (ILayer layer in this.ObservableCollection)
             {
@@ -59,7 +53,7 @@ namespace Luo_Painter
                         if (layer is BitmapLayer bitmapLayer)
                         {
                             // Write Buffer
-                            StorageFile file = await item.CreateFileAsync(layer.Id, CreationCollisionOption.ReplaceExisting);
+                            StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(layer.Id, CreationCollisionOption.ReplaceExisting);
                             IBuffer bytes = bitmapLayer.GetPixelBytes();
                             await FileIO.WriteBufferAsync(file, bytes);
                         }
@@ -70,15 +64,26 @@ namespace Luo_Painter
             }
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 docLayers.Save(stream.AsStream());
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 docProject.Save(stream.AsStream());
+            }
+
+            // Copy
+            foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
+            {
+                await item2.CopyAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);
+            }
+            // Delete
+            foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
+            {
+                await item2.DeleteAsync();
             }
 
             // 5. Save Thumbnail.png
