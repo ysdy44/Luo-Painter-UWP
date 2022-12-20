@@ -39,8 +39,8 @@ namespace Luo_Painter
             this.LayerListView.OpacitySliderClick += (s, e) =>
             {
                 this.NumberPickerMode = NumberPickerMode.LayerOpacity;
-                this.NumberFlyout.ShowAt(this.LayerListView.OpacitySliderPlacementTarget);
-                this.NumberPicker.Construct(this.LayerListView.IOpacitySlider);
+                this.NumberFlyout.ShowAt(this.LayerListView.OpacityNumber.PlacementTarget);
+                this.NumberPicker.Construct(this.LayerListView.OpacityNumber);
             };
 
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
@@ -52,7 +52,8 @@ namespace Luo_Painter
                 if (this.NumberFlyout.IsOpen is false) return;
                 this.NumberFlyout.Hide();
 
-                switch (this.NumberPickerMode)
+                NumberPickerMode mode = this.NumberPickerMode;
+                switch (mode)
                 {
                     case NumberPickerMode.LayerOpacity:
                         this.LayerListView.OpacitySliderValue = e;
@@ -84,7 +85,7 @@ namespace Luo_Painter
                                 this.ContrastSlider.Value = e;
                                 break;
                             case OptionType.Temperature:
-                                switch (this.NumberPickerMode)
+                                switch (mode)
                                 {
                                     case NumberPickerMode.Case0:
                                         this.TemperatureSlider.Value = e;
@@ -97,7 +98,7 @@ namespace Luo_Painter
                                 }
                                 break;
                             case OptionType.HighlightsAndShadows:
-                                switch (this.NumberPickerMode)
+                                switch (mode)
                                 {
                                     case NumberPickerMode.Case0:
                                         this.ShadowsSlider.Value = e;
@@ -117,17 +118,17 @@ namespace Luo_Painter
                                 break;
 
                             case OptionType.Move:
-                                this.SetMove(this.NumberPickerMode, e);
+                                this.SetMove(mode, e);
                                 break;
                             case OptionType.Transform:
-                                this.SetTransform(this.NumberPickerMode, e);
+                                this.SetTransform(mode, e);
                                 break;
                             case OptionType.FreeTransform:
-                                this.SetFreeTransform(this.NumberPickerMode, e);
+                                this.SetFreeTransform(mode, e);
                                 break;
 
                             case OptionType.DisplacementLiquefaction:
-                                switch (this.NumberPickerMode)
+                                switch (mode)
                                 {
                                     case NumberPickerMode.Case0:
                                         this.DisplacementLiquefactionSizeSlider.Value = e;
@@ -140,7 +141,7 @@ namespace Luo_Painter
                                 }
                                 break;
                             case OptionType.RippleEffect:
-                                switch (this.NumberPickerMode)
+                                switch (mode)
                                 {
                                     case NumberPickerMode.Case0:
                                         this.FrequencySlider.Value = e;

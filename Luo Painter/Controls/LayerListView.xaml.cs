@@ -19,6 +19,7 @@ namespace Luo_Painter.Controls
         public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
         public event EventHandler<IHistory> History;
         public event EventHandler<object> Invalidate;
+        public event RoutedEventHandler OpacitySliderClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
 
         //@Command
         public ICommand Command { get; set; }
@@ -28,12 +29,7 @@ namespace Luo_Painter.Controls
         public bool IsOpen => this.RenameFlyout.IsOpen;
         public ImageSource Source { get; set; }
 
-        //@Delegate
-        public event RoutedEventHandler OpacitySliderClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
-
-        //@Content
-        public INumberBase IOpacitySlider => this.OpacitySlider;
-        public FrameworkElement OpacitySliderPlacementTarget => this.OpacitySlider.PlacementTarget;
+        public INumberBase OpacityNumber => this.OpacitySlider;
         public double OpacitySliderValue { set => this.OpacitySlider.Value = value; }
 
         //@Construct
@@ -60,7 +56,7 @@ namespace Luo_Painter.Controls
             base.DoubleTapped += async (s, e) =>
             {
                 await System.Threading.Tasks.Task.Delay(100);
-        
+
                 if (e.OriginalSource is FrameworkElement element)
                 {
                     if (element.DataContext is ILayer item)
