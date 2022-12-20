@@ -122,10 +122,10 @@
   <ItemGroup>
     <Compile Include="FileImageSource.cs" />
     <Compile Include="Models\ProjectFile.cs" />
+    <Compile Include="Models\ProjectFile.Export.cs" />
     <Compile Include="Models\ProjectFolder.cs" />
     <Compile Include="Models\ProjectNone.cs" />
     <Compile Include="Project.cs" />
-    <Compile Include="Project.Export.cs" />
     <Compile Include="ProjectObservableCollections\ProjectObservableCollection.Create.cs" />
     <Compile Include="ProjectObservableCollections\ProjectObservableCollection.cs" />
     <Compile Include="ProjectObservableCollections\ProjectObservableCollection.DeleteCopy.cs" />
