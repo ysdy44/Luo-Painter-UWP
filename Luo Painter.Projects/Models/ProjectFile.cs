@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Elements;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Media;
