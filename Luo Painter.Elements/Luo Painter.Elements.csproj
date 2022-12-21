@@ -152,6 +152,9 @@
     <Compile Include="IndexGrid.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="MetadataObservableCollection.cs" />
+    <Compile Include="PipsPivot.xaml.cs">
+      <DependentUpon>PipsPivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
@@ -377,6 +380,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Icons\VerticalIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PipsPivot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

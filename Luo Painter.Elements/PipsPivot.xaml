@@ -1,0 +1,26 @@
+﻿<Canvas
+    x:Class="Luo_Painter.Elements.PipsPivot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="400"  
+    d:DesignHeight="400"
+    Background="Transparent"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Scale-->
+        <Storyboard x:Name="ScaleStoryboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" EnableDependentAnimation="True">
+                <SplineDoubleKeyFrame x:Name="SplineDoubleKeyFrame" Value="23" KeyTime="0:0:0.4" KeySpline="0.5,1.0 1,1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </FrameworkElement.Resources>
+
+    <UIElement.RenderTransform>
+        <TranslateTransform x:Name="TranslateTransform"/>
+    </UIElement.RenderTransform>
+    
+</Canvas>
