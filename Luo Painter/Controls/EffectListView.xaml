@@ -63,12 +63,58 @@
         </CollectionViewSource>
     </FrameworkElement.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="160"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+    <SplitView 
+        IsPaneOpen="True" 
+        PanePlacement="Left" 
+        OpenPaneLength="160"
+        DisplayMode="Inline" 
+        PaneBackground="{ThemeResource AppBackgroundLight}"
+        >
+        <SplitView.Pane>
+            <ListView 
+                x:Name="ComboBox" 
+                SelectedIndex="0" 
+                SelectionMode="Single"
+                >
 
+                <ItemsControl.ItemContainerTransitions>
+                    <TransitionCollection>
+
+                    </TransitionCollection>
+                </ItemsControl.ItemContainerTransitions>
+                
+                <ListViewBase.Header>
+                    <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
+                        <TextBlock
+                            x:Name="TitleTextBlock"
+                            Margin="16,0"
+                            IsTextSelectionEnabled="True"
+                            FontWeight="Medium" 
+                            TextTrimming="CharacterEllipsis" 
+                            FontSize="20" 
+                            TextWrapping="Wrap" 
+                            VerticalAlignment="Center" 
+                            OpticalMarginAlignment="TrimSideBearings"
+                            >
+                            Effects
+                        </TextBlock>
+                    </Border>
+                </ListViewBase.Header>
+                
+                <ListViewBase.Footer>
+                    <Button x:Name="ApplyButton" Margin="4" CornerRadius="4" Height="32" BorderThickness="1" HorizontalAlignment="Stretch">
+                        Apply Again
+                    </Button>
+                </ListViewBase.Footer>
+                
+                <ListViewItem x:Name="AdjustmentItem">Adjustment</ListViewItem>
+                <ListViewItem x:Name="Adjustment2Item">Adjustment2</ListViewItem>
+                <ListViewItem x:Name="Effect1Item">Effect1</ListViewItem>
+                <ListViewItem x:Name="Effect2Item">Effect2</ListViewItem>
+                <ListViewItem x:Name="Effect3Item">Effect3</ListViewItem>
+                
+            </ListView>
+        </SplitView.Pane>
         <ListView 
             x:Name="ListView"
             Grid.Column="1"
@@ -77,15 +123,8 @@
             Height="404"
             SelectionMode="None"
             IsItemClickEnabled="True"
-            Background="{ThemeResource AppBackgroundLight}"
-            ItemsSource="{x:Bind ItemsSourceConverter(ListBox.SelectedIndex), Mode=OneWay}"
+            ItemsSource="{x:Bind ItemsSourceConverter(ComboBox.SelectedIndex), Mode=OneWay}"
             >
-
-            <ItemsControl.ItemContainerTransitions>
-                <TransitionCollection>
-
-                </TransitionCollection>
-            </ItemsControl.ItemContainerTransitions>
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -132,7 +171,7 @@
                                         <RowDefinition Height="92"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Border CornerRadius="4" Margin="10,8" BorderThickness="2" BorderBrush="Black" Background="{TemplateBinding Background}"/>
+                                    <Border Width="118" Height="76" CornerRadius="4" Margin="10,8" BorderThickness="2" BorderBrush="Black" Background="{TemplateBinding Background}"/>
                                     <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}"/>
                                 </Grid>
                             </ControlTemplate>
@@ -147,30 +186,5 @@
             </ItemsControl.ItemTemplate>
 
         </ListView>
-
-        <ListBox x:Name="ListBox" Margin="0,50" SelectedIndex="0" Background="Transparent" Style="{x:Null}">
-            <ListBoxItem x:Name="AdjustmentItem">Adjustment</ListBoxItem>
-            <ListBoxItem x:Name="Adjustment2Item">Adjustment2</ListBoxItem>
-            <ListBoxItem x:Name="Effect1Item">Effect1</ListBoxItem>
-            <ListBoxItem x:Name="Effect2Item">Effect2</ListBoxItem>
-            <ListBoxItem x:Name="Effect3Item">Effect3</ListBoxItem>
-        </ListBox>
-
-        <Border Height="50" VerticalAlignment="Top">
-            <TextBlock
-                x:Name="TitleTextBlock"
-                Margin="16,0"
-                IsTextSelectionEnabled="True"
-                FontWeight="Medium" 
-                TextTrimming="CharacterEllipsis" 
-                FontSize="20" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Center" 
-                OpticalMarginAlignment="TrimSideBearings"
-                >
-                Effects
-            </TextBlock>
-        </Border>
-
-    </Grid>
+    </SplitView>
 </UserControl>

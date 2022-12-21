@@ -403,9 +403,9 @@ namespace Luo_Painter
             };
             this.EffectListView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is OptionType item)
+                this.AdjustmentFlyout.Hide();
                 {
-                    this.Click(item);
+                    this.Click(e);
                 }
             };
 
@@ -507,6 +507,7 @@ namespace Luo_Painter
 
                         if (base.Frame.CanGoBack)
                         {
+                            this.Clear();
                             base.Frame.GoBack();
                             return;
                         }
