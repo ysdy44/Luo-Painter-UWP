@@ -28,8 +28,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage
     {
 
-        [MainPageToDrawPage(NavigationMode.Back)]
-        public async Task SaveAsync(string path, bool isClear)
+        public async Task SaveAsync(string path)
         {
             XDocument docLayers = new XDocument(new XElement("Root",
                 from l
@@ -105,16 +104,14 @@ namespace Luo_Painter
                     Height = scale * this.Transformer.Height,
                 }, 96, this.CanvasDevice, stream, CanvasBitmapFileFormat.Png);
             }
+        }
 
-
-            // 6. Clear
-            if (isClear)
-            {
-                this.History.Clear();
-                LayerDictionary.Instance.Clear();
-                this.Nodes.Clear();
-                this.ObservableCollection.Clear();
-            }
+        public void Clear()
+        {
+            this.History.Clear();
+            LayerDictionary.Instance.Clear();
+            this.Nodes.Clear();
+            this.ObservableCollection.Clear();
         }
 
         public void Load(ProjectParameter item)

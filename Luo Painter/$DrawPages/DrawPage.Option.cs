@@ -26,7 +26,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, ICommand
+    public sealed partial class DrawPage
     {
 
         //@Delegate
@@ -92,11 +92,12 @@ namespace Luo_Painter
 
                     if (type is OptionType.Home)
                     {
-                        await this.SaveAsync(this.ApplicationView.PersistedStateId, true);
+                        await this.SaveAsync(this.ApplicationView.PersistedStateId);
                     }
 
                     if (base.Frame.CanGoBack)
                     {
+                        this.Clear();
                         base.Frame.GoBack();
                         break;
                     }
@@ -107,7 +108,7 @@ namespace Luo_Painter
                     if (this.Disabler) break;
                     this.Disabler = true;
 
-                    await this.SaveAsync(this.ApplicationView.PersistedStateId, false);
+                    await this.SaveAsync(this.ApplicationView.PersistedStateId);
 
                     this.Disabler = false;
                     break;
