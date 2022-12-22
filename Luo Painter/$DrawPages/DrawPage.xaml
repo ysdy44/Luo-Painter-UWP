@@ -683,6 +683,158 @@
                             </local:OptionCase>
 
 
+                            <local:OptionCase Value="GaussianBlur">
+                                <hsvColorPickers:NumberSlider x:Name="GaussianBlurSlider" Margin="0,5" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <Slider.Header>
+                                        Blur Amount
+                                    </Slider.Header>
+                                </hsvColorPickers:NumberSlider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="DirectionalBlur">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="DirectionalBlurSlider" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Blur Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="DirectionalBlurAngleSlider" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Angle
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Sharpen">
+                                <hsvColorPickers:NumberSlider x:Name="SharpenSlider" Margin="0,5" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <Slider.Header>
+                                        Amount
+                                    </Slider.Header>
+                                </hsvColorPickers:NumberSlider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Shadow">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="ShadowAmountSlider" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="ShadowOpacitySlider" Value="50" Unit="º" Decrease="True" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Opacity
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="10,0" MinWidth="280" Height="60" 
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <elements:ColorButtonBase x:Name="ShadowColorButton"/>
+                                        <Button Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            <Button.Flyout>
+                                                <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                                    <hsvColorPickers:NumberSlider x:Name="ShadowXSlider" Margin="0,5" Width="280" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}">
+                                                        <Slider.Header>
+                                                            X
+                                                        </Slider.Header>
+                                                    </hsvColorPickers:NumberSlider>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            X
+                                        </Button>
+                                        <Button Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            <Button.Flyout>
+                                                <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                                    <hsvColorPickers:NumberSlider x:Name="ShadowYSlider" Margin="0,5" Width="280" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}">
+                                                        <Slider.Header>
+                                                            Y
+                                                        </Slider.Header>
+                                                    </hsvColorPickers:NumberSlider>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            Y
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="EdgeDetection">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="EdgeDetectionSlider" Value="50" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="EdgeDetectionBlurAmountSlider" Decrease="True" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Blur Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="10,0" MinWidth="280" Height="60" 
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton x:Name="EdgeDetectionButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            Overlay Edges
+                                        </ToggleButton>
+                                        <local:EdgeDetectionModeButton x:Name="EdgeDetectionModeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"/>
+                                    </Grid>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Morphology">
+                                <local:MorphologyNumberSlider x:Name="MorphologySlider" Margin="0,5" Minimum="-90" Maximum="90" TickFrequency="30" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <Control.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="{ThemeResource SystemAccentColor}" Offset="0"/>
+                                            <GradientStop Color="Gray" Offset="0.5"/>
+                                            <GradientStop Color="{ThemeResource SystemAccentColor}" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Control.Background>
+                                    <Slider.Header>
+                                        Size
+                                    </Slider.Header>
+                                </local:MorphologyNumberSlider>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Emboss">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="EmbossSlider" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="EmbossAngleSlider" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Angle
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Straighten">
+                                <hsvColorPickers:NumberSlider x:Name="StraightenSlider" Margin="0,5" Minimum="-45" Maximum="45" Unit="º" TickFrequency="15" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <Control.Background>
+                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="Gray" Offset="0"/>
+                                            <GradientStop Color="{ThemeResource SystemAccentColor}" Offset="0.5"/>
+                                            <GradientStop Color="Gray" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Control.Background>
+                                    <Slider.Header>
+                                        Angle
+                                    </Slider.Header>
+                                </hsvColorPickers:NumberSlider>
+                            </local:OptionCase>
+
+
                             <local:OptionCase Value="LuminanceToAlpha">
                                 <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
                                     <ListBoxItem x:Name="LuminanceToAlphaNormalItem">Normal</ListBoxItem>

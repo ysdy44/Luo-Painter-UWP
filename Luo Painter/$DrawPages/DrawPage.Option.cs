@@ -1182,10 +1182,10 @@ namespace Luo_Painter
                             case PixelBoundsMode.None:
                                 PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(interpolationColors);
                                 PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, interpolationColors);
-                                this.SetTransform(bounds);
+                                this.ResetTransform(bounds);
                                 break;
                             default:
-                                this.SetTransform(this.Marquee.Bounds);
+                                this.ResetTransform(this.Marquee.Bounds);
                                 break;
                         }
 
@@ -1288,18 +1288,18 @@ namespace Luo_Painter
                                         {
                                             PixelBounds interpolationBounds = bitmapLayer.CreateInterpolationBounds(InterpolationColors);
                                             PixelBounds bounds = bitmapLayer.CreatePixelBounds(interpolationBounds, InterpolationColors);
-                                            this.SetTransform(bounds);
+                                            this.ResetTransform(bounds);
                                         }
                                         break;
                                     case SelectionType.MarqueePixelBounds:
                                         {
                                             PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(InterpolationColors);
                                             PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, InterpolationColors);
-                                            this.SetTransform(bounds);
+                                            this.ResetTransform(bounds);
                                         }
                                         break;
                                     default:
-                                        this.SetTransform(bitmapLayer.Bounds);
+                                        this.ResetTransform(bitmapLayer.Bounds);
                                         break;
                                 }
 
@@ -1467,6 +1467,11 @@ namespace Luo_Painter
                 case OptionType.Fill: break;
 
                 // Adjustment
+                case OptionType.Fog:
+
+                case OptionType.Sepia:
+                case OptionType.Posterize:
+
                 case OptionType.Gray:
                 case OptionType.Invert:
                     {
@@ -1489,6 +1494,9 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
+
+                case OptionType.Threshold:
+
                 case OptionType.Exposure:
                 case OptionType.Brightness:
                 case OptionType.Saturation:
@@ -1502,17 +1510,15 @@ namespace Luo_Painter
                 //case OptionType.ColorMatrix:
                 //case OptionType.ColorMatch:
 
-                case OptionType.Threshold:
-
                 // Effect1
-                //case OptionType.GaussianBlur:
-                //case OptionType.DirectionalBlur:
-                //case OptionType.Sharpen:
-                //case OptionType.Shadow:
-                //case OptionType.EdgeDetection:
-                //case OptionType.Morphology:
-                //case OptionType.Emboss:
-                //case OptionType.Straighten:
+                case OptionType.GaussianBlur:
+                case OptionType.DirectionalBlur:
+                case OptionType.Sharpen:
+                case OptionType.Shadow:
+                case OptionType.EdgeDetection:
+                case OptionType.Morphology:
+                case OptionType.Emboss:
+                case OptionType.Straighten:
 
                 // Effect2
                 //case OptionType.Sepia:
