@@ -8,9 +8,9 @@
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"
-    Height="80"
+    Height="60"
     FontWeight="SemiBold"
-    Padding="10,8,10,0" 
+    Padding="10,2,10,0" 
     IsThumbToolTipEnabled="False"
     >
 
@@ -226,7 +226,12 @@
                             Grid.Row="1"
                             Grid.ColumnSpan="3" 
                             />
-                        <Rectangle x:Name="HorizontalDecreaseRect" Opacity="0" Fill="{TemplateBinding Foreground}" Grid.Row="1" />
+                        <Rectangle 
+                            x:Name="HorizontalDecreaseRect" 
+                            Grid.Row="1" 
+                            Opacity="0"
+                            Fill="{ThemeResource SliderTrackValueFill}"
+                            />
                         <TickBar
                             x:Name="TopTickBar"
                             Visibility="Collapsed"
@@ -289,9 +294,10 @@
                             />
                         <Rectangle 
                             x:Name="VerticalDecreaseRect"
-                            Fill="{TemplateBinding Foreground}"
                             Grid.Column="1"
                             Grid.Row="2" 
+                            Opacity="0"
+                            Fill="{ThemeResource SliderTrackValueFill}"
                             />
                         <TickBar
                             x:Name="LeftTickBar"
