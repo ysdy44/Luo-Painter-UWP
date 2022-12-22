@@ -131,6 +131,74 @@ namespace Luo_Painter
                                 }
                                 break;
 
+                            case OptionType.GaussianBlur:
+                                this.GaussianBlurSlider.Value = e;
+                                break;
+                            case OptionType.DirectionalBlur:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.DirectionalBlurSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.DirectionalBlurAngleSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.Sharpen:
+                                this.SharpenSlider.Value = e;
+                                break;
+                            case OptionType.Shadow:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.ShadowAmountSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.ShadowOpacitySlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.ShadowXSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case3:
+                                        this.ShadowYSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.EdgeDetection:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.EdgeDetectionSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.EdgeDetectionBlurAmountSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.Emboss:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.EmbossSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.EmbossAngleSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.Straighten:
+                                this.StraightenSlider.Value = e;
+                                break;
+
                             case OptionType.Move:
                                 this.SetMove(mode, e);
                                 break;

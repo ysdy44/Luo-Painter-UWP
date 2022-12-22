@@ -78,6 +78,14 @@ namespace Luo_Painter
                         this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
                         break;
+
+                    case OptionType.Shadow:
+                        this.ShadowColorButton.SetColor(e);
+                        this.ShadowColorButton.SetColorHdr(e);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        break;
+
                     case OptionType.Threshold:
                         switch (this.ColorPickerMode)
                         {

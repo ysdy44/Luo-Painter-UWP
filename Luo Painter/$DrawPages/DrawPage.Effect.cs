@@ -110,6 +110,48 @@ namespace Luo_Painter
             this.BlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.BlurSlider.Click += (s, e) => this.NumberShowAt(this.BlurSlider, NumberPickerMode.Case3);
 
+            // GaussianBlur
+            this.GaussianBlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.GaussianBlurSlider.Click += (s, e) => this.NumberShowAt(this.GaussianBlurSlider);
+            // DirectionalBlur
+            this.DirectionalBlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.DirectionalBlurSlider.Click += (s, e) => this.NumberShowAt(this.DirectionalBlurSlider, NumberPickerMode.Case0);
+            this.DirectionalBlurAngleSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.DirectionalBlurAngleSlider.Click += (s, e) => this.NumberShowAt(this.DirectionalBlurAngleSlider, NumberPickerMode.Case1);
+            // Sharpen
+            this.SharpenSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.SharpenSlider.Click += (s, e) => this.NumberShowAt(this.SharpenSlider);
+            // Shadow
+            this.ShadowColorButton.SetColor(Colors.Black);
+            this.ShadowColorButton.SetColorHdr(Vector4.UnitW);
+            this.ShadowColorButton.Click += (s, e) => this.ColorShowAt(this.ShadowColorButton);
+            this.ShadowAmountSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ShadowAmountSlider.Click += (s, e) => this.NumberShowAt(this.ShadowAmountSlider, NumberPickerMode.Case0);
+            this.ShadowOpacitySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ShadowOpacitySlider.Click += (s, e) => this.NumberShowAt(this.ShadowOpacitySlider, NumberPickerMode.Case1);
+            this.ShadowXSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ShadowXSlider.Click += (s, e) => this.NumberShowAt(this.ShadowXSlider, NumberPickerMode.Case2);
+            this.ShadowYSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ShadowYSlider.Click += (s, e) => this.NumberShowAt(this.ShadowYSlider, NumberPickerMode.Case3);
+            // EdgeDetection
+            this.EdgeDetectionSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.EdgeDetectionSlider.Click += (s, e) => this.NumberShowAt(this.EdgeDetectionSlider, NumberPickerMode.Case0);
+            this.EdgeDetectionBlurAmountSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.EdgeDetectionBlurAmountSlider.Click += (s, e) => this.NumberShowAt(this.EdgeDetectionBlurAmountSlider, NumberPickerMode.Case1);
+            this.EdgeDetectionButton.Unchecked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.EdgeDetectionButton.Checked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.EdgeDetectionModeButton.Toggled += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            // EdgeDetection
+            this.MorphologySlider.Toggled += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            // Emboss
+            this.EmbossSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.EmbossSlider.Click += (s, e) => this.NumberShowAt(this.EmbossSlider, NumberPickerMode.Case0);
+            this.EmbossAngleSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.EmbossAngleSlider.Click += (s, e) => this.NumberShowAt(this.EmbossAngleSlider, NumberPickerMode.Case1);
+            // Straighten
+            this.StraightenSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.StraightenSlider.Click += (s, e) => this.NumberShowAt(this.StraightenSlider);
+
             // LuminanceToAlpha
             this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
         }
@@ -295,6 +337,82 @@ namespace Luo_Painter
                         MaskBlurAmount = Math.Clamp((float)this.BlurSlider.Value / 100, 0, 10),
                         Source = image
                     };
+
+
+                case OptionType.GaussianBlur:
+                    return new GaussianBlurEffect
+                    {
+                        BlurAmount = (float)this.GaussianBlurSlider.Value,
+                        Source = image
+                    };
+                case OptionType.DirectionalBlur:
+                    return new DirectionalBlurEffect
+                    {
+                        BlurAmount = (float)this.DirectionalBlurSlider.Value,
+                        Angle = (float)this.DirectionalBlurAngleSlider.Value * MathF.PI / 180,
+                        Source = image
+                    };
+                case OptionType.Sharpen:
+                    return new SharpenEffect
+                    {
+                        Amount = Math.Clamp((float)this.SharpenSlider.Value / 10, 0, 10),
+                        //Threshold = Math.Clamp((float)this.SharpenSlider.Value / 10, 0, 10),
+                        Source = image
+                    };
+                case OptionType.Shadow:
+                    return new CompositeEffect
+                    {
+                        Sources =
+                        {
+                            new OpacityEffect
+                            {
+                                Opacity = Math.Clamp((float)this.ShadowOpacitySlider.Value/100,0,1),
+                                Source = new Transform2DEffect
+                                {
+                                    TransformMatrix = Matrix3x2.CreateTranslation((float)this.ShadowXSlider.Value, (float)this.ShadowYSlider.Value),
+                                    Source = new ShadowEffect
+                                    {
+                                        BlurAmount = (float)this.ShadowAmountSlider.Value,
+                                        ShadowColor = this.ShadowColorButton.Color,
+                                        Source = image,
+                                    }
+                                }
+                            },
+                            image
+                        }
+                    };
+                case OptionType.EdgeDetection:
+                    return new EdgeDetectionEffect
+                    {
+                        Amount = Math.Clamp((float)this.EdgeDetectionSlider.Value / 100, 0, 1),
+                        BlurAmount = Math.Clamp((float)this.EdgeDetectionBlurAmountSlider.Value / 10, 0, 10),
+                        OverlayEdges = this.EdgeDetectionButton.IsChecked is true,
+                        Mode = this.EdgeDetectionModeButton.Mode,
+                        Source = image,
+                    };
+                case OptionType.Morphology:
+                    return this.MorphologySlider.IsEmpty ? image : new MorphologyEffect
+                    {
+                        Width = this.MorphologySlider.Number,
+                        Height = this.MorphologySlider.Number,
+                        Mode = this.MorphologySlider.Mode,
+                        Source = image,
+                    };
+                case OptionType.Emboss:
+                    return new EmbossEffect
+                    {
+                        Amount = Math.Clamp((float)this.EmbossSlider.Value / 10, 0, 10),
+                        Angle = (float)this.EmbossAngleSlider.Value * MathF.PI / 180,
+                        Source = image
+                    };
+                case OptionType.Straighten:
+                    return new StraightenEffect
+                    {
+                        MaintainSize = true,
+                        Angle = (float)this.StraightenSlider.Value * MathF.PI / 180,
+                        Source = image
+                    };
+
 
                 case OptionType.LuminanceToAlpha:
                     switch (this.LuminanceToAlphaComboBox.SelectedIndex)
