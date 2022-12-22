@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
@@ -6,9 +7,64 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Numerics;
 using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter
 {
+    internal sealed class EdgeDetectionModeButton : ToggleButton
+    {
+        //@Delegate
+        public event RoutedEventHandler Toggled;
+        //@Content
+        public EdgeDetectionEffectMode Mode { get; private set; }
+        //@Construct
+        public EdgeDetectionModeButton()
+        {
+            base.Content = this.Mode;
+            base.Unchecked += (s, e) =>
+            {
+                this.Mode = EdgeDetectionEffectMode.Sobel;
+                base.Content = this.Mode;
+                this.Toggled?.Invoke(s, e); //Delegate
+            };
+            base.Checked += (s, e) =>
+            {
+                this.Mode = EdgeDetectionEffectMode.Prewitt;
+                base.Content = this.Mode;
+                this.Toggled?.Invoke(s, e); //Delegate
+            };
+        }
+    }
+
+    internal sealed class MorphologyNumberSlider : NumberSliderBase
+    {
+        //@Delegate
+        public event RoutedEventHandler Toggled;
+        //@Override
+        public override int Number { get; set; } = 1;
+        public override int NumberMinimum { get; set; } = -90;
+        public override int NumberMaximum { get; set; } = 90;
+        //@Content
+        public bool IsEmpty { get; private set; } = true;
+        public MorphologyEffectMode Mode { get; private set; } = MorphologyEffectMode.Dilate;
+        //@Construct
+        public MorphologyNumberSlider()
+        {
+            base.ValueChanged += (s, e) =>
+            {
+                int size = (int)e.NewValue;
+                this.IsEmpty = size == 0;
+                this.Mode = size < 0 ? MorphologyEffectMode.Erode : MorphologyEffectMode.Dilate;
+                this.Number = Math.Clamp(Math.Abs(size), 1, 90);
+                this.Toggled?.Invoke(s, e); //Delegate
+                if (this.HeaderButton is null) return;
+                this.HeaderButton.Content = size;
+            };
+        }
+    }
+
     public sealed partial class DrawPage
     {
 
