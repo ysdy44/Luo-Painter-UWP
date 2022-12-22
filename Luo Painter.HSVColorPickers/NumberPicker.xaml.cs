@@ -313,9 +313,9 @@ namespace Luo_Painter.HSVColorPickers
             else
             {
                 if (this.IsNegative)
-                    return $"-{this.Absnumber} {this.Unit}";
+                    return $"-{this.Absnumber}{this.Unit}";
                 else
-                    return $"{this.Absnumber} {this.Unit}";
+                    return $"{this.Absnumber}{this.Unit}";
             }
         }
 

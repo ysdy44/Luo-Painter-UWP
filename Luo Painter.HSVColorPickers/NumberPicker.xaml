@@ -48,9 +48,7 @@
             </Run><Run>
                 <Run.Foreground>
                     <SolidColorBrush x:Name="CursorBrush" Opacity="1" Color="{ThemeResource SystemBaseHighColor}"/>
-                </Run.Foreground>
-                |
-            </Run>
+                </Run.Foreground>|</Run>
         </TextBlock>
 
         <Button x:Name="PasteButton" Canvas.Left="180" Canvas.Top="0" Height="40" Width="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource TextBlockButtonStyle}">

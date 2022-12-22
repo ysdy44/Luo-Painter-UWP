@@ -101,7 +101,7 @@ namespace Luo_Painter.HSVColorPickers
         Rectangle VerticalDecreaseRect;
 
         //@Construct
-        internal NumberSliderBase()
+        public NumberSliderBase()
         {
             this.InitializeComponent();
         }
