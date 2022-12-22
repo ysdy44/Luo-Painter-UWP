@@ -3,12 +3,13 @@ using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.Numerics;
-using Windows.UI.Xaml.Controls;
+using Windows.UI;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         public void ConstructEffect()
@@ -193,7 +194,7 @@ namespace Luo_Painter
                 case OptionType.Exposure:
                     return new ExposureEffect
                     {
-                        Exposure = (float)this.ExposureSlider.Value / 100,
+                        Exposure = Math.Clamp((float)this.ExposureSlider.Value / 100, -2, 2),
                         Source = image
                     };
                 case OptionType.Brightness:
@@ -213,29 +214,29 @@ namespace Luo_Painter
                 case OptionType.HueRotation:
                     return new HueRotationEffect
                     {
-                        Angle = (float)this.HueRotationSlider.Value / 180 * FanKit.Math.Pi,
+                        Angle = (float)this.HueRotationSlider.Value * MathF.PI / 180,
                         Source = image
                     };
                 case OptionType.Contrast:
                     return new ContrastEffect
                     {
-                        Contrast = (float)this.ContrastSlider.Value / 100,
+                        Contrast = Math.Clamp((float)this.ContrastSlider.Value / 100, -1, 1),
                         Source = image
                     };
                 case OptionType.Temperature:
                     return new TemperatureAndTintEffect
                     {
-                        Temperature = (float)this.TemperatureSlider.Value / 100,
-                        Tint = (float)this.TintSlider.Value / 100,
+                        Temperature = Math.Clamp((float)this.TemperatureSlider.Value / 100, -1, 1),
+                        Tint = Math.Clamp((float)this.TintSlider.Value / 100, -1, 1),
                         Source = image
                     };
                 case OptionType.HighlightsAndShadows:
                     return new HighlightsAndShadowsEffect
                     {
-                        Shadows = (float)this.ShadowsSlider.Value / 100,
-                        Highlights = (float)this.HighlightsSlider.Value / 100,
-                        Clarity = (float)this.ClaritySlider.Value / 100,
-                        MaskBlurAmount = (float)this.BlurSlider.Value / 100,
+                        Shadows = Math.Clamp((float)this.ShadowsSlider.Value / 100, -1, 1),
+                        Highlights = Math.Clamp((float)this.HighlightsSlider.Value / 100, -1, 1),
+                        Clarity = Math.Clamp((float)this.ClaritySlider.Value / 100, -1, 1),
+                        MaskBlurAmount = Math.Clamp((float)this.BlurSlider.Value / 100, 0, 10),
                         Source = image
                     };
 
