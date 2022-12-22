@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
+    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -60,7 +61,7 @@
 
 
             <!--Type-->
-            <ComboBox x:Name="ComboBox" SelectedIndex="1" HorizontalAlignment="Stretch">
+            <ComboBox x:Name="ComboBox" SelectedIndex="2" HorizontalAlignment="Stretch">
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="brushes:InkType">
@@ -70,12 +71,12 @@
 
                 <ItemsControl.ItemsSource>
                     <luo_painter:InkList x:Name="InkCollection">
+                        <brushes:InkType>Erase</brushes:InkType>
                         <brushes:InkType>General</brushes:InkType>
                         <brushes:InkType>Tip</brushes:InkType>
                         <brushes:InkType>Line</brushes:InkType>
                         <brushes:InkType>Blur</brushes:InkType>
                         <brushes:InkType>Mosaic</brushes:InkType>
-                        <brushes:InkType>Erase</brushes:InkType>
                         <brushes:InkType>Liquefy</brushes:InkType>
                     </luo_painter:InkList>
                 </ItemsControl.ItemsSource>
@@ -84,7 +85,7 @@
 
 
             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-                <StackPanel>
+                <StackPanel Margin="0,10" Spacing="10">
 
                     <!--Size-->
                     <hsvColorPickers:NumberSlider2
@@ -169,19 +170,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                    <Grid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <elements:IndexGrid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                        Index="{x:Bind HardnessListView.SelectedIndex,Mode=OneWay}">
                         <UIElement.RenderTransformOrigin>
                             0.5, 1
                         </UIElement.RenderTransformOrigin>
                         <UIElement.RenderTransform>
                             <ScaleTransform ScaleX="3" ScaleY="3"/>
                         </UIElement.RenderTransform>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="{x:Bind Int0VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="{x:Bind Int1VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="{x:Bind Int2VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="{x:Bind Int3VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
-                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="{x:Bind Int4VisibilityConverter(HardnessListView.SelectedIndex), Mode=OneWay}"/>
-                    </Grid>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="Visible"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="Collapsed"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="Collapsed"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="Collapsed"/>
+                        <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="Collapsed"/>
+                    </elements:IndexGrid>
                 </Border>
                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
 
@@ -391,7 +393,7 @@
 
             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                     Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
-                <StackPanel>
+                <StackPanel Margin="0,10" Spacing="10">
 
                     <hsvColorPickers:NumberSlider x:Name="MixSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
