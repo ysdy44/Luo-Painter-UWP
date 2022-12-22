@@ -277,7 +277,7 @@
 
 
                             <local:OptionCase Value="CropCanvas">
-                                <hsvColorPickers:NumberSlider x:Name="CropCanvasSlider" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="12" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="CropCanvasSlider" Margin="0,5" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="12" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Radians
                                     </Slider.Header>
@@ -286,21 +286,21 @@
 
 
                             <local:OptionCase Value="Feather">
-                                <hsvColorPickers:NumberSlider x:Name="FeatherSlider" Value="12" Minimum="1" Maximum="200" TickFrequency="49" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="FeatherSlider" Margin="0,5" Value="12" Minimum="1" Maximum="200" TickFrequency="49" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Feather
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Grow">
-                                <hsvColorPickers:NumberSlider x:Name="GrowSlider" Value="1" Minimum="1" Maximum="90" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="GrowSlider" Margin="0,5" Value="1" Minimum="1" Maximum="90" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Grow
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Shrink">
-                                <hsvColorPickers:NumberSlider x:Name="ShrinkSlider" Value="1" Minimum="1" Maximum="90" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ShrinkSlider" Margin="0,5" Value="1" Minimum="1" Maximum="90" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Shrink
                                     </Slider.Header>
@@ -430,7 +430,7 @@
                                         <ListBoxItem x:Name="TwirlRightItem">Twirl Right</ListBoxItem>
                                         <ListBoxItem x:Name="DisplacementLiquefactionResetItem">Reset</ListBoxItem>
                                     </ListBox>
-                                    <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}" >
+                                    <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" TickFrequency="99" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
@@ -475,7 +475,7 @@
                                 </elements:GradientStopSelectorWithUI>
                             </local:OptionCase>
                             <local:OptionCase Value="RippleEffect">
-                                <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="FrequencySlider" Value="140" Minimum="0" Maximum="300" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
@@ -497,7 +497,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Threshold">
-                                <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="ThresholdSlider" MinWidth="280" Minimum="-150" Maximum="150" Unit="º" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                         <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
@@ -509,40 +509,24 @@
                                             Threshold
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="12,6" MinWidth="280" Height="80" >
+                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="10,0" MinWidth="280" Height="60" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <!--Color0-->
-                                        <TextBlock x:Name="ThresholdColor0TextBlock" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                            Color 0
-                                        </TextBlock>
-                                        <elements:ColorButtonBase x:Name="ThresholdColor0Button" Grid.Row="1" />
-
-                                        <!--Color1-->
-                                        <TextBlock x:Name="ThresholdColor1TextBlock" Grid.Column="2" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                            Color 1
-                                        </TextBlock>
-                                        <elements:ColorButtonBase x:Name="ThresholdColor1Button" Grid.Column="2" Grid.Row="1" />
-
-                                        <Button x:Name="ThresholdReverseButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
+                                        <elements:ColorButtonBase x:Name="ThresholdColor0Button"/>
+                                        <elements:ColorButtonBase x:Name="ThresholdColor1Button" Grid.Column="2"/>
+                                        <Button x:Name="ThresholdReverseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
                                             Reverse
                                         </Button>
-
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="Exposure">
-                                <hsvColorPickers:NumberSlider x:Name="ExposureSlider" Minimum="-200" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ExposureSlider" Margin="0,5" Minimum="-200" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
@@ -555,7 +539,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Brightness">
-                                <hsvColorPickers:NumberSlider x:Name="BrightnessSlider" Value="100" Minimum="1" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="BrightnessSlider" Margin="0,5" Value="100" Minimum="1" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
@@ -569,7 +553,7 @@
 
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
-                                <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Value="100" Minimum="0" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Margin="0,5" Value="100" Minimum="0" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Gray" Offset="0"/>
@@ -582,7 +566,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="HueRotation">
-                                <hsvColorPickers:NumberSlider x:Name="HueRotationSlider" Minimum="0" Maximum="360" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="HueRotationSlider" Margin="0,5" Minimum="0" Maximum="360" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#FFCE3B" Offset="0"/>
@@ -602,7 +586,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Contrast">
-                                <hsvColorPickers:NumberSlider x:Name="ContrastSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ContrastSlider" Margin="0,5" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#888888" Offset="0"/>
@@ -624,7 +608,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Temperature">
-                                <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="TemperatureSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Control.Background>
@@ -654,7 +638,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="HighlightsAndShadows">
-                                <StackPanel Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
+                                <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
@@ -775,7 +759,7 @@
                                         <local:ElementIconWithToolTip Type="SymmetryRadial"/>
                                         <local:ElementIconWithToolTip Type="MirrorRadial"/>
                                     </ListBox>
-                                    <hsvColorPickers:NumberSlider x:Name="SymmetrySlider" Value="2" Minimum="2" Maximum="24" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                    <hsvColorPickers:NumberSlider x:Name="SymmetrySlider" Margin="0,5" Value="2" Minimum="2" Maximum="24" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                               Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
                                         <Slider.Header>
                                             Sectors
@@ -848,35 +832,35 @@
                             <local:OptionCase Value="GeometryEllipseTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryRoundRectTransform">
-                                <hsvColorPickers:NumberSlider x:Name="RoundRectCornerSlider" Value="12" Minimum="0" Maximum="50" Unit="%" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="RoundRectCornerSlider" Margin="0,5" Value="12" Minimum="0" Maximum="50" Unit="%" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Corner
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryTriangleTransform">
-                                <hsvColorPickers:NumberSlider x:Name="TriangleCenterSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="TriangleCenterSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Center Point
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDiamondTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DiamondMidSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="DiamondMidSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Mid Point
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPentagonTransform">
-                                <hsvColorPickers:NumberSlider x:Name="PentagonPointsSlider" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="PentagonPointsSlider" Margin="0,5" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Points
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryStarTransform">
-                                <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
@@ -892,14 +876,14 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDountTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DountHoleRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="DountHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Hole Radius
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCogTransform">
-                                <StackPanel Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
+                                <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
@@ -931,14 +915,14 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPieTransform">
-                                <hsvColorPickers:NumberSlider x:Name="PieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="PieSweepAngleSlider" Margin="0,5" Value="90" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Sweep Angle
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCookieTransform">
-                                <StackPanel Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
@@ -975,7 +959,7 @@
                                             <local:ElementIcon Type="ArrowTailTypesArrow"/>
                                         </ListBox>
                                     </StackPanel>
-                                    <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                         <Slider.Header>
                                             Width
                                         </Slider.Header>
@@ -985,7 +969,7 @@
                             <local:OptionCase Value="GeometryCapsuleTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryHeartTransform">
-                                <hsvColorPickers:NumberSlider x:Name="HeartSpreadSlider" Value="80" Minimum="0" Maximum="100" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="HeartSpreadSlider" Margin="0,5" Value="80" Minimum="0" Maximum="100" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Spread
                                     </Slider.Header>
@@ -1030,7 +1014,7 @@
                             </TextBlock>
 
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <hsvColorPickers:NumberSlider x:Name="RadianSlider" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="RadianSlider" Margin="0,5" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Radian
                                     </Slider.Header>
@@ -1071,7 +1055,7 @@
                             <MenuFlyoutSeparator Margin="0,4" />
 
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <hsvColorPickers:NumberSlider x:Name="ScaleSlider" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ScaleSlider" Margin="0,5" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Scale
                                     </Slider.Header>
