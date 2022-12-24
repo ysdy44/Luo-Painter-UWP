@@ -143,9 +143,6 @@
     <Compile Include="ExpanderLightDismissOverlay.cs" />
     <Compile Include="FlexPanel.cs" />
     <Compile Include="FrameworkElementExtensions.cs" />
-    <Compile Include="GradientStops.cs" />
-    <Compile Include="GradientStopSelector.cs" />
-    <Compile Include="GradientStopSelectorWithUI.cs" />
     <Compile Include="Grid2x2Panel.cs" />
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
@@ -162,6 +159,10 @@
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectedSwiper.cs" />
+    <Compile Include="Selectors\ButtonSelector.cs" />
+    <Compile Include="Selectors\GradientStops.cs" />
+    <Compile Include="Selectors\GradientStopSelectorWithUI.cs" />
+    <Compile Include="Selectors\TSelector.cs" />
     <Compile Include="Sheet.xaml.cs">
       <DependentUpon>Sheet.xaml</DependentUpon>
     </Compile>
@@ -188,7 +189,6 @@
     <Compile Include="ToastAudioType.cs" />
     <Compile Include="ToastExtensions.cs" />
     <Compile Include="ToastExtensions.LaunchFile.cs" />
-    <Compile Include="TSelector.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Elements.rd.xml" />
   </ItemGroup>
   <ItemGroup>
