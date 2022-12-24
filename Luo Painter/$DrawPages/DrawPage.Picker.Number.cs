@@ -7,23 +7,19 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal enum NumberPickerMode : byte
+    internal enum NumberPickerMode : int
     {
-        None,
+        None = 0,
 
-        Case0,
-        Case1,
-        Case2,
-        Case3,
-        Case4,
-        Case5,
-        Case6,
-        Case7,
+        Case0 = 0,
+        Case1 = 1,
+        Case2 = 2,
+        Case3 = 3,
 
-        LayerOpacity,
+        LayerOpacity = -1,
 
-        ViewRadian,
-        ViewScale,
+        ViewRadian = -2,
+        ViewScale = -3,
     }
 
     public sealed partial class DrawPage

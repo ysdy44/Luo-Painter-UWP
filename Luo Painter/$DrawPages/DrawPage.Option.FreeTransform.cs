@@ -7,22 +7,22 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         public void ConstructFreeTransform()
         {
-            this.LTPicker.XClick += (s, e) => this.NumberShowAt(this.LTPicker.XNumber, NumberPickerMode.Case0);
-            this.LTPicker.YClick += (s, e) => this.NumberShowAt(this.LTPicker.YNumber, NumberPickerMode.Case1);
+            this.LTPicker.XClick += (s, e) => this.NumberShowAt(this.LTPicker.XNumber, (NumberPickerMode)0);
+            this.LTPicker.YClick += (s, e) => this.NumberShowAt(this.LTPicker.YNumber, (NumberPickerMode)1);
 
-            this.RTPicker.XClick += (s, e) => this.NumberShowAt(this.RTPicker.XNumber, NumberPickerMode.Case2);
-            this.RTPicker.YClick += (s, e) => this.NumberShowAt(this.RTPicker.YNumber, NumberPickerMode.Case3);
+            this.RTPicker.XClick += (s, e) => this.NumberShowAt(this.RTPicker.XNumber, (NumberPickerMode)2);
+            this.RTPicker.YClick += (s, e) => this.NumberShowAt(this.RTPicker.YNumber, (NumberPickerMode)3);
 
-            this.RBPicker.XClick += (s, e) => this.NumberShowAt(this.RBPicker.XNumber, NumberPickerMode.Case4);
-            this.RBPicker.YClick += (s, e) => this.NumberShowAt(this.RBPicker.YNumber, NumberPickerMode.Case5);
+            this.RBPicker.XClick += (s, e) => this.NumberShowAt(this.RBPicker.XNumber, (NumberPickerMode)4);
+            this.RBPicker.YClick += (s, e) => this.NumberShowAt(this.RBPicker.YNumber, (NumberPickerMode)5);
 
-            this.LBPicker.XClick += (s, e) => this.NumberShowAt(this.LBPicker.XNumber, NumberPickerMode.Case6);
-            this.LBPicker.YClick += (s, e) => this.NumberShowAt(this.LBPicker.YNumber, NumberPickerMode.Case7);
+            this.LBPicker.XClick += (s, e) => this.NumberShowAt(this.LBPicker.XNumber, (NumberPickerMode)6);
+            this.LBPicker.YClick += (s, e) => this.NumberShowAt(this.LBPicker.YNumber, (NumberPickerMode)7);
         }
 
         private void ResetFreeTransform(PixelBounds bounds)
@@ -41,9 +41,9 @@ namespace Luo_Painter
 
         private void SetFreeTransform(NumberPickerMode mode, int e)
         {
-            switch (mode)
+            switch ((int)mode)
             {
-                case NumberPickerMode.Case0:
+                case 0:
                     this.BoundsFreeTransformer.LeftTop = new Vector2(e, this.BoundsFreeTransformer.LeftTop.Y);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -52,7 +52,7 @@ namespace Luo_Painter
 
                     this.LTPicker.X = e;
                     break;
-                case NumberPickerMode.Case1:
+                case 1:
                     this.BoundsFreeTransformer.LeftTop = new Vector2(this.BoundsFreeTransformer.LeftTop.X, e);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -62,7 +62,7 @@ namespace Luo_Painter
                     this.LTPicker.Y = e;
                     break;
 
-                case NumberPickerMode.Case2:
+                case 2:
                     this.BoundsFreeTransformer.RightTop = new Vector2(e, this.BoundsFreeTransformer.RightTop.Y);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -71,7 +71,7 @@ namespace Luo_Painter
 
                     this.RTPicker.X = e;
                     break;
-                case NumberPickerMode.Case3:
+                case 3:
                     this.BoundsFreeTransformer.RightTop = new Vector2(this.BoundsFreeTransformer.RightTop.X, e);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -81,7 +81,7 @@ namespace Luo_Painter
                     this.RTPicker.Y = e;
                     break;
 
-                case NumberPickerMode.Case4:
+                case 4:
                     this.BoundsFreeTransformer.RightBottom = new Vector2(e, this.BoundsFreeTransformer.RightBottom.Y);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -90,7 +90,7 @@ namespace Luo_Painter
 
                     this.RBPicker.X = e;
                     break;
-                case NumberPickerMode.Case5:
+                case 5:
                     this.BoundsFreeTransformer.RightBottom = new Vector2(this.BoundsFreeTransformer.RightBottom.X, e);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -100,7 +100,7 @@ namespace Luo_Painter
                     this.RBPicker.Y = e;
                     break;
 
-                case NumberPickerMode.Case6:
+                case 6:
                     this.BoundsFreeTransformer.LeftBottom = new Vector2(e, this.BoundsFreeTransformer.LeftBottom.Y);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -109,7 +109,7 @@ namespace Luo_Painter
 
                     this.LBPicker.X = e;
                     break;
-                case NumberPickerMode.Case7:
+                case 7:
                     this.BoundsFreeTransformer.LeftBottom = new Vector2(this.BoundsFreeTransformer.LeftBottom.X, e);
                     this.BoundsFreeMatrix = FanKit.Transformers.Transformer.FindHomography(this.BoundsFreeTransformer, this.Bounds, out this.BoundsFreeDistance);
 
@@ -140,6 +140,8 @@ namespace Luo_Painter
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.LTPicker.Value = this.Position;
                     break;
                 case TransformerMode.ScaleRightTop:
                     this.BoundsFreeTransformer.RightTop = this.Position;
@@ -147,6 +149,8 @@ namespace Luo_Painter
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.RTPicker.Value = this.Position;
                     break;
                 case TransformerMode.ScaleRightBottom:
                     this.BoundsFreeTransformer.RightBottom = this.Position;
@@ -154,6 +158,8 @@ namespace Luo_Painter
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.RBPicker.Value = this.Position;
                     break;
                 case TransformerMode.ScaleLeftBottom:
                     this.BoundsFreeTransformer.LeftBottom = this.Position;
@@ -161,6 +167,8 @@ namespace Luo_Painter
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
+
+                    this.LBPicker.Value = this.Position;
                     break;
                 default:
                     break;

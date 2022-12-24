@@ -7,22 +7,21 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         public void ConstructTransform()
         {
-            this.TXButton.Click += (s, e) => this.NumberShowAt(this.TXButton, NumberPickerMode.Case0);
-            this.TYButton.Click += (s, e) => this.NumberShowAt(this.TYButton, NumberPickerMode.Case1);
+            this.TXButton.Click += (s, e) => this.NumberShowAt(this.TXButton, (NumberPickerMode)0);
+            this.TYButton.Click += (s, e) => this.NumberShowAt(this.TYButton, (NumberPickerMode)1);
 
-            this.TWButton.Click += (s, e) => this.NumberShowAt(this.TWButton, NumberPickerMode.Case2);
-            this.THButton.Click += (s, e) => this.NumberShowAt(this.THButton, NumberPickerMode.Case3);
+            this.TWButton.Click += (s, e) => this.NumberShowAt(this.TWButton, (NumberPickerMode)2);
+            this.THButton.Click += (s, e) => this.NumberShowAt(this.THButton, (NumberPickerMode)3);
 
-            this.TSButton.Click += (s, e) => this.NumberShowAt(this.TSButton, NumberPickerMode.Case4);
-            this.TRButton.Click += (s, e) => this.NumberShowAt(this.TRButton, NumberPickerMode.Case5);
+            this.TSButton.Click += (s, e) => this.NumberShowAt(this.TSButton, (NumberPickerMode)4);
+            this.TRButton.Click += (s, e) => this.NumberShowAt(this.TRButton, (NumberPickerMode)5);
         }
 
-        private void SetTransform(PixelBounds bounds) => this.ResetTransform(bounds);
         private void ResetTransform(PixelBounds bounds)
         {
             this.Bounds = bounds.ToBorder();
@@ -35,9 +34,9 @@ namespace Luo_Painter
 
         private void SetTransform(NumberPickerMode mode, int e)
         {
-            switch (mode)
+            switch ((int)mode)
             {
-                case NumberPickerMode.Case0:
+                case 0:
                     this.BoundsTransformer += this.BoundsTransformer.TransformX(e, IndicatorMode.LeftTop);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
@@ -46,7 +45,7 @@ namespace Luo_Painter
 
                     this.TXButton.Number = e;
                     break;
-                case NumberPickerMode.Case1:
+                case 1:
                     this.BoundsTransformer += this.BoundsTransformer.TransformY(e, IndicatorMode.LeftTop);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
@@ -56,7 +55,7 @@ namespace Luo_Painter
                     this.TYButton.Number = e;
                     break;
 
-                case NumberPickerMode.Case2:
+                case 2:
                     this.BoundsTransformer *= this.BoundsTransformer.TransformWidth(e, IndicatorMode.LeftTop, this.IsRatio);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
@@ -65,7 +64,7 @@ namespace Luo_Painter
 
                     this.TWButton.Number = e;
                     break;
-                case NumberPickerMode.Case3:
+                case 3:
                     this.BoundsTransformer *= this.BoundsTransformer.TransformHeight(e, IndicatorMode.LeftTop, this.IsRatio);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
@@ -75,7 +74,7 @@ namespace Luo_Painter
                     this.THButton.Number = e;
                     break;
 
-                case NumberPickerMode.Case4:
+                case 4:
                     this.BoundsTransformer *= this.BoundsTransformer.TransformSkew(e, IndicatorMode.Center);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
@@ -84,7 +83,7 @@ namespace Luo_Painter
 
                     this.TSButton.Number = e;
                     break;
-                case NumberPickerMode.Case5:
+                case 5:
                     this.BoundsTransformer *= this.BoundsTransformer.TransformRotate(e, IndicatorMode.Center);
                     this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
 
