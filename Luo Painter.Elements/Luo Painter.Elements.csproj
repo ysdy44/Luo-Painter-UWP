@@ -155,6 +155,9 @@
     <Compile Include="PipsPivot.xaml.cs">
       <DependentUpon>PipsPivot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PipsPivot2.xaml.cs">
+      <DependentUpon>PipsPivot2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
@@ -384,6 +387,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PipsPivot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PipsPivot2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

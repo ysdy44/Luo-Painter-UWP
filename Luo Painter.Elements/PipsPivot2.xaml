@@ -1,0 +1,38 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Elements.PipsPivot2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="400"  
+    d:DesignHeight="400"
+    >
+
+    <ScrollViewer 
+        x:Name="ScrollingHost"
+        VerticalSnapPointsType="MandatorySingle"
+        HorizontalSnapPointsType="MandatorySingle"
+        HorizontalScrollMode="Enabled"
+        HorizontalScrollBarVisibility="Hidden"
+        VerticalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Hidden"
+        IsHorizontalRailEnabled="False"
+        IsVerticalRailEnabled="False"
+        IsHorizontalScrollChainingEnabled="True"
+        IsVerticalScrollChainingEnabled="True"
+        IsDeferredScrollingEnabled="False"
+        BringIntoViewOnFocusChange="True"
+        ZoomMode="Disabled"
+        TabNavigation="Once"
+        IsTabStop="False"
+        AutomationProperties.AccessibilityView="Raw">
+        <StackPanel x:Name="RootStackPanel" Orientation="Horizontal">
+            <ContentControl IsHitTestVisible="False"/>
+            <Canvas x:Name="RootCanvas">
+
+            </Canvas>
+            <ContentControl IsHitTestVisible="False"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
