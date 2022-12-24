@@ -110,6 +110,17 @@ namespace Luo_Painter
             this.BlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.BlurSlider.Click += (s, e) => this.NumberShowAt(this.BlurSlider, NumberPickerMode.Case3);
 
+            // Vignette
+            this.VignetteSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.VignetteSlider.Click += (s, e) => this.NumberShowAt(this.VignetteSlider);
+            // ColorMatch
+            this.ColorMatchSourceButton.SetColor(Colors.Gray);
+            this.ColorMatchSourceButton.SetColorHdr(Colors.Gray);
+            this.ColorMatchSourceButton.Click += (s, e) => this.ColorShowAt(this.ColorMatchSourceButton, ColorPickerMode.Case0);
+            this.ColorMatchDestinationButton.SetColor(Colors.Black);
+            this.ColorMatchDestinationButton.SetColorHdr(Vector4.UnitW);
+            this.ColorMatchDestinationButton.Click += (s, e) => this.ColorShowAt(this.ColorMatchDestinationButton, ColorPickerMode.Case1);
+
             // GaussianBlur
             this.GaussianBlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.GaussianBlurSlider.Click += (s, e) => this.NumberShowAt(this.GaussianBlurSlider);
@@ -141,7 +152,7 @@ namespace Luo_Painter
             this.EdgeDetectionButton.Unchecked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.EdgeDetectionButton.Checked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.EdgeDetectionModeButton.Toggled += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            // EdgeDetection
+            // Morphology
             this.MorphologySlider.Toggled += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             // Emboss
             this.EmbossSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -152,8 +163,30 @@ namespace Luo_Painter
             this.StraightenSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.StraightenSlider.Click += (s, e) => this.NumberShowAt(this.StraightenSlider);
 
+            // Posterize
+            this.PosterizeSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             // LuminanceToAlpha
             this.LuminanceToAlphaComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            // ChromaKey
+            this.ChromaKeyColorButton.SetColor(Colors.Black);
+            this.ChromaKeyColorButton.SetColorHdr(Vector4.UnitW);
+            this.ChromaKeyColorButton.Click += (s, e) => this.ColorShowAt(this.ChromaKeyColorButton);
+            this.ChromaKeyInvertButton.Unchecked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ChromaKeyInvertButton.Checked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ChromaKeyFeatherButton.Unchecked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ChromaKeyFeatherButton.Checked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ChromaKeySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ChromaKeySlider.Click += (s, e) => this.NumberShowAt(this.ChromaKeySlider);
+            // Border
+            this.BorderXComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.BorderYComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            // Colouring
+            this.ColouringSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.ColouringSlider.Click += (s, e) => this.NumberShowAt(this.ColouringSlider);
+            // Tint
+            this.TintColorButton.SetColor(Colors.DodgerBlue);
+            this.TintColorButton.SetColorHdr(Colors.DodgerBlue);
+            this.TintColorButton.Click += (s, e) => this.ColorShowAt(this.TintColorButton);
         }
 
         private ICanvasImage GetPreview(OptionType type, ICanvasImage image)
@@ -339,6 +372,59 @@ namespace Luo_Painter
                     };
 
 
+                case OptionType.GammaTransfer:
+                    return new GammaTransferEffect
+                    {
+                        AlphaAmplitude = this.GTAA,
+                        AlphaExponent = this.GTEA,
+                        AlphaOffset = this.GTOA,
+
+                        RedAmplitude = this.GTAR,
+                        RedExponent = this.GTER,
+                        RedOffset = this.GTOR,
+
+                        GreenAmplitude = this.GTAG,
+                        GreenExponent = this.GTEG,
+                        GreenOffset = this.GTOG,
+
+                        BlueAmplitude = this.GTAB,
+                        BlueExponent = this.GTEB,
+                        BlueOffset = this.GTOB,
+
+                        Source = image
+                    };
+                case OptionType.Vignette:
+                    return new VignetteEffect
+                    {
+                        Color = default,
+                        Amount = Math.Clamp((float)this.VignetteSlider.Value / 100, 0, 1),
+                        Source = image
+                    };
+                case OptionType.ColorMatrix:
+                    return new ColorMatrixEffect
+                    {
+                        Source = image
+                    };
+                case OptionType.ColorMatch:
+                    Vector4 sourceHdr = this.ColorMatchSourceButton.ColorHdr;
+                    Vector4 destinationHdr = this.ColorMatchDestinationButton.ColorHdr;
+                    return new ColorMatrixEffect
+                    {
+                        Source = image,
+                        ColorMatrix = new Matrix5x4
+                        {             
+                            /// <see cref="AdjustmentExtensions"/>
+                            #pragma warning disable IDE0055
+                            M11 = sourceHdr.X, M12 = 0, M13 = 0, M14 = 0, // Red
+                            M21 = 0, M22 = sourceHdr.Y, M23 = 0, M24 = 0, // Green
+                            M31 = 0, M32 = 0, M33 = sourceHdr.Z, M34 = 0, // Blue
+                            M41 = 0, M42 = 0, M43 = 0, M44 = sourceHdr.W, // Alpha
+                            M51 = destinationHdr.X, M52 = destinationHdr.Y, M53 = destinationHdr.Z, M54 = destinationHdr.W // Offset
+                            #pragma warning restore IDE0055
+                        }
+                    };
+
+
                 case OptionType.GaussianBlur:
                     return new GaussianBlurEffect
                     {
@@ -414,6 +500,20 @@ namespace Luo_Painter
                     };
 
 
+                case OptionType.Sepia:
+                    return new SepiaEffect
+                    {
+                        Source = image
+                    };
+                case OptionType.Posterize:
+                    int posterize = (int)this.PosterizeSlider.Value;
+                    return new PosterizeEffect
+                    {
+                        RedValueCount = posterize,
+                        GreenValueCount = posterize,
+                        BlueValueCount = posterize,
+                        Source = image
+                    };
                 case OptionType.LuminanceToAlpha:
                     switch (this.LuminanceToAlphaComboBox.SelectedIndex)
                     {
@@ -443,17 +543,80 @@ namespace Luo_Painter
                             };
                         default: return image;
                     }
+                case OptionType.ChromaKey:
+                    return new ChromaKeyEffect
+                    {
+                        Tolerance = Math.Clamp((float)this.ChromaKeySlider.Value / 100, 0, 1),
+                        InvertAlpha = this.ChromaKeyInvertButton.IsChecked is true,
+                        Color = this.ChromaKeyColorButton.Color,
+                        Feather = this.ChromaKeyFeatherButton.IsChecked is true,
+                        Source = image
+                    };
+                case OptionType.Border:
+                    switch (this.BorderXComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            switch (this.BorderYComboBox.SelectedIndex)
+                            {
+                                case 0: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Clamp, ExtendY = CanvasEdgeBehavior.Clamp, Source = image };
+                                case 1: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Clamp, ExtendY = CanvasEdgeBehavior.Wrap, Source = image };
+                                case 2: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Clamp, ExtendY = CanvasEdgeBehavior.Mirror, Source = image };
+                                default: return image;
+                            }
+                        case 1:
+                            switch (this.BorderYComboBox.SelectedIndex)
+                            {
+                                case 0: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Wrap, ExtendY = CanvasEdgeBehavior.Clamp, Source = image };
+                                case 1: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Wrap, ExtendY = CanvasEdgeBehavior.Wrap, Source = image };
+                                case 2: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Wrap, ExtendY = CanvasEdgeBehavior.Mirror, Source = image };
+                                default: return image;
+                            }
+                        case 2:
+                            switch (this.BorderYComboBox.SelectedIndex)
+                            {
+                                case 0: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Mirror, ExtendY = CanvasEdgeBehavior.Clamp, Source = image };
+                                case 1: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Mirror, ExtendY = CanvasEdgeBehavior.Wrap, Source = image };
+                                case 2: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Mirror, ExtendY = CanvasEdgeBehavior.Mirror, Source = image };
+                                default: return image;
+                            }
+                        default: return image;
+                    }
+                case OptionType.Colouring:
+                    return new HueRotationEffect
+                    {
+                        Angle = (float)this.ColouringSlider.Value * MathF.PI / 180,
+                        Source = new SepiaEffect
+                        {
+                            Source = image
+                        }
+                    };
+                case OptionType.Tint:
+                    if (TintEffect.IsSupported)
+                        return new TintEffect
+                        {
+                            ColorHdr = this.TintColorButton.ColorHdr,
+                            Source = image
+                        };
+                    else
+                        return image;
+                case OptionType.DiscreteTransfer:
+                    return new DiscreteTransferEffect
+                    {
+                        AlphaTable = this.AlphaTable,
+                        RedTable = this.RedTable,
+                        GreenTable = this.GreenTable,
+                        BlueTable = this.BlueTable,
+                        Source = image
+                    };
+
+                case OptionType.Lighting:
+                    return image;
                 //case OptionType.Fog:
-                case OptionType.Sepia:
-                    return new SepiaEffect
-                    {
-                        Source = image
-                    };
-                case OptionType.Posterize:
-                    return new PosterizeEffect
-                    {
-                        Source = image
-                    };
+                case OptionType.Glass:
+                    return image;
+                case OptionType.PinchPunch:
+                    return image;
+
 
                 default:
                     return image;

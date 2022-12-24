@@ -1470,7 +1470,7 @@ namespace Luo_Painter
                 case OptionType.Fog:
 
                 case OptionType.Sepia:
-                case OptionType.Posterize:
+                //case OptionType.Posterize:
 
                 case OptionType.Gray:
                 case OptionType.Invert:
@@ -1505,10 +1505,10 @@ namespace Luo_Painter
                 case OptionType.Temperature:
                 case OptionType.HighlightsAndShadows:
 
-                //case OptionType.GammaTransfer:
-                //case OptionType.Vignette:
-                //case OptionType.ColorMatrix:
-                //case OptionType.ColorMatch:
+                case OptionType.GammaTransfer:
+                case OptionType.Vignette:
+                case OptionType.ColorMatrix:
+                case OptionType.ColorMatch:
 
                 // Effect1
                 case OptionType.GaussianBlur:
@@ -1522,8 +1522,18 @@ namespace Luo_Painter
 
                 // Effect2
                 //case OptionType.Sepia:
-                //case OptionType.Posterize:
+                case OptionType.Posterize:
                 case OptionType.LuminanceToAlpha:
+                case OptionType.ChromaKey:
+                case OptionType.Border:
+                case OptionType.Colouring:
+                case OptionType.Tint:
+                case OptionType.DiscreteTransfer:
+
+                case OptionType.Lighting:
+                //case OptionType.Fog:
+                case OptionType.Glass:
+                case OptionType.PinchPunch:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
@@ -1550,16 +1560,6 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
-                //case OptionType.ChromaKey: 
-                //case OptionType.Border:
-                //case OptionType.Colouring:
-                //case OptionType.Tint:
-                //case OptionType.DiscreteTransfer:
-
-                //case OptionType.Lighting: 
-                //case OptionType.Fog:
-                //case OptionType.Glass:
-                //case OptionType.PinchPunch:
 
                 #endregion
 

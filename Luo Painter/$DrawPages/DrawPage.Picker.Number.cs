@@ -127,6 +127,13 @@ namespace Luo_Painter
                                 }
                                 break;
 
+                            case OptionType.GammaTransfer:
+                                this.SetGammaTransfer(mode, e);
+                                break;
+                            case OptionType.Vignette:
+                                this.VignetteSlider.Value = e;
+                                break;
+
                             case OptionType.GaussianBlur:
                                 this.GaussianBlurSlider.Value = e;
                                 break;
@@ -178,6 +185,9 @@ namespace Luo_Painter
                                         break;
                                 }
                                 break;
+                            case OptionType.Morphology:
+                                this.MorphologySlider.Value = e;
+                                break;
                             case OptionType.Emboss:
                                 switch (mode)
                                 {
@@ -193,6 +203,13 @@ namespace Luo_Painter
                                 break;
                             case OptionType.Straighten:
                                 this.StraightenSlider.Value = e;
+                                break;
+
+                            case OptionType.ChromaKey:
+                                this.ChromaKeySlider.Value = e;
+                                break;
+                            case OptionType.DiscreteTransfer:
+                                this.SetDiscreteTransfer(mode, e);
                                 break;
 
                             case OptionType.Move:

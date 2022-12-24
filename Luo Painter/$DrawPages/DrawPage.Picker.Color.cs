@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Options;
+using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
@@ -75,9 +76,42 @@ namespace Luo_Painter
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
                         break;
 
+                    case OptionType.ColorMatch:
+                        switch (this.ColorPickerMode)
+                        {
+                            case ColorPickerMode.Case0:
+                                this.ColorMatchSourceButton.SetColor(e);
+                                this.ColorMatchSourceButton.SetColorHdr(e);
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                break;
+                            case ColorPickerMode.Case1:
+                                this.ColorMatchDestinationButton.SetColor(e);
+                                this.ColorMatchDestinationButton.SetColorHdr(e);
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
                     case OptionType.Shadow:
                         this.ShadowColorButton.SetColor(e);
                         this.ShadowColorButton.SetColorHdr(e);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        break;
+
+                    case OptionType.ChromaKey:
+                        this.ChromaKeyColorButton.SetColor(e);
+                        this.ChromaKeyColorButton.SetColorHdr(e);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+                        break;
+                    case OptionType.Tint:
+                        this.TintColorButton.SetColor(e);
+                        this.TintColorButton.SetColorHdr(e);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
                         break;
