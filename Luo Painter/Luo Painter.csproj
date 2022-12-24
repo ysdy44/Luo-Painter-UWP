@@ -121,6 +121,7 @@
     <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
     <Compile Include="%24DrawPages\DrawPage.CreateResources.cs" />
     <Compile Include="%24DrawPages\DrawPage.Effect.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Effect.DiscreteTransfer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Export.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
