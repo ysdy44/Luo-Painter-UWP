@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -58,13 +59,33 @@ namespace Luo_Painter.Elements
         #region DependencyProperty
 
 
+        /// <summary> Gets or sets style of <see cref = "TSelector{TKey, TValue}" />'s item. </summary>
+        public Style ItemStyle
+        {
+            get => (Style)base.GetValue(ItemStyleProperty);
+            set => base.SetValue(ItemStyleProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "TSelector{TKey, TValue}.ItemStyle" /> dependency property. </summary>
+        public static readonly DependencyProperty ItemStyleProperty = DependencyProperty.Register(nameof(ItemStyle), typeof(Style), typeof(TSelector<TKey, TValue>), new PropertyMetadata(null));
+
+
+        /// <summary> Gets or sets template of <see cref = "TSelector{TKey, TValue}" />'s item. </summary>
+        public DataTemplate ItemTemplate
+        {
+            get => (DataTemplate)base.GetValue(ItemTemplateProperty);
+            set => base.SetValue(ItemTemplateProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "TSelector{TKey, TValue}.ItemTemplate" /> dependency property. </summary>
+        public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(TSelector<TKey, TValue>), new PropertyMetadata(null));
+
+
         /// <summary> Gets or sets the source of <see cref = "TSelector{TKey, TValue}" /> 's items. </summary>
         public object ItemSource
         {
             get => (object)base.GetValue(ItemSourceProperty);
             set => base.SetValue(ItemSourceProperty, value);
         }
-        /// <summary> Identifies the <see cref = "ItemSource" /> dependency property. </summary>
+        /// <summary> Identifies the <see cref = "TSelector{TKey, TValue}.ItemSource" /> dependency property. </summary>
         public static readonly DependencyProperty ItemSourceProperty = DependencyProperty.Register(nameof(ItemSource), typeof(object), typeof(TSelector<TKey, TValue>), new PropertyMetadata(false, (sender, e) =>
         {
             TSelector<TKey, TValue> control = (TSelector<TKey, TValue>)sender;
@@ -100,6 +121,22 @@ namespace Luo_Painter.Elements
 
 
         #endregion
+
+        //@Construct
+        public TSelector()
+        {
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                foreach (var item in this.Items)
+                {
+                    Canvas.SetLeft(item.Value, this.GetItemLeft(item.Key));
+                    Canvas.SetTop(item.Value, this.GetItemTop(item.Key));
+                }
+            };
+        }
 
         private TValue Create(TKey itemAdd)
         {

@@ -13,12 +13,20 @@ namespace Luo_Painter.Elements
 {
     public class GradientStopSelectorWithUI : GradientStopSelector, IColorBase
     {
+        //@Content
+        public FrameworkElement PlacementTarget => base.CurrentButton;
+        public Color Color => base.CurrentStop.Color;
+
+        public void SetColor(Color color) => base.SetCurrentColor(color);
+        public void SetColor(Vector4 colorHdr) => this.SetColor(Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f)));
+    }
+
+    public class GradientStopSelector : ButtonSelector<GradientStop>
+    {
         //@Delegate
         public event EventHandler<double> ItemRemoved;
 
         //@Content
-        public FrameworkElement PlacementTarget => this.CurrentButton;
-        public Color Color => this.CurrentStop.Color;
         public Button CurrentButton { get; private set; }
         public GradientStop CurrentStop { get; private set; }
         public GradientStop CurrentStopUI { get; private set; }
@@ -27,7 +35,8 @@ namespace Luo_Painter.Elements
         readonly ObservableCollection<GradientStop> Stops = new ObservableCollection<GradientStop>();
         readonly GradientStopCollection StopsUI = new GradientStopCollection();
 
-        public GradientStopSelectorWithUI()
+        //@Construct
+        public GradientStopSelector()
         {
             base.ItemSource = this.Stops;
             base.Background = new LinearGradientBrush
@@ -36,18 +45,6 @@ namespace Luo_Painter.Elements
                 EndPoint = new Point(1, 0),
                 GradientStops = this.StopsUI
             };
-            base.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                foreach (var item in base.Items)
-                {
-                    Canvas.SetLeft(item.Value, base.GetItemLeft(item.Key));
-                    Canvas.SetTop(item.Value, base.GetItemTop(item.Key));
-                }
-            };
-
 
             base.ItemManipulationStarted += (s, e) =>
             {
@@ -185,8 +182,9 @@ namespace Luo_Painter.Elements
             };
         }
 
-        public void SetColor(Color color) => this.SetCurrentColor(color);
-        public void SetColor(Vector4 colorHdr) => this.SetColor(Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f)));
+        //@Override
+        public override double GetItemLeft(GradientStop key) => key.Offset * base.ActualWidth - 25;
+        public override double GetItemTop(GradientStop key) => 0;
 
         public void Add(Color color, double offset)
         {
@@ -217,7 +215,7 @@ namespace Luo_Painter.Elements
                 else if (offset > offsetX)
                 {
                     if (right is null) right = item;
-                    else if (item.Offset > left.Offset) continue;
+                    else if (item.Offset > right.Offset) continue;
                     else right = item;
                 }
                 else return false;

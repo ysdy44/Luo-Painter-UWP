@@ -1,13 +1,12 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Elements
 {
-    public class GradientStopSelector : TSelector<GradientStop, Button>
+    public abstract class ButtonSelector<TKey> : TSelector<TKey, Button>
     {
-
+        
         //@Delegate
         public event RoutedEventHandler ItemClick;
         public event ManipulationStartedEventHandler ItemManipulationStarted;
@@ -15,36 +14,8 @@ namespace Luo_Painter.Elements
         public event ManipulationCompletedEventHandler ItemManipulationCompleted;
         public event KeyEventHandler ItemPreviewKeyDown;
 
-        #region DependencyProperty
-
-
-        /// <summary> Gets or sets style of <see cref = "GradientStopSelector" />'s item. </summary>
-        public Style ItemStyle
-        {
-            get => (Style)base.GetValue(ItemStyleProperty);
-            set => base.SetValue(ItemStyleProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "GradientStopSelector.ItemStyle" /> dependency property. </summary>
-        public static readonly DependencyProperty ItemStyleProperty = DependencyProperty.Register(nameof(ItemStyle), typeof(Style), typeof(GradientStopSelector), new PropertyMetadata(null));
-
-
-        /// <summary> Gets or sets template of <see cref = "GradientStopSelector" />'s item. </summary>
-        public DataTemplate ItemTemplate
-        {
-            get => (DataTemplate)base.GetValue(ItemTemplateProperty);
-            set => base.SetValue(ItemTemplateProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "GradientStopSelector.ItemTemplate" /> dependency property. </summary>
-        public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(GradientStopSelector), new PropertyMetadata(null));
-
-
-        #endregion
-
         //@Override
-        public override double GetItemLeft(GradientStop key) => key.Offset * base.ActualWidth - 25;
-        public override double GetItemTop(GradientStop key) => 0;
-
-        protected override Button CreateItem(GradientStop key) => new Button
+        protected override Button CreateItem(TKey key) => new Button
         {
             Content = key
         };
