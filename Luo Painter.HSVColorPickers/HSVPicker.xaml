@@ -49,10 +49,5 @@
                 </LinearGradientBrush>
             </Control.Background>
         </local:NumberSlider>
-        <local:NumberSlider x:Name="OpacitySlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
-            <Slider.Header>
-                Opacity
-            </Slider.Header>
-        </local:NumberSlider>
     </StackPanel>
 </UserControl>

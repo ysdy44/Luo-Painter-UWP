@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -12,27 +11,35 @@
 
     <Grid>
 
-        <elements:IndexGrid x:Name="IndexGrid" Width="320" Height="320" Index="{x:Bind ListView.SelectedIndex, Mode=OneWay}">
-            <hsvColorPickers:RGBPicker x:Name="RGBPicker">
-                <Control.Background>
-                    <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
-                </Control.Background>
-            </hsvColorPickers:RGBPicker>
-            <hsvColorPickers:HSVPicker x:Name="HSVPicker">
-                <Control.Background>
-                    <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
-                </Control.Background>
-            </hsvColorPickers:HSVPicker>
-            <hsvColorPickers:HexPicker x:Name="HexPicker" MinWidth="100" MinHeight="32" VerticalAlignment="Center">
-                <TextBox.Header>
-                    <TextBlock>
+        <StackPanel Spacing="8" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Background="{ThemeResource CommandBarBackground}">
+                <hsvColorPickers:RGBPicker x:Name="RGBPicker"/>
+            </Border>
+            <Border Background="{ThemeResource CommandBarBackground}">
+                <hsvColorPickers:HSVPicker x:Name="HSVPicker"/>
+            </Border>
+            <Border Background="{ThemeResource CommandBarBackground}">
+                <hsvColorPickers:NumberSlider x:Name="AlphaSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+                    <Control.Background>
+                        <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
+                    </Control.Background>
+                    <Slider.Header>
+                        Alpha
+                    </Slider.Header>
+                </hsvColorPickers:NumberSlider>
+            </Border>
+            <Border Background="{ThemeResource CommandBarBackground}">
+                <hsvColorPickers:HexPicker x:Name="HexPicker" Margin="8,0,8,4" MinWidth="100" CornerRadius="4" VerticalAlignment="Center" BorderThickness="1">
+                    <TextBox.Header>
+                        <TextBlock>
                         <Run>#</Run><Run Text="{x:Bind HexPicker.Text, Mode=OneWay}"/>
-                    </TextBlock>
-                </TextBox.Header>
-            </hsvColorPickers:HexPicker>
-        </elements:IndexGrid>
+                        </TextBlock>
+                    </TextBox.Header>
+                </hsvColorPickers:HexPicker>
+            </Border>
+        </StackPanel>
 
-        <CommandBar Margin="12,62" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
             <ContentControl.Content>
                 <Border Margin="12,6,2,0" CornerRadius="4" Width="90" Height="30" BorderThickness="1" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}">
@@ -45,24 +52,6 @@
                         </Shape.Fill>
                     </Rectangle>
                 </Border>
-            </ContentControl.Content>
-
-        </CommandBar>
-
-        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-
-            <ContentControl.Content>
-                <Button Margin="12,6,2,0" Content="{x:Bind ListView.SelectedItem, Mode=OneWay}">
-                    <Button.Flyout>
-                        <Flyout>
-                            <ListView x:Name="ListView" SelectedIndex="0">
-                                <x:String>RGBPicker</x:String>
-                                <x:String>HSVPicker</x:String>
-                                <x:String>HexPicker</x:String>
-                            </ListView>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
             </ContentControl.Content>
 
         </CommandBar>

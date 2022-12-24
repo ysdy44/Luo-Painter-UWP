@@ -44,10 +44,5 @@
                 </LinearGradientBrush>
             </Control.Background>
         </local:NumberSlider>
-        <local:NumberSlider x:Name="AlphaSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
-            <Slider.Header>
-                Alpha
-            </Slider.Header>
-        </local:NumberSlider>
     </StackPanel>
 </UserControl>
