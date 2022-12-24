@@ -1,8 +1,6 @@
 ﻿using Luo_Painter.HSVColorPickers;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 
 namespace Luo_Painter.Controls
 {
@@ -11,25 +9,19 @@ namespace Luo_Painter.Controls
 
         private void ConstructColorHarmony()
         {
-            this.HarmonyPicker.ColorChanged += (s, e) => this.EllipseSolidColorBrush.Color = e;
-            this.HarmonyPicker.Color1Changed += (s, e) => this.Ellipse1SolidColorBrush.Color = e;
-            this.HarmonyPicker.Color2Changed += (s, e) => this.Ellipse2SolidColorBrush.Color = e;
-            this.HarmonyPicker.Color3Changed += (s, e) => this.Ellipse3SolidColorBrush.Color = e;
+            this.EllipseItem.Click += (s, e) => this.OnColorChanged(this.EllipseBrush.Color, ColorChangedMode.All);
+            this.Ellipse1Item.Click += (s, e) => this.OnColorChanged(this.Ellipse1Brush.Color, ColorChangedMode.All);
+            this.Ellipse2Item.Click += (s, e) => this.OnColorChanged(this.Ellipse2Brush.Color, ColorChangedMode.All);
+            this.Ellipse3Item.Click += (s, e) => this.OnColorChanged(this.Ellipse3Brush.Color, ColorChangedMode.All);
 
-            this.EllipseSolidColorBrush.Color = Colors.DodgerBlue;
+            this.HarmonyPicker.ColorChanged += (s, e) => this.EllipseBrush.Color = e;
+            this.HarmonyPicker.Color1Changed += (s, e) => this.Ellipse1Brush.Color = e;
+            this.HarmonyPicker.Color2Changed += (s, e) => this.Ellipse2Brush.Color = e;
+            this.HarmonyPicker.Color3Changed += (s, e) => this.Ellipse3Brush.Color = e;
+
+            this.EllipseBrush.Color = Colors.DodgerBlue;
             this.HarmonyPicker.Recolor(Colors.DodgerBlue);
             this.HarmonyPicker.Remode(HarmonyMode.Triadic);
-
-            this.HarmonyListView.ItemClick += (s, e) =>
-            {
-                if (e.ClickedItem is Rectangle item)
-                {
-                    if (item.Fill is SolidColorBrush brush)
-                    {
-                        this.OnColorChanged(brush.Color, ColorChangedMode.All);
-                    }
-                }
-            };
 
             this.ModeListView.SelectionChanged += (s, e) =>
             {

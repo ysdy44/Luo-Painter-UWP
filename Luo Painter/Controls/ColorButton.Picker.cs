@@ -1,7 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
-using Luo_Painter.HSVColorPickers;
-using Windows.UI.Xaml.Controls;
+﻿using Luo_Painter.HSVColorPickers;
 
 namespace Luo_Painter.Controls
 {
@@ -12,12 +9,10 @@ namespace Luo_Painter.Controls
         Red,
         Green,
         Blue,
-        Alpha,
 
         Hue,
         Saturation,
         Value,
-        Opacity,
     }
 
     public sealed partial class ColorButton
@@ -37,12 +32,10 @@ namespace Luo_Painter.Controls
             this.RGBPicker.RedClick += (s, e) => this.NumberShowAt(this.RGBPicker.RedNumber, ColorNumberPickerMode.Red);
             this.RGBPicker.GreenClick += (s, e) => this.NumberShowAt(this.RGBPicker.GreenNumber, ColorNumberPickerMode.Green);
             this.RGBPicker.BlueClick += (s, e) => this.NumberShowAt(this.RGBPicker.BlueNumber, ColorNumberPickerMode.Blue);
-            this.RGBPicker.AlphaClick += (s, e) => this.NumberShowAt(this.RGBPicker.AlphaNumber, ColorNumberPickerMode.Alpha);
 
             this.HSVPicker.HueClick += (s, e) => this.NumberShowAt(this.HSVPicker.HueNumber, ColorNumberPickerMode.Hue);
             this.HSVPicker.SaturationClick += (s, e) => this.NumberShowAt(this.HSVPicker.SaturationNumber, ColorNumberPickerMode.Saturation);
             this.HSVPicker.ValueClick += (s, e) => this.NumberShowAt(this.HSVPicker.ValueNumber, ColorNumberPickerMode.Value);
-            this.HSVPicker.OpacityClick += (s, e) => this.NumberShowAt(this.HSVPicker.OpacityNumber, ColorNumberPickerMode.Opacity);
 
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
             this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
@@ -67,9 +60,6 @@ namespace Luo_Painter.Controls
                     case ColorNumberPickerMode.Blue:
                         this.RGBPicker.ResetBlue((byte)e);
                         break;
-                    case ColorNumberPickerMode.Alpha:
-                        this.RGBPicker.ResetAlpha((byte)e);
-                        break;
 
                     case ColorNumberPickerMode.Hue:
                         this.HSVPicker.ResetHue(e);
@@ -79,9 +69,6 @@ namespace Luo_Painter.Controls
                         break;
                     case ColorNumberPickerMode.Value:
                         this.HSVPicker.ResetValue(e / 100f);
-                        break;
-                    case ColorNumberPickerMode.Opacity:
-                        this.HSVPicker.ResetOpacity(e / 100f);
                         break;
 
                     default:

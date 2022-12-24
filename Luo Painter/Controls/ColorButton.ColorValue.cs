@@ -11,19 +11,21 @@ namespace Luo_Painter.Controls
             this.RGBPicker.ColorChanged += (s, color) =>
             {
                 this.OnColorChanged(color, ColorChangedMode.All);
+                this.HSVPicker.Recolor(color);
                 this.HexPicker.Recolor(color);
             };
             this.HSVPicker.ColorChanged += (s, color) =>
             {
                 this.OnColorChanged(color, ColorChangedMode.All);
+                this.RGBPicker.Recolor(color);
                 this.HexPicker.Recolor(color);
             };
 
             this.HexPicker.ColorChanged += (s, color) =>
             {
                 this.OnColorChanged(color, ColorChangedMode.All);
-                if (this.RGBPicker.Visibility == default) this.RGBPicker.Recolor(color);
-                if (this.HSVPicker.Visibility == default) this.HSVPicker.Recolor(color);
+                this.RGBPicker.Recolor(color);
+                this.HSVPicker.Recolor(color);
             };
             this.HexPicker.KeyDown += (s, e) =>
             {
@@ -43,8 +45,7 @@ namespace Luo_Painter.Controls
                 {
                     case VirtualKey.Enter:
                     case VirtualKey.Execute:
-                        if (this.RGBPicker.Visibility == default) this.RGBPicker.Focus(FocusState.Keyboard);
-                        if (this.HSVPicker.Visibility == default) this.HSVPicker.Focus(FocusState.Keyboard);
+                        this.TitleTextBlock.Focus(FocusState.Keyboard);
                         break;
                     default:
                         break;

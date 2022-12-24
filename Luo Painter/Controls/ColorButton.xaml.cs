@@ -5,18 +5,15 @@ using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
@@ -53,9 +50,9 @@ namespace Luo_Painter.Controls
             {
                 case 0: case 1: return 0;
                 case 2: return 1;
-                case 3: case 4: return 2;
-                case 5: return 3;
-                case 6: return 4;
+                case 3: return 2;
+                case 4: return 3;
+                case 5: return 4;
                 default: return default;
             }
         }
@@ -76,8 +73,6 @@ namespace Luo_Painter.Controls
         //@ Paint
         readonly PaintTaskCollection Tasks = new PaintTaskCollection();
 
-        OpacityImageSource OpacityImageSource;
-        AlphaImageSource AlphaImageSource;
         WheelImageSource WheelImageSource;
 
         Vector2 StartingPosition;
@@ -103,14 +98,10 @@ namespace Luo_Painter.Controls
             this.InkParameter = item;
 
             float dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
-            this.OpacityImageSource = new OpacityImageSource(this.CanvasDevice, 90, 15, dpi);
-            this.AlphaImageSource = new AlphaImageSource(this.CanvasDevice, 300, 4, dpi);
             this.WheelImageSource = new WheelImageSource(this.CanvasDevice, new CircleTemplateSettingsF(300), dpi);
         }
         private void SurfaceContentsLost(object sender, object e)
         {
-            this.OpacityImageSource.Redraw();
-            this.AlphaImageSource.Redraw();
             this.WheelImageSource.Redraw();
         }
 
@@ -152,11 +143,12 @@ namespace Luo_Painter.Controls
         {
             if (this.TricolorPicker.Visibility == default) this.TricolorPicker.Recolor(color);
             if (this.HuePicker.Visibility == default) this.HuePicker.Recolor(color);
-       
-            if (this.RGBPicker.Visibility == default) this.RGBPicker.Recolor(color);
-            if (this.HSVPicker.Visibility == default) this.HSVPicker.Recolor(color);
-
-            this.HexPicker.Recolor(color);
+            if (this.ValuePicker.Visibility == default)
+            {                
+                this.RGBPicker.Recolor(color);
+                this.HSVPicker.Recolor(color);
+                this.HexPicker.Recolor(color);
+            }
         }
         public override void OnColorChanged(Color color) => this.OnColorChanged(color, ColorChangedMode.All);
         public void OnColorChanged(Color color, ColorChangedMode mode)

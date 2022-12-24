@@ -75,11 +75,6 @@
                         </UIElement.ManipulationMode>
                         <FontIcon Glyph="&#xEF3C;" FontFamily="Segoe MDL2 Assets" />
                     </Button>
-                    <Rectangle Grid.Column="2" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7" Width="90" Height="32">
-                        <Rectangle.Fill>
-                            <ImageBrush ImageSource="{x:Bind OpacityImageSource.ImageSource}"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
                     <Border Grid.Column="2" CornerRadius="6,0,0,6" Width="45" Height="32" >
                         <Border.Background>
                             <SolidColorBrush x:Name="PrimarySolidColorBrush" Color="Black"/>
@@ -97,24 +92,10 @@
                     <FontIcon Glyph="&#xF157;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
-                    <x:String>RGB</x:String>
-                    <x:String>HSV</x:String>
-                    <FontIcon Glyph="&#xE929;" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xE9E9;" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xE932;" FontFamily="Segoe MDL2 Assets"/>
                     <!--<FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>-->
                 </ListBox>
-
-                <ComboBox
-                    x:Name="ModeListView"
-                    Margin="6,6,6,-6"
-                    SelectedIndex="3"
-                    Visibility="{x:Bind HarmonyListView.Visibility,Mode=OneWay}"
-                    >
-                    <luo_painter:ElementItem Type="Complementary"/>
-                    <luo_painter:ElementItem Type="SplitComplementary"/>
-                    <luo_painter:ElementItem Type="Analogous"/>
-                    <luo_painter:ElementItem Type="Triadic"/>
-                    <luo_painter:ElementItem Type="Tetradic"/>
-                </ComboBox>
 
                 <!--Color-->
                 <elements:IndexGrid Width="320" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
@@ -129,16 +110,14 @@
                             <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
                         </Control.Background>
                     </hsvColorPickers:HarmonyPicker>
-                    <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Width="320" Height="320" Foreground="{ThemeResource AppForeground}">
-                        <Control.Background>
-                            <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
-                        </Control.Background>
-                    </hsvColorPickers:RGBPicker>
-                    <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Width="320" Height="320" Foreground="{ThemeResource AppForeground}">
-                        <Control.Background>
-                            <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
-                        </Control.Background>
-                    </hsvColorPickers:HSVPicker>
+                    <StackPanel x:Name="ValuePicker" Visibility="Collapsed" Width="320" Padding="0,4,0,0" Spacing="4">
+                        <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                            <hsvColorPickers:RGBPicker x:Name="RGBPicker" Foreground="{ThemeResource AppForeground}"/>
+                        </Border>
+                        <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                            <hsvColorPickers:HSVPicker x:Name="HSVPicker" Foreground="{ThemeResource AppForeground}"/>
+                        </Border>
+                    </StackPanel>
                     <!--Palette-->
                     <canvas:CanvasControl 
                         x:Name="CanvasControl" 
@@ -206,86 +185,97 @@
 
                     </ListView>
 
-                    <ListView 
-                        x:Name="HarmonyListView"
-                        Margin="12,4"
-                        IsItemClickEnabled="True"
-                        SelectionMode="None" 
-                        ScrollViewer.HorizontalScrollMode="Enabled"
-                        ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                        ScrollViewer.VerticalScrollMode="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                        Style="{x:Null}"
-                        >
-
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Width" Value="74"/>
-                                <Setter Property="MinWidth" Value="74"/>
-                                <Setter Property="Height" Value="36"/>
-                                <Setter Property="MinHeight" Value="36"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection>
-
-                            </TransitionCollection>
-                        </ItemsControl.ItemContainerTransitions>
-
-                        <ListViewItem>
-                            <Rectangle Width="74" Height="36">
-                                <Shape.Fill>
-                                    <SolidColorBrush x:Name="EllipseSolidColorBrush" Color="Black"/>
-                                </Shape.Fill>
-                            </Rectangle>
-                        </ListViewItem>
-                        <ListViewItem x:Name="Ellipse1Item" Visibility="Visible">
-                            <Rectangle Width="74" Height="36">
-                                <Shape.Fill>
-                                    <SolidColorBrush x:Name="Ellipse1SolidColorBrush" Color="Black"/>
-                                </Shape.Fill>
-                            </Rectangle>
-                        </ListViewItem>
-                        <ListViewItem x:Name="Ellipse2Item" Visibility="Visible">
-                            <Rectangle Width="74" Height="36">
-                                <Shape.Fill>
-                                    <SolidColorBrush x:Name="Ellipse2SolidColorBrush" Color="Black"/>
-                                </Shape.Fill>
-                            </Rectangle>
-                        </ListViewItem>
-                        <ListViewItem x:Name="Ellipse3Item" Visibility="Collapsed">
-                            <Rectangle Width="74" Height="36">
-                                <Shape.Fill>
-                                    <SolidColorBrush x:Name="Ellipse3SolidColorBrush" Color="Black"/>
-                                </Shape.Fill>
-                            </Rectangle>
-                        </ListViewItem>
-                    </ListView>
-
-                    <Grid Margin="10,4" Height="32" VerticalAlignment="Top">
+                    <Grid x:Name="HarmonyListView" Padding="12,0,0,0" ColumnSpacing="6">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="140"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="HexTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                            Hex
-                        </TextBlock>
-                        <TextBlock Margin="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18" Foreground="{ThemeResource AppForeground}">
-                            #
-                        </TextBlock>
-                        <hsvColorPickers:HexPicker x:Name="HexPicker" Grid.Column="2" CornerRadius="4" BorderThickness="1" FontSize="15" Text="000000"/>
+                        <Button x:Name="EllipseItem" Padding="0" Style="{StaticResource TextBlockButtonStyle}">
+                            <Rectangle RadiusX="18" RadiusY="18" Width="72" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="EllipseBrush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </Button>
+                        <Button x:Name="Ellipse1Item" Grid.Column="1" Visibility="Visible" Padding="0" Style="{StaticResource TextBlockButtonStyle}">
+                            <Rectangle RadiusX="18" RadiusY="18" Width="46" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="Ellipse1Brush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </Button>
+                        <Button x:Name="Ellipse2Item" Grid.Column="2" Visibility="Visible" Padding="0" Style="{StaticResource TextBlockButtonStyle}">
+                            <Rectangle RadiusX="18" RadiusY="18" Width="46" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="Ellipse2Brush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </Button>
+                        <Button x:Name="Ellipse3Item" Grid.Column="3" Visibility="Collapsed" Padding="0" Style="{StaticResource TextBlockButtonStyle}">
+                            <Rectangle RadiusX="18" RadiusY="18" Width="46" Height="36">
+                                <Shape.Fill>
+                                    <SolidColorBrush x:Name="Ellipse3Brush" Color="Black"/>
+                                </Shape.Fill>
+                            </Rectangle>
+                        </Button>
+                        <Button Grid.Column="4" Width="70" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                            <Button.Flyout>
+                                <Flyout Placement="TopEdgeAlignedRight" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                    <StackPanel Spacing="2" Padding="6,4" Width="318">
+
+                                        <TextBlock
+                                            x:Name="HarmonyTextBlock" 
+                                            Margin="10,4,10,10" 
+                                            IsTextSelectionEnabled="True" 
+                                            FontWeight="Medium" 
+                                            TextTrimming="CharacterEllipsis" 
+                                            FontSize="20" 
+                                            TextWrapping="Wrap" 
+                                            VerticalAlignment="Center" 
+                                            OpticalMarginAlignment="TrimSideBearings"
+                                            >
+                                            Harmony
+                                        </TextBlock>
+
+                                        <ListView
+                                            x:Name="ModeListView"        
+                                            SelectedIndex="3"
+                                            IsItemClickEnabled="True" 
+                                            Style="{StaticResource AppListViewStyle}"
+                                            >
+                                            <luo_painter:ElementItem Type="Complementary"/>
+                                            <luo_painter:ElementItem Type="SplitComplementary"/>
+                                            <luo_painter:ElementItem Type="Analogous"/>
+                                            <luo_painter:ElementItem Type="Triadic"/>
+                                            <luo_painter:ElementItem Type="Tetradic"/>
+                                        </ListView>
+
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                            <SymbolIcon Symbol="ShowBcc"/>
+                        </Button>
+
                     </Grid>
+
+                    <Border Margin="4" Padding="8,0" Height="42" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="140"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="HexTextBlock" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                Hex
+                            </TextBlock>
+                            <TextBlock Margin="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18" Foreground="{ThemeResource AppForeground}">
+                                #
+                            </TextBlock>
+                            <hsvColorPickers:HexPicker x:Name="HexPicker" Grid.Column="2" CornerRadius="4" BorderThickness="1" FontSize="15" Text="000000" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
 
                     <Grid Padding="6,0" Height="50" Visibility="Collapsed" >
                         <Grid.ColumnDefinitions>
@@ -310,6 +300,19 @@
                     </Grid>
 
                 </elements:IndexGrid>
+
+                <!--
+                <Border Margin="4,0,4,4" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                    <hsvColorPickers:NumberSlider x:Name="AlphaSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                        <Control.Background>
+                            <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
+                        </Control.Background>
+                        <Slider.Header>
+                            Alpha
+                        </Slider.Header>
+                    </hsvColorPickers:NumberSlider>
+                </Border>
+                -->
 
             </StackPanel>
         </Flyout>
