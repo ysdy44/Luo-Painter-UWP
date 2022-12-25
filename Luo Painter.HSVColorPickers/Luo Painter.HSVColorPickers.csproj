@@ -167,6 +167,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\ButtonSelector.cs" />
+    <Compile Include="Selectors\CurveSelectorWithUI.xaml.cs">
+      <DependentUpon>CurveSelectorWithUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Selectors\CurveStop.cs" />
     <Compile Include="Selectors\GradientStops.cs" />
     <Compile Include="Selectors\GradientStopSelectorWithUI.xaml.cs">
@@ -241,6 +244,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pickers\ValuePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Selectors\CurveSelectorWithUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
