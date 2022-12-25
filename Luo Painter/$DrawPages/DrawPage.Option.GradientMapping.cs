@@ -88,16 +88,7 @@ namespace Luo_Painter
 
         private void GradientMapping()
         {
-            IEnumerable<CanvasGradientStop> array =
-                from item
-                in this.GradientMappingSelector.Source
-                select new CanvasGradientStop
-                {
-                    Position = (float)item.Offset,
-                    Color = item.Color,
-                };
-
-            using (CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(this.CanvasDevice, array.ToArray())
+            using (CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(this.CanvasDevice, this.GradientMappingSelector.Data)
             {
                 StartPoint = Vector2.Zero,
                 EndPoint = new Vector2(256, 0),

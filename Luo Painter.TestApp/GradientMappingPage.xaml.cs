@@ -1,17 +1,12 @@
-﻿using Luo_Painter.Elements;
-using Luo_Painter.HSVColorPickers;
+﻿using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Graphics.Effects;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
@@ -19,48 +14,9 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.TestApp
 {
-    internal sealed class GradientMesh
-    {
-        readonly int Length;
-        readonly CanvasRenderTarget Map;
-        public IGraphicsEffectSource Source => this.Map;
-
-        public GradientMesh(ICanvasResourceCreator resourceCreator, int length = 256)
-        {
-            this.Length = length;
-            this.Map = new CanvasRenderTarget(resourceCreator, length, 1, 96);
-        }
-
-        public void Render(ICanvasResourceCreator resourceCreator, IEnumerable<GradientStop> stops)
-        {
-            IEnumerable<CanvasGradientStop> array =
-                from item
-                in stops
-                select new CanvasGradientStop
-                {
-                    Position = (float)item.Offset,
-                    Color = item.Color,
-                };
-
-            CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(resourceCreator, array.ToArray())
-            {
-                StartPoint = Vector2.Zero,
-                EndPoint = new Vector2(this.Length, 0),
-            };
-
-            using (CanvasDrawingSession ds = this.Map.CreateDrawingSession())
-            {
-                ds.Units = CanvasUnits.Pixels;
-
-                ds.FillRectangle(0, 0, this.Length, 1, brush);
-            }
-        }
-    }
-
     public sealed partial class GradientMappingPage : Page
     {
 
@@ -77,7 +33,7 @@ namespace Luo_Painter.TestApp
         };
 
         CanvasBitmap CanvasBitmap;
-        GradientMesh GradientMesh;
+        CanvasRenderTarget GradientMesh;
         byte[] ShaderCodeBytes;
 
         public GradientMappingPage()
@@ -98,7 +54,7 @@ namespace Luo_Painter.TestApp
                 if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result is null) return; 
+                if (result is null) return;
                 if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -142,14 +98,15 @@ namespace Luo_Painter.TestApp
         {
             this.Selector.ItemClick += (s, e) =>
             {
-                if (this.Stops.Enabled) return;
-                this.Stops.Start();
+                if (this.Selector.IsItemClickEnabled)
+                {
+                    if (this.Stops.Enabled) return;
+                    this.Stops.Start();
 
-                this.Selector.SetCurrent(s);
-                if (this.Selector.CurrentStop is null) return;
-
-                this.ColorPicker.Color = this.Selector.CurrentStop.Color;
-                this.ColorFlyout.ShowAt(this.Selector.CurrentButton);
+                    this.Selector.SetCurrent(s);
+                    this.ColorPicker.Color = this.Selector.Color;
+                    this.ColorFlyout.ShowAt(this.Selector.PlacementTarget);
+                }
             };
 
             this.Selector.ItemManipulationStarted += (s, e) =>
@@ -204,7 +161,7 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CustomDevice = this.Device;
             this.CanvasControl.CreateResources += (sender, args) =>
             {
-                this.GradientMesh = new GradientMesh(sender);
+                this.GradientMesh = new CanvasRenderTarget(sender, 256, 1, 96);
 
                 args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
@@ -222,13 +179,13 @@ namespace Luo_Painter.TestApp
             {
                 if (this.CanvasBitmap is null) return;
 
-                this.GradientMesh.Render(sender, this.Selector.Source);
+                this.GradientMapping(sender);
 
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
                     Source2BorderMode = EffectBorderMode.Hard,
                     Source1 = this.CanvasBitmap,
-                    Source2 = this.GradientMesh.Source
+                    Source2 = this.GradientMesh
                 });
             };
         }
@@ -236,6 +193,21 @@ namespace Luo_Painter.TestApp
         private async Task CreateResourcesAsync()
         {
             this.ShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
+        }
+
+        private void GradientMapping(ICanvasResourceCreator resourceCreator)
+        {
+            using (CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(resourceCreator, this.Selector.Data)
+            {
+                StartPoint = Vector2.Zero,
+                EndPoint = new Vector2(256, 0),
+            })
+            using (CanvasDrawingSession ds = this.GradientMesh.CreateDrawingSession())
+            {
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.FillRectangle(0, 0, 256, 1, brush);
+            }
         }
 
         public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)

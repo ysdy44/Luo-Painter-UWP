@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Graphics.Canvas.Brushes;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -14,8 +17,28 @@ namespace Luo_Painter.HSVColorPickers
     public sealed partial class GradientStopSelectorWithUI : GradientStopSelector, IColorBase
     {
         //@Content
-        public FrameworkElement PlacementTarget => base.CurrentButton;
-        public Color Color => base.CurrentStop.Color;
+        public FrameworkElement PlacementTarget
+        {
+            get
+            {
+                if (this.SelectedIndex < 0) return this;
+                if (this.SelectedIndex >= base.Count) return this;
+
+                GradientStop key = base.Stops[base.SelectedIndex];
+                return base.Items[key];
+            }
+        }
+        public Color Color
+        {
+            get
+            {
+                if (this.SelectedIndex < 0) return default;
+                if (this.SelectedIndex >= base.Count) return default;
+
+                GradientStop key = base.Stops[base.SelectedIndex];
+                return key.Color;
+            }
+        }
 
         public GradientStopSelectorWithUI()
         {
@@ -32,13 +55,21 @@ namespace Luo_Painter.HSVColorPickers
         public event EventHandler<double> ItemRemoved;
 
         //@Content
-        public Button CurrentButton { get; private set; }
-        public GradientStop CurrentStop { get; private set; }
-        public GradientStop CurrentStopUI { get; private set; }
+        public bool IsItemClickEnabled { get; private set; } = true;
+        public int SelectedIndex { get; private set; } = -1;
 
         public IEnumerable<GradientStop> Source => this.Stops;
-        readonly ObservableCollection<GradientStop> Stops = new ObservableCollection<GradientStop>();
+        protected readonly ObservableCollection<GradientStop> Stops = new ObservableCollection<GradientStop>();
         readonly GradientStopCollection StopsUI = new GradientStopCollection();
+
+        public CanvasGradientStop[] Data { get; private set; }
+        private IEnumerable<CanvasGradientStop> CreateData() => from item in this.Source select new CanvasGradientStop
+        {
+            Position = (float)item.Offset,
+            Color = item.Color,
+        };
+
+        Point StatringPosition;
 
         //@Construct
         public GradientStopSelector()
@@ -55,128 +86,126 @@ namespace Luo_Painter.HSVColorPickers
             {
                 UIElement button = e.Container;
 
-                button.RenderTransformOrigin = new Point
+                this.StatringPosition = new Point
                 {
                     X = Canvas.GetLeft(button) + e.Cumulative.Translation.X + 25,
                     Y = Canvas.GetTop(button) + e.Cumulative.Translation.Y + 0,
                 };
 
-                int index = -1;
+                this.SelectedIndex = -1;
                 foreach (var item in base.Items)
                 {
-                    index++;
                     if (item.Value == button)
                     {
-                        Canvas.SetZIndex(button, index);
+                        this.SelectedIndex = this.Stops.IndexOf(item.Key);
                         break;
                     }
                 }
                 e.Handled = true;
+                this.IsItemClickEnabled = false;
             };
             base.ItemManipulationDelta += (s, e) =>
             {
+                if (this.SelectedIndex < 0) return;
+                if (this.SelectedIndex >= base.Count) return;
+
                 UIElement button = e.Container;
 
                 // Remove
                 if (base.Count > 2)
                 {
-                    double startingY = button.RenderTransformOrigin.Y;
-                    double y = startingY + e.Cumulative.Translation.Y;
+                    double y = this.StatringPosition.Y + e.Cumulative.Translation.Y;
                     bool isRemove = y < -50;
 
                     if (isRemove)
                     {
-                        Canvas.SetTop(button, y - 0);
+                        Canvas.SetTop(button, y);
                         base.IsHitTestVisible = false;
-                        e.Handled = true;
-                        return;
                     }
                     else
                     {
-                        Canvas.SetTop(button, -0);
+                        Canvas.SetTop(button, 0);
                         base.IsHitTestVisible = true;
                     }
                 }
 
-                double startingX = button.RenderTransformOrigin.X;
-                double x = startingX + e.Cumulative.Translation.X;
+                double x = this.StatringPosition.X + e.Cumulative.Translation.X;
                 double width = base.ActualWidth;
                 double offsetX = Math.Clamp(x / width, 0, 1);
                 Canvas.SetLeft(button, offsetX * width - 25);
 
-                int index = Canvas.GetZIndex(button);
-                this.Stops[index].Offset = offsetX;
-                this.StopsUI[index].Offset = offsetX;
+                this.Stops[this.SelectedIndex].Offset = offsetX;
+                this.StopsUI[this.SelectedIndex].Offset = offsetX;
+                this.Data[this.SelectedIndex].Position = (float)offsetX;
                 e.Handled = true;
             };
             base.ItemManipulationCompleted += (s, e) =>
             {
+                if (this.SelectedIndex < 0) return;
+                if (this.SelectedIndex >= base.Count) return;
+
                 UIElement button = e.Container;
 
                 // Remove
                 base.IsHitTestVisible = true;
                 if (base.Count > 2)
                 {
-                    double startingY = button.RenderTransformOrigin.Y;
-                    double y = startingY + e.Cumulative.Translation.Y;
-                    double height = base.ActualHeight;
-                    bool isRemove = y < -height;
+                    double y = this.StatringPosition.Y + e.Cumulative.Translation.Y;
+                    bool isRemove = y < -50;
 
                     if (isRemove)
                     {
                         this.SetCurrent(button);
-                        this.ItemRemoved?.Invoke(this, this.CurrentStop.Offset); // Delegate
+                        this.ItemRemoved?.Invoke(this, this.Stops[this.SelectedIndex].Offset); // Delegate
                         this.RemoveCurrent();
                     }
                 }
 
-                button.RenderTransformOrigin = new Point();
-                Canvas.SetZIndex(button, 0);
                 e.Handled = true;
+                this.ItemClickEnabled();
             };
             base.ItemPreviewKeyDown += (s, e) =>
             {
+                if (this.SelectedIndex < 0) return;
+                if (this.SelectedIndex >= base.Count) return;
+
+                GradientStop key = this.Stops[this.SelectedIndex];
+
                 switch (e.Key)
                 {
                     case VirtualKey.Delete:
                         if (base.Count > 2)
                         {
-                            if (this.CurrentButton is null)
-                                this.SetCurrent(e.OriginalSource);
-                            this.ItemRemoved?.Invoke(this, this.CurrentStop.Offset); // Delegate
+                            this.ItemRemoved?.Invoke(this, key.Offset); // Delegate
                             this.RemoveCurrent();
                             e.Handled = true;
                         }
                         break;
                     case VirtualKey.Left:
                         {
-                            if (this.CurrentButton is null)
-                                this.SetCurrent(e.OriginalSource);
-
-                            double offsetX = this.CurrentStop.Offset;
+                            double offsetX = key.Offset;
                             offsetX = Math.Clamp(offsetX - 0.01, 0, 1);
 
-                            this.CurrentStop.Offset = offsetX;
-                            this.CurrentStopUI.Offset = offsetX;
+                            key.Offset = offsetX;
+                            this.StopsUI[this.SelectedIndex].Offset = offsetX;
+                            this.Data[this.SelectedIndex].Position = (float)offsetX;
 
                             double width = base.ActualWidth;
-                            Canvas.SetLeft(this.CurrentButton, offsetX * width - 25);
+                            Canvas.SetLeft(base.Items[key], offsetX * width - 25);
                             e.Handled = true;
                         }
                         break;
                     case VirtualKey.Right:
                         {
-                            if (this.CurrentButton is null)
-                                this.SetCurrent(e.OriginalSource);
-
-                            double offsetX = this.CurrentStop.Offset;
+                            double offsetX = key.Offset;
                             offsetX = Math.Clamp(offsetX + 0.01, 0, 1);
 
-                            this.CurrentStop.Offset = offsetX;
-                            this.CurrentStopUI.Offset = offsetX;
+                            key.Offset = offsetX;
+                            this.StopsUI[this.SelectedIndex].Offset = offsetX;
+                            this.Data[this.SelectedIndex].Position = (float)offsetX;
 
                             double width = base.ActualWidth;
-                            Canvas.SetLeft(this.CurrentButton, offsetX * width - 25);
+                            Canvas.SetLeft(base.Items[key], offsetX * width - 25);
                             e.Handled = true;
                         }
                         break;
@@ -187,6 +216,12 @@ namespace Luo_Painter.HSVColorPickers
             };
         }
 
+        private async void ItemClickEnabled()
+        {
+            await Task.Delay(300);
+            this.IsItemClickEnabled = true;
+        }
+
         //@Override
         public override double GetItemLeft(GradientStop key) => key.Offset * base.ActualWidth - 25;
         public override double GetItemTop(GradientStop key) => 0;
@@ -195,6 +230,7 @@ namespace Luo_Painter.HSVColorPickers
         {
             this.Stops.Add(new GradientStop { Color = color, Offset = offset });
             this.StopsUI.Add(new GradientStop { Color = color, Offset = offset });
+            this.Data = this.CreateData().ToArray();
         }
         public bool Interpolation(Point point)
         {
@@ -242,6 +278,7 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Stops.Add(new GradientStop { Color = color, Offset = offsetX });
             this.StopsUI.Add(new GradientStop { Color = color, Offset = offsetX });
+            this.Data = this.CreateData().ToArray();
             return true;
         }
         public void Reset(IDictionary<double, Color> stops)
@@ -255,32 +292,27 @@ namespace Luo_Painter.HSVColorPickers
                 this.Stops.Add(new GradientStop { Color = color, Offset = offsetX });
                 this.StopsUI.Add(new GradientStop { Color = color, Offset = offsetX });
             }
+            this.Data = this.CreateData().ToArray();
         }
 
         public void RemoveCurrent()
         {
-            this.CurrentButton = null;
+            if (this.SelectedIndex < 0) return;
+            if (this.SelectedIndex >= base.Count) return;
 
-            if (this.CurrentStop != null)
-            {
-                this.Stops.Remove(this.CurrentStop);
-                this.CurrentStop = null;
-            }
-
-            if (this.CurrentStopUI != null)
-            {
-                this.StopsUI.Remove(this.CurrentStopUI);
-                this.CurrentStopUI = null;
-            }
+            this.Stops.RemoveAt(this.SelectedIndex);
+            this.StopsUI.RemoveAt(this.SelectedIndex);
+            this.Data = this.CreateData().ToArray();
         }
 
         public void SetCurrentColor(Color color)
         {
-            if (this.CurrentStop == null) return;
-            this.CurrentStop.Color = color;
+            if (this.SelectedIndex < 0) return;
+            if (this.SelectedIndex >= base.Count) return;
 
-            if (this.CurrentStopUI == null) return;
-            this.CurrentStopUI.Color = color;
+            this.Stops[this.SelectedIndex].Color = color;
+            this.StopsUI[this.SelectedIndex].Color = color;
+            this.Data[this.SelectedIndex].Color = color;
         }
         public void SetCurrentOffset(Point point)
         {
@@ -288,22 +320,19 @@ namespace Luo_Painter.HSVColorPickers
             double width = base.ActualWidth;
             double offsetX = Math.Clamp(x / width, 0, 1); // 0.5
 
-            if (this.CurrentButton == null) return;
-            Canvas.SetLeft(this.CurrentButton, offsetX * width - base.Margin.Left);
+            this.Stops[this.SelectedIndex].Offset = offsetX;
+            this.StopsUI[this.SelectedIndex].Offset = offsetX;
+            this.Data[this.SelectedIndex].Position = (float)offsetX;
 
-            if (this.CurrentStop == null) return;
-            this.CurrentStop.Offset = offsetX;
-
-            if (this.CurrentStopUI == null) return;
-            this.CurrentStopUI.Offset = offsetX;
+            GradientStop key = this.Stops[this.SelectedIndex];
+            Canvas.SetLeft(base.Items[key], offsetX * width - base.Margin.Left);
         }
 
         public void SetCurrent(Point point, double distance = 20)
         {
             double width = base.ActualWidth;
 
-            this.CurrentButton = null;
-            this.CurrentStop = null;
+            this.SelectedIndex = -1;
             foreach (var item in base.Items)
             {
                 double offset = item.Key.Offset;
@@ -311,37 +340,23 @@ namespace Luo_Painter.HSVColorPickers
 
                 if (Math.Abs(x - point.X) < distance)
                 {
-                    this.CurrentButton = item.Value;
-                    this.CurrentButton.Focus(FocusState.Keyboard);
-                    this.CurrentStop = item.Key;
-                }
-            }
-            if (this.CurrentStop == null) return;
-
-            foreach (GradientStop item in this.StopsUI)
-            {
-                if (item.Offset == this.CurrentStop.Offset)
-                {
-                    this.CurrentStopUI = item;
+                    this.SelectedIndex = this.Stops.IndexOf(item.Key);
+                    item.Value.Focus(FocusState.Keyboard);
                     break;
                 }
             }
         }
         public void SetCurrent(object sender)
         {
-            this.CurrentButton = sender as Button;
-            if (this.CurrentButton == null) return;
-            this.CurrentButton.Focus(FocusState.Keyboard);
-
-            this.CurrentStop = this.CurrentButton.Content as GradientStop;
-            if (this.CurrentStop == null) return;
-
-            foreach (GradientStop item in this.StopsUI)
+            if (sender is Button button)
             {
-                if (item.Offset == this.CurrentStop.Offset)
+                foreach (var item in base.Items)
                 {
-                    this.CurrentStopUI = item;
-                    break;
+                    if (item.Value == button)
+                    {
+                        this.SelectedIndex = this.Stops.IndexOf(item.Key);
+                        item.Value.Focus(FocusState.Keyboard);
+                    }
                 }
             }
         }
