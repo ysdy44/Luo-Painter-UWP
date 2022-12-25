@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\ButtonSelector.cs" />
+    <Compile Include="Selectors\CurveStop.cs" />
     <Compile Include="Selectors\GradientStops.cs" />
     <Compile Include="Selectors\GradientStopSelectorWithUI.xaml.cs">
       <DependentUpon>GradientStopSelectorWithUI.xaml</DependentUpon>
