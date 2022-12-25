@@ -71,9 +71,8 @@ namespace Luo_Painter
                 switch (this.OptionType)
                 {
                     case OptionType.GradientMapping:
-                        this.GradientMappingSelector.SetColor(e);
-
-                        this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                        this.GradientMappingSelector.SetCurrentColor(e);
+                        this.GradientMapping();
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
                         break;
 

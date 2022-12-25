@@ -13,44 +13,6 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter
 {
-    internal sealed class GradientMesh
-    {
-        readonly int Length;
-        readonly CanvasRenderTarget Map;
-        public IGraphicsEffectSource Source => this.Map;
-
-        public GradientMesh(ICanvasResourceCreator resourceCreator, int length = 256)
-        {
-            this.Length = length;
-            this.Map = new CanvasRenderTarget(resourceCreator, length, 1, 96);
-        }
-
-        public void Render(ICanvasResourceCreator resourceCreator, IEnumerable<GradientStop> stops)
-        {
-            IEnumerable<CanvasGradientStop> array =
-                from item
-                in stops
-                select new CanvasGradientStop
-                {
-                    Position = (float)item.Offset,
-                    Color = item.Color,
-                };
-
-            CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(resourceCreator, array.ToArray())
-            {
-                StartPoint = Vector2.Zero,
-                EndPoint = new Vector2(this.Length, 0),
-            };
-
-            using (CanvasDrawingSession ds = this.Map.CreateDrawingSession())
-            {
-                ds.Units = CanvasUnits.Pixels;
-
-                ds.FillRectangle(0, 0, this.Length, 1, brush);
-            }
-        }
-    }
-
     public sealed partial class DrawPage
     {
         readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>
@@ -64,7 +26,7 @@ namespace Luo_Painter
         private void ResetGradientMapping()
         {
             this.GradientMappingSelector.Reset(this.Stops);
-            this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+            this.GradientMapping();
         }
 
         private void ConstructGradientMapping()
@@ -72,31 +34,29 @@ namespace Luo_Painter
             this.GradientMappingSelector.ItemClick += (s, e) =>
             {
                 this.GradientMappingSelector.SetCurrent(s);
-                if (this.GradientMappingSelector.CurrentStop is null) return;
-
                 this.ColorShowAt(this.GradientMappingSelector);
             };
 
             this.GradientMappingSelector.ItemManipulationStarted += (s, e) =>
             {
-                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                this.GradientMapping();
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ItemManipulationDelta += (s, e) =>
             {
-                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                this.GradientMapping();
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ItemManipulationCompleted += (s, e) =>
             {
-                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                this.GradientMapping();
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ItemPreviewKeyDown += (s, e) =>
             {
                 if (e.Handled)
                 {
-                    this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                    this.GradientMapping();
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                 }
             };
@@ -109,38 +69,45 @@ namespace Luo_Painter
                 if (result is false) return;
 
                 this.GradientMappingSelector.SetCurrent(point);
-                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                this.GradientMapping();
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ManipulationDelta += (s, e) =>
             {
                 this.GradientMappingSelector.SetCurrentOffset(e.Position);
-                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                this.GradientMapping();
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.GradientMappingSelector.ManipulationCompleted += (s, e) =>
             {
                 this.GradientMappingSelector.SetCurrentOffset(e.Position);
-                this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
+                this.GradientMapping();
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
         }
 
-        private ICanvasImage GetGradientMappingPreview(ICanvasImage image)
+        private void GradientMapping()
         {
-            return new PixelShaderEffect(this.GradientMappingShaderCodeBytes)
-            {
-                Source2BorderMode = EffectBorderMode.Hard,
-                Source1 = image,
-                Source2 = this.GradientMesh.Source
-            };
-        }
+            IEnumerable<CanvasGradientStop> array =
+                from item
+                in this.GradientMappingSelector.Source
+                select new CanvasGradientStop
+                {
+                    Position = (float)item.Offset,
+                    Color = item.Color,
+                };
 
-        private void GradientMappingColorChanged(Color color)
-        {
-            this.GradientMappingSelector.SetCurrentColor(color);
-            this.GradientMesh.Render(this.CanvasDevice, this.GradientMappingSelector.Source);
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            using (CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(this.CanvasDevice, array.ToArray())
+            {
+                StartPoint = Vector2.Zero,
+                EndPoint = new Vector2(256, 0),
+            })
+            using (CanvasDrawingSession ds = this.GradientMesh.CreateDrawingSession())
+            {
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.FillRectangle(0, 0, 256, 1, brush);
+            }
         }
 
     }

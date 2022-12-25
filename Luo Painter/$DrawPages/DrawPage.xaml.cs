@@ -213,7 +213,7 @@ namespace Luo_Painter
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
 
-        GradientMesh GradientMesh { get; set; }
+        CanvasRenderTarget GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget Mesh { get; set; }
 
@@ -321,6 +321,9 @@ namespace Luo_Painter
             this.ConstructAppBar();
 
             this.ConstructEffect();
+            this.ConstructGammaTransfer();
+            this.ConstructDiscreteTransfer();
+
             this.ConstructGeometry();
 
             this.ConstructInk();

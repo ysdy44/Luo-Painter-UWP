@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private void ConstructCanvas()
@@ -186,7 +186,7 @@ namespace Luo_Painter
 
             this.CanvasVirtualControl.CreateResources += (sender, args) =>
             {
-                this.GradientMesh = new GradientMesh(this.CanvasDevice);
+                this.GradientMesh = new CanvasRenderTarget(this.CanvasDevice, 256, 1, 96);
                 this.GrayAndWhiteMesh = CanvasBitmap.CreateFromColors(this.CanvasDevice, new Color[]
                 {
                     Colors.LightGray, Colors.White,
@@ -212,7 +212,7 @@ namespace Luo_Painter
 
                         // Mesh
                         // Layer
-                        if (this.OptionType.IsMarquees() || this.BitmapLayer is null)
+                        if (this.BitmapLayer is null || this.OptionType.IsMarquees())
                             ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                         else
                             ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));

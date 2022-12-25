@@ -221,7 +221,7 @@ namespace Luo_Painter
                     {
                         Source2BorderMode = EffectBorderMode.Hard,
                         Source1 = image,
-                        Source2 = this.GradientMesh.Source
+                        Source2 = this.GradientMesh
                     };
 
                 case OptionType.RippleEffect:
