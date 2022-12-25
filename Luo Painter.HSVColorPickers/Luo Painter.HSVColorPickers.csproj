@@ -121,6 +121,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CanvasImageSource.cs" />
+    <Compile Include="ColorButton.xaml.cs">
+      <DependentUpon>ColorButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ColorType.cs" />
     <Compile Include="HarmonyMode.cs" />
     <Compile Include="HSVExtensions.cs" />
@@ -163,6 +166,12 @@
       <DependentUpon>ValuePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selectors\ButtonSelector.cs" />
+    <Compile Include="Selectors\GradientStops.cs" />
+    <Compile Include="Selectors\GradientStopSelectorWithUI.xaml.cs">
+      <DependentUpon>GradientStopSelectorWithUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Selectors\TSelector.cs" />
     <Compile Include="Strawers\Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
@@ -182,6 +191,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ColorButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Numbers\NumberButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -227,6 +240,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pickers\ValuePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Selectors\GradientStopSelectorWithUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

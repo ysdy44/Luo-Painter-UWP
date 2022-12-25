@@ -124,9 +124,6 @@
     <Compile Include="AnimationListView.cs" />
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
-    <Compile Include="ColorButton.xaml.cs">
-      <DependentUpon>ColorButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="Docker.xaml.cs">
       <DependentUpon>Docker.xaml</DependentUpon>
@@ -159,12 +156,6 @@
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectedSwiper.cs" />
-    <Compile Include="Selectors\ButtonSelector.cs" />
-    <Compile Include="Selectors\GradientStops.cs" />
-    <Compile Include="Selectors\GradientStopSelectorWithUI.xaml.cs">
-      <DependentUpon>GradientStopSelectorWithUI.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Selectors\TSelector.cs" />
     <Compile Include="Sheet.xaml.cs">
       <DependentUpon>Sheet.xaml</DependentUpon>
     </Compile>
@@ -199,10 +190,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ColorButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Docker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -400,10 +387,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectedIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Selectors\GradientStopSelectorWithUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
