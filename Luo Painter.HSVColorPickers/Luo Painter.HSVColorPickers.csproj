@@ -122,10 +122,6 @@
   <ItemGroup>
     <Compile Include="CanvasImageSource.cs" />
     <Compile Include="ColorType.cs" />
-    <Compile Include="Eyedropper.xaml.cs">
-      <DependentUpon>Eyedropper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EyedropperButton.cs" />
     <Compile Include="HarmonyMode.cs" />
     <Compile Include="HSVExtensions.cs" />
     <Compile Include="IColorPicker.cs" />
@@ -167,7 +163,11 @@
       <DependentUpon>ValuePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strawer.xaml.cs">
+    <Compile Include="Strawers\Eyedropper.xaml.cs">
+      <DependentUpon>Eyedropper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Strawers\EyedropperButton.cs" />
+    <Compile Include="Strawers\Strawer.xaml.cs">
       <DependentUpon>Strawer.xaml</DependentUpon>
     </Compile>
     <Compile Include="TemplateSettings.cs" />
@@ -182,10 +182,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Eyedropper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Numbers\NumberButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -234,7 +230,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Strawer.xaml">
+    <Page Include="Strawers\Eyedropper.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Strawers\Strawer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

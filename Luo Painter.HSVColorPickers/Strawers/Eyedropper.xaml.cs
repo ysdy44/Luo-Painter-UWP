@@ -31,6 +31,13 @@ namespace Luo_Painter.HSVColorPickers
                 this.TrySetResult();
                 this.Dispose();
             };
+            this.Content.PointerReleased += (s, e) =>
+            {
+                if (this.Pixels is null) return;
+
+                this.TrySetResult();
+                this.Dispose();
+            };
         }
         public void TrySetResult()
         {
