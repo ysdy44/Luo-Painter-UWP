@@ -72,7 +72,7 @@ namespace Luo_Painter
                 {
                     case OptionType.GradientMapping:
                         this.GradientMappingSelector.SetCurrentColor(e);
-                        this.GradientMapping();
+                        this.ResetGradientMapping();
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
                         break;
 
