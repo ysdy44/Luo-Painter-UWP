@@ -11,11 +11,16 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Elements
 {
-    public class GradientStopSelectorWithUI : GradientStopSelector, IColorBase
+    public sealed partial class GradientStopSelectorWithUI : GradientStopSelector, IColorBase
     {
         //@Content
         public FrameworkElement PlacementTarget => base.CurrentButton;
         public Color Color => base.CurrentStop.Color;
+
+        public GradientStopSelectorWithUI()
+        {
+            this.InitializeComponent();
+        }
 
         public void SetColor(Color color) => base.SetCurrentColor(color);
         public void SetColor(Vector4 colorHdr) => this.SetColor(Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f)));

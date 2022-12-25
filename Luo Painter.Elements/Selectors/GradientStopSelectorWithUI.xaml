@@ -1,0 +1,38 @@
+﻿<elements:GradientStopSelector
+    x:Class="Luo_Painter.Elements.GradientStopSelectorWithUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Luo_Painter.Elements"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    mc:Ignorable="d"
+    Margin="25,0" 
+    Height="50" 
+    >
+
+    <elements:GradientStopSelector.ItemStyle>
+        <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+    </elements:GradientStopSelector.ItemStyle>
+    <elements:GradientStopSelector.ItemTemplate>
+        <DataTemplate x:DataType="GradientStop">
+            <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
+                    <Shape.Fill>
+                        <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
+                    </Shape.Fill>
+                </Rectangle>
+            </Border>
+        </DataTemplate>
+    </elements:GradientStopSelector.ItemTemplate>
+</elements:GradientStopSelector>
