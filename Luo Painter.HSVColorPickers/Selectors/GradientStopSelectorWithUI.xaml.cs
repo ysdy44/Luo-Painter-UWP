@@ -155,7 +155,6 @@ namespace Luo_Painter.HSVColorPickers
 
                     if (isRemove)
                     {
-                        this.SetCurrent(button);
                         this.ItemRemoved?.Invoke(this, this.Stops[this.SelectedIndex].Offset); // Delegate
                         this.RemoveCurrent();
                     }
@@ -279,6 +278,8 @@ namespace Luo_Painter.HSVColorPickers
             this.Stops.Add(new GradientStop { Color = color, Offset = offsetX });
             this.StopsUI.Add(new GradientStop { Color = color, Offset = offsetX });
             this.Data = this.CreateData().ToArray();
+
+            this.SelectedIndex = base.Count - 1;
             return true;
         }
         public void Reset(IDictionary<double, Color> stops)
@@ -293,6 +294,8 @@ namespace Luo_Painter.HSVColorPickers
                 this.StopsUI.Add(new GradientStop { Color = color, Offset = offsetX });
             }
             this.Data = this.CreateData().ToArray();
+
+            this.SelectedIndex = -1;
         }
 
         public void RemoveCurrent()
@@ -303,6 +306,8 @@ namespace Luo_Painter.HSVColorPickers
             this.Stops.RemoveAt(this.SelectedIndex);
             this.StopsUI.RemoveAt(this.SelectedIndex);
             this.Data = this.CreateData().ToArray();
+
+            this.SelectedIndex = -1;
         }
 
         public void SetCurrentColor(Color color)
@@ -316,6 +321,9 @@ namespace Luo_Painter.HSVColorPickers
         }
         public void SetCurrentOffset(Point point)
         {
+            if (this.SelectedIndex < 0) return;
+            if (this.SelectedIndex >= base.Count) return;
+
             double x = point.X;
             double width = base.ActualWidth;
             double offsetX = Math.Clamp(x / width, 0, 1); // 0.5
@@ -328,24 +336,6 @@ namespace Luo_Painter.HSVColorPickers
             Canvas.SetLeft(base.Items[key], offsetX * width - base.Margin.Left);
         }
 
-        public void SetCurrent(Point point, double distance = 20)
-        {
-            double width = base.ActualWidth;
-
-            this.SelectedIndex = -1;
-            foreach (var item in base.Items)
-            {
-                double offset = item.Key.Offset;
-                double x = offset * width;
-
-                if (Math.Abs(x - point.X) < distance)
-                {
-                    this.SelectedIndex = this.Stops.IndexOf(item.Key);
-                    item.Value.Focus(FocusState.Keyboard);
-                    break;
-                }
-            }
-        }
         public void SetCurrent(object sender)
         {
             if (sender is Button button)
