@@ -121,26 +121,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CanvasImageSource.cs" />
-    <Compile Include="CirclePicker.xaml.cs">
-      <DependentUpon>CirclePicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ColorType.cs" />
     <Compile Include="Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
     <Compile Include="EyedropperButton.cs" />
     <Compile Include="HarmonyMode.cs" />
-    <Compile Include="HarmonyPicker.xaml.cs">
-      <DependentUpon>HarmonyPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HexPicker.cs" />
     <Compile Include="HSVExtensions.cs" />
-    <Compile Include="HSVPicker.xaml.cs">
-      <DependentUpon>HSVPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HuePicker.xaml.cs">
-      <DependentUpon>HuePicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="IColorPicker.cs" />
     <Compile Include="Numbers\NumberButton.xaml.cs">
       <DependentUpon>NumberButton.xaml</DependentUpon>
@@ -151,26 +138,39 @@
     <Compile Include="Numbers\NumberSlider.xaml.cs">
       <DependentUpon>NumberSlider.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectcolorPicker.xaml.cs">
+    <Compile Include="Pickers\CirclePicker.xaml.cs">
+      <DependentUpon>CirclePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pickers\HarmonyPicker.xaml.cs">
+      <DependentUpon>HarmonyPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pickers\HexPicker.cs" />
+    <Compile Include="Pickers\HSVPicker.xaml.cs">
+      <DependentUpon>HSVPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pickers\HuePicker.xaml.cs">
+      <DependentUpon>HuePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pickers\RectcolorPicker.xaml.cs">
       <DependentUpon>RectcolorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RGBPicker.xaml.cs">
+    <Compile Include="Pickers\RGBPicker.xaml.cs">
       <DependentUpon>RGBPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SaturationPicker.xaml.cs">
+    <Compile Include="Pickers\SaturationPicker.xaml.cs">
       <DependentUpon>SaturationPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pickers\TricolorPicker.xaml.cs">
+      <DependentUpon>TricolorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pickers\ValuePicker.xaml.cs">
+      <DependentUpon>ValuePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strawer.xaml.cs">
       <DependentUpon>Strawer.xaml</DependentUpon>
     </Compile>
     <Compile Include="TemplateSettings.cs" />
-    <Compile Include="TricolorPicker.xaml.cs">
-      <DependentUpon>TricolorPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ValuePicker.xaml.cs">
-      <DependentUpon>ValuePicker.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Luo_Painter.HSVColorPickers.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -182,23 +182,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CirclePicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Eyedropper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HarmonyPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HSVPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HuePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -214,27 +198,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RectcolorPicker.xaml">
+    <Page Include="Pickers\CirclePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RGBPicker.xaml">
+    <Page Include="Pickers\HarmonyPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SaturationPicker.xaml">
+    <Page Include="Pickers\HSVPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pickers\HuePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pickers\RectcolorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pickers\RGBPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pickers\SaturationPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pickers\TricolorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pickers\ValuePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Strawer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TricolorPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ValuePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
