@@ -142,13 +142,13 @@
       <DependentUpon>HuePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="IColorPicker.cs" />
-    <Compile Include="NumberButton.xaml.cs">
+    <Compile Include="Numbers\NumberButton.xaml.cs">
       <DependentUpon>NumberButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NumberPicker.xaml.cs">
+    <Compile Include="Numbers\NumberPicker.xaml.cs">
       <DependentUpon>NumberPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NumberSlider.xaml.cs">
+    <Compile Include="Numbers\NumberSlider.xaml.cs">
       <DependentUpon>NumberSlider.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -202,15 +202,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NumberButton.xaml">
+    <Page Include="Numbers\NumberButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NumberPicker.xaml">
+    <Page Include="Numbers\NumberPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NumberSlider.xaml">
+    <Page Include="Numbers\NumberSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
