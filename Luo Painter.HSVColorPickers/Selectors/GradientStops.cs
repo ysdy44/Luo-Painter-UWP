@@ -5,7 +5,7 @@ using System.Linq;
 using System.Timers;
 using Windows.UI;
 
-namespace Luo_Painter.Elements
+namespace Luo_Painter.HSVColorPickers
 {
     public sealed class GradientStops : Dictionary<double, Color>
     {

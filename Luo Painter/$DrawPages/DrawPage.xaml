@@ -454,32 +454,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GradientMapping">
-                                <elements:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Margin="26,4" Height="50"
-                                                                     Width="{x:Bind ReverseDevicePhoneToWidth740Converter(Device), Mode=OneWay}" >
-                                    <elements:GradientStopSelector.ItemStyle>
-                                        <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                                            <Setter Property="Width" Value="50"/>
-                                            <Setter Property="Height" Value="50"/>
-                                            <Setter Property="Padding" Value="3"/>
-                                        </Style>
-                                    </elements:GradientStopSelector.ItemStyle>
-                                    <elements:GradientStopSelector.ItemTemplate>
-                                        <DataTemplate x:DataType="GradientStop">
-                                            <Border Width="44" Height="44" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Background="Black">
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                                        <TextBlock Text="{x:Bind Offset, Mode=OneWay}"/>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
-                                                <Rectangle RadiusX="4.2" RadiusY="4.2" StrokeThickness="1" Stroke="White">
-                                                    <Rectangle.Fill>
-                                                        <SolidColorBrush Color="{x:Bind Color, Mode=OneWay}"/>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                            </Border>
-                                        </DataTemplate>
-                                    </elements:GradientStopSelector.ItemTemplate>
-                                </elements:GradientStopSelectorWithUI>
+                                <hsvColorPickers:GradientStopSelectorWithUI x:Name="GradientMappingSelector" Width="{x:Bind ReverseDevicePhoneToWidth740Converter(Device), Mode=OneWay}"/>
                             </local:OptionCase>
                             <local:OptionCase Value="RippleEffect">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
@@ -522,8 +497,8 @@
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <elements:ColorButtonBase x:Name="ThresholdColor0Button"/>
-                                        <elements:ColorButtonBase x:Name="ThresholdColor1Button" Grid.Column="2"/>
+                                        <hsvColorPickers:ColorButtonBase x:Name="ThresholdColor0Button"/>
+                                        <hsvColorPickers:ColorButtonBase x:Name="ThresholdColor1Button" Grid.Column="2"/>
                                         <Button x:Name="ThresholdReverseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
                                             Reverse
                                         </Button>
@@ -810,8 +785,8 @@
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <elements:ColorButtonBase x:Name="ColorMatchSourceButton"/>
-                                    <elements:ColorButtonBase x:Name="ColorMatchDestinationButton" Grid.Column="2"/>
+                                    <hsvColorPickers:ColorButtonBase x:Name="ColorMatchSourceButton"/>
+                                    <hsvColorPickers:ColorButtonBase x:Name="ColorMatchDestinationButton" Grid.Column="2"/>
                                     <Line Grid.Column="1" X2="64" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
                                 </Grid>
                             </local:OptionCase>
@@ -868,7 +843,7 @@
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <elements:ColorButtonBase x:Name="ShadowColorButton"/>
+                                        <hsvColorPickers:ColorButtonBase x:Name="ShadowColorButton"/>
                                         <Button Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <Button.Flyout>
                                                 <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
@@ -994,7 +969,7 @@
                                         <ToggleButton x:Name="ChromaKeyInvertButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             Invert
                                         </ToggleButton>
-                                        <elements:ColorButtonBase x:Name="ChromaKeyColorButton" Grid.Column="1"/>
+                                        <hsvColorPickers:ColorButtonBase x:Name="ChromaKeyColorButton" Grid.Column="1"/>
                                         <ToggleButton x:Name="ChromaKeyFeatherButton" Grid.Column="2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
                                             Feather
                                         </ToggleButton>
@@ -1045,7 +1020,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Tint">
-                                <elements:ColorButtonBase x:Name="TintColorButton"/>
+                                <hsvColorPickers:ColorButtonBase x:Name="TintColorButton"/>
                             </local:OptionCase>
                             <local:OptionCase Value="DiscreteTransfer">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
