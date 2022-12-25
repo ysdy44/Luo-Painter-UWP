@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Controls.CurvePanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
+    mc:Ignorable="d"
+    d:DesignWidth="400"
+    d:DesignHeight="400"
+    Margin="10"
+    >
+
+    <Canvas>
+        <ToggleButton x:Name="AlphaButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" IsChecked="{x:Bind AlphaBooleanConverter(Mode), Mode=OneWay}" IsHitTestVisible="{x:Bind ReverseAlphaBooleanConverter(Mode), Mode=OneWay}">
+            Alpha
+        </ToggleButton>
+        <ToggleButton x:Name="RedButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" IsChecked="{x:Bind RedBooleanConverter(Mode), Mode=OneWay}" IsHitTestVisible="{x:Bind ReverseRedBooleanConverter(Mode), Mode=OneWay}">
+            Red
+        </ToggleButton>
+        <ToggleButton x:Name="GreenButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" IsChecked="{x:Bind GreenBooleanConverter(Mode), Mode=OneWay}" IsHitTestVisible="{x:Bind ReverseGreenBooleanConverter(Mode), Mode=OneWay}">
+            Green
+        </ToggleButton>
+        <ToggleButton x:Name="BlueButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" IsChecked="{x:Bind BlueBooleanConverter(Mode), Mode=OneWay}" IsHitTestVisible="{x:Bind ReverseBlueBooleanConverter(Mode), Mode=OneWay}">
+            Blue
+        </ToggleButton>
+
+        <Canvas x:Name="Canvas">
+            <Rectangle x:Name="Rectangle" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}" Fill="{ThemeResource SystemAltLowColor}" />
+
+            <Line x:Name="H1Line" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+            <Line x:Name="H2Line" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+            <Line x:Name="H3Line" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+
+            <Line x:Name="V1Line" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+            <Line x:Name="V2Line" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+            <Line x:Name="V3Line" IsHitTestVisible="False" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+
+            <Polyline x:Name="AlphaPolyline" IsHitTestVisible="False" StrokeThickness="1" Stroke="White" Visibility="{x:Bind AlphaVisibilityConverter(Mode), Mode=OneWay}"/>
+            <Polyline x:Name="RedPolyline" IsHitTestVisible="False" StrokeThickness="1" Stroke="White" Visibility="{x:Bind RedVisibilityConverter(Mode), Mode=OneWay}"/>
+            <Polyline x:Name="GreenPolyline" IsHitTestVisible="False" StrokeThickness="1" Stroke="White" Visibility="{x:Bind GreenVisibilityConverter(Mode), Mode=OneWay}"/>
+            <Polyline x:Name="BluePolyline" IsHitTestVisible="False" StrokeThickness="1" Stroke="White" Visibility="{x:Bind BlueVisibilityConverter(Mode), Mode=OneWay}"/>
+
+            <Grid x:Name="Grid">
+                <hsvColorPickers:CurveSelectorWithUI x:Name="AlphaSelector" Visibility="{x:Bind AlphaVisibilityConverter(Mode), Mode=OneWay}"/>
+                <hsvColorPickers:CurveSelectorWithUI x:Name="RedSelector" Visibility="{x:Bind RedVisibilityConverter(Mode), Mode=OneWay}"/>
+                <hsvColorPickers:CurveSelectorWithUI x:Name="GreenSelector" Visibility="{x:Bind GreenVisibilityConverter(Mode), Mode=OneWay}"/>
+                <hsvColorPickers:CurveSelectorWithUI x:Name="BlueSelector" Visibility="{x:Bind BlueVisibilityConverter(Mode), Mode=OneWay}"/>
+            </Grid>
+        </Canvas>
+    </Canvas>
+</UserControl>

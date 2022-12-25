@@ -187,6 +187,9 @@
     <Compile Include="Controls\ColorPicker2.xaml.cs">
       <DependentUpon>ColorPicker2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CurvePanel.xaml.cs">
+      <DependentUpon>CurvePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EffectListView.xaml.cs">
       <DependentUpon>EffectListView.xaml</DependentUpon>
     </Compile>
@@ -352,6 +355,10 @@
     <Page Include="Controls\ColorPicker2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CurvePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\EffectListView.xaml">
       <Generator>MSBuild:Compile</Generator>
