@@ -6,14 +6,12 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace Luo_Painter.TestApp
 {
@@ -41,7 +39,6 @@ namespace Luo_Painter.TestApp
             this.InitializeComponent();
             this.ConstructGradientMapping();
             this.ConstructSelectorItems();
-            this.ConstructSelector();
             this.ConstructCanvas();
             base.Loaded += (s, e) => this.Selector.Reset(this.Stops);
         }
@@ -57,6 +54,7 @@ namespace Luo_Painter.TestApp
                 if (result is null) return;
                 if (result is false) return;
 
+                this.ResetGradientMapping(this.OriginCanvasControl);
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
@@ -96,6 +94,7 @@ namespace Luo_Painter.TestApp
 
         private void ConstructSelectorItems()
         {
+            this.Selector.Reset(this.Stops);
             this.Selector.ItemClick += (s, e) =>
             {
                 if (this.Selector.IsItemClickEnabled)
@@ -108,49 +107,14 @@ namespace Luo_Painter.TestApp
                     this.ColorFlyout.ShowAt(this.Selector.PlacementTarget);
                 }
             };
-
-            this.Selector.ItemManipulationStarted += (s, e) =>
+            this.Selector.ItemRemoved += (s, e) =>
             {
+                this.ResetGradientMapping(this.OriginCanvasControl);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
-            this.Selector.ItemManipulationDelta += (s, e) =>
+            this.Selector.Invalidate += (s, e) =>
             {
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.Selector.ItemManipulationCompleted += (s, e) =>
-            {
-                this.Stops.Start();
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.Selector.ItemPreviewKeyDown += (s, e) =>
-            {
-                if (e.Handled)
-                {
-                    this.OriginCanvasControl.Invalidate(); // Invalidate
-                }
-            };
-        }
-
-        private void ConstructSelector()
-        {
-            this.Selector.ManipulationMode = ManipulationModes.TranslateX;
-            this.Selector.ManipulationStarted += (s, e) =>
-            {
-                Point point = e.Position;
-                bool result = this.Selector.Interpolation(point);
-                if (result is false) return;
-
-                this.Selector.SetCurrent(point);
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.Selector.ManipulationDelta += (s, e) =>
-            {
-                this.Selector.SetCurrentOffset(e.Position);
-                this.OriginCanvasControl.Invalidate(); // Invalidate
-            };
-            this.Selector.ManipulationCompleted += (s, e) =>
-            {
-                this.Selector.SetCurrentOffset(e.Position);
+                this.ResetGradientMapping(this.OriginCanvasControl);
                 this.OriginCanvasControl.Invalidate(); // Invalidate
             };
         }
@@ -179,8 +143,6 @@ namespace Luo_Painter.TestApp
             {
                 if (this.CanvasBitmap is null) return;
 
-                this.GradientMapping(sender);
-
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
                     Source2BorderMode = EffectBorderMode.Hard,
@@ -195,7 +157,7 @@ namespace Luo_Painter.TestApp
             this.ShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
         }
 
-        private void GradientMapping(ICanvasResourceCreator resourceCreator)
+        private void ResetGradientMapping(ICanvasResourceCreator resourceCreator)
         {
             using (CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(resourceCreator, this.Selector.Data)
             {

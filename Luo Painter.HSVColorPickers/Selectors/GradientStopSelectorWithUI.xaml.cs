@@ -10,6 +10,7 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.HSVColorPickers
@@ -53,6 +54,7 @@ namespace Luo_Painter.HSVColorPickers
     {
         //@Delegate
         public event EventHandler<double> ItemRemoved;
+        public event EventHandler<object> Invalidate;
 
         //@Content
         public bool IsItemClickEnabled { get; private set; } = true;
@@ -63,7 +65,7 @@ namespace Luo_Painter.HSVColorPickers
         readonly GradientStopCollection StopsUI = new GradientStopCollection();
 
         public CanvasGradientStop[] Data { get; private set; }
-        private IEnumerable<CanvasGradientStop> CreateData() => from item in this.Source select new CanvasGradientStop
+       private IEnumerable<CanvasGradientStop> CreateData() => from item in this.Source select new CanvasGradientStop
         {
             Position = (float)item.Offset,
             Color = item.Color,
@@ -98,6 +100,7 @@ namespace Luo_Painter.HSVColorPickers
                     if (item.Value == button)
                     {
                         this.SelectedIndex = this.Stops.IndexOf(item.Key);
+                        this.Invalidate?.Invoke(this, null); // Delegate
                         break;
                     }
                 }
@@ -137,6 +140,7 @@ namespace Luo_Painter.HSVColorPickers
                 this.Stops[this.SelectedIndex].Offset = offsetX;
                 this.StopsUI[this.SelectedIndex].Offset = offsetX;
                 this.Data[this.SelectedIndex].Position = (float)offsetX;
+                this.Invalidate?.Invoke(this, null); // Delegate
                 e.Handled = true;
             };
             base.ItemManipulationCompleted += (s, e) =>
@@ -155,11 +159,17 @@ namespace Luo_Painter.HSVColorPickers
 
                     if (isRemove)
                     {
-                        this.ItemRemoved?.Invoke(this, this.Stops[this.SelectedIndex].Offset); // Delegate
+                        double offset = this.Stops[this.SelectedIndex].Offset;
                         this.RemoveCurrent();
+
+                        this.ItemRemoved?.Invoke(this, offset); // Delegate
+                        e.Handled = true;
+                        this.ItemClickEnabled();
+                        return;
                     }
                 }
 
+                this.Invalidate?.Invoke(this, null); // Delegate
                 e.Handled = true;
                 this.ItemClickEnabled();
             };
@@ -175,8 +185,9 @@ namespace Luo_Painter.HSVColorPickers
                     case VirtualKey.Delete:
                         if (base.Count > 2)
                         {
-                            this.ItemRemoved?.Invoke(this, key.Offset); // Delegate
                             this.RemoveCurrent();
+
+                            this.ItemRemoved?.Invoke(this, key.Offset); // Delegate
                             e.Handled = true;
                         }
                         break;
@@ -191,6 +202,8 @@ namespace Luo_Painter.HSVColorPickers
 
                             double width = base.ActualWidth;
                             Canvas.SetLeft(base.Items[key], offsetX * width - 25);
+
+                            this.Invalidate?.Invoke(this, null); // Delegate
                             e.Handled = true;
                         }
                         break;
@@ -205,6 +218,8 @@ namespace Luo_Painter.HSVColorPickers
 
                             double width = base.ActualWidth;
                             Canvas.SetLeft(base.Items[key], offsetX * width - 25);
+
+                            this.Invalidate?.Invoke(this, null); // Delegate
                             e.Handled = true;
                         }
                         break;
@@ -212,6 +227,27 @@ namespace Luo_Painter.HSVColorPickers
                         break;
                 }
 
+            };
+
+            base.ManipulationMode = ManipulationModes.TranslateX;
+            base.ManipulationStarted += (s, e) =>
+            {
+                Point point = e.Position;
+                bool result = this.Interpolation(point);
+                if (result is false) return;
+
+                this.SetCurrent(point);
+                this.Invalidate?.Invoke(this, null); // Delegate
+            };
+            base.ManipulationDelta += (s, e) =>
+            {
+                this.SetCurrentOffset(e.Position);
+                this.Invalidate?.Invoke(this, null); // Delegate
+            };
+            base.ManipulationCompleted += (s, e) =>
+            {
+                this.SetCurrentOffset(e.Position);
+                this.Invalidate?.Invoke(this, null); // Delegate
             };
         }
 
