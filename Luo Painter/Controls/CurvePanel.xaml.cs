@@ -88,6 +88,7 @@ namespace Luo_Painter.Controls
         public CurvePanel()
         {
             this.InitializeComponent();
+            this.ConstructRandom();
             base.SizeChanged += (s, e) =>
             {
                 switch (this.Orientation)

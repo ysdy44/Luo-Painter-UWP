@@ -187,6 +187,7 @@
     <Compile Include="Controls\ColorPicker2.xaml.cs">
       <DependentUpon>ColorPicker2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CurvePanel.Random.cs" />
     <Compile Include="Controls\CurvePanel.xaml.cs">
       <DependentUpon>CurvePanel.xaml</DependentUpon>
     </Compile>
