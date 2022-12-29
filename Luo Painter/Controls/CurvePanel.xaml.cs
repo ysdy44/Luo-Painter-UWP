@@ -36,7 +36,6 @@ namespace Luo_Painter.Controls
         };
 
         //@Content
-        public float[] AlphaTable => this.AlphaSelector.Data;
         public float[] RedTable => this.RedSelector.Data;
         public float[] GreenTable => this.GreenSelector.Data;
         public float[] BlueTable => this.BlueSelector.Data;
@@ -51,7 +50,7 @@ namespace Luo_Painter.Controls
             set => base.SetValue(ModeProperty, value);
         }
         /// <summary> Identifies the <see cref = "CurvePanel.Mode" /> dependency property. </summary>
-        public static readonly DependencyProperty ModeProperty = DependencyProperty.Register(nameof(Mode), typeof(EffectChannelSelect), typeof(CurvePanel), new PropertyMetadata(EffectChannelSelect.Alpha));
+        public static readonly DependencyProperty ModeProperty = DependencyProperty.Register(nameof(Mode), typeof(EffectChannelSelect), typeof(CurvePanel), new PropertyMetadata(EffectChannelSelect.Red));
 
 
         /// <summary> Gets or set the orientation for <see cref="CurvePanel"/>. </summary>
@@ -104,56 +103,43 @@ namespace Luo_Painter.Controls
                 }
             };
 
-            this.AlphaButton.Click += (s, e) => this.Mode = EffectChannelSelect.Alpha;
             this.RedButton.Click += (s, e) => this.Mode = EffectChannelSelect.Red;
             this.GreenButton.Click += (s, e) => this.Mode = EffectChannelSelect.Green;
             this.BlueButton.Click += (s, e) => this.Mode = EffectChannelSelect.Blue;
 
-            this.AlphaSelector.Reset(this.Curves);
-            this.AlphaSelector.ItemRemoved += (s, e) =>
-            {
-                this.ChangePolyline(this.AlphaPolyline, this.AlphaSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
-                this.Invalidate?.Invoke(this, null); // Delegate
-            };
-            this.AlphaSelector.Invalidate += (s, e) =>
-            {
-                this.ChangePolyline(this.AlphaPolyline, this.AlphaSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
-                this.Invalidate?.Invoke(this, null); // Delegate
-            };
-
             this.RedSelector.Reset(this.Curves);
             this.RedSelector.ItemRemoved += (s, e) =>
             {
-                this.ChangePolyline(this.RedPolyline, this.RedSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
+                this.ChangePolyline(this.RedPolyline, this.RedSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
             this.RedSelector.Invalidate += (s, e) =>
             {
-                this.ChangePolyline(this.RedPolyline, this.RedSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
+                this.ChangePolyline(this.RedPolyline, this.RedSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
 
             this.GreenSelector.Reset(this.Curves);
             this.GreenSelector.ItemRemoved += (s, e) =>
             {
-                this.ChangePolyline(this.GreenPolyline, this.GreenSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
+                this.ChangePolyline(this.GreenPolyline, this.GreenSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
             this.GreenSelector.Invalidate += (s, e) =>
             {
-                this.ChangePolyline(this.GreenPolyline, this.GreenSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
+                this.ChangePolyline(this.GreenPolyline, this.GreenSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
 
             this.BlueSelector.Reset(this.Curves);
             this.BlueSelector.ItemRemoved += (s, e) =>
             {
-                this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
+                this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
             this.BlueSelector.Invalidate += (s, e) =>
             {
-                this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data, this.Grid.ActualWidth, this.Grid.ActualHeight);
+                this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
         }
@@ -165,18 +151,20 @@ namespace Luo_Painter.Controls
 
         private void Vertical(double width)
         {
+            width = Math.Max(200, width);
+
             double height = 178;
             base.Height = 178 + 50;
 
 
             double w = (width - 10 - 10 - 10) / 4;
-            this.AlphaButton.Width =
+            this.RandomButton.Width =
             this.RedButton.Width =
             this.GreenButton.Width =
             this.BlueButton.Width = w;
 
-            Canvas.SetLeft(this.AlphaButton, 0);
-            Canvas.SetTop(this.AlphaButton, height + 10);
+            Canvas.SetLeft(this.RandomButton, 0);
+            Canvas.SetTop(this.RandomButton, height + 10);
 
             Canvas.SetLeft(this.RedButton, w + 10);
             Canvas.SetTop(this.RedButton, height + 10);
@@ -200,7 +188,6 @@ namespace Luo_Painter.Controls
 
             this.ChangeLines(width, height);
 
-            this.ChangePolyline(this.AlphaPolyline, this.AlphaSelector.Data, width, height);
             this.ChangePolyline(this.RedPolyline, this.RedSelector.Data, width, height);
             this.ChangePolyline(this.GreenPolyline, this.GreenSelector.Data, width, height);
             this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data, width, height);
@@ -208,21 +195,22 @@ namespace Luo_Painter.Controls
         private void Horizontal(double width)
         {
             width -= 100;
+            width = Math.Max(200, width);
             double height = 178;
             base.Height = 178;
 
 
-            this.AlphaButton.Width =
+            this.RandomButton.Width =
             this.RedButton.Width =
             this.GreenButton.Width =
             this.BlueButton.Width = 100 - 10;
 
-            Canvas.SetLeft(this.AlphaButton, 0);
+            Canvas.SetLeft(this.RandomButton, 0);
             Canvas.SetLeft(this.RedButton, 0);
             Canvas.SetLeft(this.GreenButton, 0);
             Canvas.SetLeft(this.BlueButton, 0);
 
-            Canvas.SetTop(this.AlphaButton, 0);
+            Canvas.SetTop(this.RandomButton, 0);
             Canvas.SetTop(this.RedButton, 40 + 6);
             Canvas.SetTop(this.GreenButton, 40 + 6 + 40 + 6);
             Canvas.SetTop(this.BlueButton, 40 + 6 + 40 + 6 + 40 + 6);
@@ -240,7 +228,6 @@ namespace Luo_Painter.Controls
 
             this.ChangeLines(width, height);
 
-            this.ChangePolyline(this.AlphaPolyline, this.AlphaSelector.Data, width, height);
             this.ChangePolyline(this.RedPolyline, this.RedSelector.Data, width, height);
             this.ChangePolyline(this.GreenPolyline, this.GreenSelector.Data, width, height);
             this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data, width, height);
@@ -280,6 +267,7 @@ namespace Luo_Painter.Controls
             this.V3Line.X2 = width / 4 * 3;
         }
 
+        public void ChangePolyline(Polyline polyline, float[] array) => this.ChangePolyline(polyline, array, this.Grid.ActualWidth, this.Grid.ActualHeight);
         public void ChangePolyline(Polyline polyline, float[] array, double width, double height)
         {
             int count = array.Length;

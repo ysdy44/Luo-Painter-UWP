@@ -12,9 +12,9 @@
     >
 
     <Canvas>
-        <ToggleButton x:Name="AlphaButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" IsChecked="{x:Bind AlphaBooleanConverter(Mode), Mode=OneWay}" IsHitTestVisible="{x:Bind ReverseAlphaBooleanConverter(Mode), Mode=OneWay}">
-            Alpha
-        </ToggleButton>
+        <Button x:Name="RandomButton" Padding="0" Height="40" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource SystemAltLowColor}" Style="{StaticResource TextBlockButtonStyle}">
+            Random
+        </Button>
         <ToggleButton x:Name="RedButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" IsChecked="{x:Bind RedBooleanConverter(Mode), Mode=OneWay}" IsHitTestVisible="{x:Bind ReverseRedBooleanConverter(Mode), Mode=OneWay}">
             Red
         </ToggleButton>
@@ -42,7 +42,6 @@
             <Polyline x:Name="BluePolyline" IsHitTestVisible="False" StrokeThickness="1" Stroke="White" Visibility="{x:Bind BlueVisibilityConverter(Mode), Mode=OneWay}"/>
 
             <Grid x:Name="Grid">
-                <hsvColorPickers:CurveSelectorWithUI x:Name="AlphaSelector" Visibility="{x:Bind AlphaVisibilityConverter(Mode), Mode=OneWay}"/>
                 <hsvColorPickers:CurveSelectorWithUI x:Name="RedSelector" Visibility="{x:Bind RedVisibilityConverter(Mode), Mode=OneWay}"/>
                 <hsvColorPickers:CurveSelectorWithUI x:Name="GreenSelector" Visibility="{x:Bind GreenVisibilityConverter(Mode), Mode=OneWay}"/>
                 <hsvColorPickers:CurveSelectorWithUI x:Name="BlueSelector" Visibility="{x:Bind BlueVisibilityConverter(Mode), Mode=OneWay}"/>
