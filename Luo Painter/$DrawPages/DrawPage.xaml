@@ -1023,36 +1023,11 @@
                                 <hsvColorPickers:ColorButtonBase x:Name="TintColorButton"/>
                             </local:OptionCase>
                             <local:OptionCase Value="DiscreteTransfer">
-                                <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
-                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <hsvColorPickers:NumberSlider x:Name="DTASlider" Value="50" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Alpha
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="DTRSlider" Value="50" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="Red"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Red
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
-                                    </StackPanel>
-                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <hsvColorPickers:NumberSlider x:Name="DTGSlider" Value="50" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="GreenYellow"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Green
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="DTBSlider" Value="50" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="DodgerBlue"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Blue
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
-                                    </StackPanel>
-                                </StackPanel>
+                                <controls:CurvePanel 
+                                    x:Name="CurvePanel" 
+                                    Width="{x:Bind ReverseDevicePhoneToWidth740Converter(Device), Mode=OneWay}"
+                                    Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}"
+                                    />
                             </local:OptionCase>
 
 
