@@ -553,34 +553,20 @@ namespace Luo_Painter
                         Source = image
                     };
                 case OptionType.Border:
-                    switch (this.BorderXComboBox.SelectedIndex)
+                    return new CropEffect
                     {
-                        case 0:
-                            switch (this.BorderYComboBox.SelectedIndex)
+                        SourceRectangle = this.StartingBorderCrop,
+                        Source = new BorderEffect
+                        {
+                            ExtendX = this.ExtendX,
+                            ExtendY = this.ExtendY,
+                            Source = new CropEffect
                             {
-                                case 0: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Clamp, ExtendY = CanvasEdgeBehavior.Clamp, Source = image };
-                                case 1: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Clamp, ExtendY = CanvasEdgeBehavior.Wrap, Source = image };
-                                case 2: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Clamp, ExtendY = CanvasEdgeBehavior.Mirror, Source = image };
-                                default: return image;
+                                SourceRectangle = this.BorderCrop,
+                                Source = image
                             }
-                        case 1:
-                            switch (this.BorderYComboBox.SelectedIndex)
-                            {
-                                case 0: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Wrap, ExtendY = CanvasEdgeBehavior.Clamp, Source = image };
-                                case 1: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Wrap, ExtendY = CanvasEdgeBehavior.Wrap, Source = image };
-                                case 2: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Wrap, ExtendY = CanvasEdgeBehavior.Mirror, Source = image };
-                                default: return image;
-                            }
-                        case 2:
-                            switch (this.BorderYComboBox.SelectedIndex)
-                            {
-                                case 0: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Mirror, ExtendY = CanvasEdgeBehavior.Clamp, Source = image };
-                                case 1: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Mirror, ExtendY = CanvasEdgeBehavior.Wrap, Source = image };
-                                case 2: return new BorderEffect { ExtendX = CanvasEdgeBehavior.Mirror, ExtendY = CanvasEdgeBehavior.Mirror, Source = image };
-                                default: return image;
-                            }
-                        default: return image;
-                    }
+                        }
+                    };
                 case OptionType.Colouring:
                     return new HueRotationEffect
                     {
@@ -591,6 +577,9 @@ namespace Luo_Painter
                         }
                     };
                 case OptionType.Tint:
+                    //if (AlphaMaskEffect.IsSupported) { }
+                    //if (CrossFadeEffect.IsSupported) { }
+                    //if (OpacityEffect.IsSupported) { }
                     if (TintEffect.IsSupported)
                         return new TintEffect
                         {

@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private void Tool_Start()
@@ -42,6 +42,10 @@ namespace Luo_Painter
                     break;
                 case OptionType.RippleEffect:
                     this.RippleEffect_Start();
+                    break;
+
+                case OptionType.Border:
+                    this.Border_Start();
                     break;
 
                 case OptionType.MarqueeRectangular:
@@ -131,6 +135,10 @@ namespace Luo_Painter
                     this.RippleEffect_Delta();
                     break;
 
+                case OptionType.Border:
+                    this.Border_Delta();
+                    break;
+
                 case OptionType.MarqueeRectangular:
                 case OptionType.MarqueeElliptical:
                 case OptionType.MarqueePolygon:
@@ -215,6 +223,10 @@ namespace Luo_Painter
                 case OptionType.GradientMapping:
                     break;
                 case OptionType.RippleEffect:
+                    break;
+
+                case OptionType.Border:
+                    this.Border_Complete();
                     break;
 
                 case OptionType.MarqueeRectangular:

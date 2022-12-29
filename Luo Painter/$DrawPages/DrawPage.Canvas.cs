@@ -113,6 +113,10 @@ namespace Luo_Painter
                         this.DrawRippleEffect(sender, args.DrawingSession);
                         break;
 
+                    case OptionType.Border:
+                        this.DrawBorder(sender, args.DrawingSession);
+                        break;
+
                     case OptionType.PaintBrush:
                     case OptionType.PaintBrushForce:
                         if (this.BitmapLayer is null) break;

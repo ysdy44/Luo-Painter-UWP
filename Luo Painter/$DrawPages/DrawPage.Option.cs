@@ -1495,6 +1495,31 @@ namespace Luo_Painter
                     }
                     break;
 
+                case OptionType.Border:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
+                            {
+                                int width = this.Transformer.Width;
+                                int height = this.Transformer.Height;
+
+                                this.ResetBorder(width, height);
+
+                                this.BitmapLayer = bitmapLayer;
+
+                                this.OptionType = OptionType.Border;
+                                this.ConstructAppBar(OptionType.Border);
+
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
+                            }
+                            else this.Tip(TipType.NotBitmapLayer);
+                        }
+                        else this.Tip(TipType.NoLayer);
+                    }
+                    break;
+
                 case OptionType.Threshold:
 
                 case OptionType.Exposure:
@@ -1525,7 +1550,7 @@ namespace Luo_Painter
                 case OptionType.Posterize:
                 case OptionType.LuminanceToAlpha:
                 case OptionType.ChromaKey:
-                case OptionType.Border:
+                //case OptionType.Border:
                 case OptionType.Colouring:
                 case OptionType.Tint:
                 case OptionType.DiscreteTransfer:
