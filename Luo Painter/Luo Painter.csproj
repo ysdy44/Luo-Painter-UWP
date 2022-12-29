@@ -120,6 +120,7 @@
     <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Construct.cs" />
     <Compile Include="%24DrawPages\DrawPage.CreateResources.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Effect.Border.cs" />
     <Compile Include="%24DrawPages\DrawPage.Effect.cs" />
     <Compile Include="%24DrawPages\DrawPage.Effect.DiscreteTransfer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Effect.GammaTransfer.cs" />
