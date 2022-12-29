@@ -155,28 +155,28 @@ namespace Luo_Painter.HSVColorPickers
                         break;
                     case VirtualKey.Down:
                         {
-                            float offsetX = key.Offset;
-                            offsetX = (float)Math.Clamp(offsetX - 0.01, 0, 1);
+                            float offsetY = key.Offset;
+                            offsetY = (float)Math.Clamp(offsetY + 0.01, 0, 1);
 
-                            key.Offset = offsetX;
-                            this.Data[this.SelectedIndex] = (float)offsetX;
+                            key.Offset = offsetY;
+                            this.Data[this.SelectedIndex] = (float)offsetY;
 
-                            double width = base.ActualWidth;
-                            Canvas.SetLeft(base.Items[key], offsetX * width - 16);
+                            double height = base.ActualHeight;
+                            Canvas.SetTop(base.Items[key], offsetY * height - 16);
                             this.Invalidate?.Invoke(this, null); // Delegate
                             e.Handled = true;
                         }
                         break;
                     case VirtualKey.Up:
                         {
-                            float offsetX = key.Offset;
-                            offsetX = (float)Math.Clamp(offsetX + 0.01, 0, 1);
+                            float offsetY = key.Offset;
+                            offsetY = (float)Math.Clamp(offsetY - 0.01, 0, 1);
 
-                            key.Offset = offsetX;
-                            this.Data[this.SelectedIndex] = (float)offsetX;
+                            key.Offset = offsetY;
+                            this.Data[this.SelectedIndex] = (float)offsetY;
 
-                            double width = base.ActualWidth;
-                            Canvas.SetLeft(base.Items[key], offsetX * width - 16);
+                            double height = base.ActualHeight;
+                            Canvas.SetTop(base.Items[key], offsetY * height - 16);
                             this.Invalidate?.Invoke(this, null); // Delegate
                             e.Handled = true;
                         }
@@ -227,11 +227,11 @@ namespace Luo_Painter.HSVColorPickers
         {
             double x = point.X;
             double width = base.ActualWidth;
-            double offsetX = Math.Clamp(x / width, 0, 1); 
+            double offsetX = Math.Clamp(x / width, 0, 1);
 
             double y = point.Y;
             double height = base.ActualHeight;
-            double offsetY = Math.Clamp(y / height, 0, 1); 
+            double offsetY = Math.Clamp(y / height, 0, 1);
 
             int index = (int)(offsetX * this.Stops.Count);
 
@@ -255,6 +255,11 @@ namespace Luo_Painter.HSVColorPickers
                 this.Stops.Add(new CurveStop { Offset = offsetX });
             }
             this.Data = this.CreateData().ToArray();
+
+            foreach (var item in base.Items)
+            {
+                Canvas.SetLeft(item.Value, this.GetItemLeft(item.Key));
+            }
         }
 
         public void RemoveCurrent()
@@ -273,11 +278,11 @@ namespace Luo_Painter.HSVColorPickers
 
             double y = point.Y;
             double height = base.ActualHeight;
-            float offsetY = (float)Math.Clamp(y / height, 0, 1); 
+            float offsetY = (float)Math.Clamp(y / height, 0, 1);
 
             this.Stops[this.SelectedIndex].Offset = offsetY;
             this.Data[this.SelectedIndex] = offsetY;
-         
+
             CurveStop key = this.Stops[this.SelectedIndex];
             Canvas.SetTop(base.Items[key], offsetY * height - 16);
         }
