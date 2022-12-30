@@ -47,6 +47,34 @@
         <Flyout x:Name="NumberFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
         </Flyout>
+        <!--MenuFlyout-->
+        <MenuFlyout x:Name="ResizeFlyout">
+            <!--Resize-->
+            <MenuFlyoutSeparator x:Name="ResizeHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                <UIElement.AccessKey>
+                    Resize
+                </UIElement.AccessKey>
+            </MenuFlyoutSeparator>
+            <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
+            <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
+            <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
+        </MenuFlyout>
+        <MenuFlyout x:Name="RotateFlyout">
+            <!--Rotate-->
+            <MenuFlyoutSeparator x:Name="RotateHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                <UIElement.AccessKey>
+                    Rotate
+                </UIElement.AccessKey>
+            </MenuFlyoutSeparator>
+            <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
+            <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
+            <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
+            <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
+        </MenuFlyout>
     </FrameworkElement.Resources>
 
 
@@ -1711,38 +1739,9 @@
                                         More
                                     </UIElement.AccessKey>
                                 </MenuFlyoutSeparator>
-                                <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
-                                <MenuFlyoutSubItem>
-                                    <MenuFlyoutSubItem.Text>
-                                        Stretch
-                                    </MenuFlyoutSubItem.Text>
-                                    <!--Stretch-->
-                                    <MenuFlyoutSeparator x:Name="StretchHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                        <UIElement.AccessKey>
-                                            Stretch
-                                        </UIElement.AccessKey>
-                                    </MenuFlyoutSeparator>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
-                                </MenuFlyoutSubItem>
-                                <MenuFlyoutSubItem>
-                                    <MenuFlyoutSubItem.Text>
-                                        Rotate
-                                    </MenuFlyoutSubItem.Text>
-                                    <!--Rotate-->
-                                    <MenuFlyoutSeparator x:Name="RotateHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                        <UIElement.AccessKey>
-                                            Rotate
-                                        </UIElement.AccessKey>
-                                    </MenuFlyoutSeparator>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
-                                </MenuFlyoutSubItem>
+                                <MenuFlyoutItem options:OptionExtensions.Type="ResizeCanvas" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="RotateCanvas" Command="{x:Bind Command}"/>
+
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem options:OptionExtensions.Type="Move" Command="{x:Bind Command}">
                                     <UIElement.KeyboardAccelerators>
@@ -1762,7 +1761,7 @@
                                 <MenuFlyoutItem options:OptionExtensions.Type="Threshold" Command="{x:Bind Command}"/>
                             </MenuFlyout>
                         </Button.Flyout>
-                        <SymbolIcon Symbol="More"/>
+                        <local:OptionIcon Type="OtherMenu"/>
                     </Button>
 
                 </StackPanel>

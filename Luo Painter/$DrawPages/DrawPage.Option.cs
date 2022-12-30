@@ -536,6 +536,22 @@ namespace Luo_Painter
                     this.CanvasControl.Invalidate(); // Invalidate
                     break;
 
+                case OptionType.ResizeCanvas:
+                    this.ResizeFlyout.ShowAt(this, new Point
+                    {
+                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
+                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 4 - 44 - 44 - 44) / 2)
+                    });
+                    break;
+
+                case OptionType.RotateCanvas:
+                    this.RotateFlyout.ShowAt(this, new Point
+                    {
+                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
+                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 44 - 4 - 44 - 44 - 44) / 2)
+                    });
+                    break;
+
                 case OptionType.Stretch:
                     {
                         this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
