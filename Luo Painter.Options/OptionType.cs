@@ -101,18 +101,23 @@ namespace Luo_Painter.Options
 
         #region Setup
 
-        CropCanvas = Setup | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        // Category
+        CropCanvas = Setup | 1 << 16 | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        ResizeCanvas = Setup | 2 << 16 | ExistIcon | IsItemClickEnabled,
+        RotateCanvas = Setup | 3 << 16 | ExistIcon | IsItemClickEnabled,
 
-        Stretch = Setup | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
-        Extend = Setup | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
-        Offset = Setup | 4 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        // Resize
+        Stretch = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Extend = ResizeCanvas | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Offset = ResizeCanvas | 4 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        FlipHorizontal = Setup | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        FlipVertical = Setup | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        // Rotate
+        FlipHorizontal = RotateCanvas | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        FlipVertical = RotateCanvas | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        LeftTurn = Setup | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        RightTurn = Setup | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        OverTurn = Setup | 9 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        LeftTurn = RotateCanvas | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        RightTurn = RotateCanvas | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        OverTurn = RotateCanvas | 9 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
@@ -258,7 +263,7 @@ namespace Luo_Painter.Options
 
         // Effect2
         Sepia = Effect2 | 1 << 8 | ExistThumbnail | IsItemClickEnabled,
-        Posterize = Effect2 | 2 << 8 | ExistThumbnail | IsItemClickEnabled,
+        Posterize = Effect2 | 2 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
         LuminanceToAlpha = Effect2 | 3 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
         ChromaKey = Effect2 | 4 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
         Border = Effect2 | 5 << 8 | HasPreview | ExistThumbnail | IsItemClickEnabled,
