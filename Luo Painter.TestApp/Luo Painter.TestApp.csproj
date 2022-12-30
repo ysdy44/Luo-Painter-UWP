@@ -131,6 +131,9 @@
     <Compile Include="BrushEdgeHardnessPage.xaml.cs">
       <DependentUpon>BrushEdgeHardnessPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CanvasManipulationsPage.xaml.cs">
+      <DependentUpon>CanvasManipulationsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ColorHarmonyPickerPage.xaml.cs">
       <DependentUpon>ColorHarmonyPickerPage.xaml</DependentUpon>
     </Compile>
@@ -355,6 +358,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BrushEdgeHardnessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CanvasManipulationsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
