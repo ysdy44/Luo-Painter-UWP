@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="RotateCanvasIcon" TargetType="ContentControl">
+        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
+            <PathIcon.Data>
+                M0,15.963L0,21.207L3.507,24.62L10.51,24.667L5.695,20.81L5.028,21.642L7.447,23.58C7.447,23.58 3.943,23.556 3.943,23.556C3.943,23.556 1.067,20.757 1.067,20.757L1.067,15.963L0,15.963ZM7.069,17.328L22.904,17.328L22.904,18.356L18.38,18.356L18.38,23.175L17.352,23.175L17.352,18.356L6.041,18.356L6.041,7.34L1.517,7.34L1.517,6.312L6.041,6.312L6.041,1.492L7.069,1.492L7.069,17.328ZM8.526,6.312L18.38,6.312L18.38,16.165L17.352,16.165L17.352,7.34L8.526,7.34L8.526,6.312ZM24.242,8.704L24.242,3.46L20.736,0.047L13.733,0L18.547,3.858L19.214,3.025L16.795,1.087C16.795,1.087 20.299,1.111 20.299,1.111C20.299,1.111 23.176,3.91 23.176,3.91L23.176,8.704L24.242,8.704Z
+            </PathIcon.Data>
+        </PathIcon>
+    </ControlTemplate>
+
+</ResourceDictionary>
