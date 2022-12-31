@@ -73,6 +73,9 @@ namespace Luo_Painter
         private double OpacityConverter(double value) => value / 100;
         private string OpacityToStringConverter(double value) => $"{(int)value} %";
 
+        public double DockLeftConverter(bool value) => value ? -90 : 0;
+        public double DockRightConverter(bool value) => value ? 90 : 0;
+
         private Visibility SymmetryIndexToVisibilityConverter(int value)
         {
             switch (value)
@@ -378,6 +381,10 @@ namespace Luo_Painter
             this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
             this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
             //this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
+
+
+            this.DockLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
+            this.DockRightButton.Click += (s, e) => this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
 
 
             this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;

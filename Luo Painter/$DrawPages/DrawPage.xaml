@@ -1470,68 +1470,40 @@
         <Grid Height="50" VerticalAlignment="Top" >
 
             <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <FontIcon Margin="8,0" Glyph="&#xE61F;" FontFamily="Segoe MDL2 Assets"/>
-                    <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Name="DockLeftToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Dock Left
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <StackPanel Spacing="4" Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Margin="4,0,0,0" Symbol="DockLeft"/>
+                    <FontIcon Glyph="&#xE26C;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
+                        <UIElement.RenderTransformOrigin>
+                            0.5, 0.5
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <RotateTransform Angle="{x:Bind DockLeftConverter(SplitLeftView.IsPaneOpen), Mode=OneWay}"/>
+                        </UIElement.RenderTransform>
+                    </FontIcon>
                 </StackPanel>
             </Button>
 
             <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Name="LayoutToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Layouts
+                    <ToolTip x:Name="DockRightToolTip" Style="{StaticResource AppToolTipStyle}">
+                        Dock Right
                     </ToolTip>
                 </ToolTipService.ToolTip>
-                <Button.Flyout>
-                    <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                        <StackPanel Spacing="2" Padding="6,4" Width="318">
-
-                            <TextBlock                                
-                                x:Name="LayoutTextBlock" 
-                                Margin="10,4,10,10" 
-                                IsTextSelectionEnabled="True"
-                                FontWeight="Medium" 
-                                TextTrimming="CharacterEllipsis" 
-                                FontSize="20" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Center" 
-                                OpticalMarginAlignment="TrimSideBearings"
-                                >                                
-                                Layouts
-                            </TextBlock>
-
-                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="136"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="DockLeftTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Dock Left
-                                    </TextBlock>
-                                    <ToggleSwitch x:Name="DockLeftToggleButton" Grid.Column="1" IsOn="{x:Bind SplitLeftView.IsPaneOpen, Mode=TwoWay}"/>
-                                </Grid>
-                            </Border>
-
-                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="136"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="DockRightTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Dock Right
-                                    </TextBlock>
-                                    <ToggleSwitch x:Name="DockRightToggleButton" Grid.Column="1" IsOn="{x:Bind SplitRightView.IsPaneOpen, Mode=TwoWay}"/>
-                                </Grid>
-                            </Border>
-
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
-                    <FontIcon Margin="8,0" Glyph="&#xF246;" FontSize="20" FontFamily="Segoe MDL2 Assets"/>
+                    <FontIcon Glyph="&#xE26B;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
+                        <UIElement.RenderTransformOrigin>
+                            0.5, 0.5
+                        </UIElement.RenderTransformOrigin>
+                        <UIElement.RenderTransform>
+                            <RotateTransform Angle="{x:Bind DockRightConverter(SplitRightView.IsPaneOpen), Mode=OneWay}"/>
+                        </UIElement.RenderTransform>
+                    </FontIcon>
+                    <SymbolIcon Margin="4,0,0,0" Symbol="DockRight"/>
                 </StackPanel>
             </Button>
 
