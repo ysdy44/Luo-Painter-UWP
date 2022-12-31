@@ -1134,6 +1134,86 @@
                                     </hsvColorPickers:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
+                            <local:OptionCase Value="View">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
+                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
+                                        <hsvColorPickers:NumberSlider x:Name="RadianSlider" Value="0" Minimum="-180" Maximum="180" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <Slider.Header>
+                                                Radian
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
+                                        <hsvColorPickers:NumberSlider x:Name="ScaleSlider" Decrease="True" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <Slider.Header>
+                                                Scale
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
+                                    </StackPanel>
+                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
+                                        <Grid ColumnSpacing="2" Padding="8,0" Height="60" 
+                                              Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                                <SymbolIcon Symbol="Refresh">
+                                                    <UIElement.RenderTransformOrigin>
+                                                        0.5, 0.5
+                                                    </UIElement.RenderTransformOrigin>
+                                                    <UIElement.RenderTransform>
+                                                        <ScaleTransform ScaleX="-1"/>
+                                                    </UIElement.RenderTransform>
+                                                </SymbolIcon>
+                                            </Button>
+                                            <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip x:Name="ResetRadianToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                        Reset the radian of rotation
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                                <local:ElementIcon Type="ResetRadian"/>
+                                            </Button>
+                                            <Button x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                                <SymbolIcon Symbol="Refresh"/>
+                                            </Button>
+                                        </Grid>
+                                        <Grid ColumnSpacing="2" Padding="8,0" Height="60" 
+                                              Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                                <SymbolIcon Symbol="Remove"/>
+                                            </Button>
+                                            <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip x:Name="ResetScaleToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                        Reset scale
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                                <local:ElementIcon Type="ResetScale"/>
+                                            </Button>
+                                            <Button x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                                <SymbolIcon Symbol="Add"/>
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+                                    <transformers:RemoteControl 
+                                        x:Name="RemoteControl"
+                                        Visibility="Collapsed"
+                                        BorderThickness="1" 
+                                        BorderBrush="{ThemeResource AppStroke}" 
+                                        Background="{ThemeResource SystemAltLowColor}" 
+                                        Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}" 
+                                        />
+                                </StackPanel>
+
+                            </local:OptionCase>
                             <local:OptionCase Value="Straw">
                                 <ListBox x:Name="StrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
                                     <ListBoxItem x:Name="StrawAllItem">All Layers</ListBoxItem>
@@ -1357,114 +1437,6 @@
         <Grid Height="50" VerticalAlignment="Top" >
 
             <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="ViewToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Views
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <Button.Flyout>
-                    <Flyout Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                        <StackPanel Spacing="2" Padding="6,4" Width="318">
-
-                            <TextBlock                                
-                                x:Name="ViewTextBlock" 
-                                Margin="10,4,10,10" 
-                                IsTextSelectionEnabled="True" 
-                                FontWeight="Medium" 
-                                TextTrimming="CharacterEllipsis" 
-                                FontSize="20" 
-                                TextWrapping="Wrap" 
-                                VerticalAlignment="Center" 
-                                OpticalMarginAlignment="TrimSideBearings"
-                                >                                
-                                View
-                            </TextBlock>
-
-                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <hsvColorPickers:NumberSlider x:Name="RadianSlider" Margin="0,5" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Radian
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
-                            </Border>
-
-                            <MenuFlyoutSeparator Margin="0,4" />
-
-                            <Grid ColumnSpacing="2" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
-                                    <SymbolIcon Symbol="Refresh">
-                                        <UIElement.RenderTransformOrigin>
-                                            0.5, 0.5
-                                        </UIElement.RenderTransformOrigin>
-                                        <UIElement.RenderTransform>
-                                            <ScaleTransform ScaleX="-1"/>
-                                        </UIElement.RenderTransform>
-                                    </SymbolIcon>
-                                </Button>
-                                <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="ResetRadianToolTip" Style="{StaticResource AppToolTipStyle}">
-                                            Reset the radian of rotation
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <local:ElementIcon Type="ResetRadian"/>
-                                </Button>
-                                <Button x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
-                                    <SymbolIcon Symbol="Refresh"/>
-                                </Button>
-                            </Grid>
-
-                            <MenuFlyoutSeparator Margin="0,4" />
-
-                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <hsvColorPickers:NumberSlider x:Name="ScaleSlider" Margin="0,5" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Scale
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
-                            </Border>
-
-                            <MenuFlyoutSeparator Margin="0,4" />
-
-                            <Grid ColumnSpacing="2" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
-                                    <SymbolIcon Symbol="Remove"/>
-                                </Button>
-                                <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="ResetScaleToolTip" Style="{StaticResource AppToolTipStyle}">
-                                            Reset scale
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <local:ElementIcon Type="ResetScale"/>
-                                </Button>
-                                <Button x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
-                                    <SymbolIcon Symbol="Add"/>
-                                </Button>
-                            </Grid>
-
-                            <transformers:RemoteControl 
-                                x:Name="RemoteControl"
-                                Visibility="Collapsed"
-                                BorderThickness="1" 
-                                BorderBrush="{ThemeResource AppStroke}" 
-                                Background="{ThemeResource SystemAltLowColor}" 
-                                Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}" 
-                                />
-
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <FontIcon Margin="8,0" Glyph="&#xE61F;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xE70D;" FontSize="12" FontFamily="Segoe MDL2 Assets"/>
