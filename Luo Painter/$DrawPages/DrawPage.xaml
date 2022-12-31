@@ -227,13 +227,46 @@
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
             <SplitView.Pane>
-                <elements:IndexGrid x:Name="IndexGrid" Index="0">
-                    <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
-                    <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
-                    <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
-                    <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
-                    <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
-                </elements:IndexGrid>
+                <Grid>
+                    <elements:IndexGrid Index="{x:Bind MenuListBox.SelectedIndex, Mode=OneWay}">
+                        <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
+                        <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
+                        <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
+                        <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
+                        <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
+                    </elements:IndexGrid>
+                    <ListBox
+                        x:Name="MenuListBox"
+                        SelectedIndex="0"
+                        Height="50" 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        BorderThickness="0,1,0,0" 
+                        BorderBrush="{ThemeResource AppStroke}" 
+                        Background="{ThemeResource AppBackgroundLight}" 
+                        ScrollViewer.HorizontalScrollMode="Disabled"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <elements:FlexPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <local:ToolIconWithToolTip Type="ToolMenu"/>
+                        <local:ToolIconWithToolTip Type="PaintMenu"/>
+                        <local:ToolIconWithToolTip Type="BrushMenu"/>
+                        <local:ToolIconWithToolTip Type="SizeMenu"/>
+                        <local:ToolIconWithToolTip Type="HistoryMenu"/>
+                    </ListBox>
+                </Grid>
             </SplitView.Pane>
             <SplitView 
                 x:Name="SplitLeftView"
@@ -1492,23 +1525,6 @@
                                     <ToggleSwitch x:Name="DockRightToggleButton" Grid.Column="1" IsOn="{x:Bind SplitRightView.IsPaneOpen, Mode=TwoWay}"/>
                                 </Grid>
                             </Border>
-
-                            <!--Menu-->
-                            <TextBlock x:Name="MenuTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                                Menus
-                            </TextBlock>
-
-                            <ListView
-                                IsEnabled="{x:Bind SplitRightView.IsPaneOpen, Mode=OneWay}"
-                                SelectedIndex="{x:Bind IndexGrid.Index, Mode=TwoWay}"
-                                Style="{StaticResource AppListViewStyle}"
-                                >
-                                <local:OptionItem Type="ToolMenu"/>
-                                <local:OptionItem Type="PaintMenu"/>
-                                <local:OptionItem Type="BrushMenu"/>
-                                <local:OptionItem Type="SizeMenu"/>
-                                <local:OptionItem Type="HistoryMenu"/>
-                            </ListView>
 
                         </StackPanel>
                     </Flyout>

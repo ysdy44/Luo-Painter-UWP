@@ -480,41 +480,28 @@ namespace Luo_Painter
                     }
                     break;
 
-                case OptionType.PaintMenu:
-                    this.IndexGrid.Index = 1;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
-                case OptionType.BrushMenu:
-                    this.IndexGrid.Index = 2;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
-                case OptionType.SizeMenu:
-                    this.IndexGrid.Index = 3;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
-                case OptionType.EffectMenu:
-                    this.IndexGrid.Index = 4;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
-                case OptionType.HistoryMenu:
-                    this.IndexGrid.Index = 5;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
+                //case OptionType.PaintMenu:
+                //    break;
+                //case OptionType.BrushMenu:
+                //    break;
+                //case OptionType.SizeMenu:
+                //    break;
+                //case OptionType.EffectMenu:
+                //    break;
+                //case OptionType.HistoryMenu:
+                //    break;
 
-                case OptionType.ToolMenu:
-                    this.IndexGrid.Index = 0;
-                    this.SplitRightView.IsPaneOpen = true;
-                    break;
-                case OptionType.LayerMenu:
-                    this.SplitLeftView.IsPaneOpen = true;
-                    break;
+                //case OptionType.ToolMenu:
+                //    break;
+                //case OptionType.LayerMenu:
+                //    break;
 
-                case OptionType.AddMenu:
-                    break;
-                case OptionType.PropertyMenu:
-                    break;
-                case OptionType.PropertyMenuWithRename:
-                    break;
+                //case OptionType.AddMenu:
+                //    break;
+                //case OptionType.PropertyMenu:
+                //    break;
+                //case OptionType.PropertyMenuWithRename:
+                //    break;
 
                 #endregion
 
