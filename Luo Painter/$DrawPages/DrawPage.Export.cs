@@ -87,6 +87,24 @@ namespace Luo_Painter
                         select new XElement("Bitmap", b))).Save(stream.AsStream());
                 }
 
+            // 6. Save Images
+            IEnumerable<ImageLayer> imageLayers = from layer in this.ObservableCollection where layer.Type is LayerType.Image select layer as ImageLayer;
+            // Do what?
+
+            // 7. Save Photos.xml 
+            IEnumerable<string> photos = imageLayers.Select(p => p.Photo);
+            bool hasPhotos = photos.Count() > 0;
+            if (hasPhotos)
+                using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Photos.xml"))
+                {
+
+                    new XDocument(new XElement("Root",
+                        from p
+                        in photos
+                        select new XElement("Photo", p))).Save(stream.AsStream());
+                }
+
+
             if (string.IsNullOrEmpty(path)) return;
             StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
@@ -120,9 +138,13 @@ namespace Luo_Painter
                         case "Bitmaps.xml":
                             valuable = hasBitmaps;
                             break;
+                        case "Photos.xml":
+                            valuable = hasPhotos;
+                            break;
                         default:
                             valuable =
-                                (hasBitmaps && bitmaps.Contains(id));
+                                (hasBitmaps && bitmaps.Contains(id)) ||
+                                (hasPhotos && photos.Contains(id));
                             break;
                     }
 
@@ -137,6 +159,7 @@ namespace Luo_Painter
         public void Clear()
         {
             this.History.Clear();
+            ImageLayer.Instance.Clear();
             LayerDictionary.Instance.Clear();
             this.Nodes.Clear();
             this.ObservableCollection.Clear();
@@ -162,6 +185,28 @@ namespace Luo_Painter
                     break;
                 case ProjectParameterType.File:
                     if (string.IsNullOrEmpty(item.DocProject)) break;
+
+                    // 1. Load Photos.xml
+                    // Photos
+                    if (item.Photos is null is false)
+                    {
+                        foreach (var item2 in item.Photos)
+                        {
+                            SoftwareBitmap softwareBitmap = item2.Value;
+                            if (softwareBitmap is null) continue;
+
+                            using (softwareBitmap)
+                            {
+                                string id = item2.Key;
+                                if (string.IsNullOrEmpty(id)) continue;
+
+                                CanvasBitmap bitmap = CanvasBitmap.CreateFromSoftwareBitmap(this.CanvasDevice, softwareBitmap);
+                                if (bitmap is null) continue;
+
+                                ImageLayer.Instance.Add(id, bitmap);
+                            }
+                        }
+                    }
 
                     // 2. Load Layers.xml
                     // Layers
@@ -219,6 +264,19 @@ namespace Luo_Painter
                     {
                         /// Sets<see cref="ProjectParameter.Bitmap"/>
                         return new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
+                    }
+                    break;
+                case "Image":
+                    if (layer.Element("Photo") is XElement photo2)
+                    {
+                        string photo = photo2.Value;
+                        if (string.IsNullOrEmpty(photo)) break;
+
+                        if (ImageLayer.Instance.ContainsKey(photo))
+                        {
+                            /// Sets<see cref="ProjectParameter.Photos"/>
+                            return _ = new ImageLayer(id, layer, this.CanvasDevice, photo, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
+                        }
                     }
                     break;
                 case "Group":
