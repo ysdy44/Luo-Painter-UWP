@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerRootNodes : LayerNodes
+    public sealed partial class LayerRootNodes
     {
 
         public ArrangeHistory Clear(ILayerManager self, ILayer add)

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerRootNodes : LayerNodes
+    public sealed partial class LayerRootNodes
     {
 
         public ArrangeHistory Group(ILayerManager self, ILayer add, ILayer layer)

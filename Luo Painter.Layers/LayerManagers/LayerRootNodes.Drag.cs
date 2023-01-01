@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class LayerRootNodes : LayerNodes
+    public sealed partial class LayerRootNodes
     {
 
         public void DragItemsStarting(ILayerManager self, IList<object> layers)
