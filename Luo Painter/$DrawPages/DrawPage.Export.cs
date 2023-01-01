@@ -24,6 +24,26 @@ namespace Luo_Painter
 
         public async Task SaveAsync(string path)
         {
+            // 1. Save Thumbnail.png
+            float scaleX = 256f / this.Transformer.Width;
+            float scaleY = 256f / this.Transformer.Height;
+            float scale = System.Math.Min(scaleX, scaleY);
+
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (ScaleEffect image = new ScaleEffect
+            {
+                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                Scale = new Vector2(scale),
+                Source = this.Nodes.Render(this.Mesh)
+            })
+            {
+                await CanvasImage.SaveAsync(image, new Rect
+                {
+                    Width = scale * this.Transformer.Width,
+                    Height = scale * this.Transformer.Height,
+                }, 96, this.CanvasDevice, stream, CanvasBitmapFileFormat.Png);
+            }
+
             // 2. Save Layers.xml 
             using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
@@ -56,35 +76,39 @@ namespace Luo_Painter
 
             StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
-            // Copy
-            foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
-            {
-                await item2.CopyAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);
-            }
-            // Delete
-            foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
+            // Delete All
+            foreach (StorageFile item2 in await item.GetFilesAsync())
             {
                 await item2.DeleteAsync();
             }
 
-            // 5. Save Thumbnail.png
-            float scaleX = 256f / this.Transformer.Width;
-            float scaleY = 256f / this.Transformer.Height;
-            float scale = System.Math.Min(scaleX, scaleY);
+            // Move Valuable Files
+            foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
+            {
+                string id = item2.Name;
 
-            using (IRandomAccessStream stream = await (await item.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
-            using (ScaleEffect image = new ScaleEffect
-            {
-                InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                Scale = new Vector2(scale),
-                Source = this.Nodes.Render(this.Mesh)
-            })
-            {
-                await CanvasImage.SaveAsync(image, new Rect
+                if (string.IsNullOrEmpty(id))
                 {
-                    Width = scale * this.Transformer.Width,
-                    Height = scale * this.Transformer.Height,
-                }, 96, this.CanvasDevice, stream, CanvasBitmapFileFormat.Png);
+                    await item2.DeleteAsync();
+                    continue;
+                }
+
+                switch (id)
+                {
+                    case "Thumbnail.png":
+                    case "Project.xml":
+                    case "Layers.xml":
+                        await item2.MoveAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);
+                        break;
+                    default:
+                        bool isMove = bitmaps.Any(c => c.Id == id);
+
+                        if (isMove)
+                            await item2.MoveAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);
+                        else
+                            await item2.DeleteAsync();
+                        break;
+                }
             }
         }
 
