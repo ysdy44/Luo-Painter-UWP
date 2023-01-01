@@ -1,10 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Input;
-
-namespace Luo_Painter.Layers
+﻿namespace Luo_Painter.Layers
 {
-    public partial interface ILayer : ILayerRender, INotifyPropertyChanged, ICommand, IDisposable
+    public partial interface ILayer
     {
         int Depth { get; set; }
 
@@ -19,6 +15,7 @@ namespace Luo_Painter.Layers
 
         void Exist(bool isExist);
 
+        //@Command
         /// <summary>
         /// Command fot IsExpand
         /// </summary>

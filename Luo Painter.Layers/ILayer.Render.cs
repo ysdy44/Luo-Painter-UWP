@@ -1,12 +1,9 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.ComponentModel;
-using System.Windows.Input;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public partial interface ILayer : ILayerRender, INotifyPropertyChanged, ICommand, IDisposable
+    public partial interface ILayer
     {
         Visibility Visibility { get; set; }
 

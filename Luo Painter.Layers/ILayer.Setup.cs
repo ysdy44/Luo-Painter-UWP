@@ -1,13 +1,10 @@
 ﻿using Microsoft.Graphics.Canvas;
-using System;
-using System.ComponentModel;
 using System.Numerics;
-using System.Windows.Input;
 using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public partial interface ILayer : ILayerRender, INotifyPropertyChanged, ICommand, IDisposable
+    public partial interface ILayer
     {
         ILayer Clone(ICanvasResourceCreator resourceCreator);
 
