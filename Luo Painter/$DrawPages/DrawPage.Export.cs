@@ -22,7 +22,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage
     {
 
-        public async Task SaveAsync(string path)
+        public async Task SaveAsync(string path = null)
         {
             // 1. Save Thumbnail.png
             float scaleX = 256f / this.Transformer.Width;
@@ -87,6 +87,7 @@ namespace Luo_Painter
                         select new XElement("Bitmap", b))).Save(stream.AsStream());
                 }
 
+            if (string.IsNullOrEmpty(path)) return;
             StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
             // Delete All
@@ -177,23 +178,7 @@ namespace Luo_Painter
                                 string type = type2.Value;
                                 if (string.IsNullOrEmpty(id)) continue;
 
-                                switch (type)
-                                {
-                                    case "Bitmap":
-                                        if (item.Bitmaps is null is false && item.Bitmaps.ContainsKey(id))
-                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
-                                        else
-                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
-                                        break;
-                                    case "Group":
-                                        _ = new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
-                                        break;
-                                    case "Curve":
-                                        _ = new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                _ = this.LoadLayer(type, id, layer, item);
                             }
                         }
                     }
@@ -222,6 +207,29 @@ namespace Luo_Painter
                 default:
                     break;
             }
+        }
+
+        private ILayer LoadLayer(string type, string id, XElement layer, ProjectParameter item)
+        {
+            switch (type)
+            {
+                case "Bitmap":
+                    if (item.Bitmaps is null) break;
+                    if (item.Bitmaps.ContainsKey(id))
+                    {
+                        /// Sets<see cref="ProjectParameter.Bitmap"/>
+                        return new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
+                    }
+                    break;
+                case "Group":
+                    return new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
+                case "Curve":
+                    return new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
+                default:
+                    break;
+            }
+
+            return new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
         }
 
     }
