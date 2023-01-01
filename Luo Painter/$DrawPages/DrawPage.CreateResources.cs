@@ -22,7 +22,7 @@ using Windows.UI.Popups;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         byte[] LiquefactionShaderCodeBytes;
@@ -122,20 +122,21 @@ namespace Luo_Painter
 
                     foreach (IStorageFile item in items)
                     {
-                        using (CanvasBitmap bitmap = await this.CreateBitmap(item))
+                        CanvasBitmap bitmap = await this.CreateBitmap(item);
+                        if (bitmap is null)
                         {
-                            if (bitmap is null)
-                            {
-                                await new MessageDialog(item.Path, "File not found.").ShowAsync();
-                                continue;
-                            }
-
-                            BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-
-                            this.Nodes.Insert(indexChild, add);
-                            this.ObservableCollection.InsertChild(index, add);
-                            count++;
+                            await new MessageDialog(item.Path, "File not found.").ShowAsync();
+                            continue;
                         }
+
+                        StorageFile copy = await item.CopyAsync(ApplicationData.Current.TemporaryFolder, item.Name, NameCollisionOption.GenerateUniqueName);
+                        ImageLayer.Instance.Add(copy.Name, bitmap);
+
+                        ImageLayer add = new ImageLayer(this.CanvasDevice, copy.Name, this.Transformer.Width, this.Transformer.Height);
+                 
+                        this.Nodes.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                        count++;
                     }
                 }
                 else
@@ -144,20 +145,21 @@ namespace Luo_Painter
 
                     foreach (IStorageFile item in items)
                     {
-                        using (CanvasBitmap bitmap = await this.CreateBitmap(item))
+                        CanvasBitmap bitmap = await this.CreateBitmap(item);
+                        if (bitmap is null)
                         {
-                            if (bitmap is null)
-                            {
-                                await new MessageDialog(item.Path, "File not found.").ShowAsync();
-                                continue;
-                            }
-
-                            BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-
-                            parent.Children.Insert(indexChild, add);
-                            this.ObservableCollection.InsertChild(index, add);
-                            count++;
+                            await new MessageDialog(item.Path, "File not found.").ShowAsync();
+                            continue;
                         }
+
+                        StorageFile copy = await item.CopyAsync(ApplicationData.Current.TemporaryFolder, item.Name, NameCollisionOption.GenerateUniqueName);
+                        ImageLayer.Instance.Add(copy.Name, bitmap);
+
+                        ImageLayer add = new ImageLayer(this.CanvasDevice, copy.Name, this.Transformer.Width, this.Transformer.Height);
+
+                        parent.Children.Insert(indexChild, add);
+                        this.ObservableCollection.InsertChild(index, add);
+                        count++;
                     }
                 }
 
@@ -167,20 +169,21 @@ namespace Luo_Painter
             {
                 foreach (IStorageFile item in items)
                 {
-                    using (CanvasBitmap bitmap = await this.CreateBitmap(item))
+                    CanvasBitmap bitmap = await this.CreateBitmap(item);
+                    if (bitmap is null)
                     {
-                        if (bitmap is null)
-                        {
-                            await new MessageDialog(item.Path, "File not found.").ShowAsync();
-                            continue;
-                        }
-
-                        BitmapLayer add = new BitmapLayer(this.CanvasDevice, bitmap, this.Transformer.Width, this.Transformer.Height);
-
-                        this.Nodes.Insert(0, add);
-                        this.ObservableCollection.InsertChild(0, add);
-                        count++;
+                        await new MessageDialog(item.Path, "File not found.").ShowAsync();
+                        continue;
                     }
+
+                    StorageFile copy = await item.CopyAsync(ApplicationData.Current.TemporaryFolder, item.Name, NameCollisionOption.GenerateUniqueName);
+                    ImageLayer.Instance.Add(copy.Name, bitmap);
+
+                    ImageLayer add = new ImageLayer(this.CanvasDevice, copy.Name, this.Transformer.Width, this.Transformer.Height);
+                
+                    this.Nodes.Insert(0, add);
+                    this.ObservableCollection.InsertChild(0, add);
+                    count++;
                 }
 
                 this.LayerSelectedIndex = 0;
