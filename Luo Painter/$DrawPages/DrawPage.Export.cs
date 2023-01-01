@@ -1,7 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
-using Luo_Painter.Layers;
+﻿using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Projects;
 using Microsoft.Graphics.Canvas;
@@ -19,9 +16,6 @@ using Windows.Graphics.DirectX;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -30,49 +24,37 @@ namespace Luo_Painter
 
         public async Task SaveAsync(string path)
         {
-            XDocument docLayers = new XDocument(new XElement("Root",
-                from l
-                in this.ObservableCollection
-                select l.Save()));
-            XDocument docProject = new XDocument(new XElement("Root",
-                new XElement("Width", this.Transformer.Width),
-                new XElement("Height", this.Transformer.Height),
-                new XElement("Index", this.LayerSelectedIndex),
-                new XElement("Layerages", this.Nodes.Save())));
-
-
-            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
-
-            // 2. Save Bitmaps 
-            foreach (ILayer layer in this.ObservableCollection)
-            {
-                switch (layer.Type)
-                {
-                    case LayerType.Bitmap:
-                        if (layer is BitmapLayer bitmapLayer)
-                        {
-                            // Write Buffer
-                            StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(layer.Id, CreationCollisionOption.ReplaceExisting);
-                            IBuffer bytes = bitmapLayer.GetPixelBytes();
-                            await FileIO.WriteBufferAsync(file, bytes);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            // 3. Save Layers.xml 
+            // 2. Save Layers.xml 
             using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
-                docLayers.Save(stream.AsStream());
+                new XDocument(new XElement("Root",
+                    from l
+                    in this.ObservableCollection
+                    select l.Save())).Save(stream.AsStream());
             }
 
-            // 4. Save Project.xml
+            // 3. Save Project.xml
             using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
-                docProject.Save(stream.AsStream());
+                new XDocument(new XElement("Root",
+                    new XElement("Width", this.Transformer.Width),
+                    new XElement("Height", this.Transformer.Height),
+                    new XElement("Index", this.LayerSelectedIndex),
+                    new XElement("Layerages", this.Nodes.Save()))).Save(stream.AsStream());
             }
+
+            IEnumerable<BitmapLayer> bitmaps = from layer in this.ObservableCollection where layer.Type is LayerType.Bitmap select layer as BitmapLayer;
+
+            // 5. Save Bitmaps 
+            foreach (BitmapLayer bitmapLayer in bitmaps)
+            {
+                // Write Buffer
+                StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(bitmapLayer.Id, CreationCollisionOption.ReplaceExisting);
+                IBuffer bytes = bitmapLayer.GetPixelBytes();
+                await FileIO.WriteBufferAsync(file, bytes);
+            }
+
+            StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
             // Copy
             foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
@@ -153,16 +135,16 @@ namespace Luo_Painter
                                 switch (type)
                                 {
                                     case "Bitmap":
-                                        if (item.Bitmaps.ContainsKey(id))
-                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height);
+                                        if (item.Bitmaps is null is false && item.Bitmaps.ContainsKey(id))
+                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Bitmaps[id], item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
                                         else
-                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                            _ = new BitmapLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
                                         break;
                                     case "Group":
-                                        _ = new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                        _ = new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
                                         break;
                                     case "Curve":
-                                        _ = new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height);
+                                        _ = new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
                                         break;
                                     default:
                                         break;
@@ -176,6 +158,7 @@ namespace Luo_Painter
                     XDocument docProject = XDocument.Load(item.DocProject);
                     if (docProject.Root.Element("Layerages") is XElement layerages)
                     {
+                        /// Gets <see cref="LayerDictionary"/>
                         this.Nodes.Load(layerages);
                     }
 

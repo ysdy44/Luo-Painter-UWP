@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -42,10 +43,10 @@ namespace Luo_Painter.Projects.Models
         public async Task<ProjectParameter> SaveAsync(BitmapSize size, IBuffer bytes, StorageItemThumbnail thumbnail)
         {
             // 1. ?
-            string id = "0";
+            const string id = "0";
 
             // 2. Save Bitmaps 
-            string type = "Bitmap";
+            const string type = "Bitmap";
 
             // Write Buffer
             StorageFile file2 = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(id, CreationCollisionOption.ReplaceExisting);
@@ -107,7 +108,7 @@ namespace Luo_Painter.Projects.Models
             {
                 await item2.CopyAsync(ApplicationData.Current.TemporaryFolder, item2.Name, NameCollisionOption.ReplaceExisting);
             }
-          
+
             string docProject = null;
             string docLayers = null;
 
@@ -135,7 +136,7 @@ namespace Luo_Painter.Projects.Models
                         if (int.TryParse(height2.Value, out int height))
                         {
 
-                            IDictionary<string, IBuffer> bitmaps = new Dictionary<string, IBuffer>();
+                            IDictionary<string, IBuffer> bitmaps = null;
                             foreach (StorageFile file in files)
                             {
                                 string id = file.Name;
@@ -149,7 +150,13 @@ namespace Luo_Painter.Projects.Models
                                         break;
                                     default:
                                         // Read Buffer
-                                        bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
+                                        if (bitmaps is null)
+                                            bitmaps = new Dictionary<string, IBuffer>
+                                            {
+                                                [id] = await FileIO.ReadBufferAsync(file)
+                                            };
+                                        else
+                                            bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
                                         break;
                                 }
                             }
