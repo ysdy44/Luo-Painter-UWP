@@ -63,7 +63,15 @@ namespace Luo_Painter
                     new XElement("Layerages", this.Nodes.Save()))).Save(stream.AsStream());
             }
 
+            // 4. Save Bitmaps.xml 
             IEnumerable<BitmapLayer> bitmaps = from layer in this.ObservableCollection where layer.Type is LayerType.Bitmap select layer as BitmapLayer;
+            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Bitmaps.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            {
+                new XDocument(new XElement("Root",
+                    from l
+                    in bitmaps
+                    select new XElement("Bitmap", l.Id))).Save(stream.AsStream());
+            }
 
             // 5. Save Bitmaps 
             foreach (BitmapLayer bitmapLayer in bitmaps)
@@ -96,6 +104,7 @@ namespace Luo_Painter
                 switch (id)
                 {
                     case "Thumbnail.png":
+                    case "Bitmaps.xml":
                     case "Project.xml":
                     case "Layers.xml":
                         await item2.MoveAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);

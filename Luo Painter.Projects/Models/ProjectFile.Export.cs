@@ -109,6 +109,7 @@ namespace Luo_Painter.Projects.Models
                 await item2.CopyAsync(ApplicationData.Current.TemporaryFolder, item2.Name, NameCollisionOption.ReplaceExisting);
             }
 
+            string docBitmaps = null;
             string docProject = null;
             string docLayers = null;
 
@@ -120,6 +121,7 @@ namespace Luo_Painter.Projects.Models
 
                 switch (id)
                 {
+                    case "Bitmaps.xml": docBitmaps = file.Path; break;
                     case "Project.xml": docProject = file.Path; break;
                     case "Layers.xml": docLayers = file.Path; break;
                 }
@@ -135,29 +137,34 @@ namespace Luo_Painter.Projects.Models
                     {
                         if (int.TryParse(height2.Value, out int height))
                         {
-
                             IDictionary<string, IBuffer> bitmaps = null;
-                            foreach (StorageFile file in files)
-                            {
-                                string id = file.Name;
-                                if (string.IsNullOrEmpty(id)) continue;
 
-                                switch (id)
+                            if (docBitmaps is null is false)
+                            {
+                                XDocument docBitmaps2 = XDocument.Load(docBitmaps);
+                                if (docBitmaps2.Root.Elements("Bitmap") is IEnumerable<XElement> bitmaps2)
                                 {
-                                    case "Thumbnail.png":
-                                    case "Project.xml":
-                                    case "Layers.xml":
-                                        break;
-                                    default:
-                                        // Read Buffer
-                                        if (bitmaps is null)
-                                            bitmaps = new Dictionary<string, IBuffer>
+                                    foreach (StorageFile file in files)
+                                    {
+                                        string id = file.Name;
+                                        if (string.IsNullOrEmpty(id)) continue;
+
+                                        foreach (XElement item2 in bitmaps2)
+                                        {
+                                            if (id == item2.Value)
                                             {
-                                                [id] = await FileIO.ReadBufferAsync(file)
-                                            };
-                                        else
-                                            bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
-                                        break;
+                                                // Read Buffer
+                                                if (bitmaps is null)
+                                                    bitmaps = new Dictionary<string, IBuffer>
+                                                    {
+                                                        [id] = await FileIO.ReadBufferAsync(file)
+                                                    };
+                                                else
+                                                    bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
