@@ -4,7 +4,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer : LayerBase, ILayer
+    public sealed partial class BitmapLayer
     {
         public Vector4 MixHdr { get; private set; } = Vector4.Zero;
         public Vector4 PersistenceHdr { get; private set; } = Vector4.Zero;

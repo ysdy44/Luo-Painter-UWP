@@ -15,7 +15,7 @@ namespace Luo_Painter.Layers.Models
         MarqueePixelBounds
     }
 
-    public sealed partial class BitmapLayer : LayerBase, ILayer
+    public sealed partial class BitmapLayer
     {
 
         public SelectionType GetDrawSelection(bool isOpaque, BitmapLayer marquee, out Color[] InterpolationColors, out PixelBoundsMode mode)
@@ -127,7 +127,7 @@ namespace Luo_Painter.Layers.Models
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.Clear(color);
-                ds.DrawImage(this.OriginRenderTarget, 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
+                ds.DrawImage(this.OriginRenderTarget, 0, 0, new Rect(0, 0, base.Width, base.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationOut);
             }
 
             return this.GetBitmapResetHistory();
@@ -138,7 +138,7 @@ namespace Luo_Painter.Layers.Models
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
             {
                 ds.Clear(color);
-                ds.DrawImage(bitmapLayer[type], 0, 0, new Rect(0, 0, this.Width, this.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationIn);
+                ds.DrawImage(bitmapLayer[type], 0, 0, new Rect(0, 0, base.Width, base.Height), 1, CanvasImageInterpolation.NearestNeighbor, CanvasComposite.DestinationIn);
             }
 
             return this.GetBitmapResetHistory();

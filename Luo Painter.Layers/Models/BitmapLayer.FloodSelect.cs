@@ -10,7 +10,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public partial class BitmapLayer : LayerBase, ILayer
+    public sealed partial class BitmapLayer
     {
 
         readonly HashSet<int> Retrieves = new HashSet<int>();
@@ -34,8 +34,8 @@ namespace Luo_Painter.Layers.Models
             if (px < 0) return false;
             if (py < 0) return false;
 
-            if (px >= this.Width) return false;
-            if (py >= this.Height) return false;
+            if (px >= base.Width) return false;
+            if (py >= base.Height) return false;
 
             return true;
         }
@@ -105,7 +105,7 @@ namespace Luo_Painter.Layers.Models
 
 
             // 4. Init Retrieves
-            int index = px + py * this.Width;
+            int index = px + py * base.Width;
             this.TargetRetrieves.Clear();
             this.TargetRetrieves.Add(index);
             this.Add1Retrieves.Clear();
@@ -118,8 +118,8 @@ namespace Luo_Painter.Layers.Models
                 // 5. Get Add1Retrieves
                 foreach (int i in this.Add1Retrieves)
                 {
-                    int x = i % this.Width;
-                    int y = i / this.Width;
+                    int x = i % base.Width;
+                    int y = i / base.Width;
 
                     // Left
                     if (x - 1 >= 0)
@@ -132,13 +132,13 @@ namespace Luo_Painter.Layers.Models
                     // Top
                     if (y - 1 >= 0)
                     {
-                        int top = i - this.Width;
+                        int top = i - base.Width;
                         if (this.Retrieves.Contains(top))
                             if (this.TargetRetrieves.Contains(top) is false)
                                 this.Add2Retrieves.Add(top);
                     }
                     // Right
-                    if (x + 1 < this.Width)
+                    if (x + 1 < base.Width)
                     {
                         int right = i + 1;
                         if (this.Retrieves.Contains(right))
@@ -146,9 +146,9 @@ namespace Luo_Painter.Layers.Models
                                 this.Add2Retrieves.Add(right);
                     }
                     // Bottom
-                    if (y + 1 < this.Height)
+                    if (y + 1 < base.Height)
                     {
-                        int bottom = i + this.Width;
+                        int bottom = i + base.Width;
                         if (this.Retrieves.Contains(bottom))
                             if (this.TargetRetrieves.Contains(bottom) is false)
                                 this.Add2Retrieves.Add(bottom);

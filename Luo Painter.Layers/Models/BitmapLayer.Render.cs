@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer : LayerBase, ILayer
+    public sealed partial class BitmapLayer
     {
         public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.SourceRenderTarget);
         public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Render(background,
@@ -125,7 +125,7 @@ namespace Luo_Painter.Layers.Models
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
-                ds.FillRectangle(0, 0, this.Width, this.Height, brush);
+                ds.FillRectangle(0, 0, base.Width, base.Height, brush);
             }
         }
         public void Fill(ICanvasBrush brush, Rect clipRectangle, BitmapType type = BitmapType.Source)
@@ -145,7 +145,7 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                 ds.Blend = CanvasBlend.Copy;
-                ds.FillRectangle(0, 0, this.Width, this.Height, brush);
+                ds.FillRectangle(0, 0, base.Width, base.Height, brush);
             }
         }
         public void Clear(ICanvasBrush brush, Rect clipRectangle, BitmapType type = BitmapType.Source)
