@@ -109,9 +109,10 @@ namespace Luo_Painter.Projects.Models
                 await item2.CopyAsync(ApplicationData.Current.TemporaryFolder, item2.Name, NameCollisionOption.ReplaceExisting);
             }
 
-            string docBitmaps = null;
+            // 1. Load xml
             string docProject = null;
             string docLayers = null;
+            string docBitmaps = null;
 
             IReadOnlyList<StorageFile> files = await ApplicationData.Current.TemporaryFolder.GetFilesAsync();
             foreach (StorageFile file in files)
@@ -121,74 +122,80 @@ namespace Luo_Painter.Projects.Models
 
                 switch (id)
                 {
-                    case "Bitmaps.xml": docBitmaps = file.Path; break;
                     case "Project.xml": docProject = file.Path; break;
                     case "Layers.xml": docLayers = file.Path; break;
+                    case "Bitmaps.xml": docBitmaps = file.Path; break;
                 }
             }
             if (docProject is null) return null;
+
+            // 2. Load Project.xml
+            int width = 0;
+            int height = 0;
+            bool hasProject = false;
 
             XDocument docProject2 = XDocument.Load(docProject);
             if (docProject2.Root.Element("Width") is XElement width2)
             {
                 if (docProject2.Root.Element("Height") is XElement height2)
                 {
-                    if (int.TryParse(width2.Value, out int width))
+                    if (int.TryParse(width2.Value, out width))
                     {
-                        if (int.TryParse(height2.Value, out int height))
+                        if (int.TryParse(height2.Value, out height))
                         {
-                            IDictionary<string, IBuffer> bitmaps = null;
+                            hasProject = true;
+                        }
+                    }
+                }
+            }
+            if (hasProject is false) return null;
 
-                            if (docBitmaps is null is false)
+            // 3. Load Bitmaps.xml 
+            IDictionary<string, IBuffer> bitmaps = null;
+            if (docBitmaps is null is false)
+            {
+                XDocument docBitmaps2 = XDocument.Load(docBitmaps);
+                if (docBitmaps2.Root.Elements("Bitmap") is IEnumerable<XElement> bitmaps2)
+                {
+                    foreach (StorageFile file in files)
+                    {
+                        string id = file.Name;
+                        if (string.IsNullOrEmpty(id)) continue;
+
+                        foreach (XElement item2 in bitmaps2)
+                        {
+                            if (id == item2.Value)
                             {
-                                XDocument docBitmaps2 = XDocument.Load(docBitmaps);
-                                if (docBitmaps2.Root.Elements("Bitmap") is IEnumerable<XElement> bitmaps2)
-                                {
-                                    foreach (StorageFile file in files)
+                                // Read Buffer
+                                if (bitmaps is null)
+                                    bitmaps = new Dictionary<string, IBuffer>
                                     {
-                                        string id = file.Name;
-                                        if (string.IsNullOrEmpty(id)) continue;
-
-                                        foreach (XElement item2 in bitmaps2)
-                                        {
-                                            if (id == item2.Value)
-                                            {
-                                                // Read Buffer
-                                                if (bitmaps is null)
-                                                    bitmaps = new Dictionary<string, IBuffer>
-                                                    {
-                                                        [id] = await FileIO.ReadBufferAsync(file)
-                                                    };
-                                                else
-                                                    bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
+                                        [id] = await FileIO.ReadBufferAsync(file)
+                                    };
+                                else
+                                    bitmaps.Add(id, await FileIO.ReadBufferAsync(file));
+                                break;
                             }
-
-                            return new ProjectParameter
-                            {
-                                Type = ProjectParameterType.File,
-
-                                Path = this.Path,
-                                Name = this.Name,
-                                DisplayName = this.DisplayName,
-
-                                Width = width,
-                                Height = height,
-
-                                DocProject = docProject,
-                                DocLayers = docLayers,
-                                Bitmaps = bitmaps,
-                            };
                         }
                     }
                 }
             }
 
-            return null;
+            return new ProjectParameter
+            {
+                Type = ProjectParameterType.File,
+
+                Path = this.Path,
+                Name = this.Name,
+                DisplayName = this.DisplayName,
+
+                Width = width,
+                Height = height,
+
+                DocProject = docProject,
+                DocLayers = docLayers,
+                Bitmaps = bitmaps,
+            };
         }
 
     }

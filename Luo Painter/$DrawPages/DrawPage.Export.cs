@@ -44,16 +44,7 @@ namespace Luo_Painter
                 }, 96, this.CanvasDevice, stream, CanvasBitmapFileFormat.Png);
             }
 
-            // 2. Save Layers.xml 
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
-            {
-                new XDocument(new XElement("Root",
-                    from l
-                    in this.ObservableCollection
-                    select l.Save())).Save(stream.AsStream());
-            }
-
-            // 3. Save Project.xml
+            // 2. Save Project.xml
             using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
             {
                 new XDocument(new XElement("Root",
@@ -63,24 +54,38 @@ namespace Luo_Painter
                     new XElement("Layerages", this.Nodes.Save()))).Save(stream.AsStream());
             }
 
-            // 4. Save Bitmaps.xml 
-            IEnumerable<BitmapLayer> bitmaps = from layer in this.ObservableCollection where layer.Type is LayerType.Bitmap select layer as BitmapLayer;
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Bitmaps.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
-            {
-                new XDocument(new XElement("Root",
-                    from l
-                    in bitmaps
-                    select new XElement("Bitmap", l.Id))).Save(stream.AsStream());
-            }
+            // 3. Save Layers.xml 
+            bool hasLayers = this.ObservableCollection.Count > 0;
+            if (hasLayers)
+                using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    new XDocument(new XElement("Root",
+                        from l
+                        in this.ObservableCollection
+                        select l.Save())).Save(stream.AsStream());
+                }
 
-            // 5. Save Bitmaps 
-            foreach (BitmapLayer bitmapLayer in bitmaps)
+            // 4. Save Bitmaps
+            IEnumerable<BitmapLayer> bitmapLayers = from layer in this.ObservableCollection where layer.Type is LayerType.Bitmap select layer as BitmapLayer;
+            foreach (BitmapLayer bitmapLayer in bitmapLayers)
             {
                 // Write Buffer
                 StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(bitmapLayer.Id, CreationCollisionOption.ReplaceExisting);
                 IBuffer bytes = bitmapLayer.GetPixelBytes();
                 await FileIO.WriteBufferAsync(file, bytes);
             }
+
+            // 5. Save Bitmaps.xml 
+            IEnumerable<string> bitmaps = bitmapLayers.Select(c => c.Id);
+            bool hasBitmaps = bitmaps.Count() > 0;
+            if (hasBitmaps)
+                using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Bitmaps.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    new XDocument(new XElement("Root",
+                        from b
+                        in bitmaps
+                        select new XElement("Bitmap", b))).Save(stream.AsStream());
+                }
 
             StorageFolder item = await StorageFolder.GetFolderFromPathAsync(path);
 
@@ -94,29 +99,36 @@ namespace Luo_Painter
             foreach (StorageFile item2 in await ApplicationData.Current.TemporaryFolder.GetFilesAsync())
             {
                 string id = item2.Name;
-
+                bool valuable = false;
+                
                 if (string.IsNullOrEmpty(id))
+                    valuable = false;
+                else
                 {
-                    await item2.DeleteAsync();
-                    continue;
-                }
+                    switch (id)
+                    {
+                        case "Thumbnail.png":
+                        case "Project.xml":
+                            valuable = true;
+                            break;
 
-                switch (id)
-                {
-                    case "Thumbnail.png":
-                    case "Bitmaps.xml":
-                    case "Project.xml":
-                    case "Layers.xml":
+                        case "Layers.xml":
+                            valuable = hasLayers;
+                            break;
+
+                        case "Bitmaps.xml":
+                            valuable = hasBitmaps;
+                            break;
+                        default:
+                            valuable =
+                                (hasBitmaps && bitmaps.Contains(id));
+                            break;
+                    }
+
+                    if (valuable)
                         await item2.MoveAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);
-                        break;
-                    default:
-                        bool isMove = bitmaps.Any(c => c.Id == id);
-
-                        if (isMove)
-                            await item2.MoveAsync(item, item2.Name, NameCollisionOption.ReplaceExisting);
-                        else
-                            await item2.DeleteAsync();
-                        break;
+                    else
+                        await item2.DeleteAsync();
                 }
             }
         }
