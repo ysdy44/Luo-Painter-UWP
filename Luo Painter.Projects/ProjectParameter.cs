@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Linq;
 using Windows.Graphics.Imaging;
-using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace Luo_Painter.Projects
@@ -9,26 +7,38 @@ namespace Luo_Painter.Projects
     public enum ProjectParameterType : byte
     {
         None,
+
+        /// <summary>
+        /// <see cref="ProjectParameter.Bitmap"/>
+        /// </summary>
         Image,
+
+        /// <summary>
+        /// <see cref="ProjectParameter.DocProject"/>
+        /// <see cref="ProjectParameter.DocLayers"/>
+        /// <see cref="ProjectParameter.Bitmaps"/>
+        /// <see cref="ProjectParameter.Photos"/>
+        /// </summary>
         File
     }
 
     public class ProjectParameter
     {
-        public ProjectParameterType Type;
+        public ProjectParameterType Type { get; internal set; }
 
-        public string Path;
-        public string Name;
-        public string DisplayName;
+        public string Path { get; internal set; }
+        public string Name { get; internal set; }
+        public string DisplayName { get; internal set; }
 
-        public int Width;
-        public int Height;
+        public int Width { get; internal set; }
+        public int Height { get; internal set; }
 
-        public IBuffer Bitmap;
+        public IBuffer Bitmap { get; internal set; }
 
-        public string DocProject;
-        public string DocLayers;
-        public IDictionary<string, IBuffer> Bitmaps;
+        public string DocProject { get; internal set; }
+        public string DocLayers { get; internal set; }
+        public IDictionary<string, IBuffer> Bitmaps { get; internal set; }
+        public IDictionary<string, SoftwareBitmap> Photos { get; internal set; }
 
         internal ProjectParameter()
         {
