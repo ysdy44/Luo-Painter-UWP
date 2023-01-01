@@ -29,7 +29,7 @@ namespace Luo_Painter
             float scaleY = 256f / this.Transformer.Height;
             float scale = System.Math.Min(scaleX, scaleY);
 
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Thumbnail.png"))
             using (ScaleEffect image = new ScaleEffect
             {
                 InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
@@ -45,7 +45,7 @@ namespace Luo_Painter
             }
 
             // 2. Save Project.xml
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Project.xml"))
             {
                 new XDocument(new XElement("Root",
                     new XElement("Width", this.Transformer.Width),
@@ -57,7 +57,7 @@ namespace Luo_Painter
             // 3. Save Layers.xml 
             bool hasLayers = this.ObservableCollection.Count > 0;
             if (hasLayers)
-                using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+                using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Layers.xml"))
                 {
                     new XDocument(new XElement("Root",
                         from l
@@ -76,10 +76,10 @@ namespace Luo_Painter
             }
 
             // 5. Save Bitmaps.xml 
-            IEnumerable<string> bitmaps = bitmapLayers.Select(c => c.Id);
+            IEnumerable<string> bitmaps = bitmapLayers.Select(b => b.Id);
             bool hasBitmaps = bitmaps.Count() > 0;
             if (hasBitmaps)
-                using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Bitmaps.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+                using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Bitmaps.xml"))
                 {
                     new XDocument(new XElement("Root",
                         from b
@@ -100,7 +100,7 @@ namespace Luo_Painter
             {
                 string id = item2.Name;
                 bool valuable = false;
-                
+
                 if (string.IsNullOrEmpty(id))
                     valuable = false;
                 else

@@ -105,15 +105,12 @@ namespace Luo_Painter.Projects
 
                     if (file is null) return FileImageSourceResult.None;
 
-                    using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                    using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
+                    using (SoftwareBitmap softwareBitmap = await stream.ToSoftwareBitmap())
                     {
-                        BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-                        using (SoftwareBitmap bitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied))
-                        {
-                            this.WriteableBitmap = new WriteableBitmap(bitmap.PixelWidth, bitmap.PixelHeight);
-                            bitmap.CopyToBuffer(this.WriteableBitmap.PixelBuffer);
-                            return FileImageSourceResult.Dynamic;
-                        }
+                        this.WriteableBitmap = new WriteableBitmap(softwareBitmap.PixelWidth, softwareBitmap.PixelHeight);
+                        softwareBitmap.CopyToBuffer(this.WriteableBitmap.PixelBuffer);
+                        return FileImageSourceResult.Dynamic;
                     }
                 }
             }
@@ -133,7 +130,7 @@ namespace Luo_Painter.Projects
 
                 if (file is null) return FileImageSourceResult.None;
 
-                using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
                 {
                     this.WriteableBitmap.SetSource(stream);
                     this.WriteableBitmap.Invalidate();

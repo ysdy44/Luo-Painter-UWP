@@ -19,7 +19,7 @@ namespace Luo_Painter.TestApp
     {
         readonly CanvasDevice CanvasDevice = new CanvasDevice();
         readonly float DPI;
-        StorageFile File;
+
         public FileInkCanvas()
         {
             DisplayInformation display = DisplayInformation.GetForCurrentView();
@@ -46,12 +46,7 @@ namespace Luo_Painter.TestApp
                 ds.DrawInk(inks);
             }
 
-            if (this.File is null)
-            {
-                this.File = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting);
-            }
-
-            using (IRandomAccessStream stream = await this.File.OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Thumbnail.png"))
             {
                 await CanvasImage.SaveAsync(image, new Rect
                 {

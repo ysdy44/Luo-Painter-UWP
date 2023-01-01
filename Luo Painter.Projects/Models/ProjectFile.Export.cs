@@ -19,7 +19,7 @@ namespace Luo_Painter.Projects.Models
         public async Task<ProjectParameter> SaveAsync(System.Drawing.Size size)
         {
             // Save Project.xml
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Project.xml"))
             {
                 new XDocument(new XElement("Root",
                     new XElement("Width", size.Width),
@@ -53,31 +53,29 @@ namespace Luo_Painter.Projects.Models
             await FileIO.WriteBufferAsync(file2, bytes);
 
             // 3. Save Layers.xml 
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Layers.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Layers.xml"))
             {
-                XDocument docLayers = new XDocument(new XElement("Root", new XElement[]
+                new XDocument(new XElement("Root", new XElement[]
                 {
                     new XElement("Layer", new XAttribute("Id", id), new XAttribute("Type", type))
-                }));
-                docLayers.Save(stream.AsStream());
+                })).Save(stream.AsStream());
             }
 
             // 4. Save Project.xml
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Project.xml", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Project.xml"))
             {
-                XDocument docProject = new XDocument(new XElement("Root",
-                new XElement("Width", size.Width),
-                new XElement("Height", size.Height),
-                new XElement("Index", 0),
-                new XElement("Layerages", new XElement[]
-                {
-                    new XElement("Layerage", new XAttribute("Id", id))
-                })));
-                docProject.Save(stream.AsStream());
+                new XDocument(new XElement("Root",
+                    new XElement("Width", size.Width),
+                    new XElement("Height", size.Height),
+                    new XElement("Index", 0),
+                    new XElement("Layerages", new XElement[]
+                    {
+                        new XElement("Layerage", new XAttribute("Id", id))
+                    }))).Save(stream.AsStream());
             }
 
             // 5. Save Thumbnail.png
-            using (IRandomAccessStream stream = await (await ApplicationData.Current.TemporaryFolder.CreateFileAsync("Thumbnail.png", CreationCollisionOption.ReplaceExisting)).OpenAsync(FileAccessMode.ReadWrite))
+            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Thumbnail.xml"))
             {
                 await RandomAccessStream.CopyAsync(thumbnail, stream);
             }
