@@ -143,6 +143,7 @@
     <Compile Include="%24DrawPages\DrawPage.Setup.CropCanvas.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Brush.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Cursor.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Geometry.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Marquee.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Paint.cs" />
@@ -152,9 +153,9 @@
     <Compile Include="%24DrawPages\DrawPage.Tool.PaintLine.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Pen.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Selection.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.Straw.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tool.Transparency.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Tool.Vector.cs" />
-    <Compile Include="%24DrawPages\DrawPage.View.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tool.View.cs" />
     <Compile Include="%24DrawPages\DrawPage.xaml.cs">
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>

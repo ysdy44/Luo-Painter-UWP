@@ -17,32 +17,6 @@ namespace Luo_Painter
 
         int StrawMode => this.StrawComboBox.SelectedIndex;
 
-        private void ConstructVector()
-        {
-        }
-
-        private void View_Start()
-        {
-            this.Transformer.CacheMove(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.StartingPoint));
-
-            this.CanvasAnimatedControl.Invalidate(true); // Invalidate
-        }
-        private void View_Delta()
-        {
-            this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
-
-            this.CanvasControl.Invalidate(); // Invalidate
-            this.CanvasVirtualControl.Invalidate(); // Invalidate
-        }
-        private void View_Complete()
-        {
-            this.Transformer.Move(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(this.Point));
-
-            this.CanvasAnimatedControl.Invalidate(this.OptionType.HasPreview()); // Invalidate
-
-            this.ConstructView(this.Transformer);
-        }
-
 
         private void Straw_Start()
         {
