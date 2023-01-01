@@ -105,6 +105,7 @@ namespace Luo_Painter.Projects.Models
             string docProject = null;
             string docLayers = null;
             string docBitmaps = null;
+            string docPhotos = null;
 
             IReadOnlyList<StorageFile> files = await item.GetFilesAsync();
             foreach (StorageFile file in files)
@@ -117,6 +118,7 @@ namespace Luo_Painter.Projects.Models
                     case "Project.xml": docProject = file.Path; break;
                     case "Layers.xml": docLayers = file.Path; break;
                     case "Bitmaps.xml": docBitmaps = file.Path; break;
+                    case "Photos.xml": docPhotos = file.Path; break;
                 }
             }
             if (docProject is null) return null;
@@ -183,6 +185,41 @@ namespace Luo_Painter.Projects.Models
                 }
             }
 
+            // 4. Load Photos.xml 
+            IDictionary<string, SoftwareBitmap> photos = null;
+            if (docPhotos is null is false)
+            {
+                XDocument docPhotos2 = XDocument.Load(docPhotos);
+                if (docPhotos2.Root.Elements("Photo") is IEnumerable<XElement> photos2)
+                {
+                    foreach (StorageFile file in files)
+                    {
+                        string id = file.Name;
+                        if (string.IsNullOrEmpty(id)) continue;
+
+                        foreach (XElement item2 in photos2)
+                        {
+                            if (id == item2.Value)
+                            {
+                                using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
+                                {
+                                    SoftwareBitmap softwareBitmap = await stream.ToSoftwareBitmap();
+
+                                    if (photos is null)
+                                        photos = new Dictionary<string, SoftwareBitmap>
+                                        {
+                                            [id] = softwareBitmap
+                                        };
+                                    else
+                                        photos.Add(id, softwareBitmap);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
             return new ProjectParameter
             {
                 Type = ProjectParameterType.File,
@@ -197,6 +234,7 @@ namespace Luo_Painter.Projects.Models
                 DocProject = docProject,
                 DocLayers = docLayers,
                 Bitmaps = bitmaps,
+                Photos = photos,
             };
         }
 
