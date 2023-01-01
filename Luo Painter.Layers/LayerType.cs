@@ -3,6 +3,7 @@
     public enum LayerType
     {
         Bitmap,
+        Image,
         Group,
         Curve,
     }
