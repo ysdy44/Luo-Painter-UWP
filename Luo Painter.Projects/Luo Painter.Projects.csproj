@@ -133,6 +133,7 @@
     <Compile Include="ProjectObservableCollections\ProjectObservableCollection.OrderBy.cs" />
     <Compile Include="ProjectParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomAccessStreamExtensions.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Projects.rd.xml" />
   </ItemGroup>
   <ItemGroup>
