@@ -1,14 +1,10 @@
-﻿using Luo_Painter.Blends;
-using Microsoft.Graphics.Canvas.Effects;
-using System;
+﻿using System;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IDisposable
+    public abstract partial class LayerBase 
     {
-
-        public string UIBlendMode => $"{this.BlendMode}";
 
         public double UIDepth => this.Depth * 20;
 

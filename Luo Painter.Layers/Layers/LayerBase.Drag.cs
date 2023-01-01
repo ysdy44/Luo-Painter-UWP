@@ -2,7 +2,7 @@
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IDisposable
+    public abstract partial class LayerBase
     {
 
         public int Depth

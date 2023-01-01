@@ -17,7 +17,7 @@ namespace Luo_Painter.Layers
         Oversize,
     }
 
-    public abstract partial class LayerBase : IDisposable
+    public abstract partial class LayerBase
     {
 
         public ImageSource Thumbnail => this.ThumbnailWriteableBitmap;

@@ -21,7 +21,7 @@ namespace Luo_Painter.Layers
         XYRemainder = 3, // 0011
     }
 
-    public abstract partial class LayerBase : IDisposable
+    public abstract partial class LayerBase
     {
 
         /// <summary>
