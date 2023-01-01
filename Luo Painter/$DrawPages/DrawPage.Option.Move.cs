@@ -5,14 +5,13 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         public void ConstructMove()
         {
             this.MovePicker.XClick += (s, e) => this.NumberShowAt(this.MovePicker.XNumber, NumberPickerMode.Case0);
             this.MovePicker.YClick += (s, e) => this.NumberShowAt(this.MovePicker.YNumber, NumberPickerMode.Case1);
-
         }
 
         private void ResetMove()

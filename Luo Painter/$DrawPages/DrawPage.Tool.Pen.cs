@@ -13,7 +13,7 @@ using Luo_Painter.Blends;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         bool PenIsSmooth => this.PenComboBox.SelectedIndex is 0;

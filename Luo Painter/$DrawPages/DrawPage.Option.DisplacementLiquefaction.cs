@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         double DisplacementLiquefactionSize => (float)this.DisplacementLiquefactionSizeSlider.Value;
@@ -25,7 +25,6 @@ namespace Luo_Painter
             this.DisplacementLiquefactionPressureSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionPressureSlider, NumberPickerMode.Case1);
         }
 
-        private void SetDisplacementLiquefaction() => this.ResetDisplacementLiquefaction();
         private void ResetDisplacementLiquefaction()
         {
             this.DisplacementLiquefactionAmount = this.Displacement.Center.Length();

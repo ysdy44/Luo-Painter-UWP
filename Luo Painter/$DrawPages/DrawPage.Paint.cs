@@ -13,7 +13,7 @@ using System;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         private void PaintCap(StrokeCap cap)

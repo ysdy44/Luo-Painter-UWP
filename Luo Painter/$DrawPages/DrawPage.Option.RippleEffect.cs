@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter
+    public sealed partial class DrawPage
     {
 
         Rippler Rippler = Rippler.Zero;
@@ -46,7 +46,6 @@ namespace Luo_Painter
             };
         }
 
-        private void SetRippleEffect(BitmapLayer bitmapLayer) => this.ResetRippleEffect(bitmapLayer);
         private void ResetRippleEffect(BitmapLayer bitmapLayer)
         {
             if (this.RipplerCenter == Vector2.Zero)
