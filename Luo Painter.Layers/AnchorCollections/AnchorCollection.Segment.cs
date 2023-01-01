@@ -8,7 +8,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
+    public sealed partial class AnchorCollection
     {
         /// <summary>
         /// Called when the value of properties that describe the size and location of the <see cref="Anchor.Strokes"/> change.

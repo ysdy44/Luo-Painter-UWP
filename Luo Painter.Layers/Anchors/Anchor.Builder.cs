@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class Anchor : Node, IDisposable
+    public sealed partial class Anchor
     {
         /// <summary>
         /// <see cref="CanvasPathBuilder.AddLine(Vector2)"/>

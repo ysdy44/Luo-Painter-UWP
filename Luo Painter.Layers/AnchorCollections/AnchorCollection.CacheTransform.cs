@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
+    public sealed partial class AnchorCollection
     {
         /// <summary>
         /// Cache the AnchorCollection's transformer.
