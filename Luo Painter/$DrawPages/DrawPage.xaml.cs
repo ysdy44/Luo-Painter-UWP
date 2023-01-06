@@ -326,6 +326,7 @@ namespace Luo_Painter
             this.ConstructEffect();
             this.ConstructGammaTransfer();
             this.ConstructDiscreteTransfer();
+            this.ConstructLighting();
 
             this.ConstructGeometry();
 

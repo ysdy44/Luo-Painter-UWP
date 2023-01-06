@@ -255,6 +255,23 @@ namespace Luo_Painter
                                 this.ThresholdSlider.Value = e;
                                 break;
 
+                            case OptionType.Lighting:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.LightDistanceSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.LightAmbientSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.LightAngleSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+
                             case OptionType.GeometryRoundRect:
                             case OptionType.GeometryRoundRectTransform:
                                 this.RoundRectCornerSlider.Value = e;

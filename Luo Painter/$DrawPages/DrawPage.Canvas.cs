@@ -116,6 +116,9 @@ namespace Luo_Painter
                     case OptionType.Border:
                         this.DrawBorder(sender, args.DrawingSession);
                         break;
+                    case OptionType.Lighting:
+                        this.DrawLighting(args.DrawingSession);
+                        break;
 
                     case OptionType.PaintBrush:
                     case OptionType.PaintBrushForce:

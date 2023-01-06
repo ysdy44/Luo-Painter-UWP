@@ -1522,6 +1522,37 @@ namespace Luo_Painter
                         else this.Tip(TipType.NoLayer);
                     }
                     break;
+                case OptionType.Lighting:
+                    {
+                        if (this.LayerSelectedItem is ILayer layer)
+                        {
+                            if (layer.Type is LayerType.Bitmap && layer is BitmapLayer bitmapLayer)
+                            {
+                                SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+                                if (state is SelectionType.None)
+                                {
+                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    break;
+                                }
+
+                                this.ResetLighting(bitmapLayer);
+
+                                this.BitmapLayer = bitmapLayer;
+                                this.SelectionType = state;
+
+                                this.OptionType = OptionType.Lighting;
+                                this.ConstructAppBar(OptionType.Lighting);
+
+                                this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                                this.CanvasControl.Invalidate(); // Invalidate
+                                break;
+                            }
+                            else this.Tip(TipType.NotBitmapLayer);
+                        }
+                        else this.Tip(TipType.NoLayer);
+                    }
+                    break;
 
                 case OptionType.Threshold:
 
@@ -1558,7 +1589,7 @@ namespace Luo_Painter
                 case OptionType.Tint:
                 case OptionType.DiscreteTransfer:
 
-                case OptionType.Lighting:
+                //case OptionType.Lighting:
                 //case OptionType.Fog:
                 case OptionType.Glass:
                 case OptionType.PinchPunch:

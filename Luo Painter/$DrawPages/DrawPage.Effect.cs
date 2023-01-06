@@ -599,7 +599,50 @@ namespace Luo_Painter
                     };
 
                 case OptionType.Lighting:
-                    return image;
+                    LuminanceToAlphaEffect HeightMap = new LuminanceToAlphaEffect
+                    {
+                        Source = image
+                    };
+
+                    SpotDiffuseEffect Diffuse = new SpotDiffuseEffect
+                    {
+                        Source = HeightMap,
+
+                        HeightMapScale = 2,
+                        LimitingConeAngle = LightAngle,
+
+                        LightTarget = LightTarget,
+                        LightPosition = LightPosition,
+                    };
+
+                    SpotSpecularEffect Specular = new SpotSpecularEffect
+                    {
+                        Source = HeightMap,
+
+                        SpecularExponent = 16,
+                        LimitingConeAngle = LightAngle,
+
+                        LightTarget = LightTarget,
+                        LightPosition = LightPosition,
+                    };
+
+                    ICanvasImage source1 = new ArithmeticCompositeEffect
+                    {
+                        Source1 = image,
+                        Source2 = Diffuse,
+                        Source1Amount = LightAmbient,
+                        Source2Amount = 0,
+                        MultiplyAmount = (1 - LightAmbient),
+                    };
+                    ICanvasImage effect = new ArithmeticCompositeEffect
+                    {
+                        Source1 = source1,
+                        Source2 = Specular,
+                        Source1Amount = 1,
+                        Source2Amount = 1,
+                        MultiplyAmount = 0,
+                    };
+                    return effect;
                 //case OptionType.Fog:
                 case OptionType.Glass:
                     return image;
