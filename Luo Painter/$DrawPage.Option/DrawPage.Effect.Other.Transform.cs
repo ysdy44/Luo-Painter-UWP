@@ -24,12 +24,11 @@ namespace Luo_Painter
 
         private void ResetTransform(PixelBounds bounds)
         {
-            this.Bounds = bounds.ToBorder();
+            this.Transform.Matrix = Matrix3x2.Identity;
+            this.Transform.Border = bounds.ToBorder();
+            this.Transform.Transformer = this.Transform.Border.ToTransformer();
 
-            this.BoundsTransformer = this.Bounds.ToTransformer();
-            this.BoundsMatrix = Matrix3x2.Identity;
-
-            this.SetTransformer(this.BoundsTransformer);
+            this.SetTransformer(this.Transform.Transformer);
         }
 
         private void SetTransform(NumberPickerMode mode, int e)
@@ -37,8 +36,8 @@ namespace Luo_Painter
             switch ((int)mode)
             {
                 case 0:
-                    this.BoundsTransformer += this.BoundsTransformer.TransformX(e, IndicatorMode.LeftTop);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer += this.Transform.Transformer.TransformX(e, IndicatorMode.LeftTop);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -46,8 +45,8 @@ namespace Luo_Painter
                     this.TXButton.Number = e;
                     break;
                 case 1:
-                    this.BoundsTransformer += this.BoundsTransformer.TransformY(e, IndicatorMode.LeftTop);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer += this.Transform.Transformer.TransformY(e, IndicatorMode.LeftTop);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -56,8 +55,8 @@ namespace Luo_Painter
                     break;
 
                 case 2:
-                    this.BoundsTransformer *= this.BoundsTransformer.TransformWidth(e, IndicatorMode.LeftTop, this.IsRatio);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer *= this.Transform.Transformer.TransformWidth(e, IndicatorMode.LeftTop, this.IsRatio);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -65,8 +64,8 @@ namespace Luo_Painter
                     this.TWButton.Number = e;
                     break;
                 case 3:
-                    this.BoundsTransformer *= this.BoundsTransformer.TransformHeight(e, IndicatorMode.LeftTop, this.IsRatio);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer *= this.Transform.Transformer.TransformHeight(e, IndicatorMode.LeftTop, this.IsRatio);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -75,8 +74,8 @@ namespace Luo_Painter
                     break;
 
                 case 4:
-                    this.BoundsTransformer *= this.BoundsTransformer.TransformSkew(e, IndicatorMode.Center);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer *= this.Transform.Transformer.TransformSkew(e, IndicatorMode.Center);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -84,8 +83,8 @@ namespace Luo_Painter
                     this.TSButton.Number = e;
                     break;
                 case 5:
-                    this.BoundsTransformer *= this.BoundsTransformer.TransformRotate(e, IndicatorMode.Center);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer *= this.Transform.Transformer.TransformRotate(e, IndicatorMode.Center);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -101,10 +100,9 @@ namespace Luo_Painter
 
         private void Transform_Start()
         {
-            this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BoundsTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
-       
-            this.IsBoundsMove = this.BoundsMode is TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
-            this.StartingBoundsTransformer = this.BoundsTransformer;
+            this.Transform.Mode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.Transform.Transformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+            this.Transform.IsMove = this.Transform.Mode is TransformerMode.None && this.Transform.Transformer.FillContainsPoint(this.StartingPosition);
+            this.Transform.StartingTransformer = this.Transform.Transformer;
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
@@ -112,18 +110,18 @@ namespace Luo_Painter
 
         private void Transform_Delta()
         {
-            if (this.IsBoundsMove)
+            if (this.Transform.IsMove)
             {
-                this.BoundsTransformer = this.StartingBoundsTransformer + (this.Position - this.StartingPosition);
-                this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                this.Transform.Transformer = this.Transform.StartingTransformer + (this.Position - this.StartingPosition);
+                this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.CanvasControl.Invalidate(); // Invalidate
             }
-            else if (this.BoundsMode != default)
+            else if (this.Transform.Mode != default)
             {
-                this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsRatio, this.IsCenter);
-                this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                this.Transform.Transformer = FanKit.Transformers.Transformer.Controller(this.Transform.Mode, this.StartingPosition, this.Position, this.Transform.StartingTransformer, this.IsRatio, this.IsCenter);
+                this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -135,7 +133,7 @@ namespace Luo_Painter
             this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 
-            this.SetTransformer(this.BoundsTransformer);
+            this.SetTransformer(this.Transform.Transformer);
         }
 
         private void SetTransformer(Transformer transformer)
