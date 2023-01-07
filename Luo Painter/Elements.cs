@@ -1,21 +1,22 @@
-﻿using Luo_Painter.Blends;
+﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Options;
+using Luo_Painter.Projects;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Luo_Painter.Projects;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
@@ -56,6 +57,36 @@ namespace Luo_Painter
         //      ...
         // </local:XamlListView>
         // Ok, but why ?
+    }
+
+    internal struct TransformBase
+    {
+        public bool IsMove;
+        public TransformerMode Mode;
+
+        public Transformer StartingTransformer;
+        public Transformer Transformer;
+    }
+    internal struct Transform
+    {
+        public bool IsMove;
+        public TransformerMode Mode;
+
+        public Matrix3x2 Matrix;
+        public TransformerBorder Border;
+
+        public Transformer StartingTransformer;
+        public Transformer Transformer;
+    }
+    internal struct FreeTransform
+    {
+        public Vector2 Distance;
+        public TransformerMode Mode;
+
+        public Matrix3x2 Matrix;
+        public TransformerBorder Border;
+
+        public Transformer Transformer;
     }
 
     internal sealed class SizeRange : InverseProportionRange
