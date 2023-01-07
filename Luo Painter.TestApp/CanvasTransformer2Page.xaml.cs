@@ -11,6 +11,18 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
+    internal struct Transform
+    {
+        public bool IsMove;
+        public TransformerMode Mode;
+
+        public Matrix3x2 Matrix;
+        public TransformerBorder Border;
+
+        public Transformer StartingTransformer;
+        public Transformer Transformer;
+    }
+
     public sealed partial class CanvasTransformer2Page : Page
     {
 
@@ -25,22 +37,13 @@ namespace Luo_Painter.TestApp
 
         CanvasBitmap Bitmap;
 
-
         Vector2 StartingPosition;
         Vector2 Position;
 
         Vector2 StartingPoint;
         Vector2 Point;
 
-
-        Transformer StartingBoundsTransformer;
-        Transformer BoundsTransformer;
-
-        // Transform
-        TransformerBorder Bounds;
-        Matrix3x2 BoundsMatrix = Matrix3x2.Identity;
-        TransformerMode BoundsMode;
-        bool IsBoundsMove;
+        Transform Transform;
 
         public CanvasTransformer2Page()
         {
@@ -78,7 +81,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.DrawImage(new Transform2DEffect
                 {
                     Source = this.Bitmap,
-                    TransformMatrix = this.BoundsMatrix * this.Transformer.GetMatrix()
+                    TransformMatrix = this.Transform.Matrix * this.Transformer.GetMatrix()
                 });
 
                 //@DPI 
@@ -86,15 +89,15 @@ namespace Luo_Painter.TestApp
 
                 Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix());
 
-                args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
+                args.DrawingSession.DrawBoundNodes(this.Transform.Transformer, matrix);
             };
         }
 
         private async Task CreateResourcesAsync(ICanvasResourceCreator sender)
         {
             this.Bitmap = await CanvasBitmap.LoadAsync(sender, "Assets\\Square150x150Logo.scale-200.png");
-            this.BoundsTransformer = new Transformer(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height, Vector2.Zero);
-            this.Bounds = new TransformerBorder(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height);
+            this.Transform.Transformer = new Transformer(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height, Vector2.Zero);
+            this.Transform.Border = new TransformerBorder(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height);
         }
 
         private void ConstructOperator()
@@ -105,10 +108,11 @@ namespace Luo_Painter.TestApp
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
 
-                this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BoundsTransformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
 
-                this.IsBoundsMove = this.BoundsMode is TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
-                this.StartingBoundsTransformer = this.BoundsTransformer;
+                this.Transform.Mode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.Transform.Transformer, this.CanvasControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+
+                this.Transform.IsMove = this.Transform.Mode is TransformerMode.None && this.Transform.Transformer.FillContainsPoint(this.StartingPosition);
+                this.Transform.StartingTransformer = this.Transform.Transformer;
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -117,17 +121,18 @@ namespace Luo_Painter.TestApp
                 this.Position = this.ToPosition(point);
                 this.Point = point;
 
-                if (this.IsBoundsMove)
+
+                if (this.Transform.IsMove)
                 {
-                    this.BoundsTransformer = this.StartingBoundsTransformer + (this.Position - this.StartingPosition);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer = this.Transform.StartingTransformer + (this.Position - this.StartingPosition);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
-                else if (this.BoundsMode != default)
+                else if (this.Transform.Mode != default)
                 {
-                    this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsRatio, this.IsCenter);
-                    this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);
+                    this.Transform.Transformer = FanKit.Transformers.Transformer.Controller(this.Transform.Mode, this.StartingPosition, this.Position, this.Transform.StartingTransformer, this.IsRatio, this.IsCenter);
+                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
 
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
