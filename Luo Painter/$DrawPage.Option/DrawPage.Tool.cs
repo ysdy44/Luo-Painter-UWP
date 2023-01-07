@@ -46,11 +46,11 @@ namespace Luo_Painter
 
                 case OptionType.Border:
                     this.Border_Start();
-                    break; 
+                    break;
 
                 case OptionType.Lighting:
                     this.Lighting_Start();
-                    break; 
+                    break;
 
                 case OptionType.MarqueeRectangular:
                 case OptionType.MarqueeElliptical:
@@ -238,6 +238,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Lighting:
+                    this.Lighting_Complete();
                     break;
 
                 case OptionType.MarqueeRectangular:

@@ -58,7 +58,7 @@ namespace Luo_Painter
             }
         }
 
-        private void DrawRippleEffect(CanvasControl sender, CanvasDrawingSession ds)
+        private void DrawRippleEffect(CanvasDrawingSession ds)
         {
             Vector2 center = this.ToPoint(this.RipplerCenter);
             Vector2 point = this.ToPoint(this.RipplerPoint);

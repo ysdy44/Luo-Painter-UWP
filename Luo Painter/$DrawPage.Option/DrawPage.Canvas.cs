@@ -105,12 +105,12 @@ namespace Luo_Painter
                         break;
 
                     case OptionType.DisplacementLiquefaction:
-                        this.DrawDisplacementLiquefaction(sender, args.DrawingSession);
+                        this.DrawDisplacementLiquefaction(args.DrawingSession);
                         break;
                     case OptionType.GradientMapping:
                         break;
                     case OptionType.RippleEffect:
-                        this.DrawRippleEffect(sender, args.DrawingSession);
+                        this.DrawRippleEffect(args.DrawingSession);
                         break;
 
                     case OptionType.Border:

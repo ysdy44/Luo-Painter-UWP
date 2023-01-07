@@ -114,8 +114,8 @@ namespace Luo_Painter
                         ds.DrawLine(center.X, 0, center.X, (float)sender.Size.Height, Colors.Gray);
                     else
                         ds.DrawLine(
-                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, FanKit.Math.PiOver2 + this.Transformer.Radian, false),
-                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, FanKit.Math.PiOver2 + this.Transformer.Radian, true),
+                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, FanKit.Math.PiOver2 - this.Transformer.Radian, false),
+                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, FanKit.Math.PiOver2 - this.Transformer.Radian, true),
                             Colors.Gray);
                     break;
                 case SymmetryMode.Vertical:
@@ -123,8 +123,8 @@ namespace Luo_Painter
                         ds.DrawLine(0, center.Y, (float)sender.Size.Width, center.Y, Colors.Gray);
                     else
                         ds.DrawLine(
-                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, this.Transformer.Radian, false),
-                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, this.Transformer.Radian, true),
+                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, - this.Transformer.Radian, false),
+                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, - this.Transformer.Radian, true),
                             Colors.Gray);
                     break;
                 case SymmetryMode.Symmetry:

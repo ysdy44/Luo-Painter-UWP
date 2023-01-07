@@ -98,13 +98,16 @@ namespace Luo_Painter
             }
         }
 
+
         private void Transform_Start()
         {
-            this.StartingMove = this.Move;
             this.BoundsMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BoundsTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+       
             this.IsBoundsMove = this.BoundsMode is TransformerMode.None && this.BoundsTransformer.FillContainsPoint(this.StartingPosition);
             this.StartingBoundsTransformer = this.BoundsTransformer;
+
             this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private void Transform_Delta()
@@ -117,10 +120,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.CanvasControl.Invalidate(); // Invalidate
             }
-            else if (this.BoundsMode == default)
-            {
-            }
-            else
+            else if (this.BoundsMode != default)
             {
                 this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsRatio, this.IsCenter);
                 this.BoundsMatrix = FanKit.Transformers.Transformer.FindHomography(this.Bounds, this.BoundsTransformer);

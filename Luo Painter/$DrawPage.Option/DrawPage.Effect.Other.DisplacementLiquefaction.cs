@@ -32,7 +32,7 @@ namespace Luo_Painter
             this.Displacement.RenderThumbnail();
         }
 
-        private void DrawDisplacementLiquefaction(CanvasControl sender, CanvasDrawingSession ds)
+        private void DrawDisplacementLiquefaction(CanvasDrawingSession ds)
         {
         }
 

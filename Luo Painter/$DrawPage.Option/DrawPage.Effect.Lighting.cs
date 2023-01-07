@@ -101,5 +101,11 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
+        private void Lighting_Complete()
+        {
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
+        }
+
     }
 }
