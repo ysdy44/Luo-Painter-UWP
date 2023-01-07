@@ -267,7 +267,7 @@ namespace Luo_Painter
                     {
                         BorderMode = EffectBorderMode.Hard,
                         InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                        TransformMatrix = this.BoundsMatrix,
+                        TransformMatrix = this.Transform.Matrix,
                         Source = image
                     };
                 case OptionType.FreeTransform:
@@ -276,12 +276,12 @@ namespace Luo_Painter
                         Source1 = image,
                         Properties =
                         {
-                            ["matrix3x2"] = this.BoundsFreeMatrix,
-                            ["zdistance"] = this.BoundsFreeDistance,
-                            ["left"] = this.Bounds.Left,
-                            ["top"] = this.Bounds.Top,
-                            ["right"] = this.Bounds.Right,
-                            ["bottom"] = this.Bounds.Bottom,
+                            ["matrix3x2"] = this.FreeTransform.Matrix,
+                            ["zdistance"] = this.FreeTransform.Distance,
+                            ["left"] = this.FreeTransform.Border.Left,
+                            ["top"] = this.FreeTransform.Border.Top,
+                            ["right"] = this.FreeTransform.Border.Right,
+                            ["bottom"] = this.FreeTransform.Border.Bottom,
                         },
                     };
 

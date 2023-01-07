@@ -82,7 +82,7 @@ namespace Luo_Painter
                                 args.DrawingSession.Transform = Matrix3x2.Identity;
                                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
 
-                                args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
+                                args.DrawingSession.DrawBoundNodes(this.Transform.Transformer, matrix);
                                 break;
                         }
                         break;
@@ -94,18 +94,20 @@ namespace Luo_Painter
                     case OptionType.Move:
                         break;
                     case OptionType.Transform:
-                        args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
+                        args.DrawingSession.DrawBoundNodes(this.Transform.Transformer, matrix);
                         break;
                     case OptionType.FreeTransform:
-                        args.DrawingSession.DrawBound(this.BoundsFreeTransformer, matrix);
-                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftTop, matrix));
-                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightTop, matrix));
-                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.RightBottom, matrix));
-                        args.DrawingSession.DrawNode2(Vector2.Transform(this.BoundsFreeTransformer.LeftBottom, matrix));
+                        args.DrawingSession.DrawBound(this.FreeTransform.Transformer, matrix);
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.LeftTop, matrix));
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.RightTop, matrix));
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.RightBottom, matrix));
+                        args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.LeftBottom, matrix));
                         break;
 
                     case OptionType.DisplacementLiquefaction:
-                        this.DrawDisplacementLiquefaction(args.DrawingSession);
+                        if (this.BitmapLayer is null) break;
+
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips((float)this.DisplacementLiquefactionSize * this.Transformer.Scale), Colors.Gray);
                         break;
                     case OptionType.GradientMapping:
                         break;
@@ -138,14 +140,6 @@ namespace Luo_Painter
                         break;
 
                     default:
-                        if (this.OptionType.IsGeometry())
-                        {
-                            if (this.BitmapLayer is null) break;
-
-                            args.DrawingSession.DrawBoundNodes(this.BoundsTransformer, matrix);
-                            break;
-                        }
-
                         if (this.OptionType.IsMarquee())
                         {
                             args.DrawingSession.DrawMarqueeTool(this.CanvasDevice, this.MarqueeToolType, this.MarqueeTool, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
@@ -156,7 +150,8 @@ namespace Luo_Painter
                         {
                             if (this.BitmapLayer is null) break;
 
-                            args.DrawingSession.DrawBound(this.BoundsTransformer, matrix);
+                            args.DrawingSession.DrawBound(this.GeoTransform.Transformer, matrix);
+                            break;
                         }
                         break;
                 }
@@ -243,11 +238,13 @@ namespace Luo_Painter
 
         private ICanvasImage GetMezzanine()
         {
+            // 1. Geometry Tool
             if (this.OptionType.IsGeometry())
             {
                 return new CompositeEffect { Sources = { this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp] } };
             }
 
+            // 2. Others Tool
             if (this.OptionType.IsEffect() is false)
             {
                 switch (this.OptionType)
@@ -269,13 +266,13 @@ namespace Luo_Painter
             }
 
 
+            // 3. Marquee Preview
             if (this.SelectionType is SelectionType.MarqueePixelBounds is false)
             {
                 return this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Source]);
             }
-
-
-            if (this.OptionType.HasDifference())
+            // 3. Difference Preview
+            else if (this.OptionType.HasDifference())
             {
                 return new CompositeEffect
                 {
@@ -294,6 +291,7 @@ namespace Luo_Painter
                     }
                 };
             }
+            // 3. Mask Preview
             else
             {
                 return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
