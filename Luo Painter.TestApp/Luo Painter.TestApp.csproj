@@ -179,6 +179,9 @@
     <Compile Include="LayerManagerPage.xaml.cs">
       <DependentUpon>LayerManagerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LightingDistantPage.xaml.cs">
+      <DependentUpon>LightingDistantPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MarqueeToolTransformPage.xaml.cs">
       <DependentUpon>MarqueeToolTransformPage.xaml</DependentUpon>
     </Compile>
@@ -422,6 +425,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LayerManagerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LightingDistantPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
