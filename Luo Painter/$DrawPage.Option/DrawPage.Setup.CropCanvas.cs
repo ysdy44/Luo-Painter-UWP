@@ -17,12 +17,6 @@ namespace Luo_Painter
         Vector2 StartingPositionWithoutRadian;
         Vector2 PositionWithoutRadian;
 
-        TransformerMode CropMode;
-        bool IsCropMove;
-
-        Transformer CropTransformer;
-        Transformer StartingCropTransformer;
-
         private void ConstructSetup()
         {
             this.CropCanvasSlider.ValueChanged += (s, e) =>
@@ -52,7 +46,7 @@ namespace Luo_Painter
 
         private void SetCropCanvas(int w, int h)
         {
-            this.CropTransformer = new Transformer(0, 0, w, h);
+            this.CropTransform.Transformer = new Transformer(0, 0, w, h);
 
             this.CropCanvasSlider.Value = 0d;
 
@@ -63,7 +57,7 @@ namespace Luo_Painter
 
         private void DrawCropCanvas(CanvasControl sender, CanvasDrawingSession ds)
         {
-            Transformer crop = FanKit.Transformers.Transformer.Multiplies(this.CropTransformer, this.GetMatrixWithoutRadian(sender.Dpi));
+            Transformer crop = FanKit.Transformers.Transformer.Multiplies(this.CropTransform.Transformer, this.GetMatrixWithoutRadian(sender.Dpi));
 
             ds.Clear(FanKit.Transformers.CanvasDrawingSessionExtensions.ShadowColor);
             ds.FillRectangle(crop.MinX, crop.MinY, crop.MaxX - crop.MinX, crop.MaxY - crop.MinY, Colors.Transparent);
@@ -77,9 +71,11 @@ namespace Luo_Painter
         {
             this.StartingPositionWithoutRadian = this.ToPositionWithoutRadian(this.Point);
 
-            this.CropMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.CropTransformer, this.GetMatrixWithoutRadian(this.CanvasVirtualControl.Dpi), true);
-            this.IsCropMove = this.CropMode == TransformerMode.None;
-            this.StartingCropTransformer = this.CropTransformer;
+            this.CropTransform.Mode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.CropTransform.Transformer, this.GetMatrixWithoutRadian(this.CanvasVirtualControl.Dpi), true);
+            this.CropTransform.IsMove = this.CropTransform.Mode == TransformerMode.None;
+            this.CropTransform.StartingTransformer = this.CropTransform.Transformer;
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         /// <summary> <see cref="Transform_Delta()"/> </summary>
@@ -87,10 +83,10 @@ namespace Luo_Painter
         {
             this.PositionWithoutRadian = this.ToPositionWithoutRadian(this.Point);
 
-            this.CropTransformer =
-                this.IsCropMove ?
-                this.StartingCropTransformer + (this.PositionWithoutRadian - this.StartingPositionWithoutRadian) :
-                FanKit.Transformers.Transformer.Controller(this.CropMode, this.StartingPositionWithoutRadian, this.PositionWithoutRadian, this.StartingCropTransformer);
+            if (this.CropTransform.IsMove)
+                this.CropTransform.Transformer = this.CropTransform.StartingTransformer + (this.PositionWithoutRadian - this.StartingPositionWithoutRadian);
+            else
+                this.CropTransform.Transformer = FanKit.Transformers.Transformer.Controller(this.CropTransform.Mode, this.StartingPositionWithoutRadian, this.PositionWithoutRadian, this.CropTransform.StartingTransformer);
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
@@ -98,6 +94,7 @@ namespace Luo_Painter
         /// <summary> <see cref="Transform_Complete()"/> </summary>
         private void CropCanvas_Complete()
         {
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
 
@@ -114,16 +111,16 @@ namespace Luo_Painter
             int width = this.Transformer.Width;
             int height = this.Transformer.Height;
 
-            float w3 = this.CropTransformer.MaxX - this.CropTransformer.MinX;
-            float h3 = this.CropTransformer.MaxY - this.CropTransformer.MinY;
+            float w3 = this.CropTransform.Transformer.MaxX - this.CropTransform.Transformer.MinX;
+            float h3 = this.CropTransform.Transformer.MaxY - this.CropTransform.Transformer.MinY;
 
             int w = (int)w3;
             int h = (int)h3;
 
             Vector2 offset = new Vector2
             {
-                X = -this.CropTransformer.MinX,
-                Y = -this.CropTransformer.MinY,
+                X = -this.CropTransform.Transformer.MinX,
+                Y = -this.CropTransform.Transformer.MinY,
             };
 
             if (this.CropCanvasSlider.Value is 0d)
@@ -138,13 +135,13 @@ namespace Luo_Painter
                 /// History
                 int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
-                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                    new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
+                        this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
+                        new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                 }));
             }
             else
             {
-                Matrix3x2 matrix = this.GetMatrix(this.CropTransformer.LeftTop);
+                Matrix3x2 matrix = this.GetMatrix(this.CropTransform.Transformer.LeftTop);
                 {
                     this.Transformer.Width = w;
                     this.Transformer.Height = h;
@@ -157,8 +154,8 @@ namespace Luo_Painter
                 /// History
                 int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
-                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
-                    new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
+                        this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
+                        new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
                 }));
 
                 this.Transformer.Radian = 0f;
