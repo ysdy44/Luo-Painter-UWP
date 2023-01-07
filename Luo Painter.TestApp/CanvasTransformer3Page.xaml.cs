@@ -13,18 +13,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    internal struct Transform
-    {
-        public bool IsMove;
-        public TransformerMode Mode;
-
-        public Matrix3x2 Matrix;
-        public TransformerBorder Border;
-
-        public Transformer StartingTransformer;
-        public Transformer Transformer;
-    }
-
     public sealed partial class CanvasTransformer3Page : Page
     {
 
