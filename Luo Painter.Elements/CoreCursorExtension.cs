@@ -6,19 +6,29 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Elements
 {
-    public enum CursorMode
-    {
-        None = 0,
-        OneWay = 1,
-        OneTime = 2,
-    }
-
     /// <summary>
     /// Provides constant and static member 
     /// for <see cref="Window.Current.CoreWindow.PointerCursor"/>.
     /// </summary>
     public static class CoreCursorExtension
     {
+
+        public static CoreCursorType ToCursorType(this Vector2 vector, int offset = 0)
+        {
+            // 0~360
+            double angle = Math.Atan2(vector.X, vector.Y) * 180 / Math.PI;
+            double angle2 = (angle + 360) % 360;
+
+            // 0~8
+            double index = angle2 * 8 / 360;
+            int index2 = offset + (int)Math.Round(index, MidpointRounding.ToEven);
+
+            // 0~4
+            int i = 7 + index2 % 4;
+
+            // 7~11
+            return (CoreCursorType)i;
+        }
 
         public static CoreCursorType ToCursorType(this Vector2 vector, Orientation orientation)
         {
