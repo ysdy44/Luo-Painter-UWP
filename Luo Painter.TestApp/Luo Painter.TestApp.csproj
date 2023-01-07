@@ -137,6 +137,9 @@
     <Compile Include="CanvasTransformer2Page.xaml.cs">
       <DependentUpon>CanvasTransformer2Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CanvasTransformer3Page.xaml.cs">
+      <DependentUpon>CanvasTransformer3Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ColorHarmonyPickerPage.xaml.cs">
       <DependentUpon>ColorHarmonyPickerPage.xaml</DependentUpon>
     </Compile>
@@ -378,6 +381,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CanvasTransformer2Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CanvasTransformer3Page.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
