@@ -78,7 +78,7 @@ namespace Luo_Painter
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
             {
                 ds.Clear(Colors.Transparent);
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.GeoTransform.Transformer), this.Color);
             }
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -100,9 +100,9 @@ namespace Luo_Painter
         {
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
             {
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.GeoTransform.Transformer), this.Color);
             }
-            this.BitmapLayer.Hit(this.BoundsTransformer);
+            this.BitmapLayer.Hit(this.GeoTransform.Transformer);
 
             // History
             int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
@@ -126,23 +126,17 @@ namespace Luo_Painter
         {
             if (this.BitmapLayer is null) return;
 
-            if (this.IsBoundsMove)
-            {
-                this.BoundsTransformer = this.StartingBoundsTransformer + (this.Position - this.StartingPosition);
-            }
-            else if (this.BoundsMode == default)
-            {
-                this.BoundsTransformer = new Transformer(this.StartingPosition, this.Position, this.IsCtrl, this.IsShift);
-            }
+            if (this.GeoTransform.IsMove)
+                this.GeoTransform.Transformer = this.GeoTransform.StartingTransformer + (this.Position - this.StartingPosition);
+            else if (this.GeoTransform.Mode == default)
+                this.GeoTransform.Transformer = new Transformer(this.StartingPosition, this.Position, this.IsCtrl, this.IsShift);
             else
-            {
-                this.BoundsTransformer = FanKit.Transformers.Transformer.Controller(this.BoundsMode, this.StartingPosition, this.Position, this.StartingBoundsTransformer, this.IsShift, this.IsCtrl);
-            }
+                this.GeoTransform.Transformer = FanKit.Transformers.Transformer.Controller(this.GeoTransform.Mode, this.StartingPosition, this.Position, this.GeoTransform.StartingTransformer, this.IsShift, this.IsCtrl);
 
             using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession(BitmapType.Temp))
             {
                 ds.Clear(Colors.Transparent);
-                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.BoundsTransformer), this.Color);
+                ds.FillGeometry(this.CreateGeometry(this.CanvasDevice, this.OptionType, this.GeoTransform.Transformer), this.Color);
             }
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -172,9 +166,9 @@ namespace Luo_Painter
                 return;
             }
 
-            this.IsBoundsMove = false;
-            this.BoundsMode = default;
-            this.BoundsTransformer = new Transformer(this.StartingPosition, this.Position, this.IsCtrl, this.IsShift);
+            this.GeoTransform.IsMove = false;
+            this.GeoTransform.Mode = default;
+            this.GeoTransform.Transformer = new Transformer(this.StartingPosition, this.Position, this.IsCtrl, this.IsShift);
 
             this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
 
