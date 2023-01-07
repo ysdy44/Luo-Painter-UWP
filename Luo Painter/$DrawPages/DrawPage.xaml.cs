@@ -243,10 +243,20 @@ namespace Luo_Painter
         SymmetryType SymmetryType;
         readonly Symmetryer Symmetryer = new Symmetryer();
 
+
+        Transform Transform;
+        Transform GeoTransform;
+        FreeTransform FreeTransform;
+        TransformBase CropTransform;
+        TransformBase BorderTransform;
+
+
         Vector2 StartingPosition;
         Vector2 Position;
+
         Vector2 StartingPoint;
         Vector2 Point;
+
         float StartingPressure;
         float Pressure;
 
