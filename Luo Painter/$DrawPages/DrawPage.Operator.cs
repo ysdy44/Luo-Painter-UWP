@@ -49,7 +49,7 @@ namespace Luo_Painter
                     }
                 }
 
-                this.Tool_Start();
+                this.Single_Start();
             };
             this.Operator.Single_Delta += (point, device, properties) =>
             {
@@ -68,7 +68,7 @@ namespace Luo_Painter
 
                 if (this.ReferenceImage is null)
                 {
-                    this.Tool_Delta();
+                    this.Single_Delta();
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Luo_Painter
             {
                 if (this.ReferenceImage is null)
                 {
-                    this.Tool_Complete();
+                    this.Single_Complete();
                 }
                 else
                 {

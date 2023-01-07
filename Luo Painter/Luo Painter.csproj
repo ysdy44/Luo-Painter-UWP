@@ -117,6 +117,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="%24DrawPage.Option\DrawPage.Canvas.cs" />
+    <Compile Include="%24DrawPage.Option\DrawPage.Cursor.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Border.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.DiscreteTransfer.cs" />
