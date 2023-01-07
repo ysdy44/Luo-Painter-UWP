@@ -31,18 +31,12 @@ namespace Luo_Painter
             return new Rect(minX, minY, maxX - minX, maxY - minY);
         }
 
-        TransformerMode BorderMode;
-        bool IsBorderMove;
-
-        Transformer BorderTransformer;
-        Transformer StartingBorderTransformer;
-
         Rect BorderCrop;
         Rect StartingBorderCrop;
 
         private void ResetBorder(int w, int h)
         {
-            this.BorderTransformer = new Transformer(0, 0, w, h);
+            this.BorderTransform.Transformer = new Transformer(0, 0, w, h);
 
             this.BorderCrop = new Rect(0, 0, w, h);
             this.StartingBorderCrop = this.BorderCrop;
@@ -50,29 +44,31 @@ namespace Luo_Painter
 
         private void DrawBorder(CanvasControl sender, CanvasDrawingSession ds)
         {
-            ds.DrawCrop(this.BorderTransformer, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
+            ds.DrawCrop(this.BorderTransform.Transformer, sender.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()));
         }
 
 
         /// <summary> <see cref="CropCanvas_Start()"/> </summary>
         private void Border_Start()
         {
-            this.BorderMode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BorderTransformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()), true);
-            this.IsBorderMove = this.BorderMode == TransformerMode.None;
-            this.StartingBorderTransformer = this.BorderTransformer;
+            this.BorderTransform.Mode = FanKit.Transformers.Transformer.ContainsNodeMode(this.Point, this.BorderTransform.Transformer, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.Transformer.GetMatrix()), true);
+            this.BorderTransform.IsMove = this.BorderTransform.Mode == TransformerMode.None;
+            this.BorderTransform.StartingTransformer = this.BorderTransform.Transformer;
 
-            this.BorderCrop = this.ToRect(this.BorderTransformer);
+            this.BorderCrop = this.ToRect(this.BorderTransform.Transformer);
+
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         /// <summary> <see cref="CropCanvas_Delta()"/> </summary>
         private void Border_Delta()
         {
-            this.BorderTransformer =
-                this.IsBorderMove ?
-                this.StartingBorderTransformer + (this.Position - this.StartingPosition) :
-                FanKit.Transformers.Transformer.Controller(this.BorderMode, this.StartingPosition, this.Position, this.StartingBorderTransformer);
+            if (this.BorderTransform.IsMove)
+                this.BorderTransform.Transformer = this.BorderTransform.StartingTransformer + (this.Position - this.StartingPosition);
+            else
+                this.BorderTransform.Transformer = FanKit.Transformers.Transformer.Controller(this.BorderTransform.Mode, this.StartingPosition, this.Position, this.BorderTransform.StartingTransformer);
 
-            this.BorderCrop = this.ToRect(this.BorderTransformer);
+            this.BorderCrop = this.ToRect(this.BorderTransform.Transformer);
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
@@ -81,6 +77,7 @@ namespace Luo_Painter
         /// <summary> <see cref="CropCanvas_Complete()"/> </summary>
         private void Border_Complete()
         {
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
     }
