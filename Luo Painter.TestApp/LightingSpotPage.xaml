@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.LightingSpotPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Grid>
+        <canvas:CanvasAnimatedControl x:Name="CanvasAnimatedControl"/>
+        <StackPanel Width="320" Margin="12" Padding="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <Slider x:Name="AmbientSlider">
+                <Slider.Header>
+                    <TextBlock>
+                        Ambient
+                        <Run Text="{x:Bind AmbientSlider.Value, Mode=OneWay}"/>
+                    </TextBlock>
+                </Slider.Header>
+            </Slider>
+            <Slider x:Name="AngleSlider" Minimum="1" Maximum="30">
+                <Slider.Header>
+                    <TextBlock>
+                        Angle
+                        <Run Text="{x:Bind AngleSlider.Value, Mode=OneWay}"/>
+                    </TextBlock>
+                </Slider.Header>
+            </Slider>
+        </StackPanel>
+    </Grid>
+
+</Page>

@@ -185,6 +185,9 @@
     <Compile Include="LightingPointPage.xaml.cs">
       <DependentUpon>LightingPointPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LightingSpotPage.xaml.cs">
+      <DependentUpon>LightingSpotPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MarqueeToolTransformPage.xaml.cs">
       <DependentUpon>MarqueeToolTransformPage.xaml</DependentUpon>
     </Compile>
@@ -436,6 +439,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LightingPointPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LightingSpotPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
