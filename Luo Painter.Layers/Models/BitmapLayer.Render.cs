@@ -119,6 +119,25 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
+        public void Fill(Color color, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.FillRectangle(0, 0, base.Width, base.Height, color);
+            }
+        }
+        public void Fill(Color color, Rect clipRectangle, BitmapType type = BitmapType.Source)
+        {
+            using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                ds.FillRectangle(clipRectangle, color);
+            }
+        }
+
         public void Fill(ICanvasBrush brush, BitmapType type = BitmapType.Source)
         {
             using (CanvasDrawingSession ds = this.CreateDrawingSession(type))
