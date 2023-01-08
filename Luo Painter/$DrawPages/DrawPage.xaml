@@ -241,7 +241,6 @@
                         Height="50" 
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Bottom"
-                        Background="{ThemeResource AppBackgroundLight}" 
                         Style="{StaticResource AppSegmentListBoxStyle}"
                         >
                         <local:ToolIconWithToolTip Type="ToolMenu"/>
@@ -475,6 +474,11 @@
                             <local:OptionCase Value="DisplacementLiquefaction">
                                 <StackPanel>
                                     <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Name="DisplacementLiquefactionToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                Liquefaction Tool
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
                                         <ListBoxItem x:Name="PushItem">Push</ListBoxItem>
                                         <ListBoxItem x:Name="PinchItem">Pinch</ListBoxItem>
                                         <ListBoxItem x:Name="ExpandItem">Expand</ListBoxItem>
@@ -715,6 +719,11 @@
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <Border Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <ListBox SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip x:Name="GammaTransferToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                        Channel Select
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
                                                 <ListBoxItem x:Name="GTAItem">Alpha</ListBoxItem>
                                                 <ListBoxItem x:Name="GTRItem">Red</ListBoxItem>
                                                 <ListBoxItem x:Name="GTGItem">Green</ListBoxItem>
@@ -998,6 +1007,11 @@
                             </local:OptionCase>
                             <local:OptionCase Value="LuminanceToAlpha">
                                 <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="LuminanceToAlphaToolTip" Style="{StaticResource AppToolTipStyle}">
+                                            Background
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
                                     <ListBoxItem x:Name="LuminanceToAlphaNormalItem">Normal</ListBoxItem>
                                     <ListBoxItem x:Name="WhitePaperItem">White Paper</ListBoxItem>
                                     <ListBoxItem x:Name="BlackPaperItem">Black Paper</ListBoxItem>
@@ -1032,6 +1046,11 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <ListBox x:Name="BorderXComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="BorderXToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                    Edge Behavior X
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                             <ListBoxItem x:Name="BorderXClampItem">Clamp</ListBoxItem>
                                             <ListBoxItem x:Name="BorderXWrapItem">Wrap</ListBoxItem>
                                             <ListBoxItem x:Name="BorderXMirrorItem">Mirror</ListBoxItem>
@@ -1039,6 +1058,11 @@
                                     </Border>
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <ListBox x:Name="BorderYComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="BorderYToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                    Edge Behavior Y
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                             <ListBoxItem x:Name="BorderYClampItem">Clamp</ListBoxItem>
                                             <ListBoxItem x:Name="BorderYWrapItem">Wrap</ListBoxItem>
                                             <ListBoxItem x:Name="BorderYMirrorItem">Mirror</ListBoxItem>
@@ -1104,6 +1128,11 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <ListBox x:Name="FogComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="FogToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                    Scale Factor
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                             <x:Double>1</x:Double>
                                             <x:Double>2</x:Double>
                                             <x:Double>4</x:Double>
@@ -1123,6 +1152,11 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <ListBox x:Name="GlassComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="GlassToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                    Scale Factor
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                             <x:Double>1</x:Double>
                                             <x:Double>2</x:Double>
                                             <x:Double>4</x:Double>
@@ -1293,10 +1327,14 @@
                                         Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}" 
                                         />
                                 </StackPanel>
-
                             </local:OptionCase>
                             <local:OptionCase Value="Straw">
                                 <ListBox x:Name="StrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="StrawToolTip" Style="{StaticResource AppToolTipStyle}">
+                                            Sampling Target
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
                                     <ListBoxItem x:Name="StrawAllItem">All Layers</ListBoxItem>
                                     <ListBoxItem x:Name="StrawCurrentItem">Current Layer</ListBoxItem>
                                 </ListBox>
@@ -1309,6 +1347,11 @@
                                         <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox x:Name="BrushComboBox" SelectedIndex="1" HorizontalAlignment="Stretch">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Name="BrushToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                Gradient Type
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
                                         <ComboBoxItem x:Name="BrushColorItem">Color</ComboBoxItem>
                                         <ComboBoxItem x:Name="BrushLinearGradientItem">Linear Gradient</ComboBoxItem>
                                         <ComboBoxItem x:Name="BrushRadialGradientItem">Radial Gradient</ComboBoxItem>
@@ -1329,6 +1372,11 @@
                                         <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox x:Name="TransparencyComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Name="TransparencyToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                Transparency Type
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
                                         <ComboBoxItem x:Name="TransparencyLinearGradientItem">Linear Gradient</ComboBoxItem>
                                         <ComboBoxItem x:Name="TransparencyRadialGradientItem">Radial Gradient</ComboBoxItem>
                                         <ComboBoxItem x:Name="TransparencyEllipticalGradientItem">Elliptical Gradient</ComboBoxItem>
@@ -1345,6 +1393,11 @@
                                         <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
                                     <ComboBox x:Name="PenComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Name="PenToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                Segment Type
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
                                         <ComboBoxItem x:Name="PenCurveItem">Curve</ComboBoxItem>
                                         <ComboBoxItem x:Name="PenLineItem">Line</ComboBoxItem>
                                     </ComboBox>
@@ -1468,18 +1521,18 @@
                             <local:OptionCase Value="GeometryArrowTransform">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <ListBox x:Name="ArrowLeftTailComboBox" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
+                                        <ListBox x:Name="ArrowLeftTailComboBox" Width="140" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                                <ToolTip x:Name="ArrowLeftTailToolTip" Style="{StaticResource AppToolTipStyle}">
                                                     Left Tail
                                                 </ToolTip>
                                             </ToolTipService.ToolTip>
                                             <local:ElementIcon Type="ArrowTailTypesNone"/>
                                             <local:ElementIcon Type="ArrowTailTypesArrow"/>
                                         </ListBox>
-                                        <ListBox x:Name="ArrowRightTailComboBox" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
+                                        <ListBox x:Name="ArrowRightTailComboBox" Width="140" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                                <ToolTip x:Name="ArrowRightTailToolTip" Style="{StaticResource AppToolTipStyle}">
                                                     Right Tail
                                                 </ToolTip>
                                             </ToolTipService.ToolTip>
@@ -1783,13 +1836,9 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
-                    <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="AppBarPrimaryButton" Grid.Column="2" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
                     Apply
-                </Button>
-                <Button x:Name="AppBarSecondaryButton" Grid.Column="3" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" >
-                    Reset
                 </Button>
                 <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                     <ToolTipService.ToolTip>
