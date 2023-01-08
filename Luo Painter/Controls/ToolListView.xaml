@@ -44,6 +44,7 @@
                         <options:OptionType>Cursor</options:OptionType>
                         <options:OptionType>View</options:OptionType>
                         <options:OptionType>Straw</options:OptionType>
+                        <options:OptionType>Fill</options:OptionType>
                         <options:OptionType>Brush</options:OptionType>
                         <options:OptionType>Transparency</options:OptionType>
                         <options:OptionType>Image</options:OptionType>
@@ -130,7 +131,7 @@
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="options:OptionType">
-            <luo_painter:ToolIcon Type="{x:Bind}"/>
+            <luo_painter:ToolIconWithToolTip Type="{x:Bind}"/>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 

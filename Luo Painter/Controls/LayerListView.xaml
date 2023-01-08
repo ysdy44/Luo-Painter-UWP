@@ -151,7 +151,7 @@
                             Type="{x:Bind BlendMode, Mode=OneWay}"
                             Opacity="{x:Bind UIVisibility, Mode=OneWay}"     
                             />
-                        
+
                         <local:LayerButton CommandParameter="{x:Bind}" Command="{x:Bind}" >
                             <FontIcon
                                 IsHitTestVisible="False"
@@ -261,7 +261,7 @@
 
                             <!--Opacity-->
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
-                                <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Margin="0,5" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Opacity
                                     </Slider.Header>
@@ -454,6 +454,7 @@
                     </MenuFlyoutItem>
                     <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
                     <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
+                    <MenuFlyoutItem options:OptionExtensions.Type="AddFillLayer" Command="{x:Bind Command}"/>
                 </MenuFlyout>
             </SplitButton.Flyout>
             <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>

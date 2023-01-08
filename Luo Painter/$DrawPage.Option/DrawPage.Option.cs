@@ -790,6 +790,18 @@ namespace Luo_Painter
 
                     this.RaiseHistoryCanExecuteChanged();
                     break;
+                case OptionType.AddFillLayer:
+                    {
+                        ILayer add = new FillLayer(this.CanvasDevice, this.Color, this.Transformer.Width, this.Transformer.Height);
+
+                        // History
+                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+                    }
+
+                    this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                    this.RaiseHistoryCanExecuteChanged();
+                    break;
 
                 // Clipboard
                 case OptionType.CutLayer:
@@ -1467,7 +1479,6 @@ namespace Luo_Painter
                     }
                     break;
                 //case OptionType.Threshold: break;
-                case OptionType.Fill: break;
 
                 // Adjustment
                 case OptionType.Sepia:
@@ -1654,6 +1665,7 @@ namespace Luo_Painter
                 case OptionType.Straw:
                 case OptionType.Crop:
 
+                case OptionType.Fill:
                 case OptionType.Brush:
                 case OptionType.Transparency:
 

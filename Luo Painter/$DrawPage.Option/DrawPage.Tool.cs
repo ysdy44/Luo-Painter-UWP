@@ -82,6 +82,7 @@ namespace Luo_Painter
                 case OptionType.Straw:
                     this.Straw_Start();
                     break;
+
                 case OptionType.Brush:
                     this.Brush_Start();
                     break;
@@ -177,6 +178,7 @@ namespace Luo_Painter
                 case OptionType.Straw:
                     this.Straw_Delta();
                     break;
+
                 case OptionType.Brush:
                     this.Brush_Delta();
                     break;
@@ -273,6 +275,10 @@ namespace Luo_Painter
                     break;
                 case OptionType.Straw:
                     this.Straw_Complete();
+                    break;
+
+                case OptionType.Fill:
+                    this.Fill_Complete();
                     break;
                 case OptionType.Brush:
                     this.Brush_Complete();

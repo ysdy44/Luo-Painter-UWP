@@ -283,6 +283,8 @@ namespace Luo_Painter
                     return new GroupLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
                 case "Curve":
                     return new CurveLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
+                case "Fill":
+                    return new FillLayer(id, layer, this.CanvasDevice, item.Width, item.Height); /// Sets <see cref="LayerDictionary"/>
                 default:
                     break;
             }
