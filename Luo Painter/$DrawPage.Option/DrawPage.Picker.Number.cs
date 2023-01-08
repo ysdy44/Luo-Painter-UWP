@@ -271,6 +271,12 @@ namespace Luo_Painter
                                         break;
                                 }
                                 break;
+                            case OptionType.Fog:
+                                this.FogSlider.Value = e;
+                                break;
+                            case OptionType.Glass:
+                                this.GlassSlider.Value = e;
+                                break;
 
                             case OptionType.GeometryRoundRect:
                             case OptionType.GeometryRoundRectTransform:

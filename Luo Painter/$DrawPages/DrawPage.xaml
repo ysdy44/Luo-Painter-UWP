@@ -1114,6 +1114,44 @@
                                     </hsvColorPickers:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
+                            <local:OptionCase Value="Fog">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <ListBox x:Name="FogComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                            <x:Double>1</x:Double>
+                                            <x:Double>2</x:Double>
+                                            <x:Double>4</x:Double>
+                                            <x:Double>8</x:Double>
+                                            <x:Double>16</x:Double>
+                                        </ListBox>
+                                    </Border>
+                                    <hsvColorPickers:NumberSlider x:Name="FogSlider" Value="50" Unit="%" Decrease="True" StepFrequency="25" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="Glass">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <ListBox x:Name="GlassComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                            <x:Double>1</x:Double>
+                                            <x:Double>2</x:Double>
+                                            <x:Double>4</x:Double>
+                                            <x:Double>8</x:Double>
+                                            <x:Double>16</x:Double>
+                                        </ListBox>
+                                    </Border>
+                                    <hsvColorPickers:NumberSlider x:Name="GlassSlider" Value="50" Unit="%" Decrease="True" StepFrequency="25" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Amount
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </StackPanel>
+                            </local:OptionCase>
 
 
                             <local:OptionCase Value="Marquee">

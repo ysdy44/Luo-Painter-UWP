@@ -187,6 +187,15 @@ namespace Luo_Painter
             this.TintColorButton.SetColor(Colors.DodgerBlue);
             this.TintColorButton.SetColorHdr(Colors.DodgerBlue);
             this.TintColorButton.Click += (s, e) => this.ColorShowAt(this.TintColorButton);
+
+            // Fog
+            this.FogComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.FogSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.FogSlider.Click += (s, e) => this.NumberShowAt(this.FogSlider);
+            // Glass
+            this.GlassComboBox.SelectionChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.GlassSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.GlassSlider.Click += (s, e) => this.NumberShowAt(this.GlassSlider);
         }
 
         private ICanvasImage GetPreview(OptionType type, ICanvasImage image)
@@ -599,6 +608,44 @@ namespace Luo_Painter
                     };
 
                 case OptionType.Lighting:
+                    LuminanceToAlphaEffect heightMap = new LuminanceToAlphaEffect
+                    {
+                        Source = image
+                    };
+                    return new ArithmeticCompositeEffect
+                    {
+                        Source1Amount = 1,
+                        Source2Amount = 1,
+                        MultiplyAmount = 0,
+                        Source1 = new ArithmeticCompositeEffect
+                        {
+                            Source1Amount = this.LightAmbient,
+                            Source2Amount = 0,
+                            MultiplyAmount = 1 - this.LightAmbient,
+                            Source1 = image,
+                            Source2 = new SpotDiffuseEffect
+                            {
+                                Source = heightMap,
+
+                                HeightMapScale = 2,
+                                LimitingConeAngle = this.LightAngle,
+
+                                LightTarget = this.LightTarget,
+                                LightPosition = this.LightPosition,
+                            },
+                        },
+                        Source2 = new SpotSpecularEffect
+                        {
+                            Source = heightMap,
+
+                            SpecularExponent = 16,
+                            LimitingConeAngle = this.LightAngle,
+
+                            LightTarget = this.LightTarget,
+                            LightPosition = this.LightPosition,
+                        },
+                    };
+                /*
                     LuminanceToAlphaEffect HeightMap = new LuminanceToAlphaEffect
                     {
                         Source = image
@@ -643,11 +690,126 @@ namespace Luo_Painter
                         MultiplyAmount = 0,
                     };
                     return effect;
-                //case OptionType.Fog:
+                */
+                case OptionType.Fog:
+                    float fog = (float)this.FogSlider.Value / 100;
+                    switch (this.FogComboBox.SelectedIndex)
+                    {
+                        case 4:
+                            return new ArithmeticCompositeEffect
+                            {
+                                MultiplyAmount = fog,
+                                Source1Amount = 1 - fog,
+                                Source1 = image,
+                                Source2 = new ScaleEffect
+                                {
+                                    Scale = new Vector2(16),
+                                    Source = this.RalphaTurbulences
+                                }
+                            };
+                        case 3:
+                            return new ArithmeticCompositeEffect
+                            {
+                                MultiplyAmount = fog,
+                                Source1Amount = 1 - fog,
+                                Source1 = image,
+                                Source2 = new ScaleEffect
+                                {
+                                    Scale = new Vector2(8),
+                                    Source = this.RalphaTurbulences
+                                }
+                            };
+                        case 2:
+                            return new ArithmeticCompositeEffect
+                            {
+                                MultiplyAmount = fog,
+                                Source1Amount = 1 - fog,
+                                Source1 = image,
+                                Source2 = new ScaleEffect
+                                {
+                                    Scale = new Vector2(4),
+                                    Source = this.RalphaTurbulences
+                                }
+                            };
+                        case 1:
+                            return new ArithmeticCompositeEffect
+                            {
+                                MultiplyAmount = fog,
+                                Source1Amount = 1 - fog,
+                                Source1 = image,
+                                Source2 = new ScaleEffect
+                                {
+                                    Scale = new Vector2(2),
+                                    Source = this.RalphaTurbulences
+                                }
+                            };
+                        default:
+                            return new ArithmeticCompositeEffect
+                            {
+                                MultiplyAmount = fog,
+                                Source1Amount = 1 - fog,
+                                Source1 = image,
+                                Source2 = this.RalphaTurbulences
+                            };
+                    }
                 case OptionType.Glass:
-                    return image;
-                case OptionType.PinchPunch:
-                    return image;
+                    float glass = (float)this.GlassSlider.Value;
+                    switch (this.GlassComboBox.SelectedIndex)
+                    {
+                        case 4:
+                            return new DisplacementMapEffect
+                            {
+                                Source = image,
+                                Amount = glass,
+                                Displacement = new ScaleEffect
+                                {
+                                    Scale = new Vector2(0.0625f),
+                                    Source = this.Turbulences
+                                }
+                            };
+                        case 3:
+                            return new DisplacementMapEffect
+                            {
+                                Source = image,
+                                Amount = glass,
+                                Displacement = new ScaleEffect
+                                {
+                                    Scale = new Vector2(0.125f),
+                                    Source = this.Turbulences
+                                }
+                            };
+                        case 2:
+                            return new DisplacementMapEffect
+                            {
+                                Source = image,
+                                Amount = glass,
+                                Displacement = new ScaleEffect
+                                {
+                                    Scale = new Vector2(0.25f),
+                                    Source = this.Turbulences
+                                }
+                            };
+                        case 1:
+                            return new DisplacementMapEffect
+                            {
+                                Source = image,
+                                Amount = glass,
+                                Displacement = new ScaleEffect
+                                {
+                                    Scale = new Vector2(0.5f),
+                                    Source = this.Turbulences
+                                }
+                            };
+                        default:
+                            return new DisplacementMapEffect
+                            {
+                                Source = image,
+                                Amount = glass,
+                                Displacement = this.Turbulences
+                            };
+                    }
+                //case OptionType.PinchPunch:
+                //    return image;
 
 
                 default:

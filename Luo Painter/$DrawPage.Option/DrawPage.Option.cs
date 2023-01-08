@@ -1470,8 +1470,6 @@ namespace Luo_Painter
                 case OptionType.Fill: break;
 
                 // Adjustment
-                case OptionType.Fog:
-
                 case OptionType.Sepia:
                 //case OptionType.Posterize:
 
@@ -1590,9 +1588,9 @@ namespace Luo_Painter
                 case OptionType.DiscreteTransfer:
 
                 //case OptionType.Lighting:
-                //case OptionType.Fog:
+                case OptionType.Fog:
                 case OptionType.Glass:
-                case OptionType.PinchPunch:
+                //case OptionType.PinchPunch:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {
