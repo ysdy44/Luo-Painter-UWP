@@ -77,16 +77,14 @@ namespace Luo_Painter
             switch (this.BrushMode)
             {
                 case 0:
-                    return;
-                case 1:
                     this.LinearGradientBrush = new CanvasLinearGradientBrush(this.CanvasDevice, startColor, endColor)
                     {
                         StartPoint = this.StartingPosition,
                         EndPoint = this.Position,
                     };
-                    break;
+                    return;
+                case 1:
                 case 2:
-                case 3:
                     this.RadialGradientBrush = new CanvasRadialGradientBrush(this.CanvasDevice, startColor, endColor)
                     {
                         Center = this.StartingPosition,
@@ -111,18 +109,16 @@ namespace Luo_Painter
             switch (this.BrushMode)
             {
                 case 0:
-                    break;
-                case 1:
                     this.LinearGradientBrush.EndPoint = this.Position;
                     this.BrushClear(this.LinearGradientBrush);
                     break;
-                case 2:
+                case 1:
                     this.RadialGradientBrush.RadiusX =
                     this.RadialGradientBrush.RadiusY =
                     Vector2.Distance(this.StartingPosition, this.Position);
                     this.BrushClear(this.RadialGradientBrush);
                     break;
-                case 3:
+                case 2:
                     this.RadialGradientBrush.RadiusX = System.Math.Abs(this.StartingPosition.X - this.Position.X);
                     this.RadialGradientBrush.RadiusY = System.Math.Abs(this.StartingPosition.Y - this.Position.Y);
                     this.BrushClear(this.RadialGradientBrush);
@@ -142,9 +138,6 @@ namespace Luo_Painter
             switch (this.BrushMode)
             {
                 case 0:
-                    this.Brush(new CanvasSolidColorBrush(this.CanvasDevice, this.ColorButton.Color));
-                    break;
-                case 1:
                     {
                         Color startColor = this.Color;
                         Color endColor = this.Color;
@@ -163,7 +156,7 @@ namespace Luo_Painter
                         });
                     }
                     break;
-                case 2:
+                case 1:
                     {
                         Color startColor = this.Color;
                         Color endColor = this.Color;
@@ -185,7 +178,7 @@ namespace Luo_Painter
                         });
                     }
                     break;
-                case 3:
+                case 2:
                     {
                         Color startColor = this.Color;
                         Color endColor = this.Color;
@@ -214,6 +207,44 @@ namespace Luo_Painter
 
             this.BitmapLayer.Flush();
             this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
+            this.BitmapLayer.RenderThumbnail();
+            this.BitmapLayer = null;
+
+            this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+            this.RaiseHistoryCanExecuteChanged();
+        }
+
+
+        private void Fill_Complete()
+        {
+            this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
+            if (this.BitmapLayer is null)
+            {
+                this.Tip(TipType.NoLayer);
+                return;
+            }
+
+            this.SelectionType = this.BitmapLayer.GetDrawSelection(this.IsBrushOpaque, this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
+            switch (this.SelectionType)
+            {
+                case SelectionType.None:
+                    this.Tip(TipType.NoPixelForBitmapLayer);
+                    return;
+                case SelectionType.All:
+                    break;
+                default:
+                    this.BitmapLayer.Hit(InterpolationColors);
+                    this.BrushBounds = this.Marquee.CreateInterpolationBoundsScaled(InterpolationColors).ToRect();
+                    break;
+            }
+
+            this.Brush(this.Color);
+
+            this.SelectionType = default;
+
+            this.BitmapLayer.Flush();
             this.BitmapLayer.RenderThumbnail();
             this.BitmapLayer = null;
 
@@ -274,6 +305,50 @@ namespace Luo_Painter
                     using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
                     {
                         ds.FillRectangle(this.BrushBounds, brush);
+                    }
+                    this.BitmapLayer.Draw(new AlphaMaskEffect
+                    {
+                        AlphaMask = this.Marquee[BitmapType.Source],
+                        Source = commandList2
+                    }, BitmapType.Source);
+                    // History
+                    int removes3 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Brush(Color color)
+        {
+            switch (this.SelectionType)
+            {
+                case SelectionType.None:
+                    break;
+                case SelectionType.All:
+                    this.BitmapLayer.Fill(color, BitmapType.Source);
+                    // History
+                    int removes1 = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
+                    break;
+                case SelectionType.PixelBounds:
+                    CanvasCommandList commandList1 = new CanvasCommandList(this.CanvasDevice);
+                    using (CanvasDrawingSession ds = commandList1.CreateDrawingSession())
+                    {
+                        ds.FillRectangle(this.BrushBounds, color);
+                    }
+                    this.BitmapLayer.Draw(new AlphaMaskEffect
+                    {
+                        AlphaMask = this.BitmapLayer[BitmapType.Origin],
+                        Source = commandList1
+                    }, BitmapType.Source);
+                    // History
+                    int removes2 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                    break;
+                case SelectionType.MarqueePixelBounds:
+                    CanvasCommandList commandList2 = new CanvasCommandList(this.CanvasDevice);
+                    using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
+                    {
+                        ds.FillRectangle(this.BrushBounds, color);
                     }
                     this.BitmapLayer.Draw(new AlphaMaskEffect
                     {
