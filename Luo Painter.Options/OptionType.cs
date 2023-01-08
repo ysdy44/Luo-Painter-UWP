@@ -140,6 +140,7 @@ namespace Luo_Painter.Options
         AddBitmapLayer = New | 1 << 8 | ExistIcon | IsItemClickEnabled,
         AddImageLayer = New | 2 << 8 | ExistIcon | IsItemClickEnabled,
         AddCurveLayer = New | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        AddFillLayer = New | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Clipboard
         CutLayer = Clipboard | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -231,8 +232,7 @@ namespace Luo_Painter.Options
         DisplacementLiquefaction = Other | 4 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         GradientMapping = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
         RippleEffect = Other | 6 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
-        Fill = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
-        Threshold = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+        Threshold = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment1
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -311,12 +311,13 @@ namespace Luo_Painter.Options
         Cursor = Vector | 1 << 8 | ExistIcon | IsItemClickEnabled,
         View = Vector | 2 << 8 | ExistIcon | IsItemClickEnabled,
         Straw = Vector | 3 << 8 | ExistIcon | IsItemClickEnabled,
-        Crop = Vector | 4 << 8 | ExistIcon | IsItemClickEnabled,
 
+        Fill = Vector | 4 << 8 | ExistIcon | IsItemClickEnabled,
         Brush = Vector | 5 << 8 | ExistIcon | IsItemClickEnabled,
         Transparency = Vector | 6 << 8 | ExistIcon | IsItemClickEnabled,
 
         Image = Vector | 7 << 8 | ExistIcon | IsItemClickEnabled,
+        Crop = Vector | 8 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Curve
         Node = Curve | 1 << 8 | ExistIcon | IsItemClickEnabled,
