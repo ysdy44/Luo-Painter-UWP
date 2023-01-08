@@ -241,25 +241,9 @@
                         Height="50" 
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Bottom"
-                        BorderThickness="0,1,0,0" 
-                        BorderBrush="{ThemeResource AppStroke}" 
                         Background="{ThemeResource AppBackgroundLight}" 
-                        ScrollViewer.HorizontalScrollMode="Disabled"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollMode="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        Style="{StaticResource AppSegmentListBoxStyle}"
                         >
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <elements:FlexPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
                         <local:ToolIconWithToolTip Type="ToolMenu"/>
                         <local:ToolIconWithToolTip Type="PaintMenu"/>
                         <local:ToolIconWithToolTip Type="BrushMenu"/>
@@ -490,7 +474,7 @@
 
                             <local:OptionCase Value="DisplacementLiquefaction">
                                 <StackPanel>
-                                    <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
                                         <ListBoxItem x:Name="PushItem">Push</ListBoxItem>
                                         <ListBoxItem x:Name="PinchItem">Pinch</ListBoxItem>
                                         <ListBoxItem x:Name="ExpandItem">Expand</ListBoxItem>
@@ -552,7 +536,7 @@
                                             Threshold
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="10,0" MinWidth="280" Height="60" >
+                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
@@ -897,7 +881,7 @@
                                             Opacity
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="10,0" MinWidth="280" Height="60" 
+                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -946,7 +930,7 @@
                                             Blur Amount
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="2" RowSpacing="8" Padding="10,0" MinWidth="280" Height="60" 
+                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -1020,8 +1004,15 @@
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="ChromaKey">
-                                <StackPanel Margin="0,5">
-                                    <Grid ColumnSpacing="2" Height="50" MinWidth="280" MaxWidth="360">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="ChromaKeySlider" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Tolerance
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" 
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
@@ -1035,24 +1026,19 @@
                                             Feather
                                         </ToggleButton>
                                     </Grid>
-                                    <hsvColorPickers:NumberSlider x:Name="ChromaKeySlider" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                        <Slider.Header>
-                                            Tolerance
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Border">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBox x:Name="BorderXComboBox" SelectedIndex="1" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                        <ListBox x:Name="BorderXComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
                                             <ListBoxItem x:Name="BorderXClampItem">Clamp</ListBoxItem>
                                             <ListBoxItem x:Name="BorderXWrapItem">Wrap</ListBoxItem>
                                             <ListBoxItem x:Name="BorderXMirrorItem">Mirror</ListBoxItem>
                                         </ListBox>
                                     </Border>
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBox x:Name="BorderYComboBox" SelectedIndex="1" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                        <ListBox x:Name="BorderYComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
                                             <ListBoxItem x:Name="BorderYClampItem">Clamp</ListBoxItem>
                                             <ListBoxItem x:Name="BorderYWrapItem">Wrap</ListBoxItem>
                                             <ListBoxItem x:Name="BorderYMirrorItem">Mirror</ListBoxItem>
@@ -1215,7 +1201,7 @@
                             </local:OptionCase>
                             <local:OptionCase Value="PaintBrushMulti">
                                 <StackPanel>
-                                    <ListBox x:Name="SymmetryComboBox" SelectedIndex="0" Margin="12,4" Style="{StaticResource AppSegmentListBoxStyle}">
+                                    <ListBox x:Name="SymmetryComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
                                         <local:ElementIconWithToolTip Type="SymmetryX"/>
                                         <local:ElementIconWithToolTip Type="SymmetryY"/>
                                         <local:ElementIconWithToolTip Type="SymmetryRadial"/>
@@ -1374,28 +1360,28 @@
                             <local:OptionCase Value="GeometryEllipseTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryRoundRectTransform">
-                                <hsvColorPickers:NumberSlider x:Name="RoundRectCornerSlider" Margin="0,5" Value="12" Minimum="0" Maximum="50" Unit="%" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="RoundRectCornerSlider" Margin="0,5" Value="12" Minimum="0" Maximum="50" Unit="%" Decrease="True" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Corner
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryTriangleTransform">
-                                <hsvColorPickers:NumberSlider x:Name="TriangleCenterSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="TriangleCenterSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Center Point
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDiamondTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DiamondMidSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="DiamondMidSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Mid Point
                                     </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPentagonTransform">
-                                <hsvColorPickers:NumberSlider x:Name="PentagonPointsSlider" Margin="0,5" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="PentagonPointsSlider" Margin="0,5" Value="5" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Points
                                     </Slider.Header>
@@ -1403,13 +1389,13 @@
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryStarTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <hsvColorPickers:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                    <hsvColorPickers:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Points
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <hsvColorPickers:NumberSlider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                    <hsvColorPickers:NumberSlider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Inner Radius
@@ -1418,7 +1404,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDountTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DountHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="DountHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Hole Radius
                                     </Slider.Header>
@@ -1427,13 +1413,13 @@
                             <local:OptionCase Value="GeometryCogTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <hsvColorPickers:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                        <hsvColorPickers:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Count
                                             </Slider.Header>
                                         </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                        <hsvColorPickers:NumberSlider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Inner Radius
@@ -1441,13 +1427,13 @@
                                         </hsvColorPickers:NumberSlider>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <hsvColorPickers:NumberSlider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                        <hsvColorPickers:NumberSlider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Tooth
                                             </Slider.Header>
                                         </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                        <hsvColorPickers:NumberSlider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
                                             <Slider.Header>
                                                 Notch
@@ -1457,7 +1443,7 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPieTransform">
-                                <hsvColorPickers:NumberSlider x:Name="PieSweepAngleSlider" Margin="0,5" Value="90" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="PieSweepAngleSlider" Margin="0,5" Value="90" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Sweep Angle
                                     </Slider.Header>
@@ -1465,13 +1451,13 @@
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCookieTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <hsvColorPickers:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                    <hsvColorPickers:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Inner Radius
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <hsvColorPickers:NumberSlider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                    <hsvColorPickers:NumberSlider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Slider.Header>
                                             Sweep Angle
@@ -1501,7 +1487,7 @@
                                             <local:ElementIcon Type="ArrowTailTypesArrow"/>
                                         </ListBox>
                                     </StackPanel>
-                                    <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                         <Slider.Header>
                                             Width
                                         </Slider.Header>
@@ -1511,7 +1497,7 @@
                             <local:OptionCase Value="GeometryCapsuleTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryHeartTransform">
-                                <hsvColorPickers:NumberSlider x:Name="HeartSpreadSlider" Margin="0,5" Value="80" Minimum="0" Maximum="100" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="HeartSpreadSlider" Margin="0,5" Value="80" Minimum="0" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Spread
                                     </Slider.Header>

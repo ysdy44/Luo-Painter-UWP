@@ -23,7 +23,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="10,6,0,6" />
-        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="MinHeight" Value="34" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
         <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
@@ -476,22 +476,22 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Background="Transparent"/>
+                    <elements:FlexPanel/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="MinWidth" Value="70"/>
+                    <Setter Property="MinWidth" Value="36"/>
                     <Setter Property="MinHeight" Value="36"/>
                     <Setter Property="Height" Value="Auto"/>
-                    <Setter Property="Padding" Value="20,4"/>
+                    <Setter Property="Padding" Value="0"/>
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
@@ -1285,9 +1285,9 @@
     <!--Flyout-->
     <Style x:Key="AppFlyoutPresenterStyle" TargetType="FlyoutPresenter">
         <Setter Property="MaxWidth" Value="1000"/>
-        <Setter Property="MinWidth" Value="250"/>
+        <Setter Property="MinWidth" Value="150"/>
         <Setter Property="MaxHeight" Value="1000"/>
-        <Setter Property="MinHeight" Value="250"/>
+        <Setter Property="MinHeight" Value="50"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderThickness" Value="1"/>
