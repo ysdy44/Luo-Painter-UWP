@@ -1182,11 +1182,53 @@
                                     <local:ElementIconWithToolTip Type="Simultaneously"/>
                                 </ListBox>
                             </local:OptionCase>
-                            <local:OptionCase Value="Selection">
-                                <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <local:ElementIconWithToolTip Type="Add"/>
-                                    <local:ElementIconWithToolTip Type="Subtract"/>
-                                </ListBox>
+                            <local:OptionCase Value="SelectionFlood">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="SelectionFloodToleranceSlider" Value="10" Minimum="1" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Tolerance
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60"
+                                          Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton x:Name="SelectionContiguousButton" Grid.ColumnSpan="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            Contiguous
+                                        </ToggleButton>
+                                        <ToggleButton x:Name="SelectionFeatherButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            Feather
+                                        </ToggleButton>
+                                    </Grid>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="SelectionBrush">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                        Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <local:ElementIconWithToolTip Type="Add"/>
+                                        <local:ElementIconWithToolTip Type="Subtract"/>
+                                    </ListBox>
+                                    <!--Size-->
+                                    <Slider                                             
+                                        x:Name="SelectionBrushSizeSlider"
+                                        Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                        SmallChange="1000" 
+                                        StepFrequency="1000" 
+                                        FontSize="{x:Bind FontSizeConverter(SelectionBrushSizeSlider.Value), Mode=OneWay}" 
+                                        Tag="{x:Bind SizeToStringConverter(SelectionBrushSizeSlider.Value), Mode=OneWay}" 
+                                        BorderBrush="White"
+                                        Style="{StaticResource AppInkSliderStyle}"
+                                        >
+                                        <Slider.Header>
+                                            Size
+                                        </Slider.Header>
+                                    </Slider>
+                                </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Paint">
                                 <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
