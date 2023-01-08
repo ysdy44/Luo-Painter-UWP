@@ -14,22 +14,6 @@ namespace Luo_Painter
     public sealed partial class DrawPage
     {
 
-        Vector2 StartingPositionWithoutRadian;
-        Vector2 PositionWithoutRadian;
-
-        private void ConstructSetup()
-        {
-            this.CropCanvasSlider.ValueChanged += (s, e) =>
-            {
-                double radian = e.NewValue / 180 * System.Math.PI;
-                this.Transformer.Radian = (float)radian;
-                this.Transformer.ReloadMatrix();
-
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.CanvasControl.Invalidate(); // Invalidate
-            };
-        }
-
         private Vector2 ToPositionWithoutRadian(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point),
             Matrix3x2.CreateTranslation(-this.Transformer.Position) *
             Matrix3x2.CreateScale(1 / this.Transformer.Scale) *
@@ -43,6 +27,19 @@ namespace Luo_Painter
             Matrix3x2.CreateRotation(this.Transformer.Radian,
                 new Vector2(this.Transformer.Width / 2, this.Transformer.Height / 2)) *
             Matrix3x2.CreateTranslation(-leftTop);
+
+        private void ConstructSetup()
+        {
+            this.CropCanvasSlider.ValueChanged += (s, e) =>
+            {
+                double radian = e.NewValue / 180 * System.Math.PI;
+                this.Transformer.Radian = (float)radian;
+                this.Transformer.ReloadMatrix();
+
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+        }
 
         private void SetCropCanvas(int w, int h)
         {

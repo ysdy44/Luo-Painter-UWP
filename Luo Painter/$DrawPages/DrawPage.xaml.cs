@@ -216,6 +216,7 @@ namespace Luo_Painter
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
 
+        TurbulenceEffect Turbulence { get; set; } = new TurbulenceEffect();
         CanvasRenderTarget GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget Mesh { get; set; }
@@ -247,8 +248,14 @@ namespace Luo_Painter
         Transform Transform;
         Transform GeoTransform;
         FreeTransform FreeTransform;
+
         TransformBase CropTransform;
+        Vector2 StartingPositionWithoutRadian;
+        Vector2 PositionWithoutRadian;
+
         TransformBase BorderTransform;
+        Rect StartingBorderCrop;
+        Rect BorderCrop;
 
 
         Vector2 StartingPosition;
@@ -260,22 +267,8 @@ namespace Luo_Painter
         float StartingPressure;
         float Pressure;
 
-
-        // Transform
-        TransformerBorder Bounds;
-
         Vector2 StartingMove;
         Vector2 Move;
-
-        Transformer StartingBoundsTransformer;
-        Transformer BoundsTransformer;
-        Matrix3x2 BoundsMatrix;
-        TransformerMode BoundsMode;
-        bool IsBoundsMove;
-
-        Transformer BoundsFreeTransformer;
-        Matrix3x2 BoundsFreeMatrix;
-        Vector2 BoundsFreeDistance;
 
 
         #region IInkParameter

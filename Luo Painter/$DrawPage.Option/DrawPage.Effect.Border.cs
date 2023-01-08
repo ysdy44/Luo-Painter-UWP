@@ -31,9 +31,6 @@ namespace Luo_Painter
             return new Rect(minX, minY, maxX - minX, maxY - minY);
         }
 
-        Rect BorderCrop;
-        Rect StartingBorderCrop;
-
         private void ResetBorder(int w, int h)
         {
             this.BorderTransform.Transformer = new Transformer(0, 0, w, h);
