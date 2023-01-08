@@ -42,6 +42,27 @@ namespace Luo_Painter
         byte[] BrushEdgeHardnessWithTextureShaderCodeBytes;
 
 
+        readonly BorderEffect Turbulences = new BorderEffect
+        {
+            ExtendX = CanvasEdgeBehavior.Mirror,
+            ExtendY = CanvasEdgeBehavior.Mirror,
+            Source = new TurbulenceEffect()
+        };
+        readonly BorderEffect RalphaTurbulences = new BorderEffect
+        {
+            ExtendX = CanvasEdgeBehavior.Mirror,
+            ExtendY = CanvasEdgeBehavior.Mirror,
+            Source = new AlphaMaskEffect
+            {
+                AlphaMask = new TurbulenceEffect(),
+                Source = new ColorSourceEffect
+                {
+                    Color = Windows.UI.Colors.White
+                }
+            }
+        };
+
+
         private void CreateResources(int width, int height)
         {
             //@DPI
@@ -133,7 +154,7 @@ namespace Luo_Painter
                         ImageLayer.Instance.Add(copy.Name, bitmap);
 
                         ImageLayer add = new ImageLayer(this.CanvasDevice, copy.Name, this.Transformer.Width, this.Transformer.Height);
-                 
+
                         this.Nodes.Insert(indexChild, add);
                         this.ObservableCollection.InsertChild(index, add);
                         count++;
@@ -180,7 +201,7 @@ namespace Luo_Painter
                     ImageLayer.Instance.Add(copy.Name, bitmap);
 
                     ImageLayer add = new ImageLayer(this.CanvasDevice, copy.Name, this.Transformer.Width, this.Transformer.Height);
-                
+
                     this.Nodes.Insert(0, add);
                     this.ObservableCollection.InsertChild(0, add);
                     count++;
