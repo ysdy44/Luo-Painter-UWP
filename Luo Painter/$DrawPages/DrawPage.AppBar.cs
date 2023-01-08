@@ -38,30 +38,17 @@ namespace Luo_Painter
 
                 default:
                     if (type.IsMarquee()) this.SwitchPresenter.Value = OptionType.Marquee;
-                    else if (type.IsSelection()) this.SwitchPresenter.Value = OptionType.Selection;
                     else if (type.IsGeometry()) this.SwitchPresenter.Value = type.ToGeometryTransform();
                     else this.SwitchPresenter.Value = type;
                     break;
             }
+
+            this.AppBarGrid.Visibility = this.SwitchPresenter.Content is null ? Visibility.Collapsed : Visibility.Visible;
         }
 
 
         public void ConstructAppBar()
         {
-            this.AppBarSecondaryButton.Click += (s, e) =>
-            {
-                if (this.OptionType is OptionType.CropCanvas)
-                {
-                    this.CancelCropCanvas();
-                }
-                if (this.OptionType.IsGeometry())
-                {
-                    this.CancelGeometryTransform();
-                }
-
-                this.Secondary();
-            };
-
             this.AppBarBackButton.Click += (s, e) =>
             {
                 if (this.OptionType is OptionType.CropCanvas)
@@ -88,17 +75,19 @@ namespace Luo_Painter
                     {
                         this.PrimaryGeometryTransform();
                     }
-                    else if (this.OptionType.IsMarquees())
+                    else
                     {
                         Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
                         PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
-                        this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
-                    }
-                    else
-                    {
-                        Color[] InterpolationColors = this.BitmapLayer.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.BitmapLayer.GetInterpolationBoundsMode(InterpolationColors);
-                        this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+
+                        if (this.OptionType.IsMarquees())
+                        {
+                            this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
+                        }
+                        else
+                        {
+                            this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+                        }
                     }
                 }
             };
