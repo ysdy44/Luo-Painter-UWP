@@ -1,34 +1,52 @@
-﻿using FanKit.Transformers;
-using Luo_Painter.Options;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
-using Windows.Foundation;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
-using Luo_Painter.Layers;
-using Luo_Painter.Brushes;
-using Luo_Painter.Blends;
-using Luo_Painter.Elements;
 
 namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
 
+        bool FloodIsContiguous => this.SelectionContiguousButton.IsChecked is true;
+        float FloodTolerance => (float)(this.SelectionFloodToleranceSlider.Value / 100);
+        bool FloodFeather => this.SelectionFeatherButton.IsChecked is true;
+
         bool SelectionIsSubtract => this.SelectionComboBox.SelectedIndex is 0 is false;
+        float SelectionSize = 32;
+
+        private void ConstructSelection()
+        {
+            // 1.Minimum
+            this.SelectionBrushSizeSlider.Minimum = this.SizeRange.XRange.Minimum;
+
+            // 2.Value
+            this.SelectionBrushSizeSlider.Value = this.SizeRange.ConvertYToX(this.SelectionSize);
+
+            // 3.Maximum
+            this.SelectionBrushSizeSlider.Maximum = this.SizeRange.XRange.Maximum;
+
+            this.SelectionBrushSizeSlider.ValueChanged += (s, e) =>
+            {
+                double size = this.SizeRange.ConvertXToY(e.NewValue);
+                this.SelectionSize = (float)size;
+            };
+        }
 
         private void SelectionBrush_Start()
         {
-            this.Marquee.Marquee(this.StartingPosition, this.StartingPosition, 32, this.SelectionIsSubtract);
-            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, 32));
+            this.Marquee.Marquee(this.StartingPosition, this.StartingPosition, this.SelectionSize, this.SelectionIsSubtract);
+            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, this.SelectionSize));
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
         private void SelectionBrush_Delta()
         {
-            this.Marquee.Marquee(this.StartingPosition, this.Position, 32, this.SelectionIsSubtract);
-            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, this.Position, 32));
+            this.Marquee.Marquee(this.StartingPosition, this.Position, this.SelectionSize, this.SelectionIsSubtract);
+            this.Marquee.Hit(RectExtensions.GetRect(this.StartingPosition, this.Position, this.SelectionSize));
 
             this.CanvasControl.Invalidate(); // Invalidate
             this.CanvasAnimatedControl.Invalidate(); // Invalidate
@@ -50,7 +68,7 @@ namespace Luo_Painter
         {
             if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
             {
-                this.SelectionFlood(this.Position, bitmapLayer, this.SelectionIsSubtract);
+                this.SelectionFlood(this.Position, bitmapLayer);
             }
             else
             {
@@ -58,9 +76,9 @@ namespace Luo_Painter
             }
         }
 
-        private bool SelectionFlood(Vector2 position, BitmapLayer bitmapLayer, bool isSubtract)
+        private bool SelectionFlood(Vector2 position, BitmapLayer bitmapLayer)
         {
-            bool result = bitmapLayer.FloodSelect(position, Windows.UI.Colors.DodgerBlue);
+            bool result = bitmapLayer.FloodSelect(position, Colors.DodgerBlue, this.FloodIsContiguous, this.FloodTolerance, this.FloodFeather);
 
             if (result is false)
             {
@@ -78,16 +96,11 @@ namespace Luo_Painter
                     this.Tip(TipType.NoPixelForMarquee);
                     return false;
                 case PixelBoundsMode.Solid:
-                    this.Click(isSubtract ? OptionType.Deselect : OptionType.All);
+                    this.Click(OptionType.All);
                     return true;
                 default:
                     // History
-                    int removes = this.History.Push
-                    (
-                        isSubtract ?
-                        this.Marquee.Clear(bitmapLayer, interpolationColors, BitmapType.Temp) :
-                        this.Marquee.Add(bitmapLayer, interpolationColors, BitmapType.Temp)
-                    );
+                    int removes = this.History.Push(this.Marquee.New(bitmapLayer, interpolationColors, BitmapType.Temp));
 
                     this.Marquee.Flush();
                     this.Marquee.RenderThumbnail();

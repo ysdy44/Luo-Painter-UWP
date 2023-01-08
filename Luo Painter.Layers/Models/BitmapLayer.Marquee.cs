@@ -97,6 +97,24 @@ namespace Luo_Painter.Layers.Models
             };
         }
 
+        public IHistory New(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
+        {
+            PixelBounds bounds = marquee.CreateInterpolationBounds(interpolationColors);
+            Rect rect = bounds.ToRect(BitmapLayer.Unit);
+
+            using (CanvasDrawingSession ds = this.CreateDrawingSession())
+            {
+                ds.Blend = CanvasBlend.Copy;
+                ds.DrawImage(new CropEffect
+                {
+                    SourceRectangle = rect,
+                    Source = marquee[type]
+                });
+            }
+            this.Hit(interpolationColors);
+
+            return this.GetBitmapHistory();
+        }
         public IHistory Add(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
         {
             using (CanvasDrawingSession ds = this.CreateDrawingSession())
@@ -107,7 +125,6 @@ namespace Luo_Painter.Layers.Models
 
             return this.GetBitmapHistory();
         }
-
         public IHistory Clear(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
         {
             PixelBounds bounds = marquee.CreateInterpolationBounds(interpolationColors);
