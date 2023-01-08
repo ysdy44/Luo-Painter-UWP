@@ -1,0 +1,37 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="FillIcon" TargetType="ContentControl">
+        <Canvas Width="24.5" Height="24">
+            <Path StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}">
+                <Shape.Fill>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="DodgerBlue" Offset="0.4"/>
+                        <GradientStop Color="DeepSkyBlue" Offset="0.6"/>
+                    </LinearGradientBrush>
+                </Shape.Fill>
+                <Path.Data>
+                    M14.94,5.812C14.94,5.812 23.094,7.513 23.707,12.565C24.133,16.081 24.005,19.621 23.875,21.482C23.756,23.177 23.157,23.683 22.534,23.694C19.674,23.742 18.327,20.603 18.511,18.966C18.951,15.057 21.754,12.839 21.068,12.04C19.28,9.955 14.94,5.812 14.94,5.812Z
+                </Path.Data>
+            </Path>
+            <Path StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}">
+                <Shape.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="LightGray" Offset="1"/>
+                    </LinearGradientBrush>
+                </Shape.Fill>
+                <Path.Data>
+                    M14.477,7.311C14.477,7.311 19,10.965 20.05,12.02C20.772,12.745 20.615,13.714 20.097,14.247C18.309,16.089 12.846,21.647 11.149,23.239C10.882,23.489 10.414,23.484 10.061,23.386C6.974,22.531 4.174,19.503 4.174,19.503C4.174,19.503 0.488,15.592 0.074,13.551C-0.1,12.689 0.05,12.573 0.349,12.241C1.874,10.546 7.521,5.002 9.225,3.378C9.769,2.859 10.817,2.911 11.399,3.438C11.96,3.947 13.31,5.376 13.31,5.376L14.477,7.311Z
+                </Path.Data>
+            </Path>
+            <Path StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="{ThemeResource SystemControlBackgroundBaseHighBrush}">
+                <Path.Data>
+                    M12.71,8.255C12.019,8.817 11.452,9.764 11.68,10.533C11.877,11.196 12.504,12.291 13.994,12.142C15.709,11.869 15.837,10.78 15.957,10.122C16.077,9.464 15.427,8.405 14.822,8.302C14.68,7.303 15.097,5.464 14.756,4.266C14.416,3.072 13.807,1.804 12.776,1.114C11.703,0.395 9.623,0.026 8.335,0.558C7.047,1.091 5.481,3.362 5.046,4.31C4.839,4.759 5.014,5.397 5.709,5.637C6.346,5.857 6.683,5.419 6.981,5.062C7.495,4.444 8.353,2.934 9.099,2.51C9.846,2.086 10.807,2.078 11.46,2.518C12.112,2.959 12.511,3.798 12.71,4.575C12.955,5.534 12.654,6.991 12.71,8.255Z
+                </Path.Data>
+            </Path>
+        </Canvas>
+    </ControlTemplate>
+
+</ResourceDictionary>
