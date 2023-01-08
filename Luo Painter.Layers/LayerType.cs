@@ -6,5 +6,6 @@
         Image,
         Group,
         Curve,
+        Fill,
     }
 }

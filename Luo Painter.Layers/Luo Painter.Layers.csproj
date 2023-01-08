@@ -165,6 +165,7 @@
     <Compile Include="Models\BitmapLayer.Setup.cs" />
     <Compile Include="Models\CurveLayer.Anchor.cs" />
     <Compile Include="Models\CurveLayer.cs" />
+    <Compile Include="Models\FillLayer.cs" />
     <Compile Include="Models\GroupLayer.cs" />
     <Compile Include="Models\ImageLayer.cs" />
     <Compile Include="RectExtensions.cs" />
