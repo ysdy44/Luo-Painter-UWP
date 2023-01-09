@@ -108,6 +108,7 @@ namespace Luo_Painter
                     if (this.Disabler) break;
                     this.Disabler = true;
 
+                    this.AnimationIcon.Begin(); // Storyboard
                     await this.SaveAsync(this.ApplicationView.PersistedStateId);
 
                     this.Disabler = false;
@@ -450,7 +451,7 @@ namespace Luo_Painter
                 #region Menu
 
                 case OptionType.FileMenu:
-                    this.FileFlyout.ShowAt(this.HomeButton);
+                    this.FileFlyout.ShowAt(this.ExportButton);
                     break;
                 case OptionType.ExportMenu:
                     {
@@ -1601,7 +1602,7 @@ namespace Luo_Painter
                 //case OptionType.Lighting:
                 case OptionType.Fog:
                 case OptionType.Glass:
-                //case OptionType.PinchPunch:
+                    //case OptionType.PinchPunch:
                     {
                         if (this.LayerSelectedItem is ILayer layer)
                         {

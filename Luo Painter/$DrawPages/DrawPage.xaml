@@ -48,6 +48,32 @@
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
         </Flyout>
         <!--MenuFlyout-->
+        <MenuFlyout x:Name="FileFlyout" Placement="Bottom">
+            <!--File-->
+            <MenuFlyoutSeparator x:Name="FileHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                <UIElement.AccessKey>
+                    Files
+                </UIElement.AccessKey>
+            </MenuFlyoutSeparator>
+            <MenuFlyoutItem options:OptionExtensions.Type="Home" Command="{x:Bind Command}">
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Home"/>
+                </MenuFlyoutItem.Tag>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem options:OptionExtensions.Type="Save" Command="{x:Bind Command}">
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                </UIElement.KeyboardAccelerators>
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Save" Foreground="#FFC003"/>
+                </MenuFlyoutItem.Tag>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem options:OptionExtensions.Type="Close" Command="{x:Bind Command}">
+                <MenuFlyoutItem.Tag>
+                    <SymbolIcon Symbol="Cancel"/>
+                </MenuFlyoutItem.Tag>
+            </MenuFlyoutItem>
+        </MenuFlyout>
         <MenuFlyout x:Name="ResizeFlyout">
             <!--Resize-->
             <MenuFlyoutSeparator x:Name="ResizeHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
@@ -1315,7 +1341,7 @@
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh">
                                                     <UIElement.RenderTransformOrigin>
                                                         0.5, 0.5
@@ -1324,7 +1350,7 @@
                                                         <ScaleTransform ScaleX="-1"/>
                                                     </UIElement.RenderTransform>
                                                 </SymbolIcon>
-                                            </Button>
+                                            </RepeatButton>
                                             <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="ResetRadianToolTip" Style="{StaticResource AppToolTipStyle}">
@@ -1333,9 +1359,9 @@
                                                 </ToolTipService.ToolTip>
                                                 <local:ElementIcon Type="ResetRadian"/>
                                             </Button>
-                                            <Button x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh"/>
-                                            </Button>
+                                            </RepeatButton>
                                         </Grid>
                                         <Grid ColumnSpacing="2" Padding="8,0" Height="60" 
                                               Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}">
@@ -1344,9 +1370,9 @@
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Remove"/>
-                                            </Button>
+                                            </RepeatButton>
                                             <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="ResetScaleToolTip" Style="{StaticResource AppToolTipStyle}">
@@ -1355,9 +1381,9 @@
                                                 </ToolTipService.ToolTip>
                                                 <local:ElementIcon Type="ResetScale"/>
                                             </Button>
-                                            <Button x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Add"/>
-                                            </Button>
+                                            </RepeatButton>
                                         </Grid>
                                     </StackPanel>
                                     <transformers:RemoteControl 
@@ -1683,43 +1709,15 @@
                                 Home
                             </ToolTip>
                         </ToolTipService.ToolTip>
-                        <UIElement.ContextFlyout>
-                            <MenuFlyout x:Name="FileFlyout" Placement="Bottom">
-                                <!--File-->
-                                <MenuFlyoutSeparator x:Name="FileHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                    <UIElement.AccessKey>
-                                        Files
-                                    </UIElement.AccessKey>
-                                </MenuFlyoutSeparator>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Home" Command="{x:Bind Command}">
-                                    <MenuFlyoutItem.Tag>
-                                        <SymbolIcon Symbol="Home"/>
-                                    </MenuFlyoutItem.Tag>
-                                </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Save" Command="{x:Bind Command}">
-                                    <UIElement.KeyboardAccelerators>
-                                        <KeyboardAccelerator Modifiers="Control" Key="S"/>
-                                    </UIElement.KeyboardAccelerators>
-                                    <MenuFlyoutItem.Tag>
-                                        <SymbolIcon Symbol="Save"/>
-                                    </MenuFlyoutItem.Tag>
-                                </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Close" Command="{x:Bind Command}">
-                                    <MenuFlyoutItem.Tag>
-                                        <SymbolIcon Symbol="Cancel"/>
-                                    </MenuFlyoutItem.Tag>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </UIElement.ContextFlyout>
                         <SymbolIcon Symbol="Home"/>
                     </Button>
-                    <Button x:Name="ExportButton" Width="70" Height="50" Foreground="#FFC003" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button x:Name="ExportButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="ExportToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Export
                             </ToolTip>
                         </ToolTipService.ToolTip>
-                        <SymbolIcon Symbol="NewWindow"/>
+                        <elements:AnimationIcon x:Name="AnimationIcon"/>
                     </Button>
                     <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>

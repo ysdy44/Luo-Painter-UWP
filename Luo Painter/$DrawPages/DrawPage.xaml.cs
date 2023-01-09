@@ -330,7 +330,8 @@ namespace Luo_Painter
             this.ConstructGammaTransfer();
             this.ConstructDiscreteTransfer();
             this.ConstructLighting();
-
+            
+            this.ConstructSelection();
             this.ConstructGeometry();
 
             this.ConstructInk();
@@ -379,6 +380,8 @@ namespace Luo_Painter
 
 
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
+            this.ExportButton.RightTapped += (s, e) => this.Click(OptionType.FileMenu);
+            this.ExportButton.Holding += (s, e) => this.Click(OptionType.FileMenu);
             this.HomeButton.Click += (s, e) => this.Click(OptionType.Home);
             this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
             this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
