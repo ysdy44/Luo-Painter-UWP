@@ -121,6 +121,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AlignmentGrid.cs" />
+    <Compile Include="AnimationIcon.xaml.cs">
+      <DependentUpon>AnimationIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AnimationListView.cs" />
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
@@ -192,6 +195,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AnimationIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Docker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
