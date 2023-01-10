@@ -261,7 +261,6 @@
                     </Grid.RowDefinitions>
                     <elements:IndexGrid Index="{x:Bind MenuListBox.SelectedIndex, Mode=OneWay}">
                         <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
-                        <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
                         <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
                         <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
                         <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
@@ -275,7 +274,6 @@
                         Style="{StaticResource AppSegmentListBoxStyle}"
                         >
                         <local:ToolIconWithToolTip Type="ToolMenu"/>
-                        <local:ToolIconWithToolTip Type="PaintMenu"/>
                         <local:ToolIconWithToolTip Type="BrushMenu"/>
                         <local:ToolIconWithToolTip Type="SizeMenu"/>
                         <local:ToolIconWithToolTip Type="HistoryMenu"/>
@@ -1268,10 +1266,10 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Paint">
-                                <Grid Padding="12,0" ColumnSpacing="12" VerticalAlignment="Center" >
+                                <Grid Padding="12,0" ColumnSpacing="4" VerticalAlignment="Center" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="70"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
 
@@ -1292,6 +1290,21 @@
                                             Size
                                         </Slider.Header>
                                     </Slider>
+
+                                    <!--Paint-->
+                                    <Button Grid.Column="1" Width="70" Height="50" Background="{ThemeResource AppBackground}" Style="{StaticResource TextBlockButtonStyle}" >
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Name="PaintToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                Paint Menu
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                        <Button.Flyout>
+                                            <Flyout x:Name="PaintFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                                <controls:PaintScrollViewer x:Name="PaintScrollViewer"/>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                        <local:OptionIcon Type="PaintMenu"/>
+                                    </Button>
 
                                     <!--Opacity-->
                                     <Slider                 
