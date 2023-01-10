@@ -28,6 +28,7 @@
         <!--Range-->
         <local:SizeRange x:Name="SizeRange"/>
         <local:ScaleRange x:Name="ScaleRange"/>
+        <!--Storyboard-->
         <!--Radian-->
         <Storyboard x:Name="RadianStoryboard">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Value" Storyboard.TargetName="RadianSlider" EnableDependentAnimation="True">
@@ -74,7 +75,7 @@
                 </MenuFlyoutItem.Tag>
             </MenuFlyoutItem>
         </MenuFlyout>
-        <MenuFlyout x:Name="ResizeFlyout">
+        <MenuFlyout x:Name="ResizeFlyout" Placement="Bottom">
             <!--Resize-->
             <MenuFlyoutSeparator x:Name="ResizeHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                 <UIElement.AccessKey>
@@ -87,7 +88,7 @@
             <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
             <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
         </MenuFlyout>
-        <MenuFlyout x:Name="RotateFlyout">
+        <MenuFlyout x:Name="RotateFlyout" Placement="Bottom">
             <!--Rotate-->
             <MenuFlyoutSeparator x:Name="RotateHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
                 <UIElement.AccessKey>
@@ -248,12 +249,16 @@
             x:Name="SplitRightView"
             Margin="0,50,0,0"
             PanePlacement="Right"
-            OpenPaneLength="280"
+            OpenPaneLength="281"
             DisplayMode="Inline"
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
             <SplitView.Pane>
-                <Grid>
+                <Grid BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
                     <elements:IndexGrid Index="{x:Bind MenuListBox.SelectedIndex, Mode=OneWay}">
                         <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
                         <controls:PaintScrollViewer x:Name="PaintScrollViewer" Visibility="Collapsed"/>
@@ -263,10 +268,10 @@
                     </elements:IndexGrid>
                     <ListBox
                         x:Name="MenuListBox"
+                        Grid.Row="1"
                         SelectedIndex="0"
                         Height="50" 
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
                         Style="{StaticResource AppSegmentListBoxStyle}"
                         >
                         <local:ToolIconWithToolTip Type="ToolMenu"/>
@@ -280,12 +285,18 @@
             <SplitView 
                 x:Name="SplitLeftView"
                 PanePlacement="Left" 
-                OpenPaneLength="280" 
+                OpenPaneLength="281" 
                 DisplayMode="Inline" 
                 PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}" 
                 >
                 <SplitView.Pane>
-                    <controls:LayerListView x:Name="LayerListView" Command="{x:Bind Command}" ItemsSource="{x:Bind ObservableCollection}" />
+                    <controls:LayerListView
+                        x:Name="LayerListView" 
+                        Command="{x:Bind Command}" 
+                        ItemsSource="{x:Bind ObservableCollection}" 
+                        BorderThickness="0,0,1,0" 
+                        BorderBrush="{ThemeResource AppStroke}"
+                        />
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">
 
@@ -396,7 +407,7 @@
                                             <ColumnDefinition Width="1*" />
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="TransformSnapButton" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformSnapButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE2AC;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock x:Name="TransformSnapTextBlock" VerticalAlignment="Center">
@@ -404,7 +415,7 @@
                                                 </TextBlock>
                                             </StackPanel>
                                         </ToggleButton>
-                                        <ToggleButton x:Name="TransformRatioButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformRatioButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xEA5F;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock x:Name="TransformRatioTextBlock" VerticalAlignment="Center">
@@ -412,7 +423,7 @@
                                                 </TextBlock>
                                             </StackPanel>
                                         </ToggleButton>
-                                        <ToggleButton x:Name="TransformCenterButton" Grid.Column="2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformCenterButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE958;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock x:Name="TransformCenterTextBlock" VerticalAlignment="Center">
@@ -566,7 +577,7 @@
                                             Threshold
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" >
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
@@ -916,7 +927,7 @@
                                             Opacity
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" 
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -965,7 +976,7 @@
                                             Blur Amount
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" 
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -1051,7 +1062,7 @@
                                             Tolerance
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60" 
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -1062,7 +1073,7 @@
                                             Invert
                                         </ToggleButton>
                                         <hsvColorPickers:ColorButtonBase x:Name="ChromaKeyColorButton" Grid.Column="1"/>
-                                        <ToggleButton x:Name="ChromaKeyFeatherButton" Grid.Column="2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="ChromaKeyFeatherButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             Feather
                                         </ToggleButton>
                                     </Grid>
@@ -1216,7 +1227,7 @@
                                             Tolerance
                                         </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60"
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60"
                                           Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -1341,7 +1352,7 @@
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <RepeatButton x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh">
                                                     <UIElement.RenderTransformOrigin>
                                                         0.5, 0.5
@@ -1351,7 +1362,7 @@
                                                     </UIElement.RenderTransform>
                                                 </SymbolIcon>
                                             </RepeatButton>
-                                            <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
+                                            <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="ResetRadianToolTip" Style="{StaticResource AppToolTipStyle}">
                                                         Reset the radian of rotation
@@ -1359,7 +1370,7 @@
                                                 </ToolTipService.ToolTip>
                                                 <local:ElementIcon Type="ResetRadian"/>
                                             </Button>
-                                            <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh"/>
                                             </RepeatButton>
                                         </Grid>
@@ -1370,10 +1381,10 @@
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <RepeatButton x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Remove"/>
                                             </RepeatButton>
-                                            <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
+                                            <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="ResetScaleToolTip" Style="{StaticResource AppToolTipStyle}">
                                                         Reset scale
@@ -1381,7 +1392,7 @@
                                                 </ToolTipService.ToolTip>
                                                 <local:ElementIcon Type="ResetScale"/>
                                             </Button>
-                                            <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="38" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Add"/>
                                             </RepeatButton>
                                         </Grid>
@@ -1420,7 +1431,7 @@
                                         <ListBoxItem x:Name="BrushRadialGradientItem">Radial</ListBoxItem>
                                         <ListBoxItem x:Name="BrushEllipticalGradientItem">Elliptical</ListBoxItem>
                                     </ListBox>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60"
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60"
                                           Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -1457,7 +1468,7 @@
                                         <ListBoxItem x:Name="TransparencyRadialGradientItem">Radial</ListBoxItem>
                                         <ListBoxItem x:Name="TransparencyEllipticalGradientItem">Elliptical</ListBoxItem>
                                     </ListBox>
-                                    <Grid ColumnSpacing="10" Padding="10,0" MinWidth="280" Height="60"
+                                    <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60"
                                           Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -1711,7 +1722,7 @@
                         </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="Home"/>
                     </Button>
-                    <Button x:Name="ExportButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button x:Name="ExportButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="ExportToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Export
@@ -1850,7 +1861,7 @@
                         </Button.Flyout>
                         <local:OptionIcon Type="AdjustmentMenu"/>
                     </Button>
-                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                    <Button x:Name="MoreButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="MoreToolTip" Style="{StaticResource AppToolTipStyle}">
                                 More
