@@ -26,10 +26,10 @@
         </Flyout>
     </FrameworkElement.Resources>
 
-    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}">
+    <ScrollViewer Width="412" Style="{StaticResource AppVerticalScrollViewerStyle}">
         <StackPanel Padding="4,0">
 
-            <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
+            <Border Margin="-4,0" Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
                 <TextBlock 
                     x:Name="TitleTextBlock"
                     Margin="12,0"
@@ -62,7 +62,7 @@
 
             <!--Type-->
             <ComboBox x:Name="ComboBox" SelectedIndex="2" HorizontalAlignment="Stretch">
-
+                
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="brushes:InkType">
                         <luo_painter:InkItem Type="{x:Bind}"/>
@@ -82,7 +82,6 @@
                 </ItemsControl.ItemsSource>
 
             </ComboBox>
-
 
             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
                 <StackPanel Margin="0,10" Spacing="10">
@@ -211,7 +210,7 @@
 
 
             <!--Tip-->
-            <TextBlock x:Name="TipTextBlock" Margin="10,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+            <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                        Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
                     Tip Shape
             </TextBlock>
@@ -470,7 +469,7 @@
                 </Grid>
             </Border>
 
-            <ContentControl HorizontalContentAlignment  ="Center" ContentTemplate="{StaticResource AppListViewBaseFooter}"/>
+            <ContentControl Height="4"/>
 
         </StackPanel>
     </ScrollViewer>

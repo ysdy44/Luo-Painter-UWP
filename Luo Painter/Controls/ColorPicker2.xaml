@@ -19,13 +19,13 @@
         </Flyout>
     </FrameworkElement.Resources>
 
-    <StackPanel Orientation="Horizontal" Width="322" Height="240">
+    <StackPanel Orientation="Horizontal" Width="322" Height="200">
 
         <!--Color-->
-        <elements:IndexGrid Width="272" Height="240" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
+        <elements:IndexGrid Width="272" Height="200" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
             <hsvColorPickers:HuePicker x:Name="HuePicker" Visibility="Collapsed" Margin="5,5,5,0" />
-            <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Foreground="{ThemeResource AppForeground}"/>
-            <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Foreground="{ThemeResource AppForeground}"/>
+            <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Height="180" Foreground="{ThemeResource AppForeground}"/>
+            <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Height="180" Foreground="{ThemeResource AppForeground}"/>
         </elements:IndexGrid>
 
         <!--Type-->
@@ -60,7 +60,7 @@
                 <x:String>HSV</x:String>
             </ListBox>
 
-            <Button x:Name="StrawButton" Grid.Row="1" Width="44" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+            <Button x:Name="StrawButton" Grid.Row="1" Width="44" CornerRadius="4" Height="40" BorderThickness="1">
                 <UIElement.ManipulationMode>
                     TranslateX, TranslateY
                 </UIElement.ManipulationMode>

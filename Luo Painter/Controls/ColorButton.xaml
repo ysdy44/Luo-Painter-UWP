@@ -185,13 +185,14 @@
 
                     </ListView>
 
-                    <Grid x:Name="HarmonyListView" Padding="12,0,0,0" ColumnSpacing="6">
+                    <Grid x:Name="HarmonyListView" Padding="12,0,4,0" ColumnSpacing="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="EllipseItem" Padding="0" Style="{StaticResource TextBlockButtonStyle}">
                             <Rectangle RadiusX="18" RadiusY="18" Width="72" Height="36">
@@ -221,7 +222,7 @@
                                 </Shape.Fill>
                             </Rectangle>
                         </Button>
-                        <Button Grid.Column="4" Width="70" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <Button Grid.Column="5" Width="70" CornerRadius="4" Height="40" BorderThickness="1">
                             <Button.Flyout>
                                 <Flyout Placement="TopEdgeAlignedRight" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                                     <StackPanel Spacing="2" Padding="6,4" Width="318">
@@ -277,7 +278,7 @@
                         </Grid>
                     </Border>
 
-                    <Grid Padding="6,0" Height="50" Visibility="Collapsed" >
+                    <Grid ColumnSpacing="4" Padding="4,0" Height="50" Visibility="Collapsed" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -290,11 +291,11 @@
                             <ListBoxItem x:Name="StrawItem">Straw</ListBoxItem>
                         </ListBox>
 
-                        <Button x:Name="ImageButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <Button x:Name="ImageButton" Grid.Column="1" Width="70" CornerRadius="4" Height="40" BorderThickness="1">
                             <SymbolIcon Symbol="Pictures"/>
                         </Button>
 
-                        <Button x:Name="ClearButton" Grid.Column="2" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                        <Button x:Name="ClearButton" Grid.Column="2" Width="70" CornerRadius="4" Height="40" BorderThickness="1">
                             <SymbolIcon Symbol="Delete"/>
                         </Button>
                     </Grid>

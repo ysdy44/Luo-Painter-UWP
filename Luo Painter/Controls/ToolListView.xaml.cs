@@ -11,7 +11,7 @@ namespace Luo_Painter.Controls
         public override string ToString() => $"{this.Width} × {this.Height}";
     }
 
-    public sealed partial class ToolListView : XamlListView
+    public sealed partial class ToolListView : XamlGridView
     {
 
         //@Content

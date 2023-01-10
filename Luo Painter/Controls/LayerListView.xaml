@@ -151,7 +151,7 @@
                             Type="{x:Bind BlendMode, Mode=OneWay}"
                             Opacity="{x:Bind UIVisibility, Mode=OneWay}"     
                             />
-
+                        
                         <local:LayerButton CommandParameter="{x:Bind}" Command="{x:Bind}" >
                             <FontIcon
                                 IsHitTestVisible="False"
@@ -211,7 +211,7 @@
     </ItemsControl.ItemTemplate>
 
     <ListViewBase.Header>
-        <Grid Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+        <Grid Height="50" Padding="0,0,4,0" ColumnSpacing="4" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -232,7 +232,7 @@
                 Layers
             </TextBlock>
 
-            <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+            <Button Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="PropertieToolTip" Style="{StaticResource AppToolTipStyle}">
                         Properties
@@ -341,7 +341,7 @@
                 <FontIcon Glyph="&#xE946;" FontFamily="Segoe MDL2 Assets"/>
             </Button>
 
-            <Button Grid.Column="2" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+            <Button Grid.Column="2" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="LayerToolTip" Style="{StaticResource AppToolTipStyle}">
                         Layers
@@ -428,7 +428,7 @@
         <SplitButton
             x:Name="NewButton"
             Margin="7"
-            Height="36"
+            Height="40"
             CornerRadius="4"            
             BorderThickness="1"               
             HorizontalAlignment="Stretch"               

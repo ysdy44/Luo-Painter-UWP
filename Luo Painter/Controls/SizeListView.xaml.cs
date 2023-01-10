@@ -23,7 +23,7 @@ namespace Luo_Painter.Controls
         }
     }
 
-    public sealed partial class SizeListView : XamlListView
+    public sealed partial class SizeListView : XamlGridView
     {
 
         //@Construct

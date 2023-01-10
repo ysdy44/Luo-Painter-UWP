@@ -7,8 +7,8 @@
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
     mc:Ignorable="d"
+    d:DesignWidth="400"   
     d:DesignHeight="400"
-    d:DesignWidth="400"
     IsItemClickEnabled="True" 
     FooterTemplate="{StaticResource AppListViewBaseFooter}"      
     >
@@ -49,7 +49,7 @@
     </ItemsControl.ItemTemplate>
 
     <ListViewBase.Header>
-        <Grid Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+        <Grid Height="50" Padding="0,0,4,0" ColumnSpacing="4" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -57,17 +57,17 @@
             <TextBlock
                 x:Name="TitleTextBlock"
                 Margin="16,0"
-                IsHitTestVisible="false" 
+                IsTextSelectionEnabled="True" 
                 FontWeight="Medium" 
                 TextTrimming="CharacterEllipsis" 
                 FontSize="20" 
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
-                Style="{StaticResource SubheaderTextBlockStyle}"
+                OpticalMarginAlignment="TrimSideBearings"
                 >
                 Brushes
             </TextBlock>
-            <Button x:Name="AddButton" Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+            <Button x:Name="AddButton" Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
                 <SymbolIcon Symbol="Add"/>
             </Button>
         </Grid>
