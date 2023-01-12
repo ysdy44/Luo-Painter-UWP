@@ -481,8 +481,9 @@ namespace Luo_Painter
                     }
                     break;
 
-                //case OptionType.PaintMenu:
-                //    break;
+                case OptionType.PaintMenu:
+                    await this.PaintScrollViewer.ShowAsync();
+                    break;
                 //case OptionType.BrushMenu:
                 //    break;
                 //case OptionType.SizeMenu:
@@ -525,19 +526,11 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.ResizeCanvas:
-                    this.ResizeFlyout.ShowAt(this, new Point
-                    {
-                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
-                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 4 - 44 - 44 - 44) / 2)
-                    });
+                    this.ResizeFlyout.ShowAt(this.MoreButton);
                     break;
 
                 case OptionType.RotateCanvas:
-                    this.RotateFlyout.ShowAt(this, new Point
-                    {
-                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
-                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 44 - 4 - 44 - 44 - 44) / 2)
-                    });
+                    this.RotateFlyout.ShowAt(this.MoreButton);
                     break;
 
                 case OptionType.Stretch:

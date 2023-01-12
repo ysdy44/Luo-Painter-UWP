@@ -379,6 +379,7 @@ namespace Luo_Painter
             };
 
 
+            this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
             this.ExportButton.RightTapped += (s, e) => this.Click(OptionType.FileMenu);
             this.ExportButton.Holding += (s, e) => this.Click(OptionType.FileMenu);

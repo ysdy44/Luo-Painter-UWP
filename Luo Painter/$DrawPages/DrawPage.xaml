@@ -1292,17 +1292,12 @@
                                     </Slider>
 
                                     <!--Paint-->
-                                    <Button Grid.Column="1" Width="70" Height="50" Background="{ThemeResource AppBackground}" Style="{StaticResource TextBlockButtonStyle}" >
+                                    <Button x:Name="PaintButton" Grid.Column="1" Width="70" Height="50" Background="{ThemeResource AppBackground}" Style="{StaticResource TextBlockButtonStyle}" >
                                         <ToolTipService.ToolTip>
                                             <ToolTip x:Name="PaintToolTip" Style="{StaticResource AppToolTipStyle}">
                                                 Paint Menu
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
-                                        <Button.Flyout>
-                                            <Flyout x:Name="PaintFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                                                <controls:PaintScrollViewer x:Name="PaintScrollViewer"/>
-                                            </Flyout>
-                                        </Button.Flyout>
                                         <local:OptionIcon Type="PaintMenu"/>
                                     </Button>
 
@@ -1961,6 +1956,7 @@
         <controls:StretchDialog x:Name="StretchDialog" />
         <controls:ExtendDialog x:Name="ExtendDialog" />
         <controls:OffsetDialog x:Name="OffsetDialog" />
+        <controls:PaintScrollViewer x:Name="PaintScrollViewer"/>
 
 
         <!--Tip-->
