@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
 using System;
 using Windows.UI.Xaml.Controls;
@@ -12,28 +13,29 @@ namespace Luo_Painter.Controls
         {
             this.ImportGrainButton.Click += async (s, e) =>
             {
-                // Show Dialog
-                this.ConstructTexture(this.InkPresenter.Grain);
-
-                base.IsHitTestVisible = false;
-                ContentDialogResult result = await this.ShowTextureAsync();
-                base.IsHitTestVisible = true;
-
-                switch (result)
+                base.Hide();
                 {
-                    case ContentDialogResult.Primary:
-                        string path = this.TextureSelectedItem;
-                        if (string.IsNullOrEmpty(path)) break;
+                    // Show Dialog
+                    this.ConstructTexture(this.InkPresenter.Grain);
 
-                        // Select Texture
-                        this.GrainImage.UriSource = new System.Uri(path.GetTexture());
-                        this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
-                        this.InkType = this.InkPresenter.GetType();
-                        this.TryInk();
-                        return;
-                    default:
-                        break;
+                    ContentDialogResult result = await this.ShowTextureAsync();
+                    switch (result)
+                    {
+                        case ContentDialogResult.Primary:
+                            string path = this.TextureSelectedItem;
+                            if (string.IsNullOrEmpty(path)) break;
+
+                            // Select Texture
+                            this.GrainImage.UriSource = new System.Uri(path.GetTexture());
+                            this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
+                            this.InkType = this.InkPresenter.GetType();
+                            this.TryInk();
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                await base.ShowAsync();
             };
 
             this.RecolorGrainButton.Click += (s, e) =>

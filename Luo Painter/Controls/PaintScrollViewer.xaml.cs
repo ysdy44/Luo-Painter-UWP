@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
+    public sealed partial class PaintScrollViewer : ContentDialog, IInkParameter
     {
 
         //@Converter
@@ -24,12 +24,6 @@ namespace Luo_Painter.Controls
         private Visibility BooleanToVisibilityConverter(bool? value) => value is true ? Visibility.Visible : Visibility.Collapsed;
         private CornerRadius CornerRadiusConverter(int value) => new CornerRadius((value is 0 || value is 1) ? 40 : 0);
         private double TipOpacityConverter(int value) => (value is 0 || value is 2) ? 1 : 0;
-
-        private Visibility Int0VisibilityConverter(int value) => value is 0 ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int1VisibilityConverter(int value) => value is 1 ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int2VisibilityConverter(int value) => value is 2 ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int3VisibilityConverter(int value) => value is 3 ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Int4VisibilityConverter(int value) => value is 4 ? Visibility.Visible : Visibility.Collapsed;
 
         private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
