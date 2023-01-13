@@ -21,6 +21,24 @@ namespace Luo_Painter.TestApp
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
 
+        private double Stop1OffsetConverter(double value) => 0.5 - 0.5 * value / 20;
+        private double Stop2OffsetConverter(double value) => 0.5 + 0.5 * value / 20;
+
+        /// <summary> <see cref="BitmapLayer.ConstructMix(Vector2)"/> </summary> 
+        private Vector4 ConstructMix(float mix)
+        {
+            float x = 1 - mix;
+            float y = mix;
+            return this.ColorHdr0 * x + this.ColorHdr1 * y;
+        }
+        /// <summary> <see cref="BitmapLayer.GetMix(Vector4, float, float)"/> </summary> 
+        private Vector4 GetMix(float mix, float persistence)
+        {
+            float x = 1 - mix;
+            float y = mix * (1 - persistence);
+            float z = mix * persistence;
+            return this.ColorHdr0 * x + this.ColorHdr2 * y + this.ColorHdr1 * z;
+        }
         private Vector3 MixNormalize(float mix, float persistence)
         {
             float x = 1 - mix;
@@ -28,6 +46,15 @@ namespace Luo_Painter.TestApp
             float z = mix * persistence;
             return new Vector3(x, y, z);
         }
+
+        //@Readonly
+        readonly Vector4 ColorHdr0 = new Vector4(0, 205f / 255f, 203f / 255f, 1);
+        readonly Vector4 ColorHdr1 = new Vector4(255f / 255f, 253f / 255f, 0, 1);
+        readonly Vector4 ColorHdr2 = new Vector4(253f / 255f, 0, 1, 1);
+
+        readonly Color Color0 = Windows.UI.Color.FromArgb(255, 0, 205, 203);
+        readonly Color Color1 = Windows.UI.Color.FromArgb(255, 255, 253, 0);
+        readonly Color Color2 = Windows.UI.Color.FromArgb(255, 253, 0, 255);
 
         byte[] BrushEdgeHardnessShaderCodeBytes;
 
@@ -57,6 +84,12 @@ namespace Luo_Painter.TestApp
             {
                 this.Mix = (float)(e.NewValue / 100);
 
+                Vector4 colorHdr1 = this.ConstructMix(this.Mix);
+                this.Stop1.Color = Color.FromArgb((byte)(colorHdr1.W * 255f), (byte)(colorHdr1.X * 255f), (byte)(colorHdr1.Y * 255f), (byte)(colorHdr1.Z * 255f));
+
+                Vector4 colorHdr = this.GetMix(this.Mix, this.Persistence);
+                this.Stop2.Color = Color.FromArgb((byte)(colorHdr.W * 255f), (byte)(colorHdr.X * 255f), (byte)(colorHdr.Y * 255f), (byte)(colorHdr.Z * 255f));
+
                 Vector3 n = this.MixNormalize(this.Mix, this.Persistence);
                 this.XRectangle.Height = n.X * 200;
                 this.YRectangle.Height = n.Y * 200;
@@ -69,6 +102,9 @@ namespace Luo_Painter.TestApp
             this.PersistenceSlider.ValueChanged += (s, e) =>
             {
                 this.Persistence = (float)(e.NewValue / 100);
+
+                Vector4 colorHdr2 = this.GetMix(this.Mix, this.Persistence);
+                this.Stop2.Color = Color.FromArgb((byte)(colorHdr2.W * 255f), (byte)(colorHdr2.X * 255f), (byte)(colorHdr2.Y * 255f), (byte)(colorHdr2.Z * 255f));
 
                 Vector3 n = this.MixNormalize(this.Mix, this.Persistence);
                 this.XRectangle.Height = n.X * 200;

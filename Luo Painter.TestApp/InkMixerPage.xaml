@@ -73,6 +73,49 @@
 
         <Grid>
             <xaml:CanvasControl x:Name="CanvasControl"/>
+          
+            <Grid Margin="60" Width="320" Height="90" CornerRadius="8" BorderThickness="1" BorderBrush="Black" Background="White" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="1">
+                    <Border.Background>
+                        <SolidColorBrush Color="{x:Bind Color1}"/>
+                    </Border.Background>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="1">
+                    <Border.Background>
+                        <SolidColorBrush Color="{x:Bind Color2}"/>
+                    </Border.Background>
+                </Border>
+
+                <Path Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Path.Data>
+                        M223.141,33.589L223.141,32.87C223.141,32.87 188.443,-0.243 152.758,0.001C152.077,-0.004 147.501,0.249 145.87,0.448C107.895,4.583 88.769,25.912 68.665,35.815C33.312,53.231 0,30.643 0,30.643L0,31.361C0,31.361 34.698,64.474 70.383,64.23C71.064,64.236 75.64,63.983 77.27,63.784C115.246,59.648 134.371,38.32 154.475,28.416C189.829,11.001 223.141,33.589 223.141,33.589Z
+                    </Path.Data>
+                    <Shape.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop 
+                                x:Name="Stop1" 
+                                Offset="{x:Bind Stop1OffsetConverter(WetSlider.Value), Mode=OneWay}" 
+                                Color="{x:Bind Color0}"
+                                />
+                            <GradientStop 
+                                x:Name="Stop2" 
+                                Offset="{x:Bind Stop2OffsetConverter(WetSlider.Value), Mode=OneWay}" 
+                                Color="{x:Bind Color0}"
+                                />
+                        </LinearGradientBrush>
+                    </Shape.Fill>
+                </Path>
+            </Grid>
+            
             <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
                 <AppBarButton>
