@@ -18,9 +18,16 @@ namespace Luo_Painter.TestApp
         //@Converter
         private string RoundConverter(double value) => $"{value:0}";
 
-        //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
+
+        private Vector3 MixNormalize(float mix, float persistence)
+        {
+            float x = 1 - mix;
+            float y = mix * (1 - persistence);
+            float z = mix * persistence;
+            return new Vector3(x, y, z);
+        }
 
         byte[] BrushEdgeHardnessShaderCodeBytes;
 
@@ -35,6 +42,7 @@ namespace Luo_Painter.TestApp
         public float Wet { get; set; } = 12;
         public float Persistence { get; set; } = 0;
 
+        //@Construct
         public InkMixerPage()
         {
             this.InitializeComponent();
@@ -49,18 +57,12 @@ namespace Luo_Painter.TestApp
             {
                 this.Mix = (float)(e.NewValue / 100);
 
-                Vector3 n = this.BitmapLayer.MixNormalize(this.Mix, this.Persistence);
-                float x = n.X * 200;
-                float y = n.Y * 200;
-                float z = n.Z * 200;
-
-                this.XRectangle.Width = x;
-                Canvas.SetLeft(this.YRectangle, x);
-                this.YRectangle.Width = y;
-                Canvas.SetLeft(this.ZRectangle, x + y);
-                this.ZRectangle.Width = z;
+                Vector3 n = this.MixNormalize(this.Mix, this.Persistence);
+                this.XRectangle.Height = n.X * 200;
+                this.YRectangle.Height = n.Y * 200;
+                this.ZRectangle.Height = n.Z * 200;
             };
-            this.Wetlider.ValueChanged += (s, e) =>
+            this.WetSlider.ValueChanged += (s, e) =>
             {
                 this.Wet = (float)(e.NewValue);
             };
@@ -68,16 +70,10 @@ namespace Luo_Painter.TestApp
             {
                 this.Persistence = (float)(e.NewValue / 100);
 
-                Vector3 n = this.BitmapLayer.MixNormalize(this.Mix, this.Persistence);
-                float x = n.X * 200;
-                float y = n.Y * 200;
-                float z = n.Z * 200;
-
-                this.XRectangle.Width = x;
-                Canvas.SetLeft(this.YRectangle, x);
-                this.YRectangle.Width = y;
-                Canvas.SetLeft(this.ZRectangle, x + y);
-                this.ZRectangle.Width = z;
+                Vector3 n = this.MixNormalize(this.Mix, this.Persistence);
+                this.XRectangle.Height = n.X * 200;
+                this.YRectangle.Height = n.Y * 200;
+                this.ZRectangle.Height = n.Z * 200;
             };
 
             this.ColorPicker.ColorChanged += (s, e) =>

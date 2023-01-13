@@ -16,91 +16,106 @@
         <transformers:CanvasTransformer x:Name="Transformer" />
     </FrameworkElement.Resources>
 
-    <Grid>
 
-        <xaml:CanvasControl x:Name="CanvasControl"/>
+    <SplitView x:Name="SplitView" OpenPaneLength="200" PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="True" >
+        <SplitView.Pane>
+            <StackPanel>
 
-        <StackPanel Margin="12,62" Padding="18,12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{ThemeResource AppBarBackgroundThemeBrush}" >
+                <Slider x:Name="MixSlider" Value="100" Width="200">
+                    <Slider.Header>
+                        <TextBlock>
+                            <Run>Mix</Run>
+                            <Run Text="{x:Bind RoundConverter(MixSlider.Value), Mode=OneWay}"/>
+                            <Run >%</Run>
+                        </TextBlock>
+                    </Slider.Header>
+                </Slider>
 
-            <TextBlock>
-                <Run>Mix</Run>
-                <Run Text="{x:Bind RoundConverter(MixSlider.Value), Mode=OneWay}"/>
-                <Run >%</Run>
-            </TextBlock>
-            <Slider x:Name="MixSlider" Value="100" Width="200" />
+                <Slider x:Name="WetSlider" Value="10" Minimum="2" Maximum="20" Width="200">
+                    <Slider.Header>
+                        <TextBlock>
+                            <Run>Wet</Run>
+                            <Run Text="{x:Bind RoundConverter(WetSlider.Value), Mode=OneWay}"/>
+                            <Run >%</Run>
+                        </TextBlock>
+                    </Slider.Header>
+                </Slider>
 
-            <TextBlock>
-                <Run>Wet</Run>
-                <Run Text="{x:Bind RoundConverter(Wetlider.Value), Mode=OneWay}"/>
-            </TextBlock>
-            <Slider x:Name="Wetlider" Value="10" Minimum="2" Maximum="20" Width="200" />
+                <Slider x:Name="PersistenceSlider" Value="0" Width="200" >
+                    <Slider.Header>
+                        <TextBlock>
+                            <Run>Persistence</Run>
+                            <Run Text="{x:Bind RoundConverter(PersistenceSlider.Value), Mode=OneWay}"/>
+                            <Run >%</Run>
+                        </TextBlock>
+                    </Slider.Header>
+                </Slider>
 
-            <TextBlock>
-                <Run>Persistence</Run>
-                <Run Text="{x:Bind RoundConverter(PersistenceSlider.Value), Mode=OneWay}"/>
-                <Run >%</Run>
-            </TextBlock>
-            <Slider x:Name="PersistenceSlider" Value="0" Width="200" />
+                <TextBlock Margin="0,10">
+                    <LineBreak/>
+                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#FF143C"/>
+                    <Run>Paint Color</Run>
+                    <LineBreak/>
+                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Chartreuse"/>
+                    <Run>Mix Color</Run>
+                    <LineBreak/>
+                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#0090FF"/>
+                    <Run>Persistence Color</Run>
+                </TextBlock>
 
-            <TextBlock>
-                <LineBreak/>
-                <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#FF143C"/>
-                <Run>Paint Color</Run>
-                <LineBreak/>
-                <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Chartreuse"/>
-                <Run>Mix Color</Run>
-                <LineBreak/>
-                <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#0090FF"/>
-                <Run>Persistence Color</Run>
-            </TextBlock>
+                <Rectangle x:Name="XRectangle" RadiusX="4" RadiusY="4" Width="100" Height="0" Fill="#FF143C"/>
+                <Rectangle x:Name="YRectangle" RadiusX="4" RadiusY="4" Width="100" Height="200" Fill="Chartreuse"/>
+                <Rectangle x:Name="ZRectangle" RadiusX="4" RadiusY="4" Width="100" Height="0" Fill="#0090FF"/>
 
-            <Canvas x:Name="Canvas" Margin="0,4,0,0" Width="200" Height="26" >
-                <Rectangle x:Name="XRectangle" RadiusX="4" RadiusY="4" Width="0" Height="26" Fill="#FF143C"/>
-                <Rectangle x:Name="YRectangle" RadiusX="4" RadiusY="4" Width="200" Height="26" Fill="Chartreuse"/>
-                <Rectangle x:Name="ZRectangle" RadiusX="4" RadiusY="4" Width="0" Height="26" Fill="#0090FF"/>
-            </Canvas>
+            </StackPanel>
+        </SplitView.Pane>
 
-        </StackPanel>
 
-        <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <Grid>
+            <xaml:CanvasControl x:Name="CanvasControl"/>
+            <CommandBar Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-            <AppBarButton>
-                <Button.Flyout>
-                    <Flyout>
-                        <ColorPicker
-                            x:Name="ColorPicker"
-                            Color="White"
-                            ColorSpectrumShape="Ring"
-                            IsMoreButtonVisible="False"
-                            IsColorSliderVisible="False"
-                            IsColorChannelTextInputVisible="False"
-                            IsHexInputVisible="False"
-                            IsAlphaEnabled="False"
-                            IsAlphaSliderVisible="True"
-                            IsAlphaTextInputVisible="True" />
-                    </Flyout>
-                </Button.Flyout>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="FontColor"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Color
-                </AppBarButton.Label>
-            </AppBarButton>
+                <AppBarButton>
+                    <Button.Flyout>
+                        <Flyout>
+                            <ColorPicker
+                                x:Name="ColorPicker"
+                                Color="White"
+                                ColorSpectrumShape="Ring"
+                                IsMoreButtonVisible="False"
+                                IsColorSliderVisible="False"
+                                IsColorChannelTextInputVisible="False"
+                                IsHexInputVisible="False"
+                                IsAlphaEnabled="False"
+                                IsAlphaSliderVisible="True"
+                                IsAlphaTextInputVisible="True" 
+                                />
+                        </Flyout>
+                    </Button.Flyout>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="FontColor"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Color
+                    </AppBarButton.Label>
+                </AppBarButton>
 
-            <AppBarButton x:Name="ClearButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Delete"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Clear
-                </AppBarButton.Label>
-            </AppBarButton>
+                <AppBarButton x:Name="ClearButton" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Delete"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Clear
+                    </AppBarButton.Label>
+                </AppBarButton>
 
-        </CommandBar>
+            </CommandBar>
+        </Grid>
 
-    </Grid>
+
+    </SplitView>
+
 </Page>
