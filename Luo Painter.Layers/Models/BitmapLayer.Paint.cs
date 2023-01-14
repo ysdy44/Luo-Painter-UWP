@@ -234,7 +234,7 @@ namespace Luo_Painter.Layers.Models
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
                         ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
                         ["targetPosition"] = cap.StartingPosition,
-                        ["color"] = this.GetMix(colorHdr, mix, persistence)
+                        ["color"] = this.GetMix(colorHdr, mix)
                     }
                 });
             }
