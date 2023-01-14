@@ -222,14 +222,14 @@
       <DependentUpon>OffsetDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PaintScrollViewer.Canvas.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Construct.cs" />
     <Compile Include="Controls\PaintScrollViewer.CreateResources.cs" />
-    <Compile Include="Controls\PaintScrollViewer.Ink0.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Grain.cs" />
     <Compile Include="Controls\PaintScrollViewer.Ink.cs" />
-    <Compile Include="Controls\PaintScrollViewer.Ink1.cs" />
-    <Compile Include="Controls\PaintScrollViewer.Ink2.cs" />
-    <Compile Include="Controls\PaintScrollViewer.Ink3.cs" />
     <Compile Include="Controls\PaintScrollViewer.Mix.cs" />
     <Compile Include="Controls\PaintScrollViewer.Picker.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Property.cs" />
+    <Compile Include="Controls\PaintScrollViewer.Shape.cs" />
     <Compile Include="Controls\PaintScrollViewer.xaml.cs">
       <DependentUpon>PaintScrollViewer.xaml</DependentUpon>
     </Compile>
