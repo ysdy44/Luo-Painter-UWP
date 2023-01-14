@@ -19,9 +19,9 @@
 
     <SplitView x:Name="SplitView" OpenPaneLength="200" PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="True" >
         <SplitView.Pane>
-            <StackPanel>
+            <StackPanel Padding="4,0">
 
-                <Slider x:Name="MixSlider" Value="100" Width="200">
+                <Slider x:Name="MixSlider">
                     <Slider.Header>
                         <TextBlock>
                             <Run>Mix</Run>
@@ -31,7 +31,7 @@
                     </Slider.Header>
                 </Slider>
 
-                <Slider x:Name="WetSlider" Value="10" Minimum="2" Maximum="20" Width="200">
+                <Slider x:Name="WetSlider" Value="10" Minimum="10" Maximum="20">
                     <Slider.Header>
                         <TextBlock>
                             <Run>Wet</Run>
@@ -41,7 +41,7 @@
                     </Slider.Header>
                 </Slider>
 
-                <Slider x:Name="PersistenceSlider" Value="0" Width="200" >
+                <Slider x:Name="PersistenceSlider">
                     <Slider.Header>
                         <TextBlock>
                             <Run>Persistence</Run>
@@ -51,21 +51,21 @@
                     </Slider.Header>
                 </Slider>
 
-                <TextBlock Margin="0,10">
-                    <LineBreak/>
-                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#FF143C"/>
+                <TextBlock>
+                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Aqua"/>
                     <Run>Paint Color</Run>
                     <LineBreak/>
-                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Chartreuse"/>
+                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Fuchsia"/>
                     <Run>Mix Color</Run>
                     <LineBreak/>
-                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="#0090FF"/>
+                    <Run Text="&#xE91F;" FontSize="10" FontFamily="Segoe MDL2 Assets" Foreground="Yellow"/>
                     <Run>Persistence Color</Run>
+                    <LineBreak/>
                 </TextBlock>
 
-                <Rectangle x:Name="XRectangle" RadiusX="4" RadiusY="4" Width="100" Height="0" Fill="#FF143C"/>
-                <Rectangle x:Name="YRectangle" RadiusX="4" RadiusY="4" Width="100" Height="200" Fill="Chartreuse"/>
-                <Rectangle x:Name="ZRectangle" RadiusX="4" RadiusY="4" Width="100" Height="0" Fill="#0090FF"/>
+                <Rectangle x:Name="XRectangle" RadiusX="4" RadiusY="4" Height="0" Fill="Aqua"/>
+                <Rectangle x:Name="YRectangle" RadiusX="4" RadiusY="4" Height="200" Fill="Fuchsia"/>
+                <Rectangle x:Name="ZRectangle" RadiusX="4" RadiusY="4" Height="0" Fill="Yellow"/>
 
             </StackPanel>
         </SplitView.Pane>
@@ -86,12 +86,12 @@
 
                 <Border Grid.Row="1">
                     <Border.Background>
-                        <SolidColorBrush Color="{x:Bind Color1}"/>
+                        <SolidColorBrush Color="{x:Bind PersistenceColor}"/>
                     </Border.Background>
                 </Border>
                 <Border Grid.Column="1" Grid.Row="1">
                     <Border.Background>
-                        <SolidColorBrush Color="{x:Bind Color2}"/>
+                        <SolidColorBrush Color="{x:Bind MixColor}"/>
                     </Border.Background>
                 </Border>
 
@@ -102,14 +102,14 @@
                     <Shape.Fill>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                             <GradientStop 
-                                x:Name="Stop1" 
-                                Offset="{x:Bind Stop1OffsetConverter(WetSlider.Value), Mode=OneWay}" 
-                                Color="{x:Bind Color0}"
+                                x:Name="CapStop" 
+                                Offset="{x:Bind CapOffsetConverter(WetSlider.Value), Mode=OneWay}" 
+                                Color="{x:Bind BrushColor}"
                                 />
                             <GradientStop 
-                                x:Name="Stop2" 
-                                Offset="{x:Bind Stop2OffsetConverter(WetSlider.Value), Mode=OneWay}" 
-                                Color="{x:Bind Color0}"
+                                x:Name="SegmentStop" 
+                                Offset="{x:Bind SegmentOffsetConverter(WetSlider.Value), Mode=OneWay}" 
+                                Color="{x:Bind BrushColor}"
                                 />
                         </LinearGradientBrush>
                     </Shape.Fill>
@@ -123,7 +123,7 @@
                         <Flyout>
                             <ColorPicker
                                 x:Name="ColorPicker"
-                                Color="White"
+                                Color="{x:Bind BrushColor}"
                                 ColorSpectrumShape="Ring"
                                 IsMoreButtonVisible="False"
                                 IsColorSliderVisible="False"
