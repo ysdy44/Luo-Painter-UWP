@@ -1,13 +1,11 @@
 ﻿using Luo_Painter.Brushes;
-using Microsoft.Graphics.Canvas.Effects;
-using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class PaintScrollViewer
     {
 
-        public void ConstructInk1()
+        public void ConstructProperty()
         {
             this.ComboBox.SelectionChanged += (s, e) =>
             {
@@ -22,7 +20,7 @@ namespace Luo_Painter.Controls
                     this.TryInkAsync();
                 }
             };
-
+            
 
             this.SizeSlider.ValueChanged += (s, e) =>
             {
@@ -66,84 +64,6 @@ namespace Luo_Painter.Controls
             {
                 if (this.InkIsEnabled is false) return;
                 this.InkPresenter.IgnoreFlowPressure = this.IgnoreFlowPressureButton.IsOn;
-                this.TryInkAsync();
-            };
-
-
-            this.TipListBox.SelectionChanged += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-
-                switch (this.TipListBox.SelectedIndex)
-                {
-                    case 0:
-                        this.InkPresenter.Tip = PenTipShape.Circle;
-                        this.InkPresenter.IsStroke = false;
-                        this.TryInk();
-                        break;
-                    case 1:
-                        this.InkPresenter.Tip = PenTipShape.Circle;
-                        this.InkPresenter.IsStroke = true;
-                        this.TryInk();
-                        break;
-                    case 2:
-                        this.InkPresenter.Tip = PenTipShape.Rectangle;
-                        this.InkPresenter.IsStroke = false;
-                        this.TryInk();
-                        break;
-                    case 3:
-                        this.InkPresenter.Tip = PenTipShape.Rectangle;
-                        this.InkPresenter.IsStroke = true;
-                        this.TryInk();
-                        break;
-                    default:
-                        break;
-                }
-            };
-
-
-            this.HardnessListView.ItemClick += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                if (e.ClickedItem is BrushEdgeHardness item)
-                {
-                    this.InkPresenter.Hardness = item;
-                    this.TryInk();
-                }
-            };
-
-
-            this.BlendModeListView.ItemClick += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                if (e.ClickedItem is BlendEffectMode item)
-                {
-                    this.InkPresenter.BlendMode = item;
-                    this.InkType = this.InkPresenter.GetType();
-                    this.TryInk();
-                }
-            };
-
-            this.MixSlider.ValueChanged += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                double mix = System.Math.Clamp(e.NewValue / 100, 0, 1);
-                this.InkPresenter.Mix = (float)mix;
-                this.InkType = this.InkPresenter.GetType();
-                this.TryInkAsync();
-            };
-            this.WetSlider.ValueChanged += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                double wet = e.NewValue;
-                this.InkPresenter.Wet = (float)wet;
-                this.TryInkAsync();
-            };
-            this.PersistenceSlider.ValueChanged += (s, e) =>
-            {
-                if (this.InkIsEnabled is false) return;
-                double persistence = System.Math.Clamp(e.NewValue / 100, 0, 1);
-                this.InkPresenter.Persistence = (float)persistence;
                 this.TryInkAsync();
             };
         }

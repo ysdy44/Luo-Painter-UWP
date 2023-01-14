@@ -1,6 +1,6 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using Windows.UI.Xaml.Controls;
 
@@ -9,8 +9,20 @@ namespace Luo_Painter.Controls
     public sealed partial class PaintScrollViewer
     {
 
-        public void ConstructInk3()
+        public void ConstructGrain()
         {
+            this.BlendModeListView.ItemClick += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                if (e.ClickedItem is BlendEffectMode item)
+                {
+                    this.InkPresenter.BlendMode = item;
+                    this.InkType = this.InkPresenter.GetType();
+                    this.TryInk();
+                }
+            };
+  
+
             this.ImportGrainButton.Click += async (s, e) =>
             {
                 base.Hide();
