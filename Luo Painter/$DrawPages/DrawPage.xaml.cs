@@ -290,8 +290,8 @@ namespace Luo_Painter
 
         public string TextureSelectedItem => this.TextureDialog.SelectedItem;
         public void ConstructTexture(string path) => this.TextureDialog.Construct(path);
-        public Task<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowInstance();
-
+        public IAsyncOperation<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowAsync();
+        
         public void Construct(IInkParameter item)
         {
             this.PaintScrollViewer.Construct(item);
@@ -330,7 +330,7 @@ namespace Luo_Painter
             this.ConstructGammaTransfer();
             this.ConstructDiscreteTransfer();
             this.ConstructLighting();
-            
+
             this.ConstructSelection();
             this.ConstructGeometry();
 

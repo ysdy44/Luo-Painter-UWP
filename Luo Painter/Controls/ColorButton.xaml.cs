@@ -7,9 +7,9 @@ using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.ObjectModel;
 using System.Numerics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
+using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -90,7 +90,7 @@ namespace Luo_Painter.Controls
 
         public string TextureSelectedItem => this.InkParameter.TextureSelectedItem;
         public void ConstructTexture(string path) => this.InkParameter.ConstructTexture(path);
-        public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
+        public IAsyncOperation<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
 
         IInkParameter InkParameter;
         public void Construct(IInkParameter item)
