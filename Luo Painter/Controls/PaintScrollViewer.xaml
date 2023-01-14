@@ -53,10 +53,13 @@
                     />
             </Border>
 
-
             <!--Type-->
+            <TextBlock x:Name="TypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                Type
+            </TextBlock>
+
             <ComboBox x:Name="ComboBox" SelectedIndex="2" HorizontalAlignment="Stretch">
-                
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="brushes:InkType">
                         <luo_painter:InkItem Type="{x:Bind}"/>
@@ -76,6 +79,11 @@
                 </ItemsControl.ItemsSource>
 
             </ComboBox>
+
+            <!--Property-->
+            <TextBlock x:Name="PropertyTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                Property
+            </TextBlock>
 
             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
                 <StackPanel Margin="2">
@@ -150,9 +158,7 @@
                 </StackPanel>
             </Border>
 
-
-            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}" />
-
+            <MenuFlyoutSeparator Margin="0,4"/>
 
             <!--Hardness-->
             <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -203,10 +209,6 @@
                 </ListView>
             </Grid>
 
-
-            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}" />
-
-
             <!--Tip-->
             <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                        Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
@@ -244,10 +246,6 @@
                     <FontIcon Glyph="&#xE003;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
                 </ListBox>
             </Grid>
-
-
-            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}" />
-
 
             <!--Shape-->
             <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -339,9 +337,6 @@
 
             </Grid>
 
-
-            <MenuFlyoutSeparator Margin="0,4"/>
-
             <!--BlendMode-->
             <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                        Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
@@ -387,6 +382,49 @@
                        Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
                 Mix Color
             </TextBlock>
+
+            <Grid Height="90" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                       Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="1">
+                    <Border.Background>
+                        <SolidColorBrush Color="{x:Bind PersistenceColor}"/>
+                    </Border.Background>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="1">
+                    <Border.Background>
+                        <SolidColorBrush Color="{x:Bind MixColor}"/>
+                    </Border.Background>
+                </Border>
+
+                <Path Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Path.Data>
+                        M223.141,33.589L223.141,32.87C223.141,32.87 188.443,-0.243 152.758,0.001C152.077,-0.004 147.501,0.249 145.87,0.448C107.895,4.583 88.769,25.912 68.665,35.815C33.312,53.231 0,30.643 0,30.643L0,31.361C0,31.361 34.698,64.474 70.383,64.23C71.064,64.236 75.64,63.983 77.27,63.784C115.246,59.648 134.371,38.32 154.475,28.416C189.829,11.001 223.141,33.589 223.141,33.589Z
+                    </Path.Data>
+                    <Shape.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop 
+                                x:Name="CapStop" 
+                                Offset="{x:Bind CapOffsetConverter(WetSlider.Value), Mode=OneWay}" 
+                                Color="{x:Bind BrushColor}"
+                                />
+                            <GradientStop 
+                                x:Name="SegmentStop" 
+                                Offset="{x:Bind SegmentOffsetConverter(WetSlider.Value), Mode=OneWay}" 
+                                Color="{x:Bind BrushColor}"
+                                />
+                        </LinearGradientBrush>
+                    </Shape.Fill>
+                </Path>
+            </Grid>
 
             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                     Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}">
