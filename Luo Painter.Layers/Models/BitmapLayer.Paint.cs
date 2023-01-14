@@ -343,16 +343,63 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void CapDrawShaderBrushEdgeHardnessWithTexture()
+        public void CapDrawShaderBrushEdgeHardnessWithTexture(StrokeCap cap, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
+            if (rotate) return;
+
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            using (ds.CreateLayer(1f, cap.Bounds))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                ds.DrawImage(new PixelShaderEffect(shaderCode)
+                {
+                    Source1 = texture,
+                    Properties =
+                    {
+                        ["hardness"] = hardness,
+                        ["rotate"] = false,
+                        ["normalization"] = Vector2.Zero,
+                        ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
+                        ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
+                        ["targetPosition"] = cap.StartingPosition,
+                        ["color"] = colorHdr
+                    }
+                });
+            }
         }
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void CapDrawShaderBrushEdgeHardnessWithTexture(StrokeCap cap, float wet)
+        public void CapDrawShaderBrushEdgeHardnessWithTexture(StrokeCap cap, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, float mix = 1, float wet = 12, float persistence = 0, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
         {
             this.ConstructMix(cap.StartingPosition);
-            this.Mix(cap.StartingPosition, cap.Size, wet);
+
+            if (rotate) return;
+
+            using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
+            using (ds.CreateLayer(1f, cap.Bounds))
+            {
+                //@DPI 
+                ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+
+                this.Mix(cap.StartingPosition, cap.Size, wet);
+                ds.DrawImage(new PixelShaderEffect(shaderCode)
+                {
+                    Source1 = texture,
+                    Properties =
+                    {
+                        ["hardness"] = hardness,
+                        ["rotate"] = false,
+                        ["normalization"] = Vector2.Zero,
+                        ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
+                        ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
+                        ["targetPosition"] = cap.StartingPosition,
+                        ["color"] = this.GetMix(colorHdr, mix, persistence)
+                    }
+                });
+            }
         }
 
         /// <summary>

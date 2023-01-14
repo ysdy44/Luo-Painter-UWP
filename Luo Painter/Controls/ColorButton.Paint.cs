@@ -1,71 +1,12 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.Linq;
 using System.Numerics;
-using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class ColorButton
     {
-
-        private async void PaintAsync()
-        {
-            while (true)
-            {
-                switch (this.Tasks.GetBehavior())
-                {
-                    case PaintTaskBehavior.WaitingWork:
-                        continue;
-                    case PaintTaskBehavior.Working:
-                    case PaintTaskBehavior.WorkingBeforeDead:
-                        StrokeSegment segment = this.Tasks.First();
-                        this.Tasks.Remove(segment);
-
-                        //@Task
-                        lock (this.Locker)
-                        {
-                            this.BitmapLayer.Hit(segment.Bounds);
-                            this.PaintSegment(segment);
-                        }
-
-                        this.CanvasControl.Invalidate();
-                        break;
-                    case PaintTaskBehavior.Dead:
-                        //@Paint
-                        this.Tasks.State = PaintTaskState.Finished;
-
-                        await this.CanvasControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                        {
-                            //@Task
-                            lock (this.Locker)
-                            {
-                                if (this.InkType is InkType.Liquefy is false)
-                                {
-                                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
-                                    {
-                                        ds.Clear(Colors.Transparent);
-                                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
-                                    }
-                                }
-                                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-
-                                this.CanvasControl.Invalidate(); // Invalidate
-                            }
-                        });
-                        return;
-                    default:
-                        return;
-                }
-            }
-        }
 
         private void PaintCap(StrokeCap cap)
         {
@@ -109,7 +50,10 @@ namespace Luo_Painter.Controls
                 case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.ShapeGeneral_Opacity_Blend:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture();
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap,
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.ShapeGeneral_Mix:
@@ -120,7 +64,11 @@ namespace Luo_Painter.Controls
                 case InkType.ShapeGeneral_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap, this.InkPresenter.Wet);
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap,
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.Tip:
@@ -200,9 +148,9 @@ namespace Luo_Painter.Controls
                 case InkType.ShapeGeneral_Opacity_Grain_Blend:
                     if (segment.IsNaN) return; // Shape without NaN
                     this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment,
-                    this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
-                    this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                    this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.ShapeGeneral_Mix:

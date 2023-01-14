@@ -1,15 +1,7 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Luo_Painter.Layers;
-using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System.Linq;
 using System.Numerics;
-using Windows.Foundation;
-using Windows.UI.Core;
-using Windows.UI;
-using Windows.UI.Xaml.Controls;
-using System;
 
 namespace Luo_Painter
 {
@@ -58,7 +50,10 @@ namespace Luo_Painter
                 case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.ShapeGeneral_Opacity_Blend:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture();
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap,
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.ShapeGeneral_Mix:
@@ -69,7 +64,11 @@ namespace Luo_Painter
                 case InkType.ShapeGeneral_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend_Mix:
-                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap, this.InkPresenter.Wet);
+                    this.BitmapLayer.CapDrawShaderBrushEdgeHardnessWithTexture(cap,
+                        this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
+                        this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
+                        this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
+                        this.InkPresenter.IgnoreSizePressure, this.InkPresenter.IgnoreFlowPressure);
                     break;
 
                 case InkType.Tip:
@@ -147,6 +146,7 @@ namespace Luo_Painter
                 case InkType.ShapeGeneral_Grain_Blend:
                 case InkType.ShapeGeneral_Opacity_Blend:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend:
+                    if (segment.IsNaN) return; // Shape without NaN
                     this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment,
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
                         this.InkPresenter.Rotate, (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
@@ -155,6 +155,7 @@ namespace Luo_Painter
 
                 case InkType.ShapeGeneral_Mix:
                 case InkType.ShapeGeneral_Grain_Mix:
+                    if (segment.IsNaN) return; // Shape without NaN
                     this.BitmapLayer.SegmentDrawShaderBrushEdgeHardnessWithTexture(segment,
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkPresenter.ShapeSource,
                         this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
@@ -194,6 +195,7 @@ namespace Luo_Painter
                     break;
 
                 case InkType.Liquefy:
+                    if (segment.IsNaN) return; // Liquefy without NaN
                     this.BitmapLayer.Shade(new PixelShaderEffect(this.LiquefactionShaderCodeBytes)
                     {
                         Source1BorderMode = EffectBorderMode.Hard,
