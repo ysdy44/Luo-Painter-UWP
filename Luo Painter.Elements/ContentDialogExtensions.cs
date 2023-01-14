@@ -7,6 +7,7 @@ namespace Luo_Painter.Elements
     public static class ContentDialogExtensions
     {
         static ContentDialog Dialog;
+        public static bool CanShow => ContentDialogExtensions.Dialog is null;
         public static async Task<ContentDialogResult> ShowInstance(this ContentDialog contentDialog)
         {
             if (ContentDialogExtensions.Dialog != null)

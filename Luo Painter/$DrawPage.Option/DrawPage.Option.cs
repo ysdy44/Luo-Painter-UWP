@@ -454,6 +454,7 @@ namespace Luo_Painter
                     this.FileFlyout.ShowAt(this.ExportButton);
                     break;
                 case OptionType.ExportMenu:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         ContentDialogResult result = await this.ExportDialog.ShowInstance();
 
@@ -482,7 +483,8 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintMenu:
-                    await this.PaintScrollViewer.ShowAsync();
+                    if (ContentDialogExtensions.CanShow)
+                        await this.PaintScrollViewer.ShowInstance();
                     break;
                 //case OptionType.BrushMenu:
                 //    break;
@@ -534,6 +536,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Stretch:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         this.StretchDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
                         ContentDialogResult result = await this.StretchDialog.ShowInstance();
@@ -574,6 +577,7 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Extend:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         this.ExtendDialog.Resezing(this.Transformer.Width, this.Transformer.Height);
                         ContentDialogResult result = await this.ExtendDialog.ShowInstance();
@@ -619,6 +623,7 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Offset:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         this.OffsetDialog.Resezing(0, 0);
                         ContentDialogResult result = await this.OffsetDialog.ShowInstance();

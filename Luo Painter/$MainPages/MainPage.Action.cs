@@ -84,6 +84,7 @@ namespace Luo_Painter
                     break;
 
                 case ProjectAction.Add:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         ContentDialogResult result = await this.AddDialog.ShowInstance();
 
@@ -221,6 +222,7 @@ namespace Luo_Painter
                     break;
 
                 case ProjectAction.New:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         this.NewTextBox.Text = this.New;
                         this.NewTextBox.SelectAll();
@@ -241,6 +243,7 @@ namespace Luo_Painter
                     }
                     break;
                 case ProjectAction.Rename:
+                    if (ContentDialogExtensions.CanShow)
                     {
                         if (obj is Project project)
                         {

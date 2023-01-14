@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Luo_Painter.Elements;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -33,7 +33,11 @@ namespace Luo_Painter
                     base.Frame.GoBack();
                 }
             };
-            this.ShowDialogButton.Click += async (s, e) => await this.ContentDialog.ShowAsync();
+            this.ShowDialogButton.Click += async (s, e) =>
+            {
+                if (ContentDialogExtensions.CanShow)
+                    await this.ContentDialog.ShowInstance();
+            };
         }
 
         //@BackRequested
