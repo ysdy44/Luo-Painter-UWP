@@ -1,16 +1,11 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
-using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
+﻿using Luo_Painter.Layers;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class ColorButton
     {
 
-        private async void PaintBrush_Start()
+        private void PaintBrush_Start()
         {
             if (this.CanvasControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
@@ -18,11 +13,10 @@ namespace Luo_Painter.Controls
 
             //@Paint
             StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
-            this.PaintCapAsync(cap);
+            this.PaintStarted(cap);
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintSegmentAsync);
+            this.PaintStart();
         }
 
         private void PaintBrush_Delta()
@@ -46,7 +40,7 @@ namespace Luo_Painter.Controls
             if (this.InkType == default) return;
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painted;
+            this.PaintStop();
         }
 
     }

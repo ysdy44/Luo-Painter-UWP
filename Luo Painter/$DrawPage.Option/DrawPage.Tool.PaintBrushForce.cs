@@ -1,17 +1,11 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
-using Microsoft.Graphics.Canvas;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
@@ -62,8 +56,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintSegmentAsync);
+            this.PaintStart();
         }
 
         private void PaintBrushForce_Delta()
@@ -87,7 +80,7 @@ namespace Luo_Painter
 
             //@Paint
             this.Tasks.StopForce();
-            this.Tasks.State = PaintTaskState.Painted;
+            this.PaintStop();
 
             this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate

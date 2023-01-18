@@ -5,7 +5,6 @@ using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
-using System.Threading.Tasks;
 using Windows.UI;
 
 namespace Luo_Painter
@@ -35,7 +34,7 @@ namespace Luo_Painter
             this.SymmetryComboBox.SelectionChanged += (s, e) => this.CanvasControl.Invalidate(); // Invalidate
         }
 
-        private async void PaintBrushMulti_Start()
+        private void PaintBrushMulti_Start()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
@@ -64,12 +63,11 @@ namespace Luo_Painter
             this.Symmetryer.Construct(count, this.BitmapLayer.Center);
             foreach (StrokeCap cap in this.Symmetryer.GetCaps(this.SymmetryType, new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size), this.BitmapLayer.Center))
             {
-                this.PaintCapAsync(cap);
+                this.PaintStarted(cap);
             }
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintSegmentAsync);
+            this.PaintStart();
         }
 
         private void PaintBrushMulti_Delta()
@@ -100,7 +98,7 @@ namespace Luo_Painter
             this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painted;
+            this.PaintStop();
         }
 
         private void DrawPaintBrushMulti(CanvasControl sender, CanvasDrawingSession ds, Vector2 center)

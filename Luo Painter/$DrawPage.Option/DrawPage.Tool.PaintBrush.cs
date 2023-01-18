@@ -2,14 +2,13 @@
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Options;
-using System.Threading.Tasks;
 
 namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
 
-        private async void PaintBrush_Start()
+        private void PaintBrush_Start()
         {
             if (this.CanvasVirtualControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
@@ -33,11 +32,10 @@ namespace Luo_Painter
 
             //@Paint
             StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
-            this.PaintCapAsync(cap);
+            this.PaintStarted(cap);
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintSegmentAsync);
+            this.PaintStart();
         }
 
         private void PaintBrush_Delta()
@@ -69,7 +67,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
-            this.Tasks.State = PaintTaskState.Painted;
+            this.PaintStop();
         }
 
     }
