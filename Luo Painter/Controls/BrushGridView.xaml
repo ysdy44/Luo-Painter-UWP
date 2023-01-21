@@ -1,0 +1,70 @@
+﻿<luo_painter:XamlGridView
+    x:Class="Luo_Painter.Controls.BrushGridView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
+    xmlns:local="using:Luo_Painter.Controls"
+    xmlns:elements="using:Luo_Painter.Elements"
+    mc:Ignorable="d"
+    d:DesignWidth="400"   
+    d:DesignHeight="400"
+    IsItemClickEnabled="True" 
+    FooterTemplate="{StaticResource AppListViewBaseFooter}"      
+    >
+
+    <ItemsControl.ItemContainerStyle>
+        <Style TargetType="GridViewItem">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="{ThemeResource SystemColorControlAccentBrush}"/>
+        </Style>
+    </ItemsControl.ItemContainerStyle>
+
+    <ItemsControl.ItemContainerTransitions>
+        <TransitionCollection>
+
+        </TransitionCollection>
+    </ItemsControl.ItemContainerTransitions>
+
+    <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="local:PaintBrush">
+            <elements:SelectedImagePresenter Source="{x:Bind ImageSource}"/>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
+
+    <ListViewBase.Header>
+        <Grid Height="50" Padding="0,0,4,0" ColumnSpacing="4" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="TitleTextBlock"
+                Margin="16,0"
+                IsTextSelectionEnabled="True" 
+                FontWeight="Medium" 
+                TextTrimming="CharacterEllipsis" 
+                FontSize="20" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Center" 
+                OpticalMarginAlignment="TrimSideBearings"
+                >
+                Brushes
+            </TextBlock>
+            <Button x:Name="AddButton" Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
+                <SymbolIcon Symbol="Add"/>
+            </Button>
+        </Grid>
+    </ListViewBase.Header>
+
+    <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011900"/>
+    <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011802"/>
+    <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011901"/>
+    <local:PaintBrush Type="Line" Size2="5" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011803"/>
+    <local:PaintBrush Type="Blur" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="Cosine" Tile2="2023012104"/>
+    <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012105"/>
+    <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012006"/>
+
+</luo_painter:XamlGridView>
