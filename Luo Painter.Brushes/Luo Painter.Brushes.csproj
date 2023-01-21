@@ -294,6 +294,15 @@
     <Content Include="Thumbnails\Universal\08\Thumbnail.png" />
     <Content Include="Thumbnails\Universal\09\Render.png" />
     <Content Include="Thumbnails\Universal\09\Thumbnail.png" />
+    <Content Include="Tiles\0000000000.jpg" />
+    <Content Include="Tiles\2023011800.jpg" />
+    <Content Include="Tiles\2023011802.jpg" />
+    <Content Include="Tiles\2023011803.jpg" />
+    <Content Include="Tiles\2023011900.jpg" />
+    <Content Include="Tiles\2023011901.jpg" />
+    <Content Include="Tiles\2023012006.jpg" />
+    <Content Include="Tiles\2023012104.jpg" />
+    <Content Include="Tiles\2023012105.jpg" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
