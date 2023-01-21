@@ -149,7 +149,9 @@
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="IndexGrid.cs" />
+    <Compile Include="InverseProportion.cs" />
     <Compile Include="InverseProportionRange.cs" />
+    <Compile Include="Marble.cs" />
     <Compile Include="MetadataObservableCollection.cs" />
     <Compile Include="PipsPivot.xaml.cs">
       <DependentUpon>PipsPivot.xaml</DependentUpon>
@@ -157,8 +159,18 @@
     <Compile Include="PipsPivot2.xaml.cs">
       <DependentUpon>PipsPivot2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgressRing.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Scroller.cs" />
+    <Compile Include="SelectedButton.xaml.cs">
+      <DependentUpon>SelectedButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectedIcon.xaml.cs">
       <DependentUpon>SelectedIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectedImage.xaml.cs">
+      <DependentUpon>SelectedImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectedSwiper.cs" />
     <Compile Include="Sheet.xaml.cs">
@@ -167,23 +179,14 @@
     <Compile Include="Spliter.xaml.cs">
       <DependentUpon>Spliter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SwitchGroupPresenter.cs" />
+    <Compile Include="SwitchPresenter.cs" />
     <Compile Include="TextFormat.cs" />
     <Compile Include="TextFormatItem.cs" />
     <Compile Include="TextFormatWithSelection.cs" />
     <Compile Include="TextRangeExtensions.cs" />
-    <Compile Include="TIcon.cs" />
-    <Compile Include="InverseProportion.cs" />
-    <Compile Include="Marble.cs" />
-    <Compile Include="ProgressRing.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="Scroller.cs" />
-    <Compile Include="SelectedButton.xaml.cs">
-      <DependentUpon>SelectedButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SwitchGroupPresenter.cs" />
-    <Compile Include="SwitchPresenter.cs" />
     <Compile Include="ThumbSlider.cs" />
+    <Compile Include="TIcon.cs" />
     <Compile Include="ToastAudioType.cs" />
     <Compile Include="ToastExtensions.cs" />
     <Compile Include="ToastExtensions.LaunchFile.cs" />
@@ -204,8 +207,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Expander.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Icons\AddIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -392,10 +395,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectedButton.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectedIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelectedImage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
