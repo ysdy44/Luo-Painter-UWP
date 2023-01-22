@@ -21,7 +21,7 @@ namespace Luo_Painter.Controls
                     this.TryInk();
                 }
             };
-  
+
 
             this.ImportGrainButton.Click += async (s, e) =>
             {
@@ -51,7 +51,10 @@ namespace Luo_Painter.Controls
                 bool recolor = this.RecolorGrainButton.IsChecked is true;
 
                 // Select Texture
+                Uri source = this.GrainImage.UriSource;
+                this.GrainImage.UriSource = null;
                 this.GrainImage.ShowAsMonochrome = recolor;
+                this.GrainImage.UriSource = source;
                 this.InkPresenter.RecolorGrain = recolor;
                 this.TryInk();
             };

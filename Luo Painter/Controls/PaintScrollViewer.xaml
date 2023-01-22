@@ -27,7 +27,7 @@
     <StackPanel>
 
         <!--Ink-->
-        <Border Margin="0,0,0,4" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <canvas:CanvasControl               
                 x:Name="InkCanvasControl"       
                 HorizontalAlignment="Center"
@@ -40,31 +40,40 @@
         </Border>
 
         <!--Type-->
-        <TextBlock x:Name="TypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                Type
-        </TextBlock>
+        <Grid>
 
-        <ComboBox x:Name="ComboBox" SelectedIndex="2" HorizontalAlignment="Stretch">
+            <Rectangle Height="1" VerticalAlignment="Bottom" Fill="{ThemeResource AppStroke}"/>
+            
+            <ListBox x:Name="ComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                <ListBoxItem x:Name="PropertyItem">Property</ListBoxItem>
+                <ListBoxItem x:Name="ShapeItem">Shape</ListBoxItem>
+                <ListBoxItem x:Name="GrainItem">Grain</ListBoxItem>
+                <ListBoxItem x:Name="MixItem">Mix Color</ListBoxItem>
+            </ListBox>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="brushes:InkType">
-                    <luo_painter:InkItem Type="{x:Bind}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            <ComboBox x:Name="TypeComboBox" SelectedIndex="2" Margin="0,0,0,2" MinWidth="160" HorizontalAlignment="Right">
 
-            <ItemsControl.ItemsSource>
-                <luo_painter:InkList x:Name="InkCollection">
-                    <brushes:InkType>Erase</brushes:InkType>
-                    <brushes:InkType>General</brushes:InkType>
-                    <brushes:InkType>Tip</brushes:InkType>
-                    <brushes:InkType>Line</brushes:InkType>
-                    <brushes:InkType>Blur</brushes:InkType>
-                    <brushes:InkType>Mosaic</brushes:InkType>
-                    <brushes:InkType>Liquefy</brushes:InkType>
-                </luo_painter:InkList>
-            </ItemsControl.ItemsSource>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="brushes:InkType">
+                        <luo_painter:InkItem Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
-        </ComboBox>
+                <ItemsControl.ItemsSource>
+                    <luo_painter:InkList x:Name="InkCollection">
+                        <brushes:InkType>Erase</brushes:InkType>
+                        <brushes:InkType>General</brushes:InkType>
+                        <brushes:InkType>Tip</brushes:InkType>
+                        <brushes:InkType>Line</brushes:InkType>
+                        <brushes:InkType>Blur</brushes:InkType>
+                        <brushes:InkType>Mosaic</brushes:InkType>
+                        <brushes:InkType>Liquefy</brushes:InkType>
+                    </luo_painter:InkList>
+                </ItemsControl.ItemsSource>
+
+            </ComboBox>
+
+        </Grid>
 
         <!--Property-->
         <TextBlock x:Name="PropertyTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
@@ -146,54 +155,39 @@
 
         <MenuFlyoutSeparator Margin="0,4"/>
 
-        <!--Hardness-->
-        <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                   Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
-            Hardness
+        <!--IgnorePressure-->
+        <TextBlock x:Name="IgnorePressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+            Ignore Pressure
         </TextBlock>
 
-        <Grid ColumnSpacing="8" 
-              Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="136"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <elements:IndexGrid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                                    Index="{x:Bind HardnessListView.SelectedIndex,Mode=OneWay}">
-                    <UIElement.RenderTransformOrigin>
-                        0.5, 1
-                    </UIElement.RenderTransformOrigin>
-                    <UIElement.RenderTransform>
-                        <ScaleTransform ScaleX="3" ScaleY="3"/>
-                    </UIElement.RenderTransform>
-                    <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="Visible"/>
-                    <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="Collapsed"/>
-                    <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="Collapsed"/>
-                    <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="Collapsed"/>
-                    <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="Collapsed"/>
-                </elements:IndexGrid>
-            </Border>
-            <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
+        <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+            <Grid ColumnSpacing="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="136"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="SizeTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Size
+                </TextBlock>
+                <ToggleSwitch x:Name="IgnoreSizePressureButton" Grid.Column="1" />
+            </Grid>
+        </Border>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="brushes:BrushEdgeHardness">
-                        <luo_painter:HardnessIcon Type="{x:Bind}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+        <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                    Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
+            <Grid ColumnSpacing="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="136"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="FlowTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                    Flow
+                </TextBlock>
+                <ToggleSwitch x:Name="IgnoreFlowPressureButton" Grid.Column="1" />
+            </Grid>
+        </Border>
 
-                <ItemsControl.ItemsSource>
-                    <luo_painter:HardnessList x:Name="HardnessCollection">
-                        <brushes:BrushEdgeHardness>None</brushes:BrushEdgeHardness>
-                        <brushes:BrushEdgeHardness>Cosine</brushes:BrushEdgeHardness>
-                        <brushes:BrushEdgeHardness>Quadratic</brushes:BrushEdgeHardness>
-                        <brushes:BrushEdgeHardness>Cube</brushes:BrushEdgeHardness>
-                        <brushes:BrushEdgeHardness>Quartic</brushes:BrushEdgeHardness>
-                    </luo_painter:HardnessList>
-                </ItemsControl.ItemsSource>
-
-            </ListView>
-        </Grid>
+        <MenuFlyoutSeparator Margin="0,4"/>
 
         <!--Tip-->
         <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -269,15 +263,69 @@
             </Button>
 
             <TextBlock x:Name="RotateTextBlock" Grid.Row="4" Margin="2,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                Rotate Shape
+                Rotation
             </TextBlock>
-            <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Grid.Row="3" />
+            <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Grid.Row="3" >
+                <ToggleSwitch.OffContent>
+                    None
+                </ToggleSwitch.OffContent>
+                <ToggleSwitch.OnContent>
+                    Rotate to stroke
+                </ToggleSwitch.OnContent>
+            </ToggleSwitch>
 
         </Grid>
 
+        <!--Hardness-->
+        <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
+            Hardness
+        </TextBlock>
+
+        <Grid ColumnSpacing="8" 
+              Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="136"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <elements:IndexGrid Width="40" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                    Index="{x:Bind HardnessListView.SelectedIndex,Mode=OneWay}">
+                    <UIElement.RenderTransformOrigin>
+                        0.5, 1
+                    </UIElement.RenderTransformOrigin>
+                    <UIElement.RenderTransform>
+                        <ScaleTransform ScaleX="3" ScaleY="3"/>
+                    </UIElement.RenderTransform>
+                    <luo_painter:ElementIcon Type="BrushEdgeHardnessNone" Visibility="Visible"/>
+                    <luo_painter:ElementIcon Type="BrushEdgeHardnessCosine" Visibility="Collapsed"/>
+                    <luo_painter:ElementIcon Type="BrushEdgeHardnessQuadratic" Visibility="Collapsed"/>
+                    <luo_painter:ElementIcon Type="BrushEdgeHardnessCube" Visibility="Collapsed"/>
+                    <luo_painter:ElementIcon Type="BrushEdgeHardnessQuartic" Visibility="Collapsed"/>
+                </elements:IndexGrid>
+            </Border>
+            <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="brushes:BrushEdgeHardness">
+                        <luo_painter:HardnessIcon Type="{x:Bind}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsSource>
+                    <luo_painter:HardnessList x:Name="HardnessCollection">
+                        <brushes:BrushEdgeHardness>None</brushes:BrushEdgeHardness>
+                        <brushes:BrushEdgeHardness>Cosine</brushes:BrushEdgeHardness>
+                        <brushes:BrushEdgeHardness>Quadratic</brushes:BrushEdgeHardness>
+                        <brushes:BrushEdgeHardness>Cube</brushes:BrushEdgeHardness>
+                        <brushes:BrushEdgeHardness>Quartic</brushes:BrushEdgeHardness>
+                    </luo_painter:HardnessList>
+                </ItemsControl.ItemsSource>
+
+            </ListView>
+        </Grid>
 
         <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}" />
-
 
         <!--Grain-->
         <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -359,9 +407,7 @@
 
         </ListView>
 
-
         <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind MixColorVisibilityConverter(Type), Mode=OneWay}" />
-
 
         <!--MixColor-->
         <TextBlock x:Name="MixColorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -435,42 +481,6 @@
                 </hsvColorPickers:NumberSlider>
 
             </StackPanel>
-        </Border>
-
-
-        <MenuFlyoutSeparator Margin="0,4"/>
-
-
-        <!--IgnorePressure-->
-        <TextBlock x:Name="IgnorePressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-            Ignore Pressure
-        </TextBlock>
-
-        <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-            <Grid ColumnSpacing="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="136"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="SizeTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                    Size
-                </TextBlock>
-                <ToggleSwitch x:Name="IgnoreSizePressureButton" Grid.Column="1" />
-            </Grid>
-        </Border>
-
-        <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
-                    Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
-            <Grid ColumnSpacing="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="136"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="FlowTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                    Flow
-                </TextBlock>
-                <ToggleSwitch x:Name="IgnoreFlowPressureButton" Grid.Column="1" />
-            </Grid>
         </Border>
 
         <ContentControl Height="4"/>

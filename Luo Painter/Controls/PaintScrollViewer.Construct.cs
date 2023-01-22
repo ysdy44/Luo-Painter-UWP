@@ -11,10 +11,10 @@ namespace Luo_Painter.Controls
             {
                 this.Type = presenter.Type;
 
+                this.TypeComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.Type);
 
-                this.ComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.Type);
 
-
+                // Property
                 // 1.Minimum
                 this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
                 //this.OpacitySlider.Minimum = 0d;
@@ -33,11 +33,11 @@ namespace Luo_Painter.Controls
                 this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
                 //this.FlowSlider.Maximum = 100d;
 
-
                 this.IgnoreSizePressureButton.IsOn = presenter.IgnoreSizePressure;
                 this.IgnoreFlowPressureButton.IsOn = presenter.IgnoreFlowPressure;
 
 
+                // Shape
                 switch (presenter.Tip)
                 {
                     case Windows.UI.Input.Inking.PenTipShape.Circle:
@@ -50,11 +50,22 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
+                this.RotateButton.IsOn = presenter.Rotate;
+                this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
+                this.RecolorShapeButton.IsChecked = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
+                
                 this.HardnessListView.SelectedIndex = this.HardnessCollection.IndexOf(presenter.Hardness);
 
 
+                // Grain
+                this.StepButton.Number = presenter.Step;
+                this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
+                this.RecolorGrainButton.IsChecked = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
+
                 this.BlendModeListView.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);
 
+
+                // Mix
                 // 1.Minimum
                 //this.MixSlider.Minimum = 0d;
                 this.WetSlider.Minimum = 10d;
@@ -69,16 +80,6 @@ namespace Luo_Painter.Controls
                 //this.MixSlider.Maximum = 100d;
                 this.WetSlider.Maximum = 20d;
                 //this.PersistenceSlider.Maximum = 100d;
-
-
-                this.RotateButton.IsOn = presenter.Rotate;
-                this.StepButton.Number = presenter.Step;
-
-                this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
-                this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
-
-                this.RecolorShapeButton.IsChecked = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
-                this.RecolorGrainButton.IsChecked = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
             }
             this.InkIsEnabled = true;
         }

@@ -82,7 +82,10 @@ namespace Luo_Painter.Controls
                 bool recolor = this.RecolorShapeButton.IsChecked is true;
 
                 // Select Texture
+                Uri source = this.ShapeImage.UriSource;
+                this.ShapeImage.UriSource = null;
                 this.ShapeImage.ShowAsMonochrome = recolor;
+                this.ShapeImage.UriSource = source;
                 this.InkPresenter.RecolorShape = recolor;
                 this.TryInk();
             };

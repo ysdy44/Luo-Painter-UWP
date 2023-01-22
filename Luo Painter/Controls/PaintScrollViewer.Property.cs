@@ -7,10 +7,10 @@ namespace Luo_Painter.Controls
 
         public void ConstructProperty()
         {
-            this.ComboBox.SelectionChanged += (s, e) =>
+            this.TypeComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                if (this.ComboBox.SelectedItem is InkType type)
+                if (this.TypeComboBox.SelectedItem is InkType type)
                 {
                     if (this.InkPresenter.Type == type) return;
                     this.InkPresenter.Type = type;
@@ -18,9 +18,11 @@ namespace Luo_Painter.Controls
                     this.Type = type;
                     this.InkType = this.InkPresenter.GetType();
                     this.TryInkAsync();
+
+                    this.ComboBox.SelectedIndex = 0;
                 }
             };
-            
+
 
             this.SizeSlider.ValueChanged += (s, e) =>
             {
