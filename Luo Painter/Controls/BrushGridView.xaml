@@ -59,9 +59,11 @@
         </Grid>
     </ListViewBase.Header>
 
-    <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011900"/>
+    <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011900"/>
+    <local:PaintBrush Type="Erase" Size2="32" Opacity2="0.5" Spacing2="0.25" Flow2="1" Hardness="Cosine" IgnoreSizePressure="True" Tile2="2023012200"/>
     <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011802"/>
     <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011901"/>
+    <local:PaintBrush Type="General" Size2="220" Opacity2="1" Spacing2="0.5" Flow2="0.5" Hardness="Cosine" Tile2="2023012201"/>
     <local:PaintBrush Type="Line" Size2="5" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011803"/>
     <local:PaintBrush Type="Blur" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="Cosine" Tile2="2023012104"/>
     <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012105"/>
