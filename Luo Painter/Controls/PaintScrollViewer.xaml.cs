@@ -27,11 +27,14 @@ namespace Luo_Painter.Controls
         private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility TipVisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility TipShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) || value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Shape2VisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) || value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
 
-        private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility Grain2VisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) || value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
 
-        private Visibility MixColorVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMix) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility MixVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMix) ? Visibility.Visible : Visibility.Collapsed;
 
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
@@ -93,7 +96,7 @@ namespace Luo_Painter.Controls
             this.ConstructShape();
             this.ConstructGrain();
             this.ConstructMix();
-            
+
             this.IsDrak = base.ActualTheme is ElementTheme.Dark;
             base.ActualThemeChanged += (s, e) =>
             {
