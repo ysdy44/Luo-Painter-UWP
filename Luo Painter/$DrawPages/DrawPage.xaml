@@ -267,7 +267,7 @@
                     </Grid.RowDefinitions>
                     <elements:IndexGrid Index="{x:Bind MenuListBox.SelectedIndex, Mode=OneWay}">
                         <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
-                        <controls:BrushListView x:Name="BrushListView" Visibility="Collapsed"/>
+                        <controls:BrushGridView x:Name="BrushGridView" Visibility="Collapsed"/>
                         <controls:SizeListView x:Name="SizeListView" Visibility="Collapsed"/>
                         <controls:HistoryListView x:Name="HistoryListView" ItemsSource="{x:Bind History.Source}" Visibility="Collapsed"/>
                     </elements:IndexGrid>
@@ -300,7 +300,44 @@
                         ItemsSource="{x:Bind ObservableCollection}" 
                         BorderThickness="0,0,1,0" 
                         BorderBrush="{ThemeResource AppStroke}"
-                        />
+                        >
+                        <ListViewBase.Footer>
+                            <SplitButton
+                                x:Name="NewButton"
+                                Margin="7"
+                                Height="40"
+                                CornerRadius="4"            
+                                BorderThickness="1"               
+                                HorizontalAlignment="Stretch"               
+                                VerticalAlignment="Stretch"   
+                                >
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Name="NewToolTip" Style="{StaticResource AppToolTipStyle}">
+                                        New
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                                <SplitButton.Flyout>
+                                    <MenuFlyout Placement="TopEdgeAlignedRight">
+                                        <!--New-->
+                                        <MenuFlyoutSeparator x:Name="NewHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                            <UIElement.AccessKey>
+                                                New
+                                            </UIElement.AccessKey>
+                                        </MenuFlyoutSeparator>
+                                        <MenuFlyoutItem options:OptionExtensions.Type="AddBitmapLayer" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Key="Insert"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
+                                        <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
+                                        <MenuFlyoutItem options:OptionExtensions.Type="AddFillLayer" Command="{x:Bind Command}"/>
+                                    </MenuFlyout>
+                                </SplitButton.Flyout>
+                                <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
+                            </SplitButton>
+                        </ListViewBase.Footer>
+                    </controls:LayerListView>
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">
 

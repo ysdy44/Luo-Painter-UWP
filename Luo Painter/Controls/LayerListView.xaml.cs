@@ -67,7 +67,6 @@ namespace Luo_Painter.Controls
                 }
             };
 
-            this.NewButton.Click += (s, e) => this.Command.Execute(OptionType.AddBitmapLayer);
             this.MenuFlyout.Opened += (s, e) =>
             {
                 bool isEnabled = base.SelectedItem is null is false;

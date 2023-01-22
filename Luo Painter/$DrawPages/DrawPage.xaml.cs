@@ -379,6 +379,7 @@ namespace Luo_Painter
             };
 
 
+            this.NewButton.Click += (s, e) => this.Click(OptionType.AddBitmapLayer);
             this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
             this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
             this.ExportButton.RightTapped += (s, e) => this.Click(OptionType.FileMenu);
@@ -428,7 +429,7 @@ namespace Luo_Painter
             };
 
 
-            this.BrushListView.ItemClick += (s, e) =>
+            this.BrushGridView.ItemClick += (s, e) =>
             {
                 if (e.ClickedItem is PaintBrush brush)
                 {
