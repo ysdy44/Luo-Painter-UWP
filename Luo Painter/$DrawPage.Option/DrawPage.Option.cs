@@ -483,8 +483,15 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintMenu:
-                    if (ContentDialogExtensions.CanShow)
-                        await this.PaintScrollViewer.ShowInstance();
+                    switch (this.AppBarScrollViewer.Visibility)
+                    {
+                        case Visibility.Visible:
+                            this.AppBarScrollViewer.Visibility = Visibility.Collapsed;
+                            break;
+                        default:
+                            this.AppBarScrollViewer.Visibility = Visibility.Visible;
+                            break;
+                    }
                     break;
                 //case OptionType.BrushMenu:
                 //    break;

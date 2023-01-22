@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer : ContentDialog, IInkParameter
+    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
         //@Converter

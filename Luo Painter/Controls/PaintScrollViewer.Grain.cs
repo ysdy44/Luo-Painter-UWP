@@ -25,29 +25,25 @@ namespace Luo_Painter.Controls
 
             this.ImportGrainButton.Click += async (s, e) =>
             {
-                base.Hide();
+                // Show Dialog
+                this.ConstructTexture(this.InkPresenter.Grain);
+
+                ContentDialogResult result = await this.ShowTextureAsync();
+                switch (result)
                 {
-                    // Show Dialog
-                    this.ConstructTexture(this.InkPresenter.Grain);
+                    case ContentDialogResult.Primary:
+                        string path = this.TextureSelectedItem;
+                        if (string.IsNullOrEmpty(path)) break;
 
-                    ContentDialogResult result = await this.ShowTextureAsync();
-                    switch (result)
-                    {
-                        case ContentDialogResult.Primary:
-                            string path = this.TextureSelectedItem;
-                            if (string.IsNullOrEmpty(path)) break;
-
-                            // Select Texture
-                            this.GrainImage.UriSource = new System.Uri(path.GetTexture());
-                            this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
-                            this.InkType = this.InkPresenter.GetType();
-                            this.TryInk();
-                            break;
-                        default:
-                            break;
-                    }
+                        // Select Texture
+                        this.GrainImage.UriSource = new System.Uri(path.GetTexture());
+                        this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
+                        this.InkType = this.InkPresenter.GetType();
+                        this.TryInk();
+                        break;
+                    default:
+                        break;
                 }
-                await base.ShowAsync();
             };
 
             this.RecolorGrainButton.Click += (s, e) =>
