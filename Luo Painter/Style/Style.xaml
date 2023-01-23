@@ -14,7 +14,7 @@
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
     </Style>
 
 
@@ -26,7 +26,7 @@
         <Setter Property="MinHeight" Value="34" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
     </Style>
 
 
@@ -42,7 +42,7 @@
         <Setter Property="StrokeStartLineCap" Value="Triangle" />
         <Setter Property="StrokeEndLineCap" Value="Triangle" />
         <Setter Property="StrokeThickness" Value="2" />
-        <Setter Property="Stroke" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="Stroke" Value="{ThemeResource AppOpacity}" />
     </Style>
 
 
@@ -214,7 +214,7 @@
 
     <!--MenuFlyoutSubItem-->
     <StaticResource x:Key="MenuFlyoutSubItemRevealBackgroundSubMenuOpened" ResourceKey="SystemColorControlAccentBrush"/>
-    <StaticResource x:Key="MenuFlyoutSubItemRevealBackground" ResourceKey="ComboBoxItemPointerOverBackgroundThemeBrush"/>
+    <StaticResource x:Key="MenuFlyoutSubItemRevealBackground" ResourceKey="AppOpacity"/>
     <Thickness x:Key="MenuFlyoutItemThemePadding" >56,0,12,0</Thickness>
     <Style TargetType="MenuFlyoutSubItem" >
         <Setter Property="CornerRadius" Value="4" />
@@ -231,7 +231,7 @@
         <Setter Property="Padding" Value="12,0" />
         <Setter Property="Width" Value="300" />
         <Setter Property="Height" Value="44" />
-        <Setter Property="Background" Value="{ThemeResource ComboBoxItemPointerOverBackgroundThemeBrush}" />
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
         <!--<Setter Property="Background" Value="{ThemeResource MenuFlyoutItemRevealBackground}" />-->
         <Setter Property="BorderBrush" Value="{ThemeResource MenuFlyoutItemRevealBorderBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource MenuFlyoutItemRevealBorderThickness}" />
@@ -427,7 +427,7 @@
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
@@ -470,7 +470,7 @@
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource SystemColorControlAccentBrush}"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{ThemeResource AppBackgroundLight}"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
@@ -515,7 +515,7 @@
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
@@ -555,7 +555,7 @@
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ItemContainerStyle">
@@ -601,6 +601,7 @@
     <!--ContentDialog-->
     <Thickness x:Key="ContentDialogPadding">16,14</Thickness>
     <x:Double x:Key="ContentDialogMinWidth">352</x:Double>
+    <x:Double x:Key="ContentDialogMaxHeight">900</x:Double>
     <Style x:Key="AppContentDialogStyle" TargetType="ContentDialog">
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -670,13 +671,13 @@
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}"/>
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}"/>
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}"/>
     </Style>
 
 
     <!--Slider-->
     <Style x:Key="AppDefaultSliderStyle" TargetType="Slider">
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
         <Setter Property="Foreground" Value="{ThemeResource SliderTrackValueFill}" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
@@ -969,7 +970,7 @@
         </Setter>
     </Style>
     <Style x:Key="AppInkSliderStyle" TargetType="Slider">
-        <Setter Property="Background" Value="{ThemeResource SystemAltLowColor}" />
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
         <Setter Property="Foreground" Value="{ThemeResource SliderTrackValueFill}" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
