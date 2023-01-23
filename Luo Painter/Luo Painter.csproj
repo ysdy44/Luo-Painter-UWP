@@ -172,9 +172,6 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BrushGridView.xaml.cs">
-      <DependentUpon>BrushGridView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\BrushListView.xaml.cs">
       <DependentUpon>BrushListView.xaml</DependentUpon>
     </Compile>
@@ -351,10 +348,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="%24StylePages\StylePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\BrushGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
