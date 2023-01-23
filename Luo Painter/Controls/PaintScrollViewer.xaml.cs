@@ -44,6 +44,7 @@ namespace Luo_Painter.Controls
         CanvasRenderTarget InkRender { get; set; }
 
         bool InkIsEnabled = true;
+        double StatringX;
 
         #region DependencyProperty
 
@@ -103,6 +104,34 @@ namespace Luo_Painter.Controls
                 this.IsDrak = base.ActualTheme is ElementTheme.Dark;
                 this.TryInkAsync();
             };
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                this.DoubleAnimation.To = e.NewSize.Height;
+            };
+
+            this.Thumb.DragStarted += (s, e) => this.StatringX = this.TranslateTransform.Y;
+            this.Thumb.DragDelta += (s, e) => this.TranslateTransform.Y = System.Math.Max(0, this.StatringX += e.VerticalChange);
+            this.Thumb.DragCompleted += (s, e) => this.Toggle(this.StatringX < base.ActualHeight / 2);
+        }
+
+        public void Hide() => this.HideStoryboard.Begin();
+        public void Show() => this.ShowStoryboard.Begin();
+        public void Toggle() => this.Toggle(base.Visibility != default);
+        private void Toggle(bool isShow)
+        {
+            if (isShow)
+            {
+                this.HideStoryboard.Pause();
+                this.ShowStoryboard.Begin();
+            }
+            else
+            {
+                this.ShowStoryboard.Pause();
+                this.HideStoryboard.Begin();
+            }
         }
 
     }
