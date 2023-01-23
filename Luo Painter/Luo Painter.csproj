@@ -172,21 +172,24 @@
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BrushListView.xaml.cs">
-      <DependentUpon>BrushListView.xaml</DependentUpon>
+    <Compile Include="Controls\BrushGridView.xaml.cs">
+      <DependentUpon>BrushGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorButton.Canvas.cs" />
     <Compile Include="Controls\ColorButton.Color.cs" />
     <Compile Include="Controls\ColorButton.ColorHarmony.cs" />
     <Compile Include="Controls\ColorButton.ColorValue.cs" />
-    <Compile Include="Controls\ColorButton.Picker.cs" />
     <Compile Include="Controls\ColorButton.CreateResources.cs" />
     <Compile Include="Controls\ColorButton.Ink.cs" />
     <Compile Include="Controls\ColorButton.Operator.cs" />
     <Compile Include="Controls\ColorButton.Paint.cs" />
+    <Compile Include="Controls\ColorButton.Picker.cs" />
     <Compile Include="Controls\ColorButton.Tool.Paint.cs" />
     <Compile Include="Controls\ColorButton.Tool.PaintBrush.cs" />
     <Compile Include="Controls\ColorButton.Tool.Straw.cs" />
+    <Compile Include="Controls\ColorButton.xaml.cs">
+      <DependentUpon>ColorButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ColorPicker2.Picker.cs" />
     <Compile Include="Controls\ColorPicker2.xaml.cs">
       <DependentUpon>ColorPicker2.xaml</DependentUpon>
@@ -197,6 +200,9 @@
     </Compile>
     <Compile Include="Controls\EffectListView.xaml.cs">
       <DependentUpon>EffectListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExportDialog.xaml.cs">
+      <DependentUpon>ExportDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendDialog.xaml.cs">
       <DependentUpon>ExtendDialog.xaml</DependentUpon>
@@ -221,6 +227,9 @@
     <Compile Include="Controls\OffsetDialog.xaml.cs">
       <DependentUpon>OffsetDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OffsetPicker.xaml.cs">
+      <DependentUpon>OffsetPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PaintScrollViewer.Canvas.cs" />
     <Compile Include="Controls\PaintScrollViewer.Construct.cs" />
     <Compile Include="Controls\PaintScrollViewer.CreateResources.cs" />
@@ -238,9 +247,6 @@
     </Compile>
     <Compile Include="Controls\SizeListView.xaml.cs">
       <DependentUpon>SizeListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OffsetPicker.xaml.cs">
-      <DependentUpon>OffsetPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SizePicker.xaml.cs">
       <DependentUpon>SizePicker.xaml</DependentUpon>
@@ -260,12 +266,6 @@
     <Compile Include="Elements.cs" />
     <Compile Include="FileUtils\FileUtil.Clipboard.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
-    <Compile Include="Controls\ColorButton.xaml.cs">
-      <DependentUpon>ColorButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ExportDialog.xaml.cs">
-      <DependentUpon>ExportDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -351,7 +351,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\BrushListView.xaml">
+    <Page Include="Controls\BrushGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -360,10 +364,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CurvePanel.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\EffectListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ExportDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -376,8 +384,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\KeyboardShortcuts.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LayerButton.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -395,6 +403,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\OffsetPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\PaintScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -404,10 +416,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SizeListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\OffsetPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -428,14 +436,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ToolListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ExportDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
