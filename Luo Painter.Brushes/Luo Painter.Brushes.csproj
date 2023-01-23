@@ -121,16 +121,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BrushEdgeHardness.cs" />
+    <Compile Include="IInkParameter.cs" />
+    <Compile Include="InkAttributes.cs" />
     <Compile Include="InkAttributes.Export.cs" />
     <Compile Include="InkCanvasOperator.cs" />
     <Compile Include="InkExtensions.cs" />
-    <Compile Include="InkPresenter.Texture.cs" />
-    <Compile Include="InkAttributes.cs" />
-    <Compile Include="IInkParameter.cs" />
     <Compile Include="InkPresenter.cs" />
     <Compile Include="InkPresenter.Preview.cs" />
-    <Compile Include="InkPresenter.Type.cs" />
     <Compile Include="InkPresenter.Render.cs" />
+    <Compile Include="InkPresenter.Texture.cs" />
+    <Compile Include="InkPresenter.Type.cs" />
     <Compile Include="InkType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Brushes.rd.xml" />
@@ -140,7 +140,7 @@
       <Version>1.6.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.13</Version>
+      <Version>6.2.12</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
