@@ -21,7 +21,10 @@ namespace Luo_Painter.Brushes
         /// </summary>
         public InkType Type { get; set; } = InkType.General; /// <see cref="InkPresenter.GetType"/>
 
+        public uint Tile { get; set; } = 0000000000;
 
+
+        // Property
         public float Size { get; set; }
         public float Opacity { get; set; } /// <see cref="InkPresenter.GetType"/>
         public float Spacing { get; set; }
@@ -31,25 +34,29 @@ namespace Luo_Painter.Brushes
         public bool IgnoreFlowPressure { get; set; } = true;
 
 
+        // Shape
         public PenTipShape Tip { get; set; }
         public bool IsStroke { get; set; }
+
         public BrushEdgeHardness Hardness { get; set; }
 
+        public bool Rotate { get; set; }
+        public string Shape { get; set; }  /// <see cref="InkPresenter.GetType"/>
+        public bool RecolorShape { get; set; } = true;
 
+
+        // Grain
         public BlendEffectMode BlendMode { get; set; } = (BlendEffectMode)(-1); /// <see cref="InkPresenter.GetType"/>
+
+        public int Step { get; set; } = 1024;
+        public string Grain { get; set; }  /// <see cref="InkPresenter.GetType"/>
+        public bool RecolorGrain { get; set; } = true;
+
+
+        // Mix
         public float Mix { get; set; } /// <see cref="InkPresenter.GetType"/>
         public float Wet { get; set; } = 10;
         public float Persistence { get; set; }
-
-
-        public bool Rotate { get; set; }
-        public int Step { get; set; } = 1024;
-
-        public string Shape { get; set; }  /// <see cref="InkPresenter.GetType"/>
-        public string Grain { get; set; }  /// <see cref="InkPresenter.GetType"/>
-
-        public bool RecolorShape { get; set; } = true;
-        public bool RecolorGrain { get; set; } = true;
 
 
         public void CopyWith(InkAttributes attributes)
@@ -57,6 +64,7 @@ namespace Luo_Painter.Brushes
             this.Type = attributes.Type;
 
 
+            // Property
             this.Size = attributes.Size;
             this.Opacity = attributes.Opacity;
             this.Spacing = attributes.Spacing;
@@ -66,26 +74,29 @@ namespace Luo_Painter.Brushes
             this.IgnoreFlowPressure = attributes.IgnoreFlowPressure;
 
 
+            // Shape
             this.Tip = attributes.Tip;
             this.IsStroke = attributes.IsStroke;
 
+            this.Rotate = attributes.Rotate;
+            this.Shape = attributes.Shape;
+            this.RecolorShape = attributes.RecolorShape;
 
-            this.Mix = attributes.Mix;
-            this.Wet = attributes.Wet;
-            this.Persistence = attributes.Persistence;
-
-            this.BlendMode = attributes.BlendMode;
             this.Hardness = attributes.Hardness;
 
 
-            this.Rotate = attributes.Rotate;
+            // Grain
             this.Step = attributes.Step;
-
-            this.Shape = attributes.Shape;
             this.Grain = attributes.Grain;
-
-            this.RecolorShape = attributes.RecolorShape;
             this.RecolorGrain = attributes.RecolorGrain;
+
+            this.BlendMode = attributes.BlendMode;
+
+
+            // Mix
+            this.Mix = attributes.Mix;
+            this.Wet = attributes.Wet;
+            this.Persistence = attributes.Persistence;
         }
 
     }
