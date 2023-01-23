@@ -260,10 +260,10 @@
             PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}"
             >
             <SplitView.Pane>
-                <Grid BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}">
+                <Grid Padding="8,8,8,0" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <elements:IndexGrid Index="{x:Bind MenuListBox.SelectedIndex, Mode=OneWay}">
                         <controls:ToolListView x:Name="ToolListView" Visibility="Visible"/>
@@ -274,10 +274,7 @@
                     <ListBox
                         x:Name="MenuListBox"
                         Grid.Row="1"
-                        SelectedIndex="0"
-                        Height="50" 
-                        HorizontalAlignment="Stretch"
-                        Style="{StaticResource AppSegmentListBoxStyle}"
+                        SelectedIndex="1"
                         >
                         <local:ToolIconWithToolTip Type="ToolMenu"/>
                         <local:ToolIconWithToolTip Type="BrushMenu"/>
@@ -294,50 +291,52 @@
                 PaneBackground="{ThemeResource SystemControlAcrylicWindowBrush}" 
                 >
                 <SplitView.Pane>
-                    <controls:LayerListView
-                        x:Name="LayerListView" 
-                        Command="{x:Bind Command}" 
-                        ItemsSource="{x:Bind ObservableCollection}" 
-                        BorderThickness="0,0,1,0" 
-                        BorderBrush="{ThemeResource AppStroke}"
-                        >
-                        <ListViewBase.Footer>
-                            <SplitButton
-                                x:Name="NewButton"
-                                Margin="7"
-                                Height="40"
-                                CornerRadius="4"            
-                                BorderThickness="1"               
-                                HorizontalAlignment="Stretch"               
-                                VerticalAlignment="Stretch"   
-                                >
-                                <ToolTipService.ToolTip>
-                                    <ToolTip x:Name="NewToolTip" Style="{StaticResource AppToolTipStyle}">
-                                        New
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SplitButton.Flyout>
-                                    <MenuFlyout Placement="TopEdgeAlignedRight">
-                                        <!--New-->
-                                        <MenuFlyoutSeparator x:Name="NewHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                            <UIElement.AccessKey>
-                                                New
-                                            </UIElement.AccessKey>
-                                        </MenuFlyoutSeparator>
-                                        <MenuFlyoutItem options:OptionExtensions.Type="AddBitmapLayer" Command="{x:Bind Command}">
-                                            <UIElement.KeyboardAccelerators>
-                                                <KeyboardAccelerator Key="Insert"/>
-                                            </UIElement.KeyboardAccelerators>
-                                        </MenuFlyoutItem>
-                                        <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
-                                        <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
-                                        <MenuFlyoutItem options:OptionExtensions.Type="AddFillLayer" Command="{x:Bind Command}"/>
-                                    </MenuFlyout>
-                                </SplitButton.Flyout>
-                                <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
-                            </SplitButton>
-                        </ListViewBase.Footer>
-                    </controls:LayerListView>
+                    <Grid BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <controls:LayerListView 
+                            x:Name="LayerListView"
+                            Command="{x:Bind Command}" 
+                            ItemsSource="{x:Bind ObservableCollection}"
+                            />
+                        <SplitButton
+                            x:Name="NewButton"
+                            Grid.Row="1" 
+                            Margin="7,0" 
+                            Height="40" 
+                            CornerRadius="4" 
+                            BorderThickness="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            >
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Name="NewToolTip" Style="{StaticResource AppToolTipStyle}">
+                                    New
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                            <SplitButton.Flyout>
+                                <MenuFlyout Placement="TopEdgeAlignedRight">
+                                    <!--New-->
+                                    <MenuFlyoutSeparator x:Name="NewHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                        <UIElement.AccessKey>
+                                            New
+                                        </UIElement.AccessKey>
+                                    </MenuFlyoutSeparator>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="AddBitmapLayer" Command="{x:Bind Command}">
+                                        <UIElement.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Insert"/>
+                                        </UIElement.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="AddFillLayer" Command="{x:Bind Command}"/>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                            <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
+                        </SplitButton>
+                    </Grid>
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">
 
@@ -380,10 +379,10 @@
                     <controls:PaintScrollViewer
                         x:Name="PaintScrollViewer" 
                         Visibility="Collapsed"
-                        MaxWidth="724"
                         Padding="10" 
                         Margin="0,10,0,80"
                         CornerRadius="8" 
+                        Width="{x:Bind ReverseDevicePhoneToWidth740Converter(Device), Mode=OneWay}"
                         />
 
                     <!--AppBar-->

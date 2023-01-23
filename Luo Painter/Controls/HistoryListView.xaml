@@ -7,18 +7,29 @@
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:historys="using:Luo_Painter.Historys"
     mc:Ignorable="d"
-    d:DesignHeight="400"
     d:DesignWidth="400"
+    d:DesignHeight="400"
     IsItemClickEnabled="True"
-    FooterTemplate="{StaticResource AppListViewBaseFooter}"     
+    Padding="1,0"   
+    BorderThickness="1"
+    BorderBrush="{ThemeResource AppStroke}"
+    Background="{ThemeResource AppOpacity}"
+    FooterTemplate="{StaticResource AppListViewBaseFooter}"    
     >
 
     <ItemsControl.ItemContainerStyle>
         <Style TargetType="ListViewItem">
             <Setter Property="Margin" Value="0,0,0,1"/>
             <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+            <Setter Property="Background" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}"/>
         </Style>
     </ItemsControl.ItemContainerStyle>
+
+    <ItemsControl.ItemContainerTransitions>
+        <TransitionCollection>
+
+        </TransitionCollection>
+    </ItemsControl.ItemContainerTransitions>
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="historys:IHistory">
@@ -44,10 +55,10 @@
     </ItemsControl.ItemTemplate>
 
     <ListViewBase.Header>
-        <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
-            <TextBlock 
+        <Border Height="32" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+            <TextBlock
                 x:Name="TitleTextBlock"
-                Margin="16,0"
+                Margin="10,0"
                 IsHitTestVisible="false" 
                 FontWeight="Medium" 
                 TextTrimming="CharacterEllipsis" 

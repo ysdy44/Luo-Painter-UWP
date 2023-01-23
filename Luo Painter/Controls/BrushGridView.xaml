@@ -12,11 +12,12 @@
     d:DesignHeight="400"
     IsItemClickEnabled="True" 
     SelectionMode="Single"
-    Margin="8"
+    Padding="1,0"   
     BorderThickness="1"
     BorderBrush="{ThemeResource AppStroke}"
-    Background="{ThemeResource SystemAltLowColor}"
+    Background="{ThemeResource AppOpacity}"
     ItemsSource="{x:Bind CollectionViewSource.View}" 
+    FooterTemplate="{StaticResource AppListViewBaseFooter}" 
     >
 
     <FrameworkElement.Resources>
@@ -49,7 +50,7 @@
             <Setter Property="Width" Value="256"/>
             <Setter Property="MaxHeight" Value="64"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Margin" Value="3,0,3,1"/>
+            <Setter Property="Margin" Value="2,0,2,1"/>
             <Setter Property="Background" Value="{ThemeResource SystemColorControlAccentBrush}"/>
         </Style>
     </ItemsControl.ItemContainerStyle>
@@ -98,5 +99,23 @@
             </GroupStyle.HeaderTemplate>
         </GroupStyle>
     </ItemsControl.GroupStyle>
+
+    <ListViewBase.Header>
+        <Border Height="32" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+            <TextBlock
+                x:Name="TitleTextBlock"
+                Margin="10,0"
+                IsTextSelectionEnabled="True" 
+                FontWeight="Medium" 
+                TextTrimming="CharacterEllipsis" 
+                FontSize="20" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Center" 
+                OpticalMarginAlignment="TrimSideBearings"
+                >
+                Brushes
+            </TextBlock>
+        </Border>
+    </ListViewBase.Header>
 
 </luo_painter:XamlGridView>

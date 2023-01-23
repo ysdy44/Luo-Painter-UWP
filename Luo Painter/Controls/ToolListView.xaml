@@ -13,10 +13,14 @@
     d:DesignWidth="400" 
     d:DesignHeight="400"
     IsItemClickEnabled="True" 
-    SelectionMode="Single" 
-    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+    SelectionMode="Single"
+    Padding="1,0"
+    BorderThickness="1"
+    BorderBrush="{ThemeResource AppStroke}"
     ItemsSource="{x:Bind CollectionViewSource.View}" 
+    Background="{ThemeResource AppOpacity}"
     FooterTemplate="{StaticResource AppListViewBaseFooter}" 
+    ScrollViewer.VerticalScrollBarVisibility="Hidden"
     >
 
     <FrameworkElement.Resources>
@@ -113,7 +117,7 @@
 
     <ItemsControl.ItemContainerStyle>
         <Style TargetType="GridViewItem">
-            <Setter Property="MinWidth" Value="55"/>
+            <Setter Property="Width" Value="Auto"/>
             <Setter Property="Height" Value="55"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -202,11 +206,11 @@
                                 IsItemClickEnabled="True" 
                                 Style="{StaticResource AppListViewStyle}"
                                 >
-                                <controls:ItemSize Width="46" Height="55"/>
-                                <controls:ItemSize Width="56" Height="55"/>
-                                <controls:ItemSize Width="70" Height="55"/>
-                                <controls:ItemSize Width="93" Height="55"/>
-                                <controls:ItemSize Width="140" Height="55"/>
+                                <controls:ItemSize Width="43" Height="55"/>
+                                <controls:ItemSize Width="52" Height="55"/>
+                                <controls:ItemSize Width="65" Height="55"/>
+                                <controls:ItemSize Width="86" Height="55"/>
+                                <controls:ItemSize Width="130" Height="55"/>
                             </ListView>
 
                         </StackPanel>

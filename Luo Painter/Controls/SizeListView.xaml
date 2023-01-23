@@ -11,18 +11,23 @@
     d:DesignWidth="400"
     SelectedIndex="16"
     IsItemClickEnabled="True"
+    Padding="1,0"   
+    BorderThickness="1"
+    BorderBrush="{ThemeResource AppStroke}"
+    Background="{ThemeResource AppOpacity}"
     FooterTemplate="{StaticResource AppListViewBaseFooter}"    
     >
 
     <ItemsControl.ItemContainerStyle>
         <Style TargetType="GridViewItem">
-            <Setter Property="Width" Value="69"/>
+            <Setter Property="Width" Value="64"/>
             <Setter Property="Height" Value="74"/>
             <Setter Property="MinWidth" Value="40"/>
             <Setter Property="Padding" Value="1,2,1,0"/>
             <Setter Property="Margin" Value="1,0,0,1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}"/>
         </Style>
     </ItemsControl.ItemContainerStyle>
 
@@ -52,10 +57,10 @@
     </ItemsControl.ItemTemplate>
 
     <ListViewBase.Header>
-        <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+        <Border Height="32" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
             <TextBlock
                 x:Name="TitleTextBlock"
-                Margin="16,0"
+                Margin="10,0"
                 IsTextSelectionEnabled="True" 
                 FontWeight="Medium" 
                 TextTrimming="CharacterEllipsis" 
