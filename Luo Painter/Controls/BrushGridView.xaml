@@ -11,13 +11,45 @@
     d:DesignWidth="400"   
     d:DesignHeight="400"
     IsItemClickEnabled="True" 
-    FooterTemplate="{StaticResource AppListViewBaseFooter}"      
+    SelectionMode="Single"
+    Margin="8"
+    BorderThickness="1"
+    BorderBrush="{ThemeResource AppStroke}"
+    Background="{ThemeResource SystemAltLowColor}"
+    ItemsSource="{x:Bind CollectionViewSource.View}" 
     >
+
+    <FrameworkElement.Resources>
+        <!--CollectionViewSource-->
+        <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
+            <CollectionViewSource.Source>
+                <local:PaintBrushGroupingList x:Name="Collection">
+                    <local:PaintBrushGrouping Key="Erase">
+                        <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011900"/>
+                        <local:PaintBrush Type="Erase" Size2="32" Opacity2="0.5" Spacing2="0.25" Flow2="1" Hardness="Cosine" IgnoreSizePressure="True" Tile2="2023012200"/>
+                    </local:PaintBrushGrouping>
+                    <local:PaintBrushGrouping Key="Paint">
+                        <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011802"/>
+                        <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011901"/>
+                        <local:PaintBrush Type="General" Size2="220" Opacity2="1" Spacing2="0.5" Flow2="0.5" Hardness="Cosine" Tile2="2023012201"/>
+                        <local:PaintBrush Type="Line" Size2="5" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011803"/>
+                    </local:PaintBrushGrouping>
+                    <local:PaintBrushGrouping Key="Fx">
+                        <local:PaintBrush Type="Blur" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="Cosine" Tile2="2023012104"/>
+                        <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012105"/>
+                        <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012006"/>
+                    </local:PaintBrushGrouping>
+                </local:PaintBrushGroupingList>
+            </CollectionViewSource.Source>
+        </CollectionViewSource>
+    </FrameworkElement.Resources>
 
     <ItemsControl.ItemContainerStyle>
         <Style TargetType="GridViewItem">
+            <Setter Property="Width" Value="256"/>
+            <Setter Property="MaxHeight" Value="64"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Margin" Value="0,0,0,1"/>
+            <Setter Property="Margin" Value="3,0,3,1"/>
             <Setter Property="Background" Value="{ThemeResource SystemColorControlAccentBrush}"/>
         </Style>
     </ItemsControl.ItemContainerStyle>
@@ -34,39 +66,37 @@
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 
-    <ListViewBase.Header>
-        <Grid Height="50" Padding="0,0,4,0" ColumnSpacing="4" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                x:Name="TitleTextBlock"
-                Margin="16,0"
-                IsTextSelectionEnabled="True" 
-                FontWeight="Medium" 
-                TextTrimming="CharacterEllipsis" 
-                FontSize="20" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Center" 
-                OpticalMarginAlignment="TrimSideBearings"
-                >
-                Brushes
-            </TextBlock>
-            <Button x:Name="AddButton" Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
-                <SymbolIcon Symbol="Add"/>
-            </Button>
-        </Grid>
-    </ListViewBase.Header>
-
-    <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011900"/>
-    <local:PaintBrush Type="Erase" Size2="32" Opacity2="0.5" Spacing2="0.25" Flow2="1" Hardness="Cosine" IgnoreSizePressure="True" Tile2="2023012200"/>
-    <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011802"/>
-    <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011901"/>
-    <local:PaintBrush Type="General" Size2="220" Opacity2="1" Spacing2="0.5" Flow2="0.5" Hardness="Cosine" Tile2="2023012201"/>
-    <local:PaintBrush Type="Line" Size2="5" Opacity2="1" Spacing2="0.25" Flow2="1" IgnoreSizePressure="True" Tile2="2023011803"/>
-    <local:PaintBrush Type="Blur" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="Cosine" Tile2="2023012104"/>
-    <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012105"/>
-    <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Tile2="2023012006"/>
+    <ItemsControl.GroupStyle>
+        <GroupStyle HidesIfEmpty="True">
+            <GroupStyle.HeaderContainerStyle>
+                <Style TargetType="GridViewHeaderItem">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="MinHeight" Value="2"/>
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="GridViewHeaderItem">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="{TemplateBinding Background}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </GroupStyle.HeaderContainerStyle>
+            <GroupStyle.HeaderTemplate>
+                <DataTemplate x:DataType="local:PaintBrushGrouping">
+                    <TextBlock
+                        Text="{x:Bind Key}" 
+                        Foreground="{ThemeResource AppForeground}"
+                        Style="{StaticResource BaseTextBlockStyle}"
+                        >       
+                        <!--Brushes-->
+                    </TextBlock>
+                </DataTemplate>
+            </GroupStyle.HeaderTemplate>
+        </GroupStyle>
+    </ItemsControl.GroupStyle>
 
 </luo_painter:XamlGridView>
