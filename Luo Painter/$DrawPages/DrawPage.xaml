@@ -193,9 +193,9 @@
                     -->
                     <VisualState.Setters>
                         <!--AppBar-->
-                        <Setter Target="AppBarScrollViewer.Margin" Value="0,0,0,49"/>
-                        <Setter Target="AppBarScrollViewer.Padding" Value="10,0"/>
-                        <Setter Target="AppBarScrollViewer.CornerRadius" Value="0"/>
+                        <Setter Target="PaintScrollViewer.Margin" Value="0,0,0,49"/>
+                        <Setter Target="PaintScrollViewer.Padding" Value="10,0"/>
+                        <Setter Target="PaintScrollViewer.CornerRadius" Value="0"/>
                         <!--AppBar-->
                         <Setter Target="AppBarBorder.CornerRadius" Value="0"/>
                         <Setter Target="AppBarBorder.Margin" Value="0"/>
@@ -216,7 +216,7 @@
                     -->
                     <VisualState.Setters>
                         <!--AppBar-->
-                        <Setter Target="AppBarScrollViewer.Margin" Value="0,10,0,60"/>
+                        <Setter Target="PaintScrollViewer.Margin" Value="0,10,0,60"/>
                         <!--AppBar-->
                         <Setter Target="AppBarBorder.CornerRadius" Value="8,8,0,0"/>
                         <Setter Target="AppBarBorder.Margin" Value="0"/>
@@ -377,21 +377,15 @@
                     </Button>
 
                     <!--AppBar-->
-                    <ScrollViewer
-                        x:Name="AppBarScrollViewer"
+                    <controls:PaintScrollViewer
+                        x:Name="PaintScrollViewer" 
                         Visibility="Collapsed"
                         MaxWidth="724"
                         Padding="10" 
                         Margin="0,10,0,80"
                         CornerRadius="8" 
-                        BorderThickness="1" 
-                        BorderBrush="{ThemeResource AppStroke}" 
-                        Background="{ThemeResource AppAcrylicElementBrush}" 
-                        Style="{StaticResource AppVerticalScrollViewerStyle}"
-                        >
-                        <controls:PaintScrollViewer x:Name="PaintScrollViewer"/>
-                    </ScrollViewer>
-                    
+                        />
+
                     <!--AppBar-->
                     <Grid
                         x:Name="AppBarGrid"

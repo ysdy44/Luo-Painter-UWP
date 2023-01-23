@@ -483,15 +483,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.PaintMenu:
-                    switch (this.AppBarScrollViewer.Visibility)
-                    {
-                        case Visibility.Visible:
-                            this.AppBarScrollViewer.Visibility = Visibility.Collapsed;
-                            break;
-                        default:
-                            this.AppBarScrollViewer.Visibility = Visibility.Visible;
-                            break;
-                    }
+                    this.PaintScrollViewer.Toggle();
                     break;
                 //case OptionType.BrushMenu:
                 //    break;
