@@ -8,19 +8,6 @@ namespace Luo_Painter.Controls
     public sealed partial class PaintScrollViewer
     {
 
-        public void TryInkAsync()
-        {
-            if (this.InkCanvasControl.ReadyToDraw is false) return;
-
-            System.Threading.Tasks.Task.Run(this.InkAsync);
-        }
-        public void TryInk()
-        {
-            if (this.InkCanvasControl.ReadyToDraw is false) return;
-
-            lock (this.InkLocker) this.Ink();
-        }
-
         private void InkAsync()
         {
             //@Task

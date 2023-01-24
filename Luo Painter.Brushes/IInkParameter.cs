@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System.Numerics;
-using Windows.Foundation;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -22,8 +22,10 @@ namespace Luo_Painter.Brushes
 
         string TextureSelectedItem { get; }
         void ConstructTexture(string path);
-        IAsyncOperation<ContentDialogResult> ShowTextureAsync();
+        Task<ContentDialogResult> ShowTextureAsync();
 
         void Construct(IInkParameter item);
+        void TryInkAsync();
+        void TryInk();
     }
 }

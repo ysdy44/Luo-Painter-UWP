@@ -7,9 +7,9 @@ using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.ObjectModel;
 using System.Numerics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -90,7 +90,7 @@ namespace Luo_Painter.Controls
 
         public string TextureSelectedItem => this.InkParameter.TextureSelectedItem;
         public void ConstructTexture(string path) => this.InkParameter.ConstructTexture(path);
-        public IAsyncOperation<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
+        public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
 
         IInkParameter InkParameter;
         public void Construct(IInkParameter item)
@@ -100,6 +100,8 @@ namespace Luo_Painter.Controls
             float dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
             this.WheelImageSource = new WheelImageSource(this.CanvasDevice, new CircleTemplateSettingsF(300), dpi);
         }
+        public void TryInkAsync() => this.InkParameter.TryInkAsync();
+        public void TryInk() => this.InkParameter.TryInk();
         private void SurfaceContentsLost(object sender, object e)
         {
             this.WheelImageSource.Redraw();
@@ -144,7 +146,7 @@ namespace Luo_Painter.Controls
             if (this.TricolorPicker.Visibility == default) this.TricolorPicker.Recolor(color);
             if (this.HuePicker.Visibility == default) this.HuePicker.Recolor(color);
             if (this.ValuePicker.Visibility == default)
-            {                
+            {
                 this.RGBPicker.Recolor(color);
                 this.HSVPicker.Recolor(color);
                 this.HexPicker.Recolor(color);

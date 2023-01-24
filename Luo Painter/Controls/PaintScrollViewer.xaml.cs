@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Brushes;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -72,7 +73,7 @@ namespace Luo_Painter.Controls
 
         public string TextureSelectedItem => this.InkParameter.TextureSelectedItem;
         public void ConstructTexture(string path) => this.InkParameter.ConstructTexture(path);
-        public IAsyncOperation<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
+        public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
 
         IInkParameter InkParameter;
         public void Construct(IInkParameter item)
@@ -81,6 +82,18 @@ namespace Luo_Painter.Controls
 
             this.ConstructInk(item.InkPresenter);
             this.Type = item.InkPresenter.Type;
+        }
+        public void TryInkAsync()
+        {
+            if (this.InkCanvasControl.ReadyToDraw is false) return;
+
+            Task.Run(this.InkAsync);
+        }
+        public void TryInk()
+        {
+            if (this.InkCanvasControl.ReadyToDraw is false) return;
+
+            lock (this.InkLocker) this.Ink();
         }
 
         #endregion

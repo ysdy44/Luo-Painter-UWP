@@ -290,12 +290,18 @@ namespace Luo_Painter
 
         public string TextureSelectedItem => this.TextureDialog.SelectedItem;
         public void ConstructTexture(string path) => this.TextureDialog.Construct(path);
-        public IAsyncOperation<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowAsync();
-        
+        public Task<ContentDialogResult> ShowTextureAsync() => this.TextureDialog.ShowInstance();
+
         public void Construct(IInkParameter item)
         {
             this.PaintScrollViewer.Construct(item);
             this.ColorButton.Construct(item);
+        }
+        public void TryInkAsync()
+        {
+        }
+        public void TryInk()
+        {
         }
 
         #endregion
