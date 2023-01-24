@@ -155,6 +155,7 @@
     <Compile Include="%24DrawPages\DrawPage.Export.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Ink.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Paint.cs" />

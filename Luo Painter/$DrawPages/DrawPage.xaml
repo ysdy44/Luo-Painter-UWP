@@ -383,7 +383,16 @@
                         Margin="0,10,0,80"
                         CornerRadius="8" 
                         Width="{x:Bind ReverseDevicePhoneToWidth740Converter(Device), Mode=OneWay}"
-                        />
+                        >
+                        <canvas:CanvasControl               
+                            x:Name="InkCanvasControl"       
+                            HorizontalAlignment="Center"
+                            Width="240"                           
+                            Height="120"                            
+                            UseSharedDevice="True"                               
+                            CustomDevice="{x:Bind CanvasDevice}"                       
+                            />
+                    </controls:PaintScrollViewer>
 
                     <!--AppBar-->
                     <Grid
@@ -1318,17 +1327,16 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Paint">
-                                <Grid Padding="12,0" ColumnSpacing="4" VerticalAlignment="Center" >
+                                <Grid Padding="10,0" VerticalAlignment="Center" Width="{x:Bind ReverseDevicePhoneToWidth740Converter(Device), Mode=OneWay}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="70"/>
-                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="90"/>
+                                        <ColumnDefinition Width="4*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <!--Size-->
                                     <Slider                                             
                                         x:Name="InkSizeSlider"
-                                        Width="{x:Bind ReverseDevicePhoneToWidth300Converter(Device), Mode=OneWay}" 
                                         SmallChange="1000" 
                                         StepFrequency="1000" 
                                         FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
@@ -1344,7 +1352,7 @@
                                     </Slider>
 
                                     <!--Paint-->
-                                    <Button x:Name="PaintButton" Grid.Column="1" Width="70" Height="50" Background="{ThemeResource AppBackground}" Style="{StaticResource TextBlockButtonStyle}" >
+                                    <Button x:Name="PaintButton" Grid.Column="1" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                                         <ToolTipService.ToolTip>
                                             <ToolTip x:Name="PaintToolTip" Style="{StaticResource AppToolTipStyle}">
                                                 Paint Menu
@@ -1357,7 +1365,6 @@
                                     <Slider                 
                                         x:Name="InkOpacitySlider" 
                                         Grid.Column="2"
-                                        Width="{x:Bind ReverseDevicePhoneToWidth300Converter(Device), Mode=OneWay}" 
                                         FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Tag="{x:Bind OpacityToStringConverter(InkOpacitySlider.Value), Mode=OneWay}" 
                                         Style="{StaticResource AppInkSliderStyle}" 

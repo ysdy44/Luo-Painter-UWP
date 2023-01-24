@@ -3,9 +3,9 @@ using Luo_Painter.Elements;
 using Microsoft.Graphics.Canvas;
 using Windows.UI;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class PaintScrollViewer
+    public sealed partial class DrawPage
     {
 
         private void InkAsync()
@@ -47,7 +47,7 @@ namespace Luo_Painter.Controls
                         //@DPI 
                         ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
+                        this.InkPresenter.IsometricDrawShaderBrushEdgeHardness(ds, this.BrushEdgeHardnessShaderCodeBytes, this.PaintScrollViewer.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -73,7 +73,7 @@ namespace Luo_Painter.Controls
                         //@DPI
                         ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
+                        this.InkPresenter.IsometricDrawShaderBrushEdgeHardnessWithTexture(ds, this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.PaintScrollViewer.ColorHdr, this.InkCanvasControl.Dpi.ConvertPixels());
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -89,7 +89,7 @@ namespace Luo_Painter.Controls
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricTip(ds, this.Color);
+                        this.InkPresenter.IsometricTip(ds, this.PaintScrollViewer.Color);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -106,7 +106,7 @@ namespace Luo_Painter.Controls
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.DrawLine(ds, this.Color);
+                        this.InkPresenter.DrawLine(ds, this.PaintScrollViewer.Color);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;
@@ -114,7 +114,7 @@ namespace Luo_Painter.Controls
                     using (CanvasDrawingSession ds = this.InkRender.CreateDrawingSession())
                     {
                         ds.Clear(Colors.Transparent);
-                        this.InkPresenter.IsometricTipFillCircle(ds, this.Color);
+                        this.InkPresenter.IsometricTipFillCircle(ds, this.PaintScrollViewer.Color);
                     }
                     this.InkCanvasControl.Invalidate();
                     break;

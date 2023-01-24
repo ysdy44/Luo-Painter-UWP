@@ -216,11 +216,11 @@ namespace Luo_Painter
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
 
-        TurbulenceEffect Turbulence { get; set; } = new TurbulenceEffect();
         CanvasRenderTarget GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget Mesh { get; set; }
 
+        ImageLayer ImageLayer { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
         BitmapLayer Marquee { get; set; }
@@ -240,6 +240,11 @@ namespace Luo_Painter
         readonly object Locker = new object();
         //@ Paint
         readonly PaintTaskCollection Tasks = new PaintTaskCollection();
+
+        //@Task
+        readonly object InkLocker = new object();
+        //@ Ink
+        CanvasRenderTarget InkRender { get; set; }
 
         SymmetryType SymmetryType;
         readonly Symmetryer Symmetryer = new Symmetryer();
@@ -299,9 +304,15 @@ namespace Luo_Painter
         }
         public void TryInkAsync()
         {
+            if (this.InkCanvasControl.ReadyToDraw is false) return;
+
+            Task.Run(this.InkAsync);
         }
         public void TryInk()
         {
+            if (this.InkCanvasControl.ReadyToDraw is false) return;
+
+            lock (this.InkLocker) this.Ink();
         }
 
         #endregion

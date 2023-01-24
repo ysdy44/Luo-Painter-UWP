@@ -84,6 +84,13 @@ namespace Luo_Painter
 
                                 args.DrawingSession.DrawBoundNodes(this.Transform.Transformer, matrix);
                                 break;
+
+                            case OptionType.SelectionBrush:
+                                args.DrawingSession.Transform = Matrix3x2.Identity;
+                                args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
+
+                                args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.SelectionSize * this.Transformer.Scale / 2), Colors.Gray);
+                                break;
                         }
                         break;
 
@@ -107,7 +114,7 @@ namespace Luo_Painter
                     case OptionType.DisplacementLiquefaction:
                         if (this.BitmapLayer is null) break;
 
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips((float)this.DisplacementLiquefactionSize * this.Transformer.Scale), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips((float)this.DisplacementLiquefactionSize * this.Transformer.Scale / 2), Colors.Gray);
                         break;
                     case OptionType.GradientMapping:
                         break;
@@ -126,14 +133,14 @@ namespace Luo_Painter
                     case OptionType.PaintBrushForce:
                         if (this.BitmapLayer is null) break;
 
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale / 2), Colors.Gray);
                         break;
                     case OptionType.PaintLine:
                         if (this.BitmapLayer is null) break;
 
                         args.DrawingSession.DrawLine(this.StartingPoint, this.Point, Colors.Gray);
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
-                        args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale / 2), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale / 2), Colors.Gray);
                         break;
                     case OptionType.PaintBrushMulti:
                         this.DrawPaintBrushMulti(sender, args.DrawingSession, this.ToPoint(this.Marquee.Center));
@@ -234,6 +241,28 @@ namespace Luo_Painter
 
                 args.DrawingSession.DrawImage(this.StrawViewer.StrawImage);
             };
+
+
+            this.InkCanvasControl.CreateResources += (sender, args) =>
+            {
+                this.InkRender = new CanvasRenderTarget(sender, InkPresenter.Width, InkPresenter.Height);
+                this.Ink();
+            };
+            this.InkCanvasControl.Draw += (sender, args) =>
+            {
+                switch (this.InkType)
+                {
+                    case InkType.Blur:
+                        args.DrawingSession.DrawImage(InkPresenter.GetBlur(this.InkRender, this.InkPresenter.Flow * 4));
+                        break;
+                    case InkType.Mosaic:
+                        args.DrawingSession.DrawImage(InkPresenter.GetMosaic(this.InkRender, this.InkPresenter.Size / 10));
+                        break;
+                    default:
+                        args.DrawingSession.DrawImage(this.InkRender);
+                        break;
+                }
+            };
         }
 
         private ICanvasImage GetMezzanine()
@@ -254,14 +283,7 @@ namespace Luo_Painter
                     case OptionType.Transparency:
                         return this.GetTransparencyPreview();
                     default:
-                        if (this.OptionType.HasFlag(OptionType.Geometry))
-                        {
-                            return new CompositeEffect { Sources = { this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp] } };
-                        }
-                        else
-                        {
-                            return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp]);
-                        }
+                        return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp]);
                 }
             }
 
