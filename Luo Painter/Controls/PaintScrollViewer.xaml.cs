@@ -6,9 +6,11 @@ using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace Luo_Painter.Controls
 {
+    [ContentProperty(Name = nameof(Child))]
     public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
 
@@ -37,12 +39,11 @@ namespace Luo_Painter.Controls
 
         private Visibility MixVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMix) ? Visibility.Visible : Visibility.Collapsed;
 
+        private int ZeroConverter(InkType value) => 0;
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
+        public object Child { get => this.ContentPresenter.Content; set => this.ContentPresenter.Content = value; }
 
-        //@Task
-        readonly object InkLocker = new object();
-        CanvasRenderTarget InkRender { get; set; }
 
         bool InkIsEnabled = true;
         double StatringX;
@@ -83,18 +84,8 @@ namespace Luo_Painter.Controls
             this.ConstructInk(item.InkPresenter);
             this.Type = item.InkPresenter.Type;
         }
-        public void TryInkAsync()
-        {
-            if (this.InkCanvasControl.ReadyToDraw is false) return;
-
-            Task.Run(this.InkAsync);
-        }
-        public void TryInk()
-        {
-            if (this.InkCanvasControl.ReadyToDraw is false) return;
-
-            lock (this.InkLocker) this.Ink();
-        }
+        public void TryInkAsync() => this.InkParameter.TryInkAsync();
+        public void TryInk() => this.InkParameter.TryInk();
 
         #endregion
 
@@ -102,8 +93,6 @@ namespace Luo_Painter.Controls
         public PaintScrollViewer()
         {
             this.InitializeComponent();
-            this.ConstructCanvas();
-
             this.ConstructPicker();
 
             this.ConstructProperty();

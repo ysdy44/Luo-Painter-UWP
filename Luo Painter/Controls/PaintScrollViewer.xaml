@@ -141,29 +141,16 @@
 
 
             <!--Ink-->
-            <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <canvas:CanvasControl               
-                    x:Name="InkCanvasControl"       
-                    HorizontalAlignment="Center"
-                    Width="240"                           
-                    Height="120"                            
-                    UseSharedDevice="True"                               
-                    CustomDevice="{x:Bind CanvasDevice}"                       
-                    Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}"              
-                    />
+            <Border Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <ContentPresenter x:Name="ContentPresenter" Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}">
+                    <!--Content-->
+                </ContentPresenter>
             </Border>
 
             <!--Type-->
             <Grid>
 
                 <Rectangle Height="1" VerticalAlignment="Bottom" Fill="{ThemeResource AppStroke}"/>
-
-                <ListBox x:Name="ComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
-                    <ListBoxItem x:Name="PropertyItem">Property</ListBoxItem>
-                    <ListBoxItem x:Name="ShapeItem" Visibility="{x:Bind Shape2VisibilityConverter(Type), Mode=OneWay}">Shape</ListBoxItem>
-                    <ListBoxItem x:Name="GrainItem" Visibility="{x:Bind Grain2VisibilityConverter(Type), Mode=OneWay}">Grain</ListBoxItem>
-                    <ListBoxItem x:Name="MixItem" Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}">Mix Color</ListBoxItem>
-                </ListBox>
 
                 <ComboBox x:Name="TypeComboBox" SelectedIndex="2" Margin="0,0,0,2" MinWidth="160" HorizontalAlignment="Right">
 
@@ -186,6 +173,13 @@
                     </ItemsControl.ItemsSource>
 
                 </ComboBox>
+
+                <ListView x:Name="ComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+                    <ListViewItem x:Name="PropertyItem">Property</ListViewItem>
+                    <ListViewItem x:Name="ShapeItem" Visibility="{x:Bind Shape2VisibilityConverter(Type), Mode=OneWay}">Shape</ListViewItem>
+                    <ListViewItem x:Name="GrainItem" Visibility="{x:Bind Grain2VisibilityConverter(Type), Mode=OneWay}">Grain</ListViewItem>
+                    <ListViewItem x:Name="MixItem" Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}">Mix Color</ListViewItem>
+                </ListView>
 
             </Grid>
 
