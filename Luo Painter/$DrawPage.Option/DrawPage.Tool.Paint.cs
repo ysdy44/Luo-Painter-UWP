@@ -48,13 +48,16 @@ namespace Luo_Painter
             }
         }
 
-        private void PaintCapAsync(StrokeCap cap) => this.PaintCapAsync(cap, this.ToPoint(cap.StartingPosition));
-        private void PaintCapAsync(StrokeCap cap, Vector2 startingPoint) => this.PaintStarted(cap);
         private void PaintStarted(StrokeCap cap)
         {
             //@Task
             lock (this.Locker)
             {
+                //@Debug
+                // BitmapLayer is null
+                // System.NullReferenceException:“Object reference not set to an instance of an object.”
+                if (this.BitmapLayer is null) return;
+
                 this.BitmapLayer.Hit(cap.Bounds);
                 this.PaintCap(cap);
             }
@@ -64,10 +67,6 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
         }
 
-        private async void PaintSegmentAsync()
-        {
-            this.PaintAction();
-        }
         private async void PaintDelta(StrokeSegment segment)
         {
             //@Task
