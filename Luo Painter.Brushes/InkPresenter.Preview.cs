@@ -1,12 +1,12 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
-using Windows.Devices.Power;
+using System.Runtime.CompilerServices;
 using Windows.Graphics.Effects;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter : InkAttributes
+    public sealed partial class InkPresenter
     {
 
         public void Preview(CanvasDrawingSession ds, InkType type, ICanvasImage image, ICanvasImage wet)
@@ -58,6 +58,15 @@ namespace Luo_Painter.Brushes
                 case InkType.ShapeGeneral_Opacity_Grain_Mix:
                 case InkType.Tip_Opacity_Grain:
                 case InkType.Line_Opacity_Grain:
+                    ds.DrawImage(image);
+                    ds.Blend = CanvasBlend.SourceOver;
+                    using (AlphaMaskEffect grain = this.GetGrain(wet))
+                    using (OpacityEffect opacity = this.GetOpacity(grain))
+                    {
+                        ds.DrawImage(opacity);
+                    }
+                    break;
+
                 case InkType.General_Opacity_Grain_Blend:
                 case InkType.General_Opacity_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend:
@@ -182,6 +191,12 @@ namespace Luo_Painter.Brushes
                 case InkType.ShapeGeneral_Opacity_Grain_Mix:
                 case InkType.Tip_Opacity_Grain:
                 case InkType.Line_Opacity_Grain:
+                    {
+                        AlphaMaskEffect grain = this.GetGrain(wet);
+                        OpacityEffect opacity = this.GetOpacity(grain);
+                        return InkPresenter.GetComposite(image, opacity);
+                    }
+
                 case InkType.General_Opacity_Grain_Blend:
                 case InkType.General_Opacity_Grain_Blend_Mix:
                 case InkType.ShapeGeneral_Opacity_Grain_Blend:
