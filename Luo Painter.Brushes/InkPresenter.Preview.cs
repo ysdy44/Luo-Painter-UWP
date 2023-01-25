@@ -288,11 +288,23 @@ namespace Luo_Painter.Brushes
         public ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
         public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, 30 * this.Flow);
         public ScaleEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
-        public AlphaMaskEffect GetGrain(IGraphicsEffectSource image) => InkPresenter.GetGrain(image, this.GrainSource, new Vector2
+        public AlphaMaskEffect GetGrain(IGraphicsEffectSource image) => this.RecolorGrain ? new AlphaMaskEffect
         {
-            X = this.Step / (float)this.GrainSource.SizeInPixels.Width,
-            Y = this.Step / (float)this.GrainSource.SizeInPixels.Height
-        });
+            Source = image,
+            AlphaMask = InkPresenter.GetGrain(this.GrainSource, new Vector2
+            {
+                X = this.Step / (float)this.GrainSource.SizeInPixels.Width,
+                Y = this.Step / (float)this.GrainSource.SizeInPixels.Height
+            })
+        } : new AlphaMaskEffect
+        {
+            AlphaMask = image,
+            Source = InkPresenter.GetGrain(this.GrainSource, new Vector2
+            {
+                X = this.Step / (float)this.GrainSource.SizeInPixels.Width,
+                Y = this.Step / (float)this.GrainSource.SizeInPixels.Height
+            })
+        };
 
 
         //@Static  
@@ -380,20 +392,16 @@ namespace Luo_Painter.Brushes
                 }
             }
         };
-        public static AlphaMaskEffect GetGrain(IGraphicsEffectSource image, IGraphicsEffectSource Grain, Vector2 scale) => new AlphaMaskEffect
+        public static BorderEffect GetGrain(IGraphicsEffectSource grain, Vector2 scale) => new BorderEffect
         {
-            AlphaMask = new BorderEffect
+            ExtendX = CanvasEdgeBehavior.Wrap,
+            ExtendY = CanvasEdgeBehavior.Wrap,
+            Source = new ScaleEffect
             {
-                ExtendX = CanvasEdgeBehavior.Wrap,
-                ExtendY = CanvasEdgeBehavior.Wrap,
-                Source = new ScaleEffect
-                {
-                    BorderMode = EffectBorderMode.Hard,
-                    Source = Grain,
-                    Scale = scale
-                }
-            },
-            Source = image
+                BorderMode = EffectBorderMode.Hard,
+                Source = grain,
+                Scale = scale
+            }
         };
 
     }
