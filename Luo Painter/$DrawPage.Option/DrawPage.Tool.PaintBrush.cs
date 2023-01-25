@@ -31,7 +31,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
-            StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
+            StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure);
             this.PaintStarted(cap);
 
             //@Paint
@@ -46,7 +46,7 @@ namespace Luo_Painter
 
             this.CanvasControl.Invalidate(); // Invalidate
 
-            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing, this.InkPresenter.IgnoreSizePressure);
             if (segment.InRadius) return;
 
             //@Paint

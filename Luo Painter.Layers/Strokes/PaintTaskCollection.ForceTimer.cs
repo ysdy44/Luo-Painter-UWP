@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class PaintTaskCollection : List<StrokeSegment>, IDisposable
+    public sealed partial class PaintTaskCollection
     {
 
         //@Const
@@ -31,6 +31,7 @@ namespace Luo_Painter.Layers
         // Ink 
         float Size = 12;
         float Spacing = 0.25f;
+        bool IgnoreSizePressure;
 
         readonly System.Timers.Timer Timer = new System.Timers.Timer
         {
@@ -57,7 +58,7 @@ namespace Luo_Painter.Layers
                     this.Velocity *= 1 - PaintTaskCollection.dt / length * 100;
                     this.PositionStabilizer += this.Velocity * PaintTaskCollection.dt * 1;
 
-                    StrokeSegment segment = new StrokeSegment(this.StartingPositionStabilizer, this.PositionStabilizer, this.StartingPressureStabilizer, this.Pressure, this.Size, this.Spacing);
+                    StrokeSegment segment = new StrokeSegment(this.StartingPositionStabilizer, this.PositionStabilizer, this.StartingPressureStabilizer, this.Pressure, this.Size, this.Spacing, this.IgnoreSizePressure);
                     if (segment.InRadius) continue;
 
                     base.Add(segment);
@@ -70,7 +71,7 @@ namespace Luo_Painter.Layers
         }
 
         public void StopForce() => this.Timer.Stop();
-        public void StartForce(Vector2 position, float pressure, float size, float spacing)
+        public void StartForce(Vector2 position, float pressure, float size, float spacing, bool ignoreSizePressure)
         {
             // Force
             this.Velocity = Vector2.Zero;
@@ -88,6 +89,7 @@ namespace Luo_Painter.Layers
             // Ink 
             this.Size = size;
             this.Spacing = spacing;
+            this.IgnoreSizePressure = ignoreSizePressure;
 
             this.Timer.Start();
         }

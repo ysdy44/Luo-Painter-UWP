@@ -27,19 +27,19 @@ namespace Luo_Painter.Layers
         public readonly bool IsNaN;
         public readonly bool InRadius;
 
-        public StrokeSegment(Vector2 startingPosition, Vector2 position, float startingPressure = 1f, float pressure = 1f, float size = 22f, float spacing = 0.25f)
+        public StrokeSegment(Vector2 startingPosition, Vector2 position, float startingPressure = 1f, float pressure = 1f, float size = 22f, float spacing = 0.25f, bool ignoreSizePressure = false)
         {
             // Paint
             this.StartingPosition = startingPosition;
             this.Position = position;
 
-            this.StartingPressure = startingPressure;
-            this.Pressure = pressure;
+            this.StartingPressure = ignoreSizePressure ? 1 : startingPressure;
+            this.Pressure = ignoreSizePressure ? 1 : pressure;
 
             // Ink
             this.Spacing = spacing;
 
-            this.StartingSize = System.Math.Max(1f, size * startingPressure);
+            this.StartingSize = ignoreSizePressure ? size : System.Math.Max(1f, size * startingPressure);
             this.Size = size;
 
             this.StartingDistance = spacing * this.StartingSize;

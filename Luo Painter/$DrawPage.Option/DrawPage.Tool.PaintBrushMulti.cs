@@ -61,7 +61,7 @@ namespace Luo_Painter
             //@Paint
             this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.Symmetryer.Construct(count, this.BitmapLayer.Center);
-            foreach (StrokeCap cap in this.Symmetryer.GetCaps(this.SymmetryType, new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size), this.BitmapLayer.Center))
+            foreach (StrokeCap cap in this.Symmetryer.GetCaps(this.SymmetryType, new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure), this.BitmapLayer.Center))
             {
                 this.PaintStarted(cap);
             }
@@ -78,7 +78,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
 
             //@Paint
-            foreach (StrokeSegment segment in this.Symmetryer.GetSegments(this.SymmetryType, new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing), this.BitmapLayer.Center))
+            foreach (StrokeSegment segment in this.Symmetryer.GetSegments(this.SymmetryType, new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing, this.InkPresenter.IgnoreSizePressure), this.BitmapLayer.Center))
             {
                 this.Tasks.Add(segment);
             }
@@ -121,8 +121,8 @@ namespace Luo_Painter
                         ds.DrawLine(0, center.Y, (float)sender.Size.Width, center.Y, Colors.Gray);
                     else
                         ds.DrawLine(
-                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, - this.Transformer.Radian, false),
-                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, - this.Transformer.Radian, true),
+                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, -this.Transformer.Radian, false),
+                            this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, -this.Transformer.Radian, true),
                             Colors.Gray);
                     break;
                 case SymmetryMode.Symmetry:

@@ -33,7 +33,7 @@ namespace Luo_Painter
 
             //@Task
             {
-                StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
+                StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure);
                 lock (this.Locker)
                 {
                     this.BitmapLayer.Hit(cap.Bounds);
@@ -51,7 +51,7 @@ namespace Luo_Painter
             }
 
             //@Paint
-            this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.Spacing, this.InkPresenter.IgnoreSizePressure);
             this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 

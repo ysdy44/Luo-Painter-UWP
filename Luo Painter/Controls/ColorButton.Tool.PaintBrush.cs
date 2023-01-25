@@ -12,7 +12,7 @@ namespace Luo_Painter.Controls
             if (this.Tasks.State != default) return;
 
             //@Paint
-            StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
+            StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure);
             this.PaintStarted(cap);
 
             //@Paint
@@ -24,7 +24,7 @@ namespace Luo_Painter.Controls
             if (this.CanvasControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
 
-            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
+            StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing, this.InkPresenter.IgnoreSizePressure);
             if (segment.InRadius) return;
 
             //@Paint
