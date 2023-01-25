@@ -114,9 +114,9 @@ namespace Luo_Painter.TestApp
                 this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
 
                 //@Paint
-                this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f);
+                this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f, true);
                 this.Tasks.State = PaintTaskState.Painting;
-                await Task.Run(this.PaintAsync);
+                await Task.Run(this.TasksAction);
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -189,7 +189,7 @@ namespace Luo_Painter.TestApp
             };
         }
 
-        private void PaintAsync()
+        private void TasksAction()
         {
             while (true)
             {
@@ -199,24 +199,31 @@ namespace Luo_Painter.TestApp
                         continue;
                     case PaintTaskBehavior.Working:
                     case PaintTaskBehavior.WorkingBeforeDead:
-                        StrokeSegment segment = this.Tasks.First();
+                        StrokeSegment segment = this.Tasks[0];
                         this.Tasks.Remove(segment);
-
-                        using (CanvasDrawingSession ds = this.RenderTarget.CreateDrawingSession())
-                        {
-                            ds.DrawLine(segment.StartingPosition, segment.Position, Colors.DodgerBlue, segment.StartingSize, this.CanvasStrokeStyle);
-                        }
-
-                        this.CanvasControl.Invalidate();
+                        this.TasksElapsed(segment);
                         break;
                     case PaintTaskBehavior.Dead:
-                        //@Paint
                         this.Tasks.State = PaintTaskState.Finished;
+                        this.Tasks.Clear();
+                        this.TasksFinished();
                         return;
                     default:
                         return;
                 }
             }
+        }
+        private void TasksElapsed(StrokeSegment segment)
+        {
+            using (CanvasDrawingSession ds = this.RenderTarget.CreateDrawingSession())
+            {
+                ds.DrawLine(segment.StartingPosition, segment.Position, Colors.DodgerBlue, segment.StartingSize, this.CanvasStrokeStyle);
+            }
+
+            this.CanvasControl.Invalidate();
+        }
+        private void TasksFinished()
+        {
         }
 
     }
