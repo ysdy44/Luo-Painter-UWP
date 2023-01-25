@@ -272,42 +272,49 @@ namespace Luo_Painter.Brushes
         }
 
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public OpacityEffect GetOpacity(IGraphicsEffectSource image) => new OpacityEffect
         {
-            Opacity = this.Opacity,
+            Opacity = base.Opacity,
             Source = image
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public BlendEffect GetBlend(IGraphicsEffectSource image, IGraphicsEffectSource wet) => new BlendEffect
         {
-            Mode = this.BlendMode,
+            Mode = base.BlendMode,
             Background = image,
             Foreground = wet
         };
 
 
-        public ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, this.Opacity);
-        public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, 30 * this.Flow);
-        public ScaleEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, this.Size);
-        public AlphaMaskEffect GetGrain(IGraphicsEffectSource image) => this.RecolorGrain ? new AlphaMaskEffect
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetErase(image, alphaMask, base.Opacity);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetBlur(image, alphaMask, 30 * base.Flow);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ScaleEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask) => InkPresenter.GetMosaic(image, alphaMask, base.Size);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AlphaMaskEffect GetGrain(IGraphicsEffectSource image) => base.RecolorGrain ? new AlphaMaskEffect
         {
             Source = image,
             AlphaMask = InkPresenter.GetGrain(this.GrainSource, new Vector2
             {
-                X = this.Step / (float)this.GrainSource.SizeInPixels.Width,
-                Y = this.Step / (float)this.GrainSource.SizeInPixels.Height
+                X = base.Step / (float)this.GrainSource.SizeInPixels.Width,
+                Y = base.Step / (float)this.GrainSource.SizeInPixels.Height
             })
         } : new AlphaMaskEffect
         {
             AlphaMask = image,
             Source = InkPresenter.GetGrain(this.GrainSource, new Vector2
             {
-                X = this.Step / (float)this.GrainSource.SizeInPixels.Width,
-                Y = this.Step / (float)this.GrainSource.SizeInPixels.Height
+                X = base.Step / (float)this.GrainSource.SizeInPixels.Width,
+                Y = base.Step / (float)this.GrainSource.SizeInPixels.Height
             })
         };
 
 
         //@Static  
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CompositeEffect GetDraw(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
         {
             Sources =
@@ -320,6 +327,7 @@ namespace Luo_Painter.Brushes
                 }
             }
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CompositeEffect GetComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2) => new CompositeEffect
         {
             Sources =
@@ -328,6 +336,7 @@ namespace Luo_Painter.Brushes
                 image2
             }
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CompositeEffect GetDrawComposite(IGraphicsEffectSource image1, IGraphicsEffectSource image2, IGraphicsEffectSource alphaMask) => new CompositeEffect
         {
             Sources =
@@ -341,6 +350,7 @@ namespace Luo_Painter.Brushes
             }
         };
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArithmeticCompositeEffect GetErase(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float opacity) => new ArithmeticCompositeEffect
         {
             MultiplyAmount = 0,
@@ -350,12 +360,14 @@ namespace Luo_Painter.Brushes
             Source1 = image,
             Source2 = alphaMask,
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static GaussianBlurEffect GetBlur(IGraphicsEffectSource image, float blurAmount) => new GaussianBlurEffect
         {
             BorderMode = EffectBorderMode.Hard,
             BlurAmount = blurAmount,
             Source = image
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AlphaMaskEffect GetBlur(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float blurAmount) => new AlphaMaskEffect
         {
             AlphaMask = alphaMask,
@@ -366,6 +378,7 @@ namespace Luo_Painter.Brushes
                 Source = image
             }
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ScaleEffect GetMosaic(IGraphicsEffectSource image, float size) => new ScaleEffect
         {
             InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
@@ -377,6 +390,7 @@ namespace Luo_Painter.Brushes
                 Source = image
             }
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ScaleEffect GetMosaic(IGraphicsEffectSource image, IGraphicsEffectSource alphaMask, float size) => new ScaleEffect
         {
             InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
@@ -392,6 +406,7 @@ namespace Luo_Painter.Brushes
                 }
             }
         };
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BorderEffect GetGrain(IGraphicsEffectSource grain, Vector2 scale) => new BorderEffect
         {
             ExtendX = CanvasEdgeBehavior.Wrap,
