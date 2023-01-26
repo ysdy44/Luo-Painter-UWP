@@ -1,13 +1,9 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
-using Luo_Painter.Layers;
-using System.IO;
-using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
 
         private void ConstructOperator()
@@ -27,12 +23,12 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
-                switch (this.ToolComboBox.SelectedIndex)
+                switch (this.ToggleButton.IsChecked)
                 {
-                    case 0:
+                    case true:
                         this.PaintBrush_Start();
                         break;
-                    case 1:
+                    case false:
                         this.Straw_Start();
                         break;
                     default:
@@ -53,12 +49,12 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
-                switch (this.ToolComboBox.SelectedIndex)
+                switch (this.ToggleButton.IsChecked)
                 {
-                    case 0:
+                    case true:
                         this.PaintBrush_Delta();
                         break;
-                    case 1:
+                    case false:
                         this.Straw_Delta();
                         break;
                     default:
@@ -67,12 +63,12 @@ namespace Luo_Painter.Controls
             };
             this.Operator.Single_Complete += (point, device, properties) =>
             {
-                switch (this.ToolComboBox.SelectedIndex)
+                switch (this.ToggleButton.IsChecked)
                 {
-                    case 0:
+                    case true:
                         this.PaintBrush_Complete();
                         break;
-                    case 1:
+                    case false:
                         this.Straw_Complete();
                         break;
                     default:

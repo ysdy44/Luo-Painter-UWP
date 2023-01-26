@@ -116,6 +116,17 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="%24BrushPages\BrushPage.Canvas.cs" />
+    <Compile Include="%24BrushPages\BrushPage.CreateResources.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Ink.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Operator.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Paint.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Tasks.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Tool.PaintBrush.cs" />
+    <Compile Include="%24BrushPages\BrushPage.Tool.Straw.cs" />
+    <Compile Include="%24BrushPages\BrushPage.xaml.cs">
+      <DependentUpon>BrushPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="%24DrawPage.Option\DrawPage.Canvas.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Cursor.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Border.cs" />
@@ -176,18 +187,10 @@
     <Compile Include="Controls\BrushGridView.xaml.cs">
       <DependentUpon>BrushGridView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ColorButton.Canvas.cs" />
     <Compile Include="Controls\ColorButton.Color.cs" />
     <Compile Include="Controls\ColorButton.ColorHarmony.cs" />
     <Compile Include="Controls\ColorButton.ColorValue.cs" />
-    <Compile Include="Controls\ColorButton.CreateResources.cs" />
-    <Compile Include="Controls\ColorButton.Ink.cs" />
-    <Compile Include="Controls\ColorButton.Operator.cs" />
-    <Compile Include="Controls\ColorButton.Paint.cs" />
     <Compile Include="Controls\ColorButton.Picker.cs" />
-    <Compile Include="Controls\ColorButton.Tool.Paint.cs" />
-    <Compile Include="Controls\ColorButton.Tool.PaintBrush.cs" />
-    <Compile Include="Controls\ColorButton.Tool.Straw.cs" />
     <Compile Include="Controls\ColorButton.xaml.cs">
       <DependentUpon>ColorButton.xaml</DependentUpon>
     </Compile>
@@ -337,6 +340,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="%24BrushPages\BrushPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="%24DrawPages\DrawPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

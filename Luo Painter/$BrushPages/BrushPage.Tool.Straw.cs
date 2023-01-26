@@ -2,9 +2,9 @@
 using System.Numerics;
 using Windows.UI;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
 
         private void Straw_Start()
@@ -14,7 +14,6 @@ namespace Luo_Painter.Controls
             if (this.BitmapLayer.Contains(x, y) is false) return;
 
             Color color = this.Straw(x, y);
-            this.OnColorChanged(color, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithSecondaryBrush);
         }
         private void Straw_Delta()
         {
@@ -23,7 +22,6 @@ namespace Luo_Painter.Controls
             if (this.BitmapLayer.Contains(x, y) is false) return;
 
             Color color = this.Straw(x, y);
-            this.OnColorChanged(color, ColorChangedMode.WithPrimaryBrush | ColorChangedMode.WithSecondaryBrush);
         }
         private void Straw_Complete()
         {
@@ -32,7 +30,6 @@ namespace Luo_Painter.Controls
             if (this.BitmapLayer.Contains(x, y) is false) return;
 
             Color color = this.Straw(x, y);
-            this.OnColorChanged(color, ColorChangedMode.All);
         }
 
         private Color Straw(int x, int y)

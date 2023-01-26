@@ -3,9 +3,9 @@ using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Numerics;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
 
         private void PaintCap(StrokeCap cap)

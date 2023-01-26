@@ -1,20 +1,12 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
 using Luo_Painter.HSVColorPickers;
-using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.ObjectModel;
 using System.Numerics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Resources;
-using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
@@ -27,9 +19,7 @@ namespace Luo_Painter.Controls
         All = WithPrimaryBrush | WithSecondaryBrush | WithColor
     }
 
-    internal class ColorCommand : RelayCommand<Color> { }
-
-    public sealed partial class ColorButton : EyedropperButton, IInkParameter, IColorHdrBase, IColorBase
+    public sealed partial class ColorButton : EyedropperButton, IColorHdrBase, IColorBase
     {
         //@Converter
         private HarmonyMode ModeConverter(int value)
@@ -64,69 +54,26 @@ namespace Luo_Painter.Controls
         public FrameworkElement PlacementTarget => this;
         public ICommand OpenCommand => this;
 
-        public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
-        BitmapLayer BitmapLayer { get; set; }
-        ObservableCollection<Color> ObservableCollection { get; } = new ObservableCollection<Color>();
-
-        //@Task
-        readonly object Locker = new object();
-        //@ Paint
-        readonly PaintTaskCollection Tasks = new PaintTaskCollection();
-
-        WheelImageSource WheelImageSource;
-
-        Vector2 StartingPosition;
-        Vector2 Position;
-        float StartingPressure;
-        float Pressure;
-
-        #region IInkParameter
-
-        public InkType InkType { get => this.InkParameter.InkType; set => this.InkParameter.InkType = value; }
-        public InkPresenter InkPresenter => this.InkParameter.InkPresenter;
+        public ObservableCollection<Color> ObservableCollection { get; } = new ObservableCollection<Color>();
 
         public Color Color { get; private set; } = Colors.Black;
         public Vector4 ColorHdr { get; private set; } = Vector4.UnitW;
 
-        public string TextureSelectedItem => this.InkParameter.TextureSelectedItem;
-        public void ConstructTexture(string path) => this.InkParameter.ConstructTexture(path);
-        public Task<ContentDialogResult> ShowTextureAsync() => this.InkParameter.ShowTextureAsync();
-
-        IInkParameter InkParameter;
         public void Construct(IInkParameter item)
         {
-            this.InkParameter = item;
-
-            float dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
-            this.WheelImageSource = new WheelImageSource(this.CanvasDevice, new CircleTemplateSettingsF(300), dpi);
         }
-        public void TryInkAsync() => this.InkParameter.TryInkAsync();
-        public void TryInk() => this.InkParameter.TryInk();
-        private void SurfaceContentsLost(object sender, object e)
-        {
-            this.WheelImageSource.Redraw();
-        }
-
-        #endregion
 
         //@Construct
         public ColorButton()
         {
             this.InitializeComponent();
-            base.Unloaded += (s, e) => CompositionTarget.SurfaceContentsLost -= this.SurfaceContentsLost;
-            base.Loaded += (s, e) => CompositionTarget.SurfaceContentsLost += this.SurfaceContentsLost;
-            this.ComboBox.SelectionChanged += (s, e) => this.Recolor(this.Color);
-
-            this.ConstructCanvas();
-            this.ConstructOperator();
-
             this.ConstructPicker();
 
             this.ConstructColor();
             this.ConstructColorHarmony();
             this.ConstructColorValue();
 
-            this.ConstructInk();
+            this.ComboBox.SelectionChanged += (s, e) => this.Recolor(this.Color);
         }
 
         //@Strings

@@ -1,8 +1,8 @@
 ﻿using Luo_Painter.Layers;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
 
         private void PaintBrush_Start()
@@ -13,11 +13,12 @@ namespace Luo_Painter.Controls
 
             //@Paint
             StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure);
-            this.PaintStarted(cap);
+            this.TasksStarted(cap);
 
             //@Paint
             this.TasksStart();
         }
+
         private void PaintBrush_Delta()
         {
             if (this.CanvasControl.ReadyToDraw is false) return;
@@ -32,6 +33,7 @@ namespace Luo_Painter.Controls
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
         }
+
         private void PaintBrush_Complete()
         {
             if (this.CanvasControl.ReadyToDraw is false) return;

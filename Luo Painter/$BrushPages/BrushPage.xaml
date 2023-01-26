@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="Luo_Painter.BrushPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:brushes="using:Luo_Painter.Brushes"
+    xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml" 
+    xmlns:controls="using:Luo_Painter.Controls"
+    NavigationCacheMode="Required"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Transformer-->
+        <brushes:InkCanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+    </FrameworkElement.Resources>
+
+
+    <Grid>
+
+        <!--Extension-->
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorDark}" AccentTitleBarColor="{ThemeResource AppBackgroundColorDark}"/>
+
+        <!--Canvas-->
+        <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Background="{ThemeResource AppBackgroundDark}" >
+            <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" />
+            <canvas:CanvasControl x:Name="CanvasControl" UseSharedDevice="True" CustomDevice="{x:Bind CanvasDevice}" />
+        </Canvas>
+
+        <!--Tool-->
+        <ToggleButton x:Name="ToggleButton" IsChecked="True" Width="70" Height="70" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource TextBlockButtonStyle}">
+            <FontIcon Glyph="&#xE932;" FontFamily="Segoe MDL2 Assets"/>
+        </ToggleButton>
+        
+        <!--Foot-->
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+
+            <Button x:Name="ImageButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="M"/>
+                    <KeyboardAccelerator Key="I"/>
+                </Button.KeyboardAccelerators>
+                <StackPanel Spacing="8" Orientation="Horizontal">
+                    <SymbolIcon Symbol="Pictures"/>
+                    <TextBlock x:Name="ImageTextBlock" VerticalAlignment="Center">
+                        Image
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="ClearButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Back"/>
+                    <KeyboardAccelerator Key="Delete"/>
+                </Button.KeyboardAccelerators>
+                <StackPanel Spacing="8" Orientation="Horizontal">
+                    <SymbolIcon Symbol="Delete"/>
+                    <TextBlock x:Name="ClearTextBlock" VerticalAlignment="Center">
+                        Clear
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
+</Page>

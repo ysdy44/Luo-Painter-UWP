@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Core;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
         private void TasksStop()
         {
@@ -32,19 +32,19 @@ namespace Luo_Painter.Controls
                     case PaintTaskBehavior.WorkingBeforeDead:
                         StrokeSegment segment = this.Tasks[0];
                         this.Tasks.RemoveAt(0);
-                        this.PaintDelta(segment);
+                        this.TasksDelta(segment);
                         break;
                     default:
                         //@Paint
                         this.Tasks.State = PaintTaskState.Finished;
                         this.Tasks.Clear();
-                        this.PaintCompleted();
+                        this.TasksCompleted();
                         return;
                 }
             }
         }
 
-        private void PaintStarted(StrokeCap cap)
+        private void TasksStarted(StrokeCap cap)
         {
             //@Task
             lock (this.Locker)
@@ -55,7 +55,8 @@ namespace Luo_Painter.Controls
 
             this.CanvasControl.Invalidate(); // Invalidate
         }
-        private async void PaintDelta(StrokeSegment segment)
+
+        private async void TasksDelta(StrokeSegment segment)
         {
             //@Task
             lock (this.Locker)
@@ -69,7 +70,7 @@ namespace Luo_Painter.Controls
                 this.CanvasControl.Invalidate();
             });
         }
-        private async void PaintCompleted()
+        private async void TasksCompleted()
         {
             //@Task
             lock (this.Locker)

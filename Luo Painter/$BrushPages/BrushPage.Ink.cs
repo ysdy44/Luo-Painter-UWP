@@ -1,19 +1,13 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
-using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
+﻿using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Numerics;
-using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
 
         private void ConstructInk()

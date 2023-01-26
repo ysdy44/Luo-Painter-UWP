@@ -6,10 +6,8 @@
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
-    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
-    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     d:DesignWidth="50" 
     d:DesignHeight="50"
@@ -30,8 +28,6 @@
     </UIElement.ManipulationMode>
 
     <FrameworkElement.Resources>
-        <!--Transformer-->
-        <brushes:InkCanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
@@ -93,41 +89,22 @@
                     <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
                     <FontIcon Glyph="&#xE9E9;" FontFamily="Segoe MDL2 Assets"/>
-                    <FontIcon Glyph="&#xE932;" FontFamily="Segoe MDL2 Assets"/>
                     <!--<FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>-->
                 </ListBox>
 
                 <!--Color-->
                 <elements:IndexGrid Width="320" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
-                    <hsvColorPickers:TricolorPicker x:Name="TricolorPicker" Visibility="Visible" Margin="10,20,10,0" Width="300" Height="300">
-                        <Control.Background>
-                            <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
-                        </Control.Background>
-                    </hsvColorPickers:TricolorPicker>
+                    <hsvColorPickers:TricolorPicker x:Name="TricolorPicker" Visibility="Visible" Margin="10,20,10,0" Width="300" Height="300" Background="{x:Bind BorderBrush, Mode=OneWay}"/>
                     <hsvColorPickers:HuePicker x:Name="HuePicker" Visibility="Collapsed" Margin="10,10,10,0" Width="300" Height="340"/>
-                    <hsvColorPickers:HarmonyPicker x:Name="HarmonyPicker" Visibility="Collapsed" Margin="10,20,10,0" Width="300" Height="340">
-                        <Control.Background>
-                            <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
-                        </Control.Background>
-                    </hsvColorPickers:HarmonyPicker>
+                    <hsvColorPickers:HarmonyPicker x:Name="HarmonyPicker" Visibility="Collapsed" Margin="10,20,10,0" Width="300" Height="340" Background="{x:Bind BorderBrush, Mode=OneWay}"/>
                     <StackPanel x:Name="ValuePicker" Visibility="Collapsed" Width="320" Padding="0,4,0,0" Spacing="4">
-                        <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                        <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
                             <hsvColorPickers:RGBPicker x:Name="RGBPicker" Foreground="{ThemeResource AppForeground}"/>
                         </Border>
-                        <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                        <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
                             <hsvColorPickers:HSVPicker x:Name="HSVPicker" Foreground="{ThemeResource AppForeground}"/>
                         </Border>
                     </StackPanel>
-                    <!--Palette-->
-                    <canvas:CanvasControl 
-                        x:Name="CanvasControl" 
-                        Width="320"
-                        Height="320"
-                        ClearColor="White" 
-                        UseSharedDevice="True" 
-                        CustomDevice="{x:Bind CanvasDevice}" 
-                        Visibility="Collapsed"
-                       />
                 </elements:IndexGrid>
 
                 <!--Tool-->
@@ -139,7 +116,7 @@
                         Height="30"
                         IsItemClickEnabled="True"
                         SelectionMode="None" 
-                        Background="{ThemeResource SystemAltLowColor}"
+                        Background="{ThemeResource AppOpacity}"
                         ItemsSource="{x:Bind ObservableCollection}"          
                         ScrollViewer.HorizontalScrollMode="Enabled"
                         ScrollViewer.HorizontalScrollBarVisibility="Hidden"
@@ -262,7 +239,7 @@
 
                     </Grid>
 
-                    <Border Margin="4" Padding="8,0" Height="42" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                    <Border Margin="4" Padding="8,0" Height="42" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -278,32 +255,10 @@
                         </Grid>
                     </Border>
 
-                    <Grid ColumnSpacing="4" Padding="4,0" Height="50" Visibility="Collapsed" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!--Tool-->
-                        <ListBox x:Name="ToolComboBox" SelectedIndex="0" VerticalAlignment="Center" Style="{StaticResource AppSegmentListBoxStyle}">
-                            <ListBoxItem x:Name="PaintItem">Paint</ListBoxItem>
-                            <ListBoxItem x:Name="StrawItem">Straw</ListBoxItem>
-                        </ListBox>
-
-                        <Button x:Name="ImageButton" Grid.Column="1" Width="70" CornerRadius="4" Height="40" BorderThickness="1">
-                            <SymbolIcon Symbol="Pictures"/>
-                        </Button>
-
-                        <Button x:Name="ClearButton" Grid.Column="2" Width="70" CornerRadius="4" Height="40" BorderThickness="1">
-                            <SymbolIcon Symbol="Delete"/>
-                        </Button>
-                    </Grid>
-
                 </elements:IndexGrid>
 
                 <!--
-                <Border Margin="4,0,4,4" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                <Border Margin="4,0,4,4" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
                     <hsvColorPickers:NumberSlider x:Name="AlphaSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                         <Control.Background>
                             <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>

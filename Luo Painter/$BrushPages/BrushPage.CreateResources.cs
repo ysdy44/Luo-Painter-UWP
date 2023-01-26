@@ -1,13 +1,10 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
-using Luo_Painter.Layers.Models;
+﻿using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class ColorButton
+    public sealed partial class BrushPage
     {
 
         byte[] LiquefactionShaderCodeBytes;
