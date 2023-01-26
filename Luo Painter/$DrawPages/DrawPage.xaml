@@ -1838,7 +1838,11 @@
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Redo"/>
                     </Button>
-                    <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}" />
+                    <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}">
+                        <Control.BorderBrush>
+                            <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+                        </Control.BorderBrush>
+                    </controls:ColorButton>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

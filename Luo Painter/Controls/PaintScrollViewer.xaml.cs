@@ -13,6 +13,8 @@ namespace Luo_Painter.Controls
     [ContentProperty(Name = nameof(Child))]
     public sealed partial class PaintScrollViewer : UserControl, IInkParameter
     {
+        //@Delegate
+        public event RoutedEventHandler ScratchpadClick { remove => this.ScratchpadButton.Click -= value; add => this.ScratchpadButton.Click += value; }
 
         //@Converter
         private int IntConverter(double value) => (int)value;

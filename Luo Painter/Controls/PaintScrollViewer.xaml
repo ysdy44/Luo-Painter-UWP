@@ -140,11 +140,19 @@
 
 
             <!--Ink-->
-            <Border Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <ContentPresenter x:Name="ContentPresenter" Opacity="{x:Bind PercentageConverter(OpacitySlider.Value), Mode=OneWay}">
                     <!--Content-->
                 </ContentPresenter>
-            </Border>
+                <Button x:Name="ScratchpadButton" Padding="12,2" Margin="12,10" Height="32" CornerRadius="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
+                    <StackPanel Spacing="8" Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE932;" FontFamily="Segoe MDL2 Assets"/>
+                        <TextBlock x:Name="ScratchpadTextBlock" VerticalAlignment="Center">
+                            Scratchpad
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
 
 
             <!--Type-->

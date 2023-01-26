@@ -204,9 +204,9 @@ namespace Luo_Painter
 
 
         public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
-        Historian<IHistory> History { get; } = new Historian<IHistory>();
+        readonly Historian<IHistory> History = new Historian<IHistory>();
 
-        public LayerRootNodes LayerManager = new LayerRootNodes();
+        readonly LayerRootNodes LayerManager = new LayerRootNodes();
         public LayerNodes Nodes => this.LayerManager;
         public LayerObservableCollection ObservableCollection { get; } = new LayerObservableCollection();
         public IList<string> ClipboardLayers { get; } = new List<string>();
@@ -243,7 +243,7 @@ namespace Luo_Painter
 
         //@Task
         readonly object InkLocker = new object();
-        //@ Ink
+        //@Ink
         CanvasRenderTarget InkRender { get; set; }
 
         SymmetryType SymmetryType;
@@ -300,7 +300,6 @@ namespace Luo_Painter
         public void Construct(IInkParameter item)
         {
             this.PaintScrollViewer.Construct(item);
-            this.ColorButton.Construct(item);
         }
         public void TryInkAsync()
         {
@@ -330,6 +329,7 @@ namespace Luo_Painter
         {
             this.InitializeComponent();
             this.Construct(this);
+            this.ConstructDraw();
 
             this.ConstructCanvas();
             this.ConstructOperator();
@@ -386,6 +386,8 @@ namespace Luo_Painter
             };
 
 
+            this.PaintScrollViewer.ScratchpadClick += (s, e) => this.TryShowBrushPage();
+
             this.LayerListView.Invalidate += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.LayerListView.History += (s, e) =>
             {
@@ -394,7 +396,6 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                 this.RaiseHistoryCanExecuteChanged();
             };
-
 
             this.NewButton.Click += (s, e) => this.Click(OptionType.AddBitmapLayer);
             this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
