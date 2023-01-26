@@ -16,9 +16,8 @@ namespace Luo_Painter.Controls
             this.PaintStarted(cap);
 
             //@Paint
-            this.PaintStart();
+            this.TasksStart();
         }
-
         private void PaintBrush_Delta()
         {
             if (this.CanvasControl.ReadyToDraw is false) return;
@@ -33,14 +32,13 @@ namespace Luo_Painter.Controls
             this.StartingPosition = this.Position;
             this.StartingPressure = this.Pressure;
         }
-
         private void PaintBrush_Complete()
         {
             if (this.CanvasControl.ReadyToDraw is false) return;
             if (this.InkType == default) return;
 
             //@Paint
-            this.PaintStop();
+            this.TasksStop();
         }
 
     }

@@ -10,17 +10,17 @@ namespace Luo_Painter.Controls
 {
     public sealed partial class ColorButton
     {
-        private void PaintStop()
+        private void TasksStop()
         {
             this.Tasks.State = PaintTaskState.Painted;
         }
-        private async void PaintStart()
+        private async void TasksStart()
         {
             this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintAction);
+            await Task.Run(this.TasksAction);
         }
 
-        private void PaintAction()
+        private void TasksAction()
         {
             while (true)
             {
@@ -44,10 +44,6 @@ namespace Luo_Painter.Controls
             }
         }
 
-        private void PaintCapAsync(StrokeCap cap)
-        {
-            this.PaintStarted(cap);
-        }
         private void PaintStarted(StrokeCap cap)
         {
             //@Task
@@ -58,11 +54,6 @@ namespace Luo_Painter.Controls
             }
 
             this.CanvasControl.Invalidate(); // Invalidate
-        }
-
-        private async void PaintSegmentAsync()
-        {
-            this.PaintAction();
         }
         private async void PaintDelta(StrokeSegment segment)
         {
