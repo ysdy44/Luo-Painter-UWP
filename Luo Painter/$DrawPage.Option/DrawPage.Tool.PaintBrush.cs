@@ -35,7 +35,7 @@ namespace Luo_Painter
             this.PaintStarted(cap);
 
             //@Paint
-            this.PaintStart();
+            this.TasksStart();
         }
 
         private void PaintBrush_Delta()
@@ -67,7 +67,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
-            this.PaintStop();
+            this.TasksStop();
         }
 
     }

@@ -56,7 +56,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
 
             //@Paint
-            this.PaintStart();
+            this.TasksStart();
         }
 
         private void PaintBrushForce_Delta()
@@ -80,7 +80,7 @@ namespace Luo_Painter
 
             //@Paint
             this.Tasks.StopForce();
-            this.PaintStop();
+            this.TasksStop();
 
             this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate

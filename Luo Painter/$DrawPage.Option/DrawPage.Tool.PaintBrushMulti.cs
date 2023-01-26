@@ -67,7 +67,7 @@ namespace Luo_Painter
             }
 
             //@Paint
-            this.PaintStart();
+            this.TasksStart();
         }
 
         private void PaintBrushMulti_Delta()
@@ -98,7 +98,7 @@ namespace Luo_Painter
             this.CanvasAnimatedControl.Paused = this.OptionType.HasPreview(); // Invalidate
 
             //@Paint
-            this.PaintStop();
+            this.TasksStop();
         }
 
         private void DrawPaintBrushMulti(CanvasControl sender, CanvasDrawingSession ds, Vector2 center)

@@ -14,17 +14,17 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
-        private void PaintStop()
+        private void TasksStop()
         {
             this.Tasks.State = PaintTaskState.Painted;
         }
-        private async void PaintStart()
+        private async void TasksStart()
         {
             this.Tasks.State = PaintTaskState.Painting;
-            await Task.Run(this.PaintAction);
+            await Task.Run(this.TasksAction);
         }
 
-        private void PaintAction()
+        private void TasksAction()
         {
             while (true)
             {
@@ -66,7 +66,6 @@ namespace Luo_Painter
             if (region.HasValue)
                 this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
         }
-
         private async void PaintDelta(StrokeSegment segment)
         {
             //@Task
