@@ -6,26 +6,33 @@ namespace Luo_Painter.Layers
 {
     public enum SymmetryMode : byte
     {
+        /// <summary> Nornal. </summary>
         None = 0,
 
-        Horizontal,
-        Vertical,
-        Symmetry,
-        Mirror
+        /// <summary> Mirror X. </summary>
+        SymmetryX,
+        /// <summary> Mirror Y. </summary>
+        SymmetryY,
+
+        /// <summary> Symmetry Radial. </summary>
+        SymmetryRadial,
+
+        /// <summary> Mirror Radial. </summary>
+        MirrorRadial
     }
 
     public enum SymmetryType : byte
     {
         None = 0,
 
-        Horizontal = 1,
-        Vertical = 2,
-        Symmetry = 4,
-        
-        Radial = 8,
-        RadialHorizontal = Radial | Horizontal,
+        X = 1, // Axis-X
+        Y = 2, // Axis-Y
 
-        HorizontalVerticalSymmetry = Symmetry | Horizontal | Vertical,
+        D = 4, // Diagonal
+        DXY = D | X | Y,
+
+        R = 8, // Radial
+        RX = R | X,
     }
 
     public sealed class Symmetryer : List<Matrix3x2>
@@ -50,10 +57,10 @@ namespace Luo_Painter.Layers
             switch (mode)
             {
                 case SymmetryMode.None: return SymmetryType.None;
-                case SymmetryMode.Horizontal: return SymmetryType.Horizontal;
-                case SymmetryMode.Vertical: return SymmetryType.Vertical;
-                case SymmetryMode.Symmetry: return (count is 2) ? SymmetryType.Symmetry : (count > 2) ? SymmetryType.Radial : SymmetryType.None;
-                case SymmetryMode.Mirror: return (count is 2) ? SymmetryType.HorizontalVerticalSymmetry : (count > 2) ? SymmetryType.RadialHorizontal : SymmetryType.None;
+                case SymmetryMode.SymmetryX: return SymmetryType.X;
+                case SymmetryMode.SymmetryY: return SymmetryType.Y;
+                case SymmetryMode.SymmetryRadial: return (count is 2) ? SymmetryType.D : (count > 2) ? SymmetryType.R : SymmetryType.None;
+                case SymmetryMode.MirrorRadial: return (count is 2) ? SymmetryType.DXY : (count > 2) ? SymmetryType.RX : SymmetryType.None;
                 default: return SymmetryType.None;
             }
         }
@@ -61,20 +68,20 @@ namespace Luo_Painter.Layers
         public IEnumerable<StrokeCap> GetCaps(SymmetryType type, StrokeCap cap, Vector2 center)
         {
             yield return cap;
-            if (type.HasFlag(SymmetryType.Horizontal)) yield return new StrokeCap(cap, center, Orientation.Horizontal);
-            if (type.HasFlag(SymmetryType.Vertical)) yield return new StrokeCap(cap, center, Orientation.Vertical);
-            if (type.HasFlag(SymmetryType.Symmetry)) yield return new StrokeCap(cap, center);
+            if (type.HasFlag(SymmetryType.X)) yield return new StrokeCap(cap, center, Orientation.Horizontal);
+            if (type.HasFlag(SymmetryType.Y)) yield return new StrokeCap(cap, center, Orientation.Vertical);
+            if (type.HasFlag(SymmetryType.D)) yield return new StrokeCap(cap, center);
 
-            if (type.HasFlag(SymmetryType.Radial))
+            if (type.HasFlag(SymmetryType.R))
             {
                 foreach (Matrix3x2 item in this)
                 {
                     cap = new StrokeCap(cap, item);
 
                     yield return cap;
-                    if (type.HasFlag(SymmetryType.Horizontal)) yield return new StrokeCap(cap, center, Orientation.Horizontal);
-                    if (type.HasFlag(SymmetryType.Vertical)) yield return new StrokeCap(cap, center, Orientation.Vertical);
-                    if (type.HasFlag(SymmetryType.Symmetry)) yield return new StrokeCap(cap, center);
+                    if (type.HasFlag(SymmetryType.X)) yield return new StrokeCap(cap, center, Orientation.Horizontal);
+                    if (type.HasFlag(SymmetryType.Y)) yield return new StrokeCap(cap, center, Orientation.Vertical);
+                    if (type.HasFlag(SymmetryType.D)) yield return new StrokeCap(cap, center);
                 }
             }
         }
@@ -82,20 +89,20 @@ namespace Luo_Painter.Layers
         public IEnumerable<StrokeSegment> GetSegments(SymmetryType type, StrokeSegment segment, Vector2 center)
         {
             yield return segment;
-            if (type.HasFlag(SymmetryType.Horizontal)) yield return new StrokeSegment(segment, center, Orientation.Horizontal);
-            if (type.HasFlag(SymmetryType.Vertical)) yield return new StrokeSegment(segment, center, Orientation.Vertical);
-            if (type.HasFlag(SymmetryType.Symmetry)) yield return new StrokeSegment(segment, center);
+            if (type.HasFlag(SymmetryType.X)) yield return new StrokeSegment(segment, center, Orientation.Horizontal);
+            if (type.HasFlag(SymmetryType.Y)) yield return new StrokeSegment(segment, center, Orientation.Vertical);
+            if (type.HasFlag(SymmetryType.D)) yield return new StrokeSegment(segment, center);
 
-            if (type.HasFlag(SymmetryType.Radial))
+            if (type.HasFlag(SymmetryType.R))
             {
                 foreach (Matrix3x2 item in this)
                 {
                     segment = new StrokeSegment(segment, item);
 
                     yield return segment;
-                    if (type.HasFlag(SymmetryType.Horizontal)) yield return new StrokeSegment(segment, center, Orientation.Horizontal);
-                    if (type.HasFlag(SymmetryType.Vertical)) yield return new StrokeSegment(segment, center, Orientation.Vertical);
-                    if (type.HasFlag(SymmetryType.Symmetry)) yield return new StrokeSegment(segment, center);
+                    if (type.HasFlag(SymmetryType.X)) yield return new StrokeSegment(segment, center, Orientation.Horizontal);
+                    if (type.HasFlag(SymmetryType.Y)) yield return new StrokeSegment(segment, center, Orientation.Vertical);
+                    if (type.HasFlag(SymmetryType.D)) yield return new StrokeSegment(segment, center);
                 }
             }
         }

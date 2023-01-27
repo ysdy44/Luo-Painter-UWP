@@ -19,10 +19,10 @@ namespace Luo_Painter
             {
                 switch (this.SymmetryComboBox.SelectedIndex)
                 {
-                    case 0: return SymmetryMode.Horizontal;
-                    case 1: return SymmetryMode.Vertical;
-                    case 2: return SymmetryMode.Symmetry;
-                    case 3: return SymmetryMode.Mirror;
+                    case 0: return SymmetryMode.SymmetryX;
+                    case 1: return SymmetryMode.SymmetryY;
+                    case 2: return SymmetryMode.SymmetryRadial;
+                    case 3: return SymmetryMode.MirrorRadial;
                     default: return SymmetryMode.None;
                 }
             }
@@ -107,7 +107,7 @@ namespace Luo_Painter
             {
                 case SymmetryMode.None:
                     break;
-                case SymmetryMode.Horizontal:
+                case SymmetryMode.SymmetryX:
                     if (this.Transformer.Radian == default)
                         ds.DrawLine(center.X, 0, center.X, (float)sender.Size.Height, Colors.Gray);
                     else
@@ -116,7 +116,7 @@ namespace Luo_Painter
                             this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, FanKit.Math.PiOver2 - this.Transformer.Radian, true),
                             Colors.Gray);
                     break;
-                case SymmetryMode.Vertical:
+                case SymmetryMode.SymmetryY:
                     if (this.Transformer.Radian == default)
                         ds.DrawLine(0, center.Y, (float)sender.Size.Width, center.Y, Colors.Gray);
                     else
@@ -125,8 +125,8 @@ namespace Luo_Painter
                             this.GetSymmetryerBorder(center, (float)sender.Size.Width, (float)sender.Size.Height, -this.Transformer.Radian, true),
                             Colors.Gray);
                     break;
-                case SymmetryMode.Symmetry:
-                case SymmetryMode.Mirror:
+                case SymmetryMode.SymmetryRadial:
+                case SymmetryMode.MirrorRadial:
                     ds.FillCircle(center, 13, Colors.Gray);
                     int count = this.SymmetryCount;
                     if (count > 2)
