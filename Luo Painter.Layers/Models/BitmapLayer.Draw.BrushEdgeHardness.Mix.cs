@@ -20,6 +20,8 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
+                float sizePressure = cap.StartingPressure * cap.StartingSize;
+
                 this.Mix(cap.StartingPosition, cap.StartingSize, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
@@ -27,7 +29,7 @@ namespace Luo_Painter.Layers.Models
                     {
                         ["hardness"] = hardness,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? sizePressure : cap.StartingSize,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix)
                     }
@@ -46,20 +48,22 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                this.Mix(segment.StartingPosition, segment.StartingSize, wet);
+                float sizePressure = segment.StartingPressure * segment.Size;
+
+                this.Mix(segment.StartingPosition, sizePressure, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? segment.Size : segment.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? segment.Size : sizePressure,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix, persistence)
                     }
                 });
 
-                float distance = segment.StartingDistance;
+                float distance = segment.Radius;
                 while (distance < segment.Distance)
                 {
                     float smooth = distance / segment.Distance;
@@ -70,7 +74,7 @@ namespace Luo_Painter.Layers.Models
                     float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
                     distance += segment.Spacing * sizePressureIsometric;
 
-                    this.Mix(positionIsometric, segment.StartingSize, wet);
+                    this.Mix(positionIsometric, sizePressure, wet);
                     ds.DrawImage(new PixelShaderEffect(shaderCode)
                     {
                         Properties =
@@ -102,7 +106,9 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                this.Mix(cap.StartingPosition, cap.Size, wet);
+                float sizePressure = cap.StartingPressure * cap.StartingSize;
+
+                this.Mix(cap.StartingPosition, sizePressure, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -112,7 +118,7 @@ namespace Luo_Painter.Layers.Models
                         ["rotate"] = false,
                         ["normalization"] = Vector2.Zero,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? sizePressure : cap.StartingSize,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix, persistence)
                     }
@@ -131,7 +137,9 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                this.Mix(segment.StartingPosition, segment.StartingSize, wet);
+                float sizePressure = segment.StartingPressure * segment.Size;
+
+                this.Mix(segment.StartingPosition, sizePressure, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -141,13 +149,13 @@ namespace Luo_Painter.Layers.Models
                         ["rotate"] = rotate,
                         ["normalization"] = segment.Normalize,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? segment.Size : segment.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? segment.Size : sizePressure,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix, persistence)
                     }
                 });
 
-                float distance = segment.StartingDistance;
+                float distance = segment.Radius;
                 while (distance < segment.Distance)
                 {
                     float smooth = distance / segment.Distance;
@@ -158,7 +166,7 @@ namespace Luo_Painter.Layers.Models
                     float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
                     distance += segment.Spacing * sizePressureIsometric;
 
-                    this.Mix(positionIsometric, segment.StartingSize, wet);
+                    this.Mix(positionIsometric, sizePressureIsometric, wet);
                     ds.DrawImage(new PixelShaderEffect(shaderCode)
                     {
                         Source1 = texture,

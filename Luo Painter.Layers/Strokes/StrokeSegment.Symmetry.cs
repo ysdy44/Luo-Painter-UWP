@@ -30,10 +30,10 @@ namespace Luo_Painter.Layers
             // Ink
             this.Spacing = mirror.Spacing;
 
-            this.StartingSize = mirror.StartingSize;
             this.Size = mirror.Size;
 
-            this.StartingDistance = mirror.StartingDistance;
+            // Radius
+            this.Radius = mirror.Radius;
             this.Distance = mirror.Distance;
 
             // Stroke
@@ -55,10 +55,10 @@ namespace Luo_Painter.Layers
             // Ink
             this.Spacing = symmetry.Spacing;
 
-            this.StartingSize = symmetry.StartingSize;
             this.Size = symmetry.Size;
 
-            this.StartingDistance = symmetry.StartingDistance;
+            // Radius
+            this.Radius = symmetry.Radius;
             this.Distance = symmetry.Distance;
 
             // Stroke
@@ -80,10 +80,10 @@ namespace Luo_Painter.Layers
             // Ink
             this.Spacing = symmetry.Spacing;
 
-            this.StartingSize = symmetry.StartingSize;
             this.Size = symmetry.Size;
 
-            this.StartingDistance = symmetry.StartingDistance;
+            // Radius
+            this.Radius = symmetry.Radius;
             this.Distance = symmetry.Distance;
 
             // Stroke

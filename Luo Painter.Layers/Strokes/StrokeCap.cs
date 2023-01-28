@@ -12,24 +12,22 @@ namespace Luo_Painter.Layers
 
         // Ink
         public readonly float StartingSize;
-        public readonly float Size;
 
         // Stroke
         public readonly Rect Bounds;
 
-        public StrokeCap(Vector2 startingPosition, float startingPressure = 1f, float size = 22f, bool ignoreSizePressure = false)
+        public StrokeCap(Vector2 startingPosition, float startingPressure = 1f, float startingSize = 22f)
         {
             // Paint
             this.StartingPosition = startingPosition;
 
-            this.StartingPressure = ignoreSizePressure ? 1 : startingPressure;
+            this.StartingPressure = startingPressure;
 
             // Ink
-            this.StartingSize = ignoreSizePressure ? size : System.Math.Max(1f, size * startingPressure);
-            this.Size = size;
+            this.StartingSize = startingSize;
 
             // Stroke
-            this.Bounds = this.StartingPosition.GetRect(this.Size);
+            this.Bounds = this.StartingPosition.GetRect(this.StartingSize);
         }
     }
 }

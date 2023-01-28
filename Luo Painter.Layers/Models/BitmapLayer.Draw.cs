@@ -72,7 +72,9 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                ds.DrawLine(segment.StartingPosition, segment.Position, color, ignoreSizePressure ? segment.Size : segment.StartingSize * 2, BitmapLayer.CanvasStrokeStyle);
+                float sizePressure = segment.StartingPressure * segment.Size;
+
+                ds.DrawLine(segment.StartingPosition, segment.Position, color, (ignoreSizePressure ? segment.Size : sizePressure) * 2, BitmapLayer.CanvasStrokeStyle);
             }
         }
 
@@ -87,11 +89,13 @@ namespace Luo_Painter.Layers.Models
                         {
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                       
+                            float sizePressure = cap.StartingPressure * cap.StartingSize;
 
                             if (isStroke)
-                                ds.DrawCircle(cap.StartingPosition, ignoreSizePressure ? cap.Size : cap.StartingSize, color);
+                                ds.DrawCircle(cap.StartingPosition, ignoreSizePressure ? sizePressure : cap.StartingSize, color);
                             else
-                                ds.FillCircle(cap.StartingPosition, ignoreSizePressure ? cap.Size : cap.StartingSize, color);
+                                ds.FillCircle(cap.StartingPosition, ignoreSizePressure ? sizePressure : cap.StartingSize, color);
                         }
                     }
                     break;
@@ -101,8 +105,9 @@ namespace Luo_Painter.Layers.Models
                         {
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                        
+                            float sizePressure = cap.StartingPressure * cap.StartingSize;
 
-                            float sizePressure = ignoreSizePressure ? cap.Size : cap.StartingSize;
                             if (isStroke)
                                 ds.DrawRectangle(cap.StartingPosition.X - sizePressure, cap.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
                             else
@@ -125,13 +130,15 @@ namespace Luo_Painter.Layers.Models
                         {
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
+                      
+                            float sizePressure = segment.StartingPressure * segment.Size;
 
                             if (isStroke)
-                                ds.DrawCircle(segment.StartingPosition, ignoreSizePressure ? segment.Size : segment.StartingSize, color);
+                                ds.DrawCircle(segment.StartingPosition, ignoreSizePressure ? segment.Size : sizePressure, color);
                             else
-                                ds.FillCircle(segment.StartingPosition, ignoreSizePressure ? segment.Size : segment.StartingSize, color);
+                                ds.FillCircle(segment.StartingPosition, ignoreSizePressure ? segment.Size : sizePressure, color);
 
-                            float distance = segment.StartingDistance;
+                            float distance = segment.Radius;
                             while (distance < segment.Distance)
                             {
                                 float smooth = distance / segment.Distance;
@@ -157,13 +164,14 @@ namespace Luo_Painter.Layers.Models
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                            float sizePressure = ignoreSizePressure ? segment.Size : segment.StartingSize;
+                            float sizePressure = segment.StartingPressure * segment.Size;
+
                             if (isStroke)
                                 ds.DrawRectangle(segment.StartingPosition.X - sizePressure, segment.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
                             else
                                 ds.FillRectangle(segment.StartingPosition.X - sizePressure, segment.StartingPosition.Y - sizePressure, sizePressure + sizePressure, sizePressure + sizePressure, color);
 
-                            float distance = segment.StartingDistance;
+                            float distance = segment.Radius;
                             while (distance < segment.Distance)
                             {
                                 float smooth = distance / segment.Distance;

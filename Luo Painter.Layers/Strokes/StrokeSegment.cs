@@ -15,10 +15,10 @@ namespace Luo_Painter.Layers
         // Ink
         public readonly float Spacing;
 
-        public readonly float StartingSize;
         public readonly float Size;
 
-        public readonly float StartingDistance;
+        // Radius
+        public readonly float Radius;
         public readonly float Distance;
 
         // Stroke
@@ -27,22 +27,22 @@ namespace Luo_Painter.Layers
         public readonly bool IsNaN;
         public readonly bool InRadius;
 
-        public StrokeSegment(Vector2 startingPosition, Vector2 position, float startingPressure = 1f, float pressure = 1f, float size = 22f, float spacing = 0.25f, bool ignoreSizePressure = false)
+        public StrokeSegment(Vector2 startingPosition, Vector2 position, float startingPressure = 1f, float pressure = 1f, float size = 22f, float spacing = 0.25f)
         {
             // Paint
             this.StartingPosition = startingPosition;
             this.Position = position;
 
-            this.StartingPressure = ignoreSizePressure ? 1 : startingPressure;
-            this.Pressure = ignoreSizePressure ? 1 : pressure;
+            this.StartingPressure = startingPressure;
+            this.Pressure = pressure;
 
             // Ink
             this.Spacing = spacing;
 
-            this.StartingSize = ignoreSizePressure ? size : System.Math.Max(1f, size * startingPressure);
             this.Size = size;
 
-            this.StartingDistance = spacing * this.StartingSize;
+            // Radius
+            this.Radius = spacing * System.Math.Max(1f, size * startingPressure);
             this.Distance = Vector2.Distance(startingPosition, position);
 
             // Stroke
@@ -56,7 +56,7 @@ namespace Luo_Painter.Layers
             else if (double.IsNaN(vector.Y)) this.IsNaN = true;
             else this.IsNaN = false;
 
-            this.InRadius = this.Distance <= this.StartingDistance;
+            this.InRadius = this.Distance <= this.Radius;
         }
     }
 }

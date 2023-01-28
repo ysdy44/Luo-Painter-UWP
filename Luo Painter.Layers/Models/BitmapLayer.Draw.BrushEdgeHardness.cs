@@ -18,13 +18,15 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
+                float sizePressure = cap.StartingPressure * cap.StartingSize;
+
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? sizePressure : cap.StartingSize,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = colorHdr
                     }
@@ -43,19 +45,21 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
+                float sizePressure = segment.StartingPressure * segment.Size;
+
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? segment.Size : segment.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? segment.Size : sizePressure,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = colorHdr
                     }
                 });
 
-                float distance = segment.StartingDistance;
+                float distance = segment.Radius;
                 while (distance < segment.Distance)
                 {
                     float smooth = distance / segment.Distance;
@@ -95,6 +99,8 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
+                float sizePressure = cap.StartingPressure * cap.StartingSize;
+
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -104,7 +110,7 @@ namespace Luo_Painter.Layers.Models
                         ["rotate"] = false,
                         ["normalization"] = Vector2.Zero,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? cap.Size : cap.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? sizePressure : cap.StartingSize,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = colorHdr
                     }
@@ -123,6 +129,8 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
+                float sizePressure = segment.StartingPressure * segment.Size;
+
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -132,13 +140,13 @@ namespace Luo_Painter.Layers.Models
                         ["rotate"] = rotate,
                         ["normalization"] = segment.Normalize,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? segment.Size : segment.StartingSize,
+                        ["radius"] =  ignoreSizePressure ? segment.Size : sizePressure,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = colorHdr
                     }
                 });
 
-                float distance = segment.StartingDistance;
+                float distance = segment.Radius;
                 while (distance < segment.Distance)
                 {
                     float smooth = distance / segment.Distance;

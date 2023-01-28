@@ -24,10 +24,9 @@ namespace Luo_Painter.Layers
 
             // Ink
             this.StartingSize = mirror.StartingSize;
-            this.Size = mirror.Size;
 
             // Stroke
-            this.Bounds = RectExtensions.GetRect(this.StartingPosition, this.Size);
+            this.Bounds = RectExtensions.GetRect(this.StartingPosition, this.StartingSize);
         }
 
         public StrokeCap(StrokeCap symmetry, Vector2 center)
@@ -39,10 +38,9 @@ namespace Luo_Painter.Layers
 
             // Ink
             this.StartingSize = symmetry.StartingSize;
-            this.Size = symmetry.Size;
 
             // Stroke
-            this.Bounds = RectExtensions.GetRect(this.StartingPosition, this.Size);
+            this.Bounds = RectExtensions.GetRect(this.StartingPosition, this.StartingSize);
         }
 
         public StrokeCap(StrokeCap symmetry, Matrix3x2 matrix)
@@ -54,10 +52,9 @@ namespace Luo_Painter.Layers
 
             // Ink
             this.StartingSize = symmetry.StartingSize;
-            this.Size = symmetry.Size;
 
             // Stroke
-            this.Bounds = RectExtensions.GetRect(this.StartingPosition, this.Size);
+            this.Bounds = RectExtensions.GetRect(this.StartingPosition, this.StartingSize);
         }
     }
 }
