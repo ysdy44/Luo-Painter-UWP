@@ -33,14 +33,14 @@ namespace Luo_Painter
 
             //@Task
             {
-                StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure);
+                StrokeCap cap = new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size);
                 lock (this.Locker)
                 {
                     this.BitmapLayer.Hit(cap.Bounds);
                     this.PaintCap(cap);
                 }
 
-                Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.Size * this.Transformer.Scale));
+                Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.StartingSize * this.Transformer.Scale));
                 if (region.HasValue)
                 {
                     await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
@@ -51,7 +51,7 @@ namespace Luo_Painter
             }
 
             //@Paint
-            this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.Spacing, this.InkPresenter.IgnoreSizePressure);
+            this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.Spacing);
             this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 

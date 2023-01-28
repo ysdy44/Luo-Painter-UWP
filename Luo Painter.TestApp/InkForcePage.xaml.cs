@@ -114,7 +114,7 @@ namespace Luo_Painter.TestApp
                 this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
 
                 //@Paint
-                this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f, true);
+                this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f);
                 this.Tasks.State = PaintTaskState.Painting;
                 await Task.Run(this.TasksAction);
 
@@ -217,7 +217,7 @@ namespace Luo_Painter.TestApp
         {
             using (CanvasDrawingSession ds = this.RenderTarget.CreateDrawingSession())
             {
-                ds.DrawLine(segment.StartingPosition, segment.Position, Colors.DodgerBlue, segment.StartingSize, this.CanvasStrokeStyle);
+                ds.DrawLine(segment.StartingPosition, segment.Position, Colors.DodgerBlue, segment.Size, this.CanvasStrokeStyle);
             }
 
             this.CanvasControl.Invalidate();
