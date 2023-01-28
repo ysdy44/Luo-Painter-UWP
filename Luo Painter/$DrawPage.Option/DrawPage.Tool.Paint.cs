@@ -62,7 +62,7 @@ namespace Luo_Painter
                 this.PaintCap(cap);
             }
 
-            Rect? region = RectExtensions.TryGetRect(cap.StartingPosition, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.Size * this.Transformer.Scale));
+            Rect? region = RectExtensions.TryGetRect(cap.StartingPosition, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.StartingSize * this.Transformer.Scale));
             if (region.HasValue)
                 this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
         }

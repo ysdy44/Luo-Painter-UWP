@@ -61,7 +61,7 @@ namespace Luo_Painter
             //@Paint
             this.CanvasAnimatedControl.Paused = true; // Invalidate
             this.Symmetryer.Construct(count, this.BitmapLayer.Center);
-            foreach (StrokeCap cap in this.Symmetryer.GetCaps(this.SymmetryType, new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size, this.InkPresenter.IgnoreSizePressure), this.BitmapLayer.Center))
+            foreach (StrokeCap cap in this.Symmetryer.GetCaps(this.SymmetryType, new StrokeCap(this.StartingPosition, this.StartingPressure, this.InkPresenter.Size), this.BitmapLayer.Center))
             {
                 this.PaintStarted(cap);
             }
@@ -78,7 +78,7 @@ namespace Luo_Painter
             if (this.BitmapLayer is null) return;
 
             //@Paint
-            foreach (StrokeSegment segment in this.Symmetryer.GetSegments(this.SymmetryType, new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing, this.InkPresenter.IgnoreSizePressure), this.BitmapLayer.Center))
+            foreach (StrokeSegment segment in this.Symmetryer.GetSegments(this.SymmetryType, new StrokeSegment(this.StartingPosition, this.Position, this.StartingPressure, this.Pressure, this.InkPresenter.Size, this.InkPresenter.Spacing), this.BitmapLayer.Center))
             {
                 this.Tasks.Add(segment);
             }
