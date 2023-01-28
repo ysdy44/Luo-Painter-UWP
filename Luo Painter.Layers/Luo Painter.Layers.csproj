@@ -156,13 +156,13 @@
     <Compile Include="Layers\LayerBase.UI.cs" />
     <Compile Include="LayerType.cs" />
     <Compile Include="Models\BitmapLayer.cs" />
+    <Compile Include="Models\BitmapLayer.Draw.BrushEdgeHardness.cs" />
+    <Compile Include="Models\BitmapLayer.Draw.BrushEdgeHardness.Mix.cs" />
+    <Compile Include="Models\BitmapLayer.Draw.cs" />
     <Compile Include="Models\BitmapLayer.FloodSelect.cs" />
     <Compile Include="Models\BitmapLayer.History.cs" />
     <Compile Include="Models\BitmapLayer.Marquee.cs" />
     <Compile Include="Models\BitmapLayer.Mix.cs" />
-    <Compile Include="Models\BitmapLayer.Paint.BrushEdgeHardness.cs" />
-    <Compile Include="Models\BitmapLayer.Paint.BrushEdgeHardness.Mix.cs" />
-    <Compile Include="Models\BitmapLayer.Paint.cs" />
     <Compile Include="Models\BitmapLayer.Render.cs" />
     <Compile Include="Models\BitmapLayer.Setup.cs" />
     <Compile Include="Models\CurveLayer.Anchor.cs" />
