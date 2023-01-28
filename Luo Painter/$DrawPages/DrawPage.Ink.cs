@@ -1,9 +1,7 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Controls;
-using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
@@ -22,7 +20,7 @@ namespace Luo_Painter
             if (string.IsNullOrEmpty(brush.Grain)) this.InkPresenter.ClearGrain();
             else this.InkPresenter.ConstructGrain(brush.Grain, await CanvasBitmap.LoadAsync(this.CanvasDevice, brush.Grain.GetTextureSource()));
 
-            this.InkPresenter.Construct(brush);
+            this.InkPresenter.CopyWith(brush);
             this.InkType = this.InkPresenter.GetType();
 
             this.IsInkEnabled = false;
@@ -30,7 +28,7 @@ namespace Luo_Painter
             this.IsInkEnabled = true;
 
             this.PaintScrollViewer.ConstructInk(this.InkPresenter);
-            this.PaintScrollViewer.TryInk();
+            this.TryInk();
         }
 
         private void ConstructSize(float size)
@@ -42,7 +40,7 @@ namespace Luo_Painter
             this.IsInkEnabled = true;
 
             this.PaintScrollViewer.ConstructInk(this.InkPresenter);
-            this.PaintScrollViewer.TryInk();
+            this.TryInk();
         }
 
         public void ConstructInk(InkPresenter presenter, bool onlyValue)
