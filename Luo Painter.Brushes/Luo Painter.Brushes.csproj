@@ -126,10 +126,10 @@
     <Compile Include="InkAttributes.Export.cs" />
     <Compile Include="InkCanvasOperator.cs" />
     <Compile Include="InkExtensions.cs" />
-    <Compile Include="InkPresenter.cs" />
-    <Compile Include="InkPresenter.Preview.cs" />
-    <Compile Include="InkPresenter.Render.cs" />
-    <Compile Include="InkPresenter.Texture.cs" />
+    <Compile Include="InkPresenter.Draw.cs" />
+    <Compile Include="InkPresenter.Grain.cs" />
+    <Compile Include="InkPresenter.Paint.cs" />
+    <Compile Include="InkPresenter.Shape.cs" />
     <Compile Include="InkPresenter.Type.cs" />
     <Compile Include="InkType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
