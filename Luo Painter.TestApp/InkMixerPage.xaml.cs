@@ -51,9 +51,9 @@ namespace Luo_Painter.TestApp
         readonly Vector4 BrushHdr = new Vector4(0, 1, 1, 1);
         readonly Vector4 MixHdr = new Vector4(1, 0, 1, 1);
         readonly Vector4 PersistenceHdr = new Vector4(1, 1, 0, 1);
-        
-        readonly Color BrushColor = Colors.Aqua; 
-        readonly Color MixColor = Colors.Fuchsia; 
+
+        readonly Color BrushColor = Colors.Aqua;
+        readonly Color MixColor = Colors.Fuchsia;
         readonly Color PersistenceColor = Colors.Yellow;
 
         byte[] BrushEdgeHardnessShaderCodeBytes;
@@ -182,7 +182,7 @@ namespace Luo_Painter.TestApp
                 this.StartingPosition = this.Position = this.ToPosition(point);
 
                 StrokeCap cap = new StrokeCap(this.StartingPosition, 1, 24);
-                this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.Mix, this.Wet, this.Persistence, 0, 1, true, true);
+                this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.Mix, this.Wet, this.Persistence, 0, 1);
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -193,7 +193,7 @@ namespace Luo_Painter.TestApp
                 StrokeSegment segment = new StrokeSegment(this.StartingPosition, this.Position, 1, 1, 24, 0.25f);
 
                 if (segment.InRadius) return;
-                this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.Mix, this.Wet, this.Persistence, 0, 1, true, true);
+                this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr, this.Mix, this.Wet, this.Persistence, 0, 1);
 
                 this.CanvasControl.Invalidate(); // Invalidate
 

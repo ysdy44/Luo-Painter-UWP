@@ -111,7 +111,7 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += async (point, properties) =>
             {
                 this.StartingPosition = this.Position = this.ToPosition(point);
-                this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+                this.StartingPressure = this.Pressure = properties.Pressure;
 
                 //@Paint
                 this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f);
@@ -123,7 +123,7 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Delta += (point, properties) =>
             {
                 this.Position = this.ToPosition(point);
-                this.Pressure = properties.Pressure * properties.Pressure;
+                this.Pressure = properties.Pressure;
 
                 // goto Timer.Elapsed
                 this.Tasks.Position = this.Position;

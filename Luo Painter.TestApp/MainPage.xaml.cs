@@ -27,7 +27,7 @@ namespace Luo_Painter.TestApp
         private readonly Lazy<ApplicationView> ViewLazy = new Lazy<ApplicationView>(() => ApplicationView.GetForCurrentView());
         private ApplicationView View => this.ViewLazy.Value;
 
-        readonly IDictionary<string, Type> Dictionary = MainPage.CreatePages(typeof(MainPage)).ToDictionary(x => x.Name, x => x);
+        readonly IDictionary<string, Type> Dictionary = MainPage.CreatePages(typeof(MainPage)).OrderBy(x => x.Name).ToDictionary(x => x.Name, x => x);
         private IEnumerable<MainGrouping> Groupings => this.Dictionary.Keys.GroupBy(Enumerable.First).Select(c => new MainGrouping(c.Key, c));
 
         public MainPage()

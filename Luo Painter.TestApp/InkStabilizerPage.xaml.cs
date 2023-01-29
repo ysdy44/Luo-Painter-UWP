@@ -132,7 +132,7 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Start += (point, properties) =>
             {
                 this.StartingPosition = this.Position = this.ToPosition(point);
-                this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+                this.StartingPressure = this.Pressure = properties.Pressure;
 
                 this.Timer.Start();
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -140,7 +140,7 @@ namespace Luo_Painter.TestApp
             this.Operator.Single_Delta += (point, properties) =>
             {
                 this.Position = this.ToPosition(point);
-                this.Pressure = properties.Pressure * properties.Pressure;
+                this.Pressure = properties.Pressure;
 
                 // goto Timer.Elapsed
             };
