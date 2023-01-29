@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BrushEasePressure.cs" />
     <Compile Include="BrushEdgeHardness.cs" />
     <Compile Include="IInkParameter.cs" />
     <Compile Include="InkAttributes.cs" />
