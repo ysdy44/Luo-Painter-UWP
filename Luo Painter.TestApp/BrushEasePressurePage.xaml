@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="Luo_Painter.TestApp.BrushEasePressurePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.TestApp"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <GridView Margin="12">
+        <ItemsControl.ItemContainerStyle>
+            <Style TargetType="GridViewItem">
+                <Setter Property="Margin" Value="12"/>
+                <Setter Property="Padding" Value="12"/>
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="local:BrushEasePressureModel">
+                <Canvas Width="120" Height="120" >
+                    <Line X1="30" Y1="{x:Bind Line25}" X2="30" Y2="120" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+                    <Line X1="60" Y1="{x:Bind Line50}" X2="60" Y2="120" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+                    <Line X1="90" Y1="{x:Bind Line75}" X2="90" Y2="120" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+                    <Polyline Points="{x:Bind Points}" StrokeThickness="1" Stroke="White" Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                </Canvas>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+        <local:BrushEasePressureModel Pressure="None"/>
+
+        <local:BrushEasePressureModel Pressure="Linear"/>
+        <local:BrushEasePressureModel Pressure="LinearFlip"/>
+
+        <local:BrushEasePressureModel Pressure="Quadratic"/>
+        <local:BrushEasePressureModel Pressure="QuadraticFlip"/>
+        <local:BrushEasePressureModel Pressure="QuadraticReverse"/>
+        <local:BrushEasePressureModel Pressure="QuadraticFlipReverse"/>
+
+        <local:BrushEasePressureModel Pressure="Mirror"/>
+        <local:BrushEasePressureModel Pressure="MirrorFlip"/>
+
+        <local:BrushEasePressureModel Pressure="Symmetry"/>
+        <local:BrushEasePressureModel Pressure="SymmetryFlip"/>
+
+    </GridView>
+</Page>

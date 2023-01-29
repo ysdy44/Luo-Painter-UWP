@@ -128,6 +128,9 @@
     <Compile Include="BitmapPixelBrushPage.xaml.cs">
       <DependentUpon>BitmapPixelBrushPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BrushEasePressurePage.xaml.cs">
+      <DependentUpon>BrushEasePressurePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BrushEdgeHardnessPage.xaml.cs">
       <DependentUpon>BrushEdgeHardnessPage.xaml</DependentUpon>
     </Compile>
@@ -368,6 +371,10 @@
     <Page Include="BitmapPixelBrushPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BrushEasePressurePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BrushEdgeHardnessPage.xaml">
       <Generator>MSBuild:Compile</Generator>
