@@ -84,8 +84,12 @@ namespace Luo_Painter
             this.ExposureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.ExposureSlider.Click += (s, e) => this.NumberShowAt(this.ExposureSlider);
             // Brightness
-            this.BrightnessSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.BrightnessSlider.Click += (s, e) => this.NumberShowAt(this.BrightnessSlider);
+            this.Brightness150Button.Click += (s, e) => this.BrightnessPicker.Linear(1.50f);
+            this.Brightness125Button.Click += (s, e) => this.BrightnessPicker.Linear(1.25f);
+            this.Brightness100Button.Click += (s, e) => this.BrightnessPicker.Linear(1.00f);
+            this.Brightness75Button.Click += (s, e) => this.BrightnessPicker.Linear(0.75f);
+            this.Brightness50Button.Click += (s, e) => this.BrightnessPicker.Linear(0.50f);
+            this.BrightnessPicker.Invalidate += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             // Saturation
             this.SaturationSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.SaturationSlider.Click += (s, e) => this.NumberShowAt(this.SaturationSlider);
@@ -338,11 +342,10 @@ namespace Luo_Painter
                         Source = image
                     };
                 case OptionType.Brightness:
-                    float brightness = (float)this.BrightnessSlider.Value / 100;
                     return new BrightnessEffect
                     {
-                        WhitePoint = new Vector2(System.Math.Clamp(2 - brightness, 0, 1), 1),
-                        BlackPoint = new Vector2(System.Math.Clamp(1 - brightness, 0, 1), 0),
+                        WhitePoint = this.BrightnessPicker.Point2,
+                        BlackPoint = this.BrightnessPicker.Point1,
                         Source = image
                     };
                 case OptionType.Saturation:

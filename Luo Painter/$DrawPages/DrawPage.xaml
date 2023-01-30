@@ -666,18 +666,26 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Brightness">
-                                <hsvColorPickers:NumberSlider x:Name="BrightnessSlider" Margin="0,5" Value="100" Minimum="1" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Control.Background>
-                                        <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
-                                            <GradientStop Color="Black" Offset="0"/>
-                                            <GradientStop Color="White" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Control.Background>
-                                    <Slider.Header>
-                                        Brightness
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
-
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <StackPanel Margin="0,22" MinWidth="90" Spacing="4" Orientation="Vertical">
+                                        <Button x:Name="Brightness150Button" CornerRadius="4" Height="44" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            150
+                                        </Button>
+                                        <Button x:Name="Brightness125Button" CornerRadius="4" Height="44" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            125
+                                        </Button>
+                                        <Button x:Name="Brightness100Button" CornerRadius="4" Height="44" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            100
+                                        </Button>
+                                        <Button x:Name="Brightness75Button" CornerRadius="4" Height="44" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            75
+                                        </Button>
+                                        <Button x:Name="Brightness50Button" CornerRadius="4" Height="44" BorderThickness="1" HorizontalAlignment="Stretch">
+                                            50
+                                        </Button>
+                                    </StackPanel>
+                                    <hsvColorPickers:SplinePicker x:Name="BrightnessPicker"/>
+                                </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
                                 <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Margin="0,5" Value="100" Minimum="0" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
