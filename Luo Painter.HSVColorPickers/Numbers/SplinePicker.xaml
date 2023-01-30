@@ -1,0 +1,99 @@
+﻿<UserControl
+    x:Class="Luo_Painter.HSVColorPickers.SplinePicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Luo_Painter.HSVColorPickers.Numbers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="400"
+    d:DesignHeight="400"
+    Width="280"
+    Height="280"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Style-->
+        <Style TargetType="Thumb">
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border
+                            x:Name="RootGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            >
+                            <!--VisualState-->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource ThumbBackgroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource ThumbBorderBrushPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource ThumbBackgroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource ThumbBorderBrushPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Indication" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse x:Name="Indication" Visibility="Visible" Width="8" Height="8" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </FrameworkElement.Resources>
+
+    <Canvas Width="240" Height="240" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Rectangle Width="240" Height="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+
+        <Line X1="0" Y1="60" X2="240" Y2="60" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="120" X2="240" Y2="120" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="180" X2="240" Y2="180" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+
+        <Line X1="60" Y1="0" X2="60" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="120" Y1="0" X2="120" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="180" Y1="0" X2="180" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+
+        <Line X1="{x:Bind X(Point1), Mode=OneWay}" Y1="{x:Bind Y(Point1), Mode=OneWay}" X2="0" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPressed}"/>
+        <Line X1="{x:Bind X(Point2), Mode=OneWay}" Y1="{x:Bind Y(Point2), Mode=OneWay}" X2="240" Y2="0" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPressed}"/>
+
+        <Path Width="240" Height="240" StrokeThickness="1" Stroke="{ThemeResource AppBarItemForegroundThemeBrush}">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0,240">
+                        <BezierSegment x:Name="BezierSegment" Point1="{x:Bind Point(Point1), Mode=OneWay}" Point2="{x:Bind Point(Point2), Mode=OneWay}" Point3="240,0"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+
+        <Thumb x:Name="Thumb1" Canvas.Left="{x:Bind Left(Point1), Mode=OneWay}" Canvas.Top="{x:Bind Top(Point1), Mode=OneWay}"/>
+        <Thumb x:Name="Thumb2" Canvas.Left="{x:Bind Left(Point2), Mode=OneWay}" Canvas.Top="{x:Bind Top(Point2), Mode=OneWay}"/>
+    </Canvas>
+</UserControl>
