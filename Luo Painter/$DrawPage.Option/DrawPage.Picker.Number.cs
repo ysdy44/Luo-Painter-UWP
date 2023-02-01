@@ -254,6 +254,22 @@ namespace Luo_Painter
                             case OptionType.Threshold:
                                 this.ThresholdSlider.Value = e;
                                 break;
+                            case OptionType.HSB:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.HSBHueSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.HSBSaturationSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.HSBBrightnessSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
 
                             case OptionType.Lighting:
                                 switch (mode)

@@ -265,6 +265,12 @@ namespace Luo_Painter
                             ["color1"] = this.ThresholdColor1,
                         },
                     };
+                case OptionType.HSB:
+                    return new ColorMatrixEffect
+                    {
+                        ColorMatrix = this.HSBMatrix,
+                        Source = image
+                    };
 
                 case OptionType.Move:
                     return new Transform2DEffect

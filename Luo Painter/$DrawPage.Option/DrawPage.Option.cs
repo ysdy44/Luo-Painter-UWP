@@ -1562,6 +1562,7 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Threshold:
+                case OptionType.HSB:
 
                 case OptionType.Exposure:
                 case OptionType.Brightness:
