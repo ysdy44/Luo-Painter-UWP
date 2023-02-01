@@ -128,7 +128,9 @@
     <Compile Include="HarmonyMode.cs" />
     <Compile Include="HSVExtensions.cs" />
     <Compile Include="IColorPicker.cs" />
-    <Compile Include="Matrix5x4Extension.cs" />
+    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.cs" />
+    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.Fx.cs" />
+    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.HSB.cs" />
     <Compile Include="Numbers\NumberButton.xaml.cs">
       <DependentUpon>NumberButton.xaml</DependentUpon>
     </Compile>
@@ -223,8 +225,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Numbers\SplinePicker.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pickers\CirclePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
