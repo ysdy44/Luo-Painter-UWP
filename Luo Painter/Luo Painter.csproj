@@ -137,6 +137,7 @@
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.DisplacementLiquefaction.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.FreeTransform.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.GradientMapping.cs" />
+    <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.HSB.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.Move.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.RippleEffect.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.Threshold.cs" />
