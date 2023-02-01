@@ -135,6 +135,9 @@
     <Compile Include="Numbers\NumberPicker.xaml.cs">
       <DependentUpon>NumberPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Numbers\NumberProtractor.xaml.cs">
+      <DependentUpon>NumberProtractor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Numbers\NumberSlider.xaml.cs">
       <DependentUpon>NumberSlider.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Numbers\NumberPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Numbers\NumberProtractor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

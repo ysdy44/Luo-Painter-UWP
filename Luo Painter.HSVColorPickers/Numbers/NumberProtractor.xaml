@@ -1,0 +1,21 @@
+﻿<UserControl
+    x:Class="Luo_Painter.HSVColorPickers.NumberProtractor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Luo_Painter.HSVColorPickers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="400"
+    d:DesignHeight="400"
+    Width="162" 
+    Height="162"
+    >
+
+    <Canvas Width="162" Height="162">
+        <Ellipse x:Name="Ellipse" Width="162" Height="162" StrokeThickness="16" Fill="{x:Bind Background, Mode=OneWay}" Stroke="{x:Bind BorderBrush, Mode=OneWay}"/>
+        <Line x:Name="Line" IsHitTestVisible="False" StrokeStartLineCap="Flat" StrokeEndLineCap="Triangle" StrokeThickness="16" Stroke="{x:Bind Foreground, Mode=OneWay}"/>
+        <Ellipse IsHitTestVisible="False" Canvas.Left="7" Canvas.Top="7" Width="148" Height="148" StrokeThickness="2" Stroke="{x:Bind Foreground, Mode=OneWay}"/>
+        <local:NumberButton x:Name="Button" Canvas.Left="46" Canvas.Top="70"/>
+    </Canvas>
+</UserControl>
