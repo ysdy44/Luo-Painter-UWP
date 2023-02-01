@@ -233,6 +233,8 @@ namespace Luo_Painter.Options
         GradientMapping = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
         RippleEffect = Other | 6 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
         Threshold = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
+  
+        HSB = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment1
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
