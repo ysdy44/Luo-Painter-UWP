@@ -388,7 +388,7 @@
                             x:Name="InkCanvasControl"       
                             HorizontalAlignment="Center"
                             Width="240"                           
-                            Height="120"                            
+                            Height="120"              
                             UseSharedDevice="True"                               
                             CustomDevice="{x:Bind CanvasDevice}"                       
                             />
@@ -650,6 +650,69 @@
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
+                            <local:OptionCase Value="HSB">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <Canvas Margin="5,0" Width="162" Height="162">
+                                        <Ellipse Width="162" Height="162" StrokeThickness="16" Fill="{ThemeResource AppOpacity}">
+                                            <Shape.Stroke>
+                                                <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+                                            </Shape.Stroke>
+                                        </Ellipse>
+                                        <Ellipse Width="162" Height="162" StrokeThickness="8">
+                                            <UIElement.RenderTransformOrigin>
+                                                0.5, 0.5
+                                            </UIElement.RenderTransformOrigin>
+                                            <UIElement.RenderTransform>
+                                                <RotateTransform Angle="{x:Bind HSBHueSlider.Value, Mode=OneWay}"/>
+                                            </UIElement.RenderTransform>
+                                            <Shape.Stroke>
+                                                <ImageBrush ImageSource="{x:Bind WheelImageSource.ImageSource}"/>
+                                            </Shape.Stroke>
+                                        </Ellipse>
+                                        <Ellipse Canvas.Left="7" Canvas.Top="7" Width="148" Height="148" StrokeThickness="2" Stroke="White"/>
+                                    </Canvas>
+                                    <StackPanel Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}">
+                                        <hsvColorPickers:NumberSlider x:Name="HSBHueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+                                            <Slider.Header>
+                                                Hue
+                                            </Slider.Header>
+                                            <Control.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="Red" Offset="0"/>
+                                                    <GradientStop Color="Yellow" Offset="0.16666667"/>
+                                                    <GradientStop Color="Lime" Offset="0.33333333"/>
+                                                    <GradientStop Color="Cyan" Offset="0.5"/>
+                                                    <GradientStop Color="Blue" Offset="0.66666667"/>
+                                                    <GradientStop Color="Fuchsia" Offset="0.83333333"/>
+                                                    <GradientStop Color="Red" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Control.Background>
+                                        </hsvColorPickers:NumberSlider>
+                                        <hsvColorPickers:NumberSlider x:Name="HSBSaturationSlider" Value="100" Minimum="0" Maximum="400" Unit="%" TickFrequency="100" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+                                            <Slider.Header>
+                                                Saturation
+                                            </Slider.Header>
+                                            <Control.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="Gray" Offset="0"/>
+                                                    <GradientStop Color="DodgerBlue" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Control.Background>
+                                        </hsvColorPickers:NumberSlider>
+                                        <hsvColorPickers:NumberSlider x:Name="HSBBrightnessSlider" Value="0" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+                                            <Slider.Header>
+                                                Brightness
+                                            </Slider.Header>
+                                            <Control.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="Black" Offset="0"/>
+                                                    <GradientStop Color="White" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Control.Background>
+                                        </hsvColorPickers:NumberSlider>
+                                    </StackPanel>
+                                </StackPanel>
+                            </local:OptionCase>
 
 
                             <local:OptionCase Value="Exposure">
@@ -684,7 +747,7 @@
                                             50
                                         </Button>
                                     </StackPanel>
-                                    <hsvColorPickers:SplinePicker x:Name="BrightnessPicker"/>
+                                    <hsvColorPickers:SplinePicker x:Name="BrightnessPicker" Background="{ThemeResource AppBackground}"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
@@ -701,7 +764,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="HueRotation">
-                                <hsvColorPickers:NumberSlider x:Name="HueRotationSlider" Margin="0,5" Minimum="0" Maximum="360" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="HueRotationSlider" Margin="0,5" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#FFCE3B" Offset="0"/>
@@ -1974,6 +2037,8 @@
                                 <MenuFlyoutItem options:OptionExtensions.Type="GradientMapping" Command="{x:Bind Command}"/>
                                 <MenuFlyoutItem options:OptionExtensions.Type="RippleEffect" Command="{x:Bind Command}"/>
                                 <MenuFlyoutItem options:OptionExtensions.Type="Threshold" Command="{x:Bind Command}"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem options:OptionExtensions.Type="HSB" Command="{x:Bind Command}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <local:OptionIcon Type="OtherMenu"/>
