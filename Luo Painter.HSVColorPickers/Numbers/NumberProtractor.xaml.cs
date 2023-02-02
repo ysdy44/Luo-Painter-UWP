@@ -1,4 +1,5 @@
 ﻿using Windows.Foundation;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -64,24 +65,100 @@ namespace Luo_Painter.HSVColorPickers
             {
                 this.SetAngle((float)WheelTemplateSettings.Atan2(this.Wheel));
                 this.NumberChanged?.Invoke(this, this.Number); // Delegate
+
+                base.Focus(FocusState.Programmatic);
+            };
+
+            base.PointerWheelChanged += (s, e) =>
+            {
+                switch (base.FocusState)
+                {
+                    case FocusState.Unfocused:
+                        break;
+                    default:
+                        if (e.GetCurrentPoint(this).Properties.MouseWheelDelta < 0)
+                        {
+                            switch (e.KeyModifiers)
+                            {
+                                case VirtualKeyModifiers.Menu:
+                                case VirtualKeyModifiers.Shift:
+                                    if (this.SetNumber((this.Number - 45) / 45 * 45 % 360))
+                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    break;
+                                case VirtualKeyModifiers.Control:
+                                case VirtualKeyModifiers.Windows:
+                                    if (this.SetNumber((this.Number - 1) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    break;
+                                default:
+                                    if (this.SetNumber((this.Number - 5) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (e.KeyModifiers)
+                            {
+                                case VirtualKeyModifiers.Menu:
+                                case VirtualKeyModifiers.Shift:
+                                    if (this.SetNumber((this.Number + 45) / 45 * 45 % 360))
+                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    break;
+                                case VirtualKeyModifiers.Control:
+                                case VirtualKeyModifiers.Windows:
+                                    if (this.SetNumber((this.Number + 1) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    break;
+                                default:
+                                    if (this.SetNumber((this.Number + 5) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    break;
+                            }
+                        }
+                        break;
+                }
+            };
+         
+            base.KeyDown += (s, e) =>
+            {
+                switch (e.Key)
+                {
+                    case VirtualKey.Down:
+                    case VirtualKey.Left:
+                        if (this.SetNumber((this.Number - 1) % 360))
+                            this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                        break;
+                    case VirtualKey.Up:
+                    case VirtualKey.Right:
+                        if (this.SetNumber((this.Number + 1) % 360))
+                            this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                        break;
+                    default:
+                        break;
+                }
             };
         }
 
-        public void SetAngle(float angle)
+        public bool SetAngle(float angle)
         {
+            if (this.Angle == angle) return false;
             this.Angle = angle;
             this.Zoom(this.Angle);
 
             this.Number = (int)(angle * 180 / System.Math.PI);
             this.Button.Content = $"{this.Number}{this.Unit}";
+            return true;
         }
-        public void SetNumber(int number)
+        public bool SetNumber(int number)
         {
+            if (this.Number == number) return false;
             this.Number = number;
             this.Button.Content = $"{this.Number}{this.Unit}";
 
             this.Angle = number * System.MathF.PI / 180;
             this.Zoom(this.Angle);
+            return true;
         }
         private void Zoom(double h)
         {
