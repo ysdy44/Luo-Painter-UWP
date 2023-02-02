@@ -1,40 +1,95 @@
 ﻿using Luo_Painter.Brushes;
 using System.Collections.Generic;
-using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PressurePanel : UserControl
+    internal sealed class PressureItem
     {
-        readonly IDictionary<BrushEasePressure, PointCollection> Points = new Dictionary<BrushEasePressure, PointCollection>
+        public BrushEasePressure Pressure { get; set; }
+        public int Index { get; set; }
+        public string Title { get; set; }
+
+        public double Line25 { get; set; }
+        public double Line50 { get; set; }
+        public double Line75 { get; set; }
+
+        public PointCollection Points { get; set; }
+    }
+
+    internal sealed class PressureItemList : List<PressureItem> { }
+
+    internal sealed class PressurePoints : Dictionary<BrushEasePressure, PointCollection>
+    {
+        public PressurePoints()
         {
-            [BrushEasePressure.None] = new PointCollection { new Point(0, 120), new Point(0, 0), new Point(120, 0), new Point(120, 120) },
-            [BrushEasePressure.Linear] = new PointCollection { new Point(0, 120), new Point(120, 0), new Point(120, 120) },
-            [BrushEasePressure.Quadratic] = new PointCollection { new Point(0, 120), new Point(0, 120), new Point(7.5, 119.53125), new Point(15, 118.125), new Point(22.5, 115.78125), new Point(30, 112.5), new Point(37.5, 108.28125), new Point(45, 103.125), new Point(52.5, 97.03125), new Point(60, 90), new Point(67.5, 82.03125), new Point(75, 73.125), new Point(82.5, 63.28125), new Point(90, 52.5), new Point(97.5, 40.78125), new Point(105, 28.125), new Point(112.5, 14.53125), new Point(120, 0), new Point(120, 120) },
-            [BrushEasePressure.QuadraticFlipReverse] = new PointCollection { new Point(0, 120), new Point(0, 120), new Point(7.5, 105.46875), new Point(15, 91.875), new Point(22.5, 79.21875), new Point(30, 67.5), new Point(37.5, 56.71875), new Point(45, 46.875), new Point(52.5, 37.96875), new Point(60, 30), new Point(67.5, 22.96875), new Point(75, 16.875), new Point(82.5, 11.71875), new Point(90, 7.5), new Point(97.5, 4.21875), new Point(105, 1.875), new Point(112.5, 0.46875), new Point(120, 0), new Point(120, 120) },
-            [BrushEasePressure.Symmetry] = new PointCollection { new Point(0, 120), new Point(0, 120), new Point(7.5, 119.0625), new Point(15, 116.25), new Point(22.5, 111.5625), new Point(30, 105), new Point(37.5, 96.5625), new Point(45, 86.25), new Point(52.5, 74.0625), new Point(60, 60), new Point(67.5, 45.9375), new Point(75, 33.75), new Point(82.5, 23.4375), new Point(90, 15), new Point(97.5, 8.4375), new Point(105, 3.75), new Point(112.5, 0.9375), new Point(120, 0), new Point(120, 120) },
-        };
-        readonly IDictionary<BrushEasePressure, Vector3> Lines = new Dictionary<BrushEasePressure, Vector3>
+            this[BrushEasePressure.None] = new PointCollection { new Point(0, 20), new Point(0, 0), new Point(20, 0), new Point(20, 20) };
+            this[BrushEasePressure.Linear] = new PointCollection { new Point(0, 20), new Point(20, 0), new Point(20, 20) };
+            this[BrushEasePressure.Quadratic] = new PointCollection { new Point(0, 20), new Point(2.618, 19.602), new Point(5.142, 18.633), new Point(7.756, 16.896), new Point(10, 14.94), new Point(12.712, 11.831), new Point(15.089, 8.649), new Point(17.576, 4.553), new Point(20.018, 0), new Point(20.018, 20) };
+            this[BrushEasePressure.QuadraticFlipReverse] = new PointCollection { new Point(0, 20), new Point(2.326, 15.452), new Point(5.087, 11.1), new Point(7.427, 8.028), new Point(10.232, 4.846), new Point(12.895, 2.432), new Point(15.272, 1.152), new Point(17.612, 0.311), new Point(20.018, 0), new Point(20.018, 20) };
+            this[BrushEasePressure.Symmetry] = new PointCollection { new Point(0, 20), new Point(2.618, 19.31), new Point(5.16, 17.244), new Point(7.628, 14.226), new Point(10.009, 10), new Point(12.529, 5.614), new Point(15.18, 2.341), new Point(17.576, 0.622), new Point(20.018, 0), new Point(20, 20) };
+        }
+    }
+
+    public sealed partial class PressureDialog : ContentDialog
+    {
+        //@Content
+        public BrushEasePressure SelectedItem
         {
-            [BrushEasePressure.None] = new Vector3(0, 0, 0),
-            [BrushEasePressure.Linear] = new Vector3(90, 60, 30),
-            [BrushEasePressure.Quadratic] = new Vector3(112.5f, 90, 52.5f),
-            [BrushEasePressure.QuadraticFlipReverse] = new Vector3(67.5f, 30, 7.5f),
-            [BrushEasePressure.Symmetry] = new Vector3(105, 60, 15),
-        };
-        public PressurePanel()
+            get
+            {
+                int value = this.ListBox.SelectedIndex;
+                foreach (PressureItem item in this.Collection)
+                {
+                    if (item.Index == value)
+                    {
+                        return item.Pressure;
+                    }
+                }
+                return default;
+            }
+        }
+
+        readonly PressurePoints Points = new PressurePoints();
+        PointCollection Points0 => this.Points[BrushEasePressure.None];
+        PointCollection Points1 => this.Points[BrushEasePressure.Linear];
+        PointCollection Points2 => this.Points[BrushEasePressure.Quadratic];
+        PointCollection Points3 => this.Points[BrushEasePressure.QuadraticFlipReverse];
+        PointCollection Points4 => this.Points[BrushEasePressure.Symmetry];
+
+        //@Construct
+        public PressureDialog()
         {
             this.InitializeComponent();
+            this.ListBox.SelectionChanged += (s, e) =>
+            {
+                int value = this.ListBox.SelectedIndex;
+                foreach (PressureItem item in this.Collection)
+                {
+                    if (item.Index == value)
+                    {
+                        this.Line25.Y2 = item.Line25;
+                        this.Line50.Y2 = item.Line50;
+                        this.Line75.Y2 = item.Line75;
+                        this.Polyline.Points = item.Points;
+                        this.TitleTextBlock.Text = item.Title;
+                        break;
+                    }
+                }
+            };
         }
-        public void Update(BrushEasePressure pressure)
+        public void Construct(BrushEasePressure pressure)
         {
-            Line25.Y1 = this.Lines[pressure].X;
-            Line50.Y1 = this.Lines[pressure].Y;
-            Line75.Y1 = this.Lines[pressure].Z;
-            Polyline.Points = this.Points[pressure];
+            foreach (PressureItem item in this.Collection)
+            {
+                if (item.Pressure == pressure)
+                {
+                    this.ListBox.SelectedIndex = item.Index;
+                    break;
+                }
+            }
         }
     }
 }
