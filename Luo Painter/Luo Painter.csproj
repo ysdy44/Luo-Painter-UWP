@@ -244,8 +244,8 @@
     <Compile Include="Controls\PaintScrollViewer.xaml.cs">
       <DependentUpon>PaintScrollViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PressurePanel.xaml.cs">
-      <DependentUpon>PressurePanel.xaml</DependentUpon>
+    <Compile Include="Controls\PressureDialog.xaml.cs">
+      <DependentUpon>PressureDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SimulateCanvas.xaml.cs">
       <DependentUpon>SimulateCanvas.xaml</DependentUpon>
@@ -420,9 +420,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\PressurePanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\PressureDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SimulateCanvas.xaml">
       <Generator>MSBuild:Compile</Generator>
