@@ -128,6 +128,7 @@
       <DependentUpon>BrushPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="%24DrawPage.Option\DrawPage.Canvas.cs" />
+    <Compile Include="%24DrawPage.Option\DrawPage.Click.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Cursor.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Border.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.cs" />
@@ -143,7 +144,6 @@
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.Threshold.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.Transform.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Geometry.cs" />
-    <Compile Include="%24DrawPage.Option\DrawPage.Option.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Picker.Color.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Picker.Number.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Setup.CropCanvas.cs" />
@@ -175,7 +175,7 @@
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="%24MainPages\ActionType.cs" />
-    <Compile Include="%24MainPages\MainPage.Action.cs" />
+    <Compile Include="%24MainPages\MainPage.Click.cs" />
     <Compile Include="%24MainPages\MainPage.Construct.cs" />
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

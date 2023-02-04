@@ -528,10 +528,20 @@ namespace Luo_Painter
 
                 case OptionType.ResizeCanvas:
                     this.ResizeFlyout.ShowAt(this.MoreButton);
+                    //this.ResizeFlyout.ShowAt(this, new Point
+                    //{
+                    //    X = Math.Max(0, (base.ActualWidth - 310) / 2),
+                    //    Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 4 - 44 - 44 - 44) / 2)
+                    //});
                     break;
 
                 case OptionType.RotateCanvas:
                     this.RotateFlyout.ShowAt(this.MoreButton);
+                    //this.RotateFlyout.ShowAt(this, new Point
+                    //{
+                    //    X = Math.Max(0, (base.ActualWidth - 310) / 2),
+                    //    Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 44 - 4 - 44 - 44 - 44) / 2)
+                    //});
                     break;
 
                 case OptionType.Stretch:
