@@ -150,7 +150,6 @@
     <Compile Include="%24DrawPage.Option\DrawPage.Tool.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Tool.Curve.Pen.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Tool.Marquee.cs" />
-    <Compile Include="%24DrawPage.Option\DrawPage.Tool.Paint.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Tool.PaintBrush.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Tool.PaintBrushForce.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Tool.PaintBrushMulti.cs" />
@@ -171,6 +170,7 @@
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Paint.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Tasks.cs" />
     <Compile Include="%24DrawPages\DrawPage.xaml.cs">
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
