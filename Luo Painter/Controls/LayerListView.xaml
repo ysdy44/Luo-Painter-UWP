@@ -98,7 +98,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="2,1"/>
             <Setter Property="Margin" Value="0,1"/>
-            <Setter Property="Background" Value="{ThemeResource ComboBoxItemPointerOverBackgroundThemeBrush}"/>
+            <Setter Property="Background" Value="{ThemeResource AppOpacity}"/>
             <Setter Property="Transitions">
                 <Setter.Value>
                     <TransitionCollection>
@@ -260,7 +260,7 @@
                             </TextBlock>
 
                             <!--Opacity-->
-                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
                                 <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Margin="0,5" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Opacity
@@ -331,7 +331,7 @@
                             <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
                                 Tag Type
                             </TextBlock>
-                            <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
+                            <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
                                 <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
                             </Border>
 

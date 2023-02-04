@@ -40,7 +40,7 @@
                 SelectedIndex="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" 
-                Background="{ThemeResource SystemAltLowColor}"
+                Background="{ThemeResource AppOpacity}"
                 Style="{x:Null}"
                 >
                 <ItemsControl.ItemContainerStyle>

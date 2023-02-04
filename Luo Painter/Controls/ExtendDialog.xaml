@@ -50,7 +50,7 @@
             Width="160" 
             Height="160"
             CornerRadius="4"
-            Background="{ThemeResource SystemAltLowColor}" 
+            Background="{ThemeResource AppOpacity}" 
             >
             <transformers:IndicatorControl 
                 x:Name="IndicatorControl"
