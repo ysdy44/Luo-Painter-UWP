@@ -9,20 +9,21 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <GridView Margin="12">
+    <GridView Padding="12" SelectionMode="None">
         <ItemsControl.ItemContainerStyle>
             <Style TargetType="GridViewItem">
                 <Setter Property="Margin" Value="12"/>
-                <Setter Property="Padding" Value="12"/>
+                <Setter Property="Padding" Value="0"/>
             </Style>
         </ItemsControl.ItemContainerStyle>
 
         <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="local:BrushEasePressureModel">
-                <Canvas Width="120" Height="120" >
-                    <Line X1="30" Y1="{x:Bind Line25}" X2="30" Y2="120" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
-                    <Line X1="60" Y1="{x:Bind Line50}" X2="60" Y2="120" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
-                    <Line X1="90" Y1="{x:Bind Line75}" X2="90" Y2="120" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+                <Canvas Width="236" Height="236" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                    <Rectangle Width="236" Height="236" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPressed}"/>
+                    <Line X1="59" Y1="{x:Bind Line25}" X2="59" Y2="236" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+                    <Line X1="118" Y1="{x:Bind Line50}" X2="118" Y2="236" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
+                    <Line X1="177" Y1="{x:Bind Line75}" X2="177" Y2="236" StrokeDashArray="6 4" StrokeThickness="1" Stroke="{ThemeResource BackButtonDisabledForegroundThemeBrush}"/>
                     <Polyline Points="{x:Bind Points}" StrokeThickness="1" Stroke="White" Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
                 </Canvas>
             </DataTemplate>

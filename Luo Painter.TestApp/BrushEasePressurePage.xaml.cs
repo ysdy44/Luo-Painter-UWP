@@ -10,9 +10,9 @@ namespace Luo_Painter.TestApp
     {
         public BrushEasePressure Pressure { get; set; }
 
-        public double Line25 => 120 - this.GetPressure(0.25) * 120;
-        public double Line50 => 120 - this.GetPressure(0.50) * 120;
-        public double Line75 => 120 - this.GetPressure(0.75) * 120;
+        public double Line25 => 236 - this.GetPressure(0.25) * 236;
+        public double Line50 => 236 - this.GetPressure(0.50) * 236;
+        public double Line75 => 236 - this.GetPressure(0.75) * 236;
 
         public PointCollection Points
         {
@@ -20,13 +20,13 @@ namespace Luo_Painter.TestApp
             {
                 PointCollection points = new PointCollection();
 
-                points.Add(new Point(0, 120));
-                for (int i = 0; i <= 50; i++)
+                points.Add(new Point(0, 236));
+                for (int i = 0; i <= 32; i++)
                 {
-                    double scale = i / 50d;
-                    points.Add(new Point(scale * 120, 120 - this.GetPressure(scale) * 120));
+                    double scale = i / 32d;
+                    points.Add(new Point(scale * 236, 236 - this.GetPressure(scale) * 236));
                 }
-                points.Add(new Point(120, 120));
+                points.Add(new Point(236, 236));
 
                 return points;
             }
@@ -51,6 +51,52 @@ namespace Luo_Painter.TestApp
 
                 case BrushEasePressure.Symmetry: return this.Symmetry(x);
                 case BrushEasePressure.SymmetryFlip: return 1 - this.Symmetry(x);
+
+                default: return 1;
+            }
+        }
+
+        public double GetPressure2(double x)
+        {
+            switch (this.Pressure)
+            {
+                case BrushEasePressure.None: return 1;
+
+                case BrushEasePressure.Linear: return x;
+
+                case BrushEasePressure.Quadratic: return x * x;
+                case BrushEasePressure.QuadraticFlipReverse: return 2 * x - x * x;
+
+                case BrushEasePressure.Symmetry:
+                    x *= 2;
+                    x -= 1;
+                    double y = (x > 0) ? (2 * x - x * x) : (2 * x + x * x);
+                    y += 1;
+                    y /= 2;
+                    return y;
+
+                default: return 1;
+            }
+        }
+
+        public float GetPressure(int pressure, float x)
+        {
+            switch (pressure)
+            {
+                case 0: return 1;
+
+                case 1: return x;
+
+                case 3: return x * x;
+                case 6: return 2 * x - x * x;
+
+                case 9:
+                    x *= 2;
+                    x -= 1;
+                    float y = (x > 0) ? (2 * x - x * x) : (2 * x + x * x);
+                    y += 1;
+                    y /= 2;
+                    return y;
 
                 default: return 1;
             }
