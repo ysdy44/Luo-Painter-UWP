@@ -26,22 +26,21 @@ namespace Luo_Painter.Controls
         private CornerRadius CornerRadiusConverter(int value) => new CornerRadius((value is 0 || value is 1) ? 40 : 0);
         private double TipOpacityConverter(int value) => (value is 0 || value is 2) ? 1 : 0;
 
+        private int ZeroConverter(InkType value) => 0;
+
+        #region Converter
+
         private Visibility SpacingVisibilityConverter(InkType value) => value.HasFlag(InkType.UISpacing) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility FlowVisibilityConverter(InkType value) => value.HasFlag(InkType.UIFlow) ? Visibility.Visible : Visibility.Collapsed;
-
         private Visibility HardnessVisibilityConverter(InkType value) => value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility TipVisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility TextureVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) || value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility TipShapeVisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) || value.HasFlag(InkType.UIShape) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Shape2VisibilityConverter(InkType value) => value.HasFlag(InkType.UITip) || value.HasFlag(InkType.UIHardness) ? Visibility.Visible : Visibility.Collapsed;
-
         private Visibility BlendModeVisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) ? Visibility.Visible : Visibility.Collapsed;
         private Visibility GrainVisibilityConverter(InkType value) => value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility Grain2VisibilityConverter(InkType value) => value.HasFlag(InkType.UIBlendMode) || value.HasFlag(InkType.UIGrain) ? Visibility.Visible : Visibility.Collapsed;
-
         private Visibility MixVisibilityConverter(InkType value) => value.HasFlag(InkType.UIMix) ? Visibility.Visible : Visibility.Collapsed;
 
-        private int ZeroConverter(InkType value) => 0;
+        #endregion
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         public object Child { get => this.ContentPresenter.Content; set => this.ContentPresenter.Content = value; }

@@ -222,8 +222,7 @@
                         </ListViewBase.Footer>
 
                         <ListViewItem x:Name="PropertyItem">Property</ListViewItem>
-                        <ListViewItem x:Name="ShapeItem" Visibility="{x:Bind Shape2VisibilityConverter(Type), Mode=OneWay}">Shape</ListViewItem>
-                        <ListViewItem x:Name="GrainItem" Visibility="{x:Bind Grain2VisibilityConverter(Type), Mode=OneWay}">Grain</ListViewItem>
+                        <ListViewItem x:Name="TextureItem" Visibility="{x:Bind TextureVisibilityConverter(Type), Mode=OneWay}">Texture</ListViewItem>
                         <ListViewItem x:Name="MixItem" Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}">Mix Color</ListViewItem>
 
                     </ListView>
@@ -345,11 +344,7 @@
                                 </Grid>
                             </Border>
 
-                        </StackPanel>
-                    </ScrollViewer>
-
-                    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}" Visibility="{x:Bind ShapeItem.IsSelected, Mode=OneWay}">
-                        <StackPanel Padding="10,0,10,8">
+                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}"/>
 
                             <!--Tip-->
                             <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -389,61 +384,7 @@
                                 </ListBox>
                             </Grid>
 
-                            <!--Shape-->
-                            <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
-                                Shape
-                            </TextBlock>
-
-                            <Grid ColumnSpacing="8" RowSpacing="4" Margin="0,0,0,4"
-                                  Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="136"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="40"/>
-                                </Grid.RowDefinitions>
-                                <Border Grid.RowSpan="3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                                    <BitmapIcon x:Name="ShapeImage" ShowAsMonochrome="True" Foreground="{ThemeResource SystemColorControlAccentBrush}">
-                                        <!--UriSource-->
-                                    </BitmapIcon>
-                                </Border>
-                                <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Import...
-                                </Button>
-                                <ToggleButton x:Name="RecolorShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Recolor
-                                </ToggleButton>
-                                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Remove
-                                </Button>
-                            </Grid>
-
-                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
-                                    Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="136"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="RotateTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Rotation
-                                    </TextBlock>
-                                    <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Margin="4,2">
-                                        <ToggleSwitch.OffContent>
-                                            None
-                                        </ToggleSwitch.OffContent>
-                                        <ToggleSwitch.OnContent>
-                                            Rotate to stroke
-                                        </ToggleSwitch.OnContent>
-                                    </ToggleSwitch>
-                                </Grid>
-                            </Border>
-
-                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind TipShapeVisibilityConverter(Type), Mode=OneWay}"/>
+                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}"/>
 
                             <!--Hardness-->
                             <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -502,8 +443,64 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}" Visibility="{x:Bind GrainItem.IsSelected, Mode=OneWay}">
+                    <ScrollViewer Style="{StaticResource AppVerticalScrollViewerStyle}" Visibility="{x:Bind TextureItem.IsSelected, Mode=OneWay}">
                         <StackPanel Padding="10,0,10,8">
+
+                            <!--Shape-->
+                            <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                                Shape
+                            </TextBlock>
+
+                            <Grid ColumnSpacing="8" RowSpacing="4" Margin="0,0,0,4"
+                                  Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="136"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.RowSpan="3" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                                    <BitmapIcon x:Name="ShapeImage" ShowAsMonochrome="True" Foreground="{ThemeResource SystemColorControlAccentBrush}">
+                                        <!--UriSource-->
+                                    </BitmapIcon>
+                                </Border>
+                                <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    Import...
+                                </Button>
+                                <ToggleButton x:Name="RecolorShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    Recolor
+                                </ToggleButton>
+                                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    Remove
+                                </Button>
+                            </Grid>
+
+                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                                    Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="136"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="RotateTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                        Rotation
+                                    </TextBlock>
+                                    <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Margin="4,2">
+                                        <ToggleSwitch.OffContent>
+                                            None
+                                        </ToggleSwitch.OffContent>
+                                        <ToggleSwitch.OnContent>
+                                            Rotate to stroke
+                                        </ToggleSwitch.OnContent>
+                                    </ToggleSwitch>
+                                </Grid>
+                            </Border>
+
+                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}"/>
 
                             <!--Grain-->
                             <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
