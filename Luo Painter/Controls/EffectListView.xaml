@@ -165,7 +165,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="options:OptionType">
-                    <luo_painter:AdjustmentImage Type="{x:Bind}" >
+                    <luo_painter:AdjustmentThumbnail Type="{x:Bind}" >
                         <ContentControl.Template>
                             <ControlTemplate TargetType="ContentControl">
                                 <Grid>
@@ -183,7 +183,7 @@
                                 <TextBlock Text="{x:Bind}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </DataTemplate>
                         </ContentControl.ContentTemplate>
-                    </luo_painter:AdjustmentImage>
+                    </luo_painter:AdjustmentThumbnail>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
