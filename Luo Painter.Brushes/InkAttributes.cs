@@ -35,9 +35,6 @@ namespace Luo_Painter.Brushes
         public BrushEasePressure SizePressure { get; set; }
         public BrushEasePressure FlowPressure { get; set; }
 
-        public bool IgnoreSizePressure { get; set; }
-        public bool IgnoreFlowPressure { get; set; } = true;
-
         public PenTipShape Tip { get; set; }
         public bool IsStroke { get; set; }
 
@@ -74,9 +71,6 @@ namespace Luo_Painter.Brushes
 
             this.SizePressure = attributes.SizePressure;
             this.FlowPressure = attributes.FlowPressure;
-
-            this.IgnoreSizePressure = attributes.IgnoreSizePressure;
-            this.IgnoreFlowPressure = attributes.IgnoreFlowPressure;
 
             this.Tip = attributes.Tip;
             this.IsStroke = attributes.IsStroke;

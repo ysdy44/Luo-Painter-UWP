@@ -25,9 +25,6 @@ namespace Luo_Painter.Brushes
             new XAttribute("SizePressure", this.SizePressure),
             new XAttribute("FlowPressure", this.FlowPressure),
 
-            new XAttribute("IgnoreSizePressure", this.IgnoreSizePressure),
-            new XAttribute("IgnoreFlowPressure", this.IgnoreFlowPressure),
-
             new XAttribute("Tip", this.Tip),
             new XAttribute("IsStroke", this.IsStroke),
 
@@ -84,9 +81,6 @@ namespace Luo_Painter.Brushes
 
             if (element.Attribute("SizePressure") is XAttribute sizePressure) this.SizePressure = this.LoadPressure(sizePressure.Value);
             if (element.Attribute("FlowPressure") is XAttribute flowPressure) this.FlowPressure = this.LoadPressure(flowPressure.Value);
-
-            if (element.Attribute("IgnoreSizePressure") is XAttribute ignoreSizePressure) this.IgnoreSizePressure = (bool)ignoreSizePressure;
-            if (element.Attribute("IgnoreFlowPressure") is XAttribute ignoreFlowPressure) this.IgnoreFlowPressure = (bool)ignoreFlowPressure;
 
             if (element.Attribute("Tip") is XAttribute tip) this.Tip = this.LoadTip(tip.Value);
             if (element.Attribute("IsStroke") is XAttribute isStroke) this.IsStroke = (bool)isStroke;
