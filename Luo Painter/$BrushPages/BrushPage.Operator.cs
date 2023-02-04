@@ -16,7 +16,7 @@ namespace Luo_Painter
                 switch (device)
                 {
                     case InkInputDevice.Pen:
-                        this.StartingPressure = this.Pressure = properties.Pressure * properties.Pressure;
+                        this.StartingPressure = this.Pressure = properties.Pressure;
                         break;
                     default:
                         this.StartingPressure = this.Pressure = 1;
@@ -42,7 +42,7 @@ namespace Luo_Painter
                 switch (device)
                 {
                     case InkInputDevice.Pen:
-                        this.Pressure = properties.Pressure * properties.Pressure;
+                        this.Pressure = properties.Pressure;
                         break;
                     default:
                         this.Pressure = 1;
