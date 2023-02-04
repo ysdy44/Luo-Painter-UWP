@@ -11,7 +11,7 @@ namespace Luo_Painter.Projects.Models
         public ImageSource ImageSource => this.FileImageSource.ImageSource;
         readonly FileImageSource FileImageSource;
 
-        public ProjectFile(StorageFolder item) : base(StorageItemTypes.File)
+        public ProjectFile(StorageFolder item) : base(ProjectType.File)
         {
             this.Path = item.Path;
             this.Name = item.Name;
@@ -66,7 +66,7 @@ namespace Luo_Painter.Projects.Models
         {
             switch (this.Type)
             {
-                case StorageItemTypes.File:
+                case ProjectType.File:
                     StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(base.Path);
                     StorageFolder zipFolder2 = await folder.CreateFolderAsync($"{this.DisplayName} - {suffix}.luo", CreationCollisionOption.ReplaceExisting);
                     foreach (StorageFile item in await zipFolder.GetFilesAsync())

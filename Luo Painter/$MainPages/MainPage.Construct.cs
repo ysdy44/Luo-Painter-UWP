@@ -1,10 +1,7 @@
 ﻿using Luo_Painter.Projects;
 using Luo_Painter.Projects.Models;
-using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -31,7 +28,7 @@ namespace Luo_Painter
                 {
                     switch (item.Type)
                     {
-                        case StorageItemTypes.None:
+                        case ProjectType.Add:
                             e.Cancel = true;
                             return;
                     }
@@ -45,7 +42,7 @@ namespace Luo_Painter
                 {
                     switch (item.Type)
                     {
-                        case StorageItemTypes.None:
+                        case ProjectType.Add:
                             return;
                         default:
                             if (this.ObservableCollection.FirstOrDefault() == ProjectNone.Add) break;
@@ -80,11 +77,11 @@ namespace Luo_Painter
                     {
                         switch (item.Type)
                         {
-                            case StorageItemTypes.File:
+                            case ProjectType.File:
                                 this.RenameItem.CommandParameter = item;
                                 this.FileMenuFlyout.ShowAt(this.ListView, e.GetPosition(this.ListView));
                                 break;
-                            case StorageItemTypes.Folder:
+                            case ProjectType.Folder:
                                 this.RenameItem.CommandParameter = item;
                                 this.FolderMenuFlyout.ShowAt(this.ListView, e.GetPosition(this.ListView));
                                 break;
@@ -103,9 +100,9 @@ namespace Luo_Painter
                 {
                     switch (item.Type)
                     {
-                        case StorageItemTypes.None: this.Action(ProjectAction.Add); break;
-                        case StorageItemTypes.File: this.Action(ProjectAction.File, item); break;
-                        case StorageItemTypes.Folder: this.Action(ProjectAction.Folder, item); break;
+                        case ProjectType.Add: this.Action(ProjectAction.Add); break;
+                        case ProjectType.File: this.Action(ProjectAction.File, item); break;
+                        case ProjectType.Folder: this.Action(ProjectAction.Folder, item); break;
                         default: break;
                     }
                 }
@@ -161,7 +158,7 @@ namespace Luo_Painter
                 {
                     switch (item.Type)
                     {
-                        case StorageItemTypes.File:
+                        case ProjectType.File:
                             this.ClipboardProjects.Add(item.Path);
                             break;
                     }

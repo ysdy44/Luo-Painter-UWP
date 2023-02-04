@@ -15,14 +15,14 @@ namespace Luo_Painter.Projects
         {
             switch (selectedItem.Type)
             {
-                case StorageItemTypes.File:
+                case ProjectType.File:
                     if (selectedItem is ProjectFile item2)
                     {
                         await item2.DeleteAsync();
                         base.Remove(selectedItem);
                     }
                     break;
-                case StorageItemTypes.Folder:
+                case ProjectType.Folder:
                     if (selectedItem is ProjectFolder item3)
                     {
                         await item3.DeleteAsync();
@@ -39,14 +39,14 @@ namespace Luo_Painter.Projects
             {
                 switch (item.Type)
                 {
-                    case StorageItemTypes.File:
+                    case ProjectType.File:
                         if (item is ProjectFile item2)
                         {
                             await item2.DeleteAsync();
                             this.Temp.Add(item);
                         }
                         break;
-                    case StorageItemTypes.Folder:
+                    case ProjectType.Folder:
                         if (item is ProjectFolder item3)
                         {
                             await item3.DeleteAsync();
@@ -103,7 +103,7 @@ namespace Luo_Painter.Projects
             {
                 switch (item.Type)
                 {
-                    case StorageItemTypes.File:
+                    case ProjectType.File:
                         if (item is ProjectFile item2)
                         {
                             Project item3 = await item2.CopyAsync(folder, suffix);

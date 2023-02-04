@@ -1,9 +1,6 @@
 ﻿using Luo_Painter.Projects.Models;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Search;
@@ -45,7 +42,7 @@ namespace Luo_Painter.Projects
                 item.Enable();
             }
         }
-        public void Enable(StorageItemTypes types)
+        public void Enable(ProjectType types)
         {
             foreach (Project item in this)
             {
@@ -61,7 +58,7 @@ namespace Luo_Painter.Projects
             {
                 switch (item.Type)
                 {
-                    case StorageItemTypes.File:
+                    case ProjectType.File:
                         if (item.Path == path)
                         {
                             if (item is ProjectFile item2)

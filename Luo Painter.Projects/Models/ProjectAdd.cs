@@ -1,5 +1,4 @@
 ﻿using System;
-using Windows.Storage;
 
 namespace Luo_Painter.Projects.Models
 {
@@ -7,7 +6,7 @@ namespace Luo_Painter.Projects.Models
     {
         //@Static
         public static readonly ProjectNone Add = new ProjectNone();
-        private ProjectNone() : base(StorageItemTypes.None)
+        private ProjectNone() : base(ProjectType.Add)
         {
             //@Debug
             // Order by DateCreated

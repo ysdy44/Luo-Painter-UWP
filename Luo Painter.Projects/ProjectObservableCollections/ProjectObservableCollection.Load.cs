@@ -44,7 +44,7 @@ namespace Luo_Painter.Projects
             {
                 switch (item.Type)
                 {
-                    case StorageItemTypes.Folder:
+                    case ProjectType.Folder:
                         base.Add(item);
                         break;
                 }
@@ -54,7 +54,7 @@ namespace Luo_Painter.Projects
             {
                 switch (item.Type)
                 {
-                    case StorageItemTypes.File:
+                    case ProjectType.File:
                         base.Add(item);
                         break;
                 }

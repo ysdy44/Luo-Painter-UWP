@@ -1,22 +1,13 @@
 ﻿using Luo_Painter.Elements;
-using Luo_Painter.Layers;
 using Luo_Painter.Projects;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
-using Windows.Graphics.Imaging;
 using Windows.Storage;
-using Windows.Storage.Search;
-using Windows.Storage.Streams;
-using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
@@ -34,9 +25,9 @@ namespace Luo_Painter
             {
                 switch (item2.Type)
                 {
-                    case StorageItemTypes.None: return this.None;
-                    case StorageItemTypes.File: return this.File;
-                    case StorageItemTypes.Folder: return this.Folder;
+                    case ProjectType.Add: return this.None;
+                    case ProjectType.File: return this.File;
+                    case ProjectType.Folder: return this.Folder;
                     default: return null;
                 }
             }

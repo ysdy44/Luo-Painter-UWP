@@ -14,7 +14,7 @@ namespace Luo_Painter.Projects.Models
         public string ThumbnailRight { get; private set; }
 
         //@Construct
-        public ProjectFolder(StorageFolder item, IReadOnlyList<StorageFile> images = null) : base(StorageItemTypes.Folder)
+        public ProjectFolder(StorageFolder item, IReadOnlyList<StorageFile> images = null) : base(ProjectType.Folder)
         {
             //@Static
             const string fallbackImage = @"ms-appx:///Icons\LoadFaill.jpg";

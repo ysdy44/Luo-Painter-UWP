@@ -2,10 +2,7 @@
 using Luo_Painter.Projects;
 using Luo_Painter.Projects.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
@@ -127,7 +124,7 @@ namespace Luo_Painter
 
                 case ProjectAction.DupliateShow:
                     {
-                        this.ObservableCollection.Enable(StorageItemTypes.File);
+                        this.ObservableCollection.Enable(ProjectType.File);
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.DupliateDocker.IsShow = true;
@@ -141,7 +138,7 @@ namespace Luo_Painter
                     break;
                 case ProjectAction.DeleteShow:
                     {
-                        this.ObservableCollection.Enable(StorageItemTypes.File | StorageItemTypes.Folder);
+                        this.ObservableCollection.Enable(ProjectType.File | ProjectType.Folder);
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.DeleteDocker.IsShow = true;
@@ -155,7 +152,7 @@ namespace Luo_Painter
                     break;
                 case ProjectAction.SelectShow:
                     {
-                        this.ObservableCollection.Enable(StorageItemTypes.File);
+                        this.ObservableCollection.Enable(ProjectType.File);
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.SelectDocker.IsShow = true;
@@ -168,13 +165,14 @@ namespace Luo_Painter
                     this.SelectDocker.IsShow = false;
                     break;
                 case ProjectAction.SelectToMove:
-                    this.ObservableCollection.Enable(StorageItemTypes.Folder);
+                    this.ObservableCollection.Enable(ProjectType.Folder);
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.SelectDocker.IsShow = false;
                     this.MoveDocker.IsShow = true;
                     break;
                 case ProjectAction.MoveHide:
+                    this.ObservableCollection.Enable(ProjectType.All);
                     this.ObservableCollection.Enable();
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
@@ -211,7 +209,7 @@ namespace Luo_Painter
                             //}
                             //else
                             //{
-                            this.ObservableCollection.Enable(StorageItemTypes.Folder);
+                            this.ObservableCollection.Enable(ProjectType.Folder);
                             this.ListView.IsItemClickEnabled = true;
                             this.AppBarListView.IsItemClickEnabled = false;
                             this.SelectDocker.IsShow = false;
@@ -253,10 +251,10 @@ namespace Luo_Painter
 
                             switch (project.Type)
                             {
-                                case StorageItemTypes.File:
+                                case ProjectType.File:
                                     this.RenameIcon.Symbol = Symbol.Document;
                                     break;
-                                case StorageItemTypes.Folder:
+                                case ProjectType.Folder:
                                     this.RenameIcon.Symbol = Symbol.Folder;
                                     break;
                                 default:
@@ -272,13 +270,13 @@ namespace Luo_Painter
 
                                     switch (project.Type)
                                     {
-                                        case StorageItemTypes.File:
+                                        case ProjectType.File:
                                             if (project is ProjectFile projectFile)
                                             {
                                                 await projectFile.RenameAsync(name);
                                             }
                                             break;
-                                        case StorageItemTypes.Folder:
+                                        case ProjectType.Folder:
                                             if (project is ProjectFolder projectFolder)
                                             {
                                                 await projectFolder.RenameAsync(name);

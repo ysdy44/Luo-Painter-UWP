@@ -1,39 +1,38 @@
 ﻿using System;
 using System.ComponentModel;
-using Windows.Storage;
 
 namespace Luo_Painter.Projects
 {
     public abstract partial class Project : INotifyPropertyChanged
     {
         //@Content
-        public StorageItemTypes Type { get; }
+        public ProjectType Type { get; }
         public bool IsEnabled { get; private set; } = true;
         public string Path { get; protected set; }
         public string Name { get; protected set; }
         public string DisplayName { get; protected set; }
         public DateTimeOffset DateCreated { get; protected set; }
-   
+
         public string Thumbnail { get; protected set; }
 
         //@Construct
-        protected Project(StorageItemTypes type) => this.Type = type;
+        protected Project(ProjectType type) => this.Type = type;
 
         public void Enable() => this.IsEnabled = true;
-        public void Enable(StorageItemTypes types)
+        public void Enable(ProjectType types)
         {
             switch (this.Type)
             {
-                case StorageItemTypes.None:
-                    this.IsEnabled = types is StorageItemTypes.None;
+                case ProjectType.Add:
+                    this.IsEnabled = types.HasFlag(ProjectType.Add);
                     this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
-                case StorageItemTypes.File:
-                    this.IsEnabled = types.HasFlag(StorageItemTypes.File);
+                case ProjectType.File:
+                    this.IsEnabled = types.HasFlag(ProjectType.File);
                     this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
-                case StorageItemTypes.Folder:
-                    this.IsEnabled = types.HasFlag(StorageItemTypes.Folder);
+                case ProjectType.Folder:
+                    this.IsEnabled = types.HasFlag(ProjectType.Folder);
                     this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
             }
