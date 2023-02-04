@@ -10,7 +10,11 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public void CapDrawShaderBrushEdgeHardness(StrokeCap cap, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void CapDrawShaderBrushEdgeHardness(StrokeCap cap, 
+            byte[] shaderCode, Vector4 colorHdr,
+            int hardness = 0, float flow = 1f, 
+            bool ignoreSizePressure = false,
+            bool ignoreFlowPressure = false)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, cap.Bounds))
@@ -18,7 +22,7 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressure = cap.StartingPressure * cap.StartingSize;
+                float sizePressed = ignoreSizePressure ? cap.StartingSize : cap.StartingPressure * cap.StartingSize;
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
@@ -26,7 +30,7 @@ namespace Luo_Painter.Layers.Models
                     {
                         ["hardness"] = hardness,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? sizePressure : cap.StartingSize,
+                        ["radius"] = sizePressed,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = colorHdr
                     }
@@ -37,7 +41,11 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardness"/>
         /// </summary>
-        public void SegmentDrawShaderBrushEdgeHardness(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void SegmentDrawShaderBrushEdgeHardness(StrokeSegment segment, 
+            byte[] shaderCode, Vector4 colorHdr, 
+            int hardness = 0, float flow = 1f, 
+            bool ignoreSizePressure = false, 
+            bool ignoreFlowPressure = false)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, segment.Bounds))
@@ -45,7 +53,7 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressure = segment.StartingPressure * segment.Size;
+                float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
@@ -53,7 +61,7 @@ namespace Luo_Painter.Layers.Models
                     {
                         ["hardness"] = hardness,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? segment.Size : sizePressure,
+                        ["radius"] = sizePressed,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = colorHdr
                     }
@@ -89,7 +97,12 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void CapDrawShaderBrushEdgeHardnessWithTexture(StrokeCap cap, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void CapDrawShaderBrushEdgeHardnessWithTexture(StrokeCap cap, 
+            byte[] shaderCode, Vector4 colorHdr, 
+            CanvasBitmap texture, bool rotate = false, 
+            int hardness = 0, float flow = 1f, 
+            bool ignoreSizePressure = false, 
+            bool ignoreFlowPressure = false)
         {
             if (rotate) return;
 
@@ -99,7 +112,7 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressure = cap.StartingPressure * cap.StartingSize;
+                float sizePressed = ignoreSizePressure ? cap.StartingSize : cap.StartingPressure * cap.StartingSize;
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
@@ -110,7 +123,7 @@ namespace Luo_Painter.Layers.Models
                         ["rotate"] = false,
                         ["normalization"] = Vector2.Zero,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? sizePressure : cap.StartingSize,
+                        ["radius"] = sizePressed,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = colorHdr
                     }
@@ -121,7 +134,12 @@ namespace Luo_Painter.Layers.Models
         /// <summary>
         /// <see cref="ShaderType.BrushEdgeHardnessWithTexture"/>
         /// </summary>
-        public void SegmentDrawShaderBrushEdgeHardnessWithTexture(StrokeSegment segment, byte[] shaderCode, Vector4 colorHdr, CanvasBitmap texture, bool rotate = false, int hardness = 0, float flow = 1f, bool ignoreSizePressure = false, bool ignoreFlowPressure = false)
+        public void SegmentDrawShaderBrushEdgeHardnessWithTexture(StrokeSegment segment, 
+            byte[] shaderCode, Vector4 colorHdr, 
+            CanvasBitmap texture, bool rotate = false,
+            int hardness = 0, float flow = 1f, 
+            bool ignoreSizePressure = false, 
+            bool ignoreFlowPressure = false)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, segment.Bounds))
@@ -129,7 +147,7 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressure = segment.StartingPressure * segment.Size;
+                float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
 
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
@@ -140,7 +158,7 @@ namespace Luo_Painter.Layers.Models
                         ["rotate"] = rotate,
                         ["normalization"] = segment.Normalize,
                         ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
-                        ["radius"] =  ignoreSizePressure ? segment.Size : sizePressure,
+                        ["radius"] = sizePressed,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = colorHdr
                     }
