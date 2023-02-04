@@ -3,7 +3,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.HSVColorPickers
+namespace Luo_Painter.Controls
 {
     /// <summary>
     /// double t = 0 ~ 1;
@@ -94,8 +94,9 @@ namespace Luo_Painter.HSVColorPickers
         }
         public void Linear(float value)
         {
-            this.Point1 = new Vector2(System.Math.Clamp(1 - value, 0, 1), 0);
-            this.Point2 = new Vector2(System.Math.Clamp(2 - value, 0, 1), 1);
+            this.Point1 = new Vector2(System.Math.Clamp(1 - value, 0, 1), System.Math.Clamp(value - 1, 0, 1));
+            this.Point2 = new Vector2(System.Math.Clamp(2 - value, 0, 1), System.Math.Clamp(value, 0, 1));
+
             this.Invalidate?.Invoke(this, null); // Delegate
         }
     }

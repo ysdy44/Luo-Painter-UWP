@@ -388,7 +388,7 @@
                             x:Name="InkCanvasControl"       
                             HorizontalAlignment="Center"
                             Width="240"                           
-                            Height="120"              
+                            Height="120"                            
                             UseSharedDevice="True"                               
                             CustomDevice="{x:Bind CanvasDevice}"                       
                             />
@@ -688,7 +688,7 @@
                                                 </LinearGradientBrush>
                                             </Control.Background>
                                         </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="HSBSaturationSlider" Value="100" Minimum="0" Maximum="400" Unit="%" TickFrequency="100" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+                                        <hsvColorPickers:NumberSlider x:Name="HSBSaturationSlider" Value="100" Minimum="0" Maximum="400" Unit="%" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
                                             <Slider.Header>
                                                 Saturation
                                             </Slider.Header>
@@ -747,7 +747,7 @@
                                             50
                                         </Button>
                                     </StackPanel>
-                                    <hsvColorPickers:SplinePicker x:Name="BrightnessPicker" Background="{ThemeResource AppBackground}"/>
+                                    <controls:SplinePicker x:Name="BrightnessPicker" Background="{ThemeResource AppBackground}"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
@@ -1817,8 +1817,8 @@
                         Dock Left
                     </ToolTip>
                 </ToolTipService.ToolTip>
-                <StackPanel Spacing="4" Orientation="Horizontal" VerticalAlignment="Center">
-                    <SymbolIcon Margin="4,0,0,0" Symbol="DockLeft"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Margin="4,0" Symbol="DockLeft"/>
                     <FontIcon Glyph="&#xE26C;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
                         <UIElement.RenderTransformOrigin>
                             0.5, 0.5
@@ -1845,7 +1845,7 @@
                             <RotateTransform Angle="{x:Bind DockRightConverter(SplitRightView.IsPaneOpen), Mode=OneWay}"/>
                         </UIElement.RenderTransform>
                     </FontIcon>
-                    <SymbolIcon Margin="4,0,0,0" Symbol="DockRight"/>
+                    <SymbolIcon Margin="4,0" Symbol="DockRight"/>
                 </StackPanel>
             </Button>
 

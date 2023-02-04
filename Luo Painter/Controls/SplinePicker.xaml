@@ -1,9 +1,8 @@
 ﻿<UserControl
-    x:Class="Luo_Painter.HSVColorPickers.SplinePicker"
+    x:Class="Luo_Painter.Controls.SplinePicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Luo_Painter.HSVColorPickers.Numbers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignWidth="400"
@@ -23,10 +22,10 @@
                     <ControlTemplate TargetType="Thumb">
                         <Border
                             x:Name="RootGrid"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}"
+                            BorderThickness="1"
+                            BorderBrush="{ThemeResource ThumbBorderBrush}"
+                            Background="{ThemeResource ThumbBackground}"
                             >
                             <!--VisualState-->
                             <VisualStateManager.VisualStateGroups>
@@ -61,7 +60,17 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Ellipse x:Name="Indication" Visibility="Visible" Width="8" Height="8" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Ellipse 
+                                x:Name="Indication" 
+                                Visibility="Visible" 
+                                Width="10" 
+                                Height="10"
+                                StrokeThickness="1" 
+                                Stroke="{TemplateBinding BorderBrush}" 
+                                Fill="{TemplateBinding Background}" 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -69,21 +78,24 @@
         </Style>
     </FrameworkElement.Resources>
 
-    <Canvas Width="240" Height="240" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Rectangle Width="240" Height="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+    <Canvas Width="240" Height="240" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource AppOpacity}">
 
+        <Line X1="0" Y1="0" X2="240" Y2="0" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
         <Line X1="0" Y1="60" X2="240" Y2="60" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
         <Line X1="0" Y1="120" X2="240" Y2="120" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
         <Line X1="0" Y1="180" X2="240" Y2="180" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="240" X2="240" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
 
+        <Line X1="0" Y1="0" X2="0" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
         <Line X1="60" Y1="0" X2="60" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
         <Line X1="120" Y1="0" X2="120" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
         <Line X1="180" Y1="0" X2="180" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="240" Y1="0" X2="240" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
 
         <Line X1="{x:Bind X(Point1), Mode=OneWay}" Y1="{x:Bind Y(Point1), Mode=OneWay}" X2="0" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPressed}"/>
         <Line X1="{x:Bind X(Point2), Mode=OneWay}" Y1="{x:Bind Y(Point2), Mode=OneWay}" X2="240" Y2="0" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPressed}"/>
 
-        <Path Width="240" Height="240" StrokeThickness="1" Stroke="{ThemeResource AppBarItemForegroundThemeBrush}">
+        <Path Canvas.Left="1" Canvas.Top="1" Width="240" Height="240" StrokeThickness="1" Stroke="{ThemeResource AppBarItemForegroundThemeBrush}">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="0,240">
@@ -93,7 +105,7 @@
             </Path.Data>
         </Path>
 
-        <Thumb x:Name="Thumb1" Canvas.Left="{x:Bind Left(Point1), Mode=OneWay}" Canvas.Top="{x:Bind Top(Point1), Mode=OneWay}"/>
-        <Thumb x:Name="Thumb2" Canvas.Left="{x:Bind Left(Point2), Mode=OneWay}" Canvas.Top="{x:Bind Top(Point2), Mode=OneWay}"/>
+        <Thumb x:Name="Thumb1" Margin="1" BorderBrush="White" Background="Black" Canvas.Left="{x:Bind Left(Point1), Mode=OneWay}" Canvas.Top="{x:Bind Top(Point1), Mode=OneWay}"/>
+        <Thumb x:Name="Thumb2" Margin="1" BorderBrush="Black" Background="White" Canvas.Left="{x:Bind Left(Point2), Mode=OneWay}" Canvas.Top="{x:Bind Top(Point2), Mode=OneWay}"/>
     </Canvas>
 </UserControl>
