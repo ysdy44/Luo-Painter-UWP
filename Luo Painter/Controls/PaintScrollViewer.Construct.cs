@@ -33,11 +33,17 @@ namespace Luo_Painter.Controls
                 this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
                 //this.FlowSlider.Maximum = 100d;
 
-                this.IgnoreSizePressureButton.IsOn = presenter.IgnoreSizePressure;
-                this.IgnoreFlowPressureButton.IsOn = presenter.IgnoreFlowPressure;
+
+                this.MinSizeSlider.Value = System.Math.Clamp(presenter.MinSize * 100d, 0d, 100d);
+                this.MinFlowSlider.Value = System.Math.Clamp(presenter.MinFlow * 100d, 0d, 100d);
+
+                this.MinSizeSlider.IsEnabled = presenter.SizePressure != default;
+                this.MinFlowSlider.IsEnabled = presenter.FlowPressure != default;
+
+                this.SizePressurePolygon.Points = this.SizePressurePoints[presenter.SizePressure];
+                this.FlowPressurePolygon.Points = this.FlowPressurePoints[presenter.FlowPressure];
 
 
-                // Shape
                 switch (presenter.Tip)
                 {
                     case Windows.UI.Input.Inking.PenTipShape.Circle:
@@ -50,14 +56,14 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
+                this.HardnessListView.SelectedIndex = this.HardnessCollection.IndexOf(presenter.Hardness);
+            
+                
+                // Texture
                 this.RotateButton.IsOn = presenter.Rotate;
                 this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
                 this.RecolorShapeButton.IsChecked = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
-                
-                this.HardnessListView.SelectedIndex = this.HardnessCollection.IndexOf(presenter.Hardness);
 
-
-                // Grain
                 this.StepButton.Number = presenter.Step;
                 this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
                 this.RecolorGrainButton.IsChecked = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;

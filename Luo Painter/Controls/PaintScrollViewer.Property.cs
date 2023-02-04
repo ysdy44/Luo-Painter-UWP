@@ -56,18 +56,53 @@ namespace Luo_Painter.Controls
                 this.TryInkAsync();
             };
 
-
-            this.IgnoreSizePressureButton.Toggled += (s, e) =>
+            this.MinSizeSlider.ValueChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                this.InkPresenter.IgnoreSizePressure = this.IgnoreSizePressureButton.IsOn;
+                double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
+                this.InkPresenter.MinSize = (float)flow;
+                this.InkType = this.InkPresenter.GetType();
                 this.TryInkAsync();
             };
-            this.IgnoreFlowPressureButton.Toggled += (s, e) =>
+            this.MinFlowSlider.ValueChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                this.InkPresenter.IgnoreFlowPressure = this.IgnoreFlowPressureButton.IsOn;
+                double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
+                this.InkPresenter.MinFlow = (float)flow;
+                this.InkType = this.InkPresenter.GetType();
                 this.TryInkAsync();
+            };
+
+            this.SizePressureButton.Click += (s, e) =>
+            {
+                this.PressurePicker.Construct(this.InkPresenter.SizePressure);
+                this.PressureFlyout.ShowAt(this.SizePressureButton);
+            };
+            this.FlowPressureButton.Click += (s, e) =>
+            {
+                this.PressurePicker.Construct(this.InkPresenter.FlowPressure);
+                this.PressureFlyout.ShowAt(this.FlowPressureButton);
+            };
+            this.PressurePicker.PressureChanged += (s, pressure) =>
+            {
+                if (this.PressureFlyout.Target == this.SizePressureButton)
+                {
+                    this.MinSizeSlider.IsEnabled = pressure != default;
+                    this.SizePressurePolygon.Points = this.SizePressurePoints[pressure];
+
+                    this.InkPresenter.SizePressure = pressure;
+                    this.InkType = this.InkPresenter.GetType();
+                    this.TryInk();
+                }
+                else if (this.PressureFlyout.Target == this.FlowPressureButton)
+                {
+                    this.MinFlowSlider.IsEnabled = pressure != default;
+                    this.FlowPressurePolygon.Points = this.FlowPressurePoints[pressure];
+
+                    this.InkPresenter.FlowPressure = pressure;
+                    this.InkType = this.InkPresenter.GetType();
+                    this.TryInk();
+                }
             };
 
 

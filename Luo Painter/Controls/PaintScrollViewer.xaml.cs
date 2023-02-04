@@ -45,6 +45,8 @@ namespace Luo_Painter.Controls
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         public object Child { get => this.ContentPresenter.Content; set => this.ContentPresenter.Content = value; }
 
+        readonly PressurePoints SizePressurePoints = new PressurePoints();
+        readonly PressurePoints FlowPressurePoints = new PressurePoints();
 
         bool InkIsEnabled = true;
         double StatringX;

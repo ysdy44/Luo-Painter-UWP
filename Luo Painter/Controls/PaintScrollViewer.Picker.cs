@@ -1,6 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.HSVColorPickers;
-using Windows.UI.Xaml.Controls;
+﻿using Luo_Painter.HSVColorPickers;
 
 namespace Luo_Painter.Controls
 {
@@ -12,6 +10,9 @@ namespace Luo_Painter.Controls
         Opacity,
         Spacing,
         Flow,
+
+        MinSize,
+        MinFlow,
 
         Mix,
         Wet,
@@ -38,6 +39,9 @@ namespace Luo_Painter.Controls
             this.OpacitySlider.Click += (s, e) => this.NumberShowAt(this.OpacitySlider, PaintNumberPickerMode.Opacity);
             this.SpacingSlider.Click += (s, e) => this.NumberShowAt(this.SpacingSlider, PaintNumberPickerMode.Spacing);
             this.FlowSlider.Click += (s, e) => this.NumberShowAt(this.FlowSlider, PaintNumberPickerMode.Flow);
+
+            this.MinSizeSlider.Click += (s, e) => this.NumberShowAt(this.MinSizeSlider, PaintNumberPickerMode.MinSize);
+            this.MinFlowSlider.Click += (s, e) => this.NumberShowAt(this.MinFlowSlider, PaintNumberPickerMode.MinFlow);
 
             this.MixSlider.Click += (s, e) => this.NumberShowAt(this.MixSlider, PaintNumberPickerMode.Mix);
             this.WetSlider.Click += (s, e) => this.NumberShowAt(this.WetSlider, PaintNumberPickerMode.Wet);
@@ -70,6 +74,13 @@ namespace Luo_Painter.Controls
                         break;
                     case PaintNumberPickerMode.Flow:
                         this.FlowSlider.Value = e;
+                        break;
+
+                    case PaintNumberPickerMode.MinSize:
+                        this.MinSizeSlider.Value = e;
+                        break;
+                    case PaintNumberPickerMode.MinFlow:
+                        this.MinFlowSlider.Value = e;
                         break;
 
                     case PaintNumberPickerMode.Mix:

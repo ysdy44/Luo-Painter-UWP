@@ -8,10 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:brushes="using:Luo_Painter.Brushes"
+    xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
-    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     >
 
@@ -22,6 +22,9 @@
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
+        </Flyout>
+        <Flyout x:Name="PressureFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+            <controls:PressurePicker x:Name="PressurePicker" />
         </Flyout>
         <!--Storyboard-->
         <Storyboard x:Name="HideStoryboard" >
@@ -310,41 +313,73 @@
                                 </StackPanel>
                             </Border>
 
-                            <MenuFlyoutSeparator Margin="0,4"/>
-
-                            <!--IgnorePressure-->
-                            <TextBlock x:Name="IgnorePressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                Ignore Pressure
+                            <!--Pressure-->
+                            <TextBlock x:Name="PressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
+                                Force pressure to control property
                             </TextBlock>
 
-                            <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="136"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="SizeTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Size
-                                    </TextBlock>
-                                    <ToggleSwitch x:Name="IgnoreSizePressureButton" Grid.Column="1" Margin="4,2"/>
-                                </Grid>
-                            </Border>
+                            <Grid ColumnSpacing="4" Margin="0,4,0,4" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                                    <hsvColorPickers:NumberSlider
+                                        x:Name="MinSizeSlider" 
+                                        Decrease="True" 
+                                        Unit="%" 
+                                        TickFrequency="25" 
+                                        TickPlacement="Outside" 
+                                        Foreground="{ThemeResource AppForeground}" 
+                                        >
+                                        <Slider.Header>
+                                            Min Size
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </Border>
+                                <Button x:Name="SizePressureButton" Grid.Column="1" CornerRadius="4" Width="40" Height="62" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                        <Border Margin="0,4" Width="22" Height="22" Background="White">
+                                            <Polygon x:Name="SizePressurePolygon" Width="20" Height="20" Fill="Black">
+                                                <!--Points-->
+                                            </Polygon>
+                                        </Border>
+                                        <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
 
-                            <Border Grid.Column="1" Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
-                                    Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="136"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="FlowTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Flow
-                                    </TextBlock>
-                                    <ToggleSwitch x:Name="IgnoreFlowPressureButton" Grid.Column="1" Margin="4,2"/>
-                                </Grid>
-                            </Border>
-
-                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}"/>
+                            <Grid ColumnSpacing="4" Margin="0,0,0,4"
+                                  Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
+                                    <hsvColorPickers:NumberSlider
+                                        x:Name="MinFlowSlider" 
+                                        Decrease="True" 
+                                        Unit="%" 
+                                        TickFrequency="25" 
+                                        TickPlacement="Outside" 
+                                        Foreground="{ThemeResource AppForeground}" 
+                                        >
+                                        <Slider.Header>
+                                            Min Flow
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </Border>
+                                <Button x:Name="FlowPressureButton" Grid.Column="1" CornerRadius="4" Width="40" Height="62" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                        <Border Margin="0,4" Width="22" Height="22" Background="White">
+                                            <Polygon x:Name="FlowPressurePolygon" Width="20" Height="20" Fill="Black">
+                                                <!--Points-->
+                                            </Polygon>
+                                        </Border>
+                                        <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
 
                             <!--Tip-->
                             <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -383,8 +418,6 @@
                                     <FontIcon Glyph="&#xE003;" FontSize="26" FontFamily="Segoe MDL2 Assets"/>
                                 </ListBox>
                             </Grid>
-
-                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}"/>
 
                             <!--Hardness-->
                             <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
@@ -500,8 +533,6 @@
                                 </Grid>
                             </Border>
 
-                            <MenuFlyoutSeparator Margin="0,4" Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}"/>
-
                             <!--Grain-->
                             <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
                                        Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
@@ -550,8 +581,6 @@
                                     </hsvColorPickers:NumberButton>
                                 </Grid>
                             </Border>
-
-                            <MenuFlyoutSeparator Margin="0,4"/>
 
                             <!--BlendMode-->
                             <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
