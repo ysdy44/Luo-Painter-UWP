@@ -16,37 +16,34 @@ namespace Luo_Painter.Brushes
             float spacing = this.Spacing;
             int hardness = (int)this.Hardness;
 
-            float open = this.IgnoreSizePressure ? (size + 10) : 10;
-            float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
+            float open = 10 + this.GetSizePressed(0.001f) * size;
+            float end = InkPresenter.Width - 10 - this.GetSizePressed(0.001f) * size;
 
-            float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
+            float startingSizePressure = this.GetSizePressed(0.001f) * size + 1;
             float x = open + startingSizePressure * spacing;
 
-            if (this.IgnoreFlowPressure)
+            ds.DrawImage(new PixelShaderEffect(shaderCode)
             {
-                ds.DrawImage(new PixelShaderEffect(shaderCode)
+                Properties =
                 {
-                    Properties =
-                    {
-                        ["hardness"] = hardness,
-                        ["pressure"] = this.Flow,
-                        ["radius"] = startingSizePressure * scaleForDPI,
-                        ["targetPosition"] = new Vector2(open, InkPresenter.HeightHalf) * scaleForDPI,
-                        ["color"] = colorHdr
-                    }
-                });
-                ds.DrawImage(new PixelShaderEffect(shaderCode)
+                    ["hardness"] = hardness,
+                    ["pressure"] = this.GetFlowPressed(0.001f) * this.Flow,
+                    ["radius"] = startingSizePressure * scaleForDPI,
+                    ["targetPosition"] = new Vector2(open, InkPresenter.HeightHalf) * scaleForDPI,
+                    ["color"] = colorHdr
+                }
+            });
+            ds.DrawImage(new PixelShaderEffect(shaderCode)
+            {
+                Properties =
                 {
-                    Properties =
-                    {
-                        ["hardness"] = hardness,
-                        ["pressure"] = this.Flow,
-                        ["radius"] = startingSizePressure * scaleForDPI,
-                        ["targetPosition"] = new Vector2(end, InkPresenter.HeightHalf) * scaleForDPI,
-                        ["color"] = colorHdr
-                    }
-                });
-            }
+                    ["hardness"] = hardness,
+                    ["pressure"] = this.GetFlowPressed(0.001f) * this.Flow,
+                    ["radius"] = startingSizePressure * scaleForDPI,
+                    ["targetPosition"] = new Vector2(end, InkPresenter.HeightHalf) * scaleForDPI,
+                    ["color"] = colorHdr
+                }
+            });
 
             do
             {
@@ -59,21 +56,21 @@ namespace Luo_Painter.Brushes
                 Vector2 position = new Vector2(x, InkPresenter.Height / 2 + offsetY);
 
                 // 3. Draw
-                float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
+                float sizePressed = this.GetSizePressed(pressure) * size + 1;
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = this.IgnoreFlowPressure ? this.Flow : this.Flow * pressure,
-                        ["radius"] = sizePressure * scaleForDPI,
+                        ["pressure"] = this.GetFlowPressed(pressure) * this.Flow,
+                        ["radius"] = sizePressed * scaleForDPI,
                         ["targetPosition"] = position * scaleForDPI,
                         ["color"] = colorHdr
                     }
                 });
 
                 // 4. Foreach
-                x += sizePressure * spacing;
+                x += sizePressed * spacing;
             } while (x < end);
         }
 
@@ -87,11 +84,11 @@ namespace Luo_Painter.Brushes
             float spacing = this.Spacing;
             int hardness = (int)this.Hardness;
 
-            float open = this.IgnoreSizePressure ? (size + 10) : 10;
-            float end = this.IgnoreSizePressure ? (InkPresenter.Width - size - 10) : (InkPresenter.Width - 10);
+            float open = 10 + this.GetSizePressed(0.001f) * size;
+            float end = InkPresenter.Width - 10 - this.GetSizePressed(0.001f) * size;
 
             Vector2 position = new Vector2(open, InkPresenter.HeightHalf);
-            float startingSizePressure = this.IgnoreSizePressure ? (size + 1) : (size * 0.001f + 1);
+            float startingSizePressure = this.GetSizePressed(0.001f) * size + 1;
             float x = open + startingSizePressure * spacing;
 
             do
@@ -106,7 +103,7 @@ namespace Luo_Painter.Brushes
                 Vector2 normalization = Vector2.Normalize(targetPosition - position);
 
                 // 3. Draw
-                float sizePressure = this.IgnoreSizePressure ? (size + 1) : (size * pressure * pressure + 1);
+                float sizePressed = this.GetSizePressed(pressure) * size + 1;
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = this.ShapeSource,
@@ -115,8 +112,8 @@ namespace Luo_Painter.Brushes
                         ["hardness"] = hardness,
                         ["rotate"] = this.Rotate,
                         ["normalization"] = normalization,
-                        ["pressure"] = this.IgnoreFlowPressure ? this.Flow : this.Flow * pressure,
-                        ["radius"] = sizePressure * scaleForDPI,
+                        ["pressure"] = this.GetFlowPressed(pressure) * this.Flow,
+                        ["radius"] = sizePressed * scaleForDPI,
                         ["targetPosition"] = position * scaleForDPI,
                         ["color"] = colorHdr
                     }
@@ -124,7 +121,7 @@ namespace Luo_Painter.Brushes
                 position = targetPosition;
 
                 // 4. Foreach
-                x += sizePressure * spacing;
+                x += sizePressed * spacing;
             } while (x < end);
         }
 

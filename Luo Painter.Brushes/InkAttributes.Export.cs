@@ -101,7 +101,7 @@ namespace Luo_Painter.Brushes
             if (element.Attribute("Step") is XAttribute step) this.Step = (int)step;
             if (element.Attribute("RecolorGrain") is XAttribute recolorGrain) this.RecolorGrain = (bool)recolorGrain;
             if (element.Attribute("Grain") is XAttribute grain) this.Grain = grain.Value;
-         
+
             if (element.Attribute("BlendMode") is XAttribute blendMode) this.BlendMode = this.LoadBlendMode(blendMode.Value);
 
             // Mix
