@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Controls
 {
@@ -67,6 +68,49 @@ namespace Luo_Painter.Controls
                 if (this.InkIsEnabled is false) return;
                 this.InkPresenter.IgnoreFlowPressure = this.IgnoreFlowPressureButton.IsOn;
                 this.TryInkAsync();
+            };
+
+
+            this.TipListBox.SelectionChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+
+                switch (this.TipListBox.SelectedIndex)
+                {
+                    case 0:
+                        this.InkPresenter.Tip = PenTipShape.Circle;
+                        this.InkPresenter.IsStroke = false;
+                        this.TryInk();
+                        break;
+                    case 1:
+                        this.InkPresenter.Tip = PenTipShape.Circle;
+                        this.InkPresenter.IsStroke = true;
+                        this.TryInk();
+                        break;
+                    case 2:
+                        this.InkPresenter.Tip = PenTipShape.Rectangle;
+                        this.InkPresenter.IsStroke = false;
+                        this.TryInk();
+                        break;
+                    case 3:
+                        this.InkPresenter.Tip = PenTipShape.Rectangle;
+                        this.InkPresenter.IsStroke = true;
+                        this.TryInk();
+                        break;
+                    default:
+                        break;
+                }
+            };
+
+
+            this.HardnessListView.ItemClick += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                if (e.ClickedItem is BrushEdgeHardness item)
+                {
+                    this.InkPresenter.Hardness = item;
+                    this.TryInk();
+                }
             };
         }
 

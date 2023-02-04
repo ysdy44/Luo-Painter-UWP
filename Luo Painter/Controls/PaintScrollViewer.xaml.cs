@@ -97,8 +97,7 @@ namespace Luo_Painter.Controls
             this.ConstructPicker();
 
             this.ConstructProperty();
-            this.ConstructShape();
-            this.ConstructGrain();
+            this.ConstructTexture();
             this.ConstructMix();
 
             this.IsDrak = base.ActualTheme is ElementTheme.Dark;
