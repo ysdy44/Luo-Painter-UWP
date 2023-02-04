@@ -21,6 +21,32 @@ namespace Luo_Painter.Layers.Models
         };
 
 
+        //@Pressure
+        private float GetPressed(float min, int pressure, float x) => System.Math.Clamp(min + (1 - min) * this.GetPressure(pressure, x), 0, 1);
+        private float GetPressure(int pressure, float x)
+        {
+            switch (pressure)
+            {
+                case 0: return 1;
+
+                case 1: return x;
+
+                case 3: return x * x;
+                case 6: return 2 * x - x * x;
+
+                case 9:
+                    x *= 2;
+                    x -= 1;
+                    float y = (x > 0) ? (2 * x - x * x) : (2 * x + x * x);
+                    y += 1;
+                    y /= 2;
+                    return y;
+
+                default: return 1;
+            }
+        }
+
+
         public void ClearDisplacement()
         {
             using (CanvasDrawingSession ds = this.OriginRenderTarget.CreateDrawingSession())
@@ -65,21 +91,26 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        public void DrawLine(StrokeSegment segment, Color color, bool ignoreSizePressure = false)
+
+
+        public void DrawLine(StrokeSegment segment, Color color,
+            int sizePressure = 0, float minSize = 0)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             {
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
+                float sizePressed = this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size;
 
                 ds.DrawLine(segment.StartingPosition, segment.Position, color, sizePressed + sizePressed, BitmapLayer.CanvasStrokeStyle);
             }
         }
 
 
-        public void CapTip(StrokeCap cap, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
+        public void CapTip(StrokeCap cap,
+            Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false,
+            int sizePressure = 0, float minSize = 0)
         {
             switch (shape)
             {
@@ -90,8 +121,8 @@ namespace Luo_Painter.Layers.Models
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                            float sizePressed = ignoreSizePressure ? cap.StartingSize : cap.StartingPressure * cap.StartingSize;
-                            
+                            float sizePressed = this.GetPressed(minSize, sizePressure, cap.StartingPressure) * cap.StartingSize;
+
                             if (isStroke)
                                 ds.DrawCircle(cap.StartingPosition, sizePressed, color);
                             else
@@ -106,8 +137,7 @@ namespace Luo_Painter.Layers.Models
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                            float sizePressed = ignoreSizePressure ? cap.StartingSize : cap.StartingPressure * cap.StartingSize;
-
+                            float sizePressed = this.GetPressed(minSize, sizePressure, cap.StartingPressure) * cap.StartingSize;
                             if (isStroke)
                                 ds.DrawRectangle(cap.StartingPosition.X - sizePressed, cap.StartingPosition.Y - sizePressed, sizePressed + sizePressed, sizePressed + sizePressed, color);
                             else
@@ -120,7 +150,9 @@ namespace Luo_Painter.Layers.Models
             }
         }
 
-        public void SegmentTip(StrokeSegment segment, Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false, bool ignoreSizePressure = false)
+        public void SegmentTip(StrokeSegment segment,
+            Color color, PenTipShape shape = PenTipShape.Circle, bool isStroke = false,
+            int sizePressure = 0, float minSize = 0)
         {
             switch (shape)
             {
@@ -131,12 +163,12 @@ namespace Luo_Painter.Layers.Models
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                            float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
+                            float sizePressed = segment.StartingPressure * segment.Size;
 
                             if (isStroke)
-                                ds.DrawCircle(segment.StartingPosition, sizePressed, color);
+                                ds.DrawCircle(segment.StartingPosition, this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size, color);
                             else
-                                ds.FillCircle(segment.StartingPosition, sizePressed, color);
+                                ds.FillCircle(segment.StartingPosition, this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size, color);
 
                             float distance = segment.Radius;
                             while (distance < segment.Distance)
@@ -146,7 +178,7 @@ namespace Luo_Painter.Layers.Models
                                 float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
                                 Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
 
-                                float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                                float sizePressureIsometric = System.Math.Max(1f, this.GetPressed(minSize, sizePressure, pressureIsometric) * segment.Size);
                                 distance += segment.Spacing * sizePressureIsometric;
 
                                 if (isStroke)
@@ -164,7 +196,7 @@ namespace Luo_Painter.Layers.Models
                             //@DPI 
                             ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                            float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
+                            float sizePressed = this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size;
 
                             if (isStroke)
                                 ds.DrawRectangle(segment.StartingPosition.X - sizePressed, segment.StartingPosition.Y - sizePressed, sizePressed + sizePressed, sizePressed + sizePressed, color);
@@ -179,7 +211,7 @@ namespace Luo_Painter.Layers.Models
                                 float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
                                 Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
 
-                                float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                                float sizePressureIsometric = System.Math.Max(1f, this.GetPressed(minSize, sizePressure, pressureIsometric) * segment.Size);
                                 distance += segment.Spacing * sizePressureIsometric;
 
                                 if (isStroke)

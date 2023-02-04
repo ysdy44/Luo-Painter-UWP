@@ -24,8 +24,8 @@ namespace Luo_Painter
                     this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap,
                         this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.General_Mix:
@@ -40,8 +40,8 @@ namespace Luo_Painter
                         this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
                         this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.ShapeGeneral:
@@ -56,8 +56,8 @@ namespace Luo_Painter
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr,
                         this.InkPresenter.ShapeSource, this.InkPresenter.Rotate,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.ShapeGeneral_Mix:
@@ -73,8 +73,8 @@ namespace Luo_Painter
                         this.InkPresenter.ShapeSource, this.InkPresenter.Rotate,
                         this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.Tip:
@@ -85,7 +85,9 @@ namespace Luo_Painter
                 case InkType.Tip_Grain_Blend:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Tip_Opacity_Grain_Blend:
-                    this.BitmapLayer.CapTip(cap, this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
+                    this.BitmapLayer.CapTip(cap,
+                        this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke,
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize);
                     break;
 
                 case InkType.Line:
@@ -104,8 +106,8 @@ namespace Luo_Painter
                     this.BitmapLayer.CapDrawShaderBrushEdgeHardness(cap,
                         this.BrushEdgeHardnessShaderCodeBytes, Vector4.One,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.Liquefy:
@@ -132,8 +134,8 @@ namespace Luo_Painter
                     this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment,
                         this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.General_Grain_Mix:
@@ -142,8 +144,8 @@ namespace Luo_Painter
                         this.BrushEdgeHardnessShaderCodeBytes, this.ColorHdr,
                         this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.ShapeGeneral:
@@ -159,8 +161,8 @@ namespace Luo_Painter
                         this.BrushEdgeHardnessWithTextureShaderCodeBytes, this.ColorHdr,
                         this.InkPresenter.ShapeSource, this.InkPresenter.Rotate,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.ShapeGeneral_Mix:
@@ -171,8 +173,8 @@ namespace Luo_Painter
                         this.InkPresenter.ShapeSource, this.InkPresenter.Rotate,
                         this.InkPresenter.Mix, this.InkPresenter.Wet, this.InkPresenter.Persistence,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure,
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.Tip:
@@ -183,7 +185,9 @@ namespace Luo_Painter
                 case InkType.Tip_Grain_Blend:
                 case InkType.Tip_Opacity_Blend:
                 case InkType.Tip_Opacity_Grain_Blend:
-                    this.BitmapLayer.SegmentTip(segment, this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke);
+                    this.BitmapLayer.SegmentTip(segment,
+                        this.Color, this.InkPresenter.Tip, this.InkPresenter.IsStroke,
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize);
                     break;
 
                 case InkType.Line:
@@ -195,16 +199,16 @@ namespace Luo_Painter
                 case InkType.Line_Opacity_Blend:
                 case InkType.Line_Opacity_Grain_Blend:
                 case InkType.Mosaic:
-                    this.BitmapLayer.DrawLine(segment, this.Color, this.InkPresenter.IgnoreSizePressure);
+                    this.BitmapLayer.DrawLine(segment, this.Color, (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize);
                     break;
 
                 case InkType.Erase:
                 case InkType.Erase_Opacity:
-                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment, 
+                    this.BitmapLayer.SegmentDrawShaderBrushEdgeHardness(segment,
                         this.BrushEdgeHardnessShaderCodeBytes, Vector4.One,
                         (int)this.InkPresenter.Hardness, this.InkPresenter.Flow,
-                        this.InkPresenter.IgnoreSizePressure, 
-                        this.InkPresenter.IgnoreFlowPressure);
+                        (int)this.InkPresenter.SizePressure, this.InkPresenter.MinSize,
+                        (int)this.InkPresenter.FlowPressure, this.InkPresenter.MinFlow);
                     break;
 
                 case InkType.Liquefy:

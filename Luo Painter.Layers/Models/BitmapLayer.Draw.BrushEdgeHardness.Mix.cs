@@ -14,8 +14,8 @@ namespace Luo_Painter.Layers.Models
             byte[] shaderCode, Vector4 colorHdr,
             float mix = 1, float wet = 12, float persistence = 0,
             int hardness = 0, float flow = 1f,
-            bool ignoreSizePressure = false,
-            bool ignoreFlowPressure = false)
+            int sizePressure = 0, float minSize = 0,
+            int flowPressure = 0, float minFlow = 0)
         {
             this.ConstructMix(cap.StartingPosition);
 
@@ -25,15 +25,15 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressed = ignoreSizePressure ? cap.StartingSize : cap.StartingPressure * cap.StartingSize;
+                float sizePressed = this.GetPressed(minSize, sizePressure, cap.StartingPressure) * cap.StartingSize;
 
-                this.Mix(cap.StartingPosition, cap.StartingSize, wet);
+                this.Mix(cap.StartingPosition, this.GetPressed(minSize, sizePressure, cap.StartingPressure) * cap.StartingSize, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
+                        ["pressure"] = this.GetPressed(minFlow, flowPressure, cap.StartingPressure) * flow,
                         ["radius"] = sizePressed,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix)
@@ -49,8 +49,8 @@ namespace Luo_Painter.Layers.Models
             byte[] shaderCode, Vector4 colorHdr,
             float mix = 1, float wet = 12, float persistence = 0,
             int hardness = 0, float flow = 1f,
-            bool ignoreSizePressure = false,
-            bool ignoreFlowPressure = false)
+            int sizePressure = 0, float minSize = 0,
+            int flowPressure = 0, float minFlow = 0)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, segment.Bounds))
@@ -58,15 +58,15 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
+                float sizePressed = this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size;
 
-                this.Mix(segment.StartingPosition, sizePressed, wet);
+                this.Mix(segment.StartingPosition, this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Properties =
                     {
                         ["hardness"] = hardness,
-                        ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
+                        ["pressure"] = this.GetPressed(minFlow, flowPressure, segment.StartingPressure) * flow,
                         ["radius"] = sizePressed,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix, persistence)
@@ -81,16 +81,16 @@ namespace Luo_Painter.Layers.Models
                     float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
                     Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
 
-                    float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                    float sizePressureIsometric = this.GetPressed(minSize, sizePressure, pressureIsometric) * segment.Size;
                     distance += segment.Spacing * sizePressureIsometric;
 
-                    this.Mix(positionIsometric, sizePressed, wet);
+                    this.Mix(positionIsometric, this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size, wet);
                     ds.DrawImage(new PixelShaderEffect(shaderCode)
                     {
                         Properties =
                         {
                             ["hardness"] = hardness,
-                            ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
+                            ["pressure"] = this.GetPressed(minFlow, flowPressure, pressureIsometric) * flow,
                             ["radius"] = sizePressureIsometric,
                             ["targetPosition"] = positionIsometric,
                             ["color"] = this.GetMix(colorHdr, mix, persistence)
@@ -109,8 +109,8 @@ namespace Luo_Painter.Layers.Models
             CanvasBitmap texture, bool rotate = false,
             float mix = 1, float wet = 12, float persistence = 0,
             int hardness = 0, float flow = 1f,
-            bool ignoreSizePressure = false,
-            bool ignoreFlowPressure = false)
+            int sizePressure = 0, float minSize = 0,
+            int flowPressure = 0, float minFlow = 0)
         {
             this.ConstructMix(cap.StartingPosition);
 
@@ -122,9 +122,9 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressed = ignoreSizePressure ? cap.StartingSize : cap.StartingPressure * cap.StartingSize;
+                float sizePressed = this.GetPressed(minSize, sizePressure, cap.StartingPressure) * cap.StartingSize;
 
-                this.Mix(cap.StartingPosition, sizePressed, wet);
+                this.Mix(cap.StartingPosition, this.GetPressed(minSize, sizePressure, cap.StartingPressure) * cap.StartingSize, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -133,7 +133,7 @@ namespace Luo_Painter.Layers.Models
                         ["hardness"] = hardness,
                         ["rotate"] = false,
                         ["normalization"] = Vector2.Zero,
-                        ["pressure"] = ignoreFlowPressure ? flow : flow * cap.StartingPressure,
+                        ["pressure"] = this.GetPressed(minFlow, flowPressure, cap.StartingPressure) * flow,
                         ["radius"] = sizePressed,
                         ["targetPosition"] = cap.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix, persistence)
@@ -150,8 +150,8 @@ namespace Luo_Painter.Layers.Models
             CanvasBitmap texture, bool rotate = false,
             float mix = 1, float wet = 12, float persistence = 0,
             int hardness = 0, float flow = 1f,
-            bool ignoreSizePressure = false,
-            bool ignoreFlowPressure = false)
+            int sizePressure = 0, float minSize = 0,
+            int flowPressure = 0, float minFlow = 0)
         {
             using (CanvasDrawingSession ds = this.TempRenderTarget.CreateDrawingSession())
             using (ds.CreateLayer(1f, segment.Bounds))
@@ -159,9 +159,9 @@ namespace Luo_Painter.Layers.Models
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                float sizePressed = ignoreSizePressure ? segment.Size : segment.StartingPressure * segment.Size;
+                float sizePressed = this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size;
 
-                this.Mix(segment.StartingPosition, sizePressed, wet);
+                this.Mix(segment.StartingPosition, this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size, wet);
                 ds.DrawImage(new PixelShaderEffect(shaderCode)
                 {
                     Source1 = texture,
@@ -170,7 +170,7 @@ namespace Luo_Painter.Layers.Models
                         ["hardness"] = hardness,
                         ["rotate"] = rotate,
                         ["normalization"] = segment.Normalize,
-                        ["pressure"] = ignoreFlowPressure ? flow : flow * segment.StartingPressure,
+                        ["pressure"] = this.GetPressed(minFlow, flowPressure, segment.StartingPressure) * flow,
                         ["radius"] = sizePressed,
                         ["targetPosition"] = segment.StartingPosition,
                         ["color"] = this.GetMix(colorHdr, mix, persistence)
@@ -185,10 +185,10 @@ namespace Luo_Painter.Layers.Models
                     float pressureIsometric = segment.Pressure * (1 - smooth) + segment.StartingPressure * smooth;
                     Vector2 positionIsometric = Vector2.Lerp(segment.Position, segment.StartingPosition, smooth);
 
-                    float sizePressureIsometric = ignoreSizePressure ? segment.Size : (segment.Size * pressureIsometric);
+                    float sizePressureIsometric = this.GetPressed(minSize, sizePressure, pressureIsometric) * segment.Size;
                     distance += segment.Spacing * sizePressureIsometric;
 
-                    this.Mix(positionIsometric, sizePressureIsometric, wet);
+                    this.Mix(positionIsometric, this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size, wet);
                     ds.DrawImage(new PixelShaderEffect(shaderCode)
                     {
                         Source1 = texture,
@@ -197,7 +197,7 @@ namespace Luo_Painter.Layers.Models
                             ["hardness"] = hardness,
                             ["rotate"] = rotate,
                             ["normalization"] = segment.Normalize,
-                            ["pressure"] = ignoreFlowPressure ? flow : flow * pressureIsometric,
+                            ["pressure"] = this.GetPressed(minFlow, flowPressure, pressureIsometric) * flow,
                             ["radius"] = sizePressureIsometric,
                             ["targetPosition"] = positionIsometric,
                             ["color"] = this.GetMix(colorHdr, mix, persistence)
