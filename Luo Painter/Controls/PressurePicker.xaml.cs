@@ -33,25 +33,12 @@ namespace Luo_Painter.Controls
         }
     }
 
-    public sealed partial class PressureDialog : ContentDialog
+    public sealed partial class PressurePicker : UserControl
     {
-        //@Content
-        public BrushEasePressure SelectedItem
-        {
-            get
-            {
-                int value = this.ListBox.SelectedIndex;
-                foreach (PressureItem item in this.Collection)
-                {
-                    if (item.Index == value)
-                    {
-                        return item.Pressure;
-                    }
-                }
-                return default;
-            }
-        }
+        //@Delegate
+        public event System.EventHandler<BrushEasePressure> PressureChanged;
 
+        bool IsSetEnabled = true;
         readonly PressurePoints Points = new PressurePoints();
         PointCollection Points0 => this.Points[BrushEasePressure.None];
         PointCollection Points1 => this.Points[BrushEasePressure.Linear];
@@ -60,7 +47,7 @@ namespace Luo_Painter.Controls
         PointCollection Points4 => this.Points[BrushEasePressure.Symmetry];
 
         //@Construct
-        public PressureDialog()
+        public PressurePicker()
         {
             this.InitializeComponent();
             this.ListBox.SelectionChanged += (s, e) =>
@@ -78,10 +65,22 @@ namespace Luo_Painter.Controls
                         break;
                     }
                 }
+
+                if (this.IsSetEnabled is false) return;
+
+                foreach (PressureItem item in this.Collection)
+                {
+                    if (item.Index == value)
+                    {
+                        this.PressureChanged?.Invoke(this, item.Pressure); // Delegate
+                        break;
+                    }
+                }
             };
         }
         public void Construct(BrushEasePressure pressure)
         {
+            this.IsSetEnabled = false;
             foreach (PressureItem item in this.Collection)
             {
                 if (item.Pressure == pressure)
@@ -90,6 +89,7 @@ namespace Luo_Painter.Controls
                     break;
                 }
             }
+            this.IsSetEnabled = true;
         }
     }
 }

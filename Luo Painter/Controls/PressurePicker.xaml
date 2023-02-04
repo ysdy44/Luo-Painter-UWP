@@ -1,13 +1,13 @@
-﻿<ContentDialog
-    x:Class="Luo_Painter.Controls.PressureDialog"
+﻿<UserControl
+    x:Class="Luo_Painter.Controls.PressurePicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
     mc:Ignorable="d"
-    FullSizeDesired="False" 
-    Style="{StaticResource AppContentDialogStyle}"
+    Margin="6,12,6,4" 
+    Width="240"
     >
 
     <FrameworkElement.Resources>
@@ -60,17 +60,6 @@
                 />
         </local:PressureItemList>
     </FrameworkElement.Resources>
-    
-    <ContentDialog.Title>
-        Pressure
-    </ContentDialog.Title>
-
-    <ContentDialog.PrimaryButtonText>
-        OK
-    </ContentDialog.PrimaryButtonText>
-    <ContentDialog.SecondaryButtonText>
-        Cancel
-    </ContentDialog.SecondaryButtonText>
 
     <StackPanel Spacing="4">
         <Canvas Width="240" Height="240" Background="{ThemeResource AppOpacity}">
@@ -136,4 +125,4 @@
         </ListBox>
     </StackPanel>
 
-</ContentDialog>
+</UserControl>
