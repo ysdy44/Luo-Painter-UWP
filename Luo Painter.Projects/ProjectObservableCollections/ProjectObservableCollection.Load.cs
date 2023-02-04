@@ -38,7 +38,7 @@ namespace Luo_Painter.Projects
         private void TempToSelf()
         {
             base.Clear();
-            base.Add(ProjectNone.Add);
+            base.Add(ProjectAdd.Add);
 
             foreach (Project item in this.Temp)
             {

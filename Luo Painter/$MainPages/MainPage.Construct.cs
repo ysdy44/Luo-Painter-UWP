@@ -45,10 +45,10 @@ namespace Luo_Painter
                         case ProjectType.Add:
                             return;
                         default:
-                            if (this.ObservableCollection.FirstOrDefault() == ProjectNone.Add) break;
+                            if (this.ObservableCollection.FirstOrDefault() == ProjectAdd.Add) break;
 
-                            this.ObservableCollection.Remove(ProjectNone.Add);
-                            this.ObservableCollection.Insert(0, ProjectNone.Add);
+                            this.ObservableCollection.Remove(ProjectAdd.Add);
+                            this.ObservableCollection.Insert(0, ProjectAdd.Add);
                             break;
                     }
                 }

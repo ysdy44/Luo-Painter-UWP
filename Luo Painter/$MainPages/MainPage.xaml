@@ -154,10 +154,9 @@
             <ListViewBase.Header>
                 <ListBox
                     x:Name="OrderListBox"
-                    Height="42"
+                    Width="320"
                     Margin="4"
                     SelectedIndex="0"
-                    Background="{ThemeResource AppBackgroundLight}"
                     Style="{StaticResource AppSegmentListBoxStyle}"
                     >
                     <ListBoxItem x:Name="TypeItem" >Type</ListBoxItem>
@@ -196,7 +195,7 @@
                 <local:ProjectDataTemplateSelector>
 
                     <local:ProjectDataTemplateSelector.None>
-                        <DataTemplate x:DataType="models:ProjectNone">
+                        <DataTemplate x:DataType="models:ProjectAdd">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
