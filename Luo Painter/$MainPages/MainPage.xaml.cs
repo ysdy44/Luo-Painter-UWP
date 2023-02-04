@@ -147,7 +147,7 @@ namespace Luo_Painter
 
                 foreach (IStorageItem item in await e.DataView.GetStorageItemsAsync())
                 {
-                    this.Action(ProjectAction.Image, item);
+                    this.Click(ActionType.Image, item);
                     break;
                 }
             };

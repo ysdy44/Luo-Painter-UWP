@@ -15,44 +15,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    internal enum ProjectAction
-    {
-        File,
-        Folder,
-
-        Add,
-        Image,
-
-        DupliateShow,
-        DupliateHide,
-        DeleteShow,
-        DeleteHide,
-        SelectShow,
-        SelectHide,
-        SelectToMove,
-        MoveHide,
-
-        Dupliate,
-        Delete,
-        Move,
-
-        New,
-        Rename,
-        Local,
-    }
 
     public sealed partial class MainPage : Page
     {
 
         [MainPageToDrawPage(NavigationMode.Forward)]
-        private async void Action(ProjectAction action, object obj = null)
+        private async void Click(ActionType action, object obj = null)
         {
             if (this.Disabler) return;
             this.Disabler = true;
 
             switch (action)
             {
-                case ProjectAction.File:
+                case ActionType.File:
                     {
                         if (obj is ProjectFile project)
                         {
@@ -68,7 +43,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ProjectAction.Folder:
+                case ActionType.Folder:
                     {
                         if (obj is Project project)
                         {
@@ -80,7 +55,7 @@ namespace Luo_Painter
                     }
                     break;
 
-                case ProjectAction.Add:
+                case ActionType.Add:
                     if (ContentDialogExtensions.CanShow)
                     {
                         ContentDialogResult result = await this.AddDialog.ShowInstance();
@@ -102,7 +77,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ProjectAction.Image:
+                case ActionType.Image:
                     {
                         StorageFile file = (StorageFile)obj;
                         if (file is null) file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -122,7 +97,7 @@ namespace Luo_Painter
                         }
                     }
 
-                case ProjectAction.DupliateShow:
+                case ActionType.DupliateShow:
                     {
                         this.ObservableCollection.Enable(ProjectType.File);
                         this.ListView.IsItemClickEnabled = false;
@@ -130,13 +105,13 @@ namespace Luo_Painter
                         this.DupliateDocker.IsShow = true;
                     }
                     break;
-                case ProjectAction.DupliateHide:
-                    this.ObservableCollection.Enable();
+                case ActionType.DupliateHide:
+                    this.ObservableCollection.Enable(ProjectType.All);
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.DupliateDocker.IsShow = false;
                     break;
-                case ProjectAction.DeleteShow:
+                case ActionType.DeleteShow:
                     {
                         this.ObservableCollection.Enable(ProjectType.File | ProjectType.Folder);
                         this.ListView.IsItemClickEnabled = false;
@@ -144,13 +119,13 @@ namespace Luo_Painter
                         this.DeleteDocker.IsShow = true;
                     }
                     break;
-                case ProjectAction.DeleteHide:
-                    this.ObservableCollection.Enable();
+                case ActionType.DeleteHide:
+                    this.ObservableCollection.Enable(ProjectType.All);
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.DeleteDocker.IsShow = false;
                     break;
-                case ProjectAction.SelectShow:
+                case ActionType.SelectShow:
                     {
                         this.ObservableCollection.Enable(ProjectType.File);
                         this.ListView.IsItemClickEnabled = false;
@@ -158,28 +133,27 @@ namespace Luo_Painter
                         this.SelectDocker.IsShow = true;
                     }
                     break;
-                case ProjectAction.SelectHide:
-                    this.ObservableCollection.Enable();
+                case ActionType.SelectHide:
+                    this.ObservableCollection.Enable(ProjectType.All);
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.SelectDocker.IsShow = false;
                     break;
-                case ProjectAction.SelectToMove:
+                case ActionType.SelectToMove:
                     this.ObservableCollection.Enable(ProjectType.Folder);
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = false;
                     this.SelectDocker.IsShow = false;
                     this.MoveDocker.IsShow = true;
                     break;
-                case ProjectAction.MoveHide:
+                case ActionType.MoveHide:
                     this.ObservableCollection.Enable(ProjectType.All);
-                    this.ObservableCollection.Enable();
                     this.ListView.IsItemClickEnabled = true;
                     this.AppBarListView.IsItemClickEnabled = true;
                     this.MoveDocker.IsShow = false;
                     break;
 
-                case ProjectAction.Dupliate:
+                case ActionType.Dupliate:
                     {
                         if (obj is ProjectFile projectFile)
                         {
@@ -187,7 +161,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ProjectAction.Delete:
+                case ActionType.Delete:
                     {
                         if (obj is Project project)
                         {
@@ -195,7 +169,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ProjectAction.Move:
+                case ActionType.Move:
                     {
                         if (obj is Project project)
                         {
@@ -219,7 +193,7 @@ namespace Luo_Painter
                     }
                     break;
 
-                case ProjectAction.New:
+                case ActionType.New:
                     if (ContentDialogExtensions.CanShow)
                     {
                         this.NewTextBox.Text = this.New;
@@ -240,7 +214,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ProjectAction.Rename:
+                case ActionType.Rename:
                     if (ContentDialogExtensions.CanShow)
                     {
                         if (obj is Project project)
@@ -292,7 +266,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ProjectAction.Local:
+                case ActionType.Local:
                     {
                         if (obj is Project project)
                         {

@@ -100,9 +100,9 @@ namespace Luo_Painter
                 {
                     switch (item.Type)
                     {
-                        case ProjectType.Add: this.Action(ProjectAction.Add); break;
-                        case ProjectType.File: this.Action(ProjectAction.File, item); break;
-                        case ProjectType.Folder: this.Action(ProjectAction.Folder, item); break;
+                        case ProjectType.Add: this.Click(ActionType.Add); break;
+                        case ProjectType.File: this.Click(ActionType.File, item); break;
+                        case ProjectType.Folder: this.Click(ActionType.Folder, item); break;
                         default: break;
                     }
                 }
@@ -119,36 +119,36 @@ namespace Luo_Painter
                 {
                     switch (item.Symbol)
                     {
-                        case Symbol.Add: this.Action(ProjectAction.Add); break;
-                        case Symbol.Pictures: this.Action(ProjectAction.Image); break;
-                        case Symbol.Copy: this.Action(ProjectAction.DupliateShow); break;
-                        case Symbol.Delete: this.Action(ProjectAction.DeleteShow); break;
-                        case Symbol.MoveToFolder: this.Action(ProjectAction.SelectShow); break;
-                        case Symbol.NewFolder: this.Action(ProjectAction.New); break;
+                        case Symbol.Add: this.Click(ActionType.Add); break;
+                        case Symbol.Pictures: this.Click(ActionType.Image); break;
+                        case Symbol.Copy: this.Click(ActionType.DupliateShow); break;
+                        case Symbol.Delete: this.Click(ActionType.DeleteShow); break;
+                        case Symbol.MoveToFolder: this.Click(ActionType.SelectShow); break;
+                        case Symbol.NewFolder: this.Click(ActionType.New); break;
                         default: break;
                     }
                 }
             };
 
-            this.DupliateDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DupliateHide);
+            this.DupliateDocker.SecondaryButtonClick += (s, e) => this.Click(ActionType.DupliateHide);
             this.DupliateDocker.PrimaryButtonClick += async (s, e) =>
             {
                 if (this.Disabler) return;
 
                 await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), this.ListView.SelectedItems);
-                this.Action(ProjectAction.DupliateHide);
+                this.Click(ActionType.DupliateHide);
             };
 
-            this.DeleteDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.DeleteHide);
+            this.DeleteDocker.SecondaryButtonClick += (s, e) => this.Click(ActionType.DeleteHide);
             this.DeleteDocker.PrimaryButtonClick += async (s, e) =>
             {
                 if (this.Disabler) return;
 
                 await this.ObservableCollection.DeleteAsync(this.ListView.SelectedItems);
-                this.Action(ProjectAction.DeleteHide);
+                this.Click(ActionType.DeleteHide);
             };
 
-            this.SelectDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.SelectHide);
+            this.SelectDocker.SecondaryButtonClick += (s, e) => this.Click(ActionType.SelectHide);
             this.SelectDocker.PrimaryButtonClick += (s, e) =>
             {
                 if (this.Disabler) return;
@@ -163,10 +163,10 @@ namespace Luo_Painter
                             break;
                     }
                 }
-                this.Action(ProjectAction.SelectToMove);
+                this.Click(ActionType.SelectToMove);
             };
 
-            this.MoveDocker.SecondaryButtonClick += (s, e) => this.Action(ProjectAction.MoveHide);
+            this.MoveDocker.SecondaryButtonClick += (s, e) => this.Click(ActionType.MoveHide);
             this.MoveDocker.PrimaryButtonClick += async (s, e) =>
             {
                 if (this.Disabler) return;
@@ -177,20 +177,20 @@ namespace Luo_Painter
                     await this.ObservableCollection.Move(path, this.ClipboardProjects);
                 }
                 this.ClipboardProjects.Clear();
-                this.Action(ProjectAction.MoveHide);
+                this.Click(ActionType.MoveHide);
             };
 
-            this.RenameCommand.Click += (s, e) => this.Action(ProjectAction.Rename, e);
+            this.RenameCommand.Click += (s, e) => this.Click(ActionType.Rename, e);
 
-            this.DupliateItem.Click += (s, e) => this.Action(ProjectAction.Dupliate, this.RenameItem.CommandParameter);
+            this.DupliateItem.Click += (s, e) => this.Click(ActionType.Dupliate, this.RenameItem.CommandParameter);
 
-            this.DeleteItem.Click += (s, e) => this.Action(ProjectAction.Delete, this.RenameItem.CommandParameter);
-            this.DeleteItem2.Click += (s, e) => this.Action(ProjectAction.Delete, this.RenameItem.CommandParameter);
+            this.DeleteItem.Click += (s, e) => this.Click(ActionType.Delete, this.RenameItem.CommandParameter);
+            this.DeleteItem2.Click += (s, e) => this.Click(ActionType.Delete, this.RenameItem.CommandParameter);
 
-            this.MoveItem.Click += (s, e) => this.Action(ProjectAction.Move, this.RenameItem.CommandParameter);
+            this.MoveItem.Click += (s, e) => this.Click(ActionType.Move, this.RenameItem.CommandParameter);
 
-            this.LocalItem.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter);
-            this.LocalItem2.Click += (s, e) => this.Action(ProjectAction.Local, this.RenameItem.CommandParameter);
+            this.LocalItem.Click += (s, e) => this.Click(ActionType.Local, this.RenameItem.CommandParameter);
+            this.LocalItem2.Click += (s, e) => this.Click(ActionType.Local, this.RenameItem.CommandParameter);
 
             this.RenameDialog.IsPrimaryButtonEnabled = false;
             this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);
