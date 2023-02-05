@@ -89,7 +89,7 @@ namespace Luo_Painter
                                 args.DrawingSession.Transform = Matrix3x2.Identity;
                                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
 
-                                args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.SelectionSize * this.Transformer.Scale / 2), Colors.Gray);
+                                args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.SelectionSize * this.Transformer.Scale), Colors.Gray);
                                 break;
                         }
                         break;
@@ -114,7 +114,7 @@ namespace Luo_Painter
                     case OptionType.DisplacementLiquefaction:
                         if (this.BitmapLayer is null) break;
 
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips((float)this.DisplacementLiquefactionSize * this.Transformer.Scale / 2), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips((float)this.DisplacementLiquefactionSize * this.Transformer.Scale), Colors.Gray);
                         break;
                     case OptionType.GradientMapping:
                         break;
@@ -133,14 +133,14 @@ namespace Luo_Painter
                     case OptionType.PaintBrushForce:
                         if (this.BitmapLayer is null) break;
 
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale / 2), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
                         break;
                     case OptionType.PaintLine:
                         if (this.BitmapLayer is null) break;
 
                         args.DrawingSession.DrawLine(this.StartingPoint, this.Point, Colors.Gray);
-                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale / 2), Colors.Gray);
-                        args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale / 2), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.Point, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
+                        args.DrawingSession.DrawCircle(this.StartingPoint, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(this.InkPresenter.Size * this.Transformer.Scale), Colors.Gray);
                         break;
                     case OptionType.PaintBrushMulti:
                         this.DrawPaintBrushMulti(sender, args.DrawingSession, this.ToPoint(this.Marquee.Center));
@@ -153,11 +153,11 @@ namespace Luo_Painter
                             break;
                         }
 
-                        if (this.OptionType.IsGeometry())
+                        if (this.OptionType.IsGeometry() || this.OptionType.IsPattern())
                         {
                             if (this.BitmapLayer is null) break;
 
-                            args.DrawingSession.DrawBound(this.GeoTransform.Transformer, matrix);
+                            args.DrawingSession.DrawBound(this.CreateTransform.Transformer, matrix);
                             break;
                         }
                         break;

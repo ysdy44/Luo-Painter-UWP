@@ -251,7 +251,7 @@ namespace Luo_Painter
 
 
         Transform Transform;
-        Transform GeoTransform;
+        Transform CreateTransform;
         FreeTransform FreeTransform;
 
         TransformBase CropTransform;
@@ -350,6 +350,7 @@ namespace Luo_Painter
 
             this.ConstructSelection();
             this.ConstructGeometry();
+            this.ConstructPattern();
 
             this.ConstructInk();
             this.ConstructSymmetry();
@@ -360,6 +361,7 @@ namespace Luo_Painter
             this.ConstructGradientMapping();
             this.ConstructRippleEffect();
             this.ConstructThreshold();
+            this.ConstructHSB();
 
             this.ConstructRadian();
             this.ConstructScale();
@@ -452,6 +454,12 @@ namespace Luo_Painter
                 if (e.ClickedItem is PaintBrush brush)
                 {
                     this.ConstructBrush(brush);
+
+                    if (this.OptionType.IsPaint()) return;
+                    this.Tip(TipType.NoPaintTool);
+
+                    this.ToolListView.SelectedType = OptionType.PaintBrush;
+                    this.Click(OptionType.PaintBrush);
                 }
             };
             this.SizeListView.ItemClick += (s, e) =>
