@@ -94,11 +94,41 @@ namespace Luo_Painter
                     this.Pen_Start();
                     break;
 
-                default:
-                    if (this.OptionType.IsGeometry())
+                // Geometry
+                // Geometry
+                case OptionType.GeometryRectangle:
+                case OptionType.GeometryEllipse:
+                // Geometry
+                case OptionType.GeometryRoundRect:
+                case OptionType.GeometryTriangle:
+                case OptionType.GeometryDiamond:
+                // Geometry
+                case OptionType.GeometryPentagon:
+                case OptionType.GeometryStar:
+                case OptionType.GeometryCog:
+                // Geometry
+                case OptionType.GeometryDount:
+                case OptionType.GeometryPie:
+                case OptionType.GeometryCookie:
+                // Geometry
+                case OptionType.GeometryArrow:
+                case OptionType.GeometryCapsule:
+                case OptionType.GeometryHeart:
                     {
                         this.Geometry_Start();
                     }
+                    break;
+
+                // Pattern
+                case OptionType.PatternGrid:
+                case OptionType.PatternDiagonal:
+                case OptionType.PatternSpotted:
+                    {
+                        this.Pattern_Start();
+                    }
+                    break;
+
+                default:
                     break;
             }
         }
@@ -190,11 +220,41 @@ namespace Luo_Painter
                     this.Pen_Delta();
                     break;
 
-                default:
-                    if (this.OptionType.IsGeometry())
+                // GeometryTransform
+                // Geometry
+                case OptionType.GeometryRectangleTransform:
+                case OptionType.GeometryEllipseTransform:
+                // Geometry
+                case OptionType.GeometryRoundRectTransform:
+                case OptionType.GeometryTriangleTransform:
+                case OptionType.GeometryDiamondTransform:
+                // Geometry
+                case OptionType.GeometryPentagonTransform:
+                case OptionType.GeometryStarTransform:
+                case OptionType.GeometryCogTransform:
+                // Geometry
+                case OptionType.GeometryDountTransform:
+                case OptionType.GeometryPieTransform:
+                case OptionType.GeometryCookieTransform:
+                // Geometry
+                case OptionType.GeometryArrowTransform:
+                case OptionType.GeometryCapsuleTransform:
+                case OptionType.GeometryHeartTransform:
                     {
                         this.GeometryTransform_Delta();
                     }
+                    break;
+
+                // Pattern
+                case OptionType.PatternGridTransform:
+                case OptionType.PatternDiagonalTransform:
+                case OptionType.PatternSpottedTransform:
+                    {
+                        this.PatternTransform_Delta();
+                    }
+                    break;
+
+                default:
                     break;
             }
         }
@@ -291,11 +351,41 @@ namespace Luo_Painter
                     this.Pen_Complete();
                     break;
 
-                default:
-                    if (this.OptionType.IsGeometry())
+                // GeometryTransform
+                // Geometry
+                case OptionType.GeometryRectangleTransform:
+                case OptionType.GeometryEllipseTransform:
+                // Geometry
+                case OptionType.GeometryRoundRectTransform:
+                case OptionType.GeometryTriangleTransform:
+                case OptionType.GeometryDiamondTransform:
+                // Geometry
+                case OptionType.GeometryPentagonTransform:
+                case OptionType.GeometryStarTransform:
+                case OptionType.GeometryCogTransform:
+                // Geometry
+                case OptionType.GeometryDountTransform:
+                case OptionType.GeometryPieTransform:
+                case OptionType.GeometryCookieTransform:
+                // Geometry
+                case OptionType.GeometryArrowTransform:
+                case OptionType.GeometryCapsuleTransform:
+                case OptionType.GeometryHeartTransform:
                     {
                         this.GeometryTransform_Delta();
                     }
+                    break;
+
+                // Pattern
+                case OptionType.PatternGridTransform:
+                case OptionType.PatternDiagonalTransform:
+                case OptionType.PatternSpottedTransform:
+                    {
+                        this.PatternTransform_Delta();
+                    }
+                    break;
+
+                default:
                     break;
             }
         }

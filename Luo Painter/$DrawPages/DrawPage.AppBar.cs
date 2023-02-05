@@ -39,6 +39,7 @@ namespace Luo_Painter
                 default:
                     if (type.IsMarquee()) this.SwitchPresenter.Value = OptionType.Marquee;
                     else if (type.IsGeometry()) this.SwitchPresenter.Value = type.ToGeometryTransform();
+                    else if (type.IsPattern()) this.SwitchPresenter.Value = type.ToPatternTransform();
                     else this.SwitchPresenter.Value = type;
                     break;
             }
@@ -55,9 +56,13 @@ namespace Luo_Painter
                 {
                     this.CancelCropCanvas();
                 }
-                if (this.OptionType.IsGeometry())
+                else if (this.OptionType.IsGeometry())
                 {
                     this.CancelGeometryTransform();
+                }
+                else if (this.OptionType.IsPattern())
+                {
+                    this.CancelPatternTransform();
                 }
 
                 this.Secondary();
@@ -74,6 +79,10 @@ namespace Luo_Painter
                     else if (this.OptionType.IsGeometry())
                     {
                         this.PrimaryGeometryTransform();
+                    }
+                    else if (this.OptionType.IsPattern())
+                    {
+                        this.PrimaryPatternTransform();
                     }
                     else
                     {
