@@ -233,7 +233,7 @@ namespace Luo_Painter.Options
         GradientMapping = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
         RippleEffect = Other | 6 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
         Threshold = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
-  
+
         HSB = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Adjustment1
@@ -377,6 +377,12 @@ namespace Luo_Painter.Options
         GeometryArrowTransform = GeometryArrow | WithTransform | HasPreview,
         GeometryCapsuleTransform = GeometryCapsule | WithTransform | HasPreview,
         GeometryHeartTransform = GeometryHeart | WithTransform | HasPreview,
+
+        // PatternTransform
+        // Pattern
+        PatternGridTransform = PatternGrid | WithTransform | HasPreview,
+        PatternDiagonalTransform = PatternDiagonal | WithTransform | HasPreview,
+        PatternSpottedTransform = PatternSpotted | WithTransform | HasPreview,
 
     }
 }

@@ -33,7 +33,10 @@ namespace Luo_Painter.Options
         public static bool IsSelection(this OptionType type) => type.HasFlag(OptionType.Selection);
         public static bool IsPaint(this OptionType type) => type.HasFlag(OptionType.Paint);
         public static bool IsGeometry(this OptionType type) => type.HasFlag(OptionType.Geometry);
+        public static bool IsPattern(this OptionType type) => type.HasFlag(OptionType.Pattern);
+  
         public static OptionType ToGeometryTransform(this OptionType type) => type.IsGeometry() ? (type | OptionType.WithTransform | OptionType.HasPreview) : type;
+        public static OptionType ToPatternTransform(this OptionType type) => type.IsPattern() ? (type | OptionType.WithTransform | OptionType.HasPreview) : type;
 
         //@Resource
         public static string GetThumbnail(this OptionType type) => type.ExistThumbnail() ? $"ms-appx:///Luo Painter.Options/Thumbnails/{type}.jpg" : throw new NullReferenceException($"The {type} no Tumbnail.");
