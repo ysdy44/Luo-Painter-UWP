@@ -144,6 +144,7 @@
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.Threshold.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Effect.Other.Transform.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Geometry.cs" />
+    <Compile Include="%24DrawPage.Option\DrawPage.Pattern.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Picker.Color.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Picker.Number.cs" />
     <Compile Include="%24DrawPage.Option\DrawPage.Setup.CropCanvas.cs" />
