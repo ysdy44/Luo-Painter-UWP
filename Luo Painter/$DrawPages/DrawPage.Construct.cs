@@ -123,6 +123,10 @@ namespace Luo_Painter
                     this.ToastTip.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
                     break;
 
+                case TipType.NoPaintTool:
+                    this.ToastTip.Tip("Paint Brush tool", "Brush Presets can only be used with the Paint");
+                    break;
+
                 case TipType.Spread:
                     this.ToastTip.Tip("Spread", $"{this.Rippler.Spread * 100:0.00}%");
                     break;

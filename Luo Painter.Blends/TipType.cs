@@ -10,6 +10,8 @@
         NoPixelForMarquee,
         NoPixelForBitmapLayer,
 
+        NoPaintTool,
+
         Spread,
         Zoom,
         Undo,
