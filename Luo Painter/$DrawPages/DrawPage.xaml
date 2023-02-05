@@ -1798,7 +1798,68 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
 
-
+                            
+                            <local:OptionCase Value="PatternGridTransform">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
+                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
+                                        <ListBox x:Name="GridComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                             Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="GridToolTip" Style="{StaticResource AppToolTipStyle}">
+                                                    Grid Type
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
+                                            <ListBoxItem x:Name="GridGridItem">Grid</ListBoxItem>
+                                            <ListBoxItem x:Name="GridColumnItem">Column</ListBoxItem>
+                                            <ListBoxItem x:Name="GridRowItem">Row</ListBoxItem>
+                                        </ListBox>
+                                        <hsvColorPickers:NumberSlider x:Name="GridStrokeWidthSlider" Value="2" Minimum="1" Maximum="32" Decrease="True" Foreground="{ThemeResource AppForeground}"
+                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <Slider.Header>
+                                                Stroke Width
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
+                                    </StackPanel>
+                                    <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
+                                        <hsvColorPickers:NumberSlider x:Name="GridColumnSpanSlider" Value="30" Minimum="5" Maximum="200" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            IsEnabled="{x:Bind ReverseBooleanConverter(GridRowItem.IsSelected), Mode=OneWay}" 
+                                            Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <Slider.Header>
+                                                Column Span
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
+                                        <hsvColorPickers:NumberSlider x:Name="GridRowSpanSlider" Value="30" Minimum="5" Maximum="200" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            IsEnabled="{x:Bind ReverseBooleanConverter(GridColumnItem.IsSelected), Mode=OneWay}" 
+                                            Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <Slider.Header>
+                                                Row Span
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
+                                    </StackPanel>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="PatternSpottedTransform">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="SpottedRadiusSlider" Value="8" Minimum="5" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Radius
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="SpottedSpanSlider" Value="30" Minimum="5" Maximum="200" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Span
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="SpottedFadeSlider" Value="0" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <Slider.Header>
+                                            Fade
+                                        </Slider.Header>
+                                    </hsvColorPickers:NumberSlider>
+                                </StackPanel>
+                            </local:OptionCase>
                         </local:OptionSwitchPresenter>
 
                     </Grid>

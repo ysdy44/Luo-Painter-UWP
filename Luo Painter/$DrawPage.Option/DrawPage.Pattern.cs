@@ -14,6 +14,27 @@ namespace Luo_Painter
 
         public void ConstructPattern()
         {
+            // PatternGrid
+            this.GridComboBox.SelectionChanged += (s, e) => this.PatternInvalidate();
+
+            this.GridStrokeWidthSlider.ValueChanged += (s, e) => this.PatternInvalidate();
+            this.GridStrokeWidthSlider.Click += (s, e) => this.NumberShowAt(this.GridStrokeWidthSlider, NumberPickerMode.Case0);
+
+            this.GridColumnSpanSlider.ValueChanged += (s, e) => this.PatternInvalidate();
+            this.GridColumnSpanSlider.Click += (s, e) => this.NumberShowAt(this.GridColumnSpanSlider, NumberPickerMode.Case1);
+
+            this.GridRowSpanSlider.ValueChanged += (s, e) => this.PatternInvalidate();
+            this.GridRowSpanSlider.Click += (s, e) => this.NumberShowAt(this.GridRowSpanSlider, NumberPickerMode.Case2);
+
+            // Spotted
+            this.SpottedRadiusSlider.ValueChanged += (s, e) => this.PatternInvalidate();
+            this.SpottedRadiusSlider.Click += (s, e) => this.NumberShowAt(this.SpottedRadiusSlider, NumberPickerMode.Case0);
+
+            this.SpottedSpanSlider.ValueChanged += (s, e) => this.PatternInvalidate();
+            this.SpottedSpanSlider.Click += (s, e) => this.NumberShowAt(this.SpottedSpanSlider, NumberPickerMode.Case1);
+
+            this.SpottedFadeSlider.ValueChanged += (s, e) => this.PatternInvalidate();
+            this.SpottedFadeSlider.Click += (s, e) => this.NumberShowAt(this.SpottedFadeSlider, NumberPickerMode.Case2);
         }
 
         private void PatternInvalidate()
@@ -131,12 +152,78 @@ namespace Luo_Painter
             {
                 case OptionType.PatternGrid:
                 case OptionType.PatternGridTransform:
-                    break;
-                case OptionType.PatternDiagonal:
-                case OptionType.PatternDiagonalTransform:
+                    {
+                        float strokeWidth = (float)this.GridStrokeWidthSlider.Value;
+
+                        TransformerBorder border = new TransformerBorder(transformerLTRB);
+                        float l = border.Left;
+                        float t = border.Top;
+                        float r = border.Right;
+                        float b = border.Bottom;
+
+                        if (this.GridColumnItem.IsSelected is false)
+                        {
+                            float span = (float)this.GridRowSpanSlider.Value;
+                            float half = (span + strokeWidth) / 2;
+                            for (float y = t + half; y < b - half; y += span)
+                            {
+                                ds.DrawLine(l, y, r, y, color, strokeWidth);
+                            }
+                        }
+
+                        if (this.GridRowItem.IsSelected is false)
+                        {
+                            float span = (float)this.GridColumnSpanSlider.Value;
+                            float half = (span + strokeWidth) / 2;
+                            for (float x = l + half; x < r - half; x += span)
+                            {
+                                ds.DrawLine(x, t, x, b, color, strokeWidth);
+                            }
+                        }
+                    }
                     break;
                 case OptionType.PatternSpotted:
                 case OptionType.PatternSpottedTransform:
+                    {
+                        float radius = (float)this.SpottedRadiusSlider.Value;
+                        float span = (float)this.SpottedSpanSlider.Value;
+                        float fade = (float)this.SpottedFadeSlider.Value / 100;
+
+                        TransformerBorder border = new TransformerBorder(transformerLTRB);
+                        float l = border.Left + radius;
+                        float t = border.Top + radius;
+                        float r = border.Right - radius;
+                        float b = border.Bottom - radius;
+                        float length = b - t;
+
+                        if (fade == 0)
+                        {
+                            for (float y = t; y < b; y += span)
+                            {
+                                for (float x = l; x < r; x += span)
+                                {
+                                    ds.FillCircle(x, y, radius, color);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (float y = t; y < b; y += span)
+                            {
+                                //@Debug
+                                //float pect = (y - t) / length;
+                                //float scale = 1 - fade * pect;
+                                //float rs = radius * scale;
+                                //@Release
+                                float rs = radius - radius * fade * (y - t) / length;
+
+                                for (float x = l; x < r; x += span)
+                                {
+                                    ds.FillCircle(x, y, rs, color);
+                                }
+                            }
+                        }
+                    }
                     break;
                 default:
                     break;

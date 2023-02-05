@@ -375,6 +375,41 @@ namespace Luo_Painter
                                 this.HeartSpreadSlider.Value = e;
                                 break;
 
+                            case OptionType.PatternGrid:
+                            case OptionType.PatternGridTransform:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.GridStrokeWidthSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.GridColumnSpanSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.GridRowSpanSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case OptionType.PatternSpotted:
+                            case OptionType.PatternSpottedTransform:
+                                switch (mode)
+                                {
+                                    case NumberPickerMode.Case0:
+                                        this.SpottedRadiusSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case1:
+                                        this.SpottedSpanSlider.Value = e;
+                                        break;
+                                    case NumberPickerMode.Case2:
+                                        this.SpottedFadeSlider.Value = e;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+
                             default:
                                 break;
                         }
