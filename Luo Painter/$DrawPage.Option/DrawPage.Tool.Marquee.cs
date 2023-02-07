@@ -50,7 +50,7 @@ namespace Luo_Painter
                 //@DPI 
                 ds.Units = CanvasUnits.Pixels; /// <see cref="DPIExtensions">
 
-                ds.FillMarqueeMaskl(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
+                ds.FillMarqueeMask(this.CanvasAnimatedControl, this.MarqueeToolType, this.MarqueeTool, new Rect(0, 0, this.Transformer.Width, this.Transformer.Height), this.MarqueeCompositeMode);
             }
 
             // History

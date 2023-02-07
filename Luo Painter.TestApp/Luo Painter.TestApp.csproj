@@ -655,7 +655,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FanKit.Transformers">
-      <Version>1.6.2</Version>
+      <Version>1.6.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>

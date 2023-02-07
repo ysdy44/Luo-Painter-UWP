@@ -4,6 +4,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
+using System;
 
 namespace Luo_Painter.Controls
 {
@@ -18,9 +19,9 @@ namespace Luo_Painter.Controls
     {
 
         //@Delegate
-        public event RightHandler Start;
-        public event RightHandler Delta;
-        public event RightHandler Complete;
+        public event Action<Vector2> Start;
+        public event Action<Vector2> Delta;
+        public event Action<Vector2> Complete;
 
         private SimulateType type;
         public SimulateType Type
