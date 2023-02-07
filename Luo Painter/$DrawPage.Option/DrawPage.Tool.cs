@@ -107,7 +107,7 @@ namespace Luo_Painter
                 case OptionType.GeometryStar:
                 case OptionType.GeometryCog:
                 // Geometry
-                case OptionType.GeometryDount:
+                case OptionType.GeometryDonut:
                 case OptionType.GeometryPie:
                 case OptionType.GeometryCookie:
                 // Geometry
@@ -233,7 +233,7 @@ namespace Luo_Painter
                 case OptionType.GeometryStarTransform:
                 case OptionType.GeometryCogTransform:
                 // Geometry
-                case OptionType.GeometryDountTransform:
+                case OptionType.GeometryDonutTransform:
                 case OptionType.GeometryPieTransform:
                 case OptionType.GeometryCookieTransform:
                 // Geometry
@@ -364,7 +364,7 @@ namespace Luo_Painter
                 case OptionType.GeometryStarTransform:
                 case OptionType.GeometryCogTransform:
                 // Geometry
-                case OptionType.GeometryDountTransform:
+                case OptionType.GeometryDonutTransform:
                 case OptionType.GeometryPieTransform:
                 case OptionType.GeometryCookieTransform:
                 // Geometry

@@ -344,9 +344,9 @@ namespace Luo_Painter
                                         break;
                                 }
                                 break;
-                            case OptionType.GeometryDount:
-                            case OptionType.GeometryDountTransform:
-                                this.DountHoleRadiusSlider.Value = e;
+                            case OptionType.GeometryDonut:
+                            case OptionType.GeometryDonutTransform:
+                                this.DonutHoleRadiusSlider.Value = e;
                                 break;
                             case OptionType.GeometryPie:
                             case OptionType.GeometryPieTransform:

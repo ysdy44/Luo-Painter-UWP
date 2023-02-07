@@ -342,7 +342,7 @@ namespace Luo_Painter.Options
         GeometryStar = Geometry | 7 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryCog = Geometry | 8 << 8 | ExistIcon | IsItemClickEnabled,
         // Geometry3
-        GeometryDount = Geometry | 9 << 8 | ExistIcon | IsItemClickEnabled,
+        GeometryDonut = Geometry | 9 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryPie = Geometry | 10 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryCookie = Geometry | 11 << 8 | ExistIcon | IsItemClickEnabled,
         // Geometry4
@@ -370,7 +370,7 @@ namespace Luo_Painter.Options
         GeometryStarTransform = GeometryStar | WithTransform | HasPreview,
         GeometryCogTransform = GeometryCog | WithTransform | HasPreview,
         // Geometry3
-        GeometryDountTransform = GeometryDount | WithTransform | HasPreview,
+        GeometryDonutTransform = GeometryDonut | WithTransform | HasPreview,
         GeometryPieTransform = GeometryPie | WithTransform | HasPreview,
         GeometryCookieTransform = GeometryCookie | WithTransform | HasPreview,
         // Geometry4

@@ -46,9 +46,9 @@ namespace Luo_Painter
             this.CogNotchSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
             this.CogNotchSlider.Click += (s, e) => this.NumberShowAt(this.CogNotchSlider, NumberPickerMode.Case3);
 
-            // Dount
-            this.DountHoleRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.DountHoleRadiusSlider.Click += (s, e) => this.NumberShowAt(this.DountHoleRadiusSlider);
+            // Donut
+            this.DonutHoleRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
+            this.DonutHoleRadiusSlider.Click += (s, e) => this.NumberShowAt(this.DonutHoleRadiusSlider);
 
             // Pie
             this.PieSweepAngleSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
@@ -218,10 +218,10 @@ namespace Luo_Painter
                         (float)(this.CogInnerRadiusSlider.Value / 100),
                         (float)(this.CogToothSlider.Value / 100),
                         (float)(this.CogNotchSlider.Value / 100));
-                case OptionType.GeometryDount:
-                case OptionType.GeometryDountTransform:
+                case OptionType.GeometryDonut:
+                case OptionType.GeometryDonutTransform:
                     return TransformerGeometry.CreateDount(resourceCreator, transformerLTRB,
-                        (float)(this.DountHoleRadiusSlider.Value / 100));
+                        (float)(this.DonutHoleRadiusSlider.Value / 100));
                 case OptionType.GeometryPie:
                 case OptionType.GeometryPieTransform:
                     return TransformerGeometry.CreatePie(resourceCreator, transformerLTRB,

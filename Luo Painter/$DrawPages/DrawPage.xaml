@@ -1697,8 +1697,8 @@
                                     </hsvColorPickers:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
-                            <local:OptionCase Value="GeometryDountTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DountHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                            <local:OptionCase Value="GeometryDonutTransform">
+                                <hsvColorPickers:NumberSlider x:Name="DonutHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
                                     <Slider.Header>
                                         Hole Radius
                                     </Slider.Header>

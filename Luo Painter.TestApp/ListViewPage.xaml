@@ -63,7 +63,7 @@
                         <options:OptionType>GeometryStar</options:OptionType>
                         <options:OptionType>GeometryCog</options:OptionType>
                         <!--Geometry3-->
-                        <options:OptionType>GeometryDount</options:OptionType>
+                        <options:OptionType>GeometryDonut</options:OptionType>
                         <options:OptionType>GeometryPie</options:OptionType>
                         <options:OptionType>GeometryCookie</options:OptionType>
                         <!--Geometry4-->
