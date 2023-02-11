@@ -105,26 +105,6 @@ namespace Luo_Painter
         public ScaleRange() : base(1, 0.1, 10, 100) { }
     }
 
-    internal sealed class AdjustmentGroupingList : GroupingList<AdjustmentGrouping, OptionType, OptionType> { }
-    internal sealed class AdjustmentGrouping : Grouping<OptionType, OptionType> { }
-    internal sealed class AdjustmentThumbnail : TIcon<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Content = value.ToString();
-
-            // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
-            if (value.ExistThumbnail())
-            {
-                BitmapImage bitmap = new BitmapImage();
-                base.Background = new ImageBrush
-                {
-                    ImageSource = bitmap
-                };
-                bitmap.UriSource = new Uri(value.GetThumbnail());
-            }
-        }
-    }
 
     internal class ElementIcon : TIcon<ElementType>
     {
@@ -159,30 +139,6 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, OptionType, OptionType> { }
-    internal class ToolGrouping : Grouping<OptionType, OptionType> { }
-    internal class ToolIcon : TIcon<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Content = value;
-            base.Resources.Source = new Uri(value.GetResource());
-            base.Template = value.GetTemplate(base.Resources);
-        }
-    }
-    internal sealed class ToolIconWithToolTip : ToolIcon
-    {
-        public ToolIconWithToolTip() => base.Loaded += (s, e) =>
-        {
-            SelectorItem parent = this.FindAncestor<SelectorItem>();
-            if (parent is null) return;
-            ToolTipService.SetToolTip(parent, new ToolTip
-            {
-                Content = this.Type,
-                Style = App.Current.Resources["AppToolTipStyle"] as Style
-            });
-        };
-    }
 
     internal sealed class InkList : List<InkType> { }
     internal sealed class InkIcon : TIcon<InkType>
@@ -251,6 +207,9 @@ namespace Luo_Painter
         }
     }
 
+    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionType, OptionType> { }
+    internal class OptionGrouping : Grouping<OptionType, OptionType> { }
+
     internal class OptionIcon : TIcon<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
@@ -260,6 +219,19 @@ namespace Luo_Painter
             base.Template = value.GetTemplate(base.Resources);
         }
     }
+    internal sealed class OptionIconWithToolTip : OptionIcon
+    {
+        public OptionIconWithToolTip() => base.Loaded += (s, e) =>
+        {
+            SelectorItem parent = this.FindAncestor<SelectorItem>();
+            if (parent is null) return;
+            ToolTipService.SetToolTip(parent, new ToolTip
+            {
+                Content = this.Type,
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        };
+    }
     internal class OptionItem : TItem<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
@@ -268,6 +240,24 @@ namespace Luo_Painter
             base.TextBlock.Text = value.ToString();
             base.Icon.Content = value;
             base.Icon.Template = value.GetTemplate(base.Resources);
+        }
+    }
+    internal sealed class OptionThumbnail : TIcon<OptionType>
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.Content = value.ToString();
+
+            // https://docs.microsoft.com/en-us/windows/uwp/debug-test-perf/optimize-animations-and-media
+            if (value.ExistThumbnail())
+            {
+                BitmapImage bitmap = new BitmapImage();
+                base.Background = new ImageBrush
+                {
+                    ImageSource = bitmap
+                };
+                bitmap.UriSource = new Uri(value.GetThumbnail());
+            }
         }
     }
 

@@ -276,10 +276,10 @@
                         Grid.Row="1"
                         SelectedIndex="1"
                         >
-                        <local:ToolIconWithToolTip Type="ToolMenu"/>
-                        <local:ToolIconWithToolTip Type="BrushMenu"/>
-                        <local:ToolIconWithToolTip Type="SizeMenu"/>
-                        <local:ToolIconWithToolTip Type="HistoryMenu"/>
+                        <local:OptionIconWithToolTip Type="ToolMenu"/>
+                        <local:OptionIconWithToolTip Type="BrushMenu"/>
+                        <local:OptionIconWithToolTip Type="SizeMenu"/>
+                        <local:OptionIconWithToolTip Type="HistoryMenu"/>
                     </ListBox>
                 </Grid>
             </SplitView.Pane>

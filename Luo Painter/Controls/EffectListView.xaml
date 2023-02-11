@@ -14,8 +14,8 @@
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
                 <!--Collection-->
-                <luo_painter:AdjustmentGroupingList x:Name="Collection">
-                    <luo_painter:AdjustmentGrouping Key="Adjustment">
+                <luo_painter:OptionGroupingList x:Name="Collection">
+                    <luo_painter:OptionGrouping Key="Adjustment">
                         <options:OptionType>Gray</options:OptionType>
                         <options:OptionType>Invert</options:OptionType>
                         <options:OptionType>Exposure</options:OptionType>
@@ -25,14 +25,14 @@
                         <options:OptionType>Contrast</options:OptionType>
                         <options:OptionType>Temperature</options:OptionType>
                         <options:OptionType>HighlightsAndShadows</options:OptionType>
-                    </luo_painter:AdjustmentGrouping>
-                    <luo_painter:AdjustmentGrouping Key="Adjustment2">
+                    </luo_painter:OptionGrouping>
+                    <luo_painter:OptionGrouping Key="Adjustment2">
                         <options:OptionType>GammaTransfer</options:OptionType>
                         <options:OptionType>Vignette</options:OptionType>
                         <options:OptionType>ColorMatrix</options:OptionType>
                         <options:OptionType>ColorMatch</options:OptionType>
-                    </luo_painter:AdjustmentGrouping>
-                    <luo_painter:AdjustmentGrouping Key="Effect1">
+                    </luo_painter:OptionGrouping>
+                    <luo_painter:OptionGrouping Key="Effect1">
                         <options:OptionType>GaussianBlur</options:OptionType>
                         <options:OptionType>DirectionalBlur</options:OptionType>
                         <options:OptionType>Sharpen</options:OptionType>
@@ -41,8 +41,8 @@
                         <options:OptionType>Morphology</options:OptionType>
                         <options:OptionType>Emboss</options:OptionType>
                         <options:OptionType>Straighten</options:OptionType>
-                    </luo_painter:AdjustmentGrouping>
-                    <luo_painter:AdjustmentGrouping Key="Effect2">
+                    </luo_painter:OptionGrouping>
+                    <luo_painter:OptionGrouping Key="Effect2">
                         <options:OptionType>Sepia</options:OptionType>
                         <options:OptionType>Posterize</options:OptionType>
                         <options:OptionType>LuminanceToAlpha</options:OptionType>
@@ -51,14 +51,14 @@
                         <options:OptionType>Colouring</options:OptionType>
                         <options:OptionType>Tint</options:OptionType>
                         <options:OptionType>DiscreteTransfer</options:OptionType>
-                    </luo_painter:AdjustmentGrouping>
-                    <luo_painter:AdjustmentGrouping Key="Effect3">
+                    </luo_painter:OptionGrouping>
+                    <luo_painter:OptionGrouping Key="Effect3">
                         <options:OptionType>Lighting</options:OptionType>
                         <options:OptionType>Fog</options:OptionType>
                         <options:OptionType>Glass</options:OptionType>
                         <options:OptionType>PinchPunch</options:OptionType>
-                    </luo_painter:AdjustmentGrouping>
-                </luo_painter:AdjustmentGroupingList>
+                    </luo_painter:OptionGrouping>
+                </luo_painter:OptionGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -165,7 +165,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="options:OptionType">
-                    <luo_painter:AdjustmentThumbnail Type="{x:Bind}" >
+                    <luo_painter:OptionThumbnail Type="{x:Bind}" >
                         <ContentControl.Template>
                             <ControlTemplate TargetType="ContentControl">
                                 <Grid>
@@ -183,7 +183,7 @@
                                 <TextBlock Text="{x:Bind}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </DataTemplate>
                         </ContentControl.ContentTemplate>
-                    </luo_painter:AdjustmentThumbnail>
+                    </luo_painter:OptionThumbnail>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
