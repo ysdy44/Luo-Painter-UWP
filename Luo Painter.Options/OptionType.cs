@@ -74,11 +74,14 @@ namespace Luo_Painter.Options
 
         #region Menu
 
-        FileMenu = Menu | 1 << 8 | HasMenu | IsItemClickEnabled,
-        ExportMenu = Menu | 2 << 8 | HasMenu | IsItemClickEnabled,
+        DockLeft = Menu | 1 << 8 | HasMenu | IsItemClickEnabled,
+        DockRight = Menu | 2 << 8 | HasMenu | IsItemClickEnabled,
+
+        FileMenu = Menu | 3 << 8 | HasMenu | IsItemClickEnabled,
+        ExportMenu = Menu | 4 << 8 | HasMenu | IsItemClickEnabled,
 
         ColorMenu = Menu | 6 << 8 | HasMenu | IsItemClickEnabled,
-        PaletteMenu = Menu | 7 << 8 | HasMenu | IsItemClickEnabled,
+        ColorHarmonyMenu = Menu | 7 << 8 | HasMenu | IsItemClickEnabled,
 
         EditMenu = Menu | 8 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         AdjustmentMenu = Menu | 9 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
@@ -93,9 +96,9 @@ namespace Luo_Painter.Options
         ToolMenu = Menu | 16 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
         LayerMenu = Menu | 17 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        AddMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
-        PropertyMenu = Menu | 19 << 8 | HasMenu | IsItemClickEnabled,
-        PropertyMenuWithRename = Menu | 20 << 8,
+        LayerNewMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
+        LayerPropertyMenu = Menu | 19 << 8 | HasMenu | IsItemClickEnabled,
+        LayerRenameMenu = Menu | 20 << 8 | HasMenu | IsItemClickEnabled,
 
         #endregion
 

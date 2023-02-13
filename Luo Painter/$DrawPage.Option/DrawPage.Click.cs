@@ -450,6 +450,13 @@ namespace Luo_Painter
 
                 #region Menu
 
+                case OptionType.DockLeft:
+                    this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
+                    break;
+                case OptionType.DockRight:
+                    this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
+                    break;
+
                 case OptionType.FileMenu:
                     this.FileFlyout.ShowAt(this.ExportButton);
                     break;
@@ -499,11 +506,11 @@ namespace Luo_Painter
                 //case OptionType.LayerMenu:
                 //    break;
 
-                //case OptionType.AddMenu:
+                //case OptionType.LayerNew:
                 //    break;
-                //case OptionType.PropertyMenu:
+                //case OptionType.LayerPropertyMenu:
                 //    break;
-                //case OptionType.PropertyMenuWithRename:
+                //case OptionType.LayerRenameMenu:
                 //    break;
 
                 #endregion
@@ -527,21 +534,19 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.ResizeCanvas:
-                    this.ResizeFlyout.ShowAt(this.MoreButton);
-                    //this.ResizeFlyout.ShowAt(this, new Point
-                    //{
-                    //    X = Math.Max(0, (base.ActualWidth - 310) / 2),
-                    //    Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 4 - 44 - 44 - 44) / 2)
-                    //});
+                    this.ResizeFlyout.ShowAt(this, new Point
+                    {
+                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
+                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 4 - 44 - 44 - 44) / 2)
+                    });
                     break;
 
                 case OptionType.RotateCanvas:
-                    this.RotateFlyout.ShowAt(this.MoreButton);
-                    //this.RotateFlyout.ShowAt(this, new Point
-                    //{
-                    //    X = Math.Max(0, (base.ActualWidth - 310) / 2),
-                    //    Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 44 - 4 - 44 - 44 - 44) / 2)
-                    //});
+                    this.RotateFlyout.ShowAt(this, new Point
+                    {
+                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
+                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 44 - 4 - 44 - 44 - 44) / 2)
+                    });
                     break;
 
                 case OptionType.Stretch:
