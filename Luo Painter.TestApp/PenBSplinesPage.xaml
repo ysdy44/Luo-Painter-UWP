@@ -4,55 +4,101 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:transformers="using:FanKit.Transformers"
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <FrameworkElement.Resources>
-        <!--Transformer-->
-        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
-    </FrameworkElement.Resources>
+    <SplitView IsPaneOpen="True" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="220">
+        <SplitView.Pane>
+            <StackPanel Padding="4">
+                <Slider x:Name="TensionSlider" Minimum="-100" Maximum="100">
+                    <Slider.Header>
+                        <Button x:Name="TensionButton">
+                            <TextBlock>
+                                Tension
+                                <Run Text="{x:Bind TensionSlider.Value, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="ContinuitySlider" Minimum="0" Maximum="100">
+                    <Slider.Header>
+                        <Button x:Name="ContinuityButton">
+                            <TextBlock>
+                                Continuity
+                                <Run Text="{x:Bind ContinuitySlider.Value, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="BiasSlider" Minimum="-100" Maximum="100">
+                    <Slider.Header>
+                        <Button x:Name="BiasButton">
+                            <TextBlock>
+                                Bias
+                                <Run Text="{x:Bind BiasSlider.Value, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Button>
+                    </Slider.Header>
+                </Slider>
+                <Slider x:Name="StepsSlider" Value="16" Minimum="0" Maximum="25">
+                    <Slider.Header>
+                        <TextBlock>
+                            Steps
+                            <Run Text="{x:Bind StepsSlider.Value, Mode=OneWay}"/>
+                        </TextBlock>
+                    </Slider.Header>
+                </Slider>
+                <CheckBox x:Name="CheckBox">
+                    Single
+                </CheckBox>
+                <ListView x:Name="ListView">
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection>
 
-    <Grid>
-        <xaml:CanvasControl x:Name="CanvasControl" />
+                        </TransitionCollection>
+                    </ItemsControl.ItemContainerTransitions>
+                </ListView>
+            </StackPanel>
+        </SplitView.Pane>
+        <Grid>
+            <xaml:CanvasControl x:Name="CanvasControl" />
+            <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-        <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-
-            <ContentControl.Content>
-                <TextBlock Margin="12,10,2,0" >
+                <ContentControl.Content>
+                    <TextBlock Margin="12,10,2,0" >
                     <Run Foreground="Red">Pen</Run>
                     <Run>+</Run>
                     <Run Foreground="DodgerBlue">B-Splines</Run>
-                </TextBlock>
-            </ContentControl.Content>
+                    </TextBlock>
+                </ContentControl.Content>
 
-            <AppBarButton x:Name="AddButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="A"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Add"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Add
-                </AppBarButton.Label>
-            </AppBarButton>
+                <AppBarButton x:Name="AddButton" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="A"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Add"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Add
+                    </AppBarButton.Label>
+                </AppBarButton>
 
-            <AppBarButton x:Name="ClearButton" >
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="None" Key="Delete"/>
-                </UIElement.KeyboardAccelerators>
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Delete"/>
-                </AppBarButton.Icon>
-                <AppBarButton.Label>
-                    Clear
-                </AppBarButton.Label>
-            </AppBarButton>
+                <AppBarButton x:Name="ClearButton" >
+                    <UIElement.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                    </UIElement.KeyboardAccelerators>
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Delete"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.Label>
+                        Clear
+                    </AppBarButton.Label>
+                </AppBarButton>
 
-        </CommandBar>
-    </Grid>
-
+            </CommandBar>
+        </Grid>
+    </SplitView>
 </Page>

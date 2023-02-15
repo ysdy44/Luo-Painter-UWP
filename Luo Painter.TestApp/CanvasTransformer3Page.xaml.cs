@@ -109,7 +109,7 @@ namespace Luo_Painter.TestApp
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.StartingPosition = this.Position = this.ToPosition(point);
                 this.StartingPoint = this.Point = point;
@@ -132,7 +132,7 @@ namespace Luo_Painter.TestApp
                         break;
                 }
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 this.Position = this.ToPosition(point);
                 this.Point = point;
@@ -161,7 +161,7 @@ namespace Luo_Painter.TestApp
                         break;
                 }
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 this.CanvasControl.Invalidate(); // Invalidate
 
@@ -177,19 +177,19 @@ namespace Luo_Painter.TestApp
 
 
             // Right
-            this.Operator.Right_Start += (point) =>
+            this.Operator.Right_Start += (point, isHolding) =>
             {
                 this.Transformer.CacheMove(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Right_Delta += (point) =>
+            this.Operator.Right_Delta += (point, isHolding) =>
             {
                 this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Right_Complete += (point) =>
+            this.Operator.Right_Complete += (point, isHolding) =>
             {
                 this.Transformer.Move(this.CanvasControl.Dpi.ConvertDipsToPixels(point));
 

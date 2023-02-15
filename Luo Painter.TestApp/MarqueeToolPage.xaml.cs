@@ -114,7 +114,7 @@ namespace Luo_Painter.TestApp
         public void ConstructOperator()
         {
             //Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.StartingPosition = point;
                 this.MarqueeTool.Start(point, MarqueeToolType.Rectangular, false, false);
@@ -122,16 +122,16 @@ namespace Luo_Painter.TestApp
                 this.CanvasAnimatedControl.Paused = true;
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 this.MarqueeTool.Delta(this.StartingPosition, point, MarqueeToolType.Rectangular, false, false);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    ds.FillMarqueeMaskl(this.CanvasAnimatedControl, MarqueeToolType.Rectangular, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
+                    ds.FillMarqueeMask(this.CanvasAnimatedControl, MarqueeToolType.Rectangular, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
                 }
 
                 this.MarqueeTool.Complete(this.StartingPosition, point, MarqueeToolType.Rectangular, false, false);

@@ -117,13 +117,13 @@ namespace Luo_Painter.TestApp
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.StartingPosition = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
@@ -142,7 +142,7 @@ namespace Luo_Painter.TestApp
 
                 this.StartingPosition = this.Position;
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                 this.BitmapLayer.Flush();

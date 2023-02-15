@@ -112,7 +112,7 @@ namespace Luo_Painter.TestApp
         public void ConstructOperator()
         {
             //Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.StartingPosition = Vector2.Transform(this.CanvasAnimatedControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
                 this.MarqueeTool.Start(this.StartingPosition, MarqueeToolType.Elliptical, false, false);
@@ -120,13 +120,13 @@ namespace Luo_Painter.TestApp
                 this.CanvasAnimatedControl.Paused = true;
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 Vector2 position = Vector2.Transform(this.CanvasAnimatedControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
                 this.MarqueeTool.Delta(this.StartingPosition, position, MarqueeToolType.Elliptical, false, false);
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 Vector2 position = Vector2.Transform(this.CanvasAnimatedControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
                 bool redraw = this.MarqueeTool.Complete(this.StartingPosition, position, MarqueeToolType.Elliptical, false, false);
@@ -134,7 +134,7 @@ namespace Luo_Painter.TestApp
 
                 using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
                 {
-                    ds.FillMarqueeMaskl(this.CanvasAnimatedControl, MarqueeToolType.Elliptical, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
+                    ds.FillMarqueeMask(this.CanvasAnimatedControl, MarqueeToolType.Elliptical, this.MarqueeTool, new Rect(0, 0, 512, 512), MarqueeCompositeMode.New);
                 }
 
                 this.CanvasAnimatedControl.Paused = false;
@@ -143,17 +143,17 @@ namespace Luo_Painter.TestApp
 
 
             // Right
-            this.Operator.Right_Start += (point) =>
+            this.Operator.Right_Start += (point, isHolding) =>
             {
                 this.Transformer.CacheMove(this.CanvasAnimatedControl.Dpi.ConvertDipsToPixels(point));
                 this.CanvasAnimatedControl.Invalidate(); // Invalidate
             };
-            this.Operator.Right_Delta += (point) =>
+            this.Operator.Right_Delta += (point, isHolding) =>
             {
                 this.Transformer.Move(this.CanvasAnimatedControl.Dpi.ConvertDipsToPixels(point));
                 this.CanvasAnimatedControl.Invalidate(); // Invalidate
             };
-            this.Operator.Right_Complete += (point) =>
+            this.Operator.Right_Complete += (point, isHolding) =>
             {
                 this.Transformer.Move(this.CanvasAnimatedControl.Dpi.ConvertDipsToPixels(point));
                 this.CanvasAnimatedControl.Invalidate(); // Invalidate

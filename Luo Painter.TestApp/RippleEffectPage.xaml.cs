@@ -152,17 +152,17 @@ namespace Luo_Painter.TestApp
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.Center = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 this.Update();
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 this.Center = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 this.Update();
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
                 this.Center = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
                 this.Update();

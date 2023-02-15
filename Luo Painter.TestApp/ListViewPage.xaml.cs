@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    internal sealed class ToolIcon : TIcon<OptionType>
+    internal sealed class OptionIcon : TIcon<OptionType>
     {
         protected override void OnTypeChanged(OptionType value)
         {
@@ -51,8 +51,8 @@ namespace Luo_Painter.TestApp
     }
 
 
-    internal sealed class ToolGroupingList : GroupingList<ToolGrouping, OptionType, OptionType> { }
-    internal sealed class ToolGrouping : Grouping<OptionType, OptionType> { }
+    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionType, OptionType> { }
+    internal sealed class OptionGrouping : Grouping<OptionType, OptionType> { }
 
     internal sealed class BlendGroupingList : GroupingList<BlendGrouping, BlendEffectMode, BlendEffectMode> { }
     internal sealed class BlendGrouping : Grouping<BlendEffectMode, BlendEffectMode> { }

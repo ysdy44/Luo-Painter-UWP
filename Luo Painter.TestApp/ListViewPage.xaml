@@ -16,24 +16,24 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="ToolCollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <local:ToolGroupingList x:Name="ToolGroupingList">
-                    <local:ToolGrouping Key="Marquee">
+                <local:OptionGroupingList x:Name="OptionGroupingList">
+                    <local:OptionGrouping Key="Marquee">
                         <options:OptionType>MarqueeRectangular</options:OptionType>
                         <options:OptionType>MarqueeElliptical</options:OptionType>
                         <options:OptionType>MarqueePolygon</options:OptionType>
                         <options:OptionType>MarqueeFreeHand</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Selection">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Selection">
                         <options:OptionType>SelectionFlood</options:OptionType>
                         <options:OptionType>SelectionBrush</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Paint">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
                         <options:OptionType>PaintLine</options:OptionType>
                         <options:OptionType>PaintBrushForce</options:OptionType>
                         <options:OptionType>PaintBrushMulti</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Vector">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Vector">
                         <options:OptionType>Cursor</options:OptionType>
                         <options:OptionType>View</options:OptionType>
                         <options:OptionType>Straw</options:OptionType>
@@ -41,16 +41,16 @@
                         <options:OptionType>Transparency</options:OptionType>
                         <options:OptionType>Image</options:OptionType>
                         <options:OptionType>Crop</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Text">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Text">
                         <options:OptionType>TextArtistic</options:OptionType>
                         <options:OptionType>TextFrame</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Curve">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Curve">
                         <options:OptionType>Pen</options:OptionType>
                         <options:OptionType>Node</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Geometry">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Geometry">
                         <!--Geometry0-->
                         <options:OptionType>GeometryRectangle</options:OptionType>
                         <options:OptionType>GeometryEllipse</options:OptionType>
@@ -70,13 +70,13 @@
                         <options:OptionType>GeometryArrow</options:OptionType>
                         <options:OptionType>GeometryCapsule</options:OptionType>
                         <options:OptionType>GeometryHeart</options:OptionType>
-                    </local:ToolGrouping>
-                    <local:ToolGrouping Key="Pattern">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Pattern">
                         <options:OptionType>PatternGrid</options:OptionType>
                         <options:OptionType>PatternDiagonal</options:OptionType>
                         <options:OptionType>PatternSpotted</options:OptionType>
-                    </local:ToolGrouping>
-                </local:ToolGroupingList>
+                    </local:OptionGrouping>
+                </local:OptionGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
 
@@ -192,7 +192,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="options:OptionType">
-                    <local:ToolIcon Type="{x:Bind}"/>
+                    <local:OptionIcon Type="{x:Bind}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
@@ -217,7 +217,7 @@
                         </Style>
                     </GroupStyle.HeaderContainerStyle>
                     <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="local:ToolGrouping">
+                        <DataTemplate x:DataType="local:OptionGrouping">
                             <TextBlock Margin="12,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{x:Bind Key}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>

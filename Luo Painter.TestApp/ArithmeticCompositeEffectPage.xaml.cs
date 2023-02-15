@@ -161,19 +161,19 @@ namespace Luo_Painter.TestApp
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.Operator.Single_Start += (point, device, properties) =>
             {
                 this.IsA = FanKit.Math.InNodeRadius(this.A, point);
                 this.IsB = FanKit.Math.InNodeRadius(this.B, point);
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.Operator.Single_Delta += (point, device, properties) =>
             {
                 if (this.IsA) this.A = point;
                 else if (this.IsB) this.B = point;
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.Operator.Single_Complete += (point, device, properties) =>
             {
             };
         }
