@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -45,6 +46,7 @@ namespace Luo_Painter.Elements
         protected readonly ContentControl Icon = new ContentControl
         {
             Width = 32,
+            FontWeight = FontWeights.Bold,
             HorizontalAlignment = HorizontalAlignment.Right,
             VerticalContentAlignment = VerticalAlignment.Center,
             HorizontalContentAlignment = HorizontalAlignment.Center,
@@ -113,6 +115,36 @@ namespace Luo_Painter.Elements
         public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(T), typeof(TAppBarButton<T>), new PropertyMetadata(default(T), (sender, e) =>
         {
             TAppBarButton<T> control = (TAppBarButton<T>)sender;
+
+            if (e.NewValue is T value)
+            {
+                control.OnTypeChanged(value);
+            }
+        }));
+
+
+        #endregion
+    }
+
+    public abstract class TMenuFlyoutItem<T> : MenuFlyoutItem
+        where T : Enum
+    {
+        //@Abstract
+        protected abstract void OnTypeChanged(T value);
+
+        #region DependencyProperty
+
+
+        /// <summary> Gets or set the type for <see cref="TMenuFlyoutItem{T}"/>. </summary>
+        public T Type
+        {
+            get => (T)base.GetValue(TypeProperty);
+            set => base.SetValue(TypeProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "TMenuFlyoutItem.Type" /> dependency property. </summary>
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(T), typeof(TMenuFlyoutItem<T>), new PropertyMetadata(default(T), (sender, e) =>
+        {
+            TMenuFlyoutItem<T> control = (TMenuFlyoutItem<T>)sender;
 
             if (e.NewValue is T value)
             {

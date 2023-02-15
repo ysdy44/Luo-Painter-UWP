@@ -261,6 +261,45 @@ namespace Luo_Painter
         }
     }
 
+    internal class OptionMenuFlyoutItem : TMenuFlyoutItem<OptionType>
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            if (value.IsItemClickEnabled())
+            {
+                base.Text = value.ToString();
+                base.CommandParameter = value;
+            }
+        }
+    }
+    internal class OptionMenuFlyoutItemWithIcon : OptionMenuFlyoutItem
+    {
+        protected override void OnTypeChanged(OptionType value)
+        {
+            base.OnTypeChanged(value);
+
+            if (value.ExistIcon())
+            {
+                base.Resources.Source = new Uri(value.GetResource());
+                base.Tag = new ContentControl
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Template = value.GetTemplate(base.Resources)
+                };
+            }
+
+            if (value.HasPreview())
+            {
+                base.KeyboardAcceleratorTextOverride = "•";
+            }
+            else if (value.HasMenu())
+            {
+                base.KeyboardAcceleratorTextOverride = ">";
+            }
+        }
+    }
+
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : DependencyObject, ICase<OptionType>
     {

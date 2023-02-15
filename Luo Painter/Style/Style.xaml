@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
     >
 
@@ -215,7 +216,6 @@
     <!--MenuFlyoutSubItem-->
     <StaticResource x:Key="MenuFlyoutSubItemRevealBackgroundSubMenuOpened" ResourceKey="SystemColorControlAccentBrush"/>
     <StaticResource x:Key="MenuFlyoutSubItemRevealBackground" ResourceKey="AppOpacity"/>
-    <Thickness x:Key="MenuFlyoutItemThemePadding" >56,0,12,0</Thickness>
     <Style TargetType="MenuFlyoutSubItem" >
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Margin" Value="4,0" />
@@ -225,10 +225,10 @@
 
 
     <!--MenuFlyoutItem-->
-    <Style TargetType="MenuFlyoutItem" >
+    <Style x:Key="MenuFlyoutItemStyleBase" TargetType="MenuFlyoutItem">
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Margin" Value="4,0" />
-        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="Padding" Value="20,0,12,0" />
         <Setter Property="Width" Value="300" />
         <Setter Property="Height" Value="44" />
         <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
@@ -242,6 +242,10 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="KeyboardAcceleratorPlacementMode" Value="Hidden" />
+    </Style>
+    <Style TargetType="luo_painter:OptionMenuFlyoutItem" BasedOn="{StaticResource MenuFlyoutItemStyleBase}"/>
+    <Style TargetType="luo_painter:OptionMenuFlyoutItemWithIcon" BasedOn="{StaticResource MenuFlyoutItemStyleBase}">
+        <Setter Property="Padding" Value="12,0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuFlyoutItem">
