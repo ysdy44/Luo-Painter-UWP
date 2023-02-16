@@ -32,17 +32,21 @@ namespace Luo_Painter.Models
 
         public static Rect? TryGetRect(Vector2 point, Size intersectSize, float radius)
         {
+            //@Debug
+            // <=2 in CanvasVirtualControl.Invalidate(region); 
+            // System.ArgumentException:“Value does not fall within the expected range.”
+
             double boundsRight = point.X + radius;
-            if (boundsRight <= 0) return null;
+            if (boundsRight <= 2) return null;
 
             double boundsBottom = point.Y + radius;
-            if (boundsBottom < 0) return null;
+            if (boundsBottom < 2) return null;
 
             double boundsLeft = point.X - radius;
-            if (boundsLeft >= intersectSize.Width) return null;
+            if (boundsLeft >= intersectSize.Width - 2) return null;
 
             double boundsTop = point.Y - radius;
-            if (boundsTop >= intersectSize.Height) return null;
+            if (boundsTop >= intersectSize.Height - 2) return null;
 
             boundsLeft = System.Math.Clamp(boundsLeft, 0, intersectSize.Width);
             boundsTop = System.Math.Clamp(boundsTop, 0, intersectSize.Height);

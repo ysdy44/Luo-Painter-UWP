@@ -146,6 +146,14 @@
     <Compile Include="Projects\ProjectType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomAccessStreamExtensions.cs" />
+    <Compile Include="RectExtensions.cs" />
+    <Compile Include="Strokes\PaintTaskCollection.cs" />
+    <Compile Include="Strokes\PaintTaskCollection.ForceTimer.cs" />
+    <Compile Include="Strokes\StrokeCap.cs" />
+    <Compile Include="Strokes\StrokeCap.Symmetry.cs" />
+    <Compile Include="Strokes\StrokeSegment.cs" />
+    <Compile Include="Strokes\StrokeSegment.Symmetry.cs" />
+    <Compile Include="Strokes\Symmetryer.cs" />
     <Compile Include="TipType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Models.rd.xml" />
   </ItemGroup>

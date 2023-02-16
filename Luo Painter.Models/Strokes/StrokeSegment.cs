@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Layers;
-using System.Numerics;
+﻿using System.Numerics;
 using Windows.Foundation;
 
 namespace Luo_Painter.Models
