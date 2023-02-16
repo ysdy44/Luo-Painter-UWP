@@ -123,6 +123,7 @@
     <Compile Include="ActionType.cs" />
     <Compile Include="ElementExtensions.cs" />
     <Compile Include="ElementType.cs" />
+    <Compile Include="FileImageSource.cs" />
     <Compile Include="Historys\HistoryMode.cs" />
     <Compile Include="Historys\HistoryType.cs" />
     <Compile Include="Historys\IHistory.cs" />
@@ -131,7 +132,20 @@
     <Compile Include="Historys\Models\CompositeHistory.cs" />
     <Compile Include="Historys\Models\PropertyHistory.cs" />
     <Compile Include="Historys\Models\SetupHistory.cs" />
+    <Compile Include="Projects\Models\ProjectAdd.cs" />
+    <Compile Include="Projects\Models\ProjectFile.cs" />
+    <Compile Include="Projects\Models\ProjectFile.Export.cs" />
+    <Compile Include="Projects\Models\ProjectFolder.cs" />
+    <Compile Include="Projects\Project.cs" />
+    <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.Create.cs" />
+    <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.cs" />
+    <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.DeleteCopy.cs" />
+    <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.Load.cs" />
+    <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.OrderBy.cs" />
+    <Compile Include="Projects\ProjectParameter.cs" />
+    <Compile Include="Projects\ProjectType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomAccessStreamExtensions.cs" />
     <Compile Include="TipType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Models.rd.xml" />
   </ItemGroup>
