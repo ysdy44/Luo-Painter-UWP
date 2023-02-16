@@ -1,6 +1,6 @@
-﻿namespace Luo_Painter
+﻿namespace Luo_Painter.Models
 {
-    internal enum ActionType : int
+    public enum ActionType : int
     {
         /// <summary> Open Project </summary>
         File,

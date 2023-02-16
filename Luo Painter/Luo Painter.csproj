@@ -175,7 +175,6 @@
     <Compile Include="%24DrawPages\DrawPage.xaml.cs">
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="%24MainPages\ActionType.cs" />
     <Compile Include="%24MainPages\MainPage.Click.cs" />
     <Compile Include="%24MainPages\MainPage.Construct.cs" />
     <Compile Include="%24MainPages\MainPage.xaml.cs">
