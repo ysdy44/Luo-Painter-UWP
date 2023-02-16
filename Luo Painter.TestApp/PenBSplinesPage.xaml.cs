@@ -22,23 +22,78 @@ namespace Luo_Painter.TestApp
         Close,
     }
 
-    internal sealed class BSplines : List<Vector2>
+    internal readonly struct BSplineParameter
+    {
+        public readonly float tc1b1;
+        public readonly float tc2b2;
+        public readonly float tc2b1;
+        public readonly float tc1b2;
+        public BSplineParameter(float tension, float continuity, float bias)
+        {
+            float t = 1 - tension;
+
+            float c1 = 1 + continuity;
+            float c2 = 1 - continuity;
+            float b1 = 1 + bias;
+            float b2 = 1 - bias;
+
+            this.tc1b1 = t * c1 * b1 / 2;
+            this.tc2b2 = t * c2 * b2 / 2;
+            this.tc2b1 = t * c2 * b1 / 2;
+            this.tc1b2 = t * c1 * b2 / 2;
+        }
+    }
+
+    internal sealed class BSplinePoints : List<Vector2>
+    {
+        public override string ToString() => Point.ToString();
+
+        public Vector2 Point { get; set; }
+
+        public float Tension { get; set; }
+        public float Continuity { get; set; }
+        public float Bias { get; set; }
+        public int Steps { get; set; } = 16;
+
+        public void Spline(Vector2 p1, Vector2 p3, Vector2 p4)
+        {
+            Vector2 p2 = this.Point;
+
+            BSplineParameter p = new BSplineParameter(this.Tension, this.Continuity, this.Bias);
+
+            base.Clear();
+            for (int j = 0; j < this.Steps; j++)
+            {
+                float scale = (float)j / (float)this.Steps;
+                float pow2 = (float)Math.Pow(scale, 2);
+                float pow3 = (float)Math.Pow(scale, 3);
+
+                float h1 = 2 * pow3 - 3 * pow2 + 1;
+                float h2 = -2 * pow3 + 3 * pow2;
+                float h3 = pow3 - 2 * pow2 + scale;
+                float h4 = pow3 - pow2;
+
+                float dix = p.tc1b1 * (p2.X - p1.X) + p.tc2b2 * (p3.X - p2.X);
+                float diy = p.tc1b1 * (p2.Y - p1.Y) + p.tc2b2 * (p3.Y - p2.Y);
+
+                float six = p.tc2b1 * (p3.X - p2.X) + p.tc1b2 * (p4.X - p3.X);
+                float siy = p.tc2b1 * (p3.Y - p2.Y) + p.tc1b2 * (p4.Y - p3.Y);
+
+                base.Add(new Vector2
+                {
+                    X = h1 * p2.X + h2 * p3.X + h3 * dix + h4 * six,
+                    Y = h1 * p2.Y + h2 * p3.Y + h3 * diy + h4 * siy
+                });
+            }
+        }
+    }
+
+    internal sealed class BSplines2 : List<BSplinePoints>
     {
 
-        public readonly bool IsClosed = false;
-        public readonly int Steps = 16;
+        public bool IsClosed { get; set; } = false;
 
-        public readonly float Tension = 0;
-        public readonly float Continuity = 0;
-        public readonly float Bias = 0;
-
-        Vector2 SplineA;
-        Vector2 SplineB;
-
-        Vector2 Spline1;
-        Vector2 Spline2;
-        Vector2 Spline3;
-        Vector2 Spline4;
+        Vector2 Point;
 
         private BSplineType GetType(int i)
         {
@@ -48,88 +103,54 @@ namespace Luo_Painter.TestApp
             return this.IsClosed ? BSplineType.Close : BSplineType.None;
         }
 
-        public void Draw(CanvasDrawingSession ds)
+        public void Arrange()
         {
             switch (base.Count)
             {
                 case 0:
                 case 1:
-                    break;
                 case 2:
-                    ds.DrawLine(base[0], base[1], Colors.DodgerBlue);
+                    foreach (BSplinePoints item in this)
+                    {
+                        item.Clear();
+                    }
                     break;
                 default:
-                    this.SplineA = default;
+                    this.Point = default;
 
                     for (int i = 0; i < base.Count; i++)
                     {
                         switch (this.GetType(i))
                         {
-                            case BSplineType.BeginFigure:
-                                this.Spline1 = base[this.IsClosed ? base.Count - 1 : i];
-                                this.Spline2 = base[i];
-                                this.Spline3 = base[i + 1];
-                                this.Spline4 = base[i + 2];
-                                break;
-                            case BSplineType.Node:
-                                this.Spline1 = base[i - 1];
-                                this.Spline2 = base[i];
-                                this.Spline3 = base[i + 1];
-                                this.Spline4 = base[i + 2];
-                                break;
-                            case BSplineType.EndFigure:
-                                this.Spline1 = base[i - 1];
-                                this.Spline2 = base[i];
-                                this.Spline3 = base[i + 1];
-                                this.Spline4 = base[this.IsClosed ? 0 : i + 1];
-                                break;
-                            case BSplineType.Close:
-                                this.Spline1 = base[i - 1];
-                                this.Spline2 = base[i];
-                                this.Spline3 = base[0];
-                                this.Spline4 = base[1];
-                                break;
-                            default:
-                                continue;
+                            case BSplineType.BeginFigure: base[i].Spline(base[this.IsClosed ? base.Count - 1 : i].Point, base[i + 1].Point, base[i + 2].Point); break;
+                            case BSplineType.Node: base[i].Spline(base[i - 1].Point, base[i + 1].Point, base[i + 2].Point); break;
+                            case BSplineType.EndFigure: base[i].Spline(base[i - 1].Point, base[i + 1].Point, base[this.IsClosed ? 0 : i + 1].Point); break;
+                            case BSplineType.Close: base[i].Spline(base[i - 1].Point, base[0].Point, base[1].Point); break;
+                            default: continue;
                         }
+                    }
+                    break;
+            }
+        }
 
-
-                        for (int j = 0; j < this.Steps; j++)
+        public void Draw(CanvasDrawingSession ds)
+        {
+            switch (base.Count)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    ds.DrawLine(base[0].Point, base[1].Point, Colors.DodgerBlue);
+                    break;
+                default:
+                    foreach (BSplinePoints item in this)
+                    {
+                        foreach (Vector2 p in item)
                         {
-                            float scale = (float)j / this.Steps;
-                            float pow2 = (float)Math.Pow(scale, 2);
-                            float pow3 = (float)Math.Pow(scale, 3);
-
-                            float h1 = 2 * pow3 - 3 * pow2 + 1;
-                            float h2 = -2 * pow3 + 3 * pow2;
-                            float h3 = pow3 - 2 * pow2 + scale;
-                            float h4 = pow3 - pow2;
-
-
-                            float t = 1 - this.Tension;
-                            float c1 = 1 + this.Continuity;
-                            float c2 = 1 - this.Continuity;
-                            float b1 = 1 + this.Bias;
-                            float b2 = 1 - this.Bias;
-
-                            float tc1b1 = t * c1 * b1 / 2;
-                            float tc2b2 = t * c2 * b2 / 2;
-                            float tc2b1 = t * c2 * b1 / 2;
-                            float tc1b2 = t * c1 * b2 / 2;
-
-
-                            float dix = tc1b1 * (this.Spline2.X - this.Spline1.X) + tc2b2 * (this.Spline3.X - this.Spline2.X);
-                            float diy = tc1b1 * (this.Spline2.Y - this.Spline1.Y) + tc2b2 * (this.Spline3.Y - this.Spline2.Y);
-
-                            float six = tc2b1 * (this.Spline3.X - this.Spline2.X) + tc1b2 * (this.Spline4.X - this.Spline3.X);
-                            float siy = tc2b1 * (this.Spline3.Y - this.Spline2.Y) + tc1b2 * (this.Spline4.Y - this.Spline3.Y);
-
-                            this.SplineB.X = h1 * this.Spline2.X + h2 * this.Spline3.X + h3 * dix + h4 * six;
-                            this.SplineB.Y = h1 * this.Spline2.Y + h2 * this.Spline3.Y + h3 * diy + h4 * siy;
-
-
-                            if (this.SplineA != default) ds.DrawLine(this.SplineA, this.SplineB, Colors.DodgerBlue);
-                            this.SplineA = this.SplineB;
+                            if (this.Point != default) ds.DrawLine(this.Point, p, Colors.DodgerBlue);
+                            this.Point = p;
                         }
                     }
                     break;
@@ -142,14 +163,82 @@ namespace Luo_Painter.TestApp
     {
 
         CanvasBitmap CanvasBitmap;
-        readonly BSplines BSplines = new BSplines();
+        BSplines2 BSplines = new BSplines2();
+        float Tension;
+        float Continuity;
+        float Bias;
+        int Steps = 16;
 
         public PenBSplinesPage()
         {
             this.InitializeComponent();
+            this.ConstructParameter();
             this.ConstructPenBSplines();
             this.ConstructCanvas();
             this.ConstructOperator();
+
+            this.BSplines.Arrange();
+        }
+
+        private void ConstructParameter()
+        {
+            this.TensionButton.Click += (s, e) => this.TensionSlider.Value = 0;
+            this.TensionSlider.Value = this.Tension * 100;
+            this.TensionSlider.ValueChanged += (s, e) =>
+            {
+                this.Tension = (float)e.NewValue / 100;
+
+                foreach (BSplinePoints item in this.BSplines)
+                {
+                    item.Tension = this.Tension;
+                }
+
+                this.BSplines.Arrange();
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+            this.ContinuityButton.Click += (s, e) => this.ContinuitySlider.Value = 0;
+            this.ContinuitySlider.Value = this.Continuity * 100;
+            this.ContinuitySlider.ValueChanged += (s, e) =>
+            {
+                this.Continuity = (float)e.NewValue / 100;
+
+                foreach (BSplinePoints item in this.BSplines)
+                {
+                    item.Continuity = this.Continuity;
+                }
+
+                this.BSplines.Arrange();
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+            this.BiasButton.Click += (s, e) => this.BiasSlider.Value = 0;
+            this.BiasSlider.Value = this.Bias * 100;
+            this.BiasSlider.ValueChanged += (s, e) =>
+            {
+                this.Bias = (float)e.NewValue / 100;
+
+                foreach (BSplinePoints item in this.BSplines)
+                {
+                    item.Bias = this.Bias;
+                }
+
+                this.BSplines.Arrange();
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
+
+            this.StepsSlider.ValueChanged += (s, e) =>
+            {
+                this.Steps = (int)e.NewValue;
+
+                foreach (BSplinePoints item in this.BSplines)
+                {
+                    item.Steps = this.Steps;
+                }
+
+                this.BSplines.Arrange();
+                this.CanvasControl.Invalidate(); // Invalidate
+            };
         }
 
         private void ConstructPenBSplines()
@@ -168,6 +257,7 @@ namespace Luo_Painter.TestApp
             this.ClearButton.Click += (s, e) =>
             {
                 this.BSplines.Clear();
+                this.BSplines.Arrange();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
         }
@@ -180,10 +270,10 @@ namespace Luo_Painter.TestApp
 
                 this.BSplines.Draw(args.DrawingSession);
 
-                foreach (Vector2 item in this.BSplines)
+                foreach (BSplinePoints item in this.BSplines)
                 {
-                    args.DrawingSession.FillCircle(item, 4, Colors.White);
-                    args.DrawingSession.FillCircle(item, 3, Colors.DodgerBlue);
+                    args.DrawingSession.FillCircle(item.Point, 4, Colors.White);
+                    args.DrawingSession.FillCircle(item.Point, 3, Colors.DodgerBlue);
                 }
             };
         }
@@ -191,34 +281,45 @@ namespace Luo_Painter.TestApp
         private void ConstructOperator()
         {
             // Single
-            this.Operator.Single_Start += (point, properties) =>
+            this.CanvasControl.PointerPressed += (s, e) =>
             {
+                PointerPoint pp = e.GetCurrentPoint(this.CanvasControl);
+                Vector2 point = pp.Position.ToVector2();
+
                 if (this.BSplines.Count is 0)
                 {
-                    this.BSplines.Add(point);
-                    this.BSplines.Add(point);
+                    this.BSplines.Add(new BSplinePoints { Point = point });
+                    this.BSplines.Add(new BSplinePoints { Point = point });
+                    this.BSplines.Arrange();
+                    this.CanvasControl.Invalidate(); // Invalidate
                 }
                 else
                 {
-                    this.BSplines.Add(point);
+                    this.BSplines.Add(new BSplinePoints { Point = point });
+                    this.BSplines.Arrange();
+                    this.CanvasControl.Invalidate(); // Invalidate
                 }
-
-                this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Delta += (point, properties) =>
+            this.CanvasControl.PointerMoved += (s, e) =>
             {
                 if (this.BSplines.Count < 2) return;
 
-                this.BSplines[this.BSplines.Count - 1] = point;
+                PointerPoint pp = e.GetCurrentPoint(this.CanvasControl);
+                Vector2 point = pp.Position.ToVector2();
 
+                this.BSplines[this.BSplines.Count - 1].Point = point;
+                this.BSplines.Arrange();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
-            this.Operator.Single_Complete += (point, properties) =>
+            this.CanvasControl.PointerReleased += (s, e) =>
             {
                 if (this.BSplines.Count < 2) return;
 
-                this.BSplines[this.BSplines.Count - 1] = point;
+                PointerPoint pp = e.GetCurrentPoint(this.CanvasControl);
+                Vector2 point = pp.Position.ToVector2();
 
+                this.BSplines[this.BSplines.Count - 1].Point = point;
+                this.BSplines.Arrange();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
 
@@ -234,8 +335,8 @@ namespace Luo_Painter.TestApp
                 }
 
                 Vector2 point = pp.Position.ToVector2();
-                this.BSplines[this.BSplines.Count - 1] = point;
-
+                this.BSplines[this.BSplines.Count - 1].Point = point;
+                this.BSplines.Arrange();
                 this.CanvasControl.Invalidate(); // Invalidate
             };
         }
