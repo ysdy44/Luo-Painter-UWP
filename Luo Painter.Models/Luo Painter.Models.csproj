@@ -123,6 +123,14 @@
     <Compile Include="ActionType.cs" />
     <Compile Include="ElementExtensions.cs" />
     <Compile Include="ElementType.cs" />
+    <Compile Include="Historys\HistoryMode.cs" />
+    <Compile Include="Historys\HistoryType.cs" />
+    <Compile Include="Historys\IHistory.cs" />
+    <Compile Include="Historys\Layerage.cs" />
+    <Compile Include="Historys\Models\ArrangeHistory.cs" />
+    <Compile Include="Historys\Models\CompositeHistory.cs" />
+    <Compile Include="Historys\Models\PropertyHistory.cs" />
+    <Compile Include="Historys\Models\SetupHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TipType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Models.rd.xml" />

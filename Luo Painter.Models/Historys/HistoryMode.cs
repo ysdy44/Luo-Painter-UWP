@@ -29,10 +29,5 @@
         /// Property of Layer
         /// </summary>
         Property,
-
-        /// <summary>
-        /// Property of Layers
-        /// </summary>
-        Propertys,
     }
 }

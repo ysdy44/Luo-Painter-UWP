@@ -1,6 +1,4 @@
-﻿using Windows.Graphics.Imaging;
-
-namespace Luo_Painter.Models.Historys
+﻿namespace Luo_Painter.Models.Historys
 {
     public class SetupHistory : IHistory
     {

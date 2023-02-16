@@ -120,14 +120,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HistoryMode.cs" />
-    <Compile Include="HistoryType.cs" />
-    <Compile Include="IHistory.cs" />
-    <Compile Include="Models\ArrangeHistory.cs" />
-    <Compile Include="Layerage.cs" />
-    <Compile Include="Models\CompositeHistory.cs" />
-    <Compile Include="Models\PropertyHistory.cs" />
-    <Compile Include="Models\SetupHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Historys.rd.xml" />
   </ItemGroup>
