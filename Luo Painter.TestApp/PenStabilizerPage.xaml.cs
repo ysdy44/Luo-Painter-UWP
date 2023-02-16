@@ -1,11 +1,10 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Luo_Painter.Elements;
-using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;

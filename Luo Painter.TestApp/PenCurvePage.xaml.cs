@@ -1,23 +1,19 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Brushes;
+using Luo_Painter.Blends;
 using Luo_Painter.Elements;
-using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
-using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp

@@ -1,4 +1,5 @@
 ﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Microsoft.Graphics.Canvas;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Luo_Painter.Layers.Models
 
         public int Index = -1;
         public AnchorCollection SelectedItem => (this.Index is -1) ? null : this.Anchorss[this.Index];
-        
+
         public void RemoveSelectedItem()
         {
             this.Anchorss.RemoveAt(this.Index);

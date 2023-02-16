@@ -1,6 +1,4 @@
-﻿using Luo_Painter.Layers;
-using Luo_Painter.Layers.Models;
-using Microsoft.Graphics.Canvas;
+﻿using Luo_Painter.Blends;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Luo_Painter.Layers
+namespace Luo_Painter.Blends
 {
     public sealed partial class Anchor : Node, IDisposable
     {
