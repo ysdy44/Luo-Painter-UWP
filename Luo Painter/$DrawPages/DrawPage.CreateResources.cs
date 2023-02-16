@@ -1,23 +1,18 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
-using Luo_Painter.Historys.Models;
+﻿using Luo_Painter.Elements;
 using Luo_Painter.Historys;
+using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
-using Luo_Painter.Projects;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Controls;
-using System.Linq;
-using System.Reflection.Metadata;
 using Windows.UI.Popups;
 
 namespace Luo_Painter
@@ -210,7 +205,7 @@ namespace Luo_Painter
                 this.LayerSelectedIndex = 0;
             }
 
-            /// History
+            // History
             Layerage[] redo = this.Nodes.Convert();
             int removes = this.History.Push(new ArrangeHistory(undo, redo));
 

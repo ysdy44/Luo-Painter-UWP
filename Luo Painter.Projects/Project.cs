@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Models
 {
     public abstract partial class Project : INotifyPropertyChanged
     {

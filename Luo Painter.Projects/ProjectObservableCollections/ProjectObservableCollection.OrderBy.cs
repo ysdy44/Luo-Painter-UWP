@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Models
 {
     public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
     {

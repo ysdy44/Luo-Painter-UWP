@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Projects.Models;
+﻿using Luo_Painter.Models.Projects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Models
 {
     public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
     {

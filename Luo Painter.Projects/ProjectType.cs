@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Projects
+﻿namespace Luo_Painter.Models
 {
     public enum ProjectType : int
     {

@@ -1,21 +1,15 @@
-﻿using FanKit.Transformers;
-using Luo_Painter.Blends;
+﻿using Luo_Painter.Blends;
 using Luo_Painter.Brushes;
 using Luo_Painter.Controls;
 using Luo_Painter.Elements;
 using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Models;
 using Luo_Painter.Options;
-using Luo_Painter.Projects;
-using Luo_Painter.Projects.Models;
-using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -30,10 +24,6 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
@@ -49,7 +39,6 @@ namespace Luo_Painter
 
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, ICommand
     {
-
         //@Key
         private bool IsKeyDown(VirtualKey key) => Window.Current.CoreWindow.GetKeyState(key).HasFlag(CoreVirtualKeyStates.Down);
         private bool IsCtrl => this.IsKeyDown(VirtualKey.Control);

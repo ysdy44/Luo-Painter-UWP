@@ -4,7 +4,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Models
 {
     public static class RandomAccessStreamExtensions
     {
@@ -17,7 +17,7 @@ namespace Luo_Painter.Projects
             return await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
         }
         public static async Task<IRandomAccessStream> OpenAsync(this StorageFolder folder, string fileName)
-        {            
+        {
             StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
             return await file.OpenAsync(FileAccessMode.ReadWrite);

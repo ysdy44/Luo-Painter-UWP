@@ -11,7 +11,7 @@ using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
 
-namespace Luo_Painter.Projects.Models
+namespace Luo_Painter.Models.Projects
 {
     public sealed partial class ProjectFile
     {

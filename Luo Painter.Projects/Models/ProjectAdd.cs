@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Luo_Painter.Projects.Models
+namespace Luo_Painter.Models.Projects
 {
     public sealed class ProjectAdd : Project
     {

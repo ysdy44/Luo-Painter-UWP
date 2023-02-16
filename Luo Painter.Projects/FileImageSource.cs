@@ -6,7 +6,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Models
 {
     /// <summary>
     /// Result of <see cref="FileImageSource"/>.

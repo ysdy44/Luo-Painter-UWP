@@ -2,7 +2,7 @@
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 
-namespace Luo_Painter.Projects
+namespace Luo_Painter.Models
 {
     public enum ProjectParameterType : byte
     {
