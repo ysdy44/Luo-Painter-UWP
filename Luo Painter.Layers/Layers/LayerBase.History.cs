@@ -1,10 +1,6 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
-using Microsoft.Graphics.Canvas;
+using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.ComponentModel;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers

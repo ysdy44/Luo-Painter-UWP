@@ -1,9 +1,5 @@
-﻿using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
+﻿using Microsoft.Graphics.Canvas;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using System.Xml.Linq;
@@ -11,7 +7,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase : IDisposable
+    public abstract partial class LayerBase : IDisposable, INotifyPropertyChanged
     {
 
         public float ConvertValueToOne(float value) => value / Math.Max(this.Width, this.Height);

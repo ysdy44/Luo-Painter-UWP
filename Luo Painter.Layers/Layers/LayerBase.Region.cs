@@ -1,14 +1,11 @@
-﻿using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
 using System;
 using System.Collections.Generic;
-using Windows.Foundation;
-using Windows.UI;
-using Windows.UI.Xaml;
 using System.Numerics;
+using Windows.Foundation;
 using Windows.Storage.Streams;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Text;
+using Windows.UI;
 
 namespace Luo_Painter.Layers
 {

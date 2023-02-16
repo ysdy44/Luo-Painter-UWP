@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Historys.Models
+﻿namespace Luo_Painter.Models.Historys
 {
     public class CompositeHistory : IHistory
     {

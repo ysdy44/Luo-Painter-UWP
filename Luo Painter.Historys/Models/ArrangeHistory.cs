@@ -1,4 +1,6 @@
-﻿namespace Luo_Painter.Historys.Models
+﻿using Luo_Painter.Models;
+
+namespace Luo_Painter.Models.Historys
 {
     public class ArrangeHistory : IHistory
     {

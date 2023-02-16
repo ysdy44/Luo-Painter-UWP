@@ -1,12 +1,11 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
 using Luo_Painter.Controls;
 using Luo_Painter.Elements;
-using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Models;
+using Luo_Painter.Models.Historys;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;

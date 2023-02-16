@@ -1,5 +1,5 @@
-﻿using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
+﻿using Luo_Painter.Models;
+using Luo_Painter.Models.Historys;
 using System.Collections.Generic;
 using System.Linq;
 

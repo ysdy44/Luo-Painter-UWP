@@ -1,11 +1,9 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Historys;
-using Luo_Painter.Historys.Models;
-using Luo_Painter.Layers;
+﻿using Luo_Painter.Layers;
+using Luo_Painter.Models;
+using Luo_Painter.Models.Historys;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {

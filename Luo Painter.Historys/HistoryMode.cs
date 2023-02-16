@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Historys
+﻿namespace Luo_Painter.Models
 {
     /// <summary>
     /// Mode of History
