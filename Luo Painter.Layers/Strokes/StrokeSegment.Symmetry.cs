@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Layers
+namespace Luo_Painter.Models
 {
     public partial struct StrokeSegment
     {

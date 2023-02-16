@@ -2,7 +2,7 @@
 using System.Numerics;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Layers
+namespace Luo_Painter.Models
 {
     public enum SymmetryMode : byte
     {
@@ -47,7 +47,7 @@ namespace Luo_Painter.Layers
                 // Only 1~count, Because 0 is self
                 for (int i = 1; i < count; i++)
                 {
-                    base.Add(Matrix3x2.CreateRotation(FanKit.Math.PiTwice / count * i, center));
+                    base.Add(Matrix3x2.CreateRotation(System.MathF.PI * 2 / count * i, center));
                 }
             }
         }

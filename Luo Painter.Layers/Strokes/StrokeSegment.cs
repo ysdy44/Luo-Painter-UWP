@@ -1,7 +1,8 @@
-﻿using System.Numerics;
+﻿using Luo_Painter.Layers;
+using System.Numerics;
 using Windows.Foundation;
 
-namespace Luo_Painter.Layers
+namespace Luo_Painter.Models
 {
     public partial struct StrokeSegment
     {
@@ -41,8 +42,7 @@ namespace Luo_Painter.Layers
 
             this.Size = size;
 
-            // Radius
-            this.Radius = spacing * System.Math.Max(1f, size * startingPressure);
+            this.Radius = spacing * size * startingPressure;
             this.Distance = Vector2.Distance(startingPosition, position);
 
             // Stroke

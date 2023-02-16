@@ -1,7 +1,7 @@
 ﻿using Luo_Painter.Elements;
-using Luo_Painter.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -47,7 +47,7 @@ namespace Luo_Painter.TestApp
                 if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result is null) return; 
+                if (result is null) return;
                 if (result is false) return;
 
                 this.CanvasControl.Invalidate(); // Invalidate

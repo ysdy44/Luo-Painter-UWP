@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Luo_Painter.Layers
+namespace Luo_Painter.Models
 {
     public sealed partial class PaintTaskCollection
     {

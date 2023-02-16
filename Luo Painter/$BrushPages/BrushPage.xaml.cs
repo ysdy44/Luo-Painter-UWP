@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Numerics;
@@ -63,7 +64,7 @@ namespace Luo_Painter
             this.ConstructOperator();
 
             this.ConstructInk();
-            
+
             this.IsDrak = base.ActualTheme is ElementTheme.Dark;
             base.ActualThemeChanged += (s, e) => this.IsDrak = base.ActualTheme is ElementTheme.Dark;
 
