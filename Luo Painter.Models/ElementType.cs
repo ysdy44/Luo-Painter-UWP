@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Elements
+﻿namespace Luo_Painter.Models
 {
     public enum ElementType
     {
