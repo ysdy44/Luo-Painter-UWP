@@ -10,6 +10,7 @@ using Luo_Painter.Layers;
 using Luo_Painter.Brushes;
 using System.Drawing;
 using Luo_Painter.Blends;
+using Luo_Painter.Models;
 
 namespace Luo_Painter
 {
