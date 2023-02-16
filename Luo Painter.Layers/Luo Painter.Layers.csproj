@@ -199,6 +199,10 @@
       <Project>{3F41D818-7A96-4A18-94D2-0C440A3108DE}</Project>
       <Name>Luo Painter.Historys</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Luo Painter.Models\Luo Painter.Models.csproj">
+      <Project>{3c61c09e-a4a7-459b-af8d-b5981bedd4e8}</Project>
+      <Name>Luo Painter.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
