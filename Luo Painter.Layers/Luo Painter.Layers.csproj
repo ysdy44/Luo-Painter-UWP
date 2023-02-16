@@ -120,15 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnchorCollections\AnchorCollection.CacheTransform.cs" />
-    <Compile Include="AnchorCollections\AnchorCollection.cs" />
-    <Compile Include="AnchorCollections\AnchorCollection.Export.cs" />
-    <Compile Include="AnchorCollections\AnchorCollection.Segment.cs" />
-    <Compile Include="Anchors\Anchor.Builder.cs" />
-    <Compile Include="Anchors\Anchor.cs" />
-    <Compile Include="Anchors\Anchor.Segment.cs" />
     <Compile Include="BitmapType.cs" />
-    <Compile Include="CanvasDrawingSessionExtensions.cs" />
     <Compile Include="ILayer.cs" />
     <Compile Include="ILayer.Drag.cs" />
     <Compile Include="ILayer.Render.cs" />
