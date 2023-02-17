@@ -261,41 +261,48 @@ namespace Luo_Painter
         }
     }
 
-    internal class OptionMenuFlyoutItem : TMenuFlyoutItem<OptionType>
+    internal static class CommandParameterExtensions
     {
-        protected override void OnTypeChanged(OptionType value)
+        //@Attached
+        public static OptionType GetButtonBase(ButtonBase dp) => dp.CommandParameter is OptionType value ? value : default;
+        public static void SetButtonBase(ButtonBase dp, OptionType value) => dp.CommandParameter = value;
+
+        public static OptionType GetSplitButton(SplitButton dp) => dp.CommandParameter is OptionType value ? value : default;
+        public static void SetSplitButton(SplitButton dp, OptionType value) => dp.CommandParameter = value;
+
+        public static OptionType GetMenuFlyoutItem(MenuFlyoutItem dp) => dp.CommandParameter is OptionType value ? value : default;
+        public static void SetMenuFlyoutItem(MenuFlyoutItem dp, OptionType value)
         {
             if (value.IsItemClickEnabled())
             {
-                base.Text = value.ToString();
-                base.CommandParameter = value;
+                dp.Text = value.ToString();
+                dp.CommandParameter = value;
             }
         }
-    }
-    internal class OptionMenuFlyoutItemWithIcon : OptionMenuFlyoutItem
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.OnTypeChanged(value);
 
+        public static OptionType GetMenuFlyoutItemWidthIcon(MenuFlyoutItem dp) => CommandParameterExtensions.GetMenuFlyoutItem(dp);
+        public static void SetMenuFlyoutItemWidthIcon(MenuFlyoutItem dp, OptionType value)
+        {
+            CommandParameterExtensions.SetMenuFlyoutItem(dp, value);
+            
             if (value.ExistIcon())
             {
-                base.Resources.Source = new Uri(value.GetResource());
-                base.Tag = new ContentControl
+                dp.Resources.Source = new Uri(value.GetResource());
+                dp.Tag = new ContentControl
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Template = value.GetTemplate(base.Resources)
+                    Template = value.GetTemplate(dp.Resources)
                 };
             }
 
             if (value.HasPreview())
             {
-                base.KeyboardAcceleratorTextOverride = "•";
+                dp.KeyboardAcceleratorTextOverride = "•";
             }
             else if (value.HasMenu())
             {
-                base.KeyboardAcceleratorTextOverride = ">";
+                dp.KeyboardAcceleratorTextOverride = ">";
             }
         }
     }
