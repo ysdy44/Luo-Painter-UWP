@@ -129,6 +129,9 @@
     <Compile Include="Anchors\Anchor.Segment.cs" />
     <Compile Include="BlendExtensions.cs" />
     <Compile Include="CanvasDrawingSessionExtensions.cs" />
+    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.cs" />
+    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.Fx.cs" />
+    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.HSB.cs" />
     <Compile Include="ReferenceImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagType.cs" />
