@@ -388,23 +388,6 @@ namespace Luo_Painter
                 this.RaiseHistoryCanExecuteChanged();
             };
 
-            this.NewButton.Click += (s, e) => this.Click(OptionType.AddBitmapLayer);
-            this.PaintButton.Click += (s, e) => this.Click(OptionType.PaintMenu);
-            this.ExportButton.Click += (s, e) => this.Click(OptionType.ExportMenu);
-            this.ExportButton.RightTapped += (s, e) => this.Click(OptionType.FileMenu);
-            this.ExportButton.Holding += (s, e) => this.Click(OptionType.FileMenu);
-            this.HomeButton.Click += (s, e) => this.Click(OptionType.Home);
-            this.UndoButton.Click += (s, e) => this.Click(OptionType.Undo);
-            this.RedoButton.Click += (s, e) => this.Click(OptionType.Redo);
-            this.UnFullScreenButton.Click += (s, e) => this.Click(OptionType.UnFullScreen);
-            this.FullScreenButton.Click += (s, e) => this.Click(OptionType.FullScreen);
-            //this.KeyButton.Click += (s, e) => this.KeyboardShortcuts.Tip();
-
-
-            this.DockLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
-            this.DockRightButton.Click += (s, e) => this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
-
-
             this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;
             this.SplitLeftButton.PointerEntered += (s, e) =>
             {

@@ -48,60 +48,6 @@
         <Flyout x:Name="NumberFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
         </Flyout>
-        <!--MenuFlyout-->
-        <MenuFlyout x:Name="FileFlyout" Placement="Bottom">
-            <!--File-->
-            <MenuFlyoutSeparator x:Name="FileHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                <UIElement.AccessKey>
-                    Files
-                </UIElement.AccessKey>
-            </MenuFlyoutSeparator>
-            <MenuFlyoutItem options:OptionExtensions.Type="Home" Command="{x:Bind Command}">
-                <MenuFlyoutItem.Tag>
-                    <SymbolIcon Symbol="Home"/>
-                </MenuFlyoutItem.Tag>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem options:OptionExtensions.Type="Save" Command="{x:Bind Command}">
-                <UIElement.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
-                </UIElement.KeyboardAccelerators>
-                <MenuFlyoutItem.Tag>
-                    <SymbolIcon Symbol="Save" Foreground="#FFC003"/>
-                </MenuFlyoutItem.Tag>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem options:OptionExtensions.Type="Close" Command="{x:Bind Command}">
-                <MenuFlyoutItem.Tag>
-                    <SymbolIcon Symbol="Cancel"/>
-                </MenuFlyoutItem.Tag>
-            </MenuFlyoutItem>
-        </MenuFlyout>
-        <MenuFlyout x:Name="ResizeFlyout" Placement="Bottom">
-            <!--Resize-->
-            <MenuFlyoutSeparator x:Name="ResizeHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                <UIElement.AccessKey>
-                    Resize
-                </UIElement.AccessKey>
-            </MenuFlyoutSeparator>
-            <MenuFlyoutItem options:OptionExtensions.Type="CropCanvas" Command="{x:Bind Command}"/>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
-            <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
-            <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
-        </MenuFlyout>
-        <MenuFlyout x:Name="RotateFlyout" Placement="Bottom">
-            <!--Rotate-->
-            <MenuFlyoutSeparator x:Name="RotateHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                <UIElement.AccessKey>
-                    Rotate
-                </UIElement.AccessKey>
-            </MenuFlyoutSeparator>
-            <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
-            <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
-            <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
-            <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
-        </MenuFlyout>
     </FrameworkElement.Resources>
 
 
@@ -1921,12 +1867,75 @@
                         </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="Home"/>
                     </Button>
-                    <Button x:Name="ExportButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="ExportToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Export
                             </ToolTip>
                         </ToolTipService.ToolTip>
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutSeparator x:Name="FileHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
+                                    <UIElement.AccessKey>
+                                        Files
+                                    </UIElement.AccessKey>
+                                </MenuFlyoutSeparator>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Home" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Home"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Save" Command="{x:Bind Command}">
+                                    <UIElement.KeyboardAccelerators>
+                                        <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                                    </UIElement.KeyboardAccelerators>
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Save"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSubItem Text="Export">
+                                    <MenuFlyoutSubItem.Icon>
+                                        <SymbolIcon Symbol="NewWindow"/>
+                                    </MenuFlyoutSubItem.Icon>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="JPEG" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="PNG" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="BMP" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="GIF" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="TIFF" Command="{x:Bind Command}"/>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="CropCanvas" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Crop"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSubItem Text="ResizeCanvas">
+                                    <MenuFlyoutSubItem.Icon>
+                                        <SymbolIcon Symbol="StopSlideShow"/>
+                                    </MenuFlyoutSubItem.Icon>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSubItem Text="RotateCanvas">
+                                    <MenuFlyoutSubItem.Icon>
+                                        <SymbolIcon Symbol="Orientation"/>
+                                    </MenuFlyoutSubItem.Icon>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Close" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Cancel"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
                         <elements:AnimationIcon x:Name="AnimationIcon"/>
                     </Button>
                     <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
@@ -2078,10 +2087,6 @@
                                         More
                                     </UIElement.AccessKey>
                                 </MenuFlyoutSeparator>
-                                <MenuFlyoutItem options:OptionExtensions.Type="ResizeCanvas" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="RotateCanvas" Command="{x:Bind Command}"/>
-
-                                <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem options:OptionExtensions.Type="Move" Command="{x:Bind Command}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="M"/>
