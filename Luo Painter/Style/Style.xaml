@@ -225,27 +225,20 @@
 
 
     <!--MenuFlyoutItem-->
-    <Style x:Key="MenuFlyoutItemStyleBase" TargetType="MenuFlyoutItem">
+    <Style TargetType="MenuFlyoutItem">
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Margin" Value="4,0" />
-        <Setter Property="Padding" Value="20,0,12,0" />
         <Setter Property="Width" Value="300" />
         <Setter Property="Height" Value="44" />
         <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
-        <!--<Setter Property="Background" Value="{ThemeResource MenuFlyoutItemRevealBackground}" />-->
-        <Setter Property="BorderBrush" Value="{ThemeResource MenuFlyoutItemRevealBorderBrush}" />
-        <Setter Property="BorderThickness" Value="{ThemeResource MenuFlyoutItemRevealBorderThickness}" />
-        <Setter Property="Foreground" Value="{ThemeResource MenuFlyoutItemForeground}" />
-        <!--<Setter Property="Padding" Value="{ThemeResource MenuFlyoutItemThemePadding}" />-->
-        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-        <Setter Property="KeyboardAcceleratorPlacementMode" Value="Hidden" />
     </Style>
-    <Style TargetType="luo_painter:OptionMenuFlyoutItem" BasedOn="{StaticResource MenuFlyoutItemStyleBase}"/>
-    <Style TargetType="luo_painter:OptionMenuFlyoutItemWithIcon" BasedOn="{StaticResource MenuFlyoutItemStyleBase}">
+    <Style x:Key="AppMenuFlyoutItemWithIconStyle" TargetType="MenuFlyoutItem">
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Margin" Value="4,0" />
         <Setter Property="Padding" Value="12,0" />
+        <Setter Property="Width" Value="300" />
+        <Setter Property="Height" Value="44" />
+        <Setter Property="Background" Value="{ThemeResource AppOpacity}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuFlyoutItem">
