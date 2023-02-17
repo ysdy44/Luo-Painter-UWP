@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Brushes;
+﻿using Luo_Painter.Blends;
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Options;
@@ -424,22 +424,10 @@ namespace Luo_Painter
                         Source = image
                     };
                 case OptionType.ColorMatch:
-                    Vector4 sourceHdr = this.ColorMatchSourceButton.ColorHdr;
-                    Vector4 destinationHdr = this.ColorMatchDestinationButton.ColorHdr;
                     return new ColorMatrixEffect
                     {
                         Source = image,
-                        ColorMatrix = new Matrix5x4
-                        {             
-                            /// <see cref="AdjustmentExtensions"/>
-                            #pragma warning disable IDE0055
-                            M11 = sourceHdr.X, M12 = 0, M13 = 0, M14 = 0, // Red
-                            M21 = 0, M22 = sourceHdr.Y, M23 = 0, M24 = 0, // Green
-                            M31 = 0, M32 = 0, M33 = sourceHdr.Z, M34 = 0, // Blue
-                            M41 = 0, M42 = 0, M43 = 0, M44 = sourceHdr.W, // Alpha
-                            M51 = destinationHdr.X, M52 = destinationHdr.Y, M53 = destinationHdr.Z, M54 = destinationHdr.W // Offset
-                            #pragma warning restore IDE0055
-                        }
+                        ColorMatrix = Matrix5x4Extension.ColorMatch(this.ColorMatchSourceButton.ColorHdr, this.ColorMatchDestinationButton.ColorHdr)
                     };
 
 

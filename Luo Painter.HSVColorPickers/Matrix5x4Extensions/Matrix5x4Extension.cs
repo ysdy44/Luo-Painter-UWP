@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
 
-namespace Luo_Painter.HSVColorPickers
+namespace Luo_Painter.Blends
 {
     /// <summary>
     /// Provides extended methods for <see cref="Matrix5x4"/> to build <see cref="ColorMatrixEffect"/>.
@@ -44,7 +44,7 @@ namespace Luo_Painter.HSVColorPickers
             M11 = -1, M12 = 0, M13 = 0, M14 = 0, // Red
             M21 = 0, M22 = -1, M23 = 0, M24 = 0, // Green
             M31 = 0, M32 = 0, M33 = -1, M34 = 0, // Blue
-            M41 = 0, M42 = 0, M43 = 0, M44 =  1, // Alpha
+            M41 = 0, M42 = 0, M43 = 0, M44 = 1, // Alpha
             M51 = 1, M52 = 1, M53 = 1, M54 = 0 // Offset
             #pragma warning restore IDE0055
         };
@@ -56,7 +56,7 @@ namespace Luo_Painter.HSVColorPickers
             M11 = Gray, M12 = Gray, M13 = Gray, M14 = 0, // Red
             M21 = Gray, M22 = Gray, M23 = Gray, M24 = 0, // Green
             M31 = Gray, M32 = Gray, M33 = Gray, M34 = 0, // Blue
-            M41 = 0, M42 = 0, M43 = 0, M44 =  1, // Alpha
+            M41 = 0, M42 = 0, M43 = 0, M44 = 1, // Alpha
             M51 = 0, M52 = 0, M53 = 0, M54 = 0 // Offset
             #pragma warning restore IDE0055
         };
@@ -68,7 +68,7 @@ namespace Luo_Painter.HSVColorPickers
             M11 = Red, M12 = Red, M13 = Red, M14 = 0, // Red
             M21 = Green, M22 = Green, M23 = Green, M24 = 0, // Green
             M31 = Blue, M32 = Blue, M33 = Blue, M34 = 0, // Blue
-            M41 = 0, M42 = 0, M43 = 0, M44 =  1, // Alpha
+            M41 = 0, M42 = 0, M43 = 0, M44 = 1, // Alpha
             M51 = 0, M52 = 0, M53 = 0, M54 = 0 // Offset
             #pragma warning restore IDE0055
         };
