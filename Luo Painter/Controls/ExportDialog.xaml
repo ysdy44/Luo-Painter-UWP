@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
@@ -23,7 +22,7 @@
 
     <StackPanel>
 
-        <Border Width="140" Height="140" Margin="0,0,0,8" Style="{StaticResource AppRoundedBorderStyle}">
+        <Border Width="140" Height="140" Style="{StaticResource AppRoundedBorderStyle}">
             <Grid>
                 <SymbolIcon Symbol="Page" >
                     <UIElement.RenderTransformOrigin>
@@ -41,7 +40,7 @@
                     VerticalAlignment="Center" 
                     >
                     <Border.Background>
-                        <SolidColorBrush Color="{x:Bind FileColorConverter(FormatComboBox.SelectedIndex), Mode=OneWay}"/>
+                        <SolidColorBrush Color="{x:Bind FileColorConverter(FileFormat), Mode=OneWay}"/>
                     </Border.Background>
                     <TextBlock
                         Foreground="White" 
@@ -49,57 +48,34 @@
                         FontWeight="Bold" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
-                        Text="{x:Bind FileTitleConverter(FormatComboBox.SelectedIndex), Mode=OneWay}"
+                        Text="{x:Bind FileTitleConverter(FileFormat), Mode=OneWay}"
                         />
                 </Border>
             </Grid>
         </Border>
 
-        <Grid ColumnSpacing="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!--DPI-->
-            <TextBlock x:Name="DPITextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
-                DPI
-            </TextBlock>
-            <ComboBox x:Name="DPIComboBox" Grid.Row="1" SelectedIndex="1" >
-                <ComboBoxItem>72</ComboBoxItem>
-                <ComboBoxItem FontWeight="Bold">96</ComboBoxItem>
-                <ComboBoxItem>144</ComboBoxItem>
-                <ComboBoxItem>192</ComboBoxItem>
-                <ComboBoxItem>300</ComboBoxItem>
-                <ComboBoxItem>400</ComboBoxItem>
-            </ComboBox>
-
-            <!--Export-->
-            <TextBlock x:Name="ExportTextBlock" Grid.Column="1" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                Export
-            </TextBlock>
-            <ComboBox x:Name="ComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" >
-                <ComboBoxItem x:Name="NoneItem" FontWeight="Bold">Export</ComboBoxItem>
-                <ComboBoxItem x:Name="AllItem">Export All Layers</ComboBoxItem>
-                <ComboBoxItem x:Name="CurrentItem">Export Current Layer</ComboBoxItem>
-            </ComboBox>
-        </Grid>
-
-        <!--Format-->
-        <TextBlock x:Name="FormatTextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
-            File Format
+        <!--DPI-->
+        <TextBlock x:Name="DPITextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
+            DPI
         </TextBlock>
-        <ListView x:Name="FormatComboBox" SelectedIndex="0" Style="{StaticResource AppListViewStyle}">
-            <luo_painter:FormatItem FontWeight="Bold" Type="Jpeg"/>
-            <luo_painter:FormatItem FontWeight="Bold" Type="Png"/>
-            <luo_painter:FormatItem Type="Bmp"/>
-            <luo_painter:FormatItem Type="Gif"/>
-            <luo_painter:FormatItem Type="Tiff"/>
-        </ListView>
+        <ComboBox x:Name="DPIComboBox" SelectedIndex="1" >
+            <ComboBoxItem>72</ComboBoxItem>
+            <ComboBoxItem FontWeight="Bold">96</ComboBoxItem>
+            <ComboBoxItem>144</ComboBoxItem>
+            <ComboBoxItem>192</ComboBoxItem>
+            <ComboBoxItem>300</ComboBoxItem>
+            <ComboBoxItem>400</ComboBoxItem>
+        </ComboBox>
+
+        <!--Export-->
+        <TextBlock x:Name="ExportTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
+            Export
+        </TextBlock>
+        <ComboBox x:Name="ComboBox" SelectedIndex="0" >
+            <ComboBoxItem x:Name="NoneItem" FontWeight="Bold">Export</ComboBoxItem>
+            <ComboBoxItem x:Name="AllItem">Export All Layers</ComboBoxItem>
+            <ComboBoxItem x:Name="CurrentItem">Export Current Layer</ComboBoxItem>
+        </ComboBox>
 
     </StackPanel>
 </ContentDialog>
