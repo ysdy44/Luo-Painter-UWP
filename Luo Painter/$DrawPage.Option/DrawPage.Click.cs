@@ -331,6 +331,27 @@ namespace Luo_Painter
                     this.IsFullScreen = false;
                     break;
 
+                case OptionType.JPEG:
+                    this.ExportDialog.FileFormat = CanvasBitmapFileFormat.Jpeg;
+                    this.Click(OptionType.ExportMenu);
+                    break;
+                case OptionType.PNG:
+                    this.ExportDialog.FileFormat = CanvasBitmapFileFormat.Png;
+                    this.Click(OptionType.ExportMenu);
+                    break;
+                case OptionType.BMP:
+                    this.ExportDialog.FileFormat = CanvasBitmapFileFormat.Bmp;
+                    this.Click(OptionType.ExportMenu);
+                    break;
+                case OptionType.GIF:
+                    this.ExportDialog.FileFormat = CanvasBitmapFileFormat.Gif;
+                    this.Click(OptionType.ExportMenu);
+                    break;
+                case OptionType.TIFF:
+                    this.ExportDialog.FileFormat = CanvasBitmapFileFormat.Tiff;
+                    this.Click(OptionType.ExportMenu);
+                    break;
+
                 #endregion
 
                 #region Edit
@@ -456,9 +477,8 @@ namespace Luo_Painter
                     this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
                     break;
 
-                case OptionType.FileMenu:
-                    this.FileFlyout.ShowAt(this.ExportButton);
-                    break;
+                //case OptionType.FileMenu:
+                //    break;
                 case OptionType.ExportMenu:
                     if (ContentDialogExtensions.CanShow)
                     {
@@ -532,21 +552,11 @@ namespace Luo_Painter
                     this.CanvasControl.Invalidate(); // Invalidate
                     break;
 
-                case OptionType.ResizeCanvas:
-                    this.ResizeFlyout.ShowAt(this, new Point
-                    {
-                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
-                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 4 - 44 - 44 - 44) / 2)
-                    });
-                    break;
+                //case OptionType.ResizeCanvas:
+                //    break;
 
-                case OptionType.RotateCanvas:
-                    this.RotateFlyout.ShowAt(this, new Point
-                    {
-                        X = Math.Max(0, (base.ActualWidth - 310) / 2),
-                        Y = Math.Max(50, (base.ActualHeight - 56 - 44 - 44 - 4 - 44 - 44 - 44) / 2)
-                    });
-                    break;
+                //case OptionType.RotateCanvas:
+                //    break;
 
                 case OptionType.Stretch:
                     if (ContentDialogExtensions.CanShow)

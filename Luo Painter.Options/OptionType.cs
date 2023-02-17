@@ -60,6 +60,12 @@ namespace Luo_Painter.Options
         FullScreen = File | 11 << 8 | IsItemClickEnabled,
         UnFullScreen = File | 12 << 8 | IsItemClickEnabled,
 
+        JPEG = File | 13 << 8 | ExistIcon | IsItemClickEnabled,
+        PNG = File | 14 << 8 | ExistIcon | IsItemClickEnabled,
+        BMP = File | 15 << 8 | ExistIcon | IsItemClickEnabled,
+        GIF = File | 16 << 8 | ExistIcon | IsItemClickEnabled,
+        TIFF = File | 17 << 8 | ExistIcon | IsItemClickEnabled,
+
         #endregion
 
         #region Edit
