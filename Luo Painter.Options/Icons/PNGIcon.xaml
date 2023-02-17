@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="PNGIcon" TargetType="ContentControl">
+        <Border CornerRadius="4" Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border.Background>
+                <SolidColorBrush Color="DodgerBlue"/>
+            </Border.Background>
+            <TextBlock Foreground="White" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                P
+            </TextBlock>
+        </Border>
+    </ControlTemplate>
+
+</ResourceDictionary>
