@@ -414,7 +414,7 @@ namespace Luo_Painter
             };
             this.EffectListView.ItemClick += (s, e) =>
             {
-                this.AdjustmentFlyout.Hide();
+                this.EffectFlyout.Hide();
                 {
                     this.Click(e);
                 }

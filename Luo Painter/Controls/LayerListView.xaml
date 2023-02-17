@@ -151,7 +151,7 @@
                             Type="{x:Bind BlendMode, Mode=OneWay}"
                             Opacity="{x:Bind UIVisibility, Mode=OneWay}"     
                             />
-                        
+
                         <local:LayerButton CommandParameter="{x:Bind}" Command="{x:Bind}" >
                             <FontIcon
                                 IsHitTestVisible="False"
@@ -355,31 +355,31 @@
                                 Layers
                             </UIElement.AccessKey>
                         </MenuFlyoutSeparator>
-                        <MenuFlyoutItem x:Name="CutLayerItem" options:OptionExtensions.Type="CutLayer" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem x:Name="CopyLayerItem" options:OptionExtensions.Type="CopyLayer" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem x:Name="PasteLayerItem" options:OptionExtensions.Type="PasteLayer" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem x:Name="RemoveItem" options:OptionExtensions.Type="Remove" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="CutLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem x:Name="CopyLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="CopyLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem x:Name="PasteLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="PasteLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem x:Name="RemoveItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Remove" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="Delete"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Name="DuplicateItem" options:OptionExtensions.Type="Duplicate" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="DuplicateItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="D"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="ExtractItem" options:OptionExtensions.Type="Extract" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="ExtractItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Extract" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="E"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="MergeItem" options:OptionExtensions.Type="Merge" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="MergeItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Merge" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="M"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="FlattenItem" options:OptionExtensions.Type="Flatten" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="FlattenItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="F"/>
                             </UIElement.KeyboardAccelerators>
@@ -393,28 +393,28 @@
                         </MenuFlyoutSeparator>
                         -->
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Name="GroupItem" options:OptionExtensions.Type="Group" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="GroupItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Group" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="G"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="UngroupItem" options:OptionExtensions.Type="Ungroup" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="UngroupItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="U"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="ReleaseItem" options:OptionExtensions.Type="Release" Command="{x:Bind Command}">
+                        <MenuFlyoutItem x:Name="ReleaseItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Release" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="R"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <!--
-                        <MenuFlyoutItem options:OptionExtensions.Type="ExpandStroke" Command="{x:Bind Command}"/>
+                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="Union" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="Exclude" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="Xor" Command="{x:Bind Command}"/>
-                        <MenuFlyoutItem options:OptionExtensions.Type="Intersect" Command="{x:Bind Command}"/>
+                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Union" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Xor" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         -->
                     </MenuFlyout>
                 </Button.Flyout>

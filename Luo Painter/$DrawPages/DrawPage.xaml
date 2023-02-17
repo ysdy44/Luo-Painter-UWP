@@ -248,7 +248,6 @@
                             ItemsSource="{x:Bind ObservableCollection}"
                             />
                         <SplitButton
-                            x:Name="NewButton"
                             Grid.Row="1" 
                             Margin="7,0" 
                             Height="40" 
@@ -256,6 +255,8 @@
                             BorderThickness="1"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
+                            local:CommandParameterExtensions.SplitButton="AddBitmapLayer" 
+                            Command="{x:Bind Command}" 
                             >
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="NewToolTip" Style="{StaticResource AppToolTipStyle}">
@@ -270,14 +271,14 @@
                                             New
                                         </UIElement.AccessKey>
                                     </MenuFlyoutSeparator>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="AddBitmapLayer" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddBitmapLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                         <UIElement.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Insert"/>
                                         </UIElement.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="AddImageLayer" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="AddCurveLayer" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="AddFillLayer" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddFillLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                             <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
@@ -1369,7 +1370,7 @@
                                     </Slider>
 
                                     <!--Paint-->
-                                    <Button x:Name="PaintButton" Grid.Column="1" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
+                                    <Button Grid.Column="1" Height="50" HorizontalAlignment="Stretch" local:CommandParameterExtensions.ButtonBase="PaintMenu" Command="{x:Bind Command}"  Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
                                         <ToolTipService.ToolTip>
                                             <ToolTip x:Name="PaintToolTip" Style="{StaticResource AppToolTipStyle}">
                                                 Paint Menu
@@ -1744,7 +1745,7 @@
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
 
-                            
+
                             <local:OptionCase Value="PatternGridTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
@@ -1818,7 +1819,7 @@
         <!--Head-->
         <Grid Height="50" VerticalAlignment="Top" >
 
-            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" local:CommandParameterExtensions.ButtonBase="DockLeft" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="DockLeftToolTip" Style="{StaticResource AppToolTipStyle}">
                         Dock Left
@@ -1837,7 +1838,7 @@
                 </StackPanel>
             </Button>
 
-            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" local:CommandParameterExtensions.ButtonBase="DockRight" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="DockRightToolTip" Style="{StaticResource AppToolTipStyle}">
                         Dock Right
@@ -1859,7 +1860,7 @@
             <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                    <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="Home" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="HomeToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Home
@@ -1897,11 +1898,11 @@
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="NewWindow"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="JPEG" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="PNG" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="BMP" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="GIF" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="TIFF" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="JPEG" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="PNG" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="BMP" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="GIF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="TIFF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="CropCanvas" Command="{x:Bind Command}">
@@ -1913,20 +1914,20 @@
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="StopSlideShow"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="Stretch" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="Extend" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="Offset" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Extend" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Offset" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSubItem Text="RotateCanvas">
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="Orientation"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipHorizontal" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="FlipVertical" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="LeftTurn" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="RightTurn" Command="{x:Bind Command}"/>
-                                    <MenuFlyoutItem options:OptionExtensions.Type="OverTurn" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Close" Command="{x:Bind Command}">
@@ -1938,7 +1939,7 @@
                         </Button.Flyout>
                         <elements:AnimationIcon x:Name="AnimationIcon"/>
                     </Button>
-                    <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button x:Name="FullScreenButton" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="FullScreen" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="FullScreenToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Full screen
@@ -1946,7 +1947,7 @@
                         </ToolTipService.ToolTip>
                         <SymbolIcon Symbol="FullScreen" />
                     </Button>
-                    <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="UnFullScreen" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="UnFullScreenToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Exit Full screen
@@ -1957,7 +1958,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button x:Name="UndoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button x:Name="UndoButton" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="Undo" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="UndoToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Undo
@@ -1968,7 +1969,7 @@
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
-                    <Button x:Name="RedoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button x:Name="RedoButton" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="Redo" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="RedoToolTip" Style="{StaticResource AppToolTipStyle}">
                                 Redo
@@ -2002,22 +2003,22 @@
                                         Edit
                                     </UIElement.AccessKey>
                                 </MenuFlyoutSeparator>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Cut" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Cut" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="X"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Copy" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Copy" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="C"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem x:Name="PasteItem" options:OptionExtensions.Type="Paste" Command="{x:Bind Command}">
+                                <MenuFlyoutItem x:Name="PasteItem" local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Paste" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="V"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem x:Name="ClearItem" options:OptionExtensions.Type="Clear" Command="{x:Bind Command}">
+                                <MenuFlyoutItem x:Name="ClearItem" local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Clear" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Key="Back"/>
                                     </UIElement.KeyboardAccelerators>
@@ -2031,31 +2032,31 @@
                                 </MenuFlyoutSeparator>
                                 -->
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="All" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="All" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="A"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Deselect" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Deselect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="D"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="MarqueeInvert" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="MarqueeInvert" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="I"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Pixel" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Pixel" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="P"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Feather" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="MarqueeTransform" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Grow" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Shrink" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Feather" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Grow" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <local:OptionIcon Type="EditMenu"/>
@@ -2067,7 +2068,7 @@
                             </ToolTip>
                         </ToolTipService.ToolTip>
                         <Button.Flyout>
-                            <Flyout x:Name="AdjustmentFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                            <Flyout x:Name="EffectFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                                 <controls:EffectListView x:Name="EffectListView"/>
                             </Flyout>
                         </Button.Flyout>
@@ -2087,24 +2088,24 @@
                                         More
                                     </UIElement.AccessKey>
                                 </MenuFlyoutSeparator>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Move" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Move" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="M"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Transform" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Transform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="T"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem options:OptionExtensions.Type="FreeTransform" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="FreeTransform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="GradientMapping" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="RippleEffect" Command="{x:Bind Command}"/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="Threshold" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="RippleEffect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Threshold" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem options:OptionExtensions.Type="HSB" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="HSB" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <local:OptionIcon Type="OtherMenu"/>
