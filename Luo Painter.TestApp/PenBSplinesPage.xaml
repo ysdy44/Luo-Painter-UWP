@@ -9,7 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
-    <SplitView IsPaneOpen="True" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="220">
+    <SplitView
+        IsPaneOpen="True" 
+        PanePlacement="Right" 
+        OpenPaneLength="220"
+        DisplayMode="Inline" 
+        >
         <SplitView.Pane>
             <StackPanel Padding="4">
                 <Slider x:Name="TensionSlider" Minimum="-100" Maximum="100">
@@ -50,55 +55,67 @@
                         </TextBlock>
                     </Slider.Header>
                 </Slider>
-                <CheckBox x:Name="CheckBox">
-                    Single
-                </CheckBox>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView
+            IsPaneOpen="True" 
+            PanePlacement="Left" 
+            OpenPaneLength="160"
+            DisplayMode="Inline" 
+            >
+            <SplitView.Pane>
                 <ListView x:Name="ListView">
+                    <ListView.Header>
+                        <CheckBox x:Name="CheckBox">
+                            Single
+                        </CheckBox>
+                    </ListView.Header>
                     <ItemsControl.ItemContainerTransitions>
                         <TransitionCollection>
 
                         </TransitionCollection>
                     </ItemsControl.ItemContainerTransitions>
                 </ListView>
-            </StackPanel>
-        </SplitView.Pane>
-        <Grid>
-            <xaml:CanvasControl x:Name="CanvasControl" />
-            <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+            </SplitView.Pane>
+            <Grid>
+                <xaml:CanvasControl x:Name="CanvasControl" />
+                <CommandBar x:Name="CommandBar" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
 
-                <ContentControl.Content>
-                    <TextBlock Margin="12,10,2,0" >
-                    <Run Foreground="Red">Pen</Run>
-                    <Run>+</Run>
-                    <Run Foreground="DodgerBlue">B-Splines</Run>
-                    </TextBlock>
-                </ContentControl.Content>
+                    <ContentControl.Content>
+                        <TextBlock Margin="12,10,2,0" >
+                            <Run Foreground="Red">Pen</Run>
+                            <Run>+</Run>
+                            <Run Foreground="DodgerBlue">B-Splines</Run>
+                        </TextBlock>
+                    </ContentControl.Content>
 
-                <AppBarButton x:Name="AddButton" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="A"/>
-                    </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <SymbolIcon Symbol="Add"/>
-                    </AppBarButton.Icon>
-                    <AppBarButton.Label>
-                        Add
-                    </AppBarButton.Label>
-                </AppBarButton>
+                    <AppBarButton x:Name="AddButton" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="A"/>
+                        </UIElement.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Add"/>
+                        </AppBarButton.Icon>
+                        <AppBarButton.Label>
+                            Add
+                        </AppBarButton.Label>
+                    </AppBarButton>
 
-                <AppBarButton x:Name="ClearButton" >
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="None" Key="Delete"/>
-                    </UIElement.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <SymbolIcon Symbol="Delete"/>
-                    </AppBarButton.Icon>
-                    <AppBarButton.Label>
-                        Clear
-                    </AppBarButton.Label>
-                </AppBarButton>
+                    <AppBarButton x:Name="ClearButton" >
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Delete"/>
+                        </UIElement.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <SymbolIcon Symbol="Delete"/>
+                        </AppBarButton.Icon>
+                        <AppBarButton.Label>
+                            Clear
+                        </AppBarButton.Label>
+                    </AppBarButton>
 
-            </CommandBar>
-        </Grid>
+                </CommandBar>
+            </Grid>
+        </SplitView>
     </SplitView>
+    
 </Page>
