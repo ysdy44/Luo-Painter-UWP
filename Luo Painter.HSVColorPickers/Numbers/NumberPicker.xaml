@@ -22,9 +22,9 @@
                 <!--Disabled-->
                 <VisualState x:Name="Disabled">
                     <VisualState.Setters>
-                        <Setter Target="TitleTextBlock.Foreground" Value="Red"/>
+                        <!--<Setter Target="TitleTextBlock.Foreground" Value="Red"/>-->
                         <Setter Target="Separator.Stroke" Value="Red"/>
-                        <Setter Target="OKButton.IsEnabled" Value="False"/>
+                        <!--<Setter Target="OKButton.IsEnabled" Value="False"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -43,7 +43,8 @@
             VerticalAlignment="Center" 
             Style="{StaticResource SubheaderTextBlockStyle}" 
             >
-            <Run x:Name="TitleRun">
+            <Run x:Name="Run1">
+            </Run><Run x:Name="Run2">
                 0
             </Run><Run>
                 <Run.Foreground>
@@ -151,15 +152,16 @@
             </UIElement.KeyboardAccelerators>
             0
         </Button>
+        <Button x:Name="DecimalButton" Canvas.Left="60" Canvas.Top="220" Width="60" Height="60" FontWeight="Bold" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Background="Transparent">
+            <UIElement.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="None" Key="Decimal"/>
+            </UIElement.KeyboardAccelerators>
+            .
+        </Button>
 
-        <Button x:Name="OKButton" Canvas.Left="62" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" FontSize="20" Content="&#xEC61;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" >
+        <Button x:Name="OKButton" Canvas.Left="122" Canvas.Top="224" Width="116" Height="52" CornerRadius="4" FontSize="20" Content="&#xEC61;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" >
             <UIElement.KeyboardAccelerators>
                 <KeyboardAccelerator Modifiers="None" Key="Enter"/>
-            </UIElement.KeyboardAccelerators>
-        </Button>
-        <Button x:Name="CancelButton" Canvas.Left="152" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" FontSize="20" Content="&#xEB90;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <UIElement.KeyboardAccelerators>
-                <KeyboardAccelerator Modifiers="None" Key="Escape"/>
             </UIElement.KeyboardAccelerators>
         </Button>
 

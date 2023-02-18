@@ -32,11 +32,10 @@ namespace Luo_Painter.HSVColorPickers
         //@Delegate
         public event NumberChangedHandler ValueChanging = null;
         public event NumberChangedHandler ValueChanged = null;
-        public event NumberChangedHandler SecondaryButtonClick = null;
 
         //@Content
         public bool IsNegative { get; private set; }
-        public double Absnumber { get; private set; }
+        public string Absnumber { get; private set; }
 
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
         public double Minimum { get; private set; }
@@ -98,32 +97,39 @@ namespace Luo_Painter.HSVColorPickers
             {
                 if (this.Timers is 0)
                 {
-                    this.Absnumber = 0;
+                    this.Absnumber = "0";
                     this.Invalidate(); // Invalidate
                 }
                 else
                 {
                     if (this.IsZero()) return;
-                    if (this.CanInput() is false) return;
-                    this.Absnumber *= 10;
+                    this.Absnumber += "0";
 
                     this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
                 }
+            };
+            this.DecimalButton.Click += (s, e) =>
+            {
+                if (this.Absnumber.Contains(".")) return;
+                this.Absnumber += ".";
+
+                this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
+                this.Invalidate(); // Invalidate
             };
 
             this.ClearButton.Click += (s, e) =>
             {
                 if (this.Timers is 0)
                 {
-                    this.Absnumber = 0;
+                    this.Absnumber = "0";
                     this.Invalidate(); // Invalidate
                 }
                 else
                 {
                     if (this.IsZero()) return;
                     this.IsNegative = false;
-                    this.Absnumber = 0;
+                    this.Absnumber = "0";
 
                     this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
@@ -133,13 +139,18 @@ namespace Luo_Painter.HSVColorPickers
             {
                 if (this.Timers is 0)
                 {
-                    this.Absnumber = 0;
+                    this.Absnumber = "0";
+                    this.Invalidate(); // Invalidate
+                }
+                else if (this.Absnumber.Length < 2)
+                {
+                    this.Absnumber = "0";
                     this.Invalidate(); // Invalidate
                 }
                 else
                 {
                     if (this.IsZero()) return;
-                    this.Absnumber /= 10;
+                    this.Absnumber = this.Absnumber.Remove(this.Absnumber.Length - 2, 1);
 
                     this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
@@ -147,27 +158,15 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.NegativeButton.Click += (s, e) =>
             {
-                if (this.Timers is 0)
-                {
-                    this.Invalidate(); // Invalidate
-                }
-                else
-                {
-                    if (this.IsZero()) return;
-                    this.IsNegative = !this.IsNegative;
+                this.IsNegative = !this.IsNegative;
 
-                    this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
-                    this.Invalidate(); // Invalidate
-                }
+                this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
+                this.Invalidate(); // Invalidate
             };
 
             this.OKButton.Click += (s, e) =>
             {
                 this.ValueChanged?.Invoke(this, this.ToValue()); // Delegate
-            };
-            this.CancelButton.Click += (s, e) =>
-            {
-                this.SecondaryButtonClick?.Invoke(this, this.ToValue()); // Delegate
             };
 
             this.PasteButton.Click += async (s, e) =>
@@ -178,22 +177,13 @@ namespace Luo_Painter.HSVColorPickers
                     string text = await view.GetTextAsync();
                     if (string.IsNullOrEmpty(text)) return;
 
-                    text = System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", "");
+                    text = System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+[.]", "");
                     if (string.IsNullOrEmpty(text)) return;
 
-                    if (int.TryParse(text, out int value))
+                    if (double.TryParse(text, out double value))
                     {
                         this.IsNegative = value < 0;
-                        this.Absnumber = System.Math.Abs(value);
-
-                        this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
-                        this.Invalidate(); // Invalidate
-                    }
-                    else if (double.TryParse(text, out double value2))
-                    {
-                        int value3 = (int)value2;
-                        this.IsNegative = value3 < 0;
-                        this.Absnumber = System.Math.Abs(value3);
+                        this.Absnumber = System.Math.Abs(value).ToString();
 
                         this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                         this.Invalidate(); // Invalidate
@@ -228,7 +218,7 @@ namespace Luo_Painter.HSVColorPickers
         public void Construct(INumberBase number)
         {
             this.IsNegative = number.Value < 0;
-            this.Absnumber = System.Math.Abs(number.Value);
+            this.Absnumber = System.Math.Abs(number.Value).ToString();
 
             this.Minimum = number.Minimum;
             this.Maximum = number.Maximum;
@@ -242,7 +232,9 @@ namespace Luo_Painter.HSVColorPickers
             // UI
             this.Timers = 0;
             VisualStateManager.GoToState(this, this.InRange() ? nameof(Normal) : nameof(Disabled), true);
-            this.TitleRun.Text = this.TextBlock.Text = this.ToString();
+            this.Run1.Text = this.IsNegative ? "-" : "";
+            this.Run2.Text = this.Absnumber;
+            this.TextBlock.Text = this.ToString();
             this.TitleTextBlock.SelectAll();
 
             // Popup
@@ -264,18 +256,23 @@ namespace Luo_Painter.HSVColorPickers
             // UI
             this.Timers++;
             VisualStateManager.GoToState(this, this.InRange() ? nameof(Normal) : nameof(Disabled), true);
-            this.TitleRun.Text = this.TextBlock.Text = this.ToString();
+            this.Run1.Text = this.IsNegative ? "-" : "";
+            this.Run2.Text = this.Absnumber;
+            this.TextBlock.Text = this.ToString();
         }
         private void Input(int value)
         {
             if (this.Timers is 0)
             {
-                this.Absnumber = value;
+                this.Absnumber = value.ToString();
+            }
+            else if (this.Absnumber is "0")
+            {
+                this.Absnumber = value.ToString();
             }
             else
             {
-                if (this.CanInput() is false) return;
-                this.Absnumber = this.Absnumber * 10 + value;
+                this.Absnumber += value.ToString();
             }
 
             this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
@@ -284,22 +281,27 @@ namespace Luo_Painter.HSVColorPickers
 
 
         //@Override   
-        /// <summary> <see cref="Int32.MaxValue"/> / 100 </summary>
-        public bool CanInput() => this.Absnumber < 21474836;
-        public bool IsZero() => this.Absnumber is 0;
+        public bool IsZero() => this.Absnumber is "0";
         public bool InRange()
         {
-            double value = this.IsNegative ? -this.Absnumber : this.Absnumber;
-            if (value < this.Minimum) return false;
-            if (value > this.Maximum) return false;
-            return true;
+            if (double.TryParse(this.Absnumber, out double value))
+            {
+                value = this.IsNegative ? -value : value;
+                if (value < this.Minimum) return false;
+                if (value > this.Maximum) return false;
+                return true;
+            }
+            else return false;
         }
         public double ToValue()
         {
-            double value = this.IsNegative ? -this.Absnumber : this.Absnumber;
-            if (value <= this.Minimum) return this.Minimum;
-            if (value >= this.Maximum) return this.Maximum;
-            return value;
+            if (double.TryParse(this.Absnumber, out double value))
+            {
+                if (value <= this.Minimum) return this.Minimum;
+                if (value >= this.Maximum) return this.Maximum;
+                return value;
+            }
+            else return 0;
         }
         public override string ToString()
         {
