@@ -51,9 +51,7 @@ namespace Luo_Painter.Controls
 
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
             this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
-
-            this.NumberPicker.SecondaryButtonClick += (s, e) => this.NumberFlyout.Hide();
-            this.NumberPicker.PrimaryButtonClick += (s, e) =>
+            this.NumberPicker.ValueChanged += (s, e) =>
             {
                 if (this.NumberFlyout.IsOpen is false) return;
                 this.NumberFlyout.Hide();

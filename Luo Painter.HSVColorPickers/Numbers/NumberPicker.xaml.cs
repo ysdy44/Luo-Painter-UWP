@@ -30,8 +30,8 @@ namespace Luo_Painter.HSVColorPickers
     public sealed partial class NumberPicker : UserControl
     {
         //@Delegate
-        public event NumberChangedHandler NumberChanging = null;
-        public event NumberChangedHandler PrimaryButtonClick = null;
+        public event NumberChangedHandler ValueChanging = null;
+        public event NumberChangedHandler ValueChanged = null;
         public event NumberChangedHandler SecondaryButtonClick = null;
 
         //@Content
@@ -107,7 +107,7 @@ namespace Luo_Painter.HSVColorPickers
                     if (this.CanInput() is false) return;
                     this.Absnumber *= 10;
 
-                    this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+                    this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
                 }
             };
@@ -125,7 +125,7 @@ namespace Luo_Painter.HSVColorPickers
                     this.IsNegative = false;
                     this.Absnumber = 0;
 
-                    this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+                    this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
                 }
             };
@@ -141,7 +141,7 @@ namespace Luo_Painter.HSVColorPickers
                     if (this.IsZero()) return;
                     this.Absnumber /= 10;
 
-                    this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+                    this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
                 }
             };
@@ -156,14 +156,14 @@ namespace Luo_Painter.HSVColorPickers
                     if (this.IsZero()) return;
                     this.IsNegative = !this.IsNegative;
 
-                    this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+                    this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                     this.Invalidate(); // Invalidate
                 }
             };
 
             this.OKButton.Click += (s, e) =>
             {
-                this.PrimaryButtonClick?.Invoke(this, this.ToValue()); // Delegate
+                this.ValueChanged?.Invoke(this, this.ToValue()); // Delegate
             };
             this.CancelButton.Click += (s, e) =>
             {
@@ -186,7 +186,7 @@ namespace Luo_Painter.HSVColorPickers
                         this.IsNegative = value < 0;
                         this.Absnumber = System.Math.Abs(value);
 
-                        this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+                        this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                         this.Invalidate(); // Invalidate
                     }
                     else if (double.TryParse(text, out double value2))
@@ -195,7 +195,7 @@ namespace Luo_Painter.HSVColorPickers
                         this.IsNegative = value3 < 0;
                         this.Absnumber = System.Math.Abs(value3);
 
-                        this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+                        this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                         this.Invalidate(); // Invalidate
                     }
                 }
@@ -278,7 +278,7 @@ namespace Luo_Painter.HSVColorPickers
                 this.Absnumber = this.Absnumber * 10 + value;
             }
 
-            this.NumberChanging?.Invoke(this, this.ToValue()); // Delegate
+            this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
             this.Invalidate(); // Invalidate
         }
 
