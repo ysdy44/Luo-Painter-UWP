@@ -6,16 +6,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Height="40"
+    Margin="4,0"
     d:DesignHeight="50"
     d:DesignWidth="200"
     >
 
     <FrameworkElement.Resources>
         <!--Style-->
-        <Style x:Name="RadioButtonStyle" TargetType="RadioButton">
-            <Setter Property="BorderBrush" Value="{ThemeResource AppStroke}" />
-            <Setter Property="Background" Value="DodgerBlue" />
-            <Setter Property="Foreground" Value="{ThemeResource RadioButtonForeground}" />
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="{ThemeResource RadioButtonBackgroundThemeBrush}" />
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -24,9 +24,10 @@
             <Setter Property="MinWidth" Value="30" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid x:Name="RootGrid" Background="Transparent">
+                    <ControlTemplate TargetType="ButtonBase">
+                        <Grid Background="Transparent">
 
+                            <!--VisualState-->
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal" />
@@ -45,35 +46,16 @@
 
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseStrokeDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonDisabledBackgroundThemeBrush}" />
-                                            </ObjectAnimationUsingKeyFrames> 
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Checked">
-                                        <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
                                         </Storyboard>
                                     </VisualState>
-                                    <VisualState x:Name="Unchecked" />
-                                    <VisualState x:Name="Indeterminate" />
 
                                 </VisualStateGroup>
-
                             </VisualStateManager.VisualStateGroups>
 
-                            <Ellipse x:Name="OuterEllipse" Width="26" Height="26" Opacity="0" UseLayoutRounding="False"
-                                                 StrokeThickness="1" Stroke="{TemplateBinding Foreground}" />
-                            <Ellipse x:Name="CheckOuterEllipse" Width="26" Height="26" Opacity="0"
-                                                 UseLayoutRounding="False" StrokeThickness="1" Stroke="{TemplateBinding Foreground}" />
-                            <Ellipse x:Name="CheckGlyph" Width="16" Height="16" UseLayoutRounding="False" 
-                                                 StrokeThickness="1" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" />
+                            <Ellipse x:Name="OuterEllipse" Width="26" Height="26" Opacity="0" UseLayoutRounding="False" StrokeThickness="1" Stroke="{TemplateBinding Foreground}" />
+                            <Ellipse x:Name="CheckOuterEllipse" Width="26" Height="26" Opacity="0" UseLayoutRounding="False" StrokeThickness="1" Stroke="{TemplateBinding Foreground}" />
+                            <Ellipse x:Name="CheckGlyph" Width="16" Height="16" UseLayoutRounding="False" StrokeThickness="1" Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" />
 
                         </Grid>
                     </ControlTemplate>
@@ -82,109 +64,14 @@
         </Style>
     </FrameworkElement.Resources>
 
-
-    <Grid x:Name="RootGrid" Padding="4,0">
-
-        <!--VisualState-->
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
-
-                <!--Normal-->
-                <VisualState x:Name="Normal"/>
-
-                <!--None-->
-                <VisualState x:Name="NoneState">
-                    <VisualState.Setters>
-                        <Setter Target = "None.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <!--Red-->
-                <VisualState x:Name="RedState">
-                    <VisualState.Setters>
-                        <Setter Target = "Red.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <!--Orange-->
-                <VisualState x:Name="OrangeState">
-                    <VisualState.Setters>
-                        <Setter Target = "Orange.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <!--Yellow-->
-                <VisualState x:Name="YellowState">
-                    <VisualState.Setters>
-                        <Setter Target = "Yellow.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <!--Green-->
-                <VisualState x:Name="GreenState">
-                    <VisualState.Setters>
-                        <Setter Target = "Green.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <!--Blue-->
-                <VisualState x:Name="BlueState">
-                    <VisualState.Setters>
-                        <Setter Target = "Blue.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <!--Purple-->
-                <VisualState x:Name="PurpleState">
-                    <VisualState.Setters>
-                        <Setter Target = "Purple.IsChecked" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-
-        <RadioButton x:Name="None" Grid.Column="0" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-        <RadioButton x:Name="Red" Grid.Column="1" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-        <RadioButton x:Name="Orange" Grid.Column="2" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-        <RadioButton x:Name="Yellow" Grid.Column="3" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-        <RadioButton x:Name="Green" Grid.Column="4" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-        <RadioButton x:Name="Blue" Grid.Column="5" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-        <RadioButton x:Name="Purple" Grid.Column="6" Style="{StaticResource RadioButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-        </RadioButton>
-
-    </Grid>
+    <StackPanel x:Name="StackPanel" Orientation="Horizontal">
+        <Button x:Name="None" Background="{ThemeResource RadioButtonBackgroundThemeBrush}" IsEnabled="{x:Bind NoneConverter(Type), Mode=OneWay}"/>
+        <Button x:Name="Red" Background="LightCoral" IsEnabled="{x:Bind RedConverter(Type), Mode=OneWay}"/>
+        <Button x:Name="Orange" Background="Orange" IsEnabled="{x:Bind OrangeConverter(Type), Mode=OneWay}"/>
+        <Button x:Name="Yellow" Background="Yellow" IsEnabled="{x:Bind YellowConverter(Type), Mode=OneWay}"/>
+        <Button x:Name="Green" Background="YellowGreen" IsEnabled="{x:Bind GreenConverter(Type), Mode=OneWay}"/>
+        <Button x:Name="Blue" Background="SkyBlue" IsEnabled="{x:Bind BlueConverter(Type), Mode=OneWay}"/>
+        <Button x:Name="Purple" Background="Plum" IsEnabled="{x:Bind PurpleConverter(Type), Mode=OneWay}"/>
+    </StackPanel>
 
 </UserControl>

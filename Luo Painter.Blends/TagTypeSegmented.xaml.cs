@@ -1,9 +1,7 @@
 ﻿using System;
-using Windows.ApplicationModel.Resources;
-using Windows.UI;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Blends
 {
@@ -16,32 +14,16 @@ namespace Luo_Painter.Blends
         //@Delegate
         public event EventHandler<TagType> TypeChanged;
 
-        //@VisualState
-        TagType _vsTagType;
-        /// <summary> 
-        /// Represents the visual appearance of UI elements in a specific state.
-        /// </summary>
-        public VisualState VisualState
-        {
-            get
-            {
-                switch (this._vsTagType)
-                {
-                    case TagType.None: return this.NoneState;
-                    case TagType.Red: return this.RedState;
-                    case TagType.Orange: return this.OrangeState;
-                    case TagType.Yellow: return this.YellowState;
-                    case TagType.Green: return this.GreenState;
-                    case TagType.Blue: return this.BlueState;
-                    case TagType.Purple: return this.PurpleState;
-                    default: return this.Normal;
-                }
-            }
-            set => VisualStateManager.GoToState(this, value.Name, false);
-        }
+        //@Converter
+        private bool NoneConverter(TagType value) => value != TagType.None;
+        private bool RedConverter(TagType value) => value != TagType.Red;
+        private bool OrangeConverter(TagType value) => value != TagType.Orange;
+        private bool YellowConverter(TagType value) => value != TagType.Yellow;
+        private bool GreenConverter(TagType value) => value != TagType.Green;
+        private bool BlueConverter(TagType value) => value != TagType.Blue;
+        private bool PurpleConverter(TagType value) => value != TagType.Purple;
 
         #region DependencyProperty
-
 
         /// <summary> Gets or sets the tag type. </summary>
         public TagType Type
@@ -50,20 +32,9 @@ namespace Luo_Painter.Blends
             set => base.SetValue(TypeProperty, value);
         }
         /// <summary> Identifies the <see cref = "TagTypeSegmented.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(TagType), typeof(TagTypeSegmented), new PropertyMetadata(TagType.None, (sender, e) =>
-        {
-            TagTypeSegmented control = (TagTypeSegmented)sender;
-
-            if (e.NewValue is TagType value)
-            {
-                control._vsTagType = value;
-                control.VisualState = control.VisualState; // State
-            }
-        }));
-
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(TagType), typeof(TagTypeSegmented), new PropertyMetadata(TagType.None));
 
         #endregion
-
 
         //@Construct
         /// <summary>
@@ -72,43 +43,34 @@ namespace Luo_Painter.Blends
         public TagTypeSegmented()
         {
             this.InitializeComponent();
-            this.ConstructGroup();
-
-            this.Loaded += (s, e) => this.VisualState = this.VisualState; // State
-        }
-
-
-        // Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
-
-        }
-
-
-        //@Group
-        private void ConstructGroup()
-        {
-            foreach (UIElement child in this.RootGrid.Children)
+            base.SizeChanged += (s, e) =>
             {
-                if (child is RadioButton button)
-                {
-                    string key = button.Name;
-                    TagType type = TagType.None;
-                    try
-                    {
-                        type = (TagType)Enum.Parse(typeof(TagType), key);
-                    }
-                    catch (Exception) { }
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
 
+                this.StackPanel.Width = e.NewSize.Width;
+                this.None.Width =
+                this.Red.Width =
+                this.Orange.Width =
+                this.Yellow.Width =
+                this.Green.Width =
+                this.Blue.Width =
+                this.Purple.Width =
+                e.NewSize.Width / 7;
+            };
 
-                    // Button
-                    button.Click += (s, e) => this.TypeChanged?.Invoke(this, type); // Delegate
-
-
-                    Color color = type.ToColor();
-                    button.Background = new SolidColorBrush(color);
-                }
-            }
+            this.None.Click += (s, e) => this.OnTypeChanged(TagType.None);
+            this.Red.Click += (s, e) => this.OnTypeChanged(TagType.Red);
+            this.Orange.Click += (s, e) => this.OnTypeChanged(TagType.Orange);
+            this.Yellow.Click += (s, e) => this.OnTypeChanged(TagType.Yellow);
+            this.Green.Click += (s, e) => this.OnTypeChanged(TagType.Green);
+            this.Blue.Click += (s, e) => this.OnTypeChanged(TagType.Blue);
+            this.Purple.Click += (s, e) => this.OnTypeChanged(TagType.Purple);
+        }
+        private void OnTypeChanged(TagType value)
+        {
+            this.Type = value;
+            this.TypeChanged?.Invoke(this, value); // Delegate
         }
     }
 }
