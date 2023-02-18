@@ -38,14 +38,10 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class MorphologyNumberSlider : NumberSliderBase
+    internal sealed class MorphologyNumberSlider : NumberSlider
     {
         //@Delegate
         public event RoutedEventHandler Toggled;
-        //@Override
-        public override double Number { get; set; } = 1;
-        public override double NumberMinimum { get; set; } = -90;
-        public override double NumberMaximum { get; set; } = 90;
         //@Content
         public int Size { get; private set; } = 1;
         public bool IsEmpty { get; private set; } = true;
@@ -53,6 +49,9 @@ namespace Luo_Painter
         //@Construct
         public MorphologyNumberSlider()
         {
+            base.Value = 1;
+            base.Minimum = -90;
+            base.Maximum = 90;
             base.ValueChanged += (s, e) =>
             {
                 int size = (int)e.NewValue;
