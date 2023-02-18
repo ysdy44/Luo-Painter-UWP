@@ -16,19 +16,18 @@ namespace Luo_Painter.HSVColorPickers
         //@Content
         public FrameworkElement PlacementTarget => this.Button;
 
-        /// <summary> <see cref="RangeBase.Value"/> </summary>
+        /// <summary> <see cref="RangeBase.Value"/> / 180 * Pi </summary>
         public double Angle { get; private set; }
+        /// <summary> <see cref="RangeBase.Value"/> </summary>
+        public double Value { get; private set; }
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
         public double Minimum => 0;
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        public double Maximum => System.MathF.PI * 2;
+        public double Maximum => 360;
 
-        /// <summary> <see cref="RangeBase.Value"/> </summary>
-        public double Number { get; private set; }
-        /// <summary> <see cref="RangeBase.Minimum"/> </summary>
-        public double NumberMinimum => 0;
-        /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        public double NumberMaximum => 360;
+        public double Number => this.Value;
+        public double NumberMinimum => this.Minimum;
+        public double NumberMaximum => this.Maximum;
 
         public string Unit => "º";
 
@@ -51,7 +50,7 @@ namespace Luo_Painter.HSVColorPickers
                 this.Wheel.Y = 80 - e.Position.Y;
 
                 this.SetAngle((float)WheelTemplateSettings.Atan2(this.Wheel));
-                this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                this.NumberChanged?.Invoke(this, this.Value); // Delegate
             };
             this.Ellipse.ManipulationDelta += (_, e) =>
             {
@@ -59,12 +58,12 @@ namespace Luo_Painter.HSVColorPickers
                 this.Wheel.Y -= e.Delta.Translation.Y;
 
                 this.SetAngle((float)WheelTemplateSettings.Atan2(this.Wheel));
-                this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                this.NumberChanged?.Invoke(this, this.Value); // Delegate
             };
             this.Ellipse.ManipulationCompleted += (_, e) =>
             {
                 this.SetAngle((float)WheelTemplateSettings.Atan2(this.Wheel));
-                this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                this.NumberChanged?.Invoke(this, this.Value); // Delegate
 
                 base.Focus(FocusState.Programmatic);
             };
@@ -82,17 +81,17 @@ namespace Luo_Painter.HSVColorPickers
                             {
                                 case VirtualKeyModifiers.Menu:
                                 case VirtualKeyModifiers.Shift:
-                                    if (this.SetNumber((this.Number - 45) / 45 * 45 % 360))
-                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    if (this.SetNumber((this.Value - 45) / 45 * 45 % 360))
+                                        this.NumberChanged?.Invoke(this, this.Value); // Delegate
                                     break;
                                 case VirtualKeyModifiers.Control:
                                 case VirtualKeyModifiers.Windows:
-                                    if (this.SetNumber((this.Number - 1) % 360))
-                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    if (this.SetNumber((this.Value - 1) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Value); // Delegate
                                     break;
                                 default:
-                                    if (this.SetNumber((this.Number - 5) % 360))
-                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    if (this.SetNumber((this.Value - 5) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Value); // Delegate
                                     break;
                             }
                         }
@@ -102,37 +101,37 @@ namespace Luo_Painter.HSVColorPickers
                             {
                                 case VirtualKeyModifiers.Menu:
                                 case VirtualKeyModifiers.Shift:
-                                    if (this.SetNumber((this.Number + 45) / 45 * 45 % 360))
-                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    if (this.SetNumber((this.Value + 45) / 45 * 45 % 360))
+                                        this.NumberChanged?.Invoke(this, this.Value); // Delegate
                                     break;
                                 case VirtualKeyModifiers.Control:
                                 case VirtualKeyModifiers.Windows:
-                                    if (this.SetNumber((this.Number + 1) % 360))
-                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    if (this.SetNumber((this.Value + 1) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Value); // Delegate
                                     break;
                                 default:
-                                    if (this.SetNumber((this.Number + 5) % 360))
-                                        this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                                    if (this.SetNumber((this.Value + 5) % 360))
+                                        this.NumberChanged?.Invoke(this, this.Value); // Delegate
                                     break;
                             }
                         }
                         break;
                 }
             };
-         
+
             base.KeyDown += (s, e) =>
             {
                 switch (e.Key)
                 {
                     case VirtualKey.Down:
                     case VirtualKey.Left:
-                        if (this.SetNumber((this.Number - 1) % 360))
-                            this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                        if (this.SetNumber((this.Value - 1) % 360))
+                            this.NumberChanged?.Invoke(this, this.Value); // Delegate
                         break;
                     case VirtualKey.Up:
                     case VirtualKey.Right:
-                        if (this.SetNumber((this.Number + 1) % 360))
-                            this.NumberChanged?.Invoke(this, this.Number); // Delegate
+                        if (this.SetNumber((this.Value + 1) % 360))
+                            this.NumberChanged?.Invoke(this, this.Value); // Delegate
                         break;
                     default:
                         break;
@@ -146,15 +145,15 @@ namespace Luo_Painter.HSVColorPickers
             this.Angle = angle;
             this.Zoom(this.Angle);
 
-            this.Number = (int)(angle * 180 / System.Math.PI);
-            this.Button.Content = $"{this.Number}{this.Unit}";
+            this.Value = (int)(angle * 180 / System.Math.PI);
+            this.Button.Content = $"{this.Value}{this.Unit}";
             return true;
         }
         public bool SetNumber(double number)
         {
-            if (this.Number == number) return false;
-            this.Number = number;
-            this.Button.Content = $"{this.Number}{this.Unit}";
+            if (this.Value == number) return false;
+            this.Value = number;
+            this.Button.Content = $"{this.Value}{this.Unit}";
 
             this.Angle = number * System.MathF.PI / 180;
             this.Zoom(this.Angle);
