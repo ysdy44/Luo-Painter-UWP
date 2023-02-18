@@ -1,11 +1,12 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System.Numerics;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class OffsetDialog : ContentDialog
     {
         //@Content
-        public System.Drawing.Point Offset => this.OffsetPicker.Offset;
+        public Vector2 Offset => this.OffsetPicker.Offset;
 
         //@Construct
         public OffsetDialog()
@@ -13,10 +14,10 @@ namespace Luo_Painter.Controls
             this.InitializeComponent();
         }
 
-        public void Resezing(int x, int y)
+        public void Resezing(Vector2 offset)
         {
-            this.OffsetPicker.ResezingX(x);
-            this.OffsetPicker.ResezingY(y);
+            this.OffsetPicker.ResezingX(offset.X);
+            this.OffsetPicker.ResezingY(offset.Y);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Windows.System;
+﻿using System.Numerics;
+using Windows.Foundation;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -11,7 +13,7 @@ namespace Luo_Painter.Controls
     {
 
         //@Converter
-        public  string Round2Converter(double value) => $"{value:0.00}";
+        public string Round2Converter(double value) => $"{value:0.00}";
 
         //@Content
         /// <summary> XTextBlock's Text. </summary>
@@ -20,13 +22,13 @@ namespace Luo_Painter.Controls
         public string YText { get => this.YTextBlock.Text; set => this.YTextBlock.Text = value; }
 
         /// <summary> Minimum. Default -16384. </summary>
-        public int Minimum { get; set; } = -16384;
+        public double Minimum { get; set; } = -16384;
         /// <summary> Maximum. Default 16384. </summary>
-        public int Maximum { get; set; } = 16384;
+        public double Maximum { get; set; } = 16384;
 
         /// <summary> Offset. </summary>
-        public System.Drawing.Point Offset => this.OffsetCore;
-        private System.Drawing.Point OffsetCore = new System.Drawing.Point
+        public Vector2 Offset => this.OffsetCore.ToVector2();
+        private Point OffsetCore = new Point
         {
             X = 0,
             Y = 0
@@ -84,7 +86,7 @@ namespace Luo_Painter.Controls
                 }
                 else
                 {
-                    this.OffsetCore.X = (int)value;
+                    this.OffsetCore.X = value;
                     this.CacheX = value;
                     this.XTextBox.Text = this.Round2Converter(value);
                 }
@@ -131,7 +133,7 @@ namespace Luo_Painter.Controls
                 }
                 else
                 {
-                    this.OffsetCore.Y = (int)value;
+                    this.OffsetCore.Y = value;
                     this.CacheY = value;
                     this.YTextBox.Text = this.Round2Converter(value);
                 }
@@ -154,7 +156,7 @@ namespace Luo_Painter.Controls
             }
             else
             {
-                this.OffsetCore.X = (int)value;
+                this.OffsetCore.X = value;
                 this.CacheX = value;
                 this.XTextBox.Text = this.Round2Converter(value);
             }
@@ -176,7 +178,7 @@ namespace Luo_Painter.Controls
             }
             else
             {
-                this.OffsetCore.Y = (int)value;
+                this.OffsetCore.Y = value;
                 this.CacheY = value;
                 this.YTextBox.Text = this.Round2Converter(value);
             }

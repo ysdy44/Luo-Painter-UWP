@@ -648,17 +648,14 @@ namespace Luo_Painter
                 case OptionType.Offset:
                     if (ContentDialogExtensions.CanShow)
                     {
-                        this.OffsetDialog.Resezing(0, 0);
+                        this.OffsetDialog.Resezing(Vector2.Zero);
                         ContentDialogResult result = await this.OffsetDialog.ShowInstance();
 
                         switch (result)
                         {
                             case ContentDialogResult.Primary:
-                                int x = this.OffsetDialog.Offset.X;
-                                int y = this.OffsetDialog.Offset.Y;
-                                if (x == 0 && y == 0) break;
-
-                                Vector2 offset = new Vector2(x, y);
+                                Vector2 offset = this.OffsetDialog.Offset;
+                                if (offset == Vector2.Zero) break;
 
                                 // History
                                 int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Offset(this.CanvasDevice, offset)).ToArray()));
