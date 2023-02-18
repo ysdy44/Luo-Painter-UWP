@@ -17,15 +17,9 @@ namespace Luo_Painter.Controls
         public event RoutedEventHandler ScratchpadClick { remove => this.ScratchpadButton.Click -= value; add => this.ScratchpadButton.Click += value; }
 
         //@Converter
-        private int IntConverter(double value) => (int)value;
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
-
-        private int SizeXToYConverter(double value) => (int)this.SizeRange.ConvertXToY(value);
-        private int SpacingXToYConverter(double value) => (int)this.SpacingRange.ConvertXToY(value);
-
         private CornerRadius CornerRadiusConverter(int value) => new CornerRadius((value is 0 || value is 1) ? 40 : 0);
         private double TipOpacityConverter(int value) => (value is 0 || value is 2) ? 1 : 0;
-
         private int ZeroConverter(InkType value) => 0;
 
         #region Converter

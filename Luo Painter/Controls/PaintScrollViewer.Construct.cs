@@ -16,21 +16,21 @@ namespace Luo_Painter.Controls
 
                 // Property
                 // 1.Minimum
-                this.SizeSlider.Minimum = this.SizeRange.XRange.Minimum;
+                this.SizeSlider.Minimum = 1d;
                 //this.OpacitySlider.Minimum = 0d;
-                this.SpacingSlider.Minimum = this.SpacingRange.XRange.Minimum;
+                this.SpacingSlider.Minimum = 10d;
                 //this.FlowSlider.Minimum = 0d;
 
                 // 2.Value
-                this.SizeSlider.Value = this.SizeRange.ConvertYToX(presenter.Size);
+                this.SizeSlider.Value = presenter.Size;
                 this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
-                this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(presenter.Spacing * 100);
+                this.SpacingSlider.Value = presenter.Spacing * 100;
                 this.FlowSlider.Value = System.Math.Clamp(presenter.Flow * 100d, 0d, 100d);
 
                 // 3.Maximum
-                this.SizeSlider.Maximum = this.SizeRange.XRange.Maximum;
+                this.SizeSlider.Maximum = 400d;
                 //this.OpacitySlider.Maximum = 100d;
-                this.SpacingSlider.Maximum = this.SpacingRange.XRange.Maximum;
+                this.SpacingSlider.Maximum = 400d;
                 //this.FlowSlider.Maximum = 100d;
 
 

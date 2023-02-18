@@ -28,7 +28,7 @@ namespace Luo_Painter.Controls
             this.SizeSlider.ValueChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                double size = this.SizeRange.ConvertXToY(e.NewValue);
+                double size = System.Math.Max(e.NewValue, 0);
                 this.InkPresenter.Size = (float)size;
                 this.TryInkAsync();
             };
@@ -42,9 +42,8 @@ namespace Luo_Painter.Controls
             this.SpacingSlider.ValueChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                double spacing = this.SpacingRange.ConvertXToY(e.NewValue);
-                double spacing2 = System.Math.Clamp(spacing / 100, 0.1, 4);
-                this.InkPresenter.Spacing = (float)spacing2;
+                double spacing = System.Math.Clamp(e.NewValue / 100, 0.1, 4);
+                this.InkPresenter.Spacing = (float)spacing;
                 this.TryInkAsync();
             };
             this.FlowSlider.ValueChanged += (s, e) =>

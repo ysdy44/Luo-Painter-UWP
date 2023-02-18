@@ -16,9 +16,6 @@
     >
 
     <FrameworkElement.Resources>
-        <!--Range-->
-        <luo_painter:SizeRange x:Name="SizeRange"/>
-        <luo_painter:SpacingRange x:Name="SpacingRange"/>
         <!--Flyout-->
         <Flyout x:Name="NumberFlyout" Placement="LeftEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
@@ -224,7 +221,7 @@
                             </ComboBox>
                         </ListViewBase.Footer>
 
-                        <ListViewItem x:Name="PropertyItem">Property</ListViewItem>
+                        <ListViewItem x:Name="PropertyItem">Properties</ListViewItem>
                         <ListViewItem x:Name="TextureItem" Visibility="{x:Bind TextureVisibilityConverter(Type), Mode=OneWay}">Texture</ListViewItem>
                         <ListViewItem x:Name="MixItem" Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}">Mix Color</ListViewItem>
 
@@ -237,28 +234,23 @@
 
                             <!--Property-->
                             <TextBlock x:Name="PropertyTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                Property
+                                Properties
                             </TextBlock>
 
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
                                 <StackPanel Margin="2">
 
                                     <!--Size-->
-                                    <hsvColorPickers:NumberSlider2
+                                    <hsvColorPickers:NumberSlider
                                         x:Name="SizeSlider" 
-                                        SmallChange="1000" 
-                                        StepFrequency="1000" 
-                                        Number="{x:Bind SizeXToYConverter(SizeSlider.Value), Mode=OneWay}"
-                                        NumberMinimum="{x:Bind IntConverter(SizeRange.YRange.Minimum), Mode=OneWay}"
-                                        NumberMaximum="{x:Bind IntConverter(SizeRange.YRange.Maximum), Mode=OneWay}"
                                         Decrease="True"
-                                        TickFrequency="25000" 
+                                        TickFrequency="100" 
                                         TickPlacement="Outside" 
                                         >
                                         <Slider.Header>
                                             Size
                                         </Slider.Header>
-                                    </hsvColorPickers:NumberSlider2>
+                                    </hsvColorPickers:NumberSlider>
 
                                     <!--Opacity-->
                                     <hsvColorPickers:NumberSlider
@@ -276,16 +268,11 @@
                                     </hsvColorPickers:NumberSlider>
 
                                     <!--Spacing-->
-                                    <hsvColorPickers:NumberSlider2
+                                    <hsvColorPickers:NumberSlider
                                         x:Name="SpacingSlider"
-                                        SmallChange="10000" 
-                                        StepFrequency="10000"
-                                        Number="{x:Bind SpacingXToYConverter(SpacingSlider.Value), Mode=OneWay}"
-                                        NumberMinimum="{x:Bind IntConverter(SpacingRange.YRange.Minimum), Mode=OneWay}"
-                                        NumberMaximum="{x:Bind IntConverter(SpacingRange.YRange.Maximum), Mode=OneWay}"
                                         Decrease="True" 
                                         Unit="%"
-                                        TickFrequency="250000" 
+                                        TickFrequency="100" 
                                         TickPlacement="Outside" 
                                         Foreground="{ThemeResource AppForeground}" 
                                         Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}" 
@@ -293,7 +280,7 @@
                                         <Slider.Header>
                                             Spacing
                                         </Slider.Header>
-                                    </hsvColorPickers:NumberSlider2>
+                                    </hsvColorPickers:NumberSlider>
 
                                     <!--Flow-->
                                     <hsvColorPickers:NumberSlider

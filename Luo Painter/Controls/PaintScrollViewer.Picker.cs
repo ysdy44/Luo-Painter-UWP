@@ -62,13 +62,13 @@ namespace Luo_Painter.Controls
                         break;
 
                     case PaintNumberPickerMode.Size:
-                        this.SizeSlider.Value = this.SizeRange.ConvertYToX(e);
+                        this.SizeSlider.Value = e;
                         break;
                     case PaintNumberPickerMode.Opacity:
                         this.OpacitySlider.Value = e;
                         break;
                     case PaintNumberPickerMode.Spacing:
-                        this.SpacingSlider.Value = this.SpacingRange.ConvertYToX(e);
+                        this.SpacingSlider.Value = e;
                         break;
                     case PaintNumberPickerMode.Flow:
                         this.FlowSlider.Value = e;
