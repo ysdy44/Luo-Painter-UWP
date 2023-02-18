@@ -17,18 +17,18 @@ namespace Luo_Painter.HSVColorPickers
         public FrameworkElement PlacementTarget => this.Button;
 
         /// <summary> <see cref="RangeBase.Value"/> </summary>
-        public float Angle { get; private set; }
+        public double Angle { get; private set; }
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
-        public float Minimum => 0;
+        public double Minimum => 0;
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        public float Maximum => System.MathF.PI * 2;
+        public double Maximum => System.MathF.PI * 2;
 
         /// <summary> <see cref="RangeBase.Value"/> </summary>
-        public int Number { get; private set; }
+        public double Number { get; private set; }
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
-        public int NumberMinimum => 0;
+        public double NumberMinimum => 0;
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        public int NumberMaximum => 360;
+        public double NumberMaximum => 360;
 
         public string Unit => "º";
 
@@ -150,7 +150,7 @@ namespace Luo_Painter.HSVColorPickers
             this.Button.Content = $"{this.Number}{this.Unit}";
             return true;
         }
-        public bool SetNumber(int number)
+        public bool SetNumber(double number)
         {
             if (this.Number == number) return false;
             this.Number = number;

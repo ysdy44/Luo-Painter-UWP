@@ -7,9 +7,9 @@ namespace Luo_Painter.HSVColorPickers
     public sealed partial class NumberSlider : NumberSliderBase
     {
         //@Override
-        public override int Number { get => (int)System.Math.Round(base.Value, System.MidpointRounding.ToEven); set => base.Value = value; }
-        public override int NumberMinimum { get => (int)System.Math.Round(base.Minimum, System.MidpointRounding.ToEven); set => base.Minimum = value; }
-        public override int NumberMaximum { get => (int)System.Math.Round(base.Maximum, System.MidpointRounding.ToEven); set => base.Maximum = value; }
+        public override double Number { get => System.Math.Round(base.Value, System.MidpointRounding.ToEven); set => base.Value = value; }
+        public override double NumberMinimum { get => System.Math.Round(base.Minimum, System.MidpointRounding.ToEven); set => base.Minimum = value; }
+        public override double NumberMaximum { get => System.Math.Round(base.Maximum, System.MidpointRounding.ToEven); set => base.Maximum = value; }
 
         //@Construct
         public NumberSlider()
@@ -27,7 +27,7 @@ namespace Luo_Painter.HSVColorPickers
     public sealed partial class NumberSlider2 : NumberSliderBase
     {
         //@Override
-        public override int Number
+        public override double Number
         {
             get => this.number;
             set
@@ -38,9 +38,9 @@ namespace Luo_Painter.HSVColorPickers
                 else this.HeaderButton.Content = $"{value}{this.Unit}";
             }
         }
-        private int number;
-        public override int NumberMinimum { get; set; }
-        public override int NumberMaximum { get; set; } = 100;
+        private double number;
+        public override double NumberMinimum { get; set; }
+        public override double NumberMaximum { get; set; } = 100;
 
         //@Construct
         public NumberSlider2()
@@ -67,9 +67,9 @@ namespace Luo_Painter.HSVColorPickers
         }
 
         //@Abstract
-        public abstract int Number { get; set; }
-        public abstract int NumberMinimum { get; set; }
-        public abstract int NumberMaximum { get; set; }
+        public abstract double Number { get; set; }
+        public abstract double NumberMinimum { get; set; }
+        public abstract double NumberMaximum { get; set; }
 
         public string Unit
         {

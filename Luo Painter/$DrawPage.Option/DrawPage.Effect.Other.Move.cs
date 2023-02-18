@@ -22,7 +22,7 @@ namespace Luo_Painter
             this.MovePicker.Value = this.Move;
         }
 
-        private void SetMove(NumberPickerMode mode, int e)
+        private void SetMove(NumberPickerMode mode, float e)
         {
             switch (mode)
             {

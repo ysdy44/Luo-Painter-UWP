@@ -128,7 +128,7 @@ namespace Luo_Painter
                                 break;
 
                             case OptionType.GammaTransfer:
-                                this.SetGammaTransfer(mode, e);
+                                this.SetGammaTransfer(mode, (float)e);
                                 break;
                             case OptionType.Vignette:
                                 this.VignetteSlider.Value = e;
@@ -209,17 +209,17 @@ namespace Luo_Painter
                                 this.ChromaKeySlider.Value = e;
                                 break;
                             case OptionType.DiscreteTransfer:
-                                this.SetDiscreteTransfer(mode, e);
+                                this.SetDiscreteTransfer(mode, (float)e);
                                 break;
 
                             case OptionType.Move:
-                                this.SetMove(mode, e);
+                                this.SetMove(mode, (float)e);
                                 break;
                             case OptionType.Transform:
-                                this.SetTransform(mode, e);
+                                this.SetTransform(mode, (float)e);
                                 break;
                             case OptionType.FreeTransform:
-                                this.SetFreeTransform(mode, e);
+                                this.SetFreeTransform(mode, (float)e);
                                 break;
 
                             case OptionType.DisplacementLiquefaction:

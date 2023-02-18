@@ -43,10 +43,11 @@ namespace Luo_Painter
         //@Delegate
         public event RoutedEventHandler Toggled;
         //@Override
-        public override int Number { get; set; } = 1;
-        public override int NumberMinimum { get; set; } = -90;
-        public override int NumberMaximum { get; set; } = 90;
+        public override double Number { get; set; } = 1;
+        public override double NumberMinimum { get; set; } = -90;
+        public override double NumberMaximum { get; set; } = 90;
         //@Content
+        public int Size { get; private set; } = 1;
         public bool IsEmpty { get; private set; } = true;
         public MorphologyEffectMode Mode { get; private set; } = MorphologyEffectMode.Dilate;
         //@Construct
@@ -57,7 +58,7 @@ namespace Luo_Painter
                 int size = (int)e.NewValue;
                 this.IsEmpty = size == 0;
                 this.Mode = size < 0 ? MorphologyEffectMode.Erode : MorphologyEffectMode.Dilate;
-                this.Number = Math.Clamp(Math.Abs(size), 1, 90);
+                this.Size = Math.Clamp(Math.Abs(size), 1, 90);
                 this.Toggled?.Invoke(s, e); //Delegate
                 if (this.HeaderButton is null) return;
                 this.HeaderButton.Content = size;
@@ -485,8 +486,8 @@ namespace Luo_Painter
                 case OptionType.Morphology:
                     return this.MorphologySlider.IsEmpty ? image : new MorphologyEffect
                     {
-                        Width = this.MorphologySlider.Number,
-                        Height = this.MorphologySlider.Number,
+                        Width = this.MorphologySlider.Size,
+                        Height = this.MorphologySlider.Size,
                         Mode = this.MorphologySlider.Mode,
                         Source = image,
                     };

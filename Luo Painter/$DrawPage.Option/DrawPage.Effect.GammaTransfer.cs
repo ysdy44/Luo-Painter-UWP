@@ -114,7 +114,7 @@ namespace Luo_Painter
             this.GTOBSlider.Click += (s, e) => this.NumberShowAt(this.GTOBSlider, (NumberPickerMode)11);
         }
 
-        private void SetGammaTransfer(NumberPickerMode mode, int e)
+        private void SetGammaTransfer(NumberPickerMode mode, float e)
         {
             switch ((int)mode)
             {

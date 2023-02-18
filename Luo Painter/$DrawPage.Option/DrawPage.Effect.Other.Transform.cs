@@ -31,7 +31,7 @@ namespace Luo_Painter
             this.SetTransformer(this.Transform.Transformer);
         }
 
-        private void SetTransform(NumberPickerMode mode, int e)
+        private void SetTransform(NumberPickerMode mode, float e)
         {
             switch ((int)mode)
             {

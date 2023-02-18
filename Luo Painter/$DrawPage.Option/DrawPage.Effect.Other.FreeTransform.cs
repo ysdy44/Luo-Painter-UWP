@@ -38,7 +38,7 @@ namespace Luo_Painter
             this.LBPicker.Value = this.FreeTransform.Transformer.LeftBottom;
         }
 
-        private void SetFreeTransform(NumberPickerMode mode, int e)
+        private void SetFreeTransform(NumberPickerMode mode, float e)
         {
             switch ((int)mode)
             {

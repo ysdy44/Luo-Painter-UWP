@@ -62,13 +62,13 @@ namespace Luo_Painter.Controls
                         break;
 
                     case ColorNumberPickerMode.Hue:
-                        this.HSVPicker.ResetHue(e);
+                        this.HSVPicker.ResetHue((float)e);
                         break;
                     case ColorNumberPickerMode.Saturation:
-                        this.HSVPicker.ResetSaturation(e / 100f);
+                        this.HSVPicker.ResetSaturation((float)e / 100f);
                         break;
                     case ColorNumberPickerMode.Value:
-                        this.HSVPicker.ResetValue(e / 100f);
+                        this.HSVPicker.ResetValue((float)e / 100f);
                         break;
 
                     default:

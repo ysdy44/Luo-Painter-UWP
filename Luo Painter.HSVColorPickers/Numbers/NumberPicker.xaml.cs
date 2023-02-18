@@ -12,11 +12,11 @@ namespace Luo_Painter.HSVColorPickers
     public interface INumberBase
     {
         /// <summary> <see cref="RangeBase.Value"/> </summary>
-        int Number { get; }
+        double Number { get; }
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
-        int NumberMinimum { get; }
+        double NumberMinimum { get; }
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        int NumberMaximum { get; }
+        double NumberMaximum { get; }
 
         string Unit { get; }
 
@@ -25,7 +25,7 @@ namespace Luo_Painter.HSVColorPickers
     }
 
     //@Delegate
-    public delegate void NumberChangedHandler(object sender, int number);
+    public delegate void NumberChangedHandler(object sender, double number);
 
     public sealed partial class NumberPicker : UserControl
     {
@@ -36,12 +36,12 @@ namespace Luo_Painter.HSVColorPickers
 
         //@Content
         public bool IsNegative { get; private set; }
-        public int Absnumber { get; private set; }
+        public double Absnumber { get; private set; }
 
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
-        public int Minimum { get; private set; }
+        public double Minimum { get; private set; }
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        public int Maximum { get; private set; } = 100;
+        public double Maximum { get; private set; } = 100;
 
         public string Unit { get; private set; }
 
@@ -289,14 +289,14 @@ namespace Luo_Painter.HSVColorPickers
         public bool IsZero() => this.Absnumber is 0;
         public bool InRange()
         {
-            int value = this.IsNegative ? -this.Absnumber : this.Absnumber;
+            double value = this.IsNegative ? -this.Absnumber : this.Absnumber;
             if (value < this.Minimum) return false;
             if (value > this.Maximum) return false;
             return true;
         }
-        public int ToValue()
+        public double ToValue()
         {
-            int value = this.IsNegative ? -this.Absnumber : this.Absnumber;
+            double value = this.IsNegative ? -this.Absnumber : this.Absnumber;
             if (value <= this.Minimum) return this.Minimum;
             if (value >= this.Maximum) return this.Maximum;
             return value;

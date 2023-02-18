@@ -16,7 +16,7 @@
             };
         }
 
-        private void SetDiscreteTransfer(NumberPickerMode mode, int e)
+        private void SetDiscreteTransfer(NumberPickerMode mode, float e)
         {
         }
 

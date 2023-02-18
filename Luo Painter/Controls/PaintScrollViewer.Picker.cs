@@ -94,7 +94,7 @@ namespace Luo_Painter.Controls
                         break;
 
                     case PaintNumberPickerMode.Step:
-                        this.InkPresenter.Step = e;
+                        this.InkPresenter.Step = (int)e;
                         this.TryInk();
 
                         this.StepButton.Number = e;
