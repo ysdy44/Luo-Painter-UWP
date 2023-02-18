@@ -128,6 +128,9 @@
     <Compile Include="BitmapPixelBrushPage.xaml.cs">
       <DependentUpon>BitmapPixelBrushPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BreadcrumbPage.xaml.cs">
+      <DependentUpon>BreadcrumbPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BrushEasePressurePage.xaml.cs">
       <DependentUpon>BrushEasePressurePage.xaml</DependentUpon>
     </Compile>
@@ -199,9 +202,6 @@
     </Compile>
     <Compile Include="MarqueeToolTransformPage.xaml.cs">
       <DependentUpon>MarqueeToolTransformPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MetadataPage.xaml.cs">
-      <DependentUpon>MetadataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NightSkyTimeLapsePage.xaml.cs">
       <DependentUpon>NightSkyTimeLapsePage.xaml</DependentUpon>
@@ -372,6 +372,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="BreadcrumbPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BrushEasePressurePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -465,10 +469,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MarqueeToolTransformPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MetadataPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

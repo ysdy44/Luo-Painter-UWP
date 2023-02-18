@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    public sealed partial class MetadataPage : Page
+    public sealed partial class BreadcrumbPage : Page
     {
 
         IEnumerable<string> Items => this.Dictionary.Select(c => c.Path).OrderBy(c => c);
@@ -164,7 +164,7 @@ namespace Luo_Painter.TestApp
         readonly BreadcrumbObservableCollection Paths = new BreadcrumbObservableCollection();
         readonly ObservableCollection<Breadcrumb> Folders = new ObservableCollection<Breadcrumb>();
 
-        public MetadataPage()
+        public BreadcrumbPage()
         {
             this.InitializeComponent();
             this.Load();
