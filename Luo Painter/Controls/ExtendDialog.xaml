@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:transformers="using:FanKit.Transformers"
     xmlns:controls="using:Luo_Painter.Controls"
+    xmlns:elements="using:Luo_Painter.Elements"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
@@ -35,27 +35,24 @@
 
         <MenuFlyoutSeparator Margin="0,4"/>
 
-        <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-            <Run x:Name="IndicatorRun" >
-                Anchored to canvas
-            </Run>
-            <Span Foreground="{ThemeResource SystemColorControlAccentBrush}">
-                <Run>(</Run><Run x:Name="ModeRun">
-                    <!--Mode-->                 
-                </Run><Run>)</Run>              
-            </Span>
+        <TextBlock x:Name="IndicatorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">               
+            Anchored to canvas
         </TextBlock>
 
         <Border
-            Width="160" 
-            Height="160"
+            Margin="0,6,0,0"
+            Width="162" 
+            Height="162"
             CornerRadius="4"
-            Background="{ThemeResource AppOpacity}" 
+            BorderThickness="1"
+            BorderBrush="{ThemeResource AppForeground}"
+            Background="{ThemeResource AppBackgroundDark}" 
             >
-            <transformers:IndicatorControl 
-                x:Name="IndicatorControl"
-                Background="{ThemeResource SystemColorControlAccentBrush}" 
-                BorderBrush="{ThemeResource AppStroke}"
+            <elements:IndicatorPanel 
+                x:Name="IndicatorPanel"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource AppBorderBrush}"
+                Background="{ThemeResource AppBackgroundLight}" 
                 FlowDirection="LeftToRight"
                 />
         </Border>
