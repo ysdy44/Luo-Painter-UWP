@@ -128,6 +128,10 @@
     <Compile Include="Anchors\Anchor.cs" />
     <Compile Include="Anchors\Anchor.Segment.cs" />
     <Compile Include="BlendExtensions.cs" />
+    <Compile Include="BSplines\BSpline.cs" />
+    <Compile Include="BSplines\BSplineParameter.cs" />
+    <Compile Include="BSplines\BSplinePoints.cs" />
+    <Compile Include="BSplines\BSplineType.cs" />
     <Compile Include="CanvasDrawingSessionExtensions.cs" />
     <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.cs" />
     <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.Fx.cs" />
