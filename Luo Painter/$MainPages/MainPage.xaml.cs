@@ -42,7 +42,7 @@ namespace Luo_Painter
         private ListViewReorderMode BooleanToReorderModeConverter(bool value) => value ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
 
         public int SelectedCount { get; private set; }
-        public MetadataObservableCollection Paths { get; } = new MetadataObservableCollection();
+        public BreadcrumbObservableCollection Paths { get; } = new BreadcrumbObservableCollection();
         public ProjectObservableCollection ObservableCollection { get; } = new ProjectObservableCollection();
 
         public IList<string> ClipboardProjects { get; } = new List<string>();
@@ -107,7 +107,7 @@ namespace Luo_Painter
             {
                 if (this.Disabler) return;
 
-                if (e.ClickedItem is Metadata item)
+                if (e.ClickedItem is Breadcrumb item)
                 {
                     int removes = this.Paths.Navigate(item.Path);
                     if (removes is 0) return;

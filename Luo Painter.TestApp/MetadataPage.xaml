@@ -32,7 +32,7 @@
             </ItemsControl.ItemContainerStyle>
 
             <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="elements:Metadata">
+                <DataTemplate x:DataType="elements:Breadcrumb">
                     <TextBlock Text="{x:Bind Name}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -79,7 +79,7 @@
                     </ItemsControl.ItemContainerStyle>
 
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="elements:Metadata">
+                        <DataTemplate x:DataType="elements:Breadcrumb">
                             <StackPanel Spacing="4" Orientation="Horizontal" >
                                 <TextBlock Text="{x:Bind Name}"/>
                                 <FontIcon FontSize="10" FontWeight="Bold" Glyph="&#xE00F;" FontFamily="Segoe MDL2 Assets" />

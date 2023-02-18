@@ -47,7 +47,7 @@ namespace Luo_Painter
                     {
                         if (obj is Project project)
                         {
-                            this.Paths.Add(new Metadata(project.Path, project.Name));
+                            this.Paths.Add(new Breadcrumb(project.Path, project.Name));
 
                             this.Load();
                             this.UpdateBack();

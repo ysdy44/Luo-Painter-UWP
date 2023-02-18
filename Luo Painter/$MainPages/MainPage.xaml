@@ -466,7 +466,7 @@
             </Button>
 
 
-            <!--Metadata-->
+            <!--Breadcrumb-->
             <ListView
                 x:Name="PathListView"    
                 Visibility="Collapsed"
@@ -507,7 +507,7 @@
                 </ItemsControl.ItemContainerStyle>
 
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="elements:Metadata">
+                    <DataTemplate x:DataType="elements:Breadcrumb">
                         <TextBlock>
                             <Run FontSize="16" FontWeight="Bold" Text="&#xE00F;" FontFamily="Segoe MDL2 Assets" />                  
                             <Run/>

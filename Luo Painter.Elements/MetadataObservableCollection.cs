@@ -5,9 +5,9 @@ using Windows.Storage;
 namespace Luo_Painter.Elements
 {
     /// <summary>
-    /// Represents label of <see cref="MetadataObservableCollection"/>.
+    /// Represents label of <see cref="BreadcrumbObservableCollection"/>.
     /// </summary>
-    public struct Metadata
+    public struct Breadcrumb
     {
         /// <summary> <see cref="IStorageItem.Path"/> </summary>
         public readonly string Path;
@@ -17,20 +17,20 @@ namespace Luo_Painter.Elements
 
         //@Construct
         /// <summary>
-        /// Constructs a Metadata.
+        /// Constructs a Breadcrumb.
         /// </summary>
         /// <param name="path"> The path. </param>
         /// <param name="name"> The name. </param>
-        public Metadata(string path, string name)
+        public Breadcrumb(string path, string name)
         {
             this.Path = path;
             this.Name = name;
         }
         /// <summary>
-        /// Constructs a Metadata.
+        /// Constructs a Breadcrumb.
         /// </summary>
         /// <param name="item"> The item. </param>
-        public Metadata(IStorageItem item)
+        public Breadcrumb(IStorageItem item)
         {
             this.Path = item.Path;
             this.Name = item.Name;
@@ -41,9 +41,9 @@ namespace Luo_Painter.Elements
     /// Represents a list of labels separated by a bullet.
     /// It also generates an accessible string representing its path.
     /// </summary>
-    public sealed class MetadataObservableCollection : ObservableCollection<Metadata>
+    public sealed class BreadcrumbObservableCollection : ObservableCollection<Breadcrumb>
     {
-
+        
         /// <summary>
         /// Generates an accessible string representing its path.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Luo_Painter.Elements
         {
             if (base.Count is 0) return false;
 
-            Metadata last = this.Last();
+            Breadcrumb last = this.Last();
             base.Remove(last);
             return true;
         }
@@ -98,7 +98,7 @@ namespace Luo_Painter.Elements
             int removes = 0;
             while (true)
             {
-                Metadata last = this.Last();
+                Breadcrumb last = this.Last();
                 if (last.Path == sourcePath)
                 {
                     break;

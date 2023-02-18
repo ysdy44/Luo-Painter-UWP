@@ -13,63 +13,63 @@ namespace Luo_Painter.TestApp
     {
 
         IEnumerable<string> Items => this.Dictionary.Select(c => c.Path).OrderBy(c => c);
-        readonly IList<Metadata> Dictionary = new List<Metadata>
+        readonly IList<Breadcrumb> Dictionary = new List<Breadcrumb>
         {
-            new Metadata("AAA", "AAA"),
-            new Metadata("BBB", "BBB"),
-            new Metadata("CCC", "CCC"),
+            new Breadcrumb("AAA", "AAA"),
+            new Breadcrumb("BBB", "BBB"),
+            new Breadcrumb("CCC", "CCC"),
 
 
-            new Metadata(@"AAA\111", "111"),
-            new Metadata(@"AAA\222", "222"),
-            new Metadata(@"AAA\333", "333"),
+            new Breadcrumb(@"AAA\111", "111"),
+            new Breadcrumb(@"AAA\222", "222"),
+            new Breadcrumb(@"AAA\333", "333"),
 
-            new Metadata(@"BBB\111", "111"),
-            new Metadata(@"BBB\222", "222"),
-            new Metadata(@"BBB\333", "333"),
+            new Breadcrumb(@"BBB\111", "111"),
+            new Breadcrumb(@"BBB\222", "222"),
+            new Breadcrumb(@"BBB\333", "333"),
 
-            new Metadata(@"CCC\111", "111"),
-            new Metadata(@"CCC\222", "222"),
-            new Metadata(@"CCC\333", "333"),
-
-
-            new Metadata(@"AAA\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"AAA\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"AAA\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
-
-            new Metadata(@"AAA\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"AAA\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"AAA\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
-
-            new Metadata(@"AAA\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"AAA\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"AAA\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"CCC\111", "111"),
+            new Breadcrumb(@"CCC\222", "222"),
+            new Breadcrumb(@"CCC\333", "333"),
 
 
-            new Metadata(@"BBB\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"BBB\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"BBB\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"AAA\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"AAA\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"AAA\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            new Metadata(@"BBB\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"BBB\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"BBB\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"AAA\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"AAA\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"AAA\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            new Metadata(@"BBB\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"BBB\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"BBB\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"AAA\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"AAA\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"AAA\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
 
-            new Metadata(@"CCC\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"CCC\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"CCC\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"BBB\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"BBB\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"BBB\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            new Metadata(@"CCC\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"CCC\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"CCC\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"BBB\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"BBB\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"BBB\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
 
-            new Metadata(@"CCC\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
-            new Metadata(@"CCC\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
-            new Metadata(@"CCC\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
+            new Breadcrumb(@"BBB\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"BBB\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"BBB\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
+
+
+            new Breadcrumb(@"CCC\111\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"CCC\111\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"CCC\111\ⅢⅢⅢ", "ⅢⅢⅢ"),
+
+            new Breadcrumb(@"CCC\222\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"CCC\222\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"CCC\222\ⅢⅢⅢ", "ⅢⅢⅢ"),
+
+            new Breadcrumb(@"CCC\333\ⅠⅠⅠ", "ⅠⅠⅠ"),
+            new Breadcrumb(@"CCC\333\ⅡⅡⅡ", "ⅡⅡⅡ"),
+            new Breadcrumb(@"CCC\333\ⅢⅢⅢ", "ⅢⅢⅢ"),
         };
         readonly IDictionary<string, string[]> Nodes = new Dictionary<string, string[]>
         {
@@ -161,8 +161,8 @@ namespace Luo_Painter.TestApp
             },
         };
 
-        readonly MetadataObservableCollection Paths = new MetadataObservableCollection();
-        readonly ObservableCollection<Metadata> Folders = new ObservableCollection<Metadata>();
+        readonly BreadcrumbObservableCollection Paths = new BreadcrumbObservableCollection();
+        readonly ObservableCollection<Breadcrumb> Folders = new ObservableCollection<Breadcrumb>();
 
         public MetadataPage()
         {
@@ -186,7 +186,7 @@ namespace Luo_Painter.TestApp
 
             this.ListView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is Metadata item)
+                if (e.ClickedItem is Breadcrumb item)
                 {
                     int removes = this.Paths.Navigate(item.Path);
                     if (removes is 0) return;
@@ -196,7 +196,7 @@ namespace Luo_Painter.TestApp
             };
             this.GridView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is Metadata item)
+                if (e.ClickedItem is Breadcrumb item)
                 {
                     this.Paths.Add(item);
                     this.Load();
@@ -218,7 +218,7 @@ namespace Luo_Painter.TestApp
             if (folder is null) return;
             foreach (string item in folder)
             {
-                foreach (Metadata item2 in this.Dictionary)
+                foreach (Breadcrumb item2 in this.Dictionary)
                 {
                     if (item2.Path == item)
                     {
@@ -237,7 +237,7 @@ namespace Luo_Painter.TestApp
         //        this.Folders.Clear();
         //        foreach (StorageFolder item in await ApplicationData.Current.LocalFolder.GetFoldersAsync())
         //        {
-        //            this.Folders.Add(new Metadata(item));
+        //            this.Folders.Add(new Breadcrumb(item));
         //        }
         //        return true;
         //    }
@@ -250,7 +250,7 @@ namespace Luo_Painter.TestApp
         //        this.Folders.Clear();
         //        foreach (StorageFolder item in await folder.GetFoldersAsync())
         //        {
-        //            this.Folders.Add(new Metadata(item));
+        //            this.Folders.Add(new Breadcrumb(item));
         //        }
         //        return true;
         //    }
