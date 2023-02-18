@@ -43,7 +43,7 @@ namespace Luo_Painter.Elements
     /// </summary>
     public sealed class BreadcrumbObservableCollection : ObservableCollection<Breadcrumb>
     {
-        
+
         /// <summary>
         /// Generates an accessible string representing its path.
         /// </summary>

@@ -127,6 +127,7 @@
     <Compile Include="AnimationListView.cs" />
     <Compile Include="ApplicationTitleBarExtension.cs" />
     <Compile Include="BackdropBrush.cs" />
+    <Compile Include="BreadcrumbObservableCollection.cs" />
     <Compile Include="ContentDialogExtensions.cs" />
     <Compile Include="CoreCursorDictionary.cs" />
     <Compile Include="CoreCursorExtension.cs" />
@@ -150,7 +151,6 @@
     <Compile Include="InverseProportion.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="Marble.cs" />
-    <Compile Include="MetadataObservableCollection.cs" />
     <Compile Include="PipsPivot.xaml.cs">
       <DependentUpon>PipsPivot.xaml</DependentUpon>
     </Compile>
