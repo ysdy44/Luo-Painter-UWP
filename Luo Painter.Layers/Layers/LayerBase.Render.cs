@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.Blends;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
@@ -76,6 +75,19 @@ namespace Luo_Painter.Layers
             }
         }
         private Visibility visibility;
+
+
+        public TagType TagType
+        {
+            get => this.tagType;
+            set
+            {
+                this.tagType = value;
+                this.OnPropertyChanged(nameof(TagType)); // Notify 
+                this.OnPropertyChanged(nameof(UITagType)); // Notify 
+            }
+        }
+        private TagType tagType;
 
 
         public RenderMode RenderMode { get; private set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
+﻿using Luo_Painter.Blends;
+using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
@@ -18,6 +19,8 @@ namespace Luo_Painter.Layers
         BlendEffectMode BlendMode { get; set; }
         BlendEffectMode StartingBlendMode { get; }
         void CacheBlendMode();
+
+        TagType TagType { get; set; }
 
         void CopyWith(LayerBase layerBase);
     }

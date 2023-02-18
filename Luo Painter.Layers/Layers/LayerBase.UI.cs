@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Luo_Painter.Blends;
+using Windows.UI;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase 
+    public abstract partial class LayerBase
     {
 
         public double UIDepth => this.Depth * 20;
@@ -11,6 +12,8 @@ namespace Luo_Painter.Layers
         public double UIVisibility => this.Visibility is Visibility.Visible ? 1d : 0.5d;
 
         public double UIIsExpand => this.IsExpand ? 90 : 0;
+
+        public Color UITagType => this.TagType.ToColor();
 
     }
 }
