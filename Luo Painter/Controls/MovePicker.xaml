@@ -12,8 +12,8 @@
     >
 
     <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <hsvColorPickers:NumberButton x:Name="XButton" NumberMinimum="-16384" NumberMaximum="16384" />
+        <hsvColorPickers:NumberButton x:Name="XButton" Minimum="-16384" Maximum="16384" />
         <Line X2="32" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource ApplicationForegroundThemeBrush}" />
-        <hsvColorPickers:NumberButton x:Name="YButton" NumberMinimum="-16384" NumberMaximum="16384" />
+        <hsvColorPickers:NumberButton x:Name="YButton" Minimum="-16384" Maximum="16384" />
     </StackPanel>
 </UserControl>

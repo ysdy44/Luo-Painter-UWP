@@ -12,11 +12,11 @@ namespace Luo_Painter.HSVColorPickers
     public interface INumberBase
     {
         /// <summary> <see cref="RangeBase.Value"/> </summary>
-        double Number { get; }
+        double Value { get; }
         /// <summary> <see cref="RangeBase.Minimum"/> </summary>
-        double NumberMinimum { get; }
+        double Minimum { get; }
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
-        double NumberMaximum { get; }
+        double Maximum { get; }
 
         string Unit { get; }
 
@@ -227,11 +227,11 @@ namespace Luo_Painter.HSVColorPickers
 
         public void Construct(INumberBase number)
         {
-            this.IsNegative = number.Number < 0;
-            this.Absnumber = System.Math.Abs(number.Number);
+            this.IsNegative = number.Value < 0;
+            this.Absnumber = System.Math.Abs(number.Value);
 
-            this.Minimum = number.NumberMinimum;
-            this.Maximum = number.NumberMaximum;
+            this.Minimum = number.Minimum;
+            this.Maximum = number.Maximum;
 
             this.Unit = number.Unit;
 

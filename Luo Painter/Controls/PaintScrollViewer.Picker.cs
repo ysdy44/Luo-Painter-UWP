@@ -95,7 +95,7 @@ namespace Luo_Painter.Controls
                         this.InkPresenter.Step = (int)e;
                         this.TryInk();
 
-                        this.StepButton.Number = e;
+                        this.StepButton.Value = e;
                         break;
 
                     default:

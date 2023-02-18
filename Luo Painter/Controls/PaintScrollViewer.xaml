@@ -563,7 +563,7 @@
                                     <TextBlock x:Name="StepTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
                                         Step of Grain
                                     </TextBlock>
-                                    <hsvColorPickers:NumberButton x:Name="StepButton" Grid.Column="1" Number="1024" NumberMinimum="16" NumberMaximum="16384" Margin="4,2">
+                                    <hsvColorPickers:NumberButton x:Name="StepButton" Grid.Column="1" Value="1024" Minimum="16" Maximum="16384" Margin="4,2">
                                         <!--Text-->
                                     </hsvColorPickers:NumberButton>
                                 </Grid>

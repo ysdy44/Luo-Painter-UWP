@@ -42,7 +42,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.TXButton.Number = e;
+                    this.TXButton.Value = e;
                     break;
                 case 1:
                     this.Transform.Transformer += this.Transform.Transformer.TransformY(e, IndicatorMode.LeftTop);
@@ -51,7 +51,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.TYButton.Number = e;
+                    this.TYButton.Value = e;
                     break;
 
                 case 2:
@@ -61,7 +61,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.TWButton.Number = e;
+                    this.TWButton.Value = e;
                     break;
                 case 3:
                     this.Transform.Transformer *= this.Transform.Transformer.TransformHeight(e, IndicatorMode.LeftTop, this.IsRatio);
@@ -70,7 +70,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.THButton.Number = e;
+                    this.THButton.Value = e;
                     break;
 
                 case 4:
@@ -80,7 +80,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.TSButton.Number = e;
+                    this.TSButton.Value = e;
                     break;
                 case 5:
                     this.Transform.Transformer *= this.Transform.Transformer.TransformRotate(e, IndicatorMode.Center);
@@ -89,7 +89,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
 
-                    this.TRButton.Number = e;
+                    this.TRButton.Value = e;
                     break;
 
                 default:
@@ -140,8 +140,8 @@ namespace Luo_Painter
         {
             // X Y
             Vector2 vector = transformer.GetIndicatorVector(default);
-            this.TXButton.Number = (int)vector.X;
-            this.TYButton.Number = (int)vector.Y;
+            this.TXButton.Value = vector.X;
+            this.TYButton.Value = vector.Y;
 
             // Value
             Vector2 horizontal = transformer.Horizontal;
@@ -155,15 +155,15 @@ namespace Luo_Painter
             //@Release: case Release
             double width = System.Math.Sqrt(horizontal.X * horizontal.X + horizontal.Y * horizontal.Y);
             double height = System.Math.Sqrt(vertical.X * vertical.X + vertical.Y * vertical.Y);
-            this.TWButton.Number = (int)width;
-            this.THButton.Number = (int)height;
+            this.TWButton.Value = width;
+            this.THButton.Value = height;
 
             // Radians
             float angle = FanKit.Transformers.Transformer.GetRadians(horizontal);
-            this.TRButton.Number = (int)angle;
+            this.TRButton.Value = angle;
 
             // Skew
-            this.TSButton.Number = (int)FanKit.Transformers.Transformer.GetSkew(vertical, angle);
+            this.TSButton.Value = FanKit.Transformers.Transformer.GetSkew(vertical, angle);
         }
 
     }

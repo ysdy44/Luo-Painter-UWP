@@ -33,7 +33,7 @@
         <TextBlock Margin="10,0" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}">
             Button
         </TextBlock>
-        <hsvColorPickers:NumberButton x:Name="NumberButton" Margin="8,0" Number="0" NumberMinimum="0" NumberMaximum="100" Unit="º"/>
+        <hsvColorPickers:NumberButton x:Name="NumberButton" Margin="8,0" Value="0" Minimum="0" Maximum="100" Unit="º"/>
       
         <!--Slider-->
         <hsvColorPickers:NumberSlider x:Name="NumberSlider" Minimum="0" Maximum="100" Unit="º">

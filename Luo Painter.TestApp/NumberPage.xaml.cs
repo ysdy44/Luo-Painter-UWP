@@ -35,7 +35,7 @@ namespace Luo_Painter.TestApp
                 this.NumberFlyout.Hide();
 
                 // Set Number
-                this.NumberButton.Number = e;
+                this.NumberButton.Value = e;
 
                 // Set Value
                 this.NumberSlider.Value = e;

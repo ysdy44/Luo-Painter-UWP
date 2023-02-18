@@ -8,7 +8,7 @@ namespace Luo_Painter.HSVColorPickers
         //@Content
         public FrameworkElement PlacementTarget => this;
 
-        public double Number
+        public double Value
         {
             get => this.number;
             set
@@ -19,8 +19,8 @@ namespace Luo_Painter.HSVColorPickers
             }
         }
         private double number;
-        public double NumberMinimum { get; set; }
-        public double NumberMaximum { get; set; } = 100;
+        public double Minimum { get; set; }
+        public double Maximum { get; set; } = 100;
 
         public string Unit
         {
@@ -28,8 +28,8 @@ namespace Luo_Painter.HSVColorPickers
             set
             {
                 this.unit = value;
-                if (string.IsNullOrEmpty(this.Unit)) base.Content = this.Number;
-                else base.Content = $"{this.Number}{value}";
+                if (string.IsNullOrEmpty(this.Unit)) base.Content = this.Value;
+                else base.Content = $"{this.Value}{value}";
             }
         }
         private string unit = string.Empty;

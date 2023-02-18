@@ -12,19 +12,19 @@ namespace Luo_Painter.Controls
         public event RoutedEventHandler YClick { remove => this.YButton.Click -= value; add => this.YButton.Click += value; }
 
         //@Content
-        public double X { get => this.XButton.Number; set => this.XButton.Number = value; }
-        public double Y { get => this.YButton.Number; set => this.YButton.Number = value; }
+        public double X { get => this.XButton.Value; set => this.XButton.Value = value; }
+        public double Y { get => this.YButton.Value; set => this.YButton.Value = value; }
         public Vector2 Value
         {
             get => new Vector2
             {
-                X = (float)this.XButton.Number, 
-                Y = (float)this.YButton.Number 
+                X = (float)this.XButton.Value, 
+                Y = (float)this.YButton.Value 
             };
             set
             {
-                this.XButton.Number = value.X;
-                this.YButton.Number = value.Y;
+                this.XButton.Value = value.X;
+                this.YButton.Value = value.Y;
             }
         }
 
