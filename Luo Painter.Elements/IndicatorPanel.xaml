@@ -1,0 +1,88 @@
+﻿<Button
+    x:Class="Luo_Painter.Elements.IndicatorPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    UseSystemFocusVisuals="True"
+    IsTapEnabled="True"
+    IsTabStop="True"
+    CornerRadius="2"
+    BorderThickness="1"
+    BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
+    Background="{ThemeResource AppBarBackgroundThemeBrush}"
+    Width="{x:Bind Unit5}" 
+    Height="{x:Bind Unit5}"
+    d:DesignWidth="100"
+    d:DesignHeight="100"
+    mc:Ignorable="d"
+    >
+
+    <FrameworkElement.Resources>
+        <!--Save-->
+        <Storyboard x:Name="Storyboard" >
+            <DoubleAnimation x:Name="XDoubleAnimation" To="0" Duration="0:0:0.2" Storyboard.TargetProperty="X" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation x:Name="YDoubleAnimation" To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateTransform" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="ShowStoryboard" >
+            <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Left"/>
+            <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Top"/>
+            <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Right"/>
+            <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Bottom"/>
+        </Storyboard>
+        <Storyboard x:Name="HideStoryboard" >
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Left"/>
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Top"/>
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Right"/>
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Bottom"/>
+        </Storyboard>
+    </FrameworkElement.Resources>
+
+    <Button.Template>
+        <ControlTemplate>
+            <ContentPresenter/>
+        </ControlTemplate>
+    </Button.Template>
+
+    <Canvas Width="{x:Bind Unit5}" Height="{x:Bind Unit5}" Background="Transparent">
+
+        <Line IsHitTestVisible="False" X1="{x:Bind Unit}" Y1="0" X2="{x:Bind Unit}" Y2="{x:Bind Unit5}" StrokeThickness="1" Stroke="{x:Bind BorderBrush, Mode=OneWay}"/>
+        <Line IsHitTestVisible="False" X1="{x:Bind Unit4}" Y1="0" X2="{x:Bind Unit4}" Y2="{x:Bind Unit5}" StrokeThickness="1" Stroke="{x:Bind BorderBrush, Mode=OneWay}"/>
+
+        <Line IsHitTestVisible="False" X1="0" Y1="{x:Bind Unit}" X2="{x:Bind Unit5}" Y2="{x:Bind Unit}" StrokeThickness="1" Stroke="{x:Bind BorderBrush, Mode=OneWay}"/>
+        <Line IsHitTestVisible="False" X1="0" Y1="{x:Bind Unit4}" X2="{x:Bind Unit5}" Y2="{x:Bind Unit4}" StrokeThickness="1" Stroke="{x:Bind BorderBrush, Mode=OneWay}"/>
+
+        <Canvas IsHitTestVisible="False" Width="{x:Bind Unit5}" Height="{x:Bind Unit5}">
+            <UIElement.RenderTransform>
+                <TranslateTransform x:Name="TranslateTransform"/>
+            </UIElement.RenderTransform>
+
+            <Border IsHitTestVisible="False" Canvas.Left="{x:Bind Unit}" Canvas.Top="{x:Bind Unit}" Width="96" Height="96" CornerRadius="{x:Bind CornerRadius, Mode=OneWay}" BorderThickness="{x:Bind BorderThickness, Mode=OneWay}" BorderBrush="{x:Bind Foreground, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
+                <!--Content-->
+            </Border>
+
+            <Border x:Name="Left" IsHitTestVisible="False" Canvas.Left="0" Canvas.Top="{x:Bind Unit2}" Width="{x:Bind Unit}" Height="{x:Bind Unit}">
+                <FontIcon IsHitTestVisible="False" Glyph="&#xE652;" FontSize="14" FontFamily="Segoe MDL2 Assets"/>
+            </Border>
+            <Border x:Name="Top" IsHitTestVisible="False" Canvas.Left="{x:Bind Unit2}" Canvas.Top="0" Width="{x:Bind Unit}" Height="{x:Bind Unit}">
+                <FontIcon IsHitTestVisible="False" Glyph="&#xE650;" FontSize="14" FontFamily="Segoe MDL2 Assets"/>
+            </Border>
+            <Border x:Name="Right" IsHitTestVisible="False" Canvas.Left="{x:Bind Unit4}" Canvas.Top="{x:Bind Unit2}" Width="{x:Bind Unit}" Height="{x:Bind Unit}">
+                <FontIcon IsHitTestVisible="False" Glyph="&#xE651;" FontSize="14" FontFamily="Segoe MDL2 Assets"/>
+            </Border>
+            <Border x:Name="Bottom" IsHitTestVisible="False" Canvas.Left="{x:Bind Unit2}" Canvas.Top="{x:Bind Unit4}" Width="{x:Bind Unit}" Height="{x:Bind Unit}">
+                <FontIcon IsHitTestVisible="False" Glyph="&#xE64F;" FontSize="14" FontFamily="Segoe MDL2 Assets"/>
+            </Border>
+        </Canvas>
+
+    </Canvas>
+
+</Button>

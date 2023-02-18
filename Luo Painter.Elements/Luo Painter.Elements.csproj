@@ -148,6 +148,9 @@
     <Compile Include="Grouping.cs" />
     <Compile Include="Historian.cs" />
     <Compile Include="IndexGrid.cs" />
+    <Compile Include="IndicatorPanel.xaml.cs">
+      <DependentUpon>IndicatorPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InverseProportion.cs" />
     <Compile Include="InverseProportionRange.cs" />
     <Compile Include="Marble.cs" />
@@ -205,6 +208,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="IndicatorPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
