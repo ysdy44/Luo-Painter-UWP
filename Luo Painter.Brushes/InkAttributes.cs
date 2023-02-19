@@ -45,7 +45,7 @@ namespace Luo_Painter.Brushes
         public string Shape { get; set; }  /// <see cref="InkPresenter.GetType"/>
         public bool RecolorShape { get; set; } = true;
 
-        public int Step { get; set; } = 1024;
+        public float GrainScale { get; set; } = 1;
         public string Grain { get; set; }  /// <see cref="InkPresenter.GetType"/>
         public bool RecolorGrain { get; set; } = true;
 
@@ -82,7 +82,7 @@ namespace Luo_Painter.Brushes
             this.Shape = attributes.Shape;
             this.RecolorShape = attributes.RecolorShape;
 
-            this.Step = attributes.Step;
+            this.GrainScale = attributes.GrainScale;
             this.Grain = attributes.Grain;
             this.RecolorGrain = attributes.RecolorGrain;
 

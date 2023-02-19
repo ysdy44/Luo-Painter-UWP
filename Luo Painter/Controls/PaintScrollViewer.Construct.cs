@@ -57,18 +57,28 @@ namespace Luo_Painter.Controls
                 }
 
                 this.HardnessListView.SelectedIndex = this.HardnessCollection.IndexOf(presenter.Hardness);
-            
-                
+
+
                 // Texture
                 this.RotateButton.IsOn = presenter.Rotate;
                 this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
                 this.RecolorShapeButton.IsChecked = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
 
-                this.StepButton.Value = presenter.Step;
                 this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
                 this.RecolorGrainButton.IsChecked = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
 
                 this.BlendModeListView.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);
+
+
+                // Texture
+                // 1.Minimum
+                this.GrainScaleSlider.Minimum = 25d;
+
+                // 2.Value
+                this.GrainScaleSlider.Value = presenter.GrainScale * 100;
+
+                // 3.Maximum
+                this.GrainScaleSlider.Maximum = 425d;
 
 
                 // Mix

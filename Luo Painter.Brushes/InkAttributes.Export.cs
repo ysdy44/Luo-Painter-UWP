@@ -35,7 +35,7 @@ namespace Luo_Painter.Brushes
             new XAttribute("RecolorShape", this.RecolorShape),
             new XAttribute("Shape", this.SaveTexture(this.Shape)),
 
-            new XAttribute("Step", this.Step),
+            new XAttribute("GrainScale", this.GrainScale),
             new XAttribute("RecolorGrain", this.RecolorGrain),
             new XAttribute("Grain", this.SaveTexture(this.Grain)),
 
@@ -92,7 +92,7 @@ namespace Luo_Painter.Brushes
             if (element.Attribute("RecolorShape") is XAttribute recolorShape) this.RecolorShape = (bool)recolorShape;
             if (element.Attribute("Shape") is XAttribute shape) this.Shape = shape.Value;
 
-            if (element.Attribute("Step") is XAttribute step) this.Step = (int)step;
+            if (element.Attribute("GrainScale") is XAttribute grainScale) this.GrainScale = (float)grainScale;
             if (element.Attribute("RecolorGrain") is XAttribute recolorGrain) this.RecolorGrain = (bool)recolorGrain;
             if (element.Attribute("Grain") is XAttribute grain) this.Grain = grain.Value;
 

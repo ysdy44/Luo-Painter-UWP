@@ -18,7 +18,7 @@ namespace Luo_Painter.Controls
         Wet,
         Persistence,
 
-        Step,
+        GrainScale,
     }
 
     public sealed partial class PaintScrollViewer
@@ -47,7 +47,7 @@ namespace Luo_Painter.Controls
             this.WetSlider.Click += (s, e) => this.NumberShowAt(this.WetSlider, PaintNumberPickerMode.Wet);
             this.PersistenceSlider.Click += (s, e) => this.NumberShowAt(this.PersistenceSlider, PaintNumberPickerMode.Persistence);
 
-            this.StepButton.Click += (s, e) => this.NumberShowAt(this.StepButton, PaintNumberPickerMode.Step);
+            this.GrainScaleSlider.Click += (s, e) => this.NumberShowAt(this.GrainScaleSlider, PaintNumberPickerMode.GrainScale);
 
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
             this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
@@ -91,11 +91,11 @@ namespace Luo_Painter.Controls
                         this.PersistenceSlider.Value = e;
                         break;
 
-                    case PaintNumberPickerMode.Step:
-                        this.InkPresenter.Step = (int)e;
+                    case PaintNumberPickerMode.GrainScale:
+                        this.InkPresenter.GrainScale = (float)e / 100;
                         this.TryInk();
 
-                        this.StepButton.Value = e;
+                        this.GrainScaleSlider.Value = e;
                         break;
 
                     default:

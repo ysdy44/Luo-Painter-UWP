@@ -110,6 +110,11 @@ namespace Luo_Painter.Controls
                 this.TryInk();
             };
 
+            this.GrainScaleSlider.ValueChanged += (s, e) =>
+            {
+                if (this.InkIsEnabled is false) return;
+                this.InkPresenter.GrainScale = (float)e.NewValue / 100f;
+            };
 
             this.BlendModeListView.ItemClick += (s, e) =>
             {

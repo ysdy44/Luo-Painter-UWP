@@ -311,61 +311,58 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-                                    <hsvColorPickers:NumberSlider
-                                        x:Name="MinSizeSlider" 
-                                        Decrease="True" 
-                                        Unit="%" 
-                                        TickFrequency="25" 
-                                        TickPlacement="Outside" 
-                                        Foreground="{ThemeResource AppForeground}" 
-                                        >
-                                        <Slider.Header>
-                                            Min Size
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
-                                </Border>
-                                <Button x:Name="SizePressureButton" Grid.Column="1" CornerRadius="4" Width="40" Height="62" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                        <Border Margin="0,4" Width="22" Height="22" Background="White">
-                                            <Polygon x:Name="SizePressurePolygon" Width="20" Height="20" Fill="Black">
-                                                <!--Points-->
-                                            </Polygon>
-                                        </Border>
-                                        <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
+                                    <StackPanel>
+                                        <hsvColorPickers:NumberSlider
+                                            x:Name="MinSizeSlider" 
+                                            Decrease="True" 
+                                            Unit="%" 
+                                            TickFrequency="25" 
+                                            TickPlacement="Outside" 
+                                            Foreground="{ThemeResource AppForeground}" 
+                                            >
+                                            <Slider.Header>
+                                                Min Size
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
+                                        <hsvColorPickers:NumberSlider
+                                            x:Name="MinFlowSlider" 
+                                            Decrease="True" 
+                                            Unit="%" 
+                                            TickFrequency="25" 
+                                            TickPlacement="Outside" 
+                                            Foreground="{ThemeResource AppForeground}" 
+                                            Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
+                                            >
+                                            <Slider.Header>
+                                                Min Flow
+                                            </Slider.Header>
+                                        </hsvColorPickers:NumberSlider>
                                     </StackPanel>
-                                </Button>
-                            </Grid>
+                                </Border>
 
-                            <Grid ColumnSpacing="4" Margin="0,0,0,4"
-                                  Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
-                                    <hsvColorPickers:NumberSlider
-                                        x:Name="MinFlowSlider" 
-                                        Decrease="True" 
-                                        Unit="%" 
-                                        TickFrequency="25" 
-                                        TickPlacement="Outside" 
-                                        Foreground="{ThemeResource AppForeground}" 
-                                        >
-                                        <Slider.Header>
-                                            Min Flow
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
-                                </Border>
-                                <Button x:Name="FlowPressureButton" Grid.Column="1" CornerRadius="4" Width="40" Height="62" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                        <Border Margin="0,4" Width="22" Height="22" Background="White">
-                                            <Polygon x:Name="FlowPressurePolygon" Width="20" Height="20" Fill="Black">
-                                                <!--Points-->
-                                            </Polygon>
-                                        </Border>
-                                        <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
-                                    </StackPanel>
-                                </Button>
+                                <StackPanel Grid.Column="1">
+                                    <Button x:Name="SizePressureButton" CornerRadius="4" Width="40" Height="60" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                            <Border Margin="0,4" Width="22" Height="22" Background="White">
+                                                <Polygon x:Name="SizePressurePolygon" Width="20" Height="20" Fill="Black">
+                                                    <!--Points-->
+                                                </Polygon>
+                                            </Border>
+                                            <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="FlowPressureButton" CornerRadius="4" Width="40" Height="60" BorderThickness="1" HorizontalAlignment="Stretch"
+                                            Margin="0,4,0,0" Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                            <Border Margin="0,4" Width="22" Height="22" Background="White">
+                                                <Polygon x:Name="FlowPressurePolygon" Width="20" Height="20" Fill="Black">
+                                                    <!--Points-->
+                                                </Polygon>
+                                            </Border>
+                                            <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
 
                             <!--Tip-->
@@ -507,16 +504,9 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Name="RotateTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Rotation
+                                        Rotate to stroke
                                     </TextBlock>
-                                    <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Margin="4,2">
-                                        <ToggleSwitch.OffContent>
-                                            None
-                                        </ToggleSwitch.OffContent>
-                                        <ToggleSwitch.OnContent>
-                                            Rotate to stroke
-                                        </ToggleSwitch.OnContent>
-                                    </ToggleSwitch>
+                                    <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Margin="4,2"/>
                                 </Grid>
                             </Border>
 
@@ -553,20 +543,13 @@
                                 </Button>
                             </Grid>
 
-                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                            <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                                     Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="136"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="StepTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Step of Grain
-                                    </TextBlock>
-                                    <hsvColorPickers:NumberButton x:Name="StepButton" Grid.Column="1" Value="1024" Minimum="16" Maximum="16384" Margin="4,2">
-                                        <!--Text-->
-                                    </hsvColorPickers:NumberButton>
-                                </Grid>
+                                <hsvColorPickers:NumberSlider x:Name="GrainScaleSlider" Decrease="True" Unit="%" TickFrequency="100" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <Slider.Header>
+                                        Scale of Grain
+                                    </Slider.Header>
+                                </hsvColorPickers:NumberSlider>
                             </Border>
 
                             <!--BlendMode-->

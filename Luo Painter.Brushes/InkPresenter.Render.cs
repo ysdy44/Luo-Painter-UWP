@@ -34,19 +34,31 @@ namespace Luo_Painter.Brushes
         public AlphaMaskEffect GetGrain(IGraphicsEffectSource image) => base.RecolorGrain ? new AlphaMaskEffect
         {
             Source = image,
-            AlphaMask = InkPresenter.GetGrain(this.GrainSource, new Vector2
+            AlphaMask = new BorderEffect
             {
-                X = base.Step / (float)this.GrainSource.SizeInPixels.Width,
-                Y = base.Step / (float)this.GrainSource.SizeInPixels.Height
-            })
+                ExtendX = CanvasEdgeBehavior.Wrap,
+                ExtendY = CanvasEdgeBehavior.Wrap,
+                Source = new ScaleEffect
+                {
+                    BorderMode = EffectBorderMode.Hard,
+                    Source = this.GrainSource,
+                    Scale = new Vector2(this.GrainScale)
+                }
+            }
         } : new AlphaMaskEffect
         {
             AlphaMask = image,
-            Source = InkPresenter.GetGrain(this.GrainSource, new Vector2
+            Source = new BorderEffect
             {
-                X = base.Step / (float)this.GrainSource.SizeInPixels.Width,
-                Y = base.Step / (float)this.GrainSource.SizeInPixels.Height
-            })
+                ExtendX = CanvasEdgeBehavior.Wrap,
+                ExtendY = CanvasEdgeBehavior.Wrap,
+                Source = new ScaleEffect
+                {
+                    BorderMode = EffectBorderMode.Hard,
+                    Source = this.GrainSource,
+                    Scale = new Vector2(this.GrainScale)
+                }
+            }
         };
 
 
@@ -141,18 +153,6 @@ namespace Luo_Painter.Brushes
                     AlphaMask = alphaMask,
                     Source = image
                 }
-            }
-        };
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static BorderEffect GetGrain(IGraphicsEffectSource grain, Vector2 scale) => new BorderEffect
-        {
-            ExtendX = CanvasEdgeBehavior.Wrap,
-            ExtendY = CanvasEdgeBehavior.Wrap,
-            Source = new ScaleEffect
-            {
-                BorderMode = EffectBorderMode.Hard,
-                Source = grain,
-                Scale = scale
             }
         };
 
