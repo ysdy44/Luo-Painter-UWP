@@ -140,6 +140,57 @@ namespace Luo_Painter
     }
 
 
+    internal static class ContentExtensions
+    {
+        //@Attached
+        public static ElementType GetIcon(ContentControl dp) => dp.Content is ElementType value ? value : default;
+        public static void SetIcon(ContentControl dp, ElementType value)
+        {
+            dp.Content = new ContentControl
+            {
+                Content = value.ToString().First().ToString(),
+            };
+        }
+
+        public static ElementType GetIconWithToolTip(ContentControl dp) => ContentExtensions.GetIcon(dp);
+        public static void SetIconWithToolTip(ContentControl dp, ElementType value)
+        {
+            ContentExtensions.SetIcon(dp, value);
+            ToolTipService.SetToolTip(dp, new ToolTip
+            {
+                Content = value.ToString(),
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        }
+
+        public static ElementType GetItem(ContentControl dp) => ContentExtensions.GetIcon(dp);
+        public static void SetItem(ContentControl dp, ElementType value)
+        {
+            dp.Content = new Grid
+            {
+                Children =
+                {
+                    new TextBlock
+                    {              
+                        Text = value.ToString().First().ToString(),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextTrimming = TextTrimming.CharacterEllipsis,
+                    },
+                    new ContentControl
+                    {
+                        Content = value,
+                        Width = 32,
+                        FontWeight = Windows.UI.Text.FontWeights.Bold,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalContentAlignment = VerticalAlignment.Center,
+                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                    }
+                }
+            };
+        }
+    }
+
+
     internal sealed class InkList : List<InkType> { }
     internal sealed class InkIcon : TIcon<InkType>
     {
