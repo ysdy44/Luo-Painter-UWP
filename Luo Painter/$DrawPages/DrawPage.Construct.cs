@@ -96,10 +96,6 @@ namespace Luo_Painter
         }
 
 
-        public void Tip(string title, string subtitle)
-        {
-            this.ToastTip.Tip(title, subtitle);
-        }
         public void Tip(TipType type)
         {
             switch (type)
@@ -128,27 +124,36 @@ namespace Luo_Painter
                     this.ToastTip.Tip("Paint Brush tool", "Brush Presets can only be used with the Paint");
                     break;
 
+                case TipType.SaveFailed:
+                    this.ToastTip.Tip("Failed to Save", "Try again?");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        public void Tip(TipType type, string subtitle)
+        {
+            switch (type)
+            {
                 case TipType.Spread:
-                    this.ToastTip.Tip("Spread", $"{this.Rippler.Spread * 100:0.00}%");
+                    this.ToastTip.Tip("Spread", subtitle);
                     break;
                 case TipType.Zoom:
-                    this.ToastTip.Tip("Zoom", $"{this.Transformer.Scale * 100:0.00}%");
+                    this.ToastTip.Tip("Zoom", subtitle);
                     break;
                 case TipType.Undo:
-                    this.ToastTip.Tip("Undo", $"{this.History.Index} / {this.History.Count}");
+                    this.ToastTip.Tip("Undo", subtitle);
                     break;
                 case TipType.Redo:
-                    this.ToastTip.Tip("Redo", $"{this.History.Index} / {this.History.Count}");
+                    this.ToastTip.Tip("Redo", subtitle);
                     break;
 
                 case TipType.Saving:
-                    this.ToastTip.Tip("Saving...", this.ApplicationView.Title);
+                    this.ToastTip.Tip("Saving...", subtitle);
                     break;
                 case TipType.SaveSuccess:
-                    this.ToastTip.Tip("Saved successfully", this.ApplicationView.Title);
-                    break;
-                case TipType.SaveFailed:
-                    this.ToastTip.Tip("Failed to Save", "Try again?");
+                    this.ToastTip.Tip("Saved successfully", subtitle);
                     break;
 
                 default:

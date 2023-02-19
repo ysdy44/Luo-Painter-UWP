@@ -123,7 +123,7 @@ namespace Luo_Painter
 
                         StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                         if (file is null) break;
-                        this.Tip(TipType.Saving);
+                        this.Tip(TipType.Saving, this.ApplicationView.Title);
 
                         float dpi = this.ExportDialog.DPI;
                         Rect rect = new Rect
@@ -178,7 +178,7 @@ namespace Luo_Painter
 
                         IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
                         if (folder is null) break;
-                        this.Tip(TipType.Saving);
+                        this.Tip(TipType.Saving, this.ApplicationView.Title);
 
                         float dpi = this.ExportDialog.DPI;
                         Rect rect = new Rect
@@ -223,7 +223,7 @@ namespace Luo_Painter
 
                                 if (result)
                                 {
-                                    this.Tip(TipType.SaveSuccess);
+                                    this.Tip(TipType.SaveSuccess, this.ApplicationView.Title);
                                     options.ItemsToSelect.Add(file);
                                 }
                                 else
@@ -243,7 +243,7 @@ namespace Luo_Painter
                         {
                             StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                             if (file is null) break;
-                            this.Tip(TipType.Saving);
+                            this.Tip(TipType.Saving, this.ApplicationView.Title);
 
                             float dpi = this.ExportDialog.DPI;
                             Rect rect = new Rect
@@ -297,7 +297,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                     this.RaiseHistoryCanExecuteChanged();
-                    this.Tip(TipType.Undo);
+                    this.Tip(TipType.Undo, $"{this.History.Index} / {this.History.Count}");
                     break;
                 case OptionType.Redo:
                     if (this.History.CanRedo is false) break;
@@ -311,7 +311,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                     this.RaiseHistoryCanExecuteChanged();
-                    this.Tip(TipType.Redo);
+                    this.Tip(TipType.Redo, $"{this.History.Index} / {this.History.Count}");
                     break;
 
                 case OptionType.FullScreen:
