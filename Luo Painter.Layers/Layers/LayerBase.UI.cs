@@ -13,7 +13,25 @@ namespace Luo_Painter.Layers
 
         public double UIIsExpand => this.IsExpand ? 90 : 0;
 
-        public Color UITagType => this.TagType.ToColor();
+        public string UIBlendMode => this.BlendMode.GetIcon();
+
+        public Color UITagType
+        {
+            get
+            {
+                switch (this.TagType)
+                {
+                    case TagType.None: return Colors.Transparent;
+                    case TagType.Red: return Colors.LightCoral;
+                    case TagType.Orange: return Colors.Orange;
+                    case TagType.Yellow: return Colors.Yellow;
+                    case TagType.Green: return Colors.YellowGreen;
+                    case TagType.Blue: return Colors.SkyBlue;
+                    case TagType.Purple: return Colors.Plum;
+                    default: return Colors.Transparent;
+                }
+            }
+        }
 
     }
 }

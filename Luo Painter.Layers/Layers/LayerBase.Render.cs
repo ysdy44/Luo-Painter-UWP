@@ -54,8 +54,9 @@ namespace Luo_Painter.Layers
             set
             {
                 this.blendMode = value;
-                this.RenderMode = this.GetRenderMode();
+                this.RenderMode = this.GetRenderMode(); 
                 this.OnPropertyChanged(nameof(BlendMode)); // Notify 
+                this.OnPropertyChanged(nameof(UIBlendMode)); // Notify 
             }
         }
         private BlendEffectMode blendMode = BlendExtensions.None;

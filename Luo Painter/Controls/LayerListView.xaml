@@ -149,15 +149,15 @@
 
                     <StackPanel Grid.Column="3" Margin="2,0" Spacing="4" Orientation="Horizontal">
 
-                        <luo_painter:BlendIcon 
-                            IsHitTestVisible="False"
-                            Width="32"
-                            Height="32"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Type="{x:Bind BlendMode, Mode=OneWay}"
-                            Opacity="{x:Bind UIVisibility, Mode=OneWay}"     
-                            />
+                        <Border IsHitTestVisible="False" Width="32" Height="32">
+                            <TextBlock
+                                IsHitTestVisible="False" 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind UIBlendMode, Mode=OneWay}"
+                                Opacity="{x:Bind UIVisibility, Mode=OneWay}"     
+                                />
+                        </Border>
 
                         <local:LayerButton CommandParameter="{x:Bind}" Command="{x:Bind}" >
                             <FontIcon

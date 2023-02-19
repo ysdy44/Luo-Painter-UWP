@@ -30,6 +30,11 @@ namespace Luo_Painter.Layers
         double UIIsExpand { get; }
 
         /// <summary>
+        /// <see cref="TextBlock.Text" /> <para/>
+        /// </summary>
+        string UIBlendMode { get; }
+
+        /// <summary>
         /// <see cref="Rectangle" /> <para/>
         /// <see cref="Shape.Fill" /> <para/>
         /// <see cref="SolidColorBrush.Color" /> <para/>
