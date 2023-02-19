@@ -132,7 +132,7 @@
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="options:OptionType">
-            <luo_painter:OptionIconWithToolTip Type="{x:Bind}"/>
+            <luo_painter:OptionIcon Type="{x:Bind}"/>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 

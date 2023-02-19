@@ -1,5 +1,7 @@
 ﻿using Luo_Painter.Options;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
@@ -24,5 +26,20 @@ namespace Luo_Painter.Controls
         {
         }
 
+        //@Override
+        protected override void ClearContainerForItemOverride(DependencyObject element, object item)
+        {
+            base.ClearContainerForItemOverride(element, item);
+            ToolTipService.SetToolTip(element, null);
+        }
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            base.PrepareContainerForItemOverride(element, item);
+            ToolTipService.SetToolTip(element, new ToolTip
+            {
+                Content = item,
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        }
     }
 }
