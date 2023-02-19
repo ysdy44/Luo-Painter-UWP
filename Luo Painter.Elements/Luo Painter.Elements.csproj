@@ -140,6 +140,8 @@
       <DependentUpon>Spliter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AlignmentGrid.cs" />
+    <Compile Include="Controls\AlignmentGridWithLines.cs" />
+    <Compile Include="Controls\AlignmentGridWithSpot.cs" />
     <Compile Include="Controls\AnimationIcon.xaml.cs">
       <DependentUpon>AnimationIcon.xaml</DependentUpon>
     </Compile>
