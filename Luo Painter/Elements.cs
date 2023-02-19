@@ -106,49 +106,17 @@ namespace Luo_Painter
     }
 
 
-    internal class ElementIcon : TIcon<ElementType>
-    {
-        protected override void OnTypeChanged(ElementType value)
-        {
-            base.Content = value;
-            base.Resources.Source = new Uri(value.GetResource());
-            base.Template = value.GetTemplate(base.Resources);
-        }
-    }
-    internal sealed class ElementIconWithToolTip : ElementIcon
-    {
-        public ElementIconWithToolTip() => base.Loaded += (s, e) =>
-        {
-            SelectorItem parent = this.FindAncestor<SelectorItem>();
-            if (parent is null) return;
-            ToolTipService.SetToolTip(parent, new ToolTip
-            {
-                Content = this.Type,
-                Style = App.Current.Resources["AppToolTipStyle"] as Style
-            });
-        };
-    }
-    internal sealed class ElementItem : TItem<ElementType>
-    {
-        protected override void OnTypeChanged(ElementType value)
-        {
-            base.Resources.Source = new Uri(value.GetResource());
-            base.TextBlock.Text = value.ToString();
-            base.Icon.Content = value;
-            base.Icon.Template = value.GetTemplate(base.Resources);
-        }
-    }
-
-
     internal static class ContentExtensions
     {
         //@Attached
         public static ElementType GetIcon(ContentControl dp) => dp.Content is ElementType value ? value : default;
         public static void SetIcon(ContentControl dp, ElementType value)
         {
+            dp.Resources.Source = new Uri(value.GetResource());
             dp.Content = new ContentControl
             {
-                Content = value.ToString().First().ToString(),
+                Content = value,
+                Template = value.GetTemplate(dp.Resources)
             };
         }
 
@@ -166,19 +134,21 @@ namespace Luo_Painter
         public static ElementType GetItem(ContentControl dp) => ContentExtensions.GetIcon(dp);
         public static void SetItem(ContentControl dp, ElementType value)
         {
+            dp.Resources.Source = new Uri(value.GetResource());
             dp.Content = new Grid
             {
                 Children =
                 {
                     new TextBlock
-                    {              
-                        Text = value.ToString().First().ToString(),
+                    {
+                        Text = value.ToString(),
                         VerticalAlignment = VerticalAlignment.Center,
                         TextTrimming = TextTrimming.CharacterEllipsis,
                     },
                     new ContentControl
                     {
                         Content = value,
+                        Template = value.GetTemplate(dp.Resources),
                         Width = 32,
                         FontWeight = Windows.UI.Text.FontWeights.Bold,
                         HorizontalAlignment = HorizontalAlignment.Right,
