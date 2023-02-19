@@ -347,11 +347,9 @@
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
-                        <!--Layer-->
-                        <MenuFlyoutSeparator x:Name="LayerHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                            <UIElement.AccessKey>
-                                Layers
-                            </UIElement.AccessKey>
+                        <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
+                                             luo_painter:ContentExtensions.AccessKey="LayerMenu">
+                            <!--Layers-->
                         </MenuFlyoutSeparator>
                         <MenuFlyoutItem x:Name="CutLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         <MenuFlyoutItem x:Name="CopyLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="CopyLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
@@ -383,13 +381,6 @@
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <!--Group-->
-                        <!--
-                        <MenuFlyoutSeparator x:Name="GroupHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                            <UIElement.AccessKey>
-                                Group
-                            </UIElement.AccessKey>
-                        </MenuFlyoutSeparator>
-                        -->
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem x:Name="GroupItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Group" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>

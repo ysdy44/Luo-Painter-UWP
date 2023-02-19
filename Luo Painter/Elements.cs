@@ -98,6 +98,9 @@ namespace Luo_Painter
         public static OptionType GetText(TextBlock dp) => default;
         public static void SetText(TextBlock dp, OptionType value) => dp.Text = value.ToString();
 
+        public static OptionType GetAccessKey(MenuFlyoutSeparator dp) => default;
+        public static void SetAccessKey(MenuFlyoutSeparator dp, OptionType value) => dp.AccessKey = value.ToString();
+
         public static OptionType GetIcon(ContentControl dp) => dp.Content is OptionType value ? value : default;
         public static void SetIcon(ContentControl dp, OptionType value)
         {

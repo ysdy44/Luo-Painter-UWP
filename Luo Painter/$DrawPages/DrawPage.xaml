@@ -263,10 +263,9 @@
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="TopEdgeAlignedRight">
                                     <!--New-->
-                                    <MenuFlyoutSeparator x:Name="NewHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                        <UIElement.AccessKey>
-                                            New
-                                        </UIElement.AccessKey>
+                                    <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
+                                                         local:ContentExtensions.AccessKey="LayerNewMenu">
+                                            <!--New-->
                                     </MenuFlyoutSeparator>
                                     <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddBitmapLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                         <UIElement.KeyboardAccelerators>
@@ -1846,10 +1845,9 @@
                         </ToolTipService.ToolTip>
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSeparator x:Name="FileHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                    <UIElement.AccessKey>
-                                        Files
-                                    </UIElement.AccessKey>
+                                <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
+                                                     local:ContentExtensions.AccessKey="FileMenu">
+                                    <!--Files-->
                                 </MenuFlyoutSeparator>
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Home" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
@@ -1964,10 +1962,9 @@
                         <Button.Flyout>
                             <MenuFlyout x:Name="EditMenuFlyout" Placement="Bottom">
                                 <!--Edit-->
-                                <MenuFlyoutSeparator x:Name="EditHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                    <UIElement.AccessKey>
-                                        Edit
-                                    </UIElement.AccessKey>
+                                <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
+                                                     local:ContentExtensions.AccessKey="EditMenu">
+                                    <!--Edit-->
                                 </MenuFlyoutSeparator>
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Cut" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
@@ -1989,14 +1986,6 @@
                                         <KeyboardAccelerator Key="Back"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <!--Select-->
-                                <!--
-                                <MenuFlyoutSeparator x:Name="SelectHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                    <UIElement.AccessKey>
-                                        Select
-                                    </UIElement.AccessKey>
-                                </MenuFlyoutSeparator>
-                                -->
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="All" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
@@ -2036,15 +2025,13 @@
                         </Button.Flyout>
                         <!--AdjustmentMenu-->
                     </Button>
-                    <Button x:Name="MoreButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
                             local:ContentExtensions.IconWithToolTip="OtherMenu">
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <!--More-->
-                                <MenuFlyoutSeparator x:Name="MoreHeaderSeparator" Style="{StaticResource AppHeaderMenuFlyoutSeparator}">
-                                    <UIElement.AccessKey>
-                                        More
-                                    </UIElement.AccessKey>
+                                <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
+                                                     local:ContentExtensions.AccessKey="OtherMenu">
+                                    <!--Others-->
                                 </MenuFlyoutSeparator>
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Move" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>

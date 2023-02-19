@@ -45,7 +45,7 @@ namespace Luo_Painter.Controls
                 {
                     case VirtualKey.Enter:
                     case VirtualKey.Execute:
-                        this.TitleTextBlock.Focus(FocusState.Keyboard);
+                        this.ComboBox.Focus(FocusState.Keyboard);
                         break;
                     default:
                         break;
