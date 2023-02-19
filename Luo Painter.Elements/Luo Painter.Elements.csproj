@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BackdropBrush.cs" />
+    <Compile Include="Breadcrumb.cs" />
     <Compile Include="BreadcrumbObservableCollection.cs" />
     <Compile Include="Containers\Docker.xaml.cs">
       <DependentUpon>Docker.xaml</DependentUpon>
