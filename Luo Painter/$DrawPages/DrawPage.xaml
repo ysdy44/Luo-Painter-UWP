@@ -1287,10 +1287,10 @@
 
                             <local:OptionCase Value="Marquee">
                                 <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <ListBoxItem local:ContentExtensions.IconWithToolTip="CombineNew"/>
-                                    <ListBoxItem local:ContentExtensions.IconWithToolTip="CombineUnion"/>
-                                    <ListBoxItem local:ContentExtensions.IconWithToolTip="CombineExclude"/>
-                                    <ListBoxItem local:ContentExtensions.IconWithToolTip="CombineIntersect"/>
+                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineNew"/>
+                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineUnion"/>
+                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineExclude"/>
+                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineIntersect"/>
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="SelectionFlood">
@@ -1321,8 +1321,8 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
                                         Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBoxItem local:ContentExtensions.IconWithToolTip="CompositeAdd"/>
-                                        <ListBoxItem local:ContentExtensions.IconWithToolTip="CompositeSubtract"/>
+                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CompositeAdd"/>
+                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CompositeSubtract"/>
                                     </ListBox>
                                     <!--Size-->
                                     <Slider                                             
@@ -1397,10 +1397,10 @@
                             <local:OptionCase Value="PaintBrushMulti">
                                 <StackPanel>
                                     <ListBox x:Name="SymmetryComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                        <ListBoxItem local:ContentExtensions.IconWithToolTip="SymmetryX"/>
-                                        <ListBoxItem local:ContentExtensions.IconWithToolTip="SymmetryY"/>
-                                        <ListBoxItem local:ContentExtensions.IconWithToolTip="SymmetryRadial"/>
-                                        <ListBoxItem local:ContentExtensions.IconWithToolTip="MirrorRadial"/>
+                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="SymmetryX"/>
+                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="SymmetryY"/>
+                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="SymmetryRadial"/>
+                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="MirrorRadial"/>
                                     </ListBox>
                                     <hsvColorPickers:NumberSlider x:Name="SymmetrySlider" Margin="0,5" Value="2" Minimum="2" Maximum="24" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
                                               Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
@@ -1445,7 +1445,7 @@
                                                 </SymbolIcon>
                                             </RepeatButton>
                                             <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                                                    local:ContentExtensions.IconWithToolTip="ResetRadian">
+                                                    local:ContentExtensions.ElementIconWithToolTip="ResetRadian">
                                                 <!--ResetRadian-->
                                             </Button>
                                             <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
@@ -1463,7 +1463,7 @@
                                                 <SymbolIcon Symbol="Remove"/>
                                             </RepeatButton>
                                             <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                                                     local:ContentExtensions.IconWithToolTip="ResetScale">
+                                                     local:ContentExtensions.ElementIconWithToolTip="ResetScale">
                                                 <!--ResetScale-->
                                             </Button>
                                             <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
@@ -1699,12 +1699,12 @@
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <ListBox x:Name="ArrowLeftTailComboBox" Width="140" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ListBoxItem local:ContentExtensions.IconWithToolTip="ArrowNone"/>
-                                            <ListBoxItem local:ContentExtensions.IconWithToolTip="ArrowArrow"/>
+                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowNone"/>
+                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowArrow"/>
                                         </ListBox>
                                         <ListBox x:Name="ArrowRightTailComboBox" Width="140" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ListBoxItem local:ContentExtensions.IconWithToolTip="ArrowNone"/>
-                                            <ListBoxItem local:ContentExtensions.IconWithToolTip="ArrowArrow"/>
+                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowNone"/>
+                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowArrow"/>
                                         </ListBox>
                                     </StackPanel>
                                     <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
@@ -1730,9 +1730,9 @@
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <ListBox x:Name="GridComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
                                              Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <ListBoxItem local:ContentExtensions.IconWithToolTip="GridGrid"/>
-                                            <ListBoxItem x:Name="GridColumnItem"  local:ContentExtensions.IconWithToolTip="GridColumn"/>
-                                            <ListBoxItem x:Name="GridRowItem"  local:ContentExtensions.IconWithToolTip="GridRow"/>
+                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="GridGrid"/>
+                                            <ListBoxItem x:Name="GridColumnItem"  local:ContentExtensions.ElementIconWithToolTip="GridColumn"/>
+                                            <ListBoxItem x:Name="GridRowItem"  local:ContentExtensions.ElementIconWithToolTip="GridRow"/>
                                         </ListBox>
                                         <hsvColorPickers:NumberSlider x:Name="GridStrokeWidthSlider" Value="2" Minimum="1" Maximum="32" Decrease="True" Foreground="{ThemeResource AppForeground}"
                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >

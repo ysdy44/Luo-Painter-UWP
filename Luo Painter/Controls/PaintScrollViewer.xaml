@@ -429,11 +429,11 @@
                                         <UIElement.RenderTransform>
                                             <ScaleTransform ScaleX="3" ScaleY="3"/>
                                         </UIElement.RenderTransform>
-                                        <ContentControl luo_painter:ContentExtensions.Icon="HardnessNone" Visibility="Visible"/>
-                                        <ContentControl luo_painter:ContentExtensions.Icon="HardnessCosine" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:ContentExtensions.Icon="HardnessQuadratic" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:ContentExtensions.Icon="HardnessCube" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:ContentExtensions.Icon="HardnessQuartic" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessNone" Visibility="Visible"/>
+                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessCosine" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessQuadratic" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessCube" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessQuartic" Visibility="Collapsed"/>
                                     </elements:IndexGrid>
                                 </Border>
                                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">

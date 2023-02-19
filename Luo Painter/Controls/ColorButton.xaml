@@ -224,11 +224,11 @@
                                             IsItemClickEnabled="True" 
                                             Style="{StaticResource AppListViewStyle}"
                                             >
-                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyComplementary"/>
-                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonySplitComplementary"/>
-                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyAnalogous"/>
-                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyTriadic"/>
-                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyTetradic"/>
+                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyComplementary"/>
+                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonySplitComplementary"/>
+                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyAnalogous"/>
+                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyTriadic"/>
+                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyTetradic"/>
                                         </ListView>
 
                                     </StackPanel>

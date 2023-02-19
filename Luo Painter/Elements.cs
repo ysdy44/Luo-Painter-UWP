@@ -109,8 +109,8 @@ namespace Luo_Painter
     internal static class ContentExtensions
     {
         //@Attached
-        public static ElementType GetIcon(ContentControl dp) => dp.Content is ElementType value ? value : default;
-        public static void SetIcon(ContentControl dp, ElementType value)
+        public static ElementType GetElementIcon(ContentControl dp) => dp.Content is ElementType value ? value : default;
+        public static void SetElementIcon(ContentControl dp, ElementType value)
         {
             dp.Resources.Source = new Uri(value.GetResource());
             dp.Content = new ContentControl
@@ -120,10 +120,10 @@ namespace Luo_Painter
             };
         }
 
-        public static ElementType GetIconWithToolTip(ContentControl dp) => ContentExtensions.GetIcon(dp);
-        public static void SetIconWithToolTip(ContentControl dp, ElementType value)
+        public static ElementType GetElementIconWithToolTip(ContentControl dp) => ContentExtensions.GetElementIcon(dp);
+        public static void SetElementIconWithToolTip(ContentControl dp, ElementType value)
         {
-            ContentExtensions.SetIcon(dp, value);
+            ContentExtensions.SetElementIcon(dp, value);
             ToolTipService.SetToolTip(dp, new ToolTip
             {
                 Content = value.ToString(),
@@ -131,33 +131,35 @@ namespace Luo_Painter
             });
         }
 
-        public static ElementType GetItem(ContentControl dp) => ContentExtensions.GetIcon(dp);
-        public static void SetItem(ContentControl dp, ElementType value)
+        public static ElementType GetElementItem(ContentControl dp) => ContentExtensions.GetElementIcon(dp);
+        public static void SetElementItem(ContentControl dp, ElementType value)
         {
             dp.Resources.Source = new Uri(value.GetResource());
-            dp.Content = new Grid
-            {
-                Children =
-                {
-                    new TextBlock
-                    {
-                        Text = value.ToString(),
-                        VerticalAlignment = VerticalAlignment.Center,
-                        TextTrimming = TextTrimming.CharacterEllipsis,
-                    },
-                    new ContentControl
-                    {
-                        Content = value,
-                        Template = value.GetTemplate(dp.Resources),
-                        Width = 32,
-                        FontWeight = Windows.UI.Text.FontWeights.Bold,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalContentAlignment = VerticalAlignment.Center,
-                        HorizontalContentAlignment = HorizontalAlignment.Center,
-                    }
-                }
-            };
+            dp.Content = CreateItem(value, value.ToString(), value.GetTemplate(dp.Resources));
         }
+
+        private static Grid CreateItem(object value, string text, ControlTemplate icon = null) => new Grid
+        {
+            Children =
+            {
+                new TextBlock
+                {
+                    Text = text,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    TextTrimming = TextTrimming.CharacterEllipsis,
+                },
+                new ContentControl
+                {
+                    Content = value,
+                    Template = icon,
+                    Width = 32,
+                    FontWeight = Windows.UI.Text.FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                }
+            }
+        };
     }
 
 
