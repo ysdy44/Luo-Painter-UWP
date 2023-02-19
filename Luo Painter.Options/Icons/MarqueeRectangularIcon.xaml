@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="MarqueeRectangularIcon" TargetType="ContentControl">
-        <Path HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="{ThemeResource SystemControlBackgroundBaseHighBrush}">
+        <Path HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="{ThemeResource SystemControlBackgroundBaseHighBrush}">
             <Path.Data>
                 M2.162,15.1l2.342,0l0,2.437l-4.504,0l0,-5.045l2.162,0l0,2.608Zm8.044,2.437l-4.841,0l0,-2.437l4.841,0l0,2.437Zm5.81,0l-4.841,0l-0,-2.437l4.841,0l-0,2.437Zm5.365,0l-4.505,0l0,-2.437l2.343,0l-0,-2.608l2.162,0l-0,5.045Zm-0,-6.006l-2.162,0l-0,-5.525l2.162,-0l-0,5.525Zm-19.219,0l-2.162,0l0,-5.525l2.162,-0l0,5.525Zm19.219,-6.486l-2.162,-0l-0,-2.608l-2.343,-0l0,-2.437l4.505,0l-0,5.045Zm-16.877,-2.608l-2.342,-0l0,2.608l-2.162,-0l-0,-5.045l4.504,0l0,2.437Zm5.702,-0l-4.841,-0l0,-2.437l4.841,0l0,2.437Zm5.81,-0l-4.841,-0l-0,-2.437l4.841,0l-0,2.437Z
             </Path.Data>

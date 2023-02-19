@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="MarqueeFreeHandIcon" TargetType="ContentControl">
-        <Path HorizontalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="{ThemeResource SystemControlBackgroundBaseHighBrush}">
+        <Path HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="1" Stroke="{ThemeResource SystemControlBackgroundAltHighBrush}" Fill="{ThemeResource SystemControlBackgroundBaseHighBrush}">
             <Path.Data>
                 M18.012,19.894l-2.151,-0l1.882,-4.302l-1.289,-1.012c-1.603,0.644 -3.457,1.012 -5.432,1.012c-6.083,0 -11.022,-3.493 -11.022,-7.796c0,-4.303 4.939,-7.796 11.022,-7.796c6.083,-0 11.022,3.493 11.022,7.796c0,1.36 -0.493,2.639 -1.36,3.752l0.016,0.012l0.538,-0l1.344,2.419l-2.957,1.882l-1.613,4.033Zm1.075,-6.721l0.538,-0.269l0.538,0.269l-0.538,0.538l-0.538,-0.538Zm-0.291,-2.957c0.531,-0.734 0.829,-1.554 0.829,-2.42c-0,-3.116 -3.855,-5.645 -8.603,-5.645c-4.748,-0 -8.602,2.529 -8.602,5.645c-0,3.116 3.854,5.646 8.602,5.646c1.207,-0 2.357,-0.164 3.4,-0.459l-0.443,-0.348l1.076,-0.269l2.957,-3.494l-0,1.344l0.784,-0Z
             </Path.Data>
