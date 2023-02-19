@@ -224,13 +224,13 @@
 
                             <TextBlock 
                                 Margin="16,0"
-                                IsHitTestVisible="false" 
+                                IsTextSelectionEnabled="True" 
                                 FontWeight="Medium" 
                                 TextTrimming="CharacterEllipsis" 
                                 FontSize="20" 
                                 TextWrapping="Wrap" 
                                 VerticalAlignment="Center" 
-                                Style="{StaticResource SubheaderTextBlockStyle}"
+                                OpticalMarginAlignment="TrimSideBearings"
                                 Text="{TemplateBinding Title}"
                                 />
 
