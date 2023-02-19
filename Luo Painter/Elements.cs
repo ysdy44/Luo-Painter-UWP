@@ -160,6 +160,12 @@ namespace Luo_Painter
             dp.Content = CreateItem(value, value.ToString(), value.GetTemplate(dp.Resources));
         }
 
+        public static CanvasImageInterpolation GetInterpolationItem(ContentControl dp) => dp.Content is CanvasImageInterpolation value ? value : default;
+        public static void SetInterpolationItem(ContentControl dp, CanvasImageInterpolation value)
+        {
+            dp.Content = CreateItem(value.ToString().First().ToString(), value.ToString());
+        }
+
         private static Grid CreateItem(object value, string text, ControlTemplate icon = null) => new Grid
         {
             Children =
@@ -186,15 +192,6 @@ namespace Luo_Painter
 
 
     internal sealed class InkList : List<InkType> { }
-    internal sealed class InkIcon : TIcon<InkType>
-    {
-        protected override void OnTypeChanged(InkType value)
-        {
-            base.Content = value;
-            base.Resources.Source = new Uri(value.GetResource());
-            base.Template = value.GetTemplate(base.Resources);
-        }
-    }
     internal sealed class InkItem : TItem<InkType>
     {
         protected override void OnTypeChanged(InkType value)
@@ -207,7 +204,6 @@ namespace Luo_Painter
     }
 
     internal sealed class HardnessList : List<BrushEdgeHardness> { }
-    internal sealed class HardnessGroupingList : List<BrushEdgeHardness> { }
     internal sealed class HardnessIcon : TIcon<BrushEdgeHardness>
     {
         protected override void OnTypeChanged(BrushEdgeHardness value)
@@ -224,15 +220,6 @@ namespace Luo_Painter
         {
             base.TextBlock.Text = value.GetTitle();
             base.Icon.Content = value.GetIcon();
-        }
-    }
-
-    internal sealed class InterpolationItem : TItem<CanvasImageInterpolation>
-    {
-        protected override void OnTypeChanged(CanvasImageInterpolation value)
-        {
-            base.TextBlock.Text = value.ToString();
-            base.Icon.Content = value.ToString().First().ToString();
         }
     }
 

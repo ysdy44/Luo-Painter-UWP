@@ -40,12 +40,12 @@
         </TextBlock>
 
         <ListView x:Name="InterpolationListView" SelectedIndex="1" Style="{StaticResource AppListViewStyle}">
-            <luo_painter:InterpolationItem Type="NearestNeighbor"/>
-            <luo_painter:InterpolationItem FontWeight="Bold" Type="Linear"/>
-            <luo_painter:InterpolationItem Type="Cubic"/>
-            <luo_painter:InterpolationItem Type="MultiSampleLinear"/>
-            <luo_painter:InterpolationItem Type="Anisotropic"/>
-            <luo_painter:InterpolationItem Type="HighQualityCubic"/>
+            <ListViewItem luo_painter:ContentExtensions.InterpolationItem="NearestNeighbor"/>
+            <ListViewItem FontWeight="Bold" luo_painter:ContentExtensions.InterpolationItem="Linear"/>
+            <ListViewItem luo_painter:ContentExtensions.InterpolationItem="Cubic"/>
+            <ListViewItem luo_painter:ContentExtensions.InterpolationItem="MultiSampleLinear"/>
+            <ListViewItem luo_painter:ContentExtensions.InterpolationItem="Anisotropic"/>
+            <ListViewItem luo_painter:ContentExtensions.InterpolationItem="HighQualityCubic"/>
         </ListView>
 
     </StackPanel>
