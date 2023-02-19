@@ -219,16 +219,16 @@
                                         </TextBlock>
 
                                         <ListView
-                                            x:Name="ModeListView"        
+                                            x:Name="ModeListView" 
                                             SelectedIndex="3"
                                             IsItemClickEnabled="True" 
                                             Style="{StaticResource AppListViewStyle}"
                                             >
-                                            <luo_painter:ElementItem Type="Complementary"/>
-                                            <luo_painter:ElementItem Type="SplitComplementary"/>
-                                            <luo_painter:ElementItem Type="Analogous"/>
-                                            <luo_painter:ElementItem Type="Triadic"/>
-                                            <luo_painter:ElementItem Type="Tetradic"/>
+                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyComplementary"/>
+                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonySplitComplementary"/>
+                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyAnalogous"/>
+                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyTriadic"/>
+                                            <ListViewItem luo_painter:ContentExtensions.Item="HarmonyTetradic"/>
                                         </ListView>
 
                                     </StackPanel>

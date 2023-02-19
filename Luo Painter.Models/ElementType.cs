@@ -11,49 +11,48 @@
         ConvertToCurves,
 
         // Harmony
-        Complementary,
-        SplitComplementary,
-        Analogous,
-        Triadic,
-        Tetradic,
+        HarmonyComplementary,
+        HarmonySplitComplementary,
+        HarmonyAnalogous,
+        HarmonyTriadic,
+        HarmonyTetradic,
 
         // CompositeModes
-        New,
-        Add,
-        Subtract,
-        Intersect,
+        CompositeAdd,
+        CompositeSubtract,
 
         // Combine
-        Union,
-        Exclude,
-        Simultaneously,
+        CombineNew,
+        CombineUnion,
+        CombineExclude,
+        CombineIntersect,
 
         // Nodes
-        Insert,
-        Remove,
-        Sharp,
-        Smooth,
+        NodeInsert,
+        NodeRemove,
+        NodeSharp,
+        NodeSmooth,
 
         // NodeModes
-        Disconnected,
-        Mirrored,
-        Asymmetric,
+        NodeDisconnected,
+        NodeMirrored,
+        NodeAsymmetric,
 
         // ArrowTailTypes
-        ArrowTailTypesNone,
-        ArrowTailTypesArrow,
+        ArrowNone,
+        ArrowArrow,
 
         // PatternGridTypes
-        Grid,
-        Horizontal,
-        Vertical,
+        GridGrid,
+        GridColumn,
+        GridRow,
 
         // BrushEdgeHardness
-        BrushEdgeHardnessNone,
-        BrushEdgeHardnessCosine,
-        BrushEdgeHardnessQuadratic,
-        BrushEdgeHardnessCube,
-        BrushEdgeHardnessQuartic,
+        HardnessNone,
+        HardnessCosine,
+        HardnessQuadratic,
+        HardnessCube,
+        HardnessQuartic,
 
         // SymmetryModes
         SymmetryX,
