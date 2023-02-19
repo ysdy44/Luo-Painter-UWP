@@ -219,10 +219,10 @@
                         Grid.Row="1"
                         SelectedIndex="1"
                         >
-                        <local:OptionIconWithToolTip Type="ToolMenu"/>
-                        <local:OptionIconWithToolTip Type="BrushMenu"/>
-                        <local:OptionIconWithToolTip Type="SizeMenu"/>
-                        <local:OptionIconWithToolTip Type="HistoryMenu"/>
+                        <ListBoxItem local:ContentExtensions.IconWithToolTip="ToolMenu"/>
+                        <ListBoxItem local:ContentExtensions.IconWithToolTip="BrushMenu"/>
+                        <ListBoxItem local:ContentExtensions.IconWithToolTip="SizeMenu"/>
+                        <ListBoxItem local:ContentExtensions.IconWithToolTip="HistoryMenu"/>
                     </ListBox>
                 </Grid>
             </SplitView.Pane>
@@ -1367,13 +1367,9 @@
                                     </Slider>
 
                                     <!--Paint-->
-                                    <Button Grid.Column="1" Height="50" HorizontalAlignment="Stretch" local:CommandParameterExtensions.ButtonBase="PaintMenu" Command="{x:Bind Command}"  Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip x:Name="PaintToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                Paint Menu
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                        <local:OptionIcon Type="PaintMenu"/>
+                                    <Button Grid.Column="1" Height="50" HorizontalAlignment="Stretch" local:CommandParameterExtensions.ButtonBase="PaintMenu" Command="{x:Bind Command}"  Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                                            local:ContentExtensions.IconWithToolTip="PaintMenu">
+                                        <!--PaintMenu-->
                                     </Button>
 
                                     <!--Opacity-->
@@ -1963,12 +1959,8 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="EditToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Edit
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                            local:ContentExtensions.IconWithToolTip="EditMenu">
                         <Button.Flyout>
                             <MenuFlyout x:Name="EditMenuFlyout" Placement="Bottom">
                                 <!--Edit-->
@@ -2033,27 +2025,19 @@
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
-                        <local:OptionIcon Type="EditMenu"/>
+                        <!--EditMenu-->
                     </Button>
-                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="AdjustmentToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Adjustments
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                            local:ContentExtensions.IconWithToolTip="AdjustmentMenu">
                         <Button.Flyout>
                             <Flyout x:Name="EffectFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                                 <controls:EffectListView x:Name="EffectListView"/>
                             </Flyout>
                         </Button.Flyout>
-                        <local:OptionIcon Type="AdjustmentMenu"/>
+                        <!--AdjustmentMenu-->
                     </Button>
-                    <Button x:Name="MoreButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" >
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="MoreToolTip" Style="{StaticResource AppToolTipStyle}">
-                                More
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button x:Name="MoreButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                            local:ContentExtensions.IconWithToolTip="OtherMenu">
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <!--More-->
@@ -2082,7 +2066,7 @@
                                 <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="HSB" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
-                        <local:OptionIcon Type="OtherMenu"/>
+                        <!--OtherMenu-->
                     </Button>
 
                 </StackPanel>

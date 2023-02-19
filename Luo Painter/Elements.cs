@@ -109,6 +109,28 @@ namespace Luo_Painter
     internal static class ContentExtensions
     {
         //@Attached
+        public static OptionType GetIcon(ContentControl dp) => dp.Content is OptionType value ? value : default;
+        public static void SetIcon(ContentControl dp, OptionType value)
+        {
+            dp.Resources.Source = new Uri(value.GetResource());
+            dp.Content = new ContentControl
+            {
+                Content = value,
+                Template = value.GetTemplate(dp.Resources)
+            };
+        }
+
+        public static OptionType GetIconWithToolTip(ContentControl dp) => ContentExtensions.GetIcon(dp);
+        public static void SetIconWithToolTip(ContentControl dp, OptionType value)
+        {
+            ContentExtensions.SetIcon(dp, value);
+            ToolTipService.SetToolTip(dp, new ToolTip
+            {
+                Content = value.ToString(),
+                Style = App.Current.Resources["AppToolTipStyle"] as Style
+            });
+        }
+
         public static ElementType GetElementIcon(ContentControl dp) => dp.Content is ElementType value ? value : default;
         public static void SetElementIcon(ContentControl dp, ElementType value)
         {
@@ -204,22 +226,6 @@ namespace Luo_Painter
             base.Icon.Content = value.GetIcon();
         }
     }
-    internal sealed class BlendIcon : TIcon<BlendEffectMode>
-    {
-        protected override void OnTypeChanged(BlendEffectMode value)
-        {
-            base.Content = value.GetIcon();
-        }
-    }
-
-    internal sealed class FormatItem : TItem<CanvasBitmapFileFormat>
-    {
-        protected override void OnTypeChanged(CanvasBitmapFileFormat value)
-        {
-            base.TextBlock.Text = value.GetTitle();
-            base.Icon.Content = value.ToString().First().ToString();
-        }
-    }
 
     internal sealed class InterpolationItem : TItem<CanvasImageInterpolation>
     {
@@ -240,29 +246,6 @@ namespace Luo_Painter
             base.Content = value;
             base.Resources.Source = new Uri(value.GetResource());
             base.Template = value.GetTemplate(base.Resources);
-        }
-    }
-    internal sealed class OptionIconWithToolTip : OptionIcon
-    {
-        public OptionIconWithToolTip() => base.Loaded += (s, e) =>
-        {
-            SelectorItem parent = this.FindAncestor<SelectorItem>();
-            if (parent is null) return;
-            ToolTipService.SetToolTip(parent, new ToolTip
-            {
-                Content = this.Type,
-                Style = App.Current.Resources["AppToolTipStyle"] as Style
-            });
-        };
-    }
-    internal class OptionItem : TItem<OptionType>
-    {
-        protected override void OnTypeChanged(OptionType value)
-        {
-            base.Resources.Source = new Uri(value.GetResource());
-            base.TextBlock.Text = value.ToString();
-            base.Icon.Content = value;
-            base.Icon.Template = value.GetTemplate(base.Resources);
         }
     }
     internal sealed class OptionThumbnail : TIcon<OptionType>
