@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ControlTemplate x:Key="BrushEdgeHardnessNoneIcon" TargetType="ContentControl">
+    <ControlTemplate x:Key="HardnessNoneIcon" TargetType="ContentControl">
         <PathIcon HorizontalAlignment="Center">
             <PathIcon.Data>
                 M0,0L40,0L40,30L0,30L0,0Z

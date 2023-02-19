@@ -2,10 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ControlTemplate x:Key="BrushEdgeHardnessQuadraticIcon" TargetType="ContentControl">
+    <ControlTemplate x:Key="HardnessCosineIcon" TargetType="ContentControl">
         <PathIcon HorizontalAlignment="Center">
             <PathIcon.Data>
-                M24.082,0C31.72,1.465 33.022,11.754 35.563,20.515C36.598,24.29 37.86,27.742 40,30L0,30C2.14,27.742 3.402,24.29 4.437,20.515C6.978,11.754 8.281,1.466 15.918,0L24.082,0Z
+                M20,0C23.333,-0 26.667,7.5 30,15C33.049,22.471 36.098,29.941 39.955,30L40,30L0,30C3.879,30 6.939,22.5 10,15C13.333,7.5 16.667,0 20,0Z
             </PathIcon.Data>
         </PathIcon>
     </ControlTemplate>
