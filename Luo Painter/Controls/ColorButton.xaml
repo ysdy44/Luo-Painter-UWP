@@ -47,17 +47,17 @@
                         <ColumnDefinition Width="45"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock                        
-                        x:Name="TitleTextBlock"    
                         Margin="10,0"
-                        IsHitTestVisible="false"                         
-                        FontWeight="Medium"                      
-                        TextTrimming="CharacterEllipsis"                      
-                        FontSize="20"                     
-                        TextWrapping="Wrap"                     
-                        VerticalAlignment="Center"                     
-                        Style="{StaticResource SubheaderTextBlockStyle}"                    
+                        IsTextSelectionEnabled="True" 
+                        FontWeight="Medium" 
+                        TextTrimming="CharacterEllipsis" 
+                        FontSize="20" 
+                        TextWrapping="Wrap" 
+                        VerticalAlignment="Center" 
+                        OpticalMarginAlignment="TrimSideBearings"
+                        luo_painter:ContentExtensions.Text="ColorMenu"
                         >                      
-                        Color
+                        <!--Color-->
                     </TextBlock>
                     <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
                             Command="{x:Bind OpenCommand}">
@@ -205,7 +205,6 @@
                                     <StackPanel Spacing="2" Padding="6,4" Width="318">
 
                                         <TextBlock
-                                            x:Name="HarmonyTextBlock" 
                                             Margin="10,4,10,10" 
                                             IsTextSelectionEnabled="True" 
                                             FontWeight="Medium" 
@@ -214,8 +213,9 @@
                                             TextWrapping="Wrap" 
                                             VerticalAlignment="Center" 
                                             OpticalMarginAlignment="TrimSideBearings"
+                                            luo_painter:ContentExtensions.Text="ColorHarmonyMenu"
                                             >
-                                            Harmony
+                                            <!--Harmony-->
                                         </TextBlock>
 
                                         <ListView

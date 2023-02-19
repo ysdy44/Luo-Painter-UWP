@@ -182,7 +182,6 @@
                         <ListViewBase.Header>
                             <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
                                 <TextBlock
-                                    x:Name="TitleTextBlock"
                                     Margin="16,0"
                                     IsTextSelectionEnabled="True"
                                     FontWeight="Medium" 
@@ -191,8 +190,9 @@
                                     TextWrapping="Wrap" 
                                     VerticalAlignment="Center" 
                                     OpticalMarginAlignment="TrimSideBearings"
+                                    luo_painter:ContentExtensions.Text="PaintMenu"
                                     >
-                                    Paint
+                                    <!--Paint-->
                                 </TextBlock>
                             </Border>
                         </ListViewBase.Header>

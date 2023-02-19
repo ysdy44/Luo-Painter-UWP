@@ -92,23 +92,12 @@ namespace Luo_Painter
         public Transformer Transformer;
     }
 
-    internal sealed class SizeRange : InverseProportionRange
-    {
-        public SizeRange() : base(12, 1, 400, 100000) { }
-    }
-    internal sealed class SpacingRange : InverseProportionRange
-    {
-        public SpacingRange() : base(25, 10, 400, 1000000) { }
-    }
-    internal sealed class ScaleRange : InverseProportionRange
-    {
-        public ScaleRange() : base(1, 0.1, 10, 100) { }
-    }
-
-
     internal static class ContentExtensions
     {
         //@Attached
+        public static OptionType GetText(TextBlock dp) => default;
+        public static void SetText(TextBlock dp, OptionType value) => dp.Text = value.ToString();
+
         public static OptionType GetIcon(ContentControl dp) => dp.Content is OptionType value ? value : default;
         public static void SetIcon(ContentControl dp, OptionType value)
         {
@@ -158,6 +147,12 @@ namespace Luo_Painter
         {
             dp.Resources.Source = new Uri(value.GetResource());
             dp.Content = CreateItem(value, value.ToString(), value.GetTemplate(dp.Resources));
+        }
+
+        public static BlendEffectMode GetBlendItem(ContentControl dp) => dp.Content is BlendEffectMode value ? value : default;
+        public static void SetBlendItem(ContentControl dp, BlendEffectMode value)
+        {
+            dp.Content = CreateItem(value.GetIcon(), value.GetTitle());
         }
 
         public static CanvasImageInterpolation GetInterpolationItem(ContentControl dp) => dp.Content is CanvasImageInterpolation value ? value : default;

@@ -10,7 +10,7 @@ namespace Luo_Painter.Controls
 {
     public sealed partial class LayerListView : XamlListView
     {
-
+   
         //string NameValue => this.NameTextBox.Text;
         float OpacityValue => (float)(this.OpacitySlider.Value / 100);
         BlendEffectMode BlendModeValue
@@ -19,7 +19,7 @@ namespace Luo_Painter.Controls
             {
                 int index = this.BlendModeComboBox.SelectedIndex;
                 if (index is 0) return BlendExtensions.None;
-                else return this.BlendCollection[index];
+                else return (BlendEffectMode)(index - 1);
             }
         }
 
@@ -28,6 +28,8 @@ namespace Luo_Painter.Controls
         int OpacityCount = 0;
         int BlendModeCount = 0;
         int NameCount = 0;
+
+        BlendEffectMode None => BlendExtensions.None;
 
         private void ConstructPropertys()
         {
@@ -103,7 +105,7 @@ namespace Luo_Painter.Controls
                     this.OpacitySlider.IsEnabled = true;
                     this.OpacitySlider.Value = layer.Opacity * 100;
                     this.BlendModeComboBox.IsEnabled = true;
-                    this.BlendModeComboBox.SelectedIndex = layer.BlendMode.IsDefined() ? this.BlendCollection.IndexOf(layer.BlendMode) : 0;
+                    this.BlendModeComboBox.SelectedIndex = layer.BlendMode.IsDefined() ? ((int)layer.BlendMode + 1) : 0;
                     this.TagTypeSegmented.IsEnabled = true;
                     this.TagTypeSegmented.Type = layer.TagType;
                 }

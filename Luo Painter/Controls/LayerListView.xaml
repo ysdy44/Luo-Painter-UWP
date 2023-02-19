@@ -64,7 +64,6 @@
                 </StackPanel>
 
                 <TextBlock
-                    x:Name="RenameTextBlock" 
                     Margin="10,4,10,10" 
                     IsTextSelectionEnabled="True"
                     FontWeight="Medium" 
@@ -73,11 +72,12 @@
                     TextWrapping="Wrap" 
                     VerticalAlignment="Center" 
                     OpticalMarginAlignment="TrimSideBearings"
+                    luo_painter:ContentExtensions.Text="LayerRenameMenu"
                     >      
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator x:Name="KeyboardAccelerator" Modifiers="None" Key="F2"/>
                     </UIElement.KeyboardAccelerators>
-                    Rename
+                    <!--Rename-->
                 </TextBlock>
 
             </Grid>
@@ -132,7 +132,7 @@
                             <SolidColorBrush Color="{x:Bind UITagType, Mode=OneWay}" />
                         </Shape.Fill>
                     </Rectangle>
-                    
+
                     <TextBlock 
                         Grid.Column="2" 
                         IsHitTestVisible="False" 
@@ -235,8 +235,9 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
+                luo_painter:ContentExtensions.Text="LayerMenu"
                 >
-                Layers
+                <!--Layers-->
             </TextBlock>
 
             <Button Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
@@ -253,7 +254,6 @@
                         <StackPanel Spacing="2" Padding="6,4" Width="318">
 
                             <TextBlock                                
-                                x:Name="PropertyTextBlock" 
                                 Margin="10,4,10,10" 
                                 IsTextSelectionEnabled="True"
                                 FontWeight="Medium" 
@@ -262,8 +262,9 @@
                                 TextWrapping="Wrap" 
                                 VerticalAlignment="Center" 
                                 OpticalMarginAlignment="TrimSideBearings"
+                                luo_painter:ContentExtensions.Text="LayerPropertyMenu"
                                 >                                
-                                Properties
+                                <!--Properties-->
                             </TextBlock>
 
                             <!--Opacity-->
@@ -288,49 +289,39 @@
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="effects:BlendEffectMode">
-                                        <luo_painter:BlendItem Type="{x:Bind}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-
-                                <ItemsControl.ItemsSource>
-                                    <luo_painter:BlendList x:Name="BlendCollection">
-                                        <!--None-->
-                                        <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Dissolve</effects:BlendEffectMode>
-                                        <!--Darken-->
-                                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>ColorBurn</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>LinearBurn</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>DarkerColor</effects:BlendEffectMode>
-                                        <!--Lighten-->
-                                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>ColorDodge</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>LighterColor</effects:BlendEffectMode>
-                                        <!--Contrast-->
-                                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>SoftLight</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>HardLight</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>VividLight</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>LinearLight</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>PinLight</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>HardMix</effects:BlendEffectMode>
-                                        <!--Difference-->
-                                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Exclusion</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Division</effects:BlendEffectMode>
-                                        <!--Color-->
-                                        <effects:BlendEffectMode>Hue</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Saturation</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Color</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Luminosity</effects:BlendEffectMode>
-                                    </luo_painter:BlendList>
-                                </ItemsControl.ItemsSource>
+                                <!--None-->
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="-1"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Dissolve" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <!--Darken-->
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Darken"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Multiply"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="ColorBurn"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LinearBurn"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="DarkerColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <!--Lighten-->
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Lighten"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Screen"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="ColorDodge"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LinearDodge"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LighterColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <!--Contrast-->
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Overlay"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="SoftLight"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="HardLight"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="VividLight"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LinearLight"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="PinLight"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="HardMix" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <!--Difference-->
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Difference"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Exclusion"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Subtract"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Division" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <!--Color-->
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Hue"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Saturation"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Color"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Luminosity"/>
 
                             </ComboBox>
 
