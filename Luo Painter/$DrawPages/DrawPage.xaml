@@ -25,9 +25,6 @@
         <transformers:CanvasTransformer x:Name="Transformer" />
         <!--Extension-->
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
-        <!--Range-->
-        <local:SizeRange x:Name="SizeRange"/>
-        <local:ScaleRange x:Name="ScaleRange"/>
         <!--Storyboard-->
         <!--Radian-->
         <Storyboard x:Name="RadianStoryboard">

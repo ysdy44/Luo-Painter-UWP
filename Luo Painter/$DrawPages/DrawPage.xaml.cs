@@ -192,6 +192,11 @@ namespace Luo_Painter
         #endregion
 
 
+        readonly InverseProportionRange SizeRange = new InverseProportionRange(12, 1, 400, 100000);
+        readonly InverseProportionRange SpacingRange = new InverseProportionRange(25, 10, 400, 1000000);
+        readonly InverseProportionRange ScaleRange = new InverseProportionRange(1, 0.1, 10, 100);
+
+
         public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         readonly Historian<IHistory> History = new Historian<IHistory>();
 
