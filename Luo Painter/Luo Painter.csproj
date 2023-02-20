@@ -216,6 +216,9 @@
     <Compile Include="Controls\HistoryListView.xaml.cs">
       <DependentUpon>HistoryListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HSVPicker.xaml.cs">
+      <DependentUpon>HSVPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\KeyboardShortcuts.xaml.cs">
       <DependentUpon>KeyboardShortcuts.xaml</DependentUpon>
     </Compile>
@@ -246,6 +249,9 @@
     </Compile>
     <Compile Include="Controls\PressurePicker.xaml.cs">
       <DependentUpon>PressurePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RGBPicker.xaml.cs">
+      <DependentUpon>RGBPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SimulateCanvas.xaml.cs">
       <DependentUpon>SimulateCanvas.xaml</DependentUpon>
@@ -395,6 +401,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\HSVPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\KeyboardShortcuts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -424,6 +434,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\PressurePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RGBPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
