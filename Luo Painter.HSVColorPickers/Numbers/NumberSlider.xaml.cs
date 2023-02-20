@@ -20,10 +20,6 @@ namespace Luo_Painter.HSVColorPickers
             }
         }
 
-        public double Number { get => base.Value; set => base.Value = value; }
-        public double NumberMinimum { get => base.Minimum; set => base.Minimum = value; }
-        public double NumberMaximum { get => base.Maximum; set => base.Maximum = value; }
-
         public string Unit
         {
             get => this.unit;
@@ -31,8 +27,8 @@ namespace Luo_Painter.HSVColorPickers
             {
                 this.unit = value;
                 if (this.HeaderButton is null) return;
-                if (string.IsNullOrEmpty(this.Unit)) this.HeaderButton.Content = this.Value;
-                else this.HeaderButton.Content = $"{this.Value}{value}";
+                if (string.IsNullOrEmpty(value)) this.HeaderButton.Content = System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven);
+                else this.HeaderButton.Content = $"{System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven)}{value}";
             }
         }
         private string unit = string.Empty;
@@ -60,8 +56,8 @@ namespace Luo_Painter.HSVColorPickers
             base.ValueChanged += (s, e) =>
             {
                 if (this.HeaderButton is null) return;
-                if (string.IsNullOrEmpty(this.Unit)) this.HeaderButton.Content = (int)e.NewValue;
-                else this.HeaderButton.Content = $"{(int)e.NewValue}{this.Unit}";
+                if (string.IsNullOrEmpty(this.Unit)) this.HeaderButton.Content = System.Math.Round(e.NewValue, 2, System.MidpointRounding.ToEven);
+                else this.HeaderButton.Content = $"{System.Math.Round(e.NewValue, 2, System.MidpointRounding.ToEven)}{this.Unit}";
             };
         }
 

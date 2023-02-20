@@ -14,8 +14,8 @@ namespace Luo_Painter.HSVColorPickers
             set
             {
                 this.number = value;
-                if (string.IsNullOrEmpty(this.Unit)) base.Content = value;
-                else base.Content = $"{value}{this.Unit}";
+                if (string.IsNullOrEmpty(this.Unit)) base.Content = System.Math.Round(value, 2, System.MidpointRounding.ToEven);
+                else base.Content = $"{System.Math.Round(value, 2, System.MidpointRounding.ToEven)}{this.Unit}";
             }
         }
         private double number;
@@ -28,8 +28,8 @@ namespace Luo_Painter.HSVColorPickers
             set
             {
                 this.unit = value;
-                if (string.IsNullOrEmpty(this.Unit)) base.Content = this.Value;
-                else base.Content = $"{this.Value}{value}";
+                if (string.IsNullOrEmpty(value)) base.Content = System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven);
+                else base.Content = $"{System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven)}{value}";
             }
         }
         private string unit = string.Empty;

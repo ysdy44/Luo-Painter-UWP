@@ -25,10 +25,6 @@ namespace Luo_Painter.HSVColorPickers
         /// <summary> <see cref="RangeBase.Maximum"/> </summary>
         public double Maximum => 360;
 
-        public double Number => this.Value;
-        public double NumberMinimum => this.Minimum;
-        public double NumberMaximum => this.Maximum;
-
         public string Unit => "º";
 
         Point Wheel;
@@ -145,15 +141,15 @@ namespace Luo_Painter.HSVColorPickers
             this.Angle = angle;
             this.Zoom(this.Angle);
 
-            this.Value = (int)(angle * 180 / System.Math.PI);
-            this.Button.Content = $"{this.Value}{this.Unit}";
+            this.Value = angle * 180 / System.Math.PI;
+            this.Button.Content = $"{System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven)}{this.Unit}";
             return true;
         }
         public bool SetNumber(double number)
         {
             if (this.Value == number) return false;
             this.Value = number;
-            this.Button.Content = $"{this.Value}{this.Unit}";
+            this.Button.Content = $"{System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven)}{this.Unit}";
 
             this.Angle = number * System.MathF.PI / 180;
             this.Zoom(this.Angle);
