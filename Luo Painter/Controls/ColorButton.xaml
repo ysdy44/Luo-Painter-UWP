@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
@@ -99,10 +100,10 @@
                     <hsvColorPickers:HarmonyPicker x:Name="HarmonyPicker" Visibility="Collapsed" Margin="10,20,10,0" Width="300" Height="340" Background="{x:Bind BorderBrush, Mode=OneWay}"/>
                     <StackPanel x:Name="ValuePicker" Visibility="Collapsed" Width="320" Padding="0,4,0,0" Spacing="4">
                         <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
-                            <hsvColorPickers:RGBPicker x:Name="RGBPicker" Foreground="{ThemeResource AppForeground}"/>
+                            <local:RGBPicker x:Name="RGBPicker" Foreground="{ThemeResource AppForeground}"/>
                         </Border>
                         <Border Margin="4,0" Padding="0,4,0,0" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
-                            <hsvColorPickers:HSVPicker x:Name="HSVPicker" Foreground="{ThemeResource AppForeground}"/>
+                            <local:HSVPicker x:Name="HSVPicker" Foreground="{ThemeResource AppForeground}"/>
                         </Border>
                     </StackPanel>
                 </elements:IndexGrid>

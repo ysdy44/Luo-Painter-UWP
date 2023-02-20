@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
@@ -24,8 +25,8 @@
         <!--Color-->
         <elements:IndexGrid Width="272" Height="200" Index="{x:Bind ComboBox.SelectedIndex,Mode=OneWay}">
             <hsvColorPickers:HuePicker x:Name="HuePicker" Visibility="Collapsed" Margin="5,5,5,0" />
-            <hsvColorPickers:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Height="180" Foreground="{ThemeResource AppForeground}"/>
-            <hsvColorPickers:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Height="180" Foreground="{ThemeResource AppForeground}"/>
+            <local:RGBPicker x:Name="RGBPicker" Visibility="Collapsed" Height="180" Foreground="{ThemeResource AppForeground}"/>
+            <local:HSVPicker x:Name="HSVPicker" Visibility="Collapsed" Height="180" Foreground="{ThemeResource AppForeground}"/>
         </elements:IndexGrid>
 
         <!--Type-->

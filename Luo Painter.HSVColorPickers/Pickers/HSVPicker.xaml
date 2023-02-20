@@ -1,17 +1,17 @@
 ﻿<UserControl
-    x:Class="Luo_Painter.HSVColorPickers.HSVPicker"
+    x:Class="Luo_Painter.Controls.HSVPicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter.HSVColorPickers"
+    xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     d:DesignWidth="400"
     d:DesignHeight="400"
     mc:Ignorable="d"
     >
 
     <StackPanel>
-        <local:NumberSlider x:Name="HueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+        <hsvColorPickers:NumberSlider x:Name="HueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Hue
             </Slider.Header>
@@ -26,8 +26,8 @@
                     <GradientStop Color="Red" Offset="1"/>
                 </LinearGradientBrush>
             </Control.Background>
-        </local:NumberSlider>
-        <local:NumberSlider x:Name="SaturationSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+        </hsvColorPickers:NumberSlider>
+        <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Saturation
             </Slider.Header>
@@ -37,8 +37,8 @@
                     <GradientStop x:Name="SaturationEndStop" Color="Red" Offset="1"/>
                 </LinearGradientBrush>
             </Control.Background>
-        </local:NumberSlider>
-        <local:NumberSlider x:Name="ValueSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
+        </hsvColorPickers:NumberSlider>
+        <hsvColorPickers:NumberSlider x:Name="ValueSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
             <Slider.Header>
                 Value
             </Slider.Header>
@@ -48,6 +48,6 @@
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </Control.Background>
-        </local:NumberSlider>
+        </hsvColorPickers:NumberSlider>
     </StackPanel>
 </UserControl>
