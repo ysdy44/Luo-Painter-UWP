@@ -155,6 +155,7 @@
     <Compile Include="Strokes\StrokeSegment.Symmetry.cs" />
     <Compile Include="Strokes\Symmetryer.cs" />
     <Compile Include="TipType.cs" />
+    <Compile Include="UIType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Models.rd.xml" />
   </ItemGroup>
   <ItemGroup>
