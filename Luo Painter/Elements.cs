@@ -193,18 +193,6 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class InkList : List<InkType> { }
-    internal sealed class InkItem : TItem<InkType>
-    {
-        protected override void OnTypeChanged(InkType value)
-        {
-            base.Resources.Source = new Uri(value.GetResource());
-            base.TextBlock.Text = value.ToString();
-            base.Icon.Content = value;
-            base.Icon.Template = value.GetTemplate(base.Resources);
-        }
-    }
-
     internal sealed class HardnessList : List<BrushEdgeHardness> { }
     internal sealed class HardnessIcon : TIcon<BrushEdgeHardness>
     {

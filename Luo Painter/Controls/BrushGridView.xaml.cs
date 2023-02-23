@@ -21,7 +21,7 @@ namespace Luo_Painter.Controls
         public double MinSize2 { get => base.MinSize; set => base.MinSize = (float)value; }
         public double MinFlow2 { get => base.MinFlow; set => base.MinFlow = (float)value; }
 
-        public string ImageSource => base.Tile == default ? InkExtensions.DeaultTile : base.Tile.GetTile();
+        public string ImageSource => base.Tile == default ? BrushExtensions.DeaultTile : base.Tile.GetTile();
         public int Tile2 { get => (int)base.Tile; set => base.Tile = (uint)value; }
     }
 
