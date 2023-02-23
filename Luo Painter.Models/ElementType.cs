@@ -10,6 +10,15 @@
 
         ConvertToCurves,
 
+        // Ink
+        InkErase,
+        InkGeneral,
+        InkTip,
+        InkLine,
+        InkBlur,
+        InkMosaic,
+        InkLiquefy,
+
         // Harmony
         HarmonyComplementary,
         HarmonySplitComplementary,

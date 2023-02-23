@@ -199,13 +199,13 @@
 
                         <ListViewBase.Footer>
                             <ComboBox x:Name="TypeComboBox" SelectedIndex="2" Margin="4,6">
-                                <ComboBoxItem Content="Erase"/>
-                                <ComboBoxItem FontWeight="Bold" Content="InkGeneral"/>
-                                <ComboBoxItem Content="InkTip"/>
-                                <ComboBoxItem Content="InkLine"/>
-                                <ComboBoxItem Content="InkBlur"/>
-                                <ComboBoxItem Content="InkMosaic"/>
-                                <ComboBoxItem Content="InkLiquefy"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkErase"/>
+                                <ComboBoxItem FontWeight="Bold" luo_painter:ContentExtensions.ElementItem="InkGeneral"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkTip"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkLine"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkBlur"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkMosaic"/>
+                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkLiquefy"/>
                             </ComboBox>
                         </ListViewBase.Footer>
 
