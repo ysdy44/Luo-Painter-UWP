@@ -7,21 +7,7 @@ namespace Luo_Painter.Controls
     {
         //@Content
         public System.Drawing.Size Size => this.SizePicker.Size;
-        public CanvasImageInterpolation Interpolation
-        {
-            get
-            {
-                switch (this.InterpolationListView.SelectedIndex)
-                {
-                    case 0: return CanvasImageInterpolation.NearestNeighbor;
-                    case 1: return CanvasImageInterpolation.Linear;
-                    case 2: return CanvasImageInterpolation.Cubic;
-                    case 3: return CanvasImageInterpolation.MultiSampleLinear;
-                    case 4: return CanvasImageInterpolation.Anisotropic;
-                    default: return CanvasImageInterpolation.HighQualityCubic;
-                }
-            }
-        }
+        public CanvasImageInterpolation Interpolation => (CanvasImageInterpolation)this.InterpolationListView.SelectedIndex;
 
         //@Construct
         public StretchDialog()

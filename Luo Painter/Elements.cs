@@ -158,12 +158,6 @@ namespace Luo_Painter
             dp.Content = CreateItem(value.GetIcon(), value.GetTitle());
         }
 
-        public static CanvasImageInterpolation GetInterpolationItem(ContentControl dp) => dp.Content is CanvasImageInterpolation value ? value : default;
-        public static void SetInterpolationItem(ContentControl dp, CanvasImageInterpolation value)
-        {
-            dp.Content = CreateItem(value.ToString().First().ToString(), value.ToString());
-        }
-
         private static Grid CreateItem(object value, string text, ControlTemplate icon = null) => new Grid
         {
             Children =
@@ -188,6 +182,16 @@ namespace Luo_Painter
         };
     }
 
+    internal sealed class BlendList : List<BlendEffectMode> { }
+    internal sealed class BlendGroupingList : List<BlendEffectMode> { }
+    internal class BlendItem : TItem<BlendEffectMode>
+    {
+        protected override void OnTypeChanged(BlendEffectMode value)
+        {
+            base.TextBlock.Text = value.GetTitle();
+            base.Icon.Content = value.GetIcon();
+        }
+    }
 
     internal sealed class InkList : List<InkType> { }
     internal sealed class InkItem : TItem<InkType>
@@ -210,14 +214,12 @@ namespace Luo_Painter
         }
     }
 
-    internal sealed class BlendList : List<BlendEffectMode> { }
-    internal sealed class BlendGroupingList : List<BlendEffectMode> { }
-    internal class BlendItem : TItem<BlendEffectMode>
+    internal sealed class InterpolationItem : TItem<CanvasImageInterpolation>
     {
-        protected override void OnTypeChanged(BlendEffectMode value)
+        protected override void OnTypeChanged(CanvasImageInterpolation value)
         {
-            base.TextBlock.Text = value.GetTitle();
-            base.Icon.Content = value.GetIcon();
+            base.TextBlock.Text = value.ToString();
+            base.Icon.Content = value.ToString().First().ToString();
         }
     }
 
