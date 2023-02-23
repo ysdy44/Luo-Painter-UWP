@@ -20,44 +20,44 @@
                 <MenuFlyoutItem.Command>
                     <local:ProjectCommand x:Name="RenameCommand"/>
                 </MenuFlyoutItem.Command>
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Rename" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Rename
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="DupliateItem" >
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Dupliate
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutItem x:Name="DeleteItem" >
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Delete" Foreground="Red"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Delete
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="MoveItem" >
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Move to Folder
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="LocalItem" >
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Local Folder
                 </MenuFlyoutItem.Text>
@@ -65,18 +65,18 @@
         </MenuFlyout>
         <MenuFlyout x:Name="FolderMenuFlyout">
             <MenuFlyoutItem x:Name="DeleteItem2" >
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Delete" Foreground="Red"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Delete
                 </MenuFlyoutItem.Text>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Name="LocalItem2" >
-                <MenuFlyoutItem.Tag>
+                <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Tag>
+                </MenuFlyoutItem.Icon>
                 <MenuFlyoutItem.Text>
                     Local Folder
                 </MenuFlyoutItem.Text>
@@ -423,14 +423,15 @@
                 Grid.Column="1" 
                 HorizontalAlignment="Center" 
                 Style="{StaticResource SubheaderTextBlockStyle}"
+                local:Res.UT="Name"
                 >
                 <!--Transitions-->
-                      <UIElement.Transitions>
+                <UIElement.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
                     </TransitionCollection>               
                 </UIElement.Transitions>
-                Luo Painter
+                <!--Luo Painter-->
             </TextBlock>
 
             <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
@@ -645,14 +646,7 @@
             <ContentDialog.Title>
                 Create New
             </ContentDialog.Title>
-            <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18" >
-                <controls:SizePicker.WidthText>
-                    Width
-                </controls:SizePicker.WidthText>
-                <controls:SizePicker.HeightText>
-                    Height
-                </controls:SizePicker.HeightText>
-            </controls:SizePicker>
+            <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18"/>
         </ContentDialog>
         <ContentDialog x:Name="NewDialog" Style="{StaticResource AppContentDialogStyle}">
             <ContentDialog.PrimaryButtonText>
