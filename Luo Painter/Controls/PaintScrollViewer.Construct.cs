@@ -11,8 +11,14 @@ namespace Luo_Painter.Controls
             {
                 this.Type = presenter.Type;
 
-                this.TypeComboBox.SelectedIndex = this.InkCollection.IndexOf(presenter.Type);
-
+                for (int i = 0; i < this.Inks.Length; i++)
+                {
+                    if (this.Inks[i] == presenter.Type)
+                    {
+                        this.TypeComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
 
                 // Property
                 // 1.Minimum

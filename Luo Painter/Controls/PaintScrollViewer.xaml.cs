@@ -86,6 +86,17 @@ namespace Luo_Painter.Controls
 
         #endregion
 
+        private readonly InkType[] Inks = new InkType[]
+        {
+            InkType.Erase,
+            InkType.General,
+            InkType.Tip,
+            InkType.Line,
+            InkType.Blur,
+            InkType.Mosaic,
+            InkType.Liquefy,
+        };
+
         //@Construct
         public PaintScrollViewer()
         {

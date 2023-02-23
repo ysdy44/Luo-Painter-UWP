@@ -199,25 +199,13 @@
 
                         <ListViewBase.Footer>
                             <ComboBox x:Name="TypeComboBox" SelectedIndex="2" Margin="4,6">
-
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="brushes:InkType">
-                                        <luo_painter:InkItem Type="{x:Bind}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-
-                                <ItemsControl.ItemsSource>
-                                    <luo_painter:InkList x:Name="InkCollection">
-                                        <brushes:InkType>Erase</brushes:InkType>
-                                        <brushes:InkType>General</brushes:InkType>
-                                        <brushes:InkType>Tip</brushes:InkType>
-                                        <brushes:InkType>Line</brushes:InkType>
-                                        <brushes:InkType>Blur</brushes:InkType>
-                                        <brushes:InkType>Mosaic</brushes:InkType>
-                                        <brushes:InkType>Liquefy</brushes:InkType>
-                                    </luo_painter:InkList>
-                                </ItemsControl.ItemsSource>
-
+                                <ComboBoxItem Content="Erase"/>
+                                <ComboBoxItem FontWeight="Bold" Content="InkGeneral"/>
+                                <ComboBoxItem Content="InkTip"/>
+                                <ComboBoxItem Content="InkLine"/>
+                                <ComboBoxItem Content="InkBlur"/>
+                                <ComboBoxItem Content="InkMosaic"/>
+                                <ComboBoxItem Content="InkLiquefy"/>
                             </ComboBox>
                         </ListViewBase.Footer>
 

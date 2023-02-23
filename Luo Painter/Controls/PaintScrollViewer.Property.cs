@@ -11,17 +11,17 @@ namespace Luo_Painter.Controls
             this.TypeComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.InkIsEnabled is false) return;
-                if (this.TypeComboBox.SelectedItem is InkType type)
-                {
-                    if (this.InkPresenter.Type == type) return;
-                    this.InkPresenter.Type = type;
 
-                    this.Type = type;
-                    this.InkType = this.InkPresenter.GetType();
-                    this.TryInkAsync();
+                InkType type = this.Inks[this.TypeComboBox.SelectedIndex];
 
-                    this.ComboBox.SelectedIndex = 0;
-                }
+                if (this.InkPresenter.Type == type) return;
+                this.InkPresenter.Type = type;
+
+                this.Type = type;
+                this.InkType = this.InkPresenter.GetType();
+                this.TryInkAsync();
+
+                this.ComboBox.SelectedIndex = 0;
             };
 
 
