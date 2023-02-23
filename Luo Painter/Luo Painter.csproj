@@ -281,6 +281,7 @@
     <Compile Include="FileUtils\FileUtil.Clipboard.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strings\Cmd.cs" />
     <Compile Include="Strings\Res.cs" />
   </ItemGroup>
   <ItemGroup>
