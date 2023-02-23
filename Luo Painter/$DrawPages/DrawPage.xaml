@@ -219,10 +219,10 @@
                         Grid.Row="1"
                         SelectedIndex="1"
                         >
-                        <ListBoxItem local:ContentExtensions.IconWithToolTip="ToolMenu"/>
-                        <ListBoxItem local:ContentExtensions.IconWithToolTip="BrushMenu"/>
-                        <ListBoxItem local:ContentExtensions.IconWithToolTip="SizeMenu"/>
-                        <ListBoxItem local:ContentExtensions.IconWithToolTip="HistoryMenu"/>
+                        <ListBoxItem local:Res.OIWTT="ToolMenu"/>
+                        <ListBoxItem local:Res.OIWTT="BrushMenu"/>
+                        <ListBoxItem local:Res.OIWTT="SizeMenu"/>
+                        <ListBoxItem local:Res.OIWTT="HistoryMenu"/>
                     </ListBox>
                 </Grid>
             </SplitView.Pane>
@@ -252,29 +252,23 @@
                             BorderThickness="1"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
-                            local:CommandParameterExtensions.SplitButton="AddBitmapLayer" 
+                            local:Res.OTT="LayerNewMenu"
+                            CommandParameter="{x:Bind AddItem.CommandParameter,Mode=OneWay}"
                             Command="{x:Bind Command}" 
                             >
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="NewToolTip" Style="{StaticResource AppToolTipStyle}">
-                                    New
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="TopEdgeAlignedRight">
                                     <!--New-->
                                     <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                                         local:ContentExtensions.AccessKey="LayerNewMenu">
-                                            <!--New-->
-                                    </MenuFlyoutSeparator>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddBitmapLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                             local:Res.OAK="LayerNewMenu"/>
+                                    <MenuFlyoutItem x:Name="AddItem" local:Cmd.MFIWI="AddBitmapLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                         <UIElement.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Insert"/>
                                         </UIElement.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="AddFillLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="AddFillLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                             <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
@@ -360,7 +354,8 @@
 
 
                             <local:OptionCase Value="CropCanvas">
-                                <hsvColorPickers:NumberSlider x:Name="CropCanvasSlider" Margin="0,5" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="12" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="CropCanvasSlider" Margin="0,5" Value="0" Minimum="-180" Maximum="180" Unit="º" TickFrequency="12" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="CropCanvas_Radians">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Gray" Offset="0"/>
@@ -368,33 +363,21 @@
                                             <GradientStop Color="Gray" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Radians
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="Feather">
-                                <hsvColorPickers:NumberSlider x:Name="FeatherSlider" Margin="0,5" Value="12" Minimum="1" Maximum="200" Decrease="True" TickFrequency="49" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Feather
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="FeatherSlider" Margin="0,5" Value="12" Minimum="1" Maximum="200" Decrease="True" TickFrequency="49" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Feather"/>
                             </local:OptionCase>
                             <local:OptionCase Value="Grow">
-                                <hsvColorPickers:NumberSlider x:Name="GrowSlider" Margin="0,5" Value="1" Minimum="1" Maximum="90" Decrease="True" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Grow
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="GrowSlider" Margin="0,5" Value="1" Minimum="1" Maximum="90" Decrease="True" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Grow"/>
                             </local:OptionCase>
                             <local:OptionCase Value="Shrink">
-                                <hsvColorPickers:NumberSlider x:Name="ShrinkSlider" Margin="0,5" Value="1" Minimum="1" Maximum="90" Decrease="True" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Shrink
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="ShrinkSlider" Margin="0,5" Value="1" Minimum="1" Maximum="90" Decrease="True" TickFrequency="44" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Shrink"/>
                             </local:OptionCase>
 
 
@@ -412,25 +395,22 @@
                                         <ToggleButton x:Name="TransformSnapButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE2AC;" FontFamily="Segoe MDL2 Assets"/>
-                                                <TextBlock x:Name="TransformSnapTextBlock" VerticalAlignment="Center">
-                                                    Snap
-                                                </TextBlock>
+                                                <TextBlock VerticalAlignment="Center"
+                                                           local:Res.UT="Transform_Snap"/>
                                             </StackPanel>
                                         </ToggleButton>
                                         <ToggleButton x:Name="TransformRatioButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xEA5F;" FontFamily="Segoe MDL2 Assets"/>
-                                                <TextBlock x:Name="TransformRatioTextBlock" VerticalAlignment="Center">
-                                                    Ratio
-                                                </TextBlock>
+                                                <TextBlock VerticalAlignment="Center"
+                                                           local:Res.UT="Transform_Ratio"/>
                                             </StackPanel>
                                         </ToggleButton>
                                         <ToggleButton x:Name="TransformCenterButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE958;" FontFamily="Segoe MDL2 Assets"/>
-                                                <TextBlock x:Name="TransformCenterTextBlock" VerticalAlignment="Center">
-                                                    Center
-                                                </TextBlock>
+                                                <TextBlock VerticalAlignment="Center"
+                                                           local:Res.UT="Transform_Center"/>
                                             </StackPanel>
                                         </ToggleButton>
                                     </Grid>
@@ -448,22 +428,18 @@
                                             <RowDefinition Height="30"/>
                                         </Grid.RowDefinitions>
                                         <!--XY-->
-                                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                            X
-                                        </TextBlock>
+                                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                                   local:Res.UT="Transform_X"/>
                                         <hsvColorPickers:NumberButton x:Name="TXButton" Grid.Column="1" Minimum="-16384" Maximum="16384" />
-                                        <TextBlock Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                            Y
-                                        </TextBlock>
+                                        <TextBlock Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                                   local:Res.UT="Transform_Y"/>
                                         <hsvColorPickers:NumberButton x:Name="TYButton" Grid.Column="1" Grid.Row="1" Minimum="-16384" Maximum="16384" />
                                         <!--WH-->
-                                        <TextBlock Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                            W
-                                        </TextBlock>
+                                        <TextBlock Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                                   local:Res.UT="Transform_W"/>
                                         <hsvColorPickers:NumberButton x:Name="TWButton" Grid.Column="3" Minimum="-16384" Maximum="16384" />
-                                        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                            H
-                                        </TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                                   local:Res.UT="Transform_H"/>
                                         <hsvColorPickers:NumberButton x:Name="THButton" Grid.Column="3" Grid.Row="1" Minimum="-16384" Maximum="16384" />
                                         <!--Skew-->
                                         <Canvas Grid.Column="4" Width="14" Height="14" HorizontalAlignment="Right" VerticalAlignment="Center" >
@@ -512,32 +488,22 @@
 
                             <local:OptionCase Value="DisplacementLiquefaction">
                                 <StackPanel>
-                                    <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip x:Name="DisplacementLiquefactionToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                Liquefaction Tool
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                        <ListBoxItem x:Name="PushItem">Push</ListBoxItem>
-                                        <ListBoxItem x:Name="PinchItem">Pinch</ListBoxItem>
-                                        <ListBoxItem x:Name="ExpandItem">Expand</ListBoxItem>
-                                        <ListBoxItem x:Name="TwirlLeftItem">Twirl Left</ListBoxItem>
-                                        <ListBoxItem x:Name="TwirlRightItem">Twirl Right</ListBoxItem>
-                                        <ListBoxItem x:Name="DisplacementLiquefactionResetItem">Reset</ListBoxItem>
+                                    <ListBox x:Name="DisplacementLiquefactionModeComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                             local:Res.UTT="DisplacementLiquefaction_Tool">
+                                        <ListBoxItem local:Res.UC="DisplacementLiquefaction_Push"/>
+                                        <ListBoxItem local:Res.UC="DisplacementLiquefaction_Pinch"/>
+                                        <ListBoxItem local:Res.UC="DisplacementLiquefaction_Expand"/>
+                                        <ListBoxItem local:Res.UC="DisplacementLiquefaction_TwirlLeft"/>
+                                        <ListBoxItem local:Res.UC="DisplacementLiquefaction_TwirlRight"/>
+                                        <ListBoxItem local:Res.UC="DisplacementLiquefaction_Reset"/>
                                     </ListBox>
                                     <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="DisplacementLiquefactionSizeSlider" Value="22" Minimum="1" Maximum="500" Decrease="True" TickFrequency="99" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Size
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                      local:Res.UH="DisplacementLiquefaction_Size"/>
                                         <hsvColorPickers:NumberSlider x:Name="DisplacementLiquefactionPressureSlider" Value="12" Minimum="10" Maximum="100" Unit="%" Decrease="True" TickFrequency="30" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Pressure
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                      local:Res.UH="DisplacementLiquefaction_Pressure"/>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
@@ -547,37 +513,26 @@
                             <local:OptionCase Value="RippleEffect">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="FrequencySlider" Value="140" Minimum="0" Maximum="300" Decrease="True" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Frequency
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                  local:Res.UH="RippleEffect_Frequency"/>
                                     <hsvColorPickers:NumberSlider x:Name="PhaseSlider" Minimum="-100" Maximum="0" Unit="º" Decrease="True" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Phase
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                  local:Res.UH="RippleEffect_Phase"/>
                                     <hsvColorPickers:NumberSlider x:Name="AmplitudeSlider" Value="60" Minimum="0" Maximum="200" Decrease="True" TickFrequency="40" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Amplitude
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="RippleEffect_Amplitude"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Threshold">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
-                                    <hsvColorPickers:NumberSlider x:Name="ThresholdSlider" MinWidth="280" Minimum="-150" Maximum="150" Unit="º" Decrease="True" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                    <hsvColorPickers:NumberSlider x:Name="ThresholdSlider" MinWidth="280" Minimum="-150" Maximum="150" Unit="º" Decrease="True" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  local:Res.UH="Threshold">
                                         <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="Black" Offset="0"/>
                                                 <GradientStop Color="White" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Control.Background>
-                                        <Slider.Header>
-                                            Threshold
-                                        </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" >
                                         <Grid.ColumnDefinitions>
@@ -587,9 +542,8 @@
                                         </Grid.ColumnDefinitions>
                                         <hsvColorPickers:ColorButtonBase x:Name="ThresholdColor0Button"/>
                                         <hsvColorPickers:ColorButtonBase x:Name="ThresholdColor1Button" Grid.Column="2"/>
-                                        <Button x:Name="ThresholdReverseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}">
-                                            Reverse
-                                        </Button>
+                                        <Button x:Name="ThresholdReverseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                                                local:Res.UC="Threshold_Reverse"/>
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
@@ -615,10 +569,8 @@
                                         <Ellipse Canvas.Left="7" Canvas.Top="7" Width="148" Height="148" StrokeThickness="2" Stroke="White"/>
                                     </Canvas>
                                     <StackPanel Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}">
-                                        <hsvColorPickers:NumberSlider x:Name="HSBHueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
-                                            <Slider.Header>
-                                                Hue
-                                            </Slider.Header>
+                                        <hsvColorPickers:NumberSlider x:Name="HSBHueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}"
+                                                                      local:Res.UH="HSB_Hue">
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                     <GradientStop Color="Red" Offset="0"/>
@@ -631,10 +583,8 @@
                                                 </LinearGradientBrush>
                                             </Control.Background>
                                         </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="HSBSaturationSlider" Value="100" Minimum="0" Maximum="400" Unit="%" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
-                                            <Slider.Header>
-                                                Saturation
-                                            </Slider.Header>
+                                        <hsvColorPickers:NumberSlider x:Name="HSBSaturationSlider" Value="100" Minimum="0" Maximum="400" Unit="%" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}"
+                                                                      local:Res.UH="HSB_Saturation">
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                     <GradientStop Color="Gray" Offset="0"/>
@@ -642,10 +592,8 @@
                                                 </LinearGradientBrush>
                                             </Control.Background>
                                         </hsvColorPickers:NumberSlider>
-                                        <hsvColorPickers:NumberSlider x:Name="HSBBrightnessSlider" Value="0" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
-                                            <Slider.Header>
-                                                Brightness
-                                            </Slider.Header>
+                                        <hsvColorPickers:NumberSlider x:Name="HSBBrightnessSlider" Value="0" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}"
+                                                                      local:Res.UH="HSB_Brightness">
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                     <GradientStop Color="Black" Offset="0"/>
@@ -659,16 +607,14 @@
 
 
                             <local:OptionCase Value="Exposure">
-                                <hsvColorPickers:NumberSlider x:Name="ExposureSlider" Margin="0,5" Minimum="-200" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ExposureSlider" Margin="0,5" Minimum="-200" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Exposure">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Black" Offset="0"/>
                                             <GradientStop Color="White" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Exposure
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Brightness">
@@ -694,20 +640,19 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Saturation">
-                                <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Margin="0,5" Value="100" Minimum="0" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Margin="0,5" Value="100" Minimum="0" Maximum="200" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Saturation">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Gray" Offset="0"/>
                                             <GradientStop Color="#00A5FF" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Saturation
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="HueRotation">
-                                <hsvColorPickers:NumberSlider x:Name="HueRotationSlider" Margin="0,5" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="HueRotationSlider" Margin="0,5" Minimum="0" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="HueRotation_Angle">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#FFCE3B" Offset="0"/>
@@ -721,13 +666,11 @@
                                             <GradientStop Color="#FFCE3B" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Angle
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Contrast">
-                                <hsvColorPickers:NumberSlider x:Name="ContrastSlider" Margin="0,5" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ContrastSlider" Margin="0,5" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Contrast">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#888888" Offset="0"/>
@@ -743,15 +686,13 @@
 
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Contrast
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Temperature">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="TemperatureSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Temperature">
                                         <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="#3EADF5" Offset="0"/>
@@ -759,12 +700,10 @@
                                                 <GradientStop Color="#F99652" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Control.Background>
-                                        <Slider.Header>
-                                            Temperature
-                                        </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
                                     <hsvColorPickers:NumberSlider x:Name="TintSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Temperature_Tint">
                                         <Control.Background>
                                             <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="#9680C9" Offset="0"/>
@@ -772,9 +711,6 @@
                                                 <GradientStop Color="#80763E" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Control.Background>
-                                        <Slider.Header>
-                                            Tint
-                                        </Slider.Header>
                                     </hsvColorPickers:NumberSlider>
                                 </StackPanel>
                             </local:OptionCase>
@@ -782,43 +718,33 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="ShadowsSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="HighlightsAndShadows_Shadows">
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                     <GradientStop Color="Black" Offset="0"/>
                                                     <GradientStop Color="Gray" Offset="1"/>
                                                 </LinearGradientBrush>
                                             </Control.Background>
-                                            <Slider.Header>
-                                                Shadows
-                                            </Slider.Header>
                                         </hsvColorPickers:NumberSlider>
                                         <hsvColorPickers:NumberSlider x:Name="HighlightsSlider" Minimum="-100" Maximum="100" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="HighlightsAndShadows_Highlights">
                                             <Control.Background>
                                                 <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                                     <GradientStop Color="Gray" Offset="0"/>
                                                     <GradientStop Color="White" Offset="1"/>
                                                 </LinearGradientBrush>
                                             </Control.Background>
-                                            <Slider.Header>
-                                                Highlights
-                                            </Slider.Header>
                                         </hsvColorPickers:NumberSlider>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="ClaritySlider" Minimum="-100" Maximum="100" Decrease="True" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Clarity
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="HighlightsAndShadows_Clarity"/>
                                         <hsvColorPickers:NumberSlider x:Name="BlurSlider" Value="125" Minimum="0" Maximum="1000" Decrease="True" TickFrequency="250" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Blur
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="HighlightsAndShadows_Blur"/>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
@@ -828,119 +754,76 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <Border Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <ListBox SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip x:Name="GammaTransferToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                        Channel Select
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
-                                                <ListBoxItem x:Name="GTAItem">Alpha</ListBoxItem>
-                                                <ListBoxItem x:Name="GTRItem">Red</ListBoxItem>
-                                                <ListBoxItem x:Name="GTGItem">Green</ListBoxItem>
-                                                <ListBoxItem x:Name="GTBItem">Blue</ListBoxItem>
+                                            <ListBox SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}"
+                                                     local:Res.UTT="GammaTransfer_ChannelSelect">
+                                                <ListBoxItem x:Name="GTAItem" local:Res.UC="GammaTransfer_Alpha"/>
+                                                <ListBoxItem x:Name="GTRItem" local:Res.UC="GammaTransfer_Red"/>
+                                                <ListBoxItem x:Name="GTGItem" local:Res.UC="GammaTransfer_Green"/>
+                                                <ListBoxItem x:Name="GTBItem" local:Res.UC="GammaTransfer_Blue"/>
                                             </ListBox>
                                         </Border>
                                         <!--#region Amplitude-->
                                         <hsvColorPickers:NumberSlider x:Name="GTAASlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Visibility="{x:Bind GTAItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Amplitude
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTAItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Amplitude"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTARSlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="Red"
-                                                Visibility="{x:Bind GTRItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Amplitude
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTRItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Amplitude"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTAGSlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="GreenYellow"
-                                                Visibility="{x:Bind GTGItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Amplitude
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTGItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Amplitude"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTABSlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="DodgerBlue"
-                                                Visibility="{x:Bind GTBItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Amplitude
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTBItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" 
+                                                                      local:Res.UH="GammaTransfer_Amplitude"/>
                                         <!--#endregion-->
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <!--#region Exponent-->
                                         <hsvColorPickers:NumberSlider x:Name="GTEASlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Visibility="{x:Bind GTAItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Exponent
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTAItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Exponent"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTERSlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="Red"
-                                                Visibility="{x:Bind GTRItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Exponent
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTRItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Exponent"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTEGSlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="GreenYellow"
-                                                Visibility="{x:Bind GTGItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Exponent
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTGItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Exponent"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTEBSlider" Value="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="DodgerBlue"
-                                                Visibility="{x:Bind GTBItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Exponent
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTBItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Exponent"/>
                                         <!--#endregion-->
                                         <!--#region Offset-->
                                         <hsvColorPickers:NumberSlider x:Name="GTOASlider" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" 
-                                                Visibility="{x:Bind GTAItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Offset
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTAItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Offset"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTORSlider" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="Red"
-                                                Visibility="{x:Bind GTRItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Offset
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTRItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Offset"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTOGSlider" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="GreenYellow"
-                                                Visibility="{x:Bind GTGItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Offset
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTGItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Offset"/>
                                         <hsvColorPickers:NumberSlider x:Name="GTOBSlider" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}" Background="DodgerBlue"
-                                                Visibility="{x:Bind GTBItem.IsSelected, Mode=OneWay}" 
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Offset
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Visibility="{x:Bind GTBItem.IsSelected, Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GammaTransfer_Offset"/>
                                         <!--#endregion-->
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Vignette">
-                                <hsvColorPickers:NumberSlider x:Name="VignetteSlider" Margin="0,5" Value="10" Decrease="True" Unit="º" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Amount
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="VignetteSlider" Margin="0,5" Value="10" Decrease="True" Unit="º" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Vignette_Amount"/>
                             </local:OptionCase>
                             <local:OptionCase Value="ColorMatch">
                                 <Grid>
@@ -957,49 +840,31 @@
 
 
                             <local:OptionCase Value="GaussianBlur">
-                                <hsvColorPickers:NumberSlider x:Name="GaussianBlurSlider" Margin="0,5" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Blur Amount
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="GaussianBlurSlider" Margin="0,5" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GaussianBlur_BlurAmount"/>
                             </local:OptionCase>
                             <local:OptionCase Value="DirectionalBlur">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="DirectionalBlurSlider" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Blur Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="DirectionalBlur_BlurAmount"/>
                                     <hsvColorPickers:NumberSlider x:Name="DirectionalBlurAngleSlider" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Angle
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="DirectionalBlur_Angle"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Sharpen">
-                                <hsvColorPickers:NumberSlider x:Name="SharpenSlider" Margin="0,5" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Amount
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="SharpenSlider" Margin="0,5" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Sharpen_Amount"/>
                             </local:OptionCase>
                             <local:OptionCase Value="Shadow">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="ShadowAmountSlider" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Shadow_Amount"/>
                                     <hsvColorPickers:NumberSlider x:Name="ShadowOpacitySlider" Value="50" Unit="º" Decrease="True" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Opacity
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Shadow_Opacity"/>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
@@ -1011,26 +876,18 @@
                                         <Button Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <Button.Flyout>
                                                 <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                                                    <hsvColorPickers:NumberSlider x:Name="ShadowXSlider" Margin="0,5" Width="280" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}">
-                                                        <Slider.Header>
-                                                            X
-                                                        </Slider.Header>
-                                                    </hsvColorPickers:NumberSlider>
+                                                    <hsvColorPickers:NumberSlider x:Name="ShadowXSlider" Margin="0,5" Width="280" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}"
+                                                            local:Res.UH="Shadow_X"/>
                                                 </Flyout>
                                             </Button.Flyout>
-                                            X
                                         </Button>
                                         <Button Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <Button.Flyout>
                                                 <Flyout Placement="Top" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-                                                    <hsvColorPickers:NumberSlider x:Name="ShadowYSlider" Margin="0,5" Width="280" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}">
-                                                        <Slider.Header>
-                                                            Y
-                                                        </Slider.Header>
-                                                    </hsvColorPickers:NumberSlider>
+                                                    <hsvColorPickers:NumberSlider x:Name="ShadowYSlider" Margin="0,5" Width="280" Minimum="-200" Maximum="200" Foreground="{ThemeResource AppForeground}"
+                                                        local:Res.UH="Shadow_Y"/>
                                                 </Flyout>
                                             </Button.Flyout>
-                                            Y
                                         </Button>
                                     </Grid>
                                 </StackPanel>
@@ -1038,32 +895,26 @@
                             <local:OptionCase Value="EdgeDetection">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="EdgeDetectionSlider" Value="50" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                  local:Res.UH="EdgeDetection_Amount"/>
                                     <hsvColorPickers:NumberSlider x:Name="EdgeDetectionBlurAmountSlider" Decrease="True" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Blur Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="EdgeDetection_BlurAmount"/>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="EdgeDetectionButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Overlay Edges
-                                        </ToggleButton>
+                                        <ToggleButton x:Name="EdgeDetectionButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                                      local:Res.UC="EdgeDetection_OverlayEdges"/>
                                         <local:EdgeDetectionModeButton x:Name="EdgeDetectionModeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"/>
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Morphology">
-                                <local:MorphologyNumberSlider x:Name="MorphologySlider" Margin="0,5" Minimum="-90" Maximum="90" TickFrequency="30" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <local:MorphologyNumberSlider x:Name="MorphologySlider" Margin="0,5" Minimum="-90" Maximum="90" TickFrequency="30" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Morphology_Size">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="{ThemeResource SystemAccentColor}" Offset="0"/>
@@ -1071,29 +922,21 @@
                                             <GradientStop Color="{ThemeResource SystemAccentColor}" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Size
-                                    </Slider.Header>
                                 </local:MorphologyNumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Emboss">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="EmbossSlider" Value="10" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Emboss_Amount"/>
                                     <hsvColorPickers:NumberSlider x:Name="EmbossAngleSlider" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Angle
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Emboss_Angle"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Straighten">
-                                <hsvColorPickers:NumberSlider x:Name="StraightenSlider" Margin="0,5" Minimum="-45" Maximum="45" Unit="º" TickFrequency="15" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="StraightenSlider" Margin="0,5" Minimum="-45" Maximum="45" Unit="º" TickFrequency="15" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Straighten_Angle">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="Gray" Offset="0"/>
@@ -1101,40 +944,27 @@
                                             <GradientStop Color="Gray" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Angle
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="Posterize">
-                                <hsvColorPickers:NumberSlider x:Name="PosterizeSlider" Margin="0,5" Value="2" Minimum="2" Maximum="12" Decrease="True" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Count
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="PosterizeSlider" Margin="0,5" Value="2" Minimum="2" Maximum="12" Decrease="True" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Posterize_Count"/>
                             </local:OptionCase>
                             <local:OptionCase Value="LuminanceToAlpha">
-                                <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="LuminanceToAlphaToolTip" Style="{StaticResource AppToolTipStyle}">
-                                            Background
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <ListBoxItem x:Name="LuminanceToAlphaNormalItem">Normal</ListBoxItem>
-                                    <ListBoxItem x:Name="WhitePaperItem">White Paper</ListBoxItem>
-                                    <ListBoxItem x:Name="BlackPaperItem">Black Paper</ListBoxItem>
+                                <ListBox x:Name="LuminanceToAlphaComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}"
+                                         local:Res.UTT="LuminanceToAlpha_Background">
+                                    <ListBoxItem local:Res.UC="LuminanceToAlpha_Normal"/>
+                                    <ListBoxItem local:Res.UC="LuminanceToAlpha_WhitePaper"/>
+                                    <ListBoxItem local:Res.UC="LuminanceToAlpha_BlackPaper"/>
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="ChromaKey">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="ChromaKeySlider" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Tolerance
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="ChromaKey_Tolerance"/>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60" 
                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
@@ -1142,46 +972,37 @@
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="ChromaKeyInvertButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Invert
-                                        </ToggleButton>
+                                        <ToggleButton x:Name="ChromaKeyInvertButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                                      local:Res.UC="ChromaKey_Invert"/>
                                         <hsvColorPickers:ColorButtonBase x:Name="ChromaKeyColorButton" Grid.Column="1"/>
-                                        <ToggleButton x:Name="ChromaKeyFeatherButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Feather
-                                        </ToggleButton>
+                                        <ToggleButton x:Name="ChromaKeyFeatherButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                                      local:Res.UC="Feather"/>
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Border">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBox x:Name="BorderXComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip x:Name="BorderXToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                    Edge Behavior X
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
-                                            <ListBoxItem x:Name="BorderXClampItem">Clamp</ListBoxItem>
-                                            <ListBoxItem x:Name="BorderXWrapItem">Wrap</ListBoxItem>
-                                            <ListBoxItem x:Name="BorderXMirrorItem">Mirror</ListBoxItem>
+                                        <ListBox x:Name="BorderXComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                                 local:Res.UTT="Border_EdgeBehaviorX">
+                                            <ListBoxItem local:Res.UC="Border_Clamp"/>
+                                            <ListBoxItem local:Res.UC="Border_Wrap"/>
+                                            <ListBoxItem local:Res.UC="Border_Mirror"/>
                                         </ListBox>
                                     </Border>
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBox x:Name="BorderYComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip x:Name="BorderYToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                    Edge Behavior Y
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
-                                            <ListBoxItem x:Name="BorderYClampItem">Clamp</ListBoxItem>
-                                            <ListBoxItem x:Name="BorderYWrapItem">Wrap</ListBoxItem>
-                                            <ListBoxItem x:Name="BorderYMirrorItem">Mirror</ListBoxItem>
+                                        <ListBox x:Name="BorderYComboBox" SelectedIndex="1" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                                 local:Res.UTT="Border_EdgeBehaviorY">
+                                            <ListBoxItem local:Res.UC="Border_Clamp"/>
+                                            <ListBoxItem local:Res.UC="Border_Wrap"/>
+                                            <ListBoxItem local:Res.UC="Border_Mirror"/>
                                         </ListBox>
                                     </Border>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Colouring">
-                                <hsvColorPickers:NumberSlider x:Name="ColouringSlider" Margin="0,5" Minimum="0" Maximum="360" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
+                                <hsvColorPickers:NumberSlider x:Name="ColouringSlider" Margin="0,5" Minimum="0" Maximum="360" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="Colouring_Angle">
                                     <Control.Background>
                                         <LinearGradientBrush StartPoint=" 0,0.5" EndPoint="1,0.5">
                                             <GradientStop Color="#FFCE3B" Offset="0"/>
@@ -1195,9 +1016,6 @@
                                             <GradientStop Color="#FFCE3B" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Control.Background>
-                                    <Slider.Header>
-                                        Angle
-                                    </Slider.Header>
                                 </hsvColorPickers:NumberSlider>
                             </local:OptionCase>
                             <local:OptionCase Value="Tint">
@@ -1215,34 +1033,21 @@
                             <local:OptionCase Value="Lighting">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="LightDistanceSlider" Value="100" Minimum="0" Maximum="300" Decrease="True" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Distance
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Lighting_Distance"/>
                                     <hsvColorPickers:NumberSlider x:Name="LightAngleSlider" Value="60" Minimum="10" Maximum="90" Unit="º" Decrease="True" TickFrequency="40" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Angle
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Lighting_Angle"/>
                                     <hsvColorPickers:NumberSlider x:Name="LightAmbientSlider" Unit="%" Decrease="True" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Ambient
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Lighting_Ambient"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Fog">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBox x:Name="FogComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip x:Name="FogToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                    Scale Factor
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
+                                        <ListBox x:Name="FogComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                                    local:Res.UTT="Fog_ScaleFactor">
                                             <x:Double>1</x:Double>
                                             <x:Double>2</x:Double>
                                             <x:Double>4</x:Double>
@@ -1251,22 +1056,15 @@
                                         </ListBox>
                                     </Border>
                                     <hsvColorPickers:NumberSlider x:Name="FogSlider" Value="50" Unit="%" Decrease="True" StepFrequency="25" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                  local:Res.UH="Fog_Amount"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Glass">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <Border Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBox x:Name="GlassComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip x:Name="GlassToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                    Scale Factor
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
+                                        <ListBox x:Name="GlassComboBox" SelectedIndex="2" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
+                                                 local:Res.UTT="Glass_ScaleFactor">
                                             <x:Double>1</x:Double>
                                             <x:Double>2</x:Double>
                                             <x:Double>4</x:Double>
@@ -1275,31 +1073,25 @@
                                         </ListBox>
                                     </Border>
                                     <hsvColorPickers:NumberSlider x:Name="GlassSlider" Value="50" Unit="%" Decrease="True" StepFrequency="25" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Amount
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="Glass_Amount"/>
                                 </StackPanel>
                             </local:OptionCase>
 
 
                             <local:OptionCase Value="Marquee">
                                 <ListBox x:Name="MarqueeComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineNew"/>
-                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineUnion"/>
-                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineExclude"/>
-                                    <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CombineIntersect"/>
+                                    <ListBoxItem local:Res.EIWTT="CombineNew"/>
+                                    <ListBoxItem local:Res.EIWTT="CombineUnion"/>
+                                    <ListBoxItem local:Res.EIWTT="CombineExclude"/>
+                                    <ListBoxItem local:Res.EIWTT="CombineIntersect"/>
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="SelectionFlood">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="SelectionFloodToleranceSlider" Value="10" Minimum="1" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Tolerance
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                                  local:Res.UH="SelectionFlood_Tolerance"/>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60"
                                           Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
                                         <Grid.ColumnDefinitions>
@@ -1307,21 +1099,19 @@
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="SelectionContiguousButton" Grid.ColumnSpan="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Contiguous
-                                        </ToggleButton>
-                                        <ToggleButton x:Name="SelectionFeatherButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Feather
-                                        </ToggleButton>
+                                        <ToggleButton x:Name="SelectionContiguousButton" Grid.ColumnSpan="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                                      local:Res.UC="SelectionFlood_Contiguous"/>
+                                        <ToggleButton x:Name="SelectionFeatherButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                                      local:Res.UC="SelectionFlood_Feather"/>
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="SelectionBrush">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <ListBox x:Name="SelectionComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
-                                        Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CompositeAdd"/>
-                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="CompositeSubtract"/>
+                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
+                                        <ListBoxItem local:Res.EIWTT="CompositeAdd"/>
+                                        <ListBoxItem local:Res.EIWTT="CompositeSubtract"/>
                                     </ListBox>
                                     <!--Size-->
                                     <Slider                                             
@@ -1333,11 +1123,7 @@
                                         Tag="{x:Bind SizeToStringConverter(SelectionBrushSizeSlider.Value), Mode=OneWay}" 
                                         BorderBrush="White"
                                         Style="{StaticResource AppInkSliderStyle}"
-                                        >
-                                        <Slider.Header>
-                                            Size
-                                        </Slider.Header>
-                                    </Slider>
+                                        local:Res.UH="SelectionBrush_Size"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Paint">
@@ -1356,20 +1142,16 @@
                                         FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Tag="{x:Bind SizeToStringConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Style="{StaticResource AppInkSliderStyle}"
+                                        local:Res.UH="Paint_Size"
                                         >
                                         <Control.BorderBrush>
                                             <SolidColorBrush Color="White" Opacity="{x:Bind OpacityConverter(InkOpacitySlider.Value), Mode=OneWay}"/>
                                         </Control.BorderBrush>
-                                        <Slider.Header>
-                                            Size
-                                        </Slider.Header>
                                     </Slider>
 
                                     <!--Paint-->
-                                    <Button Grid.Column="1" Height="50" HorizontalAlignment="Stretch" local:CommandParameterExtensions.ButtonBase="PaintMenu" Command="{x:Bind Command}"  Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                                            local:ContentExtensions.IconWithToolTip="PaintMenu">
-                                        <!--PaintMenu-->
-                                    </Button>
+                                    <Button Grid.Column="1" Height="50" HorizontalAlignment="Stretch" local:Cmd.BB="PaintMenu" Command="{x:Bind Command}"  Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                                            local:Res.OIWTT="PaintMenu"/>
 
                                     <!--Opacity-->
                                     <Slider                 
@@ -1378,13 +1160,11 @@
                                         FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Tag="{x:Bind OpacityToStringConverter(InkOpacitySlider.Value), Mode=OneWay}" 
                                         Style="{StaticResource AppInkSliderStyle}" 
+                                        local:Res.UH="Paint_Opacity"
                                         >
                                         <Control.BorderBrush>
                                             <SolidColorBrush Color="White" Opacity="{x:Bind OpacityConverter(InkOpacitySlider.Value), Mode=OneWay}"/>
                                         </Control.BorderBrush>
-                                        <Slider.Header>
-                                            Opacity
-                                        </Slider.Header>
                                     </Slider>
 
                                 </Grid>
@@ -1392,34 +1172,25 @@
                             <local:OptionCase Value="PaintBrushMulti">
                                 <StackPanel>
                                     <ListBox x:Name="SymmetryComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}">
-                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="SymmetryX"/>
-                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="SymmetryY"/>
-                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="SymmetryRadial"/>
-                                        <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="MirrorRadial"/>
+                                        <ListBoxItem local:Res.EIWTT="SymmetryX"/>
+                                        <ListBoxItem local:Res.EIWTT="SymmetryY"/>
+                                        <ListBoxItem local:Res.EIWTT="SymmetryRadial"/>
+                                        <ListBoxItem local:Res.EIWTT="MirrorRadial"/>
                                     </ListBox>
                                     <hsvColorPickers:NumberSlider x:Name="SymmetrySlider" Margin="0,5" Value="2" Minimum="2" Maximum="24" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                              Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}">
-                                        <Slider.Header>
-                                            Sectors
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Visibility="{x:Bind SymmetryIndexToVisibilityConverter(SymmetryComboBox.SelectedIndex), Mode=OneWay}"
+                                                                  local:Res.UH="PaintBrushMulti_Sectors"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="View">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="RadianSlider" Value="0" Minimum="-180" Maximum="180" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Radian
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" 
+                                                                      local:Res.UH="View_Radian"/>
                                         <hsvColorPickers:NumberSlider x:Name="ScaleSlider" Decrease="True" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Scale
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" 
+                                                                      local:Res.UH="View_Scale"/>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <Grid ColumnSpacing="2" Padding="8,0" Height="60" 
@@ -1440,9 +1211,7 @@
                                                 </SymbolIcon>
                                             </RepeatButton>
                                             <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                                                    local:ContentExtensions.ElementIconWithToolTip="ResetRadian">
-                                                <!--ResetRadian-->
-                                            </Button>
+                                                    local:Res.EIWTT="ResetRadian"/>
                                             <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh"/>
                                             </RepeatButton>
@@ -1458,9 +1227,7 @@
                                                 <SymbolIcon Symbol="Remove"/>
                                             </RepeatButton>
                                             <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                                                     local:ContentExtensions.ElementIconWithToolTip="ResetScale">
-                                                <!--ResetScale-->
-                                            </Button>
+                                                     local:Res.EIWTT="ResetScale"/>
                                             <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Add"/>
                                             </RepeatButton>
@@ -1477,28 +1244,20 @@
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Straw">
-                                <ListBox x:Name="StrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="StrawToolTip" Style="{StaticResource AppToolTipStyle}">
-                                            Sampling Target
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <ListBoxItem x:Name="StrawAllItem">All Layers</ListBoxItem>
-                                    <ListBoxItem x:Name="StrawCurrentItem">Current Layer</ListBoxItem>
+                                <ListBox x:Name="StrawComboBox" SelectedIndex="0" Margin="12,0" Style="{StaticResource AppSegmentListBoxStyle}"
+                                            local:Res.UTT="Straw_Object">
+                                    <ListBoxItem local:Res.UC="Export_Object_Layers"/>
+                                    <ListBoxItem local:Res.UC="Export_Object_Layer"/>
                                 </ListBox>
                             </local:OptionCase>
                             <local:OptionCase Value="Brush">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <ListBox x:Name="BrushComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
-                                        Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip x:Name="BrushToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                Gradient Type
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                        <ListBoxItem x:Name="BrushLinearGradientItem">Linear</ListBoxItem>
-                                        <ListBoxItem x:Name="BrushRadialGradientItem">Radial</ListBoxItem>
-                                        <ListBoxItem x:Name="BrushEllipticalGradientItem">Elliptical</ListBoxItem>
+                                        Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                                local:Res.UTT="Brush_GradientType">
+                                        <ListBoxItem local:Res.UC="Brush_Linear"/>
+                                        <ListBoxItem local:Res.UC="Brush_Radial"/>
+                                        <ListBoxItem local:Res.UC="Brush_Elliptical"/>
                                     </ListBox>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60"
                                           Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
@@ -1515,27 +1274,21 @@
                                                 </LinearGradientBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        <ToggleButton x:Name="BrushOpaqueButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Opaque
-                                        </ToggleButton>
-                                        <ToggleButton x:Name="BrushReverseButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Reverse
-                                        </ToggleButton>
+                                        <ToggleButton x:Name="BrushOpaqueButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                            local:Res.UC="Brush_Opaque"/>
+                                        <ToggleButton x:Name="BrushReverseButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                            local:Res.UC="Brush_Reverse"/>
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="Transparency">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <ListBox x:Name="TransparencyComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
-                                        Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip x:Name="TransparencyToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                Transparency Type
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                        <ListBoxItem x:Name="TransparencyLinearGradientItem">Linear</ListBoxItem>
-                                        <ListBoxItem x:Name="TransparencyRadialGradientItem">Radial</ListBoxItem>
-                                        <ListBoxItem x:Name="TransparencyEllipticalGradientItem">Elliptical</ListBoxItem>
+                                             Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" 
+                                             local:Res.UTT="Transparency_TransparencyType">
+                                        <ListBoxItem local:Res.UC="Brush_Linear"/>
+                                        <ListBoxItem local:Res.UC="Brush_Radial"/>
+                                        <ListBoxItem local:Res.UC="Brush_Elliptical"/>
                                     </ListBox>
                                     <Grid ColumnSpacing="4" Padding="10,0" MinWidth="280" Height="60"
                                           Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
@@ -1552,9 +1305,8 @@
                                                 </LinearGradientBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        <ToggleButton x:Name="TransparencyReverseButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                            Reverse
-                                        </ToggleButton>
+                                        <ToggleButton x:Name="TransparencyReverseButton" Grid.Column="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                            local:Res.UC="Transparency_Reverse"/>
                                     </Grid>
                                 </StackPanel>
                             </local:OptionCase>
@@ -1564,18 +1316,13 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto" MinWidth="70"/>
                                     </Grid.ColumnDefinitions>
-                                    <ComboBox x:Name="PenComboBox" SelectedIndex="0" HorizontalAlignment="Stretch">
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip x:Name="PenToolTip" Style="{StaticResource AppToolTipStyle}">
-                                                Segment Type
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                        <ComboBoxItem x:Name="PenCurveItem">Curve</ComboBoxItem>
-                                        <ComboBoxItem x:Name="PenLineItem">Line</ComboBoxItem>
+                                    <ComboBox x:Name="PenComboBox" SelectedIndex="0" HorizontalAlignment="Stretch"
+                                                local:Res.UTT="Pen_SegmentType">
+                                        <ListBoxItem local:Res.UC="Pen_Curve"/>
+                                        <ListBoxItem local:Res.UC="Pen_Line"/>
                                     </ComboBox>
-                                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                        Close
-                                    </Button>
+                                    <Button x:Name="PenCloseButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                        local:Res.UC="Pen_Close"/>
                                 </Grid>
                             </local:OptionCase>
 
@@ -1585,138 +1332,90 @@
                             <local:OptionCase Value="GeometryEllipseTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryRoundRectTransform">
-                                <hsvColorPickers:NumberSlider x:Name="RoundRectCornerSlider" Margin="0,5" Value="12" Minimum="0" Maximum="50" Unit="%" Decrease="True" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Corner
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="RoundRectCornerSlider" Margin="0,5" Value="12" Minimum="0" Maximum="50" Unit="%" Decrease="True" TickFrequency="10" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GeometryRoundRect_Corner"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryTriangleTransform">
-                                <hsvColorPickers:NumberSlider x:Name="TriangleCenterSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Center Point
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="TriangleCenterSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GeometryTriangle_CenterPoint"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDiamondTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DiamondMidSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Mid Point
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="DiamondMidSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GeometryDiamond_MidPoint"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPentagonTransform">
-                                <hsvColorPickers:NumberSlider x:Name="PentagonPointsSlider" Margin="0,5" Value="5" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Points
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="PentagonPointsSlider" Margin="0,5" Value="5" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GeometryPentagon_Points"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryStarTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="StarPointsSlider" Value="5" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Points
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="GeometryStar_Points"/>
                                     <hsvColorPickers:NumberSlider x:Name="StarInnerRadiusSlider" Value="40" Minimum="0" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Inner Radius
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="GeometryStar_InnerRadius"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryDonutTransform">
-                                <hsvColorPickers:NumberSlider x:Name="DonutHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Hole Radius
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="DonutHoleRadiusSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                        local:Res.UH="GeometryDonut_HoleRadius"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCogTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="CogCountSlider" Value="8" Minimum="4" Maximum="36" Decrease="True" TickFrequency="6" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Count
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GeometryCog_Count"/>
                                         <hsvColorPickers:NumberSlider x:Name="CogInnerRadiusSlider" Value="70" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Inner Radius
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GeometryCog_InnerRadius"/>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="CogToothSlider" Value="30" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Tooth
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GeometryCog_Tooth"/>
                                         <hsvColorPickers:NumberSlider x:Name="CogNotchSlider" Value="60" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Notch
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="GeometryCog_Notch"/>
                                     </StackPanel>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryPieTransform">
-                                <hsvColorPickers:NumberSlider x:Name="PieSweepAngleSlider" Margin="0,5" Value="90" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Sweep Angle
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="PieSweepAngleSlider" Margin="0,5" Value="90" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GeometryPie_SweepAngle"/>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCookieTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="CookieInnerRadiusSlider" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Inner Radius
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="GeometryCookie_InnerRadius"/>
                                     <hsvColorPickers:NumberSlider x:Name="CookieSweepAngleSlider" Value="90" Minimum="0" Maximum="360" Unit="º" Decrease="True" TickFrequency="60" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Sweep Angle
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="GeometryCookie_SweepAngle"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryArrowTransform">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <ListBox x:Name="ArrowLeftTailComboBox" Width="140" SelectedIndex="0" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowNone"/>
-                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowArrow"/>
+                                            <ListBoxItem local:Res.EIWTT="ArrowNone"/>
+                                            <ListBoxItem local:Res.EIWTT="ArrowArrow"/>
                                         </ListBox>
                                         <ListBox x:Name="ArrowRightTailComboBox" Width="140" SelectedIndex="1" Style="{StaticResource AppSegmentListBoxStyle}">
-                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowNone"/>
-                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="ArrowArrow"/>
+                                            <ListBoxItem local:Res.EIWTT="ArrowNone"/>
+                                            <ListBoxItem local:Res.EIWTT="ArrowArrow"/>
                                         </ListBox>
                                     </StackPanel>
-                                    <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                        <Slider.Header>
-                                            Width
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="ArrowWidthSlider" Margin="0,5" Value="50" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  local:Res.UH="GeometryArrow_Width"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryCapsuleTransform">
                             </local:OptionCase>
                             <local:OptionCase Value="GeometryHeartTransform">
-                                <hsvColorPickers:NumberSlider x:Name="HeartSpreadSlider" Margin="0,5" Value="80" Minimum="0" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Spread
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="HeartSpreadSlider" Margin="0,5" Value="80" Minimum="0" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              local:Res.UH="GeometryHeart_Spread"/>
                             </local:OptionCase>
 
 
@@ -1724,56 +1423,51 @@
                                 <StackPanel Margin="0,5" Orientation="{x:Bind DeviceHubToOrientationHorizontalConverter(Device), Mode=OneWay}" >
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <ListBox x:Name="GridComboBox" SelectedIndex="0" Margin="10,4" Style="{StaticResource AppSegmentListBoxStyle}"
-                                             Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <ListBoxItem local:ContentExtensions.ElementIconWithToolTip="GridGrid"/>
-                                            <ListBoxItem x:Name="GridColumnItem"  local:ContentExtensions.ElementIconWithToolTip="GridColumn"/>
-                                            <ListBoxItem x:Name="GridRowItem"  local:ContentExtensions.ElementIconWithToolTip="GridRow"/>
+                                                 Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
+                                            <ListBoxItem local:Res.EIWTT="GridGrid"/>
+                                            <ListBoxItem x:Name="GridColumnItem" local:Res.EIWTT="GridColumn"/>
+                                            <ListBoxItem x:Name="GridRowItem" local:Res.EIWTT="GridRow"/>
                                         </ListBox>
                                         <hsvColorPickers:NumberSlider x:Name="GridStrokeWidthSlider" Value="2" Minimum="1" Maximum="32" Decrease="True" Foreground="{ThemeResource AppForeground}"
-                                                Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Stroke Width
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="PatternGrid_StrokeWidth"/>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
                                         <hsvColorPickers:NumberSlider x:Name="GridColumnSpanSlider" Value="30" Minimum="5" Maximum="200" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            IsEnabled="{x:Bind ReverseBooleanConverter(GridRowItem.IsSelected), Mode=OneWay}" 
-                                            Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Column Span
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      IsEnabled="{x:Bind ReverseBooleanConverter(GridRowItem.IsSelected), Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="PatternGrid_ColumnSpan"/>
                                         <hsvColorPickers:NumberSlider x:Name="GridRowSpanSlider" Value="30" Minimum="5" Maximum="200" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            IsEnabled="{x:Bind ReverseBooleanConverter(GridColumnItem.IsSelected), Mode=OneWay}" 
-                                            Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}" >
-                                            <Slider.Header>
-                                                Row Span
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                                                      IsEnabled="{x:Bind ReverseBooleanConverter(GridColumnItem.IsSelected), Mode=OneWay}" 
+                                                                      Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}"
+                                                                      local:Res.UH="PatternGrid_RowSpan"/>
                                     </StackPanel>
+                                </StackPanel>
+                            </local:OptionCase>
+                            <local:OptionCase Value="PatternDiagonalTransform">
+                                <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
+                                    <hsvColorPickers:NumberSlider x:Name="PatternDiagonalFrequencySlider" Value="140" Minimum="0" Maximum="300" Decrease="True" TickFrequency="50" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="PatternDiagonal_Frequency"/>
+                                    <hsvColorPickers:NumberSlider x:Name="PatternDiagonalPhaseSlider" Minimum="-100" Maximum="0" Decrease="True" Unit="º" TickFrequency="20" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="PatternDiagonal_Phase"/>
+                                    <hsvColorPickers:NumberSlider x:Name="PatternDiagonalAmplitudeSlider" Value="60" Minimum="0" Maximum="200" Decrease="True" TickFrequency="40" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="PatternDiagonal_Amplitude"/>
                                 </StackPanel>
                             </local:OptionCase>
                             <local:OptionCase Value="PatternSpottedTransform">
                                 <StackPanel Margin="0,5" Orientation="{x:Bind ReverseDevicePhoneAndPadToOrientationHorizontalConverter(Device), Mode=OneWay}">
                                     <hsvColorPickers:NumberSlider x:Name="SpottedRadiusSlider" Value="8" Minimum="5" Maximum="100" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Radius
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="PatternSpotted_Radius"/>
                                     <hsvColorPickers:NumberSlider x:Name="SpottedSpanSlider" Value="30" Minimum="5" Maximum="200" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Span
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="PatternSpotted_Span"/>
                                     <hsvColorPickers:NumberSlider x:Name="SpottedFadeSlider" Value="0" Minimum="0" Maximum="100" Unit="%" Decrease="True" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                            Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}" >
-                                        <Slider.Header>
-                                            Fade
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                                                  Width="{x:Bind ReverseDevicePhoneAndPadToWidth260Converter(Device), Mode=OneWay}"
+                                                                  local:Res.UH="PatternSpotted_Fade"/>
                                 </StackPanel>
                             </local:OptionCase>
                         </local:OptionSwitchPresenter>
@@ -1788,12 +1482,10 @@
         <!--Head-->
         <Grid Height="50" VerticalAlignment="Top" >
 
-            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" local:CommandParameterExtensions.ButtonBase="DockLeft" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="DockLeftToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Dock Left
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <Button x:Name="DockLeftButton" Width="90" Height="50" HorizontalAlignment="Left" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                    local:Cmd.BB="DockLeft" 
+                    local:Res.OTT="DockLeft"
+                    Command="{x:Bind Command}">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <SymbolIcon Margin="4,0" Symbol="DockLeft"/>
                     <FontIcon Glyph="&#xE26C;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
@@ -1807,12 +1499,10 @@
                 </StackPanel>
             </Button>
 
-            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" local:CommandParameterExtensions.ButtonBase="DockRight" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="DockRightToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Dock Right
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                    local:Cmd.BB="DockRight" 
+                    local:Res.OTT="DockRight"
+                    Command="{x:Bind Command}">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE26B;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
                         <UIElement.RenderTransformOrigin>
@@ -1829,32 +1519,24 @@
             <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                    <Button Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="Home" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="HomeToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Home
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                            local:Cmd.BB="Home"
+                            local:Res.OTT="Home"
+                            Command="{x:Bind Command}" >
                         <SymbolIcon Symbol="Home"/>
                     </Button>
-                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="ExportToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Export
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}"
+                            local:Res.OTT="ExportMenu">
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                                     local:ContentExtensions.AccessKey="FileMenu">
-                                    <!--Files-->
-                                </MenuFlyoutSeparator>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Home" Command="{x:Bind Command}">
+                                             local:Res.OAK="FileMenu"/>
+                                <MenuFlyoutItem local:Cmd.MFI="Home" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="Home"/>
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Save" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:Cmd.MFI="Save" Command="{x:Bind Command}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="S"/>
                                     </UIElement.KeyboardAccelerators>
@@ -1862,43 +1544,43 @@
                                         <SymbolIcon Symbol="Save"/>
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutSubItem Text="Export">
+                                <MenuFlyoutSubItem local:Cmd.MFS="ExportMenu">
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="NewWindow"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="JPEG" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="PNG" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="BMP" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="GIF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="TIFF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="JPEG" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="PNG" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="BMP" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="GIF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="TIFF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="CropCanvas" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:Cmd.MFI="CropCanvas" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="Crop"/>
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutSubItem Text="ResizeCanvas">
+                                <MenuFlyoutSubItem local:Cmd.MFS="ResizeCanvas">
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="StopSlideShow"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Extend" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Offset" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="Stretch" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="Extend" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="Offset" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
-                                <MenuFlyoutSubItem Text="RotateCanvas">
+                                <MenuFlyoutSubItem local:Cmd.MFS="RotateCanvas">
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="Orientation"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="FlipHorizontal" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="FlipVertical" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                     <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="LeftTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="RightTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <MenuFlyoutItem local:Cmd.MFIWI="OverTurn" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItem="Close" Command="{x:Bind Command}">
+                                <MenuFlyoutItem local:Cmd.MFI="Close" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="Cancel"/>
                                     </MenuFlyoutItem.Icon>
@@ -1907,42 +1589,34 @@
                         </Button.Flyout>
                         <elements:AnimationIcon x:Name="AnimationIcon"/>
                     </Button>
-                    <Button x:Name="FullScreenButton" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="FullScreen" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="FullScreenToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Full screen
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button x:Name="FullScreenButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                            local:Res.OTT="FullScreen" 
+                            local:Cmd.BB="FullScreen" 
+                            Command="{x:Bind Command}" >
                         <SymbolIcon Symbol="FullScreen" />
                     </Button>
-                    <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="UnFullScreen" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="UnFullScreenToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Exit Full screen
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                            local:Res.OTT="UnFullScreen" 
+                            local:Cmd.BB="UnFullScreen" 
+                            Command="{x:Bind Command}" >
                         <SymbolIcon Symbol="BackToWindow" />
                     </Button>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button x:Name="UndoButton" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="Undo" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="UndoToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Undo
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button x:Name="UndoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                            local:Res.OTT="Undo" 
+                            local:Cmd.BB="Undo" 
+                            Command="{x:Bind Command}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="Undo"/>
                     </Button>
-                    <Button x:Name="RedoButton" Width="70" Height="50" local:CommandParameterExtensions.ButtonBase="Redo" Command="{x:Bind Command}" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="RedoToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Redo
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                    <Button x:Name="RedoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                            local:Res.OTT="Redo" 
+                            local:Cmd.BB="Redo" 
+                            Command="{x:Bind Command}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
@@ -1956,68 +1630,66 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
                     <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                            local:ContentExtensions.IconWithToolTip="EditMenu">
+                            local:Res.OIWTT="EditMenu">
                         <Button.Flyout>
                             <MenuFlyout x:Name="EditMenuFlyout" Placement="Bottom">
                                 <!--Edit-->
                                 <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                                     local:ContentExtensions.AccessKey="EditMenu">
-                                    <!--Edit-->
-                                </MenuFlyoutSeparator>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Cut" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                             local:Res.OAK="EditMenu"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="Cut" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="X"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Copy" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem local:Cmd.MFIWI="Copy" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="C"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem x:Name="PasteItem" local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Paste" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem x:Name="PasteItem" local:Cmd.MFIWI="Paste" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="V"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem x:Name="ClearItem" local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Clear" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem x:Name="ClearItem" local:Cmd.MFIWI="Clear" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Key="Back"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
+                                <!--Select-->
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="All" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem local:Cmd.MFIWI="All" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="A"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Deselect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem local:Cmd.MFIWI="Deselect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="D"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="MarqueeInvert" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem local:Cmd.MFIWI="MarqueeInvert" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="I"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Pixel" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem local:Cmd.MFIWI="Pixel" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="P"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Feather" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Grow" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="Feather" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="MarqueeTransform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="Grow" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="Shrink" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <!--EditMenu-->
                     </Button>
                     <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                            local:ContentExtensions.IconWithToolTip="AdjustmentMenu">
+                            local:Res.OIWTT="AdjustmentMenu">
                         <Button.Flyout>
                             <Flyout x:Name="EffectFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                                 <controls:EffectListView x:Name="EffectListView"/>
@@ -2025,32 +1697,31 @@
                         </Button.Flyout>
                         <!--AdjustmentMenu-->
                     </Button>
-                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                            local:ContentExtensions.IconWithToolTip="OtherMenu">
+                    <Button x:Name="MoreButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                            local:Res.OIWTT="OtherMenu">
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
+                                <!--Others-->
                                 <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                                     local:ContentExtensions.AccessKey="OtherMenu">
-                                    <!--Others-->
-                                </MenuFlyoutSeparator>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Move" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                             local:Res.OAK="OtherMenu"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="Move" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="M"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Transform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                <MenuFlyoutItem local:Cmd.MFIWI="Transform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="T"/>
                                     </UIElement.KeyboardAccelerators>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="FreeTransform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="FreeTransform" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="RippleEffect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Threshold" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="DisplacementLiquefaction" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="GradientMapping" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="RippleEffect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="Threshold" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem local:CommandParameterExtensions.MenuFlyoutItemWidthIcon="HSB" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                <MenuFlyoutItem local:Cmd.MFIWI="HSB" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <!--OtherMenu-->
@@ -2068,15 +1739,10 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="AppBarPrimaryButton" Grid.Column="2" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" >
-                    Apply
-                </Button>
-                <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip x:Name="AppBarBackToolTip" Style="{StaticResource AppToolTipStyle}">
-                            Back
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
+                <Button x:Name="AppBarPrimaryButton" Grid.Column="2" CornerRadius="4" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource AccentButtonStyle}" 
+                        local:Res.UC="Apply"/>
+                <Button x:Name="AppBarBackButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                        local:Res.UTT="Back">
                     <SymbolIcon Symbol="Back"/>
                 </Button>
                 <TextBlock
@@ -2114,9 +1780,8 @@
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon Symbol="Delete"/>
                 <ContentControl Width="12"/>
-                <TextBlock x:Name="GradientMappingTipTextBlock" FontWeight="Medium" VerticalAlignment="Center">
-                    Drop to Remove
-                </TextBlock>
+                <TextBlock FontWeight="Medium" VerticalAlignment="Center"
+                           local:Res.UT="GradientMapping_DropRemove"/>
             </StackPanel>
         </Border>
 
