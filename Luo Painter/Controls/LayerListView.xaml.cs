@@ -32,6 +32,8 @@ namespace Luo_Painter.Controls
         public INumberBase OpacityNumber => this.OpacitySlider;
         public double OpacitySliderValue { set => this.OpacitySlider.Value = value; }
 
+        private string InputText => App.Resource.GetString(UIType.InputText.ToString());
+
         //@Construct
         public LayerListView()
         {

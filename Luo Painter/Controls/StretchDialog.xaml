@@ -9,35 +9,17 @@
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}" 
+    luo_painter:Res.UD="Stretch"
     >
-
-    <ContentDialog.Title>
-        Stretch
-    </ContentDialog.Title>
-
-    <ContentDialog.PrimaryButtonText>
-        OK
-    </ContentDialog.PrimaryButtonText>
-    <ContentDialog.SecondaryButtonText>
-        Cancel
-    </ContentDialog.SecondaryButtonText>
 
     <StackPanel>
 
-        <controls:SizePicker x:Name="SizePicker" Margin="0,0,0,8" >
-            <controls:SizePicker.WidthText>
-                Width
-            </controls:SizePicker.WidthText>
-            <controls:SizePicker.HeightText>
-                Height
-            </controls:SizePicker.HeightText>
-        </controls:SizePicker>
+        <controls:SizePicker x:Name="SizePicker" Margin="0,0,0,8"/>
 
         <MenuFlyoutSeparator Margin="0,4"/>
 
-        <TextBlock x:Name="InterpolationTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">               
-            Interpolation
-        </TextBlock>
+        <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   luo_painter:Res.UT="Stretch_Interpolation"/>
 
         <ListView x:Name="InterpolationListView" SelectedIndex="1" Style="{StaticResource AppListViewStyle}">
             <luo_painter:InterpolationItem Type="NearestNeighbor"/>

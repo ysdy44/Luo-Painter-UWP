@@ -5,8 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter.Controls"
     xmlns:luo_painter="using:Luo_Painter"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     mc:Ignorable="d"
@@ -16,13 +16,8 @@
     Height="50" 
     Foreground="{ThemeResource AppForeground}" 
     Style="{StaticResource TextBlockButtonStyle}" 
+    luo_painter:Res.OTT="ColorMenu"
     >
-
-    <ToolTipService.ToolTip>
-        <ToolTip x:Name="ColorToolTip" Style="{StaticResource AppToolTipStyle}">
-            Color
-        </ToolTip>
-    </ToolTipService.ToolTip>
 
     <UIElement.ManipulationMode>
         TranslateX, TranslateY
@@ -56,17 +51,11 @@
                         TextWrapping="Wrap" 
                         VerticalAlignment="Center" 
                         OpticalMarginAlignment="TrimSideBearings"
-                        luo_painter:ContentExtensions.Text="ColorMenu"
-                        >                      
-                        <!--Color-->
-                    </TextBlock>
+                        luo_painter:Res.OT="ColorMenu"
+                        />
                     <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                            Command="{x:Bind OpenCommand}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip x:Name="StrawToolTip" Style="{StaticResource AppToolTipStyle}">
-                                Straw
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
+                            Command="{x:Bind OpenCommand}"
+                            luo_painter:Res.UTT="Color_Straw">
                         <UIElement.ManipulationMode>
                             TranslateX, TranslateY
                         </UIElement.ManipulationMode>
@@ -86,11 +75,18 @@
 
                 <!--Type-->
                 <ListBox x:Name="ComboBox" SelectedIndex="0" Visibility="Visible">
-                    <FontIcon Glyph="&#xF157;" FontFamily="Segoe MDL2 Assets"/>
-                    <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
-                    <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
-                    <FontIcon Glyph="&#xE9E9;" FontFamily="Segoe MDL2 Assets"/>
-                    <!--<FontIcon Glyph="&#xE790;" FontFamily="Segoe MDL2 Assets"/>-->
+                    <ListBoxItem luo_painter:Res.UTT="Color_Wheel">
+                        <FontIcon Glyph="&#xF157;" FontFamily="Segoe MDL2 Assets"/>
+                    </ListBoxItem>
+                    <ListBoxItem luo_painter:Res.UTT="Color_Box">
+                        <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
+                    </ListBoxItem>
+                    <ListBoxItem luo_painter:Res.UTT="Color_Palette">
+                        <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
+                    </ListBoxItem>
+                    <ListBoxItem luo_painter:Res.UTT="Color_Parameter">
+                        <FontIcon Glyph="&#xE9E9;" FontFamily="Segoe MDL2 Assets"/>
+                    </ListBoxItem>
                 </ListBox>
 
                 <!--Color-->
@@ -118,7 +114,7 @@
                         IsItemClickEnabled="True"
                         SelectionMode="None" 
                         Background="{ThemeResource AppOpacity}"
-                        ItemsSource="{x:Bind ObservableCollection}"          
+                        ItemsSource="{x:Bind ObservableCollection}" 
                         ScrollViewer.HorizontalScrollMode="Enabled"
                         ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                         ScrollViewer.VerticalScrollMode="Disabled"
@@ -214,10 +210,8 @@
                                             TextWrapping="Wrap" 
                                             VerticalAlignment="Center" 
                                             OpticalMarginAlignment="TrimSideBearings"
-                                            luo_painter:ContentExtensions.Text="ColorHarmonyMenu"
-                                            >
-                                            <!--Harmony-->
-                                        </TextBlock>
+                                            luo_painter:Res.OT="ColorHarmonyMenu"
+                                            />
 
                                         <ListView
                                             x:Name="ModeListView" 
@@ -225,11 +219,11 @@
                                             IsItemClickEnabled="True" 
                                             Style="{StaticResource AppListViewStyle}"
                                             >
-                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyComplementary"/>
-                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonySplitComplementary"/>
-                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyAnalogous"/>
-                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyTriadic"/>
-                                            <ListViewItem luo_painter:ContentExtensions.ElementItem="HarmonyTetradic"/>
+                                            <ListViewItem luo_painter:Res.EE="HarmonyComplementary"/>
+                                            <ListViewItem luo_painter:Res.EE="HarmonySplitComplementary"/>
+                                            <ListViewItem luo_painter:Res.EE="HarmonyAnalogous"/>
+                                            <ListViewItem luo_painter:Res.EE="HarmonyTriadic"/>
+                                            <ListViewItem luo_painter:Res.EE="HarmonyTetradic"/>
                                         </ListView>
 
                                     </StackPanel>
@@ -246,9 +240,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="140"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="HexTextBlock" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                Hex
-                            </TextBlock>
+                            <TextBlock x:Name="HexTextBlock" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       luo_painter:Res.UT="Color_Hex"/>
                             <TextBlock Margin="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18" Foreground="{ThemeResource AppForeground}">
                                 #
                             </TextBlock>

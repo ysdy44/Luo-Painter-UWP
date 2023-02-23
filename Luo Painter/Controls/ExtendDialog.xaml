@@ -4,40 +4,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
+    luo_painter:Res.UD="Extend"
     >
-
-    <ContentDialog.Title>
-        Extend
-    </ContentDialog.Title>
-
-    <ContentDialog.PrimaryButtonText>
-        OK
-    </ContentDialog.PrimaryButtonText>
-    <ContentDialog.SecondaryButtonText>
-        Cancel
-    </ContentDialog.SecondaryButtonText>
 
     <StackPanel>
 
-        <controls:SizePicker x:Name="SizePicker" Margin="0,0,0,8" >
-            <controls:SizePicker.WidthText>
-                Width
-            </controls:SizePicker.WidthText>
-            <controls:SizePicker.HeightText>
-                Height
-            </controls:SizePicker.HeightText>
-        </controls:SizePicker>
+        <controls:SizePicker x:Name="SizePicker" Margin="0,0,0,8"/>
 
         <MenuFlyoutSeparator Margin="0,4"/>
 
-        <TextBlock x:Name="IndicatorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">               
-            Anchored to canvas
-        </TextBlock>
+        <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   luo_painter:Res.UT="Extend_Indicator"/>
 
         <Border
             Margin="0,6,0,0"

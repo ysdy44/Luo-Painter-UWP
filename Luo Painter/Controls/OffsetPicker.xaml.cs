@@ -15,12 +15,6 @@ namespace Luo_Painter.Controls
         //@Converter
         public string Round2Converter(double value) => $"{value:0.00}";
 
-        //@Content
-        /// <summary> XTextBlock's Text. </summary>
-        public string XText { get => this.XTextBlock.Text; set => this.XTextBlock.Text = value; }
-        /// <summary> YTextBlock's Text. </summary>
-        public string YText { get => this.YTextBlock.Text; set => this.YTextBlock.Text = value; }
-
         /// <summary> Minimum. Default -16384. </summary>
         public double Minimum { get; set; } = -16384;
         /// <summary> Maximum. Default 16384. </summary>

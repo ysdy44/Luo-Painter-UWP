@@ -67,10 +67,8 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:ContentExtensions.Text="SizeMenu"
-                >
-                <!--Sizes-->
-            </TextBlock>
+                luo_painter:Res.OT="SizeMenu"
+                />
         </Border>
     </ListViewBase.Header>
 

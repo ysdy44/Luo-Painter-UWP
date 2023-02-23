@@ -4,22 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
+    luo_painter:Res.UD="Texture"
     >
-
-    <ContentDialog.Title>
-        Texture
-    </ContentDialog.Title>
-
-    <ContentDialog.PrimaryButtonText>
-        OK
-    </ContentDialog.PrimaryButtonText>
-    <ContentDialog.SecondaryButtonText>
-        Cancel
-    </ContentDialog.SecondaryButtonText>
 
     <GridView
         x:Name="GridView"
@@ -62,7 +53,7 @@
                 <local:PaintTexture Width="400" Height="400" Path="Flash/00" />
                 <local:PaintTexture Width="1400" Height="1400" Path="Flash/01" />
                 <local:PaintTexture Width="1100" Height="1100" Path="Flash/02" />
-                <local:PaintTexture Width="1600"    Height="1600" Path="Flash/03" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Flash/03" />
                 <local:PaintTexture Width="900" Height="900" Path="Flash/04" />
 
                 <local:PaintTexture Width="512" Height="512" Path="Splodge/00" />

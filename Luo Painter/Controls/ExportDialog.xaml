@@ -4,21 +4,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
+    luo_painter:Res.UD="Export"
     >
-
-    <ContentDialog.Title>
-        Export...
-    </ContentDialog.Title>
-
-    <ContentDialog.PrimaryButtonText>
-        OK
-    </ContentDialog.PrimaryButtonText>
-    <ContentDialog.SecondaryButtonText>
-        Cancel
-    </ContentDialog.SecondaryButtonText>
 
     <StackPanel>
 
@@ -55,9 +46,8 @@
         </Border>
 
         <!--DPI-->
-        <TextBlock x:Name="DPITextBlock" Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" >
-            DPI
-        </TextBlock>
+        <TextBlock Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" 
+                   luo_painter:Res.UT="Export_DPI"/>
         <ComboBox x:Name="DPIComboBox" SelectedIndex="1" >
             <ComboBoxItem>72</ComboBoxItem>
             <ComboBoxItem FontWeight="Bold">96</ComboBoxItem>
@@ -68,13 +58,12 @@
         </ComboBox>
 
         <!--Export-->
-        <TextBlock x:Name="ExportTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-            Export
-        </TextBlock>
+        <TextBlock Margin="2,4" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}" 
+                   luo_painter:Res.UT="Export_Object"/>
         <ComboBox x:Name="ComboBox" SelectedIndex="0" >
-            <ComboBoxItem x:Name="NoneItem" FontWeight="Bold">Export</ComboBoxItem>
-            <ComboBoxItem x:Name="AllItem">Export All Layers</ComboBoxItem>
-            <ComboBoxItem x:Name="CurrentItem">Export Current Layer</ComboBoxItem>
+            <ComboBoxItem FontWeight="Bold" luo_painter:Res.UC="Export_Object_Image"/>
+            <ComboBoxItem luo_painter:Res.UC="Export_Object_Layers"/>
+            <ComboBoxItem luo_painter:Res.UC="Export_Object_Layer"/>
         </ComboBox>
 
     </StackPanel>

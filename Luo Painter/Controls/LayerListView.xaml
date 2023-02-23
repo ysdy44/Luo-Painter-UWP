@@ -44,22 +44,21 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="RenameTextBox" Grid.Row="1">
-                    <TextBox.PlaceholderText>
-                        Input Text...
-                    </TextBox.PlaceholderText>
-                </TextBox>
+                <TextBox x:Name="RenameTextBox" Grid.Row="1"
+                         PlaceholderText="{x:Bind InputText}"/>
 
                 <StackPanel Grid.Row="2" Margin="0,4" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="OKButton" Canvas.Left="62" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" FontSize="20" Content="&#xEC61;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" >
+                    <Button x:Name="OKButton" Canvas.Left="62" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="Enter"/>
                         </UIElement.KeyboardAccelerators>
+                        <FontIcon Glyph="&#xEC61;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
                     </Button>
-                    <Button x:Name="CancelButton" Canvas.Left="152" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" FontSize="20" Content="&#xEB90;" FontWeight="Bold" FontFamily="Segoe MDL2 Assets" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <Button x:Name="CancelButton" Canvas.Left="152" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="None" Key="Escape"/>
                         </UIElement.KeyboardAccelerators>
+                        <FontIcon Glyph="&#xEB90;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
                     </Button>
                 </StackPanel>
 
@@ -72,7 +71,7 @@
                     TextWrapping="Wrap" 
                     VerticalAlignment="Center" 
                     OpticalMarginAlignment="TrimSideBearings"
-                    luo_painter:ContentExtensions.Text="LayerRenameMenu"
+                    luo_painter:Res.OT="LayerRenameMenu"
                     >      
                     <UIElement.KeyboardAccelerators>
                         <KeyboardAccelerator x:Name="KeyboardAccelerator" Modifiers="None" Key="F2"/>
@@ -224,7 +223,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
+  
             <TextBlock
                 x:Name="TitleTextBlock"
                 Margin="16,0,0,0"
@@ -235,17 +234,13 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:ContentExtensions.Text="LayerMenu"
+                luo_painter:Res.OT="LayerMenu"
                 >
                 <!--Layers-->
             </TextBlock>
 
-            <Button Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="PropertieToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Properties
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <Button Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1"
+                    luo_painter:Res.OTT="LayerPropertyMenu">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Key="F3"/>
                 </UIElement.KeyboardAccelerators>
@@ -262,24 +257,20 @@
                                 TextWrapping="Wrap" 
                                 VerticalAlignment="Center" 
                                 OpticalMarginAlignment="TrimSideBearings"
-                                luo_painter:ContentExtensions.Text="LayerPropertyMenu"
+                                luo_painter:Res.OT="LayerPropertyMenu"
                                 >                                
                                 <!--Properties-->
                             </TextBlock>
 
                             <!--Opacity-->
                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
-                                <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Margin="0,5" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Opacity
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Margin="0,5" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              luo_painter:Res.UH="Layer_Property_Opacity"/>
                             </Border>
 
                             <!--BlendMode-->
-                            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                                Blend Mode
-                            </TextBlock>
+                            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"      
+                                       luo_painter:Res.UT="Layer_Property_BlendMode"/>
                             <ComboBox x:Name="BlendModeComboBox" >
 
                                 <ItemsControl.ItemContainerStyle>
@@ -290,45 +281,44 @@
                                 </ItemsControl.ItemContainerStyle>
 
                                 <!--None-->
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="-1"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Dissolve" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="-1"/>
+                                <ComboBoxItem luo_painter:Res.BE="Dissolve" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Darken-->
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Darken"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Multiply"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="ColorBurn"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LinearBurn"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="DarkerColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="Darken"/>
+                                <ComboBoxItem luo_painter:Res.BE="Multiply"/>
+                                <ComboBoxItem luo_painter:Res.BE="ColorBurn"/>
+                                <ComboBoxItem luo_painter:Res.BE="LinearBurn"/>
+                                <ComboBoxItem luo_painter:Res.BE="DarkerColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Lighten-->
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Lighten"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Screen"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="ColorDodge"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LinearDodge"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LighterColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="Lighten"/>
+                                <ComboBoxItem luo_painter:Res.BE="Screen"/>
+                                <ComboBoxItem luo_painter:Res.BE="ColorDodge"/>
+                                <ComboBoxItem luo_painter:Res.BE="LinearDodge"/>
+                                <ComboBoxItem luo_painter:Res.BE="LighterColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Contrast-->
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Overlay"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="SoftLight"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="HardLight"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="VividLight"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="LinearLight"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="PinLight"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="HardMix" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="Overlay"/>
+                                <ComboBoxItem luo_painter:Res.BE="SoftLight"/>
+                                <ComboBoxItem luo_painter:Res.BE="HardLight"/>
+                                <ComboBoxItem luo_painter:Res.BE="VividLight"/>
+                                <ComboBoxItem luo_painter:Res.BE="LinearLight"/>
+                                <ComboBoxItem luo_painter:Res.BE="PinLight"/>
+                                <ComboBoxItem luo_painter:Res.BE="HardMix" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Difference-->
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Difference"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Exclusion"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Subtract"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Division" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="Difference"/>
+                                <ComboBoxItem luo_painter:Res.BE="Exclusion"/>
+                                <ComboBoxItem luo_painter:Res.BE="Subtract"/>
+                                <ComboBoxItem luo_painter:Res.BE="Division" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Color-->
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Hue"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Saturation"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Color"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.BlendItem="Luminosity"/>
+                                <ComboBoxItem luo_painter:Res.BE="Hue"/>
+                                <ComboBoxItem luo_painter:Res.BE="Saturation"/>
+                                <ComboBoxItem luo_painter:Res.BE="Color"/>
+                                <ComboBoxItem luo_painter:Res.BE="Luminosity"/>
 
                             </ComboBox>
 
                             <!--TagType-->
-                            <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" >
-                                Tag Type
-                            </TextBlock>
+                            <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
+                                       luo_painter:Res.UT="Layer_Property_TagType"/>
                             <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
                                 <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
                             </Border>
@@ -339,71 +329,65 @@
                 <FontIcon Glyph="&#xE946;" FontFamily="Segoe MDL2 Assets"/>
             </Button>
 
-            <Button Grid.Column="2" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="LayerToolTip" Style="{StaticResource AppToolTipStyle}">
-                        Layers
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <Button Grid.Column="2" Width="70" Height="40" CornerRadius="4" BorderThickness="1"
+                    luo_painter:Res.OTT="LayerMenu">
                 <Button.Flyout>
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
                         <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                             luo_painter:ContentExtensions.AccessKey="LayerMenu">
-                            <!--Layers-->
-                        </MenuFlyoutSeparator>
-                        <MenuFlyoutItem x:Name="CutLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                        <MenuFlyoutItem x:Name="CopyLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="CopyLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                        <MenuFlyoutItem x:Name="PasteLayerItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="PasteLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                        <MenuFlyoutItem x:Name="RemoveItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Remove" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                                             luo_painter:Res.OAK="LayerMenu"/>
+                        <MenuFlyoutItem x:Name="CutLayerItem" luo_painter:Cmd.MFIWI="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem x:Name="CopyLayerItem" luo_painter:Cmd.MFIWI="CopyLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem x:Name="PasteLayerItem" luo_painter:Cmd.MFIWI="PasteLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem x:Name="RemoveItem" luo_painter:Cmd.MFIWI="Remove" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="Delete"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Name="DuplicateItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="DuplicateItem" luo_painter:Cmd.MFIWI="Duplicate" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="D"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="ExtractItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Extract" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="ExtractItem" luo_painter:Cmd.MFIWI="Extract" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="E"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="MergeItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Merge" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="MergeItem" luo_painter:Cmd.MFIWI="Merge" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="M"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="FlattenItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="FlattenItem" luo_painter:Cmd.MFIWI="Flatten" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="F"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <!--Group-->
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Name="GroupItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Group" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="GroupItem" luo_painter:Cmd.MFIWI="Group" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="G"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="UngroupItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="UngroupItem" luo_painter:Cmd.MFIWI="Ungroup" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="U"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="ReleaseItem" luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Release" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
+                        <MenuFlyoutItem x:Name="ReleaseItem" luo_painter:Cmd.MFIWI="Release" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}">
                             <UIElement.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="R"/>
                             </UIElement.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <!--
-                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:Cmd.MFIWI="ExpandStroke" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Union" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Xor" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                        <MenuFlyoutItem luo_painter:CommandParameterExtensions.MenuFlyoutItemWidthIcon="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:Cmd.MFIWI="Union" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:Cmd.MFIWI="Exclude" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:Cmd.MFIWI="Xor" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                        <MenuFlyoutItem luo_painter:Cmd.MFIWI="Intersect" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         -->
                     </MenuFlyout>
                 </Button.Flyout>

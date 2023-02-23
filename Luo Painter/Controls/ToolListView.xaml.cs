@@ -37,7 +37,7 @@ namespace Luo_Painter.Controls
             base.PrepareContainerForItemOverride(element, item);
             ToolTipService.SetToolTip(element, new ToolTip
             {
-                Content = item,
+                Content = App.Resource.GetString(item.ToString()),
                 Style = App.Current.Resources["AppToolTipStyle"] as Style
             });
         }

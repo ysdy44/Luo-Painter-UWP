@@ -65,10 +65,8 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center"
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:ContentExtensions.Text="HistoryMenu"
-                >
-                <!--Histories-->
-            </TextBlock>
+                luo_painter:Res.OT="HistoryMenu"
+                />
         </Border>
     </ListViewBase.Header>
 

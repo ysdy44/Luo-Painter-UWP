@@ -112,10 +112,8 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:ContentExtensions.Text="BrushMenu"
-                >
-                <!--Brushes-->
-            </TextBlock>
+                luo_painter:Res.OT="BrushMenu"
+                />
         </Border>
     </ListViewBase.Header>
 

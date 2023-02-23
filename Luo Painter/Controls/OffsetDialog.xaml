@@ -4,29 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
+    luo_painter:Res.UD="Offset"
     >
 
-    <ContentDialog.Title>
-        Offset
-    </ContentDialog.Title>
-
-    <ContentDialog.PrimaryButtonText>
-        OK
-    </ContentDialog.PrimaryButtonText>
-    <ContentDialog.SecondaryButtonText>
-        Cancel
-    </ContentDialog.SecondaryButtonText>
-
-    <controls:OffsetPicker x:Name="OffsetPicker" Margin="0,8,0,18" >
-        <controls:OffsetPicker.XText>
-            X
-        </controls:OffsetPicker.XText>
-        <controls:OffsetPicker.YText>
-            Y
-        </controls:OffsetPicker.YText>
-    </controls:OffsetPicker>
+    <controls:OffsetPicker x:Name="OffsetPicker" Margin="0,8,0,18"/>
 </ContentDialog>

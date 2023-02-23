@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:luo_painter="using:Luo_Painter"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     d:DesignWidth="400"
     d:DesignHeight="400"
@@ -11,10 +12,16 @@
     >
 
     <StackPanel>
-        <hsvColorPickers:NumberSlider x:Name="HueSlider" Maximum="360" Unit="º" TickFrequency="60" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
-            <Slider.Header>
-                Hue
-            </Slider.Header>
+        <hsvColorPickers:NumberSlider 
+            x:Name="HueSlider" 
+            Minimum="0"
+            Maximum="360" 
+            Unit="º" 
+            TickFrequency="60" 
+            TickPlacement="Outside" 
+            Foreground="{ThemeResource AppForeground}"
+            luo_painter:Res.UH="Color_Hue" 
+            >
             <Control.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="Red" Offset="0"/>
@@ -27,10 +34,16 @@
                 </LinearGradientBrush>
             </Control.Background>
         </hsvColorPickers:NumberSlider>
-        <hsvColorPickers:NumberSlider x:Name="SaturationSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
-            <Slider.Header>
-                Saturation
-            </Slider.Header>
+        <hsvColorPickers:NumberSlider 
+            x:Name="SaturationSlider" 
+            Minimum="0"
+            Maximum="100"
+            Unit="%" 
+            TickFrequency="25" 
+            TickPlacement="Outside"
+            Foreground="{ThemeResource AppForeground}"
+            luo_painter:Res.UH="Color_Saturation" 
+            >
             <Control.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="Gray" Offset="0"/>
@@ -38,10 +51,16 @@
                 </LinearGradientBrush>
             </Control.Background>
         </hsvColorPickers:NumberSlider>
-        <hsvColorPickers:NumberSlider x:Name="ValueSlider" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
-            <Slider.Header>
-                Value
-            </Slider.Header>
+        <hsvColorPickers:NumberSlider 
+            x:Name="ValueSlider" 
+            Minimum="0"
+            Maximum="100"
+            Unit="%" 
+            TickFrequency="25" 
+            TickPlacement="Outside" 
+            Foreground="{ThemeResource AppForeground}"
+            luo_painter:Res.UH="Color_Value"
+            >
             <Control.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="Black" Offset="0"/>

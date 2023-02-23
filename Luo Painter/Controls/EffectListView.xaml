@@ -96,7 +96,7 @@
                             TextWrapping="Wrap" 
                             VerticalAlignment="Center" 
                             OpticalMarginAlignment="TrimSideBearings"
-                            luo_painter:ContentExtensions.Text="EffectMenu"
+                            luo_painter:Res.OT="EffectMenu"
                             >
                             <!--Effects-->
                         </TextBlock>
@@ -104,9 +104,8 @@
                 </ListViewBase.Header>
                 
                 <ListViewBase.Footer>
-                    <Button x:Name="ApplyButton" Margin="4,6" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                        Apply Again
-                    </Button>
+                    <Button x:Name="ApplyButton" Margin="4,6" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                            luo_painter:Res.UC="Effect_Apply"/>
                 </ListViewBase.Footer>
                 
                 <ListViewItem x:Name="AdjustmentItem">Adjustment</ListViewItem>

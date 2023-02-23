@@ -16,12 +16,6 @@ namespace Luo_Painter.Controls
         //@Key
         private bool IsRatio => this.ToggleButton.IsChecked is true;
 
-        //@Content
-        /// <summary> WidthTextBlock's Text. </summary>
-        public string WidthText { get => this.WidthTextBlock.Text; set => this.WidthTextBlock.Text = value; }
-        /// <summary> HeightTextBlock's Text. </summary>
-        public string HeightText { get => this.HeightTextBlock.Text; set => this.HeightTextBlock.Text = value; }
-
         /// <summary> Minimum. Default 16. </summary>
         public int Minimum { get; set; } = 16;
         /// <summary> Maximum. Default 16384. </summary>

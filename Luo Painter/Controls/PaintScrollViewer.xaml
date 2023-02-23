@@ -102,36 +102,36 @@
                             </VisualStateManager.VisualStateGroups>
 
                             <Border
-                                x:Name="Background"                              
-                                IsHitTestVisible="False"                           
+                                x:Name="Background" 
+                                IsHitTestVisible="False" 
                                 Width="36" 
                                 Height="6" 
                                 CornerRadius="{TemplateBinding CornerRadius}" 
-                                BorderThickness="{TemplateBinding BorderThickness}"            
-                                BorderBrush="{TemplateBinding BorderBrush}"            
-                                Background="{TemplateBinding Background}"           
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}" 
                                 />
                             <Border
-                                x:Name="BackgroundPointerOver"                            
+                                x:Name="BackgroundPointerOver" 
                                 Opacity="0" 
                                 IsHitTestVisible="False"
                                 Width="36"
                                 Height="6" 
-                                CornerRadius="{TemplateBinding CornerRadius}"          
-                                BorderThickness="{TemplateBinding BorderThickness}"              
-                                BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}"             
-                                Background="{ThemeResource ThumbBackgroundPointerOver}"              
+                                CornerRadius="{TemplateBinding CornerRadius}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{ThemeResource ThumbBorderBrushPointerOver}" 
+                                Background="{ThemeResource ThumbBackgroundPointerOver}" 
                                 />
                             <Border
-                                x:Name="BackgroundPressed"                              
+                                x:Name="BackgroundPressed" 
                                 Opacity="0" 
                                 IsHitTestVisible="False"
                                 Width="36" 
                                 Height="6"
-                                CornerRadius="{TemplateBinding CornerRadius}"          
-                                Background="{ThemeResource ThumbBackgroundPressed}"             
-                                BorderBrush="{ThemeResource ThumbBorderBrushPressed}"              
-                                BorderThickness="{TemplateBinding BorderThickness}"                
+                                CornerRadius="{TemplateBinding CornerRadius}" 
+                                Background="{ThemeResource ThumbBackgroundPressed}" 
+                                BorderBrush="{ThemeResource ThumbBorderBrushPressed}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
                                 />
                         </Grid>
                     </ControlTemplate>
@@ -147,9 +147,7 @@
                 <Button x:Name="ScratchpadButton" Padding="12,2" Margin="12,10" Height="32" CornerRadius="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
                     <StackPanel Spacing="8" Orientation="Horizontal">
                         <FontIcon Glyph="&#xE932;" FontFamily="Segoe MDL2 Assets"/>
-                        <TextBlock x:Name="ScratchpadTextBlock" VerticalAlignment="Center">
-                            Scratchpad
-                        </TextBlock>
+                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Scratchpad"/>
                     </StackPanel>
                 </Button>
             </Grid>
@@ -190,28 +188,37 @@
                                     TextWrapping="Wrap" 
                                     VerticalAlignment="Center" 
                                     OpticalMarginAlignment="TrimSideBearings"
-                                    luo_painter:ContentExtensions.Text="PaintMenu"
-                                    >
-                                    <!--Paint-->
-                                </TextBlock>
+                                    luo_painter:Res.OT="PaintMenu"
+                                    />
                             </Border>
                         </ListViewBase.Header>
 
                         <ListViewBase.Footer>
                             <ComboBox x:Name="TypeComboBox" SelectedIndex="2" Margin="4,6">
-                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkErase"/>
-                                <ComboBoxItem FontWeight="Bold" luo_painter:ContentExtensions.ElementItem="InkGeneral"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkTip"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkLine"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkBlur"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkMosaic"/>
-                                <ComboBoxItem luo_painter:ContentExtensions.ElementItem="InkLiquefy"/>
+                                <ComboBoxItem luo_painter:Res.EE="InkErase"/>
+                                <ComboBoxItem FontWeight="Bold" luo_painter:Res.EE="InkGeneral"/>
+                                <ComboBoxItem luo_painter:Res.EE="InkTip"/>
+                                <ComboBoxItem luo_painter:Res.EE="InkLine"/>
+                                <ComboBoxItem luo_painter:Res.EE="InkBlur"/>
+                                <ComboBoxItem luo_painter:Res.EE="InkMosaic"/>
+                                <ComboBoxItem luo_painter:Res.EE="InkLiquefy"/>
                             </ComboBox>
                         </ListViewBase.Footer>
 
-                        <ListViewItem x:Name="PropertyItem">Properties</ListViewItem>
-                        <ListViewItem x:Name="TextureItem" Visibility="{x:Bind TextureVisibilityConverter(Type), Mode=OneWay}">Texture</ListViewItem>
-                        <ListViewItem x:Name="MixItem" Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}">Mix Color</ListViewItem>
+                        <ListViewItem
+                            x:Name="PropertyItem" 
+                            luo_painter:Res.UC="Paint_Property"
+                            />
+                        <ListViewItem
+                            x:Name="TextureItem" 
+                            Visibility="{x:Bind TextureVisibilityConverter(Type), Mode=OneWay}" 
+                            luo_painter:Res.UC="Paint_Texture"
+                            />
+                        <ListViewItem
+                            x:Name="MixItem"
+                            Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}" 
+                            luo_painter:Res.UC="Paint_Mix"
+                            />
 
                     </ListView>
                 </SplitView.Pane>
@@ -221,9 +228,8 @@
                         <StackPanel Padding="10,0,10,8">
 
                             <!--Property-->
-                            <TextBlock x:Name="PropertyTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                Properties
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       luo_painter:Res.UT="Paint_Property"/>
 
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
                                 <StackPanel Margin="2">
@@ -234,11 +240,8 @@
                                         Decrease="True"
                                         TickFrequency="100" 
                                         TickPlacement="Outside" 
-                                        >
-                                        <Slider.Header>
-                                            Size
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                        luo_painter:Res.UH="Paint_Property_Size"
+                                        />
 
                                     <!--Opacity-->
                                     <hsvColorPickers:NumberSlider
@@ -248,12 +251,9 @@
                                         Decrease="True" 
                                         Unit="%"
                                         TickFrequency="25" 
-                                        TickPlacement="Outside" 
-                                        >
-                                        <Slider.Header>
-                                            Opacity
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                        TickPlacement="Outside"
+                                        luo_painter:Res.UH="Paint_Property_Opacity"
+                                        />
 
                                     <!--Spacing-->
                                     <hsvColorPickers:NumberSlider
@@ -264,11 +264,8 @@
                                         TickPlacement="Outside" 
                                         Foreground="{ThemeResource AppForeground}" 
                                         Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}" 
-                                        >
-                                        <Slider.Header>
-                                            Spacing
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                        luo_painter:Res.UH="Paint_Property_Spacing"
+                                        />
 
                                     <!--Flow-->
                                     <hsvColorPickers:NumberSlider
@@ -279,20 +276,13 @@
                                         TickPlacement="Outside" 
                                         Foreground="{ThemeResource AppForeground}" 
                                         Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}" 
-                                        >
-                                        <Slider.Header>
-                                            Flow
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                        luo_painter:Res.UH="Paint_Property_Flow"
+                                        />
 
                                 </StackPanel>
                             </Border>
 
                             <!--Pressure-->
-                            <TextBlock x:Name="PressureTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                Force pressure to control property
-                            </TextBlock>
-
                             <Grid ColumnSpacing="4" Margin="0,4,0,4" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -307,11 +297,8 @@
                                             TickFrequency="25" 
                                             TickPlacement="Outside" 
                                             Foreground="{ThemeResource AppForeground}" 
-                                            >
-                                            <Slider.Header>
-                                                Min Size
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                            luo_painter:Res.UH="Paint_Property_MinSize"
+                                            />
                                         <hsvColorPickers:NumberSlider
                                             x:Name="MinFlowSlider" 
                                             Decrease="True" 
@@ -320,44 +307,34 @@
                                             TickPlacement="Outside" 
                                             Foreground="{ThemeResource AppForeground}" 
                                             Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
-                                            >
-                                            <Slider.Header>
-                                                Min Flow
-                                            </Slider.Header>
-                                        </hsvColorPickers:NumberSlider>
+                                            luo_painter:Res.UH="Paint_Property_MinFlow"
+                                            />
                                     </StackPanel>
                                 </Border>
 
                                 <StackPanel Grid.Column="1">
-                                    <Button x:Name="SizePressureButton" CornerRadius="4" Width="40" Height="60" BorderThickness="1" HorizontalAlignment="Stretch">
-                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                            <Border Margin="0,4" Width="22" Height="22" Background="White">
-                                                <Polygon x:Name="SizePressurePolygon" Width="20" Height="20" Fill="Black">
-                                                    <!--Points-->
-                                                </Polygon>
-                                            </Border>
-                                            <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button x:Name="FlowPressureButton" CornerRadius="4" Width="40" Height="60" BorderThickness="1" HorizontalAlignment="Stretch"
+                                    <hsvColorPickers:NumberButtonBase x:Name="SizePressureButton" CornerRadius="4" Height="60" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <Border Margin="0,4" Width="22" Height="22" Background="White">
+                                            <Polygon x:Name="SizePressurePolygon" Width="20" Height="20" Fill="Black">
+                                                <!--Points-->
+                                            </Polygon>
+                                        </Border>
+                                    </hsvColorPickers:NumberButtonBase>
+                                    <hsvColorPickers:NumberButtonBase x:Name="FlowPressureButton" CornerRadius="4" Height="60" BorderThickness="1" HorizontalAlignment="Stretch"
                                             Margin="0,4,0,0" Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}">
-                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                            <Border Margin="0,4" Width="22" Height="22" Background="White">
-                                                <Polygon x:Name="FlowPressurePolygon" Width="20" Height="20" Fill="Black">
-                                                    <!--Points-->
-                                                </Polygon>
-                                            </Border>
-                                            <FontIcon Glyph="&#xE96F;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
-                                        </StackPanel>
-                                    </Button>
+                                        <Border Margin="0,4" Width="22" Height="22" Background="White">
+                                            <Polygon x:Name="FlowPressurePolygon" Width="20" Height="20" Fill="Black">
+                                                <!--Points-->
+                                            </Polygon>
+                                        </Border>
+                                    </hsvColorPickers:NumberButtonBase>
                                 </StackPanel>
                             </Grid>
 
                             <!--Tip-->
-                            <TextBlock x:Name="TipTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                   Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
-                                Tip Shape
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}"
+                                       luo_painter:Res.UT="Paint_Property_Tip"/>
 
                             <Grid Height="136" ColumnSpacing="8"
                                   Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
@@ -392,10 +369,9 @@
                             </Grid>
 
                             <!--Hardness-->
-                            <TextBlock x:Name="HardnessTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                   Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
-                                Hardness
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}"
+                                       luo_painter:Res.UT="Paint_Property_Hardness"/>
 
                             <Grid ColumnSpacing="8" Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
                                 <Grid.ColumnDefinitions>
@@ -417,11 +393,11 @@
                                         <UIElement.RenderTransform>
                                             <ScaleTransform ScaleX="3" ScaleY="3"/>
                                         </UIElement.RenderTransform>
-                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessNone" Visibility="Visible"/>
-                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessCosine" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessQuadratic" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessCube" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:ContentExtensions.ElementIcon="HardnessQuartic" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:Res.EI="HardnessNone" Visibility="Visible"/>
+                                        <ContentControl luo_painter:Res.EI="HardnessCosine" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:Res.EI="HardnessQuadratic" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:Res.EI="HardnessCube" Visibility="Collapsed"/>
+                                        <ContentControl luo_painter:Res.EI="HardnessQuartic" Visibility="Collapsed"/>
                                     </elements:IndexGrid>
                                 </Border>
                                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
@@ -452,10 +428,9 @@
                         <StackPanel Padding="10,0,10,8">
 
                             <!--Shape-->
-                            <TextBlock x:Name="ShapeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
-                                Shape
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}"
+                                       luo_painter:Res.UT="Paint_Texture_Shape"/>
 
                             <Grid ColumnSpacing="8" RowSpacing="4" Margin="0,0,0,4"
                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
@@ -473,15 +448,12 @@
                                         <!--UriSource-->
                                     </BitmapIcon>
                                 </Border>
-                                <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Import...
-                                </Button>
-                                <ToggleButton x:Name="RecolorShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Recolor
-                                </ToggleButton>
-                                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Remove
-                                </Button>
+                                <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture_Import"/>
+                                <ToggleButton x:Name="RecolorShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture_Recolor"/>
+                                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture_Remove"/>
                             </Grid>
 
                             <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
@@ -491,18 +463,16 @@
                                         <ColumnDefinition Width="136"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="RotateTextBlock" Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                        Rotate to stroke
-                                    </TextBlock>
+                                    <TextBlock Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                               luo_painter:Res.UT="Paint_Texture_Rotate"/>
                                     <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Margin="4,2"/>
                                 </Grid>
                             </Border>
 
                             <!--Grain-->
-                            <TextBlock x:Name="GrainTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
-                                       Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
-                                Grain
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
+                                       Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}"
+                                       luo_painter:Res.UT="Paint_Texture_Grain"/>
 
                             <Grid ColumnSpacing="8" RowSpacing="4" Margin="0,0,0,4" 
                                   Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
@@ -520,31 +490,25 @@
                                         <!--UriSource-->
                                     </BitmapIcon>
                                 </Border>
-                                <Button x:Name="ImportGrainButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Import...
-                                </Button>
-                                <ToggleButton x:Name="RecolorGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Recolor
-                                </ToggleButton>
-                                <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    Remove
-                                </Button>
+                                <Button x:Name="ImportGrainButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture_Import"/>
+                                <ToggleButton x:Name="RecolorGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture_Recolor"/>
+                                <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture_Remove"/>
                             </Grid>
 
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                                     Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
-                                <hsvColorPickers:NumberSlider x:Name="GrainScaleSlider" Decrease="True" Unit="%" TickFrequency="100" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                    <Slider.Header>
-                                        Scale of Grain
-                                    </Slider.Header>
-                                </hsvColorPickers:NumberSlider>
+                                <hsvColorPickers:NumberSlider x:Name="GrainScaleSlider" Decrease="True" Unit="%" TickFrequency="100" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                              luo_painter:Res.UH="Paint_Texture_Scale"/>
                             </Border>
 
                             <!--BlendMode-->
-                            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                       Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
-                                Blend Mode
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" 
+                                       luo_painter:Res.UT="Paint_Texture_BlendMode"/>
+
 
                             <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
                                       Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
@@ -583,9 +547,8 @@
                         <StackPanel Padding="10,0,10,8">
 
                             <!--MixColor-->
-                            <TextBlock x:Name="MixColorTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}">
-                                Mix Color
-                            </TextBlock>
+                            <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                       luo_painter:Res.UT="Paint_Mix"/>
 
                             <Grid Height="90" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                 <Grid.ColumnDefinitions>
@@ -632,23 +595,14 @@
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" >
                                 <StackPanel Margin="2">
 
-                                    <hsvColorPickers:NumberSlider x:Name="MixSlider" Decrease="True" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                        <Slider.Header>
-                                            Mix
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="MixSlider" Decrease="True" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  luo_painter:Res.UH="Paint_Mix_Mix"/>
 
-                                    <hsvColorPickers:NumberSlider x:Name="WetSlider" Decrease="True" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                        <Slider.Header>
-                                            Wet
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="WetSlider" Decrease="True" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  luo_painter:Res.UH="Paint_Mix_Wet"/>
 
-                                    <hsvColorPickers:NumberSlider x:Name="PersistenceSlider" Decrease="True" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}">
-                                        <Slider.Header>
-                                            Persistence
-                                        </Slider.Header>
-                                    </hsvColorPickers:NumberSlider>
+                                    <hsvColorPickers:NumberSlider x:Name="PersistenceSlider" Decrease="True" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                                  luo_painter:Res.UH="Paint_Mix_Persistence"/>
 
                                 </StackPanel>
                             </Border>

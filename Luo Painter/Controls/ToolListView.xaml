@@ -168,10 +168,8 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:ContentExtensions.Text="ToolMenu"
-                >
-                <!--Tools-->
-            </TextBlock>
+                luo_painter:Res.OT="ToolMenu"
+                />
         </Border>
     </ListViewBase.Header>
 
