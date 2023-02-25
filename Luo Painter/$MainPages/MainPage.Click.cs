@@ -28,7 +28,7 @@ namespace Luo_Painter
 
             switch (action)
             {
-                case ActionType.File:
+                case ActionType.OpenProject:
                     {
                         if (obj is Project project)
                         {
@@ -44,7 +44,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ActionType.Folder:
+                case ActionType.OpenFolder:
                     {
                         if (obj is ProjectBase project)
                         {
@@ -56,7 +56,7 @@ namespace Luo_Painter
                     }
                     break;
 
-                case ActionType.Add:
+                case ActionType.NewProject:
                     if (ContentDialogExtensions.CanShow)
                     {
                         ContentDialogResult result = await this.AddDialog.ShowInstance();
@@ -78,7 +78,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ActionType.Image:
+                case ActionType.NewImage:
                     {
                         StorageFile file = (StorageFile)obj;
                         if (file is null) file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
@@ -97,7 +97,7 @@ namespace Luo_Painter
                             return;
                         }
                     }
-                case ActionType.New:
+                case ActionType.NewFolder:
                     await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), this.New);
                     this.ListView.ScrollIntoView(this.ObservableCollection.Last());
                     break;
@@ -158,7 +158,7 @@ namespace Luo_Painter
                     this.MoveDocker.IsShow = false;
                     break;
 
-                case ActionType.Dupliate:
+                case ActionType.DupliateProject:
                     {
                         if (obj is Project projectFile)
                         {
@@ -166,7 +166,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ActionType.Delete:
+                case ActionType.DeleteProject:
                     {
                         if (obj is ProjectBase project)
                         {
@@ -174,7 +174,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ActionType.Move:
+                case ActionType.MoveProject:
                     {
                         if (obj is ProjectBase project)
                         {
@@ -198,7 +198,7 @@ namespace Luo_Painter
                     }
                     break;
 
-                case ActionType.Rename:
+                case ActionType.RenameProject:
                     if (ContentDialogExtensions.CanShow)
                     {
                         if (obj is ProjectBase project)
@@ -250,7 +250,7 @@ namespace Luo_Painter
                         }
                     }
                     break;
-                case ActionType.Local:
+                case ActionType.LocalFolder:
                     {
                         if (obj is ProjectBase project)
                         {

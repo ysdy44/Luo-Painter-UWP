@@ -100,9 +100,9 @@ namespace Luo_Painter
                 {
                     switch (item.Type)
                     {
-                        case ProjectType.New: this.Click(ActionType.Add); break;
-                        case ProjectType.Project: this.Click(ActionType.File, item); break;
-                        case ProjectType.Folder: this.Click(ActionType.Folder, item); break;
+                        case ProjectType.New: this.Click(ActionType.NewProject); break;
+                        case ProjectType.Project: this.Click(ActionType.OpenProject, item); break;
+                        case ProjectType.Folder: this.Click(ActionType.OpenFolder, item); break;
                         default: break;
                     }
                 }
@@ -119,12 +119,12 @@ namespace Luo_Painter
                 {
                     switch (item.Symbol)
                     {
-                        case Symbol.Add: this.Click(ActionType.Add); break;
-                        case Symbol.Pictures: this.Click(ActionType.Image); break;
+                        case Symbol.Add: this.Click(ActionType.NewProject); break;
+                        case Symbol.Pictures: this.Click(ActionType.NewImage); break;
+                        case Symbol.NewFolder: this.Click(ActionType.NewFolder); break;
                         case Symbol.Copy: this.Click(ActionType.DupliateShow); break;
                         case Symbol.Delete: this.Click(ActionType.DeleteShow); break;
                         case Symbol.MoveToFolder: this.Click(ActionType.SelectShow); break;
-                        case Symbol.NewFolder: this.Click(ActionType.New); break;
                         default: break;
                     }
                 }
@@ -180,17 +180,17 @@ namespace Luo_Painter
                 this.Click(ActionType.MoveHide);
             };
 
-            this.RenameCommand.Click += (s, e) => this.Click(ActionType.Rename, e);
+            this.RenameCommand.Click += (s, e) => this.Click(ActionType.RenameProject, e);
 
-            this.DupliateItem.Click += (s, e) => this.Click(ActionType.Dupliate, this.RenameItem.CommandParameter);
+            this.DupliateItem.Click += (s, e) => this.Click(ActionType.DupliateProject, this.RenameItem.CommandParameter);
 
-            this.DeleteItem.Click += (s, e) => this.Click(ActionType.Delete, this.RenameItem.CommandParameter);
-            this.DeleteItem2.Click += (s, e) => this.Click(ActionType.Delete, this.RenameItem.CommandParameter);
+            this.DeleteItem.Click += (s, e) => this.Click(ActionType.DeleteProject, this.RenameItem.CommandParameter);
+            this.DeleteItem2.Click += (s, e) => this.Click(ActionType.DeleteProject, this.RenameItem.CommandParameter);
 
-            this.MoveItem.Click += (s, e) => this.Click(ActionType.Move, this.RenameItem.CommandParameter);
+            this.MoveItem.Click += (s, e) => this.Click(ActionType.MoveProject, this.RenameItem.CommandParameter);
 
-            this.LocalItem.Click += (s, e) => this.Click(ActionType.Local, this.RenameItem.CommandParameter);
-            this.LocalItem2.Click += (s, e) => this.Click(ActionType.Local, this.RenameItem.CommandParameter);
+            this.LocalItem.Click += (s, e) => this.Click(ActionType.LocalFolder, this.RenameItem.CommandParameter);
+            this.LocalItem2.Click += (s, e) => this.Click(ActionType.LocalFolder, this.RenameItem.CommandParameter);
 
             this.RenameDialog.IsPrimaryButtonEnabled = false;
             this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);

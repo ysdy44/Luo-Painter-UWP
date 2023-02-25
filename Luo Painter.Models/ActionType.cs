@@ -3,14 +3,16 @@
     public enum ActionType : int
     {
         /// <summary> Open Project </summary>
-        File,
+        OpenProject,
         /// <summary> Open Folder </summary>
-        Folder,
+        OpenFolder,
 
-        /// <summary> Add Empty Project </summary>
-        Add,
-        /// <summary> Add Image Project </summary>
-        Image,
+        /// <summary> New Empty Project </summary>
+        NewProject,
+        /// <summary> New Image Project </summary>
+        NewImage,
+        /// <summary> New Folder </summary>
+        NewFolder,
 
         DupliateShow,
         DupliateHide,
@@ -22,17 +24,15 @@
         MoveHide,
 
         /// <summary> Dupliate Project </summary>
-        Dupliate,
+        DupliateProject,
         /// <summary> Delete Project or Folder </summary>
-        Delete,
+        DeleteProject,
         /// <summary> Move Project </summary>
-        Move,
+        MoveProject,
 
-        /// <summary> New Folder </summary>
-        New,
         /// <summary> Rename Project </summary>
-        Rename,
+        RenameProject,
         /// <summary> Open Local Folder </summary>
-        Local,
+        LocalFolder,
     }
 }
