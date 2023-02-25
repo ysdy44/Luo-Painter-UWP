@@ -194,7 +194,6 @@ namespace Luo_Painter
 
             this.RenameDialog.IsPrimaryButtonEnabled = false;
             this.RenameTextBox.TextChanged += (s, e) => this.RenameDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.RenameTextBox.Text);
-            this.NewTextBox.TextChanged += (s, e) => this.NewDialog.IsPrimaryButtonEnabled = this.ObservableCollection.Match(this.NewTextBox.Text);
         }
 
     }
