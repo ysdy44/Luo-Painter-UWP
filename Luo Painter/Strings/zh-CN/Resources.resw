@@ -63,6 +63,7 @@
   <data name='Version' xml:space='preserve'> <value>1.0.0</value> </data>
   <data name='InputText' xml:space='preserve'> <value>请输入文本</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>未命名</value> </data>
+  <data name='UntitledFolder' xml:space='preserve'> <value>新建文件夹</value> </data>
   <data name='GithubLink' xml:space='preserve'> <value>https://github.com/ysdy44/Luo-Painter-UWP</value> </data>
   <data name='FeedbackLink' xml:space='preserve'> <value>ysdy44@outlook.com</value> </data>
   <data name='Github' xml:space='preserve'> <value>Github</value> </data>
@@ -413,6 +414,7 @@
   <data name='Color_Saturation' xml:space='preserve'> <value>饱和度</value> </data>
   <data name='Color_Value' xml:space='preserve'> <value>值</value> </data>
   <data name='Color_Hex' xml:space='preserve'> <value>十六进制</value> </data>
+  <!--Separator 11-->
   <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
   <data name='Export_Object' xml:space='preserve'> <value>导出对象</value> </data>
   <data name='Export_Object_Image' xml:space='preserve'> <value>图像</value> </data>
@@ -421,6 +423,28 @@
   <data name='Extend_Indicator' xml:space='preserve'> <value>锚定到画布</value> </data>
   <data name='Stretch_Interpolation' xml:space='preserve'> <value>插值</value> </data>
   <data name='Texture' xml:space='preserve'> <value>纹理</value> </data>
+  <!--Separator 12-->
+  <data name='NewProject' xml:space='preserve'> <value>创建新项目</value> </data>
+  <data name='NewImage' xml:space='preserve'> <value>从图像创建</value> </data>
+  <data name='NewFolder' xml:space='preserve'> <value>创建文件夹</value> </data>
+  <data name='DupliateProject' xml:space='preserve'> <value>复制项目</value> </data>
+  <data name='DupliateProject_Subtitle' xml:space='preserve'> <value>选择要复制的项目。</value> </data>
+  <data name='DeleteProject' xml:space='preserve'> <value>删除项目</value> </data>
+  <data name='DeleteProject_Subtitle' xml:space='preserve'> <value>选择要删除的项目。</value> </data>
+  <data name='SelectProject' xml:space='preserve'> <value>选择项目</value> </data>
+  <data name='SelectProject_Subtitle' xml:space='preserve'> <value>选择要移动的项目。</value> </data>
+  <data name='MoveProject' xml:space='preserve'> <value>移动项目</value> </data>
+  <data name='MoveProject_Subtitle' xml:space='preserve'> <value>将项目移动到此文件夹。</value> </data>
+  <data name='RenameProject' xml:space='preserve'> <value>重命名</value> </data>
+  <!--Separator 13-->
+  <data name='Main_Documentation' xml:space='preserve'> <value>打开文档网页</value> </data>
+  <data name='Main_Setting' xml:space='preserve'> <value>打开设置页面</value> </data>
+  <data name='Main_Home' xml:space='preserve'> <value>主页</value> </data>
+  <data name='Main_Back' xml:space='preserve'> <value>返回</value> </data>
+  <data name='Main_Type' xml:space='preserve'> <value>类型</value> </data>
+  <data name='Main_Date' xml:space='preserve'> <value>创建日期</value> </data>
+  <data name='Main_Name' xml:space='preserve'> <value>名字</value> </data>
+  <!--Separator 14-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>弧度</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>折</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>率</value> </data>

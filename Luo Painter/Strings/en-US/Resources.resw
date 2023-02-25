@@ -63,6 +63,7 @@
   <data name='Version' xml:space='preserve'> <value>1.0.0</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Please input the text</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Untitled</value> </data>
+  <data name='UntitledFolder' xml:space='preserve'> <value>New Folder</value> </data>
   <data name='GithubLink' xml:space='preserve'> <value>https://github.com/ysdy44/Luo-Painter-UWP</value> </data>
   <data name='FeedbackLink' xml:space='preserve'> <value>ysdy44@outlook.com</value> </data>
   <data name='Github' xml:space='preserve'> <value>Github</value> </data>
@@ -413,6 +414,7 @@
   <data name='Color_Saturation' xml:space='preserve'> <value>Saturation</value> </data>
   <data name='Color_Value' xml:space='preserve'> <value>Value</value> </data>
   <data name='Color_Hex' xml:space='preserve'> <value>Hex</value> </data>
+  <!--Separator 11-->
   <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
   <data name='Export_Object' xml:space='preserve'> <value>Exported Object</value> </data>
   <data name='Export_Object_Image' xml:space='preserve'> <value>Image</value> </data>
@@ -421,6 +423,28 @@
   <data name='Extend_Indicator' xml:space='preserve'> <value>Anchor to Canvas</value> </data>
   <data name='Stretch_Interpolation' xml:space='preserve'> <value>Interpolation</value> </data>
   <data name='Texture' xml:space='preserve'> <value>Texture</value> </data>
+  <!--Separator 12-->
+  <data name='NewProject' xml:space='preserve'> <value>Create a new Project</value> </data>
+  <data name='NewImage' xml:space='preserve'> <value>Create From Images</value> </data>
+  <data name='NewFolder' xml:space='preserve'> <value>New a new Folder</value> </data>
+  <data name='DupliateProject' xml:space='preserve'> <value>Dupliate project(s)</value> </data>
+  <data name='DupliateProject_Subtitle' xml:space='preserve'> <value>Select the project(s) you want to duplicate.</value> </data>
+  <data name='DeleteProject' xml:space='preserve'> <value>Delete project(s)</value> </data>
+  <data name='DeleteProject_Subtitle' xml:space='preserve'> <value>Select the project(s) you want to delete.</value> </data>
+  <data name='SelectProject' xml:space='preserve'> <value>Select project(s)</value> </data>
+  <data name='SelectProject_Subtitle' xml:space='preserve'> <value>Select the project(s) you want to move.</value> </data>
+  <data name='MoveProject' xml:space='preserve'> <value>Move project(s)</value> </data>
+  <data name='MoveProject_Subtitle' xml:space='preserve'> <value>Move the project(s) to this Folder.</value> </data>
+  <data name='RenameProject' xml:space='preserve'> <value>Rename</value> </data>
+  <!--Separator 13-->
+  <data name='Main_Documentation' xml:space='preserve'> <value>Open document webpage</value> </data>
+  <data name='Main_Setting' xml:space='preserve'> <value>Open the settings page</value> </data>
+  <data name='Main_Home' xml:space='preserve'> <value>Go Home</value> </data>
+  <data name='Main_Back' xml:space='preserve'> <value>Go Back</value> </data>
+  <data name='Main_Type' xml:space='preserve'> <value>Type</value> </data>
+  <data name='Main_Date' xml:space='preserve'> <value>Date Created</value> </data>
+  <data name='Main_Name' xml:space='preserve'> <value>Name</value> </data>
+  <!--Separator 14-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>Radians</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>Snap</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>Ratio</value> </data>
