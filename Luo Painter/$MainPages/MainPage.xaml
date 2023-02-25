@@ -159,9 +159,9 @@
                     SelectedIndex="0"
                     Style="{StaticResource AppSegmentListBoxStyle}"
                     >
-                    <ListBoxItem x:Name="TypeItem" >Type</ListBoxItem>
-                    <ListBoxItem x:Name="TimeItem" >Date Created</ListBoxItem>
-                    <ListBoxItem x:Name="NameItem" >Name</ListBoxItem>
+                    <ListBoxItem local:Res.UC="Main_Type"/>
+                    <ListBoxItem local:Res.UC="Main_Date"/>
+                    <ListBoxItem local:Res.UC="Main_Name"/>
                 </ListBox>
             </ListViewBase.Header>
 
@@ -356,55 +356,23 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
 
-            <ListViewItem>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="AddToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        Create New
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <ListViewItem local:Res.UTT="NewProject">
                 <SymbolIcon Symbol="Add"/>
             </ListViewItem>
-            <ListViewItem>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="ImageToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        Image
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <ListViewItem local:Res.UTT="NewImage">
                 <SymbolIcon Symbol="Pictures"/>
             </ListViewItem>
-            <ListViewItem>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="NewToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        New Folder
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <ListViewItem local:Res.UTT="NewFolder">
                 <SymbolIcon Symbol="NewFolder"/>
             </ListViewItem>
 
-            <ListViewItem IsEnabled="False" MinWidth="32" MinHeight="1" Width="32" Height="1" Margin="2" Padding="0" Background="{ThemeResource AppForeground}" Style="{x:Null}"/>
-
-            <ListViewItem>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="DupliateToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        Dupliate
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <ListViewItem local:Res.UTT="DupliateProject">
                 <SymbolIcon Symbol="Copy"/>
             </ListViewItem>
-            <ListViewItem>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="DeleteToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        Delete
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <ListViewItem local:Res.UTT="DeleteProject">
                 <SymbolIcon Symbol="Delete"/>
             </ListViewItem>
-            <ListViewItem>
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="MoveToolTip" Placement="Left" Style="{StaticResource AppToolTipStyle}">
-                        Move to Folder
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <ListViewItem local:Res.UTT="MoveProject">
                 <SymbolIcon Symbol="MoveToFolder"/>
             </ListViewItem>
 
@@ -436,12 +404,8 @@
             </TextBlock>
 
             <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="DocumentationButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
-                        Open document webpage
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}"
+                    local:Res.UTT="Main_Documentation" >
                 <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
@@ -452,12 +416,8 @@
             </Button>
 
             <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" >
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="SettingButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
-                        Open the settings page
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" 
+                    local:Res.UTT="Main_Setting">
                 <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
@@ -521,12 +481,8 @@
 
             </ListView>
 
-            <Button x:Name="HomeButton" Visibility="Collapsed" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="HomeButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
-                        Go Home
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <Button x:Name="HomeButton" Visibility="Collapsed" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}"
+                    local:Res.UTT="Main_Home">
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
@@ -535,12 +491,8 @@
                 <SymbolIcon Symbol="Home"/>
             </Button>
 
-            <Button x:Name="BackButton" Grid.Column="2" Visibility="Collapsed" Width="Auto" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}" >
-                <ToolTipService.ToolTip>
-                    <ToolTip x:Name="BackButtonToolTip" Placement="Bottom" Style="{StaticResource AppToolTipStyle}">
-                        Go Back
-                    </ToolTip>
-                </ToolTipService.ToolTip>
+            <Button x:Name="BackButton" Grid.Column="2" Visibility="Collapsed" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}"
+                    local:Res.UTT="Main_Back">
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
@@ -553,13 +505,13 @@
 
 
         <!--Docker-->
-        <!--Docker-->
         <elements:Docker 
             x:Name="DupliateDocker" 
             PrimaryButtonIsEnabledFollowCount="True" 
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
+            local:Res.UK="DupliateProject"
             />
         <elements:Docker 
             x:Name="DeleteDocker" 
@@ -567,6 +519,7 @@
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
+            local:Res.UK="DeleteProject"
             />
         <elements:Docker 
             x:Name="SelectDocker" 
@@ -574,26 +527,23 @@
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
+            local:Res.UK="SelectProject"
             />
         <elements:Docker 
             x:Name="MoveDocker" 
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
+            local:Res.UK="MoveProject"
             />
 
 
         <!--Dialog-->
-        <ContentDialog x:Name="RenameDialog" Style="{StaticResource AppContentDialogStyle}">
-            <ContentDialog.PrimaryButtonText>
-                OK
-            </ContentDialog.PrimaryButtonText>
-            <ContentDialog.SecondaryButtonText>
-                Cancel
-            </ContentDialog.SecondaryButtonText>
-            <ContentDialog.Title>
-                Rename
-            </ContentDialog.Title>
+        <ContentDialog
+            x:Name="RenameDialog"
+            Style="{StaticResource AppContentDialogStyle}"
+            local:Res.UD="RenameProject"
+            >
             <TextBox x:Name="RenameTextBox" >
                 <TextBox.Header>
                     <Border Width="140" Height="140" Margin="0,0,0,8" Style="{StaticResource AppRoundedBorderStyle}">
@@ -609,16 +559,11 @@
                 </TextBox.Header>
             </TextBox>
         </ContentDialog>
-        <ContentDialog x:Name="AddDialog" Style="{StaticResource AppContentDialogStyle}">
-            <ContentDialog.PrimaryButtonText>
-                OK
-            </ContentDialog.PrimaryButtonText>
-            <ContentDialog.SecondaryButtonText>
-                Cancel
-            </ContentDialog.SecondaryButtonText>
-            <ContentDialog.Title>
-                Create New
-            </ContentDialog.Title>
+        <ContentDialog 
+            x:Name="AddDialog" 
+            Style="{StaticResource AppContentDialogStyle}"
+            local:Res.UD="NewProject"
+            >
             <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18"/>
         </ContentDialog>
 

@@ -11,7 +11,7 @@ namespace Luo_Painter
     {
 
         string Untitled = "Untitled";
-        string New = "New Folder";
+        string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
 
         //@Strings
         public void ConstructStrings(ResourceLoader resource)
