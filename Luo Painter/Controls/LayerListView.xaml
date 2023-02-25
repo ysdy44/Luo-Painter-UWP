@@ -205,38 +205,38 @@
                                 </ItemsControl.ItemContainerStyle>
 
                                 <!--None-->
-                                <ComboBoxItem luo_painter:Res.BE="-1"/>
-                                <ComboBoxItem luo_painter:Res.BE="Dissolve" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[0]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[1]}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Darken-->
-                                <ComboBoxItem luo_painter:Res.BE="Darken"/>
-                                <ComboBoxItem luo_painter:Res.BE="Multiply"/>
-                                <ComboBoxItem luo_painter:Res.BE="ColorBurn"/>
-                                <ComboBoxItem luo_painter:Res.BE="LinearBurn"/>
-                                <ComboBoxItem luo_painter:Res.BE="DarkerColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[2]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[3]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[4]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[5]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[6]}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Lighten-->
-                                <ComboBoxItem luo_painter:Res.BE="Lighten"/>
-                                <ComboBoxItem luo_painter:Res.BE="Screen"/>
-                                <ComboBoxItem luo_painter:Res.BE="ColorDodge"/>
-                                <ComboBoxItem luo_painter:Res.BE="LinearDodge"/>
-                                <ComboBoxItem luo_painter:Res.BE="LighterColor" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[7]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[8]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[9]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[10]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[11]}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Contrast-->
-                                <ComboBoxItem luo_painter:Res.BE="Overlay"/>
-                                <ComboBoxItem luo_painter:Res.BE="SoftLight"/>
-                                <ComboBoxItem luo_painter:Res.BE="HardLight"/>
-                                <ComboBoxItem luo_painter:Res.BE="VividLight"/>
-                                <ComboBoxItem luo_painter:Res.BE="LinearLight"/>
-                                <ComboBoxItem luo_painter:Res.BE="PinLight"/>
-                                <ComboBoxItem luo_painter:Res.BE="HardMix" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[12]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[13]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[14]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[15]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[16]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[17]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[18]}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Difference-->
-                                <ComboBoxItem luo_painter:Res.BE="Difference"/>
-                                <ComboBoxItem luo_painter:Res.BE="Exclusion"/>
-                                <ComboBoxItem luo_painter:Res.BE="Subtract"/>
-                                <ComboBoxItem luo_painter:Res.BE="Division" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[19]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[20]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[21]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[22]}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Color-->
-                                <ComboBoxItem luo_painter:Res.BE="Hue"/>
-                                <ComboBoxItem luo_painter:Res.BE="Saturation"/>
-                                <ComboBoxItem luo_painter:Res.BE="Color"/>
-                                <ComboBoxItem luo_painter:Res.BE="Luminosity"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[23]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[24]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[25]}"/>
+                                <ComboBoxItem luo_painter:Res.BE="{x:Bind BlendModes[26]}"/>
 
                             </ComboBox>
 
