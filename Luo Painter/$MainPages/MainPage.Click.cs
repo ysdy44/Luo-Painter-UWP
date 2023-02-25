@@ -29,7 +29,7 @@ namespace Luo_Painter
             {
                 case ActionType.File:
                     {
-                        if (obj is ProjectFile project)
+                        if (obj is Project project)
                         {
                             ProjectParameter parameter = await project.LoadAsync();
                             if (parameter is null)
@@ -45,7 +45,7 @@ namespace Luo_Painter
                     break;
                 case ActionType.Folder:
                     {
-                        if (obj is Project project)
+                        if (obj is ProjectBase project)
                         {
                             this.Paths.Add(new Breadcrumb(project.Path, project.Name));
 
@@ -66,7 +66,7 @@ namespace Luo_Painter
                                 System.Drawing.Size size = this.SizePicker.Size;
 
                                 StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
-                                ProjectFile project = new ProjectFile(item);
+                                Project project = new Project(item);
                                 ProjectParameter parameter = await project.SaveAsync(size);
 
                                 this.ObservableCollection.Insert(project);
@@ -88,7 +88,7 @@ namespace Luo_Painter
                         using (StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView))
                         {
                             StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), file.DisplayName);
-                            ProjectFile project = new ProjectFile(item);
+                            Project project = new Project(item);
                             ProjectParameter parameter = await project.SaveAsync(bitmap.SizeInPixels, bitmap.GetPixelBytes().AsBuffer(), thumbnail);
 
                             this.ObservableCollection.Insert(project);
@@ -99,7 +99,7 @@ namespace Luo_Painter
 
                 case ActionType.DupliateShow:
                     {
-                        this.ObservableCollection.Enable(ProjectType.File);
+                        this.ObservableCollection.Enable(ProjectType.Project);
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.DupliateDocker.IsShow = true;
@@ -113,7 +113,7 @@ namespace Luo_Painter
                     break;
                 case ActionType.DeleteShow:
                     {
-                        this.ObservableCollection.Enable(ProjectType.File | ProjectType.Folder);
+                        this.ObservableCollection.Enable(ProjectType.Project | ProjectType.Folder);
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.DeleteDocker.IsShow = true;
@@ -127,7 +127,7 @@ namespace Luo_Painter
                     break;
                 case ActionType.SelectShow:
                     {
-                        this.ObservableCollection.Enable(ProjectType.File);
+                        this.ObservableCollection.Enable(ProjectType.Project);
                         this.ListView.IsItemClickEnabled = false;
                         this.AppBarListView.IsItemClickEnabled = false;
                         this.SelectDocker.IsShow = true;
@@ -155,7 +155,7 @@ namespace Luo_Painter
 
                 case ActionType.Dupliate:
                     {
-                        if (obj is ProjectFile projectFile)
+                        if (obj is Project projectFile)
                         {
                             await this.ObservableCollection.CopyAsync(this.Paths.GetPath(), projectFile);
                         }
@@ -163,7 +163,7 @@ namespace Luo_Painter
                     break;
                 case ActionType.Delete:
                     {
-                        if (obj is Project project)
+                        if (obj is ProjectBase project)
                         {
                             await this.ObservableCollection.DeleteAsync(project);
                         }
@@ -171,7 +171,7 @@ namespace Luo_Painter
                     break;
                 case ActionType.Move:
                     {
-                        if (obj is Project project)
+                        if (obj is ProjectBase project)
                         {
                             this.ClipboardPath = this.Paths.GetPath();
                             this.ClipboardProjects.Add(project.Path);
@@ -217,7 +217,7 @@ namespace Luo_Painter
                 case ActionType.Rename:
                     if (ContentDialogExtensions.CanShow)
                     {
-                        if (obj is Project project)
+                        if (obj is ProjectBase project)
                         {
                             this.RenameTextBox.Text = project.DisplayName;
                             this.RenameTextBox.SelectAll();
@@ -225,7 +225,7 @@ namespace Luo_Painter
 
                             switch (project.Type)
                             {
-                                case ProjectType.File:
+                                case ProjectType.Project:
                                     this.RenameIcon.Symbol = Symbol.Document;
                                     break;
                                 case ProjectType.Folder:
@@ -244,8 +244,8 @@ namespace Luo_Painter
 
                                     switch (project.Type)
                                     {
-                                        case ProjectType.File:
-                                            if (project is ProjectFile projectFile)
+                                        case ProjectType.Project:
+                                            if (project is Project projectFile)
                                             {
                                                 await projectFile.RenameAsync(name);
                                             }
@@ -268,7 +268,7 @@ namespace Luo_Painter
                     break;
                 case ActionType.Local:
                     {
-                        if (obj is Project project)
+                        if (obj is ProjectBase project)
                         {
                             await Launcher.LaunchFolderPathAsync(project.Path);
                         }

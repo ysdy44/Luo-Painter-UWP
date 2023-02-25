@@ -6,7 +6,7 @@ using Windows.Storage;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
+    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
     {
 
         public async Task<StorageFolder> Create(string path, string displayName)

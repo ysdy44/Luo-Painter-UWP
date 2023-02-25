@@ -8,15 +8,15 @@ using Windows.Storage;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
+    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
     {
 
-        public async Task DeleteAsync(Project selectedItem)
+        public async Task DeleteAsync(ProjectBase selectedItem)
         {
             switch (selectedItem.Type)
             {
-                case ProjectType.File:
-                    if (selectedItem is ProjectFile item2)
+                case ProjectType.Project:
+                    if (selectedItem is Project item2)
                     {
                         await item2.DeleteAsync();
                         base.Remove(selectedItem);
@@ -35,12 +35,12 @@ namespace Luo_Painter.Models
         }
         public async Task DeleteAsync(IEnumerable<object> selectedItems)
         {
-            foreach (Project item in selectedItems.Cast<Project>())
+            foreach (ProjectBase item in selectedItems.Cast<ProjectBase>())
             {
                 switch (item.Type)
                 {
-                    case ProjectType.File:
-                        if (item is ProjectFile item2)
+                    case ProjectType.Project:
+                        if (item is Project item2)
                         {
                             await item2.DeleteAsync();
                             this.Temp.Add(item);
@@ -58,7 +58,7 @@ namespace Luo_Painter.Models
                 }
             }
 
-            foreach (Project item in this.Temp)
+            foreach (ProjectBase item in this.Temp)
             {
                 base.Remove(item);
             }
@@ -66,11 +66,11 @@ namespace Luo_Painter.Models
             this.Temp.Clear();
         }
 
-        public async Task CopyAsync(string path, ProjectFile selectedItem, string suffix = "Dupliate")
+        public async Task CopyAsync(string path, Project selectedItem, string suffix = "Dupliate")
         {
             if (path is null)
             {
-                Project item = await selectedItem.CopyAsync(ApplicationData.Current.LocalFolder, suffix);
+                ProjectBase item = await selectedItem.CopyAsync(ApplicationData.Current.LocalFolder, suffix);
                 if (item is null) return;
 
                 base.Add(item);
@@ -80,7 +80,7 @@ namespace Luo_Painter.Models
                 StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
                 if (folder is null) return;
 
-                Project item = await selectedItem.CopyAsync(folder, suffix);
+                ProjectBase item = await selectedItem.CopyAsync(folder, suffix);
                 if (item is null) return;
 
                 base.Add(item);
@@ -99,14 +99,14 @@ namespace Luo_Painter.Models
                 if (folder is null) return;
             }
 
-            foreach (Project item in selectedItems.Cast<Project>())
+            foreach (ProjectBase item in selectedItems.Cast<ProjectBase>())
             {
                 switch (item.Type)
                 {
-                    case ProjectType.File:
-                        if (item is ProjectFile item2)
+                    case ProjectType.Project:
+                        if (item is Project item2)
                         {
-                            Project item3 = await item2.CopyAsync(folder, suffix);
+                            ProjectBase item3 = await item2.CopyAsync(folder, suffix);
                             if (item3 is null) continue;
 
                             this.Temp.Add(item3);
@@ -117,7 +117,7 @@ namespace Luo_Painter.Models
                 }
             }
 
-            foreach (Project item in this.Temp)
+            foreach (ProjectBase item in this.Temp)
             {
                 base.Add(item);
             }

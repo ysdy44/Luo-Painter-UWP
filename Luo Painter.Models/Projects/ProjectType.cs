@@ -2,9 +2,9 @@
 {
     public enum ProjectType : int
     {
-        Add = 1,
-        File = 2,
+        New = 1,
+        Project = 2,
         Folder = 4,
-        All = Add | File | Folder,
+        All = New | Project | Folder,
     }
 }

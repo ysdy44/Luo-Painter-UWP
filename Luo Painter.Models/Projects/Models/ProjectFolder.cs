@@ -6,7 +6,7 @@ using Windows.System;
 
 namespace Luo_Painter.Models.Projects
 {
-    public sealed class ProjectFolder : Project
+    public sealed class ProjectFolder : ProjectBase
     {
 
         //@Content

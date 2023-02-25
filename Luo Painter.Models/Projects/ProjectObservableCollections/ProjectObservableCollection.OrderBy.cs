@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
+    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
     {
 
         public void OrderByType()
@@ -24,7 +24,7 @@ namespace Luo_Painter.Models
             this.Order(this.OrderByDescending(c => c.Name).Reverse().ToArray());
         }
 
-        private void Order(Project[] array)
+        private void Order(ProjectBase[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {

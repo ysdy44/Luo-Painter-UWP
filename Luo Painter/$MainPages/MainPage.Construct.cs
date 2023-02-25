@@ -24,11 +24,11 @@ namespace Luo_Painter
             {
                 if (this.Disabler) return;
 
-                foreach (Project item in e.Items.Cast<Project>())
+                foreach (ProjectBase item in e.Items.Cast<ProjectBase>())
                 {
                     switch (item.Type)
                     {
-                        case ProjectType.Add:
+                        case ProjectType.New:
                             e.Cancel = true;
                             return;
                     }
@@ -38,17 +38,17 @@ namespace Luo_Painter
             {
                 if (this.Disabler) return;
 
-                if (this.ObservableCollection.FirstOrDefault() is Project item)
+                if (this.ObservableCollection.FirstOrDefault() is ProjectBase item)
                 {
                     switch (item.Type)
                     {
-                        case ProjectType.Add:
+                        case ProjectType.New:
                             return;
                         default:
-                            if (this.ObservableCollection.FirstOrDefault() == ProjectAdd.Add) break;
+                            if (this.ObservableCollection.FirstOrDefault() == ProjectNew.New) break;
 
-                            this.ObservableCollection.Remove(ProjectAdd.Add);
-                            this.ObservableCollection.Insert(0, ProjectAdd.Add);
+                            this.ObservableCollection.Remove(ProjectNew.New);
+                            this.ObservableCollection.Insert(0, ProjectNew.New);
                             break;
                     }
                 }
@@ -73,11 +73,11 @@ namespace Luo_Painter
 
                 if (e.OriginalSource is FrameworkElement element)
                 {
-                    if (element.DataContext is Project item)
+                    if (element.DataContext is ProjectBase item)
                     {
                         switch (item.Type)
                         {
-                            case ProjectType.File:
+                            case ProjectType.Project:
                                 this.RenameItem.CommandParameter = item;
                                 this.FileMenuFlyout.ShowAt(this.ListView, e.GetPosition(this.ListView));
                                 break;
@@ -96,12 +96,12 @@ namespace Luo_Painter
             {
                 if (this.Disabler) return;
 
-                if (e.ClickedItem is Project item)
+                if (e.ClickedItem is ProjectBase item)
                 {
                     switch (item.Type)
                     {
-                        case ProjectType.Add: this.Click(ActionType.Add); break;
-                        case ProjectType.File: this.Click(ActionType.File, item); break;
+                        case ProjectType.New: this.Click(ActionType.Add); break;
+                        case ProjectType.Project: this.Click(ActionType.File, item); break;
                         case ProjectType.Folder: this.Click(ActionType.Folder, item); break;
                         default: break;
                     }
@@ -154,11 +154,11 @@ namespace Luo_Painter
                 if (this.Disabler) return;
 
                 this.ClipboardPath = this.Paths.GetPath();
-                foreach (Project item in this.ListView.SelectedItems.Cast<Project>())
+                foreach (ProjectBase item in this.ListView.SelectedItems.Cast<ProjectBase>())
                 {
                     switch (item.Type)
                     {
-                        case ProjectType.File:
+                        case ProjectType.Project:
                             this.ClipboardProjects.Add(item.Path);
                             break;
                     }

@@ -5,7 +5,7 @@ using Windows.Storage;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
+    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
     {
 
         public async void Load(string path)
@@ -14,7 +14,7 @@ namespace Luo_Painter.Models
             {
                 foreach (StorageFolder item in await ApplicationData.Current.LocalFolder.GetFoldersAsync())
                 {
-                    if (this.IsLuo(item.Name)) this.Temp.Add(new ProjectFile(item));
+                    if (this.IsLuo(item.Name)) this.Temp.Add(new Project(item));
                     else this.Temp.Add(new ProjectFolder(item, await this.GetFilesAsync(item)));
                 }
 
@@ -27,7 +27,7 @@ namespace Luo_Painter.Models
 
                 foreach (StorageFolder item in await folder.GetFoldersAsync())
                 {
-                    if (this.IsLuo(item.Name)) this.Temp.Add(new ProjectFile(item));
+                    if (this.IsLuo(item.Name)) this.Temp.Add(new Project(item));
                     else this.Temp.Add(new ProjectFolder(item, await this.GetFilesAsync(item)));
                 }
 
@@ -38,9 +38,9 @@ namespace Luo_Painter.Models
         private void TempToSelf()
         {
             base.Clear();
-            base.Add(ProjectAdd.Add);
+            base.Add(ProjectNew.New);
 
-            foreach (Project item in this.Temp)
+            foreach (ProjectBase item in this.Temp)
             {
                 switch (item.Type)
                 {
@@ -50,11 +50,11 @@ namespace Luo_Painter.Models
                 }
             }
 
-            foreach (Project item in this.Temp)
+            foreach (ProjectBase item in this.Temp)
             {
                 switch (item.Type)
                 {
-                    case ProjectType.File:
+                    case ProjectType.Project:
                         base.Add(item);
                         break;
                 }

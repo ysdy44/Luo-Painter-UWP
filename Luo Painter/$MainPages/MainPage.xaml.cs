@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    internal class ProjectCommand : RelayCommand<Project> { }
+    internal class ProjectCommand : RelayCommand<ProjectBase> { }
 
     internal class ProjectDataTemplateSelector : DataTemplateSelector
     {
@@ -21,12 +21,12 @@ namespace Luo_Painter
         public DataTemplate Folder { get; set; }
         protected override DataTemplate SelectTemplateCore(object item)
         {
-            if (item is Project item2)
+            if (item is ProjectBase item2)
             {
                 switch (item2.Type)
                 {
-                    case ProjectType.Add: return this.None;
-                    case ProjectType.File: return this.File;
+                    case ProjectType.New: return this.None;
+                    case ProjectType.Project: return this.File;
                     case ProjectType.Folder: return this.Folder;
                     default: return null;
                 }

@@ -5,13 +5,13 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Models.Projects
 {
-    public sealed partial class ProjectFile : Project
+    public sealed partial class Project : ProjectBase
     {
 
         public ImageSource ImageSource => this.FileImageSource.ImageSource;
         readonly FileImageSource FileImageSource;
 
-        public ProjectFile(StorageFolder item) : base(ProjectType.File)
+        public Project(StorageFolder item) : base(ProjectType.Project)
         {
             this.Path = item.Path;
             this.Name = item.Name;
@@ -62,11 +62,11 @@ namespace Luo_Painter.Models.Projects
             this.OnPropertyChanged(nameof(ImageSource)); // Notify 
         }
 
-        public async Task<Project> CopyAsync(StorageFolder folder, string suffix = "Dupliate")
+        public async Task<ProjectBase> CopyAsync(StorageFolder folder, string suffix = "Dupliate")
         {
             switch (this.Type)
             {
-                case ProjectType.File:
+                case ProjectType.Project:
                     StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(base.Path);
                     StorageFolder zipFolder2 = await folder.CreateFolderAsync($"{this.DisplayName} - {suffix}.luo", CreationCollisionOption.ReplaceExisting);
                     foreach (StorageFile item in await zipFolder.GetFilesAsync())
@@ -74,7 +74,7 @@ namespace Luo_Painter.Models.Projects
                         await item.CopyAsync(zipFolder2);
                     }
 
-                    return new ProjectFile(zipFolder2);
+                    return new Project(zipFolder2);
                 default:
                     return null;
             }

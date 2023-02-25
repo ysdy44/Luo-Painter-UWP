@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Luo_Painter.Models
 {
-    public abstract partial class Project : INotifyPropertyChanged
+    public abstract partial class ProjectBase : INotifyPropertyChanged
     {
         //@Content
         public ProjectType Type { get; }
@@ -16,19 +16,19 @@ namespace Luo_Painter.Models
         public string Thumbnail { get; protected set; }
 
         //@Construct
-        protected Project(ProjectType type) => this.Type = type;
+        protected ProjectBase(ProjectType type) => this.Type = type;
 
         public void Enable() => this.IsEnabled = true;
         public void Enable(ProjectType types)
         {
             switch (this.Type)
             {
-                case ProjectType.Add:
-                    this.IsEnabled = types.HasFlag(ProjectType.Add);
+                case ProjectType.New:
+                    this.IsEnabled = types.HasFlag(ProjectType.New);
                     this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
-                case ProjectType.File:
-                    this.IsEnabled = types.HasFlag(ProjectType.File);
+                case ProjectType.Project:
+                    this.IsEnabled = types.HasFlag(ProjectType.Project);
                     this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
                     break;
                 case ProjectType.Folder:

@@ -7,7 +7,7 @@ using Windows.Storage.Search;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<Project>
+    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
     {
 
         public bool IsLuo(string name) => name.EndsWith(".luo");
@@ -24,27 +24,27 @@ namespace Luo_Painter.Models
             }
         };
 
-        public readonly IList<Project> Temp = new List<Project>();
+        public readonly IList<ProjectBase> Temp = new List<ProjectBase>();
 
         public void Insert(StorageFolder zipFolder)
         {
-            base.Insert(1, new ProjectFile(zipFolder));
+            base.Insert(1, new Project(zipFolder));
         }
-        public void Insert(Project project)
+        public void Insert(ProjectBase project)
         {
             base.Insert(1, project);
         }
 
         public void Enable()
         {
-            foreach (Project item in this)
+            foreach (ProjectBase item in this)
             {
                 item.Enable();
             }
         }
         public void Enable(ProjectType types)
         {
-            foreach (Project item in this)
+            foreach (ProjectBase item in this)
             {
                 item.Enable(types);
             }
@@ -54,14 +54,14 @@ namespace Luo_Painter.Models
         {
             if (string.IsNullOrEmpty(path)) return;
 
-            foreach (Project item in this)
+            foreach (ProjectBase item in this)
             {
                 switch (item.Type)
                 {
-                    case ProjectType.File:
+                    case ProjectType.Project:
                         if (item.Path == path)
                         {
-                            if (item is ProjectFile item2)
+                            if (item is Project item2)
                             {
                                 item2.Refresh();
                             }
@@ -78,7 +78,7 @@ namespace Luo_Painter.Models
         {
             if (string.IsNullOrEmpty(name)) return false;
 
-            foreach (Project item in this)
+            foreach (ProjectBase item in this)
             {
                 if (item.DisplayName == name) return false;
             }

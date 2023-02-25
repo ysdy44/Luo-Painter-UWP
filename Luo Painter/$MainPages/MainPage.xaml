@@ -195,7 +195,7 @@
                 <local:ProjectDataTemplateSelector>
 
                     <local:ProjectDataTemplateSelector.None>
-                        <DataTemplate x:DataType="models:ProjectAdd">
+                        <DataTemplate x:DataType="models:ProjectNew">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -222,7 +222,7 @@
                     </local:ProjectDataTemplateSelector.None>
 
                     <local:ProjectDataTemplateSelector.File>
-                        <DataTemplate x:DataType="models:ProjectFile">
+                        <DataTemplate x:DataType="models:Project">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
