@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Blends;
+using Luo_Painter.Elements;
 using Luo_Painter.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas.Effects;
@@ -25,10 +26,20 @@ namespace Luo_Painter
         public static void SetUC(ContentControl dp, UIType value) => dp.Content = App.Resource.GetString(value.ToString());
 
         // UIDialog
-        public static UIType GetUD(ContentDialog dp) => dp.Content is UIType value ? value : default;
+        public static UIType GetUD(ContentDialog dp) => default;
         public static void SetUD(ContentDialog dp, UIType value)
         {
             dp.Title = App.Resource.GetString(value.ToString());
+            dp.PrimaryButtonText = App.Resource.GetString(UIType.OK.ToString());
+            dp.SecondaryButtonText = App.Resource.GetString(UIType.Cancel.ToString());
+        }
+
+        // UIDocker
+        public static UIType GetUK(IDocker dp) => default;
+        public static void SetUK(IDocker dp, UIType value)
+        {
+            dp.Title = App.Resource.GetString(value.ToString());
+            dp.Subtitle = App.Resource.GetString($"{value}_Subtitle");
             dp.PrimaryButtonText = App.Resource.GetString(UIType.OK.ToString());
             dp.SecondaryButtonText = App.Resource.GetString(UIType.Cancel.ToString());
         }
