@@ -323,19 +323,31 @@
   <data name='Blends_Subtract' xml:space='preserve'> <value>减去</value> </data>
   <data name='Blends_Division' xml:space='preserve'> <value>反色</value> </data>
   <!--Separator 4-->
+  <data name='Layer_Bitmap' xml:space='preserve'> <value>位图图层</value> </data>
+  <data name='Layer_Image' xml:space='preserve'> <value>图像图层</value> </data>
+  <data name='Layer_Text' xml:space='preserve'> <value>文本图层</value> </data>
+  <data name='Layer_Group' xml:space='preserve'> <value>组图层</value> </data>
+  <data name='Layer_Curve' xml:space='preserve'> <value>曲线图层</value> </data>
+  <data name='Layer_Fill' xml:space='preserve'> <value>填充图层</value> </data>
+  <!--Separator 5-->
+  <data name='Brush_Erase' xml:space='preserve'> <value>橡皮擦</value> </data>
+  <data name='Brush_Paint' xml:space='preserve'> <value>绘画</value> </data>
+  <data name='Brush_Fx' xml:space='preserve'> <value>特效</value> </data>
+  <data name='Brush_Others' xml:space='preserve'> <value>其他</value> </data>
+  <!--Separator 6-->
   <data name='Hardness_None' xml:space='preserve'> <value>无</value> </data>
   <data name='Hardness_Cosine' xml:space='preserve'> <value>余弦</value> </data>
   <data name='Hardness_Quadratic' xml:space='preserve'> <value>二次方</value> </data>
   <data name='Hardness_Cube' xml:space='preserve'> <value>三次方</value> </data>
   <data name='Hardness_Quartic' xml:space='preserve'> <value>四次方</value> </data>
-  <!--Separator 5-->
+  <!--Separator 7-->
   <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>最近邻</value> </data>
   <data name='Interpolation_Linear' xml:space='preserve'> <value>双线性</value> </data>
   <data name='Interpolation_Cubic' xml:space='preserve'> <value>双三次</value> </data>
   <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>多线性采样</value> </data>
   <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>各向异性</value> </data>
   <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>高质量三次</value> </data>
-  <!--Separator 6-->
+  <!--Separator 8-->
   <data name='Tip_NoLayer' xml:space='preserve'> <value>无图层</value> </data>
   <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>不是位图图层</value> </data>
   <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>不是曲线图层</value> </data>
@@ -350,7 +362,7 @@
   <data name='Tip_Saving' xml:space='preserve'> <value>正在保存......</value> </data>
   <data name='Tip_SaveSuccess' xml:space='preserve'> <value>保存成功</value> </data>
   <data name='Tip_SaveFailed' xml:space='preserve'> <value>保存失败</value> </data>
-  <!--Separator 7-->
+  <!--Separator 9-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>创建新图层？</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>只能在位图图层上操作</value> </data>
   <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>只能在曲线层上操作</value> </data>
@@ -359,7 +371,7 @@
   <data name='SubTip_NoPixelForBitmapLayer' xml:space='preserve'> <value>当前位图图层是透明的</value> </data>
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>画笔预设只能与绘画工具一起使用</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>再试一次？</value> </data>
-  <!--Separator 8-->
+  <!--Separator 10-->
   <data name='Layer_Property' xml:space='preserve'> <value>属性</value> </data>
   <data name='Layer_Property_Opacity' xml:space='preserve'> <value>不透明度</value> </data>
   <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>混合模式</value> </data>
@@ -506,6 +518,8 @@
   <data name='Transparency_TransparencyType' xml:space='preserve'> <value>透明度类型</value> </data>
   <data name='Transparency_Reverse' xml:space='preserve'> <value>反向</value> </data>
   <data name='Pen_SegmentType' xml:space='preserve'> <value>段类型</value> </data>
+  <data name='Pen_Curve' xml:space='preserve'> <value>曲线</value> </data>
+  <data name='Pen_Line' xml:space='preserve'> <value>直线</value> </data>
   <data name='Pen_Close' xml:space='preserve'> <value>关闭</value> </data>
   <data name='GeometryRoundRect_Corner' xml:space='preserve'> <value>拐角</value> </data>
   <data name='GeometryTriangle_CenterPoint' xml:space='preserve'> <value>中心点</value> </data>

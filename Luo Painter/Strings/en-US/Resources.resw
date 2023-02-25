@@ -247,6 +247,23 @@
   <data name='PatternGrid' xml:space='preserve'> <value>Grid</value> </data>
   <data name='PatternDiagonal' xml:space='preserve'> <value>Diagonal</value> </data>
   <data name='PatternSpotted' xml:space='preserve'> <value>Spotted</value> </data>
+  <data name='GeometryRectangleTransform' xml:space='preserve'> <value>Rectangle</value> </data>
+  <data name='GeometryEllipseTransform' xml:space='preserve'> <value>Ellipse</value> </data>
+  <data name='GeometryRoundRectTransform' xml:space='preserve'> <value>Rounded rectangle</value> </data>
+  <data name='GeometryTriangleTransform' xml:space='preserve'> <value>Triangle</value> </data>
+  <data name='GeometryDiamondTransform' xml:space='preserve'> <value>Diamond</value> </data>
+  <data name='GeometryPentagonTransform' xml:space='preserve'> <value>Pentagon</value> </data>
+  <data name='GeometryStarTransform' xml:space='preserve'> <value>Star</value> </data>
+  <data name='GeometryCogTransform' xml:space='preserve'> <value>Cog</value> </data>
+  <data name='GeometryDonutTransform' xml:space='preserve'> <value>Donut</value> </data>
+  <data name='GeometryPieTransform' xml:space='preserve'> <value>Pie</value> </data>
+  <data name='GeometryCookieTransform' xml:space='preserve'> <value>Cookie</value> </data>
+  <data name='GeometryArrowTransform' xml:space='preserve'> <value>Arrow</value> </data>
+  <data name='GeometryCapsuleTransform' xml:space='preserve'> <value>Capsule</value> </data>
+  <data name='GeometryHeartTransform' xml:space='preserve'> <value>Heart</value> </data>
+  <data name='PatternGridTransform' xml:space='preserve'> <value>Grid</value> </data>
+  <data name='PatternDiagonalTransform' xml:space='preserve'> <value>Diagonal</value> </data>
+  <data name='PatternSpottedTransform' xml:space='preserve'> <value>Spotted</value> </data>
   <!--Separator 2-->
   <data name='ResetRadian' xml:space='preserve'> <value>Reset the radian of rotation</value> </data>
   <data name='ResetScale' xml:space='preserve'> <value>Reset scale</value> </data>
@@ -306,19 +323,31 @@
   <data name='Blends_Subtract' xml:space='preserve'> <value>Subtract</value> </data>
   <data name='Blends_Division' xml:space='preserve'> <value>Division</value> </data>
   <!--Separator 4-->
+  <data name='Layer_Bitmap' xml:space='preserve'> <value>Bitmap Layer</value> </data>
+  <data name='Layer_Image' xml:space='preserve'> <value>Image Layer</value> </data>
+  <data name='Layer_Text' xml:space='preserve'> <value>Text Layer</value> </data>
+  <data name='Layer_Group' xml:space='preserve'> <value>Group Layer</value> </data>
+  <data name='Layer_Curve' xml:space='preserve'> <value>Curve Layer</value> </data>
+  <data name='Layer_Fill' xml:space='preserve'> <value>Fill Layer</value> </data>
+  <!--Separator 5-->
+  <data name='Brush_Erase' xml:space='preserve'> <value>Erase</value> </data>
+  <data name='Brush_Paint' xml:space='preserve'> <value>Paint</value> </data>
+  <data name='Brush_Fx' xml:space='preserve'> <value>Fx</value> </data>
+  <data name='Brush_Others' xml:space='preserve'> <value>Others</value> </data>
+  <!--Separator 6-->
   <data name='Hardness_None' xml:space='preserve'> <value>None</value> </data>
   <data name='Hardness_Cosine' xml:space='preserve'> <value>Cosine</value> </data>
   <data name='Hardness_Quadratic' xml:space='preserve'> <value>Quadratic</value> </data>
   <data name='Hardness_Cube' xml:space='preserve'> <value>Cube</value> </data>
   <data name='Hardness_Quartic' xml:space='preserve'> <value>Quartic</value> </data>
-  <!--Separator 5-->
+  <!--Separator 7-->
   <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>NearestNeighbor</value> </data>
   <data name='Interpolation_Linear' xml:space='preserve'> <value>Linear</value> </data>
   <data name='Interpolation_Cubic' xml:space='preserve'> <value>Cubic</value> </data>
   <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>MultiSampleLinear</value> </data>
   <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>Anisotropic</value> </data>
   <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>HighQualityCubic</value> </data>
-  <!--Separator 6-->
+  <!--Separator 8-->
   <data name='Tip_NoLayer' xml:space='preserve'> <value>No Layer</value> </data>
   <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>Not Bitmap Layer</value> </data>
   <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>Not Curve Layer</value> </data>
@@ -333,7 +362,7 @@
   <data name='Tip_Saving' xml:space='preserve'> <value>Saving...</value> </data>
   <data name='Tip_SaveSuccess' xml:space='preserve'> <value>Saved successfully</value> </data>
   <data name='Tip_SaveFailed' xml:space='preserve'> <value>Failed to Save</value> </data>
-  <!--Separator 7-->
+  <!--Separator 9-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>Create a new Layer?</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>Can only operate on Bitmap Layer</value> </data>
   <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>Can only operate on Curve Layer</value> </data>
@@ -342,7 +371,7 @@
   <data name='SubTip_NoPixelForBitmapLayer' xml:space='preserve'> <value>The current Bitmap Layer is Transparent</value> </data>
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>Brush Presets can only be used with the Paint Tool</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Try again?</value> </data>
-  <!--Separator 8-->
+  <!--Separator 10-->
   <data name='Layer_Property' xml:space='preserve'> <value>Properties</value> </data>
   <data name='Layer_Property_Opacity' xml:space='preserve'> <value>Opacity</value> </data>
   <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>Blend Mode</value> </data>
@@ -489,6 +518,8 @@
   <data name='Transparency_TransparencyType' xml:space='preserve'> <value>Transparency Type</value> </data>
   <data name='Transparency_Reverse' xml:space='preserve'> <value>Reverse</value> </data>
   <data name='Pen_SegmentType' xml:space='preserve'> <value>Segment Type</value> </data>
+  <data name='Pen_Curve' xml:space='preserve'> <value>Curve</value> </data>
+  <data name='Pen_Line' xml:space='preserve'> <value>Line</value> </data>
   <data name='Pen_Close' xml:space='preserve'> <value>Close</value> </data>
   <data name='GeometryRoundRect_Corner' xml:space='preserve'> <value>Corner</value> </data>
   <data name='GeometryTriangle_CenterPoint' xml:space='preserve'> <value>Center Point</value> </data>
