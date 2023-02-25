@@ -63,7 +63,14 @@
 
                         <StackPanel Spacing="8" Orientation="{TemplateBinding Orientation}">
                             <Grid>
-                                <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" MinWidth="{TemplateBinding MinWidth}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <StackPanel MinWidth="{TemplateBinding MinWidth}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <TextBlock Text="{TemplateBinding Title}" FontWeight="Bold" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                        <!--Title-->
+                                    </TextBlock>
+                                    <TextBlock Text="{TemplateBinding Subtitle}" Foreground="{TemplateBinding Foreground}">
+                                        <!--Subtitle-->
+                                    </TextBlock>
+                                </StackPanel>
                                 <Border x:Name="Badge" Visibility="Collapsed" IsHitTestVisible="False" CornerRadius="12" Padding="4,1" MinWidth="24" Height="24" BorderThickness="1" BorderBrush="White" Background="{ThemeResource AccentButtonBackground}" HorizontalAlignment="Right" >
                                     <ContentControl FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource AccentButtonForeground}" Content="{TemplateBinding Count}">
                                         <!--Count-->

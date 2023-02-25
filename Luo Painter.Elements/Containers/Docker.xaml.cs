@@ -2,12 +2,22 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Luo_Painter.Elements
 {
+    public interface IDocker
+    {
+        string Title { get; set; }
+        string Subtitle { get; set; }
+
+        string PrimaryButtonText { get; set; }
+        string SecondaryButtonText { get; set; }
+
+        ContentDialogButton DefaultButton { get; set; }
+    }
+
     [TemplatePart(Name = nameof(RootGrid), Type = typeof(Border))]
     [TemplatePart(Name = nameof(HideStoryboard), Type = typeof(Storyboard))]
     [TemplatePart(Name = nameof(ShowStoryboard), Type = typeof(Storyboard))]
@@ -16,8 +26,7 @@ namespace Luo_Painter.Elements
     [TemplatePart(Name = nameof(PrimaryButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(SecondaryButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(Badge), Type = typeof(Border))]
-    [ContentProperty(Name = nameof(Content))]
-    public class Docker : ContentControl
+    public sealed class Docker : Control, IDocker
     {
         //@Delegate
         public event RoutedEventHandler PrimaryButtonClick;
@@ -39,6 +48,26 @@ namespace Luo_Painter.Elements
         Border Badge;
 
         #region DependencyProperty
+
+
+        /// <summary> Gets or set the title for <see cref="Docker"/>. </summary>
+        public string Title
+        {
+            get => (string)base.GetValue(TitleProperty);
+            set => base.SetValue(TitleProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Docker.Title" /> dependency property. </summary>
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Docker), new PropertyMetadata(string.Empty));
+
+
+        /// <summary> Gets or set the subtitle for <see cref="Docker"/>. </summary>
+        public string Subtitle
+        {
+            get => (string)base.GetValue(SubtitleProperty);
+            set => base.SetValue(SubtitleProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "Docker.Subtitle" /> dependency property. </summary>
+        public static readonly DependencyProperty SubtitleProperty = DependencyProperty.Register(nameof(Subtitle), typeof(string), typeof(Docker), new PropertyMetadata(string.Empty));
 
 
         /// <summary> Gets or set the text for <see cref="Docker"/>'s PrimaryButton. </summary>
@@ -199,7 +228,7 @@ namespace Luo_Painter.Elements
         private void UpdateStoryboard()
         {
             if (this.HideDoubleAnimation is null) return;
-     
+
             //@Debug
             //this.HideDoubleAnimation.To = base.ActualHeight;
             this.HideDoubleAnimation.To = base.Margin.Top + base.ActualHeight + base.Margin.Bottom;
@@ -209,7 +238,7 @@ namespace Luo_Painter.Elements
         {
             if (this.TranslateTransform is null) return;
             if (this.IsShow) return;
-     
+
             //@Debug
             //this.TranslateTransform.Y = base.ActualHeight;
             this.TranslateTransform.Y = base.Margin.Top + base.ActualHeight + base.Margin.Bottom;

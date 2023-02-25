@@ -553,62 +553,34 @@
 
 
         <!--Docker-->
-        <elements:Docker x:Name="DupliateDocker" PrimaryButtonIsEnabledFollowCount="True" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
-            <elements:Docker.PrimaryButtonText>
-                OK
-            </elements:Docker.PrimaryButtonText>
-            <elements:Docker.SecondaryButtonText>
-                Cancel
-            </elements:Docker.SecondaryButtonText>
-            <TextBlock>
-                <Run/>
-                <Run x:Name="DupliateTitleRun" FontWeight="Bold">Dupliate project(s)</Run>
-                <LineBreak/>
-                <Run x:Name="DupliateSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to duplicate.</Run>
-            </TextBlock>
-        </elements:Docker>
-        <elements:Docker x:Name="DeleteDocker" PrimaryButtonIsEnabledFollowCount="True" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
-            <elements:Docker.PrimaryButtonText>
-                OK
-            </elements:Docker.PrimaryButtonText>
-            <elements:Docker.SecondaryButtonText>
-                Cancel
-            </elements:Docker.SecondaryButtonText>
-            <TextBlock>
-                <Run/>
-                <Run x:Name="DeleteTitleRun" FontWeight="Bold">Delete project(s)</Run>
-                <LineBreak/>
-                <Run x:Name="DeleteSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to delete.</Run>
-            </TextBlock>
-        </elements:Docker>
-        <elements:Docker x:Name="SelectDocker" PrimaryButtonIsEnabledFollowCount="True" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
-            <elements:Docker.PrimaryButtonText>
-                OK
-            </elements:Docker.PrimaryButtonText>
-            <elements:Docker.SecondaryButtonText>
-                Cancel
-            </elements:Docker.SecondaryButtonText>
-            <TextBlock>
-                <Run/>
-                <Run x:Name="SelectTitleRun" FontWeight="Bold">Select project(s)</Run>
-                <LineBreak/>
-                <Run x:Name="SelectSubtitleRun" Foreground="{ThemeResource AppForeground}">Select the project(s) you want to move.</Run>
-            </TextBlock>
-        </elements:Docker>
-        <elements:Docker x:Name="MoveDocker" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppAcrylicOverlayBrush}" >
-            <elements:Docker.PrimaryButtonText>
-                OK
-            </elements:Docker.PrimaryButtonText>
-            <elements:Docker.SecondaryButtonText>
-                Cancel
-            </elements:Docker.SecondaryButtonText>
-            <TextBlock>
-                <Run/>
-                <Run x:Name="MoveTitleRun" FontWeight="Bold">Move project(s)</Run>
-                <LineBreak/>
-                <Run x:Name="MoveSubtitleRun" Foreground="{ThemeResource AppForeground}">Move the project(s) to this Folder.</Run>
-            </TextBlock>
-        </elements:Docker>
+        <!--Docker-->
+        <elements:Docker 
+            x:Name="DupliateDocker" 
+            PrimaryButtonIsEnabledFollowCount="True" 
+            BorderBrush="{ThemeResource AppStroke}"
+            Background="{ThemeResource AppAcrylicOverlayBrush}" 
+            Foreground="{ThemeResource AppForeground}"
+            />
+        <elements:Docker 
+            x:Name="DeleteDocker" 
+            PrimaryButtonIsEnabledFollowCount="True" 
+            BorderBrush="{ThemeResource AppStroke}"
+            Background="{ThemeResource AppAcrylicOverlayBrush}" 
+            Foreground="{ThemeResource AppForeground}"
+            />
+        <elements:Docker 
+            x:Name="SelectDocker" 
+            PrimaryButtonIsEnabledFollowCount="True" 
+            BorderBrush="{ThemeResource AppStroke}"
+            Background="{ThemeResource AppAcrylicOverlayBrush}" 
+            Foreground="{ThemeResource AppForeground}"
+            />
+        <elements:Docker 
+            x:Name="MoveDocker" 
+            BorderBrush="{ThemeResource AppStroke}"
+            Background="{ThemeResource AppAcrylicOverlayBrush}" 
+            Foreground="{ThemeResource AppForeground}"
+            />
 
 
         <!--Dialog-->
