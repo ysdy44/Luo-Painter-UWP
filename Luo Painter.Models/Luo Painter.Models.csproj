@@ -132,11 +132,11 @@
     <Compile Include="Historys\Models\CompositeHistory.cs" />
     <Compile Include="Historys\Models\PropertyHistory.cs" />
     <Compile Include="Historys\Models\SetupHistory.cs" />
-    <Compile Include="Projects\Models\ProjectAdd.cs" />
-    <Compile Include="Projects\Models\ProjectFile.cs" />
-    <Compile Include="Projects\Models\ProjectFile.Export.cs" />
+    <Compile Include="Projects\Models\Project.cs" />
+    <Compile Include="Projects\Models\Project.Export.cs" />
     <Compile Include="Projects\Models\ProjectFolder.cs" />
-    <Compile Include="Projects\Project.cs" />
+    <Compile Include="Projects\Models\ProjectNew.cs" />
+    <Compile Include="Projects\ProjectBase.cs" />
     <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.Create.cs" />
     <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.cs" />
     <Compile Include="Projects\ProjectObservableCollections\ProjectObservableCollection.DeleteCopy.cs" />
