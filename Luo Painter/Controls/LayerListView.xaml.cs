@@ -4,8 +4,8 @@ using Luo_Painter.Layers;
 using Luo_Painter.Models;
 using Luo_Painter.Options;
 using System;
+using System.Linq;
 using System.Windows.Input;
-using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -50,7 +50,10 @@ namespace Luo_Painter.Controls
                 {
                     if (element.DataContext is ILayer item)
                     {
-                        base.SelectedItem = item;
+                        if (base.SelectedItem is null)
+                            base.SelectedItem = item;
+                        else if (base.SelectedItems.All(c => c != item))
+                            base.SelectedItem = item;
                         this.MenuFlyout.ShowAt(this, e.GetPosition(this));
                     }
                 }
@@ -63,7 +66,10 @@ namespace Luo_Painter.Controls
                 {
                     if (element.DataContext is ILayer item)
                     {
-                        base.SelectedItem = item;
+                        if (base.SelectedItem is null)
+                            base.SelectedItem = item;
+                        else if (base.SelectedItems.All(c => c != item))
+                            base.SelectedItem = item;
                         this.RenameFlyout.ShowAt(element);
                     }
                 }
@@ -85,11 +91,6 @@ namespace Luo_Painter.Controls
                 this.UngroupItem.GoToState(isEnabled);
                 this.ReleaseItem.GoToState(isEnabled);
             };
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
     }
