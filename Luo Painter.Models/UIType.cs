@@ -8,6 +8,7 @@
 
         InputText,
         Untitled,
+        UntitledFolder,
 
         GithubLink,
         FeedbackLink,
@@ -24,6 +25,7 @@
         Y,
         Width,
         Height,
+
 
 
         // Layer
@@ -82,6 +84,8 @@
 
         Color_Hex,
 
+
+
         // Export
         Export, // OptionType.Export
         Export_DPI,
@@ -104,6 +108,51 @@
 
         // Texture
         Texture,
+
+
+
+        // NewProject
+        NewProject,
+
+        // NewImage
+        NewImage,
+
+        // NewFolder
+        NewFolder,
+
+        // DupliateProject
+        DupliateProject,
+        DupliateProject_Subtitle,
+
+        // DeleteProject
+        DeleteProject,
+        DeleteProject_Subtitle,
+
+        // SelectProject
+        SelectProject,
+        SelectProject_Subtitle,
+
+        // MoveProject
+        MoveProject,
+        MoveProject_Subtitle,
+
+        // RenameProject
+        RenameProject,
+
+
+
+        // Main
+        Main_Documentation,
+        Main_Setting,
+
+        Main_Home,
+        Main_Back,
+
+        Main_Type,
+        Main_Date,
+        Main_Name,
+
+
 
         // Setup
         CropCanvas_Radians,
