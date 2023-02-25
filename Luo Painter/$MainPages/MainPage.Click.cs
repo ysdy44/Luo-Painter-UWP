@@ -2,6 +2,7 @@
 using Luo_Painter.Models;
 using Luo_Painter.Models.Projects;
 using System;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
@@ -96,6 +97,10 @@ namespace Luo_Painter
                             return;
                         }
                     }
+                case ActionType.New:
+                    await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), this.New);
+                    this.ListView.ScrollIntoView(this.ObservableCollection.Last());
+                    break;
 
                 case ActionType.DupliateShow:
                     {
@@ -193,27 +198,6 @@ namespace Luo_Painter
                     }
                     break;
 
-                case ActionType.New:
-                    if (ContentDialogExtensions.CanShow)
-                    {
-                        this.NewTextBox.Text = this.New;
-                        this.NewTextBox.SelectAll();
-                        this.RenameTextBox.Focus(FocusState.Keyboard);
-
-                        ContentDialogResult result = await this.NewDialog.ShowInstance();
-                        switch (result)
-                        {
-                            case ContentDialogResult.Primary:
-                                string name = this.NewTextBox.Text;
-                                if (string.IsNullOrEmpty(name)) break;
-
-                                await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), name);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
                 case ActionType.Rename:
                     if (ContentDialogExtensions.CanShow)
                     {
