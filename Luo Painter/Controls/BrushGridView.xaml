@@ -41,6 +41,8 @@
                         <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012105"/>
                         <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012006"/>
                     </local:PaintBrushGrouping>
+                    <local:PaintBrushGrouping Key="Others">
+                    </local:PaintBrushGrouping>
                 </local:PaintBrushGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
@@ -90,7 +92,7 @@
             <GroupStyle.HeaderTemplate>
                 <DataTemplate x:DataType="local:PaintBrushGrouping">
                     <TextBlock
-                        Text="{x:Bind Key}" 
+                        Text="{x:Bind KeyString}" 
                         Foreground="{ThemeResource AppForeground}"
                         Style="{StaticResource BaseTextBlockStyle}"
                         >       

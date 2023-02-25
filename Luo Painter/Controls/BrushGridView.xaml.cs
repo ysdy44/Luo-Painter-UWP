@@ -1,14 +1,22 @@
 ﻿using Luo_Painter.Brushes;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.ApplicationModel.Resources;
 
 namespace Luo_Painter.Controls
 {
-    internal sealed class PaintBrushGroupingList : List<PaintBrushGrouping>, IList<PaintBrushGrouping> { }
-    internal class PaintBrushGrouping : List<PaintBrush>, IList<PaintBrush>, IGrouping<string, PaintBrush>
+    internal enum PaintBrushType
     {
-        public string Key { set; get; }
+        Erase,
+        Paint,
+        Fx,
+        Others,
+    }
+
+    internal sealed class PaintBrushGroupingList : List<PaintBrushGrouping>, IList<PaintBrushGrouping> { }
+    internal class PaintBrushGrouping : List<PaintBrush>, IList<PaintBrush>, IGrouping<PaintBrushType, PaintBrush>
+    {
+        public PaintBrushType Key { set; get; }
+        public string KeyString => App.Resource.GetString($"Brush_{this.Key}");
     }
     internal sealed class PaintBrush : InkAttributes
     {
@@ -33,11 +41,6 @@ namespace Luo_Painter.Controls
         {
             this.InitializeComponent();
             base.Loaded += (s, e) => base.SelectedIndex = 2;
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
     }
