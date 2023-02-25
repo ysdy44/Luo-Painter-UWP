@@ -1,22 +1,139 @@
-﻿<Button
+﻿<SwipeControl
     x:Name="UserControl"
-    x:Class="Luo_Painter.Controls.LayerButton"
+    x:Class="Luo_Painter.Controls.LayerSwiper"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignWidth="50"
-    d:DesignHeight="50"
-    Padding="2"
-    CornerRadius="2"
-    Width="36"
-    Height="36"
-    BorderThickness="1"
-    BorderBrush="Transparent"
-    Background="Transparent"
-    Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
-    HorizontalAlignment="Stretch"
-    VerticalAlignment="Stretch"
-    Visibility="{x:Bind UserControl.IsEnabled, Mode=OneWay}"
-    />
+    >
+
+    <SwipeControl.LeftItems>
+        <SwipeItems Mode="Execute">
+            <SwipeItem x:Name="Item" BehaviorOnInvoked="Close"/>
+        </SwipeItems>
+    </SwipeControl.LeftItems>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock 
+            x:Name="TextBlock"
+            Grid.Column="1" 
+            IsHitTestVisible="False" 
+            VerticalAlignment="Center" 
+            >              
+            <Run x:Name="Run1">
+                <!--Name-->
+            </Run>
+            <Run>            
+                (
+            </Run><Run x:Name="Run2">
+            <!--Type-->
+            </Run><Run>                     
+                )       
+            </Run>
+        </TextBlock>
+
+        <StackPanel Grid.Column="2" Margin="2,0" Spacing="4" Orientation="Horizontal">
+            <Border
+                IsHitTestVisible="False" 
+                Width="32" 
+                Height="32"
+                >
+                <TextBlock
+                    x:Name="BlendModeTextBlock"
+                    IsHitTestVisible="False" 
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    >
+                    <!--BlendMode-->
+                </TextBlock>
+            </Border>
+
+            <Button 
+                x:Name="ExpandButton"
+                Padding="2"
+                CornerRadius="2"
+                Width="36"
+                Height="36"
+                BorderThickness="1"
+                BorderBrush="Transparent"
+                Background="Transparent"
+                Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                CommandParameter="{x:Bind CommandParameter,Mode=OneWay}"
+                Command="{x:Bind ExpandCommand, Mode=OneWay}"
+                Visibility="{x:Bind ExpandButton.IsEnabled, Mode=OneWay}"
+                >
+                <FontIcon
+                    x:Name="ExpandIcon"
+                    IsHitTestVisible="False"
+                    Glyph="&#xE228;" 
+                    FontSize="12" 
+                    FontWeight="Normal" 
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    >
+                    <UIElement.RenderTransformOrigin>
+                        0.5,0.5
+                    </UIElement.RenderTransformOrigin>
+                    <UIElement.RenderTransform>
+                        <RotateTransform x:Name="RotateTransform">
+                            <!--IsExpand-->
+                        </RotateTransform>
+                    </UIElement.RenderTransform>
+                    <!--Visibility-->
+                </FontIcon>
+            </Button>
+
+            <Button 
+                x:Name="VisibilityButton"
+                Padding="2"
+                CornerRadius="2"
+                Width="36"
+                Height="36"
+                BorderThickness="1"
+                BorderBrush="Transparent"
+                Background="Transparent"
+                Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                CommandParameter="{x:Bind CommandParameter,Mode=OneWay}"
+                Command="{x:Bind VisibilityCommand, Mode=OneWay}"
+                >
+                <FontIcon 
+                    x:Name="VisibilityIcon"
+                    IsHitTestVisible="False"
+                    Glyph="&#xE7B3;"
+                    FontSize="18"
+                    FontWeight="Normal"
+                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    >
+                    <!--Visibility-->
+                </FontIcon>
+            </Button>
+        </StackPanel>
+
+        <Border 
+            x:Name="ChildBorder"
+            CornerRadius="2"
+            MinWidth="32"
+            MinHeight="32"
+            IsHitTestVisible="False" 
+            BorderThickness="1"
+            BorderBrush="Black" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="White"
+            >
+            <!--Child-->
+        </Border>
+
+    </Grid>
+</SwipeControl>

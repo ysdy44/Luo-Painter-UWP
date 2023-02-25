@@ -14,14 +14,14 @@
     xmlns:options="using:Luo_Painter.Options"
     xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
-    d:DesignWidth="400"   
+    d:DesignWidth="400" 
     d:DesignHeight="400"
     IsItemClickEnabled="True"
-    SelectionMode="Extended"   
+    SelectionMode="Extended" 
     AllowDrop="True" 
     CanDragItems="True"
     CanReorderItems="True" 
-    ReorderMode="Enabled"   
+    ReorderMode="Enabled" 
     ScrollViewer.VerticalScrollBarVisibility="Hidden"
     >
 
@@ -116,103 +116,27 @@
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="layers:ILayer">
-            <elements:SelectedSwiper IsExist="{x:Bind IsExist, Mode=OneWay}" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="{x:Bind UIDepth, Mode=OneWay}"/>
-                        <ColumnDefinition Width="66"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="2"/>
-                    </Grid.ColumnDefinitions>
+            <local:LayerSwiper
+                Type="{x:Bind Type, Mode=OneWay}" 
+                
+                Visibility2="{x:Bind Visibility, Mode=OneWay}" 
+                Text="{x:Bind Name, Mode=OneWay}" 
+                BlendMode="{x:Bind BlendMode, Mode=OneWay}" 
+                TagType="{x:Bind TagType, Mode=OneWay}" 
+                
+                Depth="{x:Bind Depth, Mode=OneWay}" 
+                IsExist="{x:Bind IsExist, Mode=OneWay}" 
+                IsExpand="{x:Bind IsExpand, Mode=OneWay}" 
 
-                    <Rectangle IsHitTestVisible="False" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch">
-                        <Shape.Fill>
-                            <SolidColorBrush Color="{x:Bind UITagType, Mode=OneWay}" />
-                        </Shape.Fill>
-                    </Rectangle>
-
-                    <TextBlock 
-                        Grid.Column="2" 
-                        IsHitTestVisible="False" 
-                        VerticalAlignment="Center"                         
-                        Opacity="{x:Bind UIVisibility, Mode=OneWay}"                         
-                        >
-                        <Run Text="{x:Bind Name, Mode=OneWay}"/>                           
-                        <Run>                        
-                        (
-                        </Run><Run Text="{x:Bind Type, Mode=OneWay}"/><Run>                     
-                        )       
-                        </Run>
-                    </TextBlock>
-
-                    <StackPanel Grid.Column="3" Margin="2,0" Spacing="4" Orientation="Horizontal">
-
-                        <Border IsHitTestVisible="False" Width="32" Height="32">
-                            <TextBlock
-                                IsHitTestVisible="False" 
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind UIBlendMode, Mode=OneWay}"
-                                Opacity="{x:Bind UIVisibility, Mode=OneWay}"     
-                                />
-                        </Border>
-
-                        <local:LayerButton CommandParameter="{x:Bind}" Command="{x:Bind}" >
-                            <FontIcon
-                                IsHitTestVisible="False"
-                                Glyph="&#xE228;" 
-                                FontSize="12" 
-                                FontWeight="Normal" 
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                Opacity="{x:Bind UIVisibility, Mode=OneWay}" 
-                                >
-                                <UIElement.RenderTransformOrigin>
-                                    0.5,0.5
-                                </UIElement.RenderTransformOrigin>
-                                <UIElement.RenderTransform>
-                                    <RotateTransform Angle="{x:Bind UIIsExpand, Mode=OneWay}" />
-                                </UIElement.RenderTransform>
-                            </FontIcon>
-                        </local:LayerButton>
-
-                        <local:LayerButton 
-                            CommandParameter="{Binding}" 
-                            Command="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}"
-                            >
-                            <FontIcon 
-                                IsHitTestVisible="False"
-                                Glyph="&#xE7B3;"
-                                FontSize="18"
-                                FontWeight="Normal"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                Opacity="{x:Bind UIVisibility, Mode=OneWay}" 
-                                />
-                        </local:LayerButton>
-
-                    </StackPanel>
-
-                    <Border 
-                        Grid.Column="1" 
-                        CornerRadius="2"
-                        IsHitTestVisible="False" 
-                        BorderThickness="1"
-                        BorderBrush="Black" 
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Opacity="{x:Bind UIVisibility, Mode=OneWay}"  
-                        >
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="{x:Bind Opacity, Mode=OneWay}"/>
-                        </Border.Background>
-                        <Image 
-                            Source="{x:Bind Thumbnail, Mode=OneWay}" 
-                            Opacity="{x:Bind Opacity, Mode=OneWay}"
-                            />
-                    </Border>
-
-                </Grid>
-            </elements:SelectedSwiper>
+                CommandParameter="{x:Bind}" 
+                ExpandCommand="{x:Bind}" 
+                VisibilityCommand="{Binding ElementName=VisualButton, Path=Command, Mode=OneWay}" 
+                >
+                <Image 
+                    Source="{x:Bind Thumbnail, Mode=OneWay}" 
+                    Opacity="{x:Bind Opacity, Mode=OneWay}"
+                    />
+            </local:LayerSwiper>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 
@@ -223,7 +147,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-  
+
             <TextBlock
                 x:Name="TitleTextBlock"
                 Margin="16,0,0,0"
@@ -269,7 +193,7 @@
                             </Border>
 
                             <!--BlendMode-->
-                            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"      
+                            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
                                        luo_painter:Res.UT="Layer_Property_BlendMode"/>
                             <ComboBox x:Name="BlendModeComboBox" >
 
