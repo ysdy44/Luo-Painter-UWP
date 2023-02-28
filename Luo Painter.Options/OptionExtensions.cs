@@ -43,42 +43,5 @@ namespace Luo_Painter.Options
         public static string GetResource(this OptionType type) => type.ExistIcon() ? $"ms-appx:///Luo Painter.Options/Icons/{type}Icon.xaml" : throw new NullReferenceException($"The {type} no Icon.");
         public static ControlTemplate GetTemplate(this OptionType type, ResourceDictionary resource) => resource[$"{type}Icon"] as ControlTemplate;
 
-        //@Attached
-        public static OptionType GetType(DependencyObject dp) => (OptionType)dp.GetValue(TypeProperty);
-        public static void SetType(DependencyObject dp, OptionType value) => dp.SetValue(TypeProperty, value);
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.RegisterAttached("Type", typeof(OptionType), typeof(MenuFlyoutItem), new PropertyMetadata(default(OptionType), (sender, e) =>
-        {
-            MenuFlyoutItem control = (MenuFlyoutItem)sender;
-
-            if (e.NewValue is OptionType value)
-            {
-                if (value.IsItemClickEnabled())
-                {
-                    control.Text = value.ToString();
-                    control.CommandParameter = value;
-                }
-
-                if (value.ExistIcon())
-                {
-                    control.Resources.Source = new Uri(value.GetResource());
-                    control.Tag = new ContentControl
-                    {
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Template = value.GetTemplate(control.Resources)
-                    };
-                }
-
-                if (value.HasPreview())
-                {
-                    control.KeyboardAcceleratorTextOverride = "•";
-                }
-                else if (value.HasMenu())
-                {
-                    control.KeyboardAcceleratorTextOverride = ">";
-                }
-            }
-        }));
-
     }
 }
