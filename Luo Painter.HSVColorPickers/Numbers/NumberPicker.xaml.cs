@@ -183,7 +183,7 @@ namespace Luo_Painter.HSVColorPickers
                     if (double.TryParse(text, out double value))
                     {
                         this.IsNegative = value < 0;
-                        this.Absnumber = System.Math.Abs(value).ToString();
+                        this.Absnumber = System.Math.Abs(System.Math.Round(value, 2, MidpointRounding.ToEven)).ToString();
 
                         this.ValueChanging?.Invoke(this, this.ToValue()); // Delegate
                         this.Invalidate(); // Invalidate
@@ -218,7 +218,7 @@ namespace Luo_Painter.HSVColorPickers
         public void Construct(INumberBase number)
         {
             this.IsNegative = number.Value < 0;
-            this.Absnumber = System.Math.Abs(number.Value).ToString();
+            this.Absnumber = System.Math.Abs(System.Math.Round(number.Value, 2, MidpointRounding.ToEven)).ToString();
 
             this.Minimum = number.Minimum;
             this.Maximum = number.Maximum;

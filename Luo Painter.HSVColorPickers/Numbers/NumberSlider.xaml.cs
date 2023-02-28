@@ -74,8 +74,8 @@ namespace Luo_Painter.HSVColorPickers
             this.HeaderButton = base.GetTemplateChild(nameof(HeaderButton)) as NumberButtonBase;
             if (this.HeaderButton is null is false)
             {
-                if (string.IsNullOrEmpty(this.Unit)) this.HeaderButton.Content = this.Value;
-                else this.HeaderButton.Content = $"{this.Value}{this.Unit}";
+                if (string.IsNullOrEmpty(this.Unit)) this.HeaderButton.Content = System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven);
+                else this.HeaderButton.Content = $"{System.Math.Round(this.Value, 2, System.MidpointRounding.ToEven)}{this.Unit}";
                 this.HeaderButton.Click += this.Click;
             }
 
