@@ -72,15 +72,8 @@ namespace Luo_Painter
                 this.ListView.Resizing(e.NewSize);
             };
 
-            this.DocumentationButton.Click += (s, e) =>
-            {
-            };
-            this.SettingButton.Click += (s, e) =>
-            {
-                if (this.Disabler) return;
-
-                base.Frame.Navigate(typeof(StylePage));
-            };
+            this.DocumentationButton.Click += async (s, e) => await this.AboutDialog.ShowInstance();
+            this.SettingButton.Click += async (s, e) => await this.SettingDialog.ShowInstance();
 
             this.HomeButton.Click += (s, e) =>
             {

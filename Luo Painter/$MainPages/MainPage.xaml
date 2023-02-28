@@ -366,6 +366,8 @@
                 <SymbolIcon Symbol="NewFolder"/>
             </ListViewItem>
 
+            <ListViewItem IsEnabled="False" MinWidth="32" MinHeight="1" Width="32" Height="1" Margin="2" Padding="0" Background="{ThemeResource AppForeground}" Style="{x:Null}"/>
+
             <ListViewItem local:Res.UTT="DupliateProject">
                 <SymbolIcon Symbol="Copy"/>
             </ListViewItem>
@@ -566,6 +568,11 @@
             >
             <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18"/>
         </ContentDialog>
+
+
+        <!--Dialog-->
+        <controls:AboutDialog x:Name="AboutDialog"/>
+        <controls:SettingDialog x:Name="SettingDialog"/>
 
     </Grid>
 </Page>

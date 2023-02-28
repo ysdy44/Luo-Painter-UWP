@@ -10,7 +10,7 @@ namespace Luo_Painter
     public sealed partial class MainPage : Page
     {
 
-        string Untitled = "Untitled";
+        string Untitled => App.Resource.GetString(UIType.Untitled.ToString());
         string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
 
         //@Strings
