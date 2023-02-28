@@ -445,10 +445,19 @@
   <data name='Main_Date' xml:space='preserve'> <value>创建日期</value> </data>
   <data name='Main_Name' xml:space='preserve'> <value>名字</value> </data>
   <!--Separator 14-->
+  <data name='Theme' xml:space='preserve'> <value>主题</value> </data>
+  <data name='Theme_Light' xml:space='preserve'> <value>浅色</value> </data>
+  <data name='Theme_Dark' xml:space='preserve'> <value>深色</value> </data>
+  <data name='Theme_UseSystem' xml:space='preserve'> <value>跟随系统</value> </data>
+  <!--Separator 15-->
+  <data name='Language' xml:space='preserve'> <value>语言</value> </data>
+  <data name='Language_Tip' xml:space='preserve'> <value>重启应用以查看更改。</value> </data>
+  <data name='Language_UseSystemSetting' xml:space='preserve'> <value>使用系统设置</value> </data>
+  <!--Separator 16-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>弧度</value> </data>
-  <data name='Transform_Snap' xml:space='preserve'> <value>折</value> </data>
-  <data name='Transform_Ratio' xml:space='preserve'> <value>率</value> </data>
-  <data name='Transform_Center' xml:space='preserve'> <value>中心</value> </data>
+  <data name='Transform_Snap' xml:space='preserve'> <value>吸附</value> </data>
+  <data name='Transform_Ratio' xml:space='preserve'> <value>等比</value> </data>
+  <data name='Transform_Center' xml:space='preserve'> <value>居中</value> </data>
   <data name='Transform_X' xml:space='preserve'> <value>X</value> </data>
   <data name='Transform_Y' xml:space='preserve'> <value>Y</value> </data>
   <data name='Transform_W' xml:space='preserve'> <value>W</value> </data>

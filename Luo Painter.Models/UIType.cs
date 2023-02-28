@@ -154,6 +154,21 @@
 
 
 
+        // Theme
+        Theme,
+        Theme_Light,
+        Theme_Dark,
+        Theme_UseSystem,
+
+
+
+        // Language
+        Language,
+        Language_Tip,
+        Language_UseSystemSetting,
+
+
+
         // Setup
         CropCanvas_Radians,
 
