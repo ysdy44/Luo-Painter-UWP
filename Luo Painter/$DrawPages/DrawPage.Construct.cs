@@ -1,16 +1,10 @@
-﻿using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Brushes;
 using Luo_Painter.HSVColorPickers;
-using Luo_Painter.Layers;
 using Luo_Painter.Models;
 using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources;
 using Windows.Graphics.Display;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -27,11 +21,6 @@ namespace Luo_Painter
         int BrushPageId;
 
         bool PasteIsEnabled;
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
-        }
 
         private void ConstructDraw()
         {
@@ -98,67 +87,19 @@ namespace Luo_Painter
 
         public void Tip(TipType type)
         {
-            switch (type)
-            {
-                case TipType.NoLayer:
-                    this.ToastTip.Tip("No Layer", "Create a new Layer?");
-                    break;
-                case TipType.NotBitmapLayer:
-                    this.ToastTip.Tip("Not Bitmap Layer", "Can only operate on Bitmap Layer.");
-                    break;
-                case TipType.NotCurveLayer:
-                    this.ToastTip.Tip("Not Curve Layer", "Can only operate on Curve Layer.");
-                    break;
-
-                case TipType.NoPixel:
-                    this.ToastTip.Tip("No Pixel", "The current Pixel is Transparent.");
-                    break;
-                case TipType.NoPixelForMarquee:
-                    this.ToastTip.Tip("No Pixel", "The Marquee is Transparent.");
-                    break;
-                case TipType.NoPixelForBitmapLayer:
-                    this.ToastTip.Tip("No Pixel", "The current Bitmap Layer is Transparent.");
-                    break;
-
-                case TipType.NoPaintTool:
-                    this.ToastTip.Tip("Paint Brush tool", "Brush Presets can only be used with the Paint");
-                    break;
-
-                case TipType.SaveFailed:
-                    this.ToastTip.Tip("Failed to Save", "Try again?");
-                    break;
-
-                default:
-                    break;
-            }
+            this.ToastTip.Tip
+            (
+                App.Resource.GetString($"Tip_{type}"),
+                App.Resource.GetString($"SubTip_{type}")
+            );
         }
         public void Tip(TipType type, string subtitle)
         {
-            switch (type)
-            {
-                case TipType.Spread:
-                    this.ToastTip.Tip("Spread", subtitle);
-                    break;
-                case TipType.Zoom:
-                    this.ToastTip.Tip("Zoom", subtitle);
-                    break;
-                case TipType.Undo:
-                    this.ToastTip.Tip("Undo", subtitle);
-                    break;
-                case TipType.Redo:
-                    this.ToastTip.Tip("Redo", subtitle);
-                    break;
-
-                case TipType.Saving:
-                    this.ToastTip.Tip("Saving...", subtitle);
-                    break;
-                case TipType.SaveSuccess:
-                    this.ToastTip.Tip("Saved successfully", subtitle);
-                    break;
-
-                default:
-                    break;
-            }
+            this.ToastTip.Tip
+            (
+                App.Resource.GetString($"Tip_{type}"),
+                subtitle
+            );
         }
 
     }

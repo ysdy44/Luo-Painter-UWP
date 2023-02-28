@@ -19,7 +19,7 @@ namespace Luo_Painter.Controls
         //@Content
         public UIElement Child { get => this.ChildBorder.Child; set => this.ChildBorder.Child = value; }
         public string Text { get => this.Run1.Text; set => this.Run1.Text = value; }
-        public LayerType Type { set => this.Run2.Text = value.ToString(); }
+        public LayerType Type { set => this.Run2.Text = App.Resource.GetString($"Layer_{value}"); }
 
         public BlendEffectMode BlendMode { set => this.BlendModeTextBlock.Text = value.GetIcon(); }
         public int Depth { set => base.Padding = new Thickness(value * 20, 0, 2, 0); }

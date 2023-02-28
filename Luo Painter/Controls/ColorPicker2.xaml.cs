@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.HSVColorPickers;
 using System;
 using System.Numerics;
-using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,11 +30,6 @@ namespace Luo_Painter.Controls
             this.HSVPicker.ColorChanged += (s, color) => this.OnColorChanged(color);
 
             this.ConstructPicker();
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
         public void SetColor(Color color) => this.Color = color;

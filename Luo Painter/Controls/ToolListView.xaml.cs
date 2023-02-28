@@ -1,5 +1,4 @@
 ﻿using Luo_Painter.Options;
-using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -19,11 +18,6 @@ namespace Luo_Painter.Controls
         public ToolListView()
         {
             this.InitializeComponent();
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
         //@Override

@@ -1,7 +1,5 @@
 ﻿using Luo_Painter.Options;
 using System;
-using System.Collections.ObjectModel;
-using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -34,11 +32,6 @@ namespace Luo_Painter.Controls
                     this.ItemClick?.Invoke(this, this.SelectedType);
                 }
             };
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
     }

@@ -1,9 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using System;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml.Controls;
-
-namespace Luo_Painter.Controls
+﻿namespace Luo_Painter.Controls
 {
     internal sealed class PaintSize
     {
@@ -31,11 +26,6 @@ namespace Luo_Painter.Controls
         {
             this.InitializeComponent();
             base.Loaded += (s, e) => base.SelectedIndex = 16;
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
     }

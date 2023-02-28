@@ -4,7 +4,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Windows.Input;
-using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 
@@ -74,11 +73,6 @@ namespace Luo_Painter.Controls
             this.ConstructColorValue();
 
             this.ComboBox.SelectionChanged += (s, e) => this.Recolor(this.Color);
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
         public void SetColor(Color color) => this.Color = color;

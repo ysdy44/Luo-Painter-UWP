@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.Models;
 using Luo_Painter.Models.Projects;
 using System.Linq;
-using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,11 +11,6 @@ namespace Luo_Painter
 
         string Untitled => App.Resource.GetString(UIType.Untitled.ToString());
         string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
-        }
 
         private void ConstructListView()
         {

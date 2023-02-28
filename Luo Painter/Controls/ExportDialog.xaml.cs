@@ -1,5 +1,4 @@
 ﻿using Microsoft.Graphics.Canvas;
-using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -108,11 +107,6 @@ namespace Luo_Painter.Controls
         public ExportDialog()
         {
             this.InitializeComponent();
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
     }

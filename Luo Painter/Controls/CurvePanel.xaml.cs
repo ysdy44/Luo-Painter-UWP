@@ -1,7 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
-using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -143,11 +142,6 @@ namespace Luo_Painter.Controls
                 this.ChangePolyline(this.BluePolyline, this.BlueSelector.Data);
                 this.Invalidate?.Invoke(this, null); // Delegate
             };
-        }
-
-        //@Strings
-        public void ConstructStrings(ResourceLoader resource)
-        {
         }
 
         private void Vertical(double width)
