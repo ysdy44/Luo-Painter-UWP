@@ -16,7 +16,7 @@ namespace Luo_Painter
         {
             if (type.HasPreview())
             {
-                this.TitleTextBlock.Text = type.ToString();
+                this.TitleTextBlock.Text = App.Resource.GetString(type.ToString());
                 VisualStateManager.GoToState(this, nameof(AppBarPreview), false);
             }
             else
@@ -46,6 +46,16 @@ namespace Luo_Painter
             }
 
             this.AppBarGrid.Visibility = this.SwitchPresenter.Content is null ? Visibility.Collapsed : Visibility.Visible;
+
+            switch (this.PaintScrollViewer.Visibility)
+            {
+                case Visibility.Visible:
+                    if (type.IsPaint()) break;
+                    this.PaintScrollViewer.Hide();
+                    break;
+                default:
+                    break;
+            }
         }
 
 
