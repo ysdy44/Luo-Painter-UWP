@@ -124,6 +124,7 @@
     <Compile Include="BrushEdgeHardness.cs" />
     <Compile Include="BrushExtensions.cs" />
     <Compile Include="IInkParameter.cs" />
+    <Compile Include="IInkSlider.cs" />
     <Compile Include="InkAttributes.cs" />
     <Compile Include="InkAttributes.Export.cs" />
     <Compile Include="InkPresenter.cs" />
