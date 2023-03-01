@@ -3,6 +3,8 @@
 
 
     <ResourceDictionary.MergedDictionaries>
+        <!--Expanders-->
+        <ResourceDictionary Source="ms-appx:///Luo Painter.Blends/TagTypeSegmented.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 

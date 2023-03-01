@@ -8,33 +8,29 @@ namespace Luo_Painter.Blends
     /// <summary>
     /// Segmented of <see cref="TagType"/>
     /// </summary>
-    public sealed partial class TagTypeSegmented : UserControl
+    public sealed class TagTypeSegmented : MenuFlyoutSeparator
     {
 
         //@Delegate
         public event EventHandler<TagType> TypeChanged;
 
-        //@Converter
-        private bool NoneConverter(TagType value) => value != TagType.None;
-        private bool RedConverter(TagType value) => value != TagType.Red;
-        private bool OrangeConverter(TagType value) => value != TagType.Orange;
-        private bool YellowConverter(TagType value) => value != TagType.Yellow;
-        private bool GreenConverter(TagType value) => value != TagType.Green;
-        private bool BlueConverter(TagType value) => value != TagType.Blue;
-        private bool PurpleConverter(TagType value) => value != TagType.Purple;
-
-        #region DependencyProperty
+        readonly Button[] Controls = new Button[7];
+        int Index;
 
         /// <summary> Gets or sets the tag type. </summary>
         public TagType Type
         {
-            get => (TagType)base.GetValue(TypeProperty);
-            set => base.SetValue(TypeProperty, value);
+            get => (TagType)this.Index;
+            set
+            {
+                this.Index = (int)value;
+                foreach (Button item in this.Controls)
+                {
+                    if (item is null) continue;
+                    item.IsEnabled = item.TabIndex != this.Index;
+                }
+            }
         }
-        /// <summary> Identifies the <see cref = "TagTypeSegmented.Type" /> dependency property. </summary>
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(TagType), typeof(TagTypeSegmented), new PropertyMetadata(TagType.None));
-
-        #endregion
 
         //@Construct
         /// <summary>
@@ -42,35 +38,54 @@ namespace Luo_Painter.Blends
         /// </summary>
         public TagTypeSegmented()
         {
-            this.InitializeComponent();
+            this.DefaultStyleKey = typeof(TagTypeSegmented);
             base.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                this.StackPanel.Width = e.NewSize.Width;
-                this.None.Width =
-                this.Red.Width =
-                this.Orange.Width =
-                this.Yellow.Width =
-                this.Green.Width =
-                this.Blue.Width =
-                this.Purple.Width =
-                e.NewSize.Width / 7;
+                foreach (Button item in this.Controls)
+                {
+                    if (item is null) continue;
+                    item.Width = e.NewSize.Width / 7;
+                }
             };
-
-            this.None.Click += (s, e) => this.OnTypeChanged(TagType.None);
-            this.Red.Click += (s, e) => this.OnTypeChanged(TagType.Red);
-            this.Orange.Click += (s, e) => this.OnTypeChanged(TagType.Orange);
-            this.Yellow.Click += (s, e) => this.OnTypeChanged(TagType.Yellow);
-            this.Green.Click += (s, e) => this.OnTypeChanged(TagType.Green);
-            this.Blue.Click += (s, e) => this.OnTypeChanged(TagType.Blue);
-            this.Purple.Click += (s, e) => this.OnTypeChanged(TagType.Purple);
         }
-        private void OnTypeChanged(TagType value)
+
+        /// <inheritdoc/>
+        protected override void OnApplyTemplate()
         {
-            this.Type = value;
-            this.TypeChanged?.Invoke(this, value); // Delegate
+            base.OnApplyTemplate();
+
+            foreach (TagType item in System.Enum.GetValues(typeof(TagType)))
+            {
+                int i = (int)item;
+
+                if (this.Controls[i] != null)
+                {
+                    this.Controls[i].TabIndex = 0;
+                    this.Controls[i].Click -= this.Click;
+                    this.Controls[i].Width = double.NaN;
+                    this.Controls[i].IsEnabled = true;
+                }
+                this.Controls[i] = base.GetTemplateChild(item.ToString()) as Button;
+                if (this.Controls[i] != null)
+                {
+                    this.Controls[i].TabIndex = i;
+                    this.Controls[i].Click += this.Click;
+                    this.Controls[i].Width = base.Width / 7;
+                    this.Controls[i].IsEnabled = this.Index != i;
+                }
+            }
+        }
+
+        private void Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button item)
+            {
+                this.Type = (TagType)item.TabIndex;
+                this.TypeChanged?.Invoke(this, this.Type); // Delegate
+            }
         }
     }
 }
