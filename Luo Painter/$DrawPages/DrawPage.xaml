@@ -21,7 +21,7 @@
 
     <FrameworkElement.Resources>
         <!--Transformer-->
-        <brushes:InkCanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
+        <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <!--Extension-->
         <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
@@ -1141,6 +1141,7 @@
                                         StepFrequency="1000" 
                                         FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Tag="{x:Bind SizeToStringConverter(InkSizeSlider.Value), Mode=OneWay}" 
+                                        IsEnabled="{x:Bind ReverseVisibilityToBooleanConverter(PaintScrollViewer.Visibility),Mode=OneWay}"
                                         Style="{StaticResource AppInkSliderStyle}"
                                         local:Res.UH="Paint_Size"
                                         >
@@ -1159,6 +1160,7 @@
                                         Grid.Column="2"
                                         FontSize="{x:Bind FontSizeConverter(InkSizeSlider.Value), Mode=OneWay}" 
                                         Tag="{x:Bind OpacityToStringConverter(InkOpacitySlider.Value), Mode=OneWay}" 
+                                        IsEnabled="{x:Bind ReverseVisibilityToBooleanConverter(PaintScrollViewer.Visibility),Mode=OneWay}"
                                         Style="{StaticResource AppInkSliderStyle}" 
                                         local:Res.UH="Paint_Opacity"
                                         >

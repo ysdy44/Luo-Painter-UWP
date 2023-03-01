@@ -5,7 +5,6 @@ using Luo_Painter.Elements;
 using Luo_Painter.Models;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
-using Luo_Painter.Models;
 using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using System;
@@ -53,6 +52,8 @@ namespace Luo_Painter
         //@Converter
         private bool ReverseBooleanConverter(bool value) => !value;
         private bool ReverseBooleanConverter(bool? value) => value == false;
+        private bool VisibilityToBooleanConverter(Visibility value) => value is Visibility.Visible;
+        private bool ReverseVisibilityToBooleanConverter(Visibility value) => value is Visibility.Collapsed;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
@@ -374,7 +375,7 @@ namespace Luo_Painter
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                double width = (int)e.NewSize.Width;
+                int width = (int)e.NewSize.Width;
                 if (width > 1200) this.Device = ContextAppBarDevice.Hub;
                 else if (width > 900) this.Device = ContextAppBarDevice.PC;
                 else if (width > 600) this.Device = ContextAppBarDevice.Pad;

@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Brushes;
+﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
 
 namespace Luo_Painter
@@ -15,7 +15,7 @@ namespace Luo_Painter
 
                 switch (device)
                 {
-                    case InkInputDevice.Pen:
+                    case InputDevice.Pen:
                         this.StartingPressure = this.Pressure = properties.Pressure;
                         break;
                     default:
@@ -41,7 +41,7 @@ namespace Luo_Painter
 
                 switch (device)
                 {
-                    case InkInputDevice.Pen:
+                    case InputDevice.Pen:
                         this.Pressure = properties.Pressure;
                         break;
                     default:
