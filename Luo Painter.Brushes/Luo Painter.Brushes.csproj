@@ -126,7 +126,6 @@
     <Compile Include="IInkParameter.cs" />
     <Compile Include="InkAttributes.cs" />
     <Compile Include="InkAttributes.Export.cs" />
-    <Compile Include="InkCanvasOperator.cs" />
     <Compile Include="InkPresenter.cs" />
     <Compile Include="InkPresenter.Draw.BrushEdgeHardness.cs" />
     <Compile Include="InkPresenter.Draw.cs" />
