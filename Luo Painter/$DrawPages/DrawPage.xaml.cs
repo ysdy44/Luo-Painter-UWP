@@ -36,7 +36,7 @@ namespace Luo_Painter
         Hub,
     }
 
-    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, ICommand
+    public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, IInkSlider, ICommand
     {
         //@Key
         private bool IsKeyDown(VirtualKey key) => Window.Current.CoreWindow.GetKeyState(key).HasFlag(CoreVirtualKeyStates.Down);
@@ -239,6 +239,7 @@ namespace Luo_Painter
         //@Task
         readonly object InkLocker = new object();
         //@Ink
+        public bool IsInkEnabled { get; set; } = true;
         CanvasRenderTarget InkRender { get; set; }
 
         SymmetryType SymmetryType;
