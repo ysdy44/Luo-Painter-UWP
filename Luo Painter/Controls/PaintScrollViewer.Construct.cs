@@ -5,9 +5,39 @@ namespace Luo_Painter.Controls
     public sealed partial class PaintScrollViewer
     {
 
+        public void ConstructInkSliderValue(InkPresenter presenter)
+        {
+            this.IsInkEnabled = false;
+            {
+                // 2.Value
+                this.SizeSlider.Value = presenter.Size;
+                this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
+            }
+            this.IsInkEnabled = true;
+        }
+
+        public void ConstructInkSlider(InkPresenter presenter)
+        {
+            this.IsInkEnabled = false;
+            {
+                // 1.Minimum
+                this.SizeSlider.Minimum = 1d;
+                //this.OpacitySlider.Minimum = 0d;
+
+                // 2.Value
+                this.SizeSlider.Value = presenter.Size;
+                this.OpacitySlider.Value = System.Math.Clamp(presenter.Opacity * 100d, 0d, 100d);
+
+                // 3.Maximum
+                this.SizeSlider.Maximum = 400d;
+                //this.OpacitySlider.Maximum = 100d;
+            }
+            this.IsInkEnabled = true;
+        }
+
         public void ConstructInk(InkPresenter presenter)
         {
-            this.InkIsEnabled = false;
+            this.IsInkEnabled = false;
             {
                 this.Type = presenter.Type;
 
@@ -103,7 +133,7 @@ namespace Luo_Painter.Controls
                 this.WetSlider.Maximum = 20d;
                 //this.PersistenceSlider.Maximum = 100d;
             }
-            this.InkIsEnabled = true;
+            this.IsInkEnabled = true;
         }
 
     }

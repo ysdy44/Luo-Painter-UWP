@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using Microsoft.Graphics.Canvas;
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -11,10 +12,12 @@ using Windows.UI.Xaml.Markup;
 namespace Luo_Painter.Controls
 {
     [ContentProperty(Name = nameof(Child))]
-    public sealed partial class PaintScrollViewer : UserControl, IInkParameter
+    public sealed partial class PaintScrollViewer : UserControl, IInkParameter, IInkSlider
     {
         //@Delegate
         public event RoutedEventHandler ScratchpadClick { remove => this.ScratchpadButton.Click -= value; add => this.ScratchpadButton.Click += value; }
+        public event EventHandler<object> Opened { remove => this.ShowStoryboard.Completed -= value; add => this.ShowStoryboard.Completed += value; }
+        public event EventHandler<object> Closed { remove => this.HideStoryboard.Completed -= value; add => this.HideStoryboard.Completed += value; }
 
         //@Converter
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
@@ -38,11 +41,12 @@ namespace Luo_Painter.Controls
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
         public object Child { get => this.ContentPresenter.Content; set => this.ContentPresenter.Content = value; }
+        public bool InkIsEnabled { get => this.IsInkEnabled; set => this.IsInkEnabled = value; }
+        public bool IsInkEnabled { get; set; } = true;
 
         readonly PressurePoints SizePressurePoints = new PressurePoints();
         readonly PressurePoints FlowPressurePoints = new PressurePoints();
 
-        bool InkIsEnabled = true;
         double StatringX;
 
         #region DependencyProperty
@@ -120,6 +124,8 @@ namespace Luo_Painter.Controls
 
                 this.DoubleAnimation.To = e.NewSize.Height;
             };
+
+            this.Opened += (s, e) => this.ConstructInkSliderValue(this.InkPresenter);
 
             this.Thumb.DragStarted += (s, e) => this.StatringX = this.TranslateTransform.Y;
             this.Thumb.DragDelta += (s, e) => this.TranslateTransform.Y = System.Math.Max(0, this.StatringX += e.VerticalChange);
