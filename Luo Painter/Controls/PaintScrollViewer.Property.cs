@@ -10,7 +10,7 @@ namespace Luo_Painter.Controls
         {
             this.TypeComboBox.SelectionChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
 
                 InkType type = this.Inks[this.TypeComboBox.SelectedIndex];
 
@@ -27,28 +27,28 @@ namespace Luo_Painter.Controls
 
             this.SizeSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double size = System.Math.Max(e.NewValue, 0);
                 this.InkPresenter.Size = (float)size;
                 this.TryInkAsync();
             };
             this.OpacitySlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double opacity = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.Opacity = (float)opacity;
                 this.InkType = this.InkPresenter.GetType();
             };
             this.SpacingSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double spacing = System.Math.Clamp(e.NewValue / 100, 0.1, 4);
                 this.InkPresenter.Spacing = (float)spacing;
                 this.TryInkAsync();
             };
             this.FlowSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.Flow = (float)flow;
                 this.InkType = this.InkPresenter.GetType();
@@ -57,7 +57,7 @@ namespace Luo_Painter.Controls
 
             this.MinSizeSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.MinSize = (float)flow;
                 this.InkType = this.InkPresenter.GetType();
@@ -65,7 +65,7 @@ namespace Luo_Painter.Controls
             };
             this.MinFlowSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double flow = System.Math.Clamp(e.NewValue / 100, 0, 1);
                 this.InkPresenter.MinFlow = (float)flow;
                 this.InkType = this.InkPresenter.GetType();
@@ -107,7 +107,7 @@ namespace Luo_Painter.Controls
 
             this.TipListBox.SelectionChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
 
                 switch (this.TipListBox.SelectedIndex)
                 {
@@ -139,7 +139,7 @@ namespace Luo_Painter.Controls
 
             this.HardnessListView.ItemClick += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 if (e.ClickedItem is BrushEdgeHardness item)
                 {
                     this.InkPresenter.Hardness = item;

@@ -48,14 +48,14 @@ namespace Luo_Painter.Controls
                 Vector4 segment = this.GetMix(mix, persistence);
                 this.SegmentStop.Color = Windows.UI.Color.FromArgb((byte)(segment.W * 255f), (byte)(segment.X * 255f), (byte)(segment.Y * 255f), (byte)(segment.Z * 255f));
 
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 this.InkPresenter.Mix = mix;
                 this.InkType = this.InkPresenter.GetType();
                 this.TryInkAsync();
             };
             this.WetSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 double wet = e.NewValue;
                 this.InkPresenter.Wet = (float)wet;
                 this.TryInkAsync();
@@ -68,7 +68,7 @@ namespace Luo_Painter.Controls
                 Vector4 segment = this.GetMix(mix, persistence);
                 this.SegmentStop.Color = Windows.UI.Color.FromArgb((byte)(segment.W * 255f), (byte)(segment.X * 255f), (byte)(segment.Y * 255f), (byte)(segment.Z * 255f));
 
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 this.InkPresenter.Persistence = persistence;
                 this.TryInkAsync();
             };

@@ -57,7 +57,7 @@ namespace Luo_Painter.Controls
 
             this.RotateButton.Toggled += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
 
                 bool rotate = this.RotateButton.IsOn;
                 this.InkPresenter.Rotate = rotate;
@@ -112,13 +112,13 @@ namespace Luo_Painter.Controls
 
             this.GrainScaleSlider.ValueChanged += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 this.InkPresenter.GrainScale = (float)e.NewValue / 100f;
             };
 
             this.BlendModeListView.ItemClick += (s, e) =>
             {
-                if (this.InkIsEnabled is false) return;
+                if (this.IsInkEnabled is false) return;
                 if (e.ClickedItem is BlendEffectMode item)
                 {
                     this.InkPresenter.BlendMode = item;
