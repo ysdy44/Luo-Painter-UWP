@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Elements;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Elements;
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
@@ -90,6 +91,24 @@ namespace Luo_Painter.Controls
                 this.GroupItem.GoToState(isEnabled);
                 this.UngroupItem.GoToState(isEnabled);
                 this.ReleaseItem.GoToState(isEnabled);
+
+                this.TagTypeSegmented.IsEnabled = isEnabled;
+
+                if (isEnabled && base.SelectedItem is ILayer layer)
+                {
+                    this.TagTypeSegmented.Type = layer.TagType;
+                }
+                else
+                {
+                    this.TagTypeSegmented.Type = TagType.None;
+                }
+            };
+            this.TagTypeSegmented.TypeChanged += (s, e) =>
+            {
+                foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+                {
+                    item.TagType = e;
+                }
             };
         }
 

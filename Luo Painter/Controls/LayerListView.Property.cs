@@ -116,8 +116,6 @@ namespace Luo_Painter.Controls
                             break;
                         }
                     }
-                    this.TagTypeSegmented.IsEnabled = true;
-                    this.TagTypeSegmented.Type = layer.TagType;
                 }
                 else
                 {
@@ -125,8 +123,6 @@ namespace Luo_Painter.Controls
                     this.OpacitySlider.IsEnabled = false;
                     this.BlendModeComboBox.IsEnabled = false;
                     this.BlendModeComboBox.SelectedIndex = -1;
-                    this.TagTypeSegmented.IsEnabled = false;
-                    this.TagTypeSegmented.Type = TagType.None;
                 }
                 this.IsPropertyEnabled = true;
 
@@ -186,15 +182,6 @@ namespace Luo_Painter.Controls
                 }
 
                 this.Invalidate(s, e); // Invalidate
-            };
-            this.TagTypeSegmented.TypeChanged += (s, e) =>
-            {
-                if (this.IsPropertyEnabled is false) return;
-
-                foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
-                {
-                    item.TagType = e;
-                }
             };
         }
 

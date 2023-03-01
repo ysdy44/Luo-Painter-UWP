@@ -8,11 +8,8 @@
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:blends="using:Luo_Painter.Blends"
     xmlns:local="using:Luo_Painter.Controls"
-    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:layers="using:Luo_Painter.Layers"
-    xmlns:options="using:Luo_Painter.Options"
-    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
     mc:Ignorable="d"
     d:DesignWidth="400" 
     d:DesignHeight="400"
@@ -240,13 +237,6 @@
 
                             </ComboBox>
 
-                            <!--TagType-->
-                            <TextBlock x:Name="TagTypeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
-                                       luo_painter:Res.UT="Layer_Property_TagType"/>
-                            <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
-                                <blends:TagTypeSegmented x:Name="TagTypeSegmented"/>
-                            </Border>
-
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
@@ -259,6 +249,15 @@
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
                         <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
                                              luo_painter:Res.OAK="LayerMenu"/>
+
+                        <!--TagType-->
+                        <blends:TagTypeSegmented 
+                            x:Name="TagTypeSegmented"
+                            Width="286"
+                            Height="40"
+                            luo_painter:Res.UTT="Layer_Property_TagType"
+                            />
+
                         <MenuFlyoutItem x:Name="CutLayerItem" luo_painter:Cmd.MFIWI="CutLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         <MenuFlyoutItem x:Name="CopyLayerItem" luo_painter:Cmd.MFIWI="CopyLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                         <MenuFlyoutItem x:Name="PasteLayerItem" luo_painter:Cmd.MFIWI="PasteLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
