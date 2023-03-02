@@ -74,8 +74,8 @@
   <data name='Cancel' xml:space='preserve'> <value>取消</value> </data>
   <data name='X' xml:space='preserve'> <value>X</value> </data>
   <data name='Y' xml:space='preserve'> <value>Y</value> </data>
-  <data name='Width' xml:space='preserve'> <value>宽</value> </data>
-  <data name='Height' xml:space='preserve'> <value>高</value> </data>
+  <data name='Width' xml:space='preserve'> <value>宽度</value> </data>
+  <data name='Height' xml:space='preserve'> <value>高度</value> </data>
   <!--Separator 1-->
   <data name='Home' xml:space='preserve'> <value>主页</value> </data>
   <data name='Close' xml:space='preserve'> <value>关闭</value> </data>
@@ -104,7 +104,7 @@
   <data name='OtherMenu' xml:space='preserve'> <value>其他</value> </data>
   <data name='PaintMenu' xml:space='preserve'> <value>绘画</value> </data>
   <data name='BrushMenu' xml:space='preserve'> <value>笔刷</value> </data>
-  <data name='SizeMenu' xml:space='preserve'> <value>尺寸</value> </data>
+  <data name='SizeMenu' xml:space='preserve'> <value>大小</value> </data>
   <data name='EffectMenu' xml:space='preserve'> <value>特效</value> </data>
   <data name='HistoryMenu' xml:space='preserve'> <value>历史</value> </data>
   <data name='ToolMenu' xml:space='preserve'> <value>工具</value> </data>
@@ -379,7 +379,7 @@
   <data name='Layer_Property_TagType' xml:space='preserve'> <value>标签类型</value> </data>
   <data name='Paint_Scratchpad' xml:space='preserve'> <value>便笺</value> </data>
   <data name='Paint_Property' xml:space='preserve'> <value>属性</value> </data>
-  <data name='Paint_Property_Size' xml:space='preserve'> <value>尺寸</value> </data>
+  <data name='Paint_Property_Size' xml:space='preserve'> <value>大小</value> </data>
   <data name='Paint_Property_Opacity' xml:space='preserve'> <value>不透明度</value> </data>
   <data name='Paint_Property_Spacing' xml:space='preserve'> <value>间距</value> </data>
   <data name='Paint_Property_Flow' xml:space='preserve'> <value>流量</value> </data>
@@ -444,24 +444,24 @@
   <data name='Main_Type' xml:space='preserve'> <value>类型</value> </data>
   <data name='Main_Date' xml:space='preserve'> <value>创建日期</value> </data>
   <data name='Main_Name' xml:space='preserve'> <value>名字</value> </data>
-  <!--Separator 14-->
   <data name='Theme' xml:space='preserve'> <value>主题</value> </data>
   <data name='Theme_Light' xml:space='preserve'> <value>浅色</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>深色</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>跟随系统</value> </data>
-  <!--Separator 15-->
   <data name='Language' xml:space='preserve'> <value>语言</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>重启应用以查看更改。</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>使用系统设置</value> </data>
-  <!--Separator 16-->
+  <data name='LocalFolder' xml:space='preserve'> <value>本地文件夹</value> </data>
+  <data name='LocalFolder_Open' xml:space='preserve'> <value>打开</value> </data>
+  <!--Separator 14-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>弧度</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>吸附</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>等比</value> </data>
-  <data name='Transform_Center' xml:space='preserve'> <value>居中</value> </data>
+  <data name='Transform_Center' xml:space='preserve'> <value>中心</value> </data>
   <data name='Transform_X' xml:space='preserve'> <value>X</value> </data>
   <data name='Transform_Y' xml:space='preserve'> <value>Y</value> </data>
-  <data name='Transform_W' xml:space='preserve'> <value>W</value> </data>
-  <data name='Transform_H' xml:space='preserve'> <value>H</value> </data>
+  <data name='Transform_W' xml:space='preserve'> <value>宽度</value> </data>
+  <data name='Transform_H' xml:space='preserve'> <value>高度</value> </data>
   <data name='DisplacementLiquefaction_Tool' xml:space='preserve'> <value>工具</value> </data>
   <data name='DisplacementLiquefaction_Push' xml:space='preserve'> <value>推</value> </data>
   <data name='DisplacementLiquefaction_Pinch' xml:space='preserve'> <value>捏</value> </data>
@@ -469,7 +469,7 @@
   <data name='DisplacementLiquefaction_TwirlLeft' xml:space='preserve'> <value>左旋</value> </data>
   <data name='DisplacementLiquefaction_TwirlRight' xml:space='preserve'> <value>右旋</value> </data>
   <data name='DisplacementLiquefaction_Reset' xml:space='preserve'> <value>恢复</value> </data>
-  <data name='DisplacementLiquefaction_Size' xml:space='preserve'> <value>尺寸</value> </data>
+  <data name='DisplacementLiquefaction_Size' xml:space='preserve'> <value>大小</value> </data>
   <data name='DisplacementLiquefaction_Pressure' xml:space='preserve'> <value>压力</value> </data>
   <data name='GradientMapping_DropRemove' xml:space='preserve'> <value>拖放以删除</value> </data>
   <data name='RippleEffect_Frequency' xml:space='preserve'> <value>频率</value> </data>
@@ -492,7 +492,7 @@
   <data name='GammaTransfer_Blue' xml:space='preserve'> <value>蓝</value> </data>
   <data name='GammaTransfer_Amplitude' xml:space='preserve'> <value>波幅</value> </data>
   <data name='GammaTransfer_Exponent' xml:space='preserve'> <value>指数</value> </data>
-  <data name='GammaTransfer_Offset' xml:space='preserve'> <value>卫衣</value> </data>
+  <data name='GammaTransfer_Offset' xml:space='preserve'> <value>位移</value> </data>
   <data name='Vignette_Amount' xml:space='preserve'> <value>量</value> </data>
   <data name='GaussianBlur_BlurAmount' xml:space='preserve'> <value>模糊量</value> </data>
   <data name='DirectionalBlur_BlurAmount' xml:space='preserve'> <value>模糊量</value> </data>
@@ -505,7 +505,7 @@
   <data name='EdgeDetection_Amount' xml:space='preserve'> <value>量</value> </data>
   <data name='EdgeDetection_BlurAmount' xml:space='preserve'> <value>模糊量</value> </data>
   <data name='EdgeDetection_OverlayEdges' xml:space='preserve'> <value>覆盖边缘</value> </data>
-  <data name='Morphology_Size' xml:space='preserve'> <value>尺寸</value> </data>
+  <data name='Morphology_Size' xml:space='preserve'> <value>大小</value> </data>
   <data name='Emboss_Amount' xml:space='preserve'> <value>量</value> </data>
   <data name='Emboss_Angle' xml:space='preserve'> <value>角度</value> </data>
   <data name='Straighten_Angle' xml:space='preserve'> <value>角度</value> </data>
@@ -525,7 +525,7 @@
   <data name='Colouring_Angle' xml:space='preserve'> <value>角度</value> </data>
   <data name='Lighting_Distance' xml:space='preserve'> <value>距离</value> </data>
   <data name='Lighting_Angle' xml:space='preserve'> <value>角度</value> </data>
-  <data name='Lighting_Ambient' xml:space='preserve'> <value>环境</value> </data>
+  <data name='Lighting_Ambient' xml:space='preserve'> <value>氛围</value> </data>
   <data name='Fog_ScaleFactor' xml:space='preserve'> <value>缩放比</value> </data>
   <data name='Fog_Amount' xml:space='preserve'> <value>量</value> </data>
   <data name='Glass_ScaleFactor' xml:space='preserve'> <value>缩放比</value> </data>
@@ -533,8 +533,8 @@
   <data name='SelectionFlood_Tolerance' xml:space='preserve'> <value>容差</value> </data>
   <data name='SelectionFlood_Contiguous' xml:space='preserve'> <value>连续</value> </data>
   <data name='SelectionFlood_Feather' xml:space='preserve'> <value>羽化</value> </data>
-  <data name='SelectionBrush_Size' xml:space='preserve'> <value>尺寸</value> </data>
-  <data name='Paint_Size' xml:space='preserve'> <value>尺寸</value> </data>
+  <data name='SelectionBrush_Size' xml:space='preserve'> <value>大小</value> </data>
+  <data name='Paint_Size' xml:space='preserve'> <value>大小</value> </data>
   <data name='Paint_Opacity' xml:space='preserve'> <value>不透明度</value> </data>
   <data name='PaintBrushMulti_Sectors' xml:space='preserve'> <value>扇区 </value> </data>
   <data name='View_Radian' xml:space='preserve'> <value>弧度</value> </data>
