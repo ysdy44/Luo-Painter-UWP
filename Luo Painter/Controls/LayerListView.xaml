@@ -166,10 +166,10 @@
                     <KeyboardAccelerator Key="F3"/>
                 </UIElement.KeyboardAccelerators>
                 <Button.Flyout>
-                    <Flyout x:Name="Flyout" Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                    <Flyout x:Name="Flyout" Placement="RightEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
                         <StackPanel Spacing="2" Padding="6,4" Width="318">
 
-                            <TextBlock                                
+                            <TextBlock                    
                                 Margin="10,4,10,10" 
                                 IsTextSelectionEnabled="True"
                                 FontWeight="Medium" 
@@ -242,14 +242,14 @@
                                     luo_painter:Res.OTT="Remove">
                                 <SymbolIcon Symbol="Delete"/>
                             </Button>
-                            
+
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
-                <FontIcon Glyph="&#xE946;" FontFamily="Segoe MDL2 Assets"/>
+                <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
             </Button>
 
-            <Button Grid.Column="2" Width="70" Height="40" CornerRadius="4" BorderThickness="1"
+            <Button Grid.Column="2" Width="44" Height="40" CornerRadius="4" BorderThickness="1"
                     luo_painter:Res.OTT="LayerMenu">
                 <Button.Flyout>
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
@@ -320,7 +320,7 @@
                         -->
                     </MenuFlyout>
                 </Button.Flyout>
-                <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
+                <SymbolIcon Symbol="More"/>
             </Button>
 
         </Grid>
