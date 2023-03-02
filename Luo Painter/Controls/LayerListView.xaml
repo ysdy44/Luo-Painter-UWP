@@ -237,6 +237,12 @@
 
                             </ComboBox>
 
+                            <Button x:Name="RemoveButton" Width="70" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                                    luo_painter:Cmd.BB="Remove" Command="{x:Bind Command}"
+                                    luo_painter:Res.OTT="Remove">
+                                <SymbolIcon Symbol="Delete"/>
+                            </Button>
+                            
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>

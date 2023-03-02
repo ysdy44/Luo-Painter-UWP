@@ -104,6 +104,7 @@ namespace Luo_Painter.Controls
                 this.IsPropertyEnabled = false;
                 if (base.SelectedItem is ILayer layer)
                 {
+                    this.RemoveButton.IsEnabled = true;
                     this.OpacitySlider.IsEnabled = true;
                     this.OpacitySlider.Value = layer.Opacity * 100;
                     this.BlendModeComboBox.IsEnabled = true;
@@ -119,6 +120,7 @@ namespace Luo_Painter.Controls
                 }
                 else
                 {
+                    this.RemoveButton.IsEnabled = false;
                     this.OpacitySlider.Value = 100;
                     this.OpacitySlider.IsEnabled = false;
                     this.BlendModeComboBox.IsEnabled = false;
