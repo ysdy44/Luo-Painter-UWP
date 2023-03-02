@@ -120,9 +120,12 @@ namespace Luo_Painter.Controls
                 Res.SetUT(this.TB4, UIType.Language);
                 Res.SetUT(this.TB5, UIType.Language_Tip);
                 Res.SetUT(this.TB6, UIType.Language_UseSystemSetting);
+
+                Res.SetUT(this.TB7, UIType.LocalFolder);
+                Res.SetUT(this.TB8, UIType.LocalFolder_Open);
             };
             this.LanguageTipButton.Click += async (s, e) => await Windows.ApplicationModel.Core.CoreApplication.RequestRestartAsync(string.Empty);
-            //this.LocalFolderButton.Click += async (s, e) => await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
+            this.LocalFolderButton.Click += async (s, e) => await Windows.System.Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
         }
     }
 }

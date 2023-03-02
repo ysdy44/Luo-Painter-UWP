@@ -76,5 +76,15 @@
             <TextBlock x:Name="TB5" luo_painter:Res.UT="Language_Tip"/>
         </HyperlinkButton>
 
+        <!--LocalFolder-->
+        <TextBlock x:Name="TB7" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   luo_painter:Res.UT="LocalFolder"/>
+        <Button x:Name="LocalFolderButton" Padding="12,2" Margin="0,6" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
+            <StackPanel Spacing="8" Orientation="Horizontal">
+                <SymbolIcon Symbol="NewWindow"/>
+                <TextBlock x:Name="TB8" VerticalAlignment="Center" luo_painter:Res.UT="LocalFolder_Open"/>
+            </StackPanel>
+        </Button>
+        
     </StackPanel>
 </ContentDialog>
