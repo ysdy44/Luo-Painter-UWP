@@ -226,7 +226,6 @@ namespace Luo_Painter.HSVColorPickers
                     default:
                         break;
                 }
-
             };
 
             base.ManipulationMode = ManipulationModes.TranslateX;
@@ -318,7 +317,7 @@ namespace Luo_Painter.HSVColorPickers
             this.SelectedIndex = base.Count - 1;
             return true;
         }
-        public void Reset(IDictionary<double, Color> stops)
+        public void Reset(IEnumerable<KeyValuePair<double, Color>> stops)
         {
             this.Stops.Clear();
             this.StopsUI.Clear();
