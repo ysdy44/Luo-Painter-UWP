@@ -133,7 +133,7 @@ namespace Luo_Painter
                 int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
                         this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                        new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
+                        new SetupHistory(width, height,w, h)
                 }));
             }
             else
@@ -152,7 +152,7 @@ namespace Luo_Painter
                 int removes = this.History.Push(new CompositeHistory(new IHistory[]
                 {
                         this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
-                        new SetupHistory(new System.Drawing.Size(width, height), new System.Drawing.Size(w, h))
+                        new SetupHistory(width, height, w, h)
                 }));
 
                 this.Transformer.Radian = 0f;

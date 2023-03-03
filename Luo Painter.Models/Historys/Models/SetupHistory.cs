@@ -8,10 +8,11 @@
 
         public readonly System.Drawing.Size UndoParameter;
         public readonly System.Drawing.Size RedoParameter;
-        public SetupHistory(System.Drawing.Size undoParameter, System.Drawing.Size redoParameter)
+
+        public SetupHistory(int undoWidth, int undoHeight, int redoWidth, int redoHeight)
         {
-            this.UndoParameter = undoParameter;
-            this.RedoParameter = redoParameter;
+            this.UndoParameter = new System.Drawing.Size(undoWidth, undoHeight);
+            this.RedoParameter = new System.Drawing.Size(redoWidth, redoHeight);
         }
 
         public void Dispose()
