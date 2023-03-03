@@ -23,7 +23,7 @@ namespace Luo_Painter.Layers
 
         XElement Save();
 
-        bool History(HistoryType type, object parameter);
+        bool History(HistoryPropertyMode type, object parameter);
 
         bool FillContainsPoint(Vector2 point);
     }

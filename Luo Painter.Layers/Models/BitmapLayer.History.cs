@@ -31,30 +31,30 @@ namespace Luo_Painter.Layers.Models
                 redoParameter[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
             }
 
-            return new PropertyHistory(HistoryType.Bitmap, base.Id, undoParameter, redoParameter);
+            return new PropertyHistory(HistoryPropertyMode.Bitmap, base.Id, undoParameter, redoParameter);
         }
         public IHistory GetBitmapClearHistory(Color color) => new PropertyHistory
         (
-            HistoryType.BitmapClear,
+            HistoryPropertyMode.BitmapClear,
             base.Id,
             this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
             color
         );
         public IHistory GetBitmapResetHistory() => new PropertyHistory
         (
-            HistoryType.BitmapReset,
+            HistoryPropertyMode.BitmapReset,
             base.Id,
             this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
             this.SourceRenderTarget.GetPixelBytes().AsBuffer()
         );
 
-        public override bool History(HistoryType type, object parameter)
+        public override bool History(HistoryPropertyMode type, object parameter)
         {
             if (base.History(type, parameter)) return true;
 
             switch (type)
             {
-                case HistoryType.Bitmap:
+                case HistoryPropertyMode.Bitmap:
                     if (parameter is IDictionary<int, IBuffer> bitmap)
                     {
                         this.SetPixelBytes(bitmap);
@@ -63,7 +63,7 @@ namespace Luo_Painter.Layers.Models
                         return true;
                     }
                     else return false;
-                case HistoryType.BitmapClear:
+                case HistoryPropertyMode.BitmapClear:
                     if (parameter is IBuffer bitmapClear)
                     {
                         this.OriginRenderTarget.SetPixelBytes(bitmapClear);
@@ -79,7 +79,7 @@ namespace Luo_Painter.Layers.Models
                         return true;
                     }
                     else return false;
-                case HistoryType.BitmapReset:
+                case HistoryPropertyMode.BitmapReset:
                     if (parameter is IBuffer bitmapReset)
                     {
                         this.OriginRenderTarget.SetPixelBytes(bitmapReset);

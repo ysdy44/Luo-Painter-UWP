@@ -70,7 +70,7 @@ namespace Luo_Painter.Controls
                             float redo = this.OpacityValue;
 
                             // History
-                            this.History(this, new PropertyHistory(HistoryType.Opacity, layer.Id, layer.StartingOpacity, redo));
+                            this.History(this, new PropertyHistory(HistoryPropertyMode.Opacity, layer.Id, layer.StartingOpacity, redo));
                         }
                         break;
                     default:
@@ -89,7 +89,7 @@ namespace Luo_Painter.Controls
                             BlendEffectMode? redo = this.BlendModeValue;
 
                             // History
-                            this.History(this, new PropertyHistory(HistoryType.BlendMode, layer.Id, layer.StartingBlendMode, redo));
+                            this.History(this, new PropertyHistory(HistoryPropertyMode.BlendMode, layer.Id, layer.StartingBlendMode, redo));
                         }
                         break;
                     default:
@@ -195,7 +195,7 @@ namespace Luo_Painter.Controls
             {
                 if (item.StartingOpacity == redo) continue;
 
-                yield return new PropertyHistory(HistoryType.Opacity, item.Id, item.StartingOpacity, redo);
+                yield return new PropertyHistory(HistoryPropertyMode.Opacity, item.Id, item.StartingOpacity, redo);
             }
         }
         private IEnumerable<IHistory> GetBlendModeHistory()
@@ -206,7 +206,7 @@ namespace Luo_Painter.Controls
             {
                 if (item.StartingBlendMode == redo) continue;
 
-                yield return new PropertyHistory(HistoryType.BlendMode, item.Id, item.StartingBlendMode, redo);
+                yield return new PropertyHistory(HistoryPropertyMode.BlendMode, item.Id, item.StartingBlendMode, redo);
             }
         }
 

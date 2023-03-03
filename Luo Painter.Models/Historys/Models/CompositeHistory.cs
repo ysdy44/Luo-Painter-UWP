@@ -3,7 +3,7 @@
     public class CompositeHistory : IHistory
     {
         public HistoryMode Mode => HistoryMode.Composite;
-        public HistoryType PropertyMode => HistoryType.None;
+        public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;
 
         public readonly IHistory[] Histories;
         public CompositeHistory(IHistory[] histories)

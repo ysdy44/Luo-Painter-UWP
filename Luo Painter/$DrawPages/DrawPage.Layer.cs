@@ -62,7 +62,7 @@ namespace Luo_Painter
                     layer.Visibility = redo;
 
                     // History
-                    int removes = this.History.Push(new PropertyHistory(HistoryType.Visibility, layer.Id, undo, redo));
+                    int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo));
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.RaiseHistoryCanExecuteChanged();
                     return;
@@ -73,7 +73,7 @@ namespace Luo_Painter
                     layer.Visibility = redo;
 
                     // History
-                    int removes = this.History.Push(new PropertyHistory(HistoryType.Visibility, layer.Id, undo, redo));
+                    int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo));
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.RaiseHistoryCanExecuteChanged();
                     return;
@@ -112,7 +112,7 @@ namespace Luo_Painter
                 Visibility undo = layer2.Visibility;
                 layer2.Visibility = redo;
 
-                yield return new PropertyHistory(HistoryType.Visibility, layer2.Id, undo, redo);
+                yield return new PropertyHistory(HistoryPropertyMode.Visibility, layer2.Id, undo, redo);
             }
         }
 

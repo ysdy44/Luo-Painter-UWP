@@ -8,25 +8,25 @@ namespace Luo_Painter.Layers
     public abstract partial class LayerBase
     {
 
-        public virtual bool History(HistoryType type, object parameter)
+        public virtual bool History(HistoryPropertyMode type, object parameter)
         {
             switch (type)
             {
-                case HistoryType.Name:
+                case HistoryPropertyMode.Name:
                     if (parameter is string name)
                     {
                         this.Name = name;
                         return true;
                     }
                     else return false;
-                case HistoryType.Opacity:
+                case HistoryPropertyMode.Opacity:
                     if (parameter is float opacity)
                     {
                         this.Opacity = opacity;
                         return true;
                     }
                     else return false;
-                case HistoryType.BlendMode:
+                case HistoryPropertyMode.BlendMode:
                     if (parameter is BlendEffectMode blendMode)
                     {
                         this.BlendMode = blendMode;
@@ -37,7 +37,7 @@ namespace Luo_Painter.Layers
                         this.BlendMode = BlendExtensions.None;
                         return true;
                     }
-                case HistoryType.Visibility:
+                case HistoryPropertyMode.Visibility:
                     if (parameter is Visibility visibility)
                     {
                         this.Visibility = visibility;
