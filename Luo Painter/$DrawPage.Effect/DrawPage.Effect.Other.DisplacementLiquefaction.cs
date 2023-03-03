@@ -1,20 +1,17 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
-using Microsoft.Graphics.Canvas;
+using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
 
-        double DisplacementLiquefactionSize => (float)this.DisplacementLiquefactionSizeSlider.Value;
-        double DisplacementLiquefactionPressure => (float)this.DisplacementLiquefactionPressureSlider.Value;
+        float DisplacementLiquefactionSize => (float)this.DisplacementLiquefactionSizeSlider.Value;
+        float DisplacementLiquefactionPressure => (float)this.DisplacementLiquefactionPressureSlider.Value;
 
         int DisplacementLiquefactionMode => this.DisplacementLiquefactionModeComboBox.SelectedIndex;
 
@@ -33,27 +30,23 @@ namespace Luo_Painter
             this.Displacement.RenderThumbnail();
         }
 
-        private void DrawDisplacementLiquefaction(CanvasDrawingSession ds)
-        {
-        }
-
         private void DisplacementLiquefaction_Delta()
         {
             if (this.StartingPosition == this.Position) return;
 
-            float radius = (float)this.DisplacementLiquefactionSize;
-            float pressure = (float)this.DisplacementLiquefactionPressure / 100;
+            float radius = this.DisplacementLiquefactionSize;
+            float pressure = this.DisplacementLiquefactionPressure / 100;
 
             this.Displacement.Shade(new PixelShaderEffect(this.DisplacementLiquefactionShaderCodeBytes)
             {
-                Source1BorderMode = EffectBorderMode.Hard,
+                Source1BorderMode = EffectBorderMode.Soft,
                 Source1 = this.Displacement[BitmapType.Source],
                 Properties =
                 {
-                    /// <see cref="DisplacementLiquefactionMode"/> to <see cref="System.Int32"/>
+                    /// <see cref="Shaders.DisplacementLiquefactionMode"/> to <see cref="System.Int32"/>
                     ["mode"] =1+this.DisplacementLiquefactionMode,
                     ["amount"] = this.DisplacementLiquefactionAmount,
-                    ["pressure"] = pressure,
+                    ["pressure"] = pressure, //
                     ["radius"] = radius,
                     ["position"] = this.StartingPosition,
                     ["targetPosition"] = this.Position,
@@ -65,6 +58,7 @@ namespace Luo_Painter
 
             if (region.HasValue)
                 this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
         }
 
         private void DisplacementLiquefaction_Complete()

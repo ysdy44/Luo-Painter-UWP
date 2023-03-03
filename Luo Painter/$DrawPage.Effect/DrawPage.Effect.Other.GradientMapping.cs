@@ -9,7 +9,7 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
-        readonly IDictionary<double, Color> Stops = new Dictionary<double, Color>
+        readonly IReadOnlyDictionary<double, Color> Stops = new Dictionary<double, Color>
         {
             [0] = Colors.LightBlue,
             [0.3333] = Colors.LightSteelBlue,

@@ -1,10 +1,5 @@
 ﻿using Luo_Painter.Blends;
-using Luo_Painter.HSVColorPickers;
-using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas.Effects;
-using System.Numerics;
-using Windows.UI;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {

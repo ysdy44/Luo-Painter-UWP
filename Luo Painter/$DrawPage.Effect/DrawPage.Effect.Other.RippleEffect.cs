@@ -1,14 +1,9 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Blends;
-using Luo_Painter.Brushes;
-using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
 using Luo_Painter.Shaders;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Numerics;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {

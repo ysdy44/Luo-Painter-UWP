@@ -1,9 +1,7 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using System.Numerics;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {

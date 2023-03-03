@@ -8,7 +8,6 @@ using System;
 using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter

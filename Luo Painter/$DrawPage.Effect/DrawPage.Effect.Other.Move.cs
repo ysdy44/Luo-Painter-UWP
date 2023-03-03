@@ -1,7 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Layers;
-using System.Numerics;
-using Windows.UI.Xaml.Controls;
+﻿using System.Numerics;
 
 namespace Luo_Painter
 {
