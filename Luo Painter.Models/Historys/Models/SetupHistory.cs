@@ -3,7 +3,7 @@
     public class SetupHistory : IHistory
     {
         public HistoryMode Mode => HistoryMode.Setup;
-        public HistoryType Type => HistoryType.None;
+        public HistoryType PropertyMode => HistoryType.None;
         public HistoryType PropertyType => HistoryType.None;
 
         public readonly System.Drawing.Size UndoParameter;

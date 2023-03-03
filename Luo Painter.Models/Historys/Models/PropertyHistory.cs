@@ -3,7 +3,7 @@
     public class PropertyHistory : IHistory
     {
         public HistoryMode Mode => HistoryMode.Property;
-        public HistoryType Type => this.type;
+        public HistoryType PropertyMode => this.type;
 
         public string Id => this.id;
         public object UndoParameter => this.undoParameter;

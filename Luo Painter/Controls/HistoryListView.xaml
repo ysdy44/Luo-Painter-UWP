@@ -48,7 +48,7 @@
                 </SwipeControl.RightItems>
                 <TextBlock VerticalAlignment="Center">
                     <Run Text="{x:Bind Mode}"/>
-                    <Run Text="{x:Bind Type}"/>
+                    <Run Text="{x:Bind PropertyMode}"/>
                 </TextBlock>
             </SwipeControl>
         </DataTemplate>

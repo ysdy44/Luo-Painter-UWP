@@ -162,7 +162,7 @@ namespace Luo_Painter.TestApp
                 case HistoryMode.Property:
                     if (history is PropertyHistory propertyHistory)
                     {
-                        return this.BitmapLayer.History(propertyHistory.Type, propertyHistory.UndoParameter);
+                        return this.BitmapLayer.History(propertyHistory.PropertyMode, propertyHistory.UndoParameter);
                     }
                     else return false;
                 default:
@@ -176,7 +176,7 @@ namespace Luo_Painter.TestApp
                 case HistoryMode.Property:
                     if (history is PropertyHistory propertyHistory)
                     {
-                        return this.BitmapLayer.History(propertyHistory.Type, propertyHistory.RedoParameter);
+                        return this.BitmapLayer.History(propertyHistory.PropertyMode, propertyHistory.RedoParameter);
                     }
                     else return false;
                 default:

@@ -56,9 +56,9 @@ namespace Luo_Painter
                     if (history is PropertyHistory propertyHistory)
                     {
                         if (this.Marquee.Id == propertyHistory.Id)
-                            return this.Marquee.History(propertyHistory.Type, propertyHistory.UndoParameter);
+                            return this.Marquee.History(propertyHistory.PropertyMode, propertyHistory.UndoParameter);
                         else if (LayerDictionary.Instance.ContainsKey(propertyHistory.Id))
-                            return LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.UndoParameter);
+                            return LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.PropertyMode, propertyHistory.UndoParameter);
                     }
                     return false;
                 default:
@@ -113,9 +113,9 @@ namespace Luo_Painter
                     if (history is PropertyHistory propertyHistory)
                     {
                         if (this.Marquee.Id == propertyHistory.Id)
-                            return this.Marquee.History(propertyHistory.Type, propertyHistory.RedoParameter);
+                            return this.Marquee.History(propertyHistory.PropertyMode, propertyHistory.RedoParameter);
                         else if (LayerDictionary.Instance.ContainsKey(propertyHistory.Id))
-                            return LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.Type, propertyHistory.RedoParameter);
+                            return LayerDictionary.Instance[propertyHistory.Id].History(propertyHistory.PropertyMode, propertyHistory.RedoParameter);
                     }
                     return false;
                 default:

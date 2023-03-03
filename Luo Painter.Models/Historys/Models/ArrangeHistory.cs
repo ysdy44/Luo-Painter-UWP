@@ -3,7 +3,7 @@
     public class ArrangeHistory : IHistory
     {
         public HistoryMode Mode => HistoryMode.Arrange;
-        public HistoryType Type => HistoryType.None;
+        public HistoryType PropertyMode => HistoryType.None;
 
         public Layerage[] UndoParameter { get; }
         public Layerage[] RedoParameter { get; }
