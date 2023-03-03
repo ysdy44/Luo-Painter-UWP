@@ -31,16 +31,16 @@ namespace Luo_Painter.Layers.Models
                 redoParameter[i] = this.SourceRenderTarget.GetPixelBytes(left, top, width, height).AsBuffer();
             }
 
-            return new PropertyHistory<IDictionary<int, IBuffer>>(HistoryType.Bitmap, base.Id, undoParameter, redoParameter);
+            return new PropertyHistory(HistoryType.Bitmap, base.Id, undoParameter, redoParameter);
         }
-        public IHistory GetBitmapClearHistory(Color color) => new PropertyHistory<IBuffer, Color>
+        public IHistory GetBitmapClearHistory(Color color) => new PropertyHistory
         (
             HistoryType.BitmapClear,
             base.Id,
             this.OriginRenderTarget.GetPixelBytes().AsBuffer(),
             color
         );
-        public IHistory GetBitmapResetHistory() => new PropertyHistory<IBuffer>
+        public IHistory GetBitmapResetHistory() => new PropertyHistory
         (
             HistoryType.BitmapReset,
             base.Id,

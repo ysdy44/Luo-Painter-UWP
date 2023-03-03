@@ -53,7 +53,7 @@ namespace Luo_Painter
                     }
                     return false;
                 case HistoryMode.Property:
-                    if (history is IPropertyHistory propertyHistory)
+                    if (history is PropertyHistory propertyHistory)
                     {
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.UndoParameter);
@@ -110,7 +110,7 @@ namespace Luo_Painter
                     }
                     return false;
                 case HistoryMode.Property:
-                    if (history is IPropertyHistory propertyHistory)
+                    if (history is PropertyHistory propertyHistory)
                     {
                         if (this.Marquee.Id == propertyHistory.Id)
                             return this.Marquee.History(propertyHistory.Type, propertyHistory.RedoParameter);

@@ -1,18 +1,6 @@
 ﻿namespace Luo_Painter.Models.Historys
 {
-    public interface IPropertyHistory : IHistory
-    {
-        string Id { get; }
-        object UndoParameter { get; }
-        object RedoParameter { get; }
-    }
-
-    public class PropertyHistory<T> : PropertyHistory<T, T>
-    {
-        public PropertyHistory(HistoryType type, string id, T undoParameter, T redoParameter) : base(type, id, undoParameter, redoParameter) { }
-    }
-
-    public class PropertyHistory<TUndo, TRedo> : IPropertyHistory
+    public class PropertyHistory : IHistory
     {
         public HistoryMode Mode => HistoryMode.Property;
         public HistoryType Type => this.type;
@@ -23,10 +11,10 @@
 
         readonly HistoryType type;
         readonly string id;
-        readonly TUndo undoParameter;
-        readonly TRedo redoParameter;
+        readonly object undoParameter;
+        readonly object redoParameter;
 
-        public PropertyHistory(HistoryType type, string id, TUndo undoParameter, TRedo redoParameter)
+        public PropertyHistory(HistoryType type, string id, object undoParameter, object redoParameter)
         {
             this.type = type;
             this.id = id;
