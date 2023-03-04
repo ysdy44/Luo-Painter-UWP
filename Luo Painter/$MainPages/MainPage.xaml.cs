@@ -44,7 +44,10 @@ namespace Luo_Painter
         private string DeleteProject => App.Resource.GetString(UIType.DeleteProject.ToString());
         private string MoveProject => App.Resource.GetString(UIType.MoveProject.ToString());
         private string LocalFolder => App.Resource.GetString(UIType.LocalFolder.ToString());
-        
+
+        private string Untitled => App.Resource.GetString(UIType.Untitled.ToString());
+        private string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
+
         //@Converter
         private ListViewSelectionMode BooleanToSelectionModeConverter(bool value) => value ? ListViewSelectionMode.None : ListViewSelectionMode.Multiple;
         private ListViewReorderMode BooleanToReorderModeConverter(bool value) => value ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
@@ -225,14 +228,6 @@ namespace Luo_Painter
         {
             if (this.Paths.Count is 0)
             {
-                this.TitleTextBlock.Visibility = Visibility.Visible;
-                this.DocumentationButton.Visibility = Visibility.Visible;
-                this.SettingButton.Visibility = Visibility.Visible;
-
-                this.PathListView.Visibility = Visibility.Collapsed;
-                this.HomeButton.Visibility = Visibility.Collapsed;
-                this.BackButton.Visibility = Visibility.Collapsed;
-
                 if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
                 {
                     manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
@@ -240,14 +235,6 @@ namespace Luo_Painter
             }
             else
             {
-                this.TitleTextBlock.Visibility = Visibility.Collapsed;
-                this.DocumentationButton.Visibility = Visibility.Collapsed;
-                this.SettingButton.Visibility = Visibility.Collapsed;
-
-                this.PathListView.Visibility = Visibility.Visible;
-                this.HomeButton.Visibility = Visibility.Visible;
-                this.BackButton.Visibility = Visibility.Visible;
-
                 if (SystemNavigationManager.GetForCurrentView() is SystemNavigationManager manager)
                 {
                     manager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
