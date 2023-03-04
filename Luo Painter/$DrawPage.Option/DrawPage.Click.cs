@@ -20,6 +20,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -508,6 +509,16 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.HistogramMenu:
+                    if (CanvasImage.IsHistogramSupported(this.CanvasDevice) is false)
+                    {
+                        await new MessageDialog
+                        (
+                            App.Resource.GetString($"SubTip_{TipType.NoCompatible}"),
+                            App.Resource.GetString($"Tip_{TipType.NoCompatible}")
+                        ).ShowAsync();
+                        break;
+                    }
+
                     this.Histogram();
                     this.HistogramCanvasControl.Invalidate();
                     await this.HistogramDialog.ShowInstance();

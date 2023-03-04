@@ -35,7 +35,7 @@ namespace Luo_Painter
                             ProjectParameter parameter = await project.LoadAsync();
                             if (parameter is null)
                             {
-                                await new MessageDialog("Folder not found.").ShowAsync();
+                                await new MessageDialog(project.Path, App.Resource.GetString($"Tip_{TipType.NoFile}")).ShowAsync();
                                 break;
                             }
 
