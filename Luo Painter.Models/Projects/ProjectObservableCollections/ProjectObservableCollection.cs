@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Models.Projects;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Search;
@@ -84,6 +85,19 @@ namespace Luo_Painter.Models
             }
 
             return true;
+        }
+        public string Rename(string name)
+        {
+            int index = 1;
+            string rename = name;
+
+            while (this.Any(c => c.Name == rename))
+            {
+                index++;
+                rename = $"{name} {index}";
+            }
+
+            return rename;
         }
 
     }

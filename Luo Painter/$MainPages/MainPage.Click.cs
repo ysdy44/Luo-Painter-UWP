@@ -98,8 +98,28 @@ namespace Luo_Painter
                         }
                     }
                 case ActionType.NewFolder:
-                    await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), this.New);
-                    this.ListView.ScrollIntoView(this.ObservableCollection.Last());
+                    {
+                        this.RenameTextBox.Text = this.ObservableCollection.Rename(this.New);
+                        this.RenameTextBox.SelectAll();
+                        this.RenameTextBox.Focus(FocusState.Keyboard);
+
+                        this.RenameIcon.Symbol = Symbol.Folder;
+                        this.RenameDialog.IsPrimaryButtonEnabled = true;
+
+                        ContentDialogResult result = await this.RenameDialog.ShowInstance();
+                        switch (result)
+                        {
+                            case ContentDialogResult.Primary:
+                                string name = this.RenameTextBox.Text;
+                                if (string.IsNullOrEmpty(name)) break;
+
+                                await this.ObservableCollection.AddFolderAsync(this.Paths.GetPath(), name);
+                                this.ListView.ScrollIntoView(this.ObservableCollection.Last());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     break;
 
                 case ActionType.DupliateShow:
@@ -211,9 +231,11 @@ namespace Luo_Painter
                             {
                                 case ProjectType.Project:
                                     this.RenameIcon.Symbol = Symbol.Document;
+                                    this.RenameDialog.IsPrimaryButtonEnabled = false;
                                     break;
                                 case ProjectType.Folder:
                                     this.RenameIcon.Symbol = Symbol.Folder;
+                                    this.RenameDialog.IsPrimaryButtonEnabled = false;
                                     break;
                                 default:
                                     break;
