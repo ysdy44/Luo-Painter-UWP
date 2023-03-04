@@ -12,13 +12,18 @@
 
         NoPaintTool,
 
-        Spread,
-        Zoom,
-        Undo,
-        Redo,
+        Spread, // No Subtitle
+        Zoom, // No Subtitle
+        Undo, // No Subtitle
+        Redo, // No Subtitle
 
-        Saving,
-        SaveSuccess,
+        Saving, // No Subtitle
+        SaveSuccess, // No Subtitle
         SaveFailed,
+
+        NoFile, // No Subtitle
+        NoFolder, // No Subtitle
+        NoSupport, // No Subtitle
+        NoCompatible,
     }
 }
