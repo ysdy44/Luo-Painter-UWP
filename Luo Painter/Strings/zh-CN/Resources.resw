@@ -98,6 +98,7 @@
   <data name='DockRight' xml:space='preserve'> <value>停靠右侧</value> </data>
   <data name='FileMenu' xml:space='preserve'> <value>文件</value> </data>
   <data name='ExportMenu' xml:space='preserve'> <value>导出</value> </data>
+  <data name='HistogramMenu' xml:space='preserve'> <value>直方图</value> </data>
   <data name='ColorMenu' xml:space='preserve'> <value>颜色</value> </data>
   <data name='ColorHarmonyMenu' xml:space='preserve'> <value>调和</value> </data>
   <data name='EditMenu' xml:space='preserve'> <value>编辑</value> </data>
@@ -363,6 +364,10 @@
   <data name='Tip_Saving' xml:space='preserve'> <value>正在保存......</value> </data>
   <data name='Tip_SaveSuccess' xml:space='preserve'> <value>保存成功</value> </data>
   <data name='Tip_SaveFailed' xml:space='preserve'> <value>保存失败</value> </data>
+  <data name='Tip_NoFile' xml:space='preserve'> <value>找不到文件</value> </data>
+  <data name='Tip_NoFolder' xml:space='preserve'> <value>找不到文件夹</value> </data>
+  <data name='Tip_NoSupport' xml:space='preserve'> <value>文件类型不支持</value> </data>
+  <data name='Tip_NoCompatible' xml:space='preserve'> <value>不兼容</value> </data>
   <!--Separator 9-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>创建新图层？</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>只能在位图图层上操作</value> </data>
@@ -372,6 +377,7 @@
   <data name='SubTip_NoPixelForBitmapLayer' xml:space='preserve'> <value>当前位图图层是透明的</value> </data>
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>画笔预设只能与绘画工具一起使用</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>再试一次？</value> </data>
+  <data name='SubTip_NoCompatible' xml:space='preserve'> <value>与 GPU 功能不兼容。</value> </data>
   <!--Separator 10-->
   <data name='Layer_Property' xml:space='preserve'> <value>属性</value> </data>
   <data name='Layer_Property_Opacity' xml:space='preserve'> <value>不透明度</value> </data>
