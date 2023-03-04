@@ -54,7 +54,32 @@ namespace Luo_Painter
             set => App.SourcePageType = value ? SourcePageType.Invalid : SourcePageType.MainPage;
         }
 
-        private void Load() => this.ObservableCollection.Load(this.Paths.GetPath());
+        private async void Load()
+        {
+            string path = this.Paths.GetPath();
+            if (path is null)
+            {
+                this.ObservableCollection.Load(await ApplicationData.Current.LocalFolder.GetFoldersAsync());
+                return;
+            }
+
+            StorageFolder folder = null;
+
+            try
+            {
+                folder = await StorageFolder.GetFolderFromPathAsync(path);
+            }
+            catch (Exception)
+            {
+            }
+
+            if (folder is null)
+            {
+                return;
+            }
+
+            this.ObservableCollection.Load(await folder.GetFoldersAsync());
+        }
 
         public MainPage()
         {
