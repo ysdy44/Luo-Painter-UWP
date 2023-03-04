@@ -112,7 +112,9 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--Head-->
+                        <Setter Target="HomeButton.Visibility" Value="Collapsed"/>
                         <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="UndoButton.Visibility" Value="Collapsed"/>
                         <Setter Target="RedoButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -120,6 +122,17 @@
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--Head-->
+                        <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="RedoButton.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <!--PC-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
                     </VisualState.StateTriggers>
                 </VisualState>
             </VisualStateGroup>
@@ -1521,7 +1534,7 @@
             <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                    <Button Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
+                    <Button x:Name="HomeButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
                             local:Cmd.BB="Home"
                             local:Res.OTT="Home"
                             Command="{x:Bind Command}" >
@@ -1556,6 +1569,11 @@
                                     <MenuFlyoutItem local:Cmd.MFIWI="GIF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                     <MenuFlyoutItem local:Cmd.MFIWI="TIFF" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyoutSubItem>
+                                <MenuFlyoutItem local:Cmd.MFI="HistogramMenu" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE9D9;" FontFamily="Segoe MDL2 Assets"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem local:Cmd.MFI="CropCanvas" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
@@ -1772,6 +1790,9 @@
         <controls:StretchDialog x:Name="StretchDialog" />
         <controls:ExtendDialog x:Name="ExtendDialog" />
         <controls:OffsetDialog x:Name="OffsetDialog" />
+        <controls:HistogramDialog x:Name="HistogramDialog">
+            <canvas:CanvasControl x:Name="HistogramCanvasControl" Width="240" Height="240"/>
+        </controls:HistogramDialog>
 
 
         <!--Tip-->

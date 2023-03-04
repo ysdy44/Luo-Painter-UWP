@@ -20,6 +20,10 @@ namespace Luo_Painter
     public sealed partial class DrawPage
     {
 
+        float[] RedHistogram;
+        float[] GreenHistogram;
+        float[] BlueHistogram;
+
         byte[] LiquefactionShaderCodeBytes;
         byte[] FreeTransformShaderCodeBytes;
         byte[] GradientMappingShaderCodeBytes;
