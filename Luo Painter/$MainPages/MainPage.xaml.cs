@@ -6,6 +6,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -37,6 +38,13 @@ namespace Luo_Painter
 
     public sealed partial class MainPage : Page
     {
+        //@Strings
+        private string RenameProject => App.Resource.GetString(UIType.RenameProject.ToString());
+        private string DupliateProject => App.Resource.GetString(UIType.DupliateProject.ToString());
+        private string DeleteProject => App.Resource.GetString(UIType.DeleteProject.ToString());
+        private string MoveProject => App.Resource.GetString(UIType.MoveProject.ToString());
+        private string LocalFolder => App.Resource.GetString(UIType.LocalFolder.ToString());
+        
         //@Converter
         private ListViewSelectionMode BooleanToSelectionModeConverter(bool value) => value ? ListViewSelectionMode.None : ListViewSelectionMode.Multiple;
         private ListViewReorderMode BooleanToReorderModeConverter(bool value) => value ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
@@ -75,6 +83,7 @@ namespace Luo_Painter
 
             if (folder is null)
             {
+                await new MessageDialog(path, App.Resource.GetString($"Tip_{TipType.NoFolder}")).ShowAsync();
                 return;
             }
 
