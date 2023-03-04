@@ -85,6 +85,7 @@ namespace Luo_Painter.Options
 
         FileMenu = Menu | 3 << 8 | HasMenu | IsItemClickEnabled,
         ExportMenu = Menu | 4 << 8 | HasMenu | IsItemClickEnabled,
+        HistogramMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
 
         ColorMenu = Menu | 6 << 8 | HasMenu | IsItemClickEnabled,
         ColorHarmonyMenu = Menu | 7 << 8 | HasMenu | IsItemClickEnabled,
@@ -359,6 +360,7 @@ namespace Luo_Painter.Options
         GeometryCapsule = Geometry | 13 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryHeart = Geometry | 14 << 8 | ExistIcon | IsItemClickEnabled,
 
+        // PatternTransform
         // Pattern
         PatternGrid = Pattern | 1 << 8 | ExistIcon | IsItemClickEnabled,
         PatternDiagonal = Pattern | 2 << 8 | ExistIcon | IsItemClickEnabled,
