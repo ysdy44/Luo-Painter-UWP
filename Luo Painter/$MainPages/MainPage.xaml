@@ -134,7 +134,7 @@
                 <ListBox
                     x:Name="OrderListBox"
                     Width="320"
-                    Margin="4"
+                    Margin="4,30,4,4"
                     SelectedIndex="0"
                     Style="{StaticResource AppSegmentListBoxStyle}"
                     >
@@ -305,7 +305,7 @@
             x:Name="AppBarListView"
             IsItemClickEnabled="True"
             SelectionMode="None"
-            Padding="12,62,12,12"                  
+            Padding="12,72,12,12"                  
             HorizontalAlignment="Right" 
             VerticalAlignment="Bottom"
             Visibility="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}"
@@ -390,7 +390,6 @@
                 <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
-                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
                     </TransitionCollection>
                 </ContentControl.ContentTransitions>
                 <SymbolIcon Symbol="Important"/>
@@ -402,87 +401,92 @@
                 <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
-                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
                     </TransitionCollection>
                 </ContentControl.ContentTransitions>
                 <SymbolIcon Symbol="Setting"/>
             </Button>
 
-
-            <!--Breadcrumb-->
-            <ListView
-                x:Name="PathListView"    
-                Visibility="Collapsed"
-                Grid.Column="1"
-                SelectionMode="None"    
-                IsItemClickEnabled="True"                                      
-                ItemsSource="{x:Bind Paths}"         
-                ScrollViewer.HorizontalScrollMode="Enabled"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                ScrollViewer.VerticalScrollMode="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                >
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal" ItemsUpdatingScrollMode="KeepLastItemInView" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemContainerTransitions>
-                    <TransitionCollection>
-
-                    </TransitionCollection>
-                </ItemsControl.ItemContainerTransitions>
-
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="4"/>
-                        <Setter Property="Width" Value="Auto"/>
-                        <Setter Property="MinWidth" Value="64"/>
-                        <Setter Property="HorizontalAlignment" Value="Left"/>
-                        <Setter Property="VerticalAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="elements:Breadcrumb">
-                        <TextBlock>
-                            <Run FontSize="16" FontWeight="Bold" Text="&#xE00F;" FontFamily="Segoe MDL2 Assets" />                  
-                            <Run/>
-                            <Run FontSize="22" Text="{x:Bind Name}"/>
-                            <Run/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-
-            </ListView>
-
-            <Button x:Name="HomeButton" Visibility="Collapsed" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}"
-                    local:Res.UTT="Main_Home">
-                <ContentControl.ContentTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
-                    </TransitionCollection>
-                </ContentControl.ContentTransitions>
-                <SymbolIcon Symbol="Home"/>
-            </Button>
-
-            <Button x:Name="BackButton" Grid.Column="2" Visibility="Collapsed" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}"
-                    local:Res.UTT="Main_Back">
-                <ContentControl.ContentTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
-                    </TransitionCollection>
-                </ContentControl.ContentTransitions>
-                <SymbolIcon Symbol="Up"/>
-            </Button>
-
         </Grid>
+
+
+        <!--Breadcrumb-->
+        <ListView
+            x:Name="PathListView"    
+            Grid.Column="1"
+            Margin="0,50,0,0"
+            Padding="12,0"
+            Height="24"
+            VerticalAlignment="Top"
+            BorderThickness="0,0,0,1"
+            BorderBrush="{ThemeResource AppStroke}" 
+            Background="{ThemeResource AppBackground}"
+            SelectionMode="None"    
+            IsItemClickEnabled="True"                                      
+            ItemsSource="{x:Bind Paths}"         
+            ScrollViewer.HorizontalScrollMode="Enabled"
+            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+            ScrollViewer.VerticalScrollMode="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            >
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Horizontal" ItemsUpdatingScrollMode="KeepLastItemInView" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="4,0"/>
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="MinWidth" Value="64"/>
+                    <Setter Property="MinHeight" Value="22"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="Foreground" Value="{ThemeResource AppForeground}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="elements:Breadcrumb">
+                    <TextBlock>
+                        <Run FontSize="10" FontWeight="Bold" Text="&#xE00F;" FontFamily="Segoe MDL2 Assets" />
+                        <Run FontSize="14" Text="{x:Bind Name}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ListViewBase.Header>
+                <Button x:Name="HomeButton" Padding="8,0" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Foreground="{ThemeResource AppForeground}" 
+                        local:Res.UC="Main_Home">
+                    <ContentControl.ContentTransitions>
+                        <TransitionCollection>
+                        </TransitionCollection>
+                    </ContentControl.ContentTransitions>
+                </Button>
+            </ListViewBase.Header>
+
+            <ListViewBase.Footer>
+                <Button x:Name="BackButton" Padding="8,0" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Foreground="{ThemeResource AppForeground}" 
+                        local:Res.UC="Main_Back">
+                    <ContentControl.ContentTransitions>
+                        <TransitionCollection>
+                        </TransitionCollection>
+                    </ContentControl.ContentTransitions>
+                </Button>
+            </ListViewBase.Footer>
+
+        </ListView>
 
 
         <!--Docker-->
