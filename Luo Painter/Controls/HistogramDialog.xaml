@@ -1,0 +1,32 @@
+﻿<ContentDialog
+    x:Class="Luo_Painter.Controls.HistogramDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FullSizeDesired="False" 
+    Style="{StaticResource AppContentDialogStyle}"  
+    PrimaryButtonText="{x:Bind Back}"
+    Title="{x:Bind Histogram}"
+    >
+    <Canvas Width="242" Height="242" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource AppOpacity}">
+
+        <Line X1="0" Y1="0" X2="240" Y2="0" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="60" X2="240" Y2="60" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="120" X2="240" Y2="120" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="180" X2="240" Y2="180" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="0" Y1="240" X2="240" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+
+        <Line X1="0" Y1="0" X2="0" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="60" Y1="0" X2="60" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="120" Y1="0" X2="120" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="180" Y1="0" X2="180" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+        <Line X1="240" Y1="0" X2="240" Y2="240" StrokeThickness="1" Stroke="{ThemeResource ThumbBackgroundPointerOver}"/>
+
+        <Border x:Name="ChildBorder" Margin="1" Width="240" Height="240">
+            <!--Child-->
+        </Border>
+        
+    </Canvas>
+</ContentDialog>
