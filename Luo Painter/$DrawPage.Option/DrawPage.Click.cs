@@ -507,6 +507,11 @@ namespace Luo_Painter
                         }
                     }
                     break;
+                case OptionType.HistogramMenu:
+                    this.Histogram();
+                    this.HistogramCanvasControl.Invalidate();
+                    await this.HistogramDialog.ShowInstance();
+                    break;
 
                 case OptionType.PaintMenu:
                     this.PaintScrollViewer.Toggle();

@@ -230,6 +230,15 @@ namespace Luo_Painter
             };
 
 
+            this.HistogramCanvasControl.Draw += (sender, args) =>
+            {
+                args.DrawingSession.Blend = CanvasBlend.Add;
+                if (this.RedHistogram != null) for (int i = 0; i < 240; i++) args.DrawingSession.DrawLine(i, 240 - 240 * 64 * this.RedHistogram[i], i, 240, Colors.Red);
+                if (this.GreenHistogram != null) for (int i = 0; i < 240; i++) args.DrawingSession.DrawLine(i, 240 - 240 * 64 * this.GreenHistogram[i], i, 240, Colors.Lime);
+                if (this.BlueHistogram != null) for (int i = 0; i < 240; i++) args.DrawingSession.DrawLine(i, 240 - 240 * 64 * this.BlueHistogram[i], i, 240, Colors.Blue);
+            };
+
+
             this.StrawCanvasControl.CreateResources += (sender, args) =>
             {
                 this.StrawViewer.CreateResources(sender);
@@ -322,6 +331,21 @@ namespace Luo_Painter
                     Source2 = this.BitmapLayer[BitmapType.Origin],
                     Source3 = this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Origin])
                 };
+            }
+        }
+
+        private void Histogram()
+        {
+            using (ColorSourceEffect background = new ColorSourceEffect
+            {
+                Color = Colors.Transparent
+            })
+            {
+                ICanvasImage image = this.Nodes.Render(background);
+                Rect bounds = this.Mesh.Bounds;
+                this.RedHistogram = CanvasImage.ComputeHistogram(image, bounds, this.CanvasDevice, EffectChannelSelect.Red, 240);
+                this.GreenHistogram = CanvasImage.ComputeHistogram(image, bounds, this.CanvasDevice, EffectChannelSelect.Green, 240);
+                this.BlueHistogram = CanvasImage.ComputeHistogram(image, bounds, this.CanvasDevice, EffectChannelSelect.Blue, 240);
             }
         }
 
