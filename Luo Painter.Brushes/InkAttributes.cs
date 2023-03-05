@@ -21,7 +21,7 @@ namespace Luo_Painter.Brushes
         /// </summary>
         public InkType Type { get; set; } = InkType.General; /// <see cref="InkPresenter.GetType"/>
 
-        public uint Tile { get; set; } = 0000000000;
+        public bool Favorite { get; set; }
 
         // Property
         public float Size { get; set; }

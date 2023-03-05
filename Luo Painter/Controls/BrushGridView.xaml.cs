@@ -37,17 +37,15 @@ namespace Luo_Painter.Controls
     }
     internal sealed class PaintBrush : BrushBase
     {
-        public string ImageSource => base.Tile == default ? BrushExtensions.DeaultTile : base.Tile.GetTile();
-        public int Tile2 { get => (int)base.Tile; set => base.Tile = (uint)value; }
+        public uint Tile { get; set; }
+        public string ImageSource => this.Tile == default ? BrushExtensions.DeaultTile : this.Tile.GetTile();
+        public int Tile2 { get => (int)this.Tile; set => this.Tile = (uint)value; }
     }
     internal sealed class RetouchBrush : BrushBase
     {
         public string Path { get; set; }
         public string Brush => this.Path.GetBrush();
         public string BrushSource => this.Path.GetBrushSource();
-
-        public string Title { get; set; }
-        public string Subtitle => ((int)this.Size).ToString();
     }
 
     internal class InkTemplateSelector : DataTemplateSelector

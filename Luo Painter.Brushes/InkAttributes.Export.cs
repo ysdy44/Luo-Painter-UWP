@@ -11,7 +11,7 @@ namespace Luo_Painter.Brushes
         public XElement Save() => new XElement("Brush",
             new XAttribute("Type", this.Type),
 
-            new XAttribute("Tile", this.Tile),
+            new XAttribute("Favorite", this.Favorite),
 
             // Property
             new XAttribute("Size", this.Size),
@@ -69,6 +69,8 @@ namespace Luo_Painter.Brushes
         public void Load(XElement element)
         {
             if (element.Attribute("Type") is XAttribute type) this.Type = this.LoadType(type.Value);
+
+            if (element.Attribute("Favorite") is XAttribute favorite) this.Favorite = (bool)favorite;
 
             // Property
             if (element.Attribute("Size") is XAttribute size) this.Size = (float)size;
