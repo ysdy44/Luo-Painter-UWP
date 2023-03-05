@@ -430,7 +430,7 @@ namespace Luo_Painter
 
             this.BrushGridView.ItemClick += (s, e) =>
             {
-                if (e.ClickedItem is PaintBrush brush)
+                if (e.ClickedItem is InkAttributes brush)
                 {
                     this.ConstructBrush(brush);
 

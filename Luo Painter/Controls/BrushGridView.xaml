@@ -24,26 +24,26 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <local:PaintBrushGroupingList x:Name="Collection">
-                    <local:PaintBrushGrouping Key="Erase">
+                <local:InkGroupingList x:Name="Collection">
+                    <local:InkGrouping Key="Erase">
                         <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011900"/>
                         <local:PaintBrush Type="Erase" Size2="32" Opacity2="0.5" Spacing2="0.25" Flow2="1" Hardness="Cosine" Tile2="2023012200"/>
-                    </local:PaintBrushGrouping>
-                    <local:PaintBrushGrouping Key="Paint">
+                    </local:InkGrouping>
+                    <local:InkGrouping Key="Paint">
                         <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" SizePressure="Quadratic" MinSize2="0.25" Tile2="2023011802"/>
                         <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Quadratic" SizePressure="Quadratic" Tile2="2023011901"/>
                         <local:PaintBrush Type="General" Size2="360" Opacity2="1" Spacing2="0.15" Flow2="0.25" Hardness="Cosine" Tile2="2023012201"/>
                         <local:PaintBrush Type="General" Size2="5" Opacity2="1" Spacing2="0.75" Flow2="1" Hardness="Quadratic" SizePressure="QuadraticFlipReverse" Tile2="2023012501"/>
                         <local:PaintBrush Type="Line" Size2="3" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011803"/>
-                    </local:PaintBrushGrouping>
-                    <local:PaintBrushGrouping Key="Fx">
+                    </local:InkGrouping>
+                    <local:InkGrouping Key="Fx">
                         <local:PaintBrush Type="Blur" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="Cosine" SizePressure="Quadratic" Tile2="2023012104"/>
                         <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012105"/>
                         <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012006"/>
-                    </local:PaintBrushGrouping>
-                    <local:PaintBrushGrouping Key="Others">
-                    </local:PaintBrushGrouping>
-                </local:PaintBrushGroupingList>
+                    </local:InkGrouping>
+                    <local:InkGrouping Key="Others">
+                    </local:InkGrouping>
+                </local:InkGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -90,7 +90,7 @@
                 </Style>
             </GroupStyle.HeaderContainerStyle>
             <GroupStyle.HeaderTemplate>
-                <DataTemplate x:DataType="local:PaintBrushGrouping">
+                <DataTemplate x:DataType="local:InkGrouping">
                     <TextBlock
                         Text="{x:Bind KeyString}" 
                         Foreground="{ThemeResource AppForeground}"

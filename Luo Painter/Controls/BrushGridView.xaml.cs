@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Luo_Painter.Controls
 {
-    internal enum PaintBrushType
+    internal enum InkGroupingType
     {
         Erase,
         Paint,
@@ -12,10 +12,10 @@ namespace Luo_Painter.Controls
         Others,
     }
 
-    internal sealed class PaintBrushGroupingList : List<PaintBrushGrouping>, IList<PaintBrushGrouping> { }
-    internal class PaintBrushGrouping : List<PaintBrush>, IList<PaintBrush>, IGrouping<PaintBrushType, PaintBrush>
+    internal sealed class InkGroupingList : List<InkGrouping>, IList<InkGrouping> { }
+    internal class InkGrouping : List<InkAttributes>, IList<InkAttributes>, IGrouping<InkGroupingType, InkAttributes>
     {
-        public PaintBrushType Key { set; get; }
+        public InkGroupingType Key { set; get; }
         public string KeyString => App.Resource.GetString($"Brush_{this.Key}");
     }
     internal sealed class PaintBrush : InkAttributes
