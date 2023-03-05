@@ -66,7 +66,9 @@
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="local:PaintBrush">
-            <elements:SelectedImagePresenter Source="{x:Bind ImageSource}"/>
+            <elements:SelectedImagePresenter>
+                <Image Source="{x:Bind ImageSource}" />
+            </elements:SelectedImagePresenter>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 

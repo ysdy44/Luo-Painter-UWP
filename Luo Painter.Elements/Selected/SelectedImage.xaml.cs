@@ -1,9 +1,12 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Markup;
 
 namespace Luo_Painter.Elements
 {
+    [ContentProperty(Name = nameof(Child))]
+    //[ContentProperty(Name = nameof(Source))]
     public sealed class SelectedImagePresenter : Grid // ContentPresenter
     {
 
@@ -13,15 +16,15 @@ namespace Luo_Painter.Elements
         #region DependencyProperty 
 
 
-        /// <summary> Gets or sets <see cref = "SelectedImagePresenter" />'s Source. </summary>
-        public string Source
+        /// <summary> Gets or sets <see cref = "SelectedImagePresenter" />'s child. </summary>
+        public UIElement Child
         {
-            get => (string)base.GetValue(SourceProperty);
-            set => base.SetValue(SourceProperty, value);
+            get => (UIElement)base.GetValue(ChildProperty);
+            set => base.SetValue(ChildProperty, value);
         }
-        /// <summary> Identifies the <see cref = "SelectedImagePresenter.Source" /> dependency property. </summary>
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(nameof(Source), typeof(string), typeof(SelectedImagePresenter), new PropertyMetadata(null));
-
+        /// <summary> Identifies the <see cref = "SelectedImagePresenter.Child" /> dependency property. </summary>
+        public static readonly DependencyProperty ChildProperty = DependencyProperty.Register(nameof(Child), typeof(UIElement), typeof(SelectedImagePresenter), new PropertyMetadata(null));
+        
 
         #endregion
 
