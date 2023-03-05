@@ -50,35 +50,35 @@
         <ItemsControl.ItemsSource>
             <!--Collection-->
             <local:PaintTextureList x:Name="Collection">
-                <local:PaintTexture Width="400" Height="400" Path="Flash/00" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Flash/01" />
-                <local:PaintTexture Width="1100" Height="1100" Path="Flash/02" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Flash/03" />
-                <local:PaintTexture Width="900" Height="900" Path="Flash/04" />
+                <local:PaintTexture Width="400" Height="400" Path="Flash00" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Flash01" />
+                <local:PaintTexture Width="1100" Height="1100" Path="Flash02" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Flash03" />
+                <local:PaintTexture Width="900" Height="900" Path="Flash04" />
 
-                <local:PaintTexture Width="512" Height="512" Path="Splodge/00" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge/01" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge/02" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge/03" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge/04" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge00" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge01" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge02" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge03" />
+                <local:PaintTexture Width="512" Height="512" Path="Splodge04" />
 
-                <local:PaintTexture Width="600" Height="600" Path="Splodge/05" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Splodge/06" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Splodge/07" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Splodge/08" />
-                <local:PaintTexture Width="1024" Height="1024" Path="Splodge/09" />
+                <local:PaintTexture Width="600" Height="600" Path="Splodge05" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Splodge06" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Splodge07" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Splodge08" />
+                <local:PaintTexture Width="1024" Height="1024" Path="Splodge09" />
 
-                <local:PaintTexture Width="1300" Height="1300" Path="Scratch/00" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/01" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/02" />
-                <local:PaintTexture Width="1200" Height="1200" Path="Scratch/03" />
-                <local:PaintTexture Width="1300" Height="1300" Path="Scratch/04" />
+                <local:PaintTexture Width="1300" Height="1300" Path="Scratch00" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch01" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch02" />
+                <local:PaintTexture Width="1200" Height="1200" Path="Scratch03" />
+                <local:PaintTexture Width="1300" Height="1300" Path="Scratch04" />
 
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/05" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch/06" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Scratch/07" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Scratch/08" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Scratch/09" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch05" />
+                <local:PaintTexture Width="1400" Height="1400" Path="Scratch06" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Scratch07" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Scratch08" />
+                <local:PaintTexture Width="1600" Height="1600" Path="Scratch09" />
             </local:PaintTextureList>
         </ItemsControl.ItemsSource>
 
