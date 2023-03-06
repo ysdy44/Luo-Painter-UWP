@@ -450,11 +450,24 @@
                                 </Border>
                                 <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
                                        luo_painter:Res.UC="Paint_Texture_Import"/>
-                                <ToggleButton x:Name="RecolorShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture_Recolor"/>
+                                <ToggleButton x:Name="TextureShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture"/>
                                 <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
                                        luo_painter:Res.UC="Paint_Texture_Remove"/>
                             </Grid>
+
+                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                                    Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="136"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                               luo_painter:Res.UT="Paint_Texture_Recolor"/>
+                                    <ToggleSwitch x:Name="RecolorShapeButton" Grid.Column="1" Margin="4,2"/>
+                                </Grid>
+                            </Border>
 
                             <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                                     Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
@@ -492,11 +505,24 @@
                                 </Border>
                                 <Button x:Name="ImportGrainButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
                                        luo_painter:Res.UC="Paint_Texture_Import"/>
-                                <ToggleButton x:Name="RecolorGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture_Recolor"/>
+                                <ToggleButton x:Name="TextureGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
+                                       luo_painter:Res.UC="Paint_Texture"/>
                                 <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
                                        luo_painter:Res.UC="Paint_Texture_Remove"/>
                             </Grid>
+
+                            <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
+                                    Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="136"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                                               luo_painter:Res.UT="Paint_Texture_Recolor"/>
+                                    <ToggleSwitch x:Name="RecolorGrainButton" Grid.Column="1" Margin="4,2"/>
+                                </Grid>
+                            </Border>
 
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                                     Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">

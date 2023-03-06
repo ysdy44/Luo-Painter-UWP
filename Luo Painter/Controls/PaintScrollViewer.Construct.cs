@@ -98,10 +98,10 @@ namespace Luo_Painter.Controls
                 // Texture
                 this.RotateButton.IsOn = presenter.Rotate;
                 this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
-                this.RecolorShapeButton.IsChecked = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
+                this.RecolorShapeButton.IsOn = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
 
                 this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
-                this.RecolorGrainButton.IsChecked = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
+                this.RecolorGrainButton.IsOn = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
 
                 this.BlendModeListView.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);
 

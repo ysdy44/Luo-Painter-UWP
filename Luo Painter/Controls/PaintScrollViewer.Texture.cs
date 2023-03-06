@@ -33,9 +33,10 @@ namespace Luo_Painter.Controls
                 }
             };
 
-            this.RecolorShapeButton.Click += (s, e) =>
+            this.RecolorShapeButton.Toggled += (s, e) =>
             {
-                bool recolor = this.RecolorShapeButton.IsChecked is true;
+                if (this.IsInkEnabled is false) return;
+                bool recolor = this.RecolorShapeButton.IsOn is true;
 
                 // Select Texture
                 Uri source = this.ShapeImage.UriSource;
@@ -88,9 +89,10 @@ namespace Luo_Painter.Controls
                 }
             };
 
-            this.RecolorGrainButton.Click += (s, e) =>
+            this.RecolorGrainButton.Toggled += (s, e) =>
             {
-                bool recolor = this.RecolorGrainButton.IsChecked is true;
+                if (this.IsInkEnabled is false) return;
+                bool recolor = this.RecolorGrainButton.IsOn is true;
 
                 // Select Texture
                 Uri source = this.GrainImage.UriSource;
