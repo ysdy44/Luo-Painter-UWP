@@ -189,6 +189,9 @@
     <Compile Include="Selected\SelectedImage.xaml.cs">
       <DependentUpon>SelectedImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Selected\SelectedImages.xaml.cs">
+      <DependentUpon>SelectedImages.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Selected\SelectedSwiper.cs" />
     <Compile Include="Texts\TextFormat.cs" />
     <Compile Include="Texts\TextFormatItem.cs" />
@@ -243,6 +246,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Selected\SelectedImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Selected\SelectedImages.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
