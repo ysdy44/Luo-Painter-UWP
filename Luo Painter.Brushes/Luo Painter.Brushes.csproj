@@ -226,6 +226,8 @@
     <Content Include="Textures\Flash03Texture.png" />
     <Content Include="Textures\Flash04.png" />
     <Content Include="Textures\Flash04Texture.png" />
+    <Content Include="Textures\FX00.png" />
+    <Content Include="Textures\FX00Texture.png" />
     <Content Include="Textures\Scratch00.png" />
     <Content Include="Textures\Scratch00Texture.png" />
     <Content Include="Textures\Scratch01.png" />
