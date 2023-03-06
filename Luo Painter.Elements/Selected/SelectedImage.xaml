@@ -7,8 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="50"
-    Opacity="{x:Bind BooleanToVisibilityConverter(Presenter.Ancestor.IsSelected), Mode=OneWay}"
-    Content="{x:Bind Presenter.Child, Mode=OneWay}"
+    Opacity="{x:Bind BooleanToVisibilityConverter(Presenter.Ancestor.IsSelected), Mode=OneWay}" 
     >
-    <!--Content-->
+    <Image Source="{x:Bind Presenter.Source}" />
 </UserControl>

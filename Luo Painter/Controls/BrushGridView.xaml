@@ -102,19 +102,12 @@
         <local:InkTemplateSelector>
             <local:InkTemplateSelector.PaintTemplate>
                 <DataTemplate x:DataType="local:PaintBrush">
-                    <elements:SelectedImagePresenter>
-                        <Image Source="{x:Bind ImageSource}" />
-                    </elements:SelectedImagePresenter>
+                    <elements:SelectedImagePresenter Source="{x:Bind ImageSource}"/>
                 </DataTemplate>
             </local:InkTemplateSelector.PaintTemplate>
             <local:InkTemplateSelector.RetouchTemplate>
                 <DataTemplate x:DataType="local:RetouchBrush">
-                    <elements:SelectedImagePresenter>
-                        <StackPanel Orientation="Horizontal" Spacing="4" Background="#CECECE">
-                            <BitmapIcon Width="64" Height="64" UriSource="{x:Bind BrushSource}" Foreground="Black"/>
-                            <BitmapIcon Width="188" Height="64" UriSource="{x:Bind Brush}" Foreground="Black"/>
-                        </StackPanel>
-                    </elements:SelectedImagePresenter>
+                    <elements:SelectedImagesPresenter Source1="{x:Bind BrushSource}" Source2="{x:Bind Brush}"/>
                 </DataTemplate>
             </local:InkTemplateSelector.RetouchTemplate>
         </local:InkTemplateSelector>
