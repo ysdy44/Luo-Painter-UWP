@@ -448,12 +448,24 @@
                                         <!--UriSource-->
                                     </BitmapIcon>
                                 </Border>
-                                <Button x:Name="ImportShapeButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture_Import"/>
-                                <ToggleButton x:Name="TextureShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture"/>
-                                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture_Remove"/>
+                                <Button x:Name="ImportShapeButton" IsEnabled="False" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Spacing="8" Orientation="Horizontal">
+                                        <SymbolIcon Symbol="OpenFile"/>
+                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Import"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="TextureShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Spacing="8" Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Pictures"/>
+                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Spacing="8" Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Delete"/>
+                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Remove"/>
+                                    </StackPanel>
+                                </Button>
                             </Grid>
 
                             <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
@@ -503,12 +515,24 @@
                                         <!--UriSource-->
                                     </BitmapIcon>
                                 </Border>
-                                <Button x:Name="ImportGrainButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture_Import"/>
-                                <ToggleButton x:Name="TextureGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture"/>
-                                <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                                       luo_painter:Res.UC="Paint_Texture_Remove"/>
+                                <Button x:Name="ImportGrainButton" IsEnabled="False" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Spacing="8" Orientation="Horizontal">
+                                        <SymbolIcon Symbol="OpenFile"/>
+                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Import"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="TextureGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Spacing="8" Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Pictures"/>
+                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <StackPanel Spacing="8" Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Delete"/>
+                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Remove"/>
+                                    </StackPanel>
+                                </Button>
                             </Grid>
 
                             <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 

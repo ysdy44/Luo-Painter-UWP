@@ -2,6 +2,8 @@
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
@@ -11,6 +13,20 @@ namespace Luo_Painter.Controls
         public void ConstructTexture()
         {
             this.ImportShapeButton.Click += async (s, e) =>
+            {
+                StorageFile file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file == null) return;
+
+                this.InkPresenter.ClearShape();
+                StorageFile copyFile = await FileUtil.CopySingleImageFileAsync(file);
+
+                // Select Texture
+                this.ShapeImage.UriSource = new System.Uri(copyFile.Path);
+                this.InkPresenter.ConstructShape(copyFile.Name, await CanvasBitmap.LoadAsync(this.CanvasDevice, copyFile.Path));
+                this.InkType = this.InkPresenter.GetType();
+                this.TryInk();
+            };
+            this.TextureShapeButton.Click += async (s, e) =>
             {
                 // Show Dialog
                 this.ConstructTexture(this.InkPresenter.Shape);
@@ -67,6 +83,20 @@ namespace Luo_Painter.Controls
 
 
             this.ImportGrainButton.Click += async (s, e) =>
+            {
+                StorageFile file = await FileUtil.PickSingleImageFileAsync(PickerLocationId.Desktop);
+                if (file == null) return;
+
+                this.InkPresenter.ClearGrain();
+                StorageFile copyFile = await FileUtil.CopySingleImageFileAsync(file);
+
+                // Select Texture
+                this.GrainImage.UriSource = new System.Uri(copyFile.Path);
+                this.InkPresenter.ConstructGrain(copyFile.Name, await CanvasBitmap.LoadAsync(this.CanvasDevice, copyFile.Path));
+                this.InkType = this.InkPresenter.GetType();
+                this.TryInk();
+            };
+            this.TextureGrainButton.Click += async (s, e) =>
             {
                 // Show Dialog
                 this.ConstructTexture(this.InkPresenter.Grain);
