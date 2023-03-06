@@ -41,6 +41,11 @@
                         <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012105"/>
                         <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012006"/>
                     </local:InkGrouping>
+                    <local:InkGrouping Key="Others">
+                        <local:PaintBrush Type="General" Size2="75" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" Shape="FX00" Tile2="2023030601"/>
+                        <local:PaintBrush Type="General" Size2="100" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Flash02" Tile2="2023030603"/>
+                        <local:PaintBrush Type="General" Size2="50" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Splodge03" Rotate="True" Tile2="2023030602"/>
+                    </local:InkGrouping>
                     <local:InkGrouping Key="Flash">
                         <local:RetouchBrush Type="General" Size2="300" Opacity2="0.9" Spacing2="0.8" Flow2="1" Hardness="Quartic" Path="Flash00" Shape="Flash00" />
                         <local:RetouchBrush Type="General" Size2="500" Opacity2="0.85" Spacing2="0.55" Flow2="1" Hardness="None" Path="Flash01" Shape="Flash01" />
