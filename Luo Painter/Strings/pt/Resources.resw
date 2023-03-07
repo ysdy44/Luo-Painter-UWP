@@ -1,0 +1,589 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <xsd:schema id='root' xmlns='' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:msdata='urn:schemas-microsoft-com:xml-msdata'>
+    <xsd:import namespace='http://www.w3.org/XML/1998/namespace' />
+    <xsd:element name='root' msdata:IsDataSet='true'>
+      <xsd:complexType>
+        <xsd:choice maxOccurs='unbounded'>
+          <xsd:element name='metadata'>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name='value' type='xsd:string' minOccurs='0' />
+              </xsd:sequence>
+              <xsd:attribute name='name' use='required' type='xsd:string' />
+              <xsd:attribute name='type' type='xsd:string' />
+              <xsd:attribute name='mimetype' type='xsd:string' />
+              <xsd:attribute ref='xml:space' />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name='assembly'>
+            <xsd:complexType>
+              <xsd:attribute name='alias' type='xsd:string' />
+              <xsd:attribute name='name' type='xsd:string' />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name='data'>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name='value' type='xsd:string' minOccurs='0' msdata:Ordinal='1' />
+                <xsd:element name='comment' type='xsd:string' minOccurs='0' msdata:Ordinal='2' />
+              </xsd:sequence>
+              <xsd:attribute name='name' type='xsd:string' use='required' msdata:Ordinal='1' />
+              <xsd:attribute name='type' type='xsd:string' msdata:Ordinal='3' />
+              <xsd:attribute name='mimetype' type='xsd:string' msdata:Ordinal='4' />
+              <xsd:attribute ref='xml:space' />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name='resheader'>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name='value' type='xsd:string' minOccurs='0' msdata:Ordinal='1' />
+              </xsd:sequence>
+              <xsd:attribute name='name' type='xsd:string' use='required' />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name='resmimetype'>
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name='version'>
+    <value>2.0</value>
+  </resheader>
+  <resheader name='reader'>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name='writer'>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!--Separator 0-->
+  <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.0.0</value> </data>
+  <data name='InputText' xml:space='preserve'> <value>Introduza o texto</value> </data>
+  <data name='Untitled' xml:space='preserve'> <value>Sem título</value> </data>
+  <data name='UntitledFolder' xml:space='preserve'> <value>Nova pasta</value> </data>
+  <data name='GithubLink' xml:space='preserve'> <value>https://github.com/ysdy44/Luo-Painter-UWP</value> </data>
+  <data name='FeedbackLink' xml:space='preserve'> <value>ysdy44@outlook.com</value> </data>
+  <data name='Github' xml:space='preserve'> <value>Github</value> </data>
+  <data name='Feedback' xml:space='preserve'> <value>Comentários</value> </data>
+  <data name='Apply' xml:space='preserve'> <value>aplicar</value> </data>
+  <data name='Back' xml:space='preserve'> <value>Voltar</value> </data>
+  <data name='OK' xml:space='preserve'> <value>OK</value> </data>
+  <data name='Cancel' xml:space='preserve'> <value>Cancelar</value> </data>
+  <data name='X' xml:space='preserve'> <value>X</value> </data>
+  <data name='Y' xml:space='preserve'> <value>Y</value> </data>
+  <data name='Width' xml:space='preserve'> <value>Largura</value> </data>
+  <data name='Height' xml:space='preserve'> <value>Altura</value> </data>
+  <!--Separator 1-->
+  <data name='Home' xml:space='preserve'> <value>Início</value> </data>
+  <data name='Close' xml:space='preserve'> <value>Fechar</value> </data>
+  <data name='Save' xml:space='preserve'> <value>Salvar</value> </data>
+  <data name='Export' xml:space='preserve'> <value>Exportar</value> </data>
+  <data name='Undo' xml:space='preserve'> <value>Desfazer</value> </data>
+  <data name='Redo' xml:space='preserve'> <value>Refazer</value> </data>
+  <data name='FullScreen' xml:space='preserve'> <value>Refazer</value> </data>
+  <data name='UnFullScreen' xml:space='preserve'> <value>Sair da tela cheia</value> </data>
+  <data name='JPEG' xml:space='preserve'> <value>JPEG</value> </data>
+  <data name='PNG' xml:space='preserve'> <value>PNG</value> </data>
+  <data name='BMP' xml:space='preserve'> <value>BMP</value> </data>
+  <data name='GIF' xml:space='preserve'> <value>GIF</value> </data>
+  <data name='TIFF' xml:space='preserve'> <value>TIFF</value> </data>
+  <data name='Cut' xml:space='preserve'> <value>Cortar</value> </data>
+  <data name='Copy' xml:space='preserve'> <value>Copiar</value> </data>
+  <data name='Paste' xml:space='preserve'> <value>Colar</value> </data>
+  <data name='Clear' xml:space='preserve'> <value>Limpar</value> </data>
+  <data name='DockLeft' xml:space='preserve'> <value>Encaixe à esquerda</value> </data>
+  <data name='DockRight' xml:space='preserve'> <value>Encaixe o lado direito</value> </data>
+  <data name='FileMenu' xml:space='preserve'> <value>Arquivo</value> </data>
+  <data name='ExportMenu' xml:space='preserve'> <value>Exportar</value> </data>
+  <data name='HistogramMenu' xml:space='preserve'> <value>histograma</value> </data>
+  <data name='ColorMenu' xml:space='preserve'> <value>Cor</value> </data>
+  <data name='ColorHarmonyMenu' xml:space='preserve'> <value>Harmonia</value> </data>
+  <data name='EditMenu' xml:space='preserve'> <value>Editar</value> </data>
+  <data name='AdjustmentMenu' xml:space='preserve'> <value>ajustar</value> </data>
+  <data name='OtherMenu' xml:space='preserve'> <value>outro</value> </data>
+  <data name='PaintMenu' xml:space='preserve'> <value>pintura</value> </data>
+  <data name='BrushMenu' xml:space='preserve'> <value>Escovar</value> </data>
+  <data name='SizeMenu' xml:space='preserve'> <value>Tamanho</value> </data>
+  <data name='EffectMenu' xml:space='preserve'> <value>Efeitos</value> </data>
+  <data name='HistoryMenu' xml:space='preserve'> <value>História</value> </data>
+  <data name='ToolMenu' xml:space='preserve'> <value>Ferramentas</value> </data>
+  <data name='LayerMenu' xml:space='preserve'> <value>camadas</value> </data>
+  <data name='LayerNewMenu' xml:space='preserve'> <value>Novo</value> </data>
+  <data name='LayerPropertyMenu' xml:space='preserve'> <value>atributo</value> </data>
+  <data name='LayerRenameMenu' xml:space='preserve'> <value>Renomear</value> </data>
+  <data name='CropCanvas' xml:space='preserve'> <value>Recortar lona</value> </data>
+  <data name='ResizeCanvas' xml:space='preserve'> <value>Redimensionar tela</value> </data>
+  <data name='RotateCanvas' xml:space='preserve'> <value>Girar tela</value> </data>
+  <data name='Stretch' xml:space='preserve'> <value>Esticar</value> </data>
+  <data name='Extend' xml:space='preserve'> <value>Estender</value> </data>
+  <data name='Offset' xml:space='preserve'> <value>Offset</value> </data>
+  <data name='FlipHorizontal' xml:space='preserve'> <value>Inverter horizontalmente</value> </data>
+  <data name='FlipVertical' xml:space='preserve'> <value>Inverter verticalmente</value> </data>
+  <data name='LeftTurn' xml:space='preserve'> <value>Vire à esquerda</value> </data>
+  <data name='RightTurn' xml:space='preserve'> <value>Vire à direita</value> </data>
+  <data name='OverTurn' xml:space='preserve'> <value>Viragem</value> </data>
+  <data name='AddLayer' xml:space='preserve'> <value>Adicionar camada</value> </data>
+  <data name='AddBitmapLayer' xml:space='preserve'> <value>Adicionar uma camada de bitmap</value> </data>
+  <data name='AddImageLayer' xml:space='preserve'> <value>Adicionar uma camada de imagem</value> </data>
+  <data name='AddCurveLayer' xml:space='preserve'> <value>Adicionar uma camada de curva</value> </data>
+  <data name='AddFillLayer' xml:space='preserve'> <value>Adicionar uma camada de preenchimento</value> </data>
+  <data name='CutLayer' xml:space='preserve'> <value>Camada de corte</value> </data>
+  <data name='CopyLayer' xml:space='preserve'> <value>Copiar camada</value> </data>
+  <data name='PasteLayer' xml:space='preserve'> <value>Colar camada</value> </data>
+  <data name='Remove' xml:space='preserve'> <value>Retirar</value> </data>
+  <data name='Duplicate' xml:space='preserve'> <value>Duplicar</value> </data>
+  <data name='Extract' xml:space='preserve'> <value>Extrair</value> </data>
+  <data name='Merge' xml:space='preserve'> <value>Fundir</value> </data>
+  <data name='Flatten' xml:space='preserve'> <value>Achatar</value> </data>
+  <data name='Group' xml:space='preserve'> <value>Grupo</value> </data>
+  <data name='Ungroup' xml:space='preserve'> <value>Desagrupar</value> </data>
+  <data name='Release' xml:space='preserve'> <value>Lançamento</value> </data>
+  <data name='Union' xml:space='preserve'> <value>União</value> </data>
+  <data name='Exclude' xml:space='preserve'> <value>Excluir</value> </data>
+  <data name='Xor' xml:space='preserve'> <value>Xor</value> </data>
+  <data name='Intersect' xml:space='preserve'> <value>Cruzar-se</value> </data>
+  <data name='ExpandStroke' xml:space='preserve'> <value>Expandir traçado</value> </data>
+  <data name='MirrorHorizontally' xml:space='preserve'> <value>Espelho horizontal</value> </data>
+  <data name='MirrorVertically' xml:space='preserve'> <value>Espelho vertical</value> </data>
+  <data name='RotateLeft' xml:space='preserve'> <value>Girar para a esquerda</value> </data>
+  <data name='RotateRight' xml:space='preserve'> <value>Girar para a direita</value> </data>
+  <data name='BackOne' xml:space='preserve'> <value>Voltar um</value> </data>
+  <data name='ForwardOne' xml:space='preserve'> <value>Encaminhar um</value> </data>
+  <data name='MoveBack' xml:space='preserve'> <value>Retroceder</value> </data>
+  <data name='MoveFront' xml:space='preserve'> <value>Mover para a frente</value> </data>
+  <data name='AlignLeft' xml:space='preserve'> <value>Alinhar à esquerda</value> </data>
+  <data name='AlignCenter' xml:space='preserve'> <value>Alinhar centro</value> </data>
+  <data name='AlignRight' xml:space='preserve'> <value>Alinhar à direita</value> </data>
+  <data name='SpaceHorizontally' xml:space='preserve'> <value>Espaço horizontalmente</value> </data>
+  <data name='AlignTop' xml:space='preserve'> <value>Alinhar parte superior</value> </data>
+  <data name='AlignMiddle' xml:space='preserve'> <value>Alinhar o meio</value> </data>
+  <data name='AlignBottom' xml:space='preserve'> <value>Alinhar parte inferior</value> </data>
+  <data name='SpaceVertically' xml:space='preserve'> <value>Espaço verticalmente</value> </data>
+  <data name='All' xml:space='preserve'> <value>Selecionar tudo</value> </data>
+  <data name='Deselect' xml:space='preserve'> <value>Desmarque</value> </data>
+  <data name='MarqueeInvert' xml:space='preserve'> <value>Inverter</value> </data>
+  <data name='Pixel' xml:space='preserve'> <value>Pixel</value> </data>
+  <data name='Feather' xml:space='preserve'> <value>Pena</value> </data>
+  <data name='MarqueeTransform' xml:space='preserve'> <value>Transformar</value> </data>
+  <data name='Grow' xml:space='preserve'> <value>Crescer</value> </data>
+  <data name='Shrink' xml:space='preserve'> <value>Encolher</value> </data>
+  <data name='Move' xml:space='preserve'> <value>Mover</value> </data>
+  <data name='Transform' xml:space='preserve'> <value>Transformar</value> </data>
+  <data name='FreeTransform' xml:space='preserve'> <value>Transformação livre</value> </data>
+  <data name='DisplacementLiquefaction' xml:space='preserve'> <value>Liquefação de deslocamento</value> </data>
+  <data name='GradientMapping' xml:space='preserve'> <value>Mapeamento de gradiente</value> </data>
+  <data name='RippleEffect' xml:space='preserve'> <value>Efeito cascata</value> </data>
+  <data name='Threshold' xml:space='preserve'> <value>Limite</value> </data>
+  <data name='HSB' xml:space='preserve'> <value>Matiz, Saturação, Brilho</value> </data>
+  <data name='Gray' xml:space='preserve'> <value>Escala de cinza</value> </data>
+  <data name='Invert' xml:space='preserve'> <value>Inverter</value> </data>
+  <data name='Exposure' xml:space='preserve'> <value>Exposição</value> </data>
+  <data name='Brightness' xml:space='preserve'> <value>Brilho</value> </data>
+  <data name='Saturation' xml:space='preserve'> <value>Saturação</value> </data>
+  <data name='HueRotation' xml:space='preserve'> <value>Rotação de matiz</value> </data>
+  <data name='Contrast' xml:space='preserve'> <value>Contraste</value> </data>
+  <data name='Temperature' xml:space='preserve'> <value>Temperatura</value> </data>
+  <data name='HighlightsAndShadows' xml:space='preserve'> <value>Destaques e sombras</value> </data>
+  <data name='GammaTransfer' xml:space='preserve'> <value>Transferência gama</value> </data>
+  <data name='Vignette' xml:space='preserve'> <value>Vinheta</value> </data>
+  <data name='ColorMatrix' xml:space='preserve'> <value>Matriz de cores</value> </data>
+  <data name='ColorMatch' xml:space='preserve'> <value>Correspondência de cores</value> </data>
+  <data name='GaussianBlur' xml:space='preserve'> <value>Desfoque gaussiano</value> </data>
+  <data name='DirectionalBlur' xml:space='preserve'> <value>Desfoque direcional</value> </data>
+  <data name='Sharpen' xml:space='preserve'> <value>Aguçar</value> </data>
+  <data name='Shadow' xml:space='preserve'> <value>Sombra</value> </data>
+  <data name='EdgeDetection' xml:space='preserve'> <value>Detecção de borda</value> </data>
+  <data name='Morphology' xml:space='preserve'> <value>Morfologia</value> </data>
+  <data name='Emboss' xml:space='preserve'> <value>Emboss</value> </data>
+  <data name='Straighten' xml:space='preserve'> <value>Endireitar</value> </data>
+  <data name='Sepia' xml:space='preserve'> <value>Sépia</value> </data>
+  <data name='Posterize' xml:space='preserve'> <value>Posterizar</value> </data>
+  <data name='LuminanceToAlpha' xml:space='preserve'> <value>Luminância para Alpha</value> </data>
+  <data name='ChromaKey' xml:space='preserve'> <value>Chroma Chave</value> </data>
+  <data name='Border' xml:space='preserve'> <value>Fronteira</value> </data>
+  <data name='Colouring' xml:space='preserve'> <value>Coloração</value> </data>
+  <data name='Tint' xml:space='preserve'> <value>Tonalidade</value> </data>
+  <data name='DiscreteTransfer' xml:space='preserve'> <value>Transferência discreta</value> </data>
+  <data name='Lighting' xml:space='preserve'> <value>Iluminação</value> </data>
+  <data name='Fog' xml:space='preserve'> <value>Nevoeiro</value> </data>
+  <data name='Glass' xml:space='preserve'> <value>Vidro</value> </data>
+  <data name='PinchPunch' xml:space='preserve'> <value>Pinça Punch</value> </data>
+  <data name='MarqueeRectangular' xml:space='preserve'> <value>Retangular</value> </data>
+  <data name='MarqueeElliptical' xml:space='preserve'> <value>Elíptico</value> </data>
+  <data name='MarqueePolygon' xml:space='preserve'> <value>Polígono</value> </data>
+  <data name='MarqueeFreeHand' xml:space='preserve'> <value>Liberdade de ação</value> </data>
+  <data name='SelectionFlood' xml:space='preserve'> <value>Inundação</value> </data>
+  <data name='SelectionBrush' xml:space='preserve'> <value>Pincel de seleção</value> </data>
+  <data name='PaintBrush' xml:space='preserve'> <value>Pincel</value> </data>
+  <data name='PaintLine' xml:space='preserve'> <value>Linha</value> </data>
+  <data name='PaintBrushForce' xml:space='preserve'> <value>Pincel de força</value> </data>
+  <data name='PaintBrushMulti' xml:space='preserve'> <value>Multi-escova</value> </data>
+  <data name='Cursor' xml:space='preserve'> <value>Cursor</value> </data>
+  <data name='View' xml:space='preserve'> <value>Vista</value> </data>
+  <data name='Straw' xml:space='preserve'> <value>Palha</value> </data>
+  <data name='Fill' xml:space='preserve'> <value>Preencher</value> </data>
+  <data name='Brush' xml:space='preserve'> <value>Escova</value> </data>
+  <data name='Transparency' xml:space='preserve'> <value>Transparência</value> </data>
+  <data name='Image' xml:space='preserve'> <value>Imagem</value> </data>
+  <data name='Crop' xml:space='preserve'> <value>Colheita</value> </data>
+  <data name='Node' xml:space='preserve'> <value>Nodo</value> </data>
+  <data name='Pen' xml:space='preserve'> <value>Caneta</value> </data>
+  <data name='TextArtistic' xml:space='preserve'> <value>Texto artístico </value> </data>
+  <data name='TextFrame' xml:space='preserve'> <value>Texto do quadro </value> </data>
+  <data name='GeometryRectangle' xml:space='preserve'> <value>Retângulo</value> </data>
+  <data name='GeometryEllipse' xml:space='preserve'> <value>Elipse</value> </data>
+  <data name='GeometryRoundRect' xml:space='preserve'> <value>Retângulo arredondado</value> </data>
+  <data name='GeometryTriangle' xml:space='preserve'> <value>Triângulo</value> </data>
+  <data name='GeometryDiamond' xml:space='preserve'> <value>Diamante</value> </data>
+  <data name='GeometryPentagon' xml:space='preserve'> <value>Pentágono</value> </data>
+  <data name='GeometryStar' xml:space='preserve'> <value>Estrela</value> </data>
+  <data name='GeometryCog' xml:space='preserve'> <value>Engrenagem</value> </data>
+  <data name='GeometryDonut' xml:space='preserve'> <value>Donut</value> </data>
+  <data name='GeometryPie' xml:space='preserve'> <value>Torta</value> </data>
+  <data name='GeometryCookie' xml:space='preserve'> <value>Biscoito</value> </data>
+  <data name='GeometryArrow' xml:space='preserve'> <value>Flecha</value> </data>
+  <data name='GeometryCapsule' xml:space='preserve'> <value>Cápsula</value> </data>
+  <data name='GeometryHeart' xml:space='preserve'> <value>Coração</value> </data>
+  <data name='PatternGrid' xml:space='preserve'> <value>Grade</value> </data>
+  <data name='PatternDiagonal' xml:space='preserve'> <value>Diagonal</value> </data>
+  <data name='PatternSpotted' xml:space='preserve'> <value>Manchado</value> </data>
+  <data name='GeometryRectangleTransform' xml:space='preserve'> <value>Retângulo</value> </data>
+  <data name='GeometryEllipseTransform' xml:space='preserve'> <value>Elipse</value> </data>
+  <data name='GeometryRoundRectTransform' xml:space='preserve'> <value>Retângulo arredondado</value> </data>
+  <data name='GeometryTriangleTransform' xml:space='preserve'> <value>Triângulo</value> </data>
+  <data name='GeometryDiamondTransform' xml:space='preserve'> <value>Diamante</value> </data>
+  <data name='GeometryPentagonTransform' xml:space='preserve'> <value>Pentágono</value> </data>
+  <data name='GeometryStarTransform' xml:space='preserve'> <value>Estrela</value> </data>
+  <data name='GeometryCogTransform' xml:space='preserve'> <value>Engrenagem</value> </data>
+  <data name='GeometryDonutTransform' xml:space='preserve'> <value>Donut</value> </data>
+  <data name='GeometryPieTransform' xml:space='preserve'> <value>Torta</value> </data>
+  <data name='GeometryCookieTransform' xml:space='preserve'> <value>Biscoito</value> </data>
+  <data name='GeometryArrowTransform' xml:space='preserve'> <value>Flecha</value> </data>
+  <data name='GeometryCapsuleTransform' xml:space='preserve'> <value>Cápsula</value> </data>
+  <data name='GeometryHeartTransform' xml:space='preserve'> <value>Coração</value> </data>
+  <data name='PatternGridTransform' xml:space='preserve'> <value>Grade</value> </data>
+  <data name='PatternDiagonalTransform' xml:space='preserve'> <value>Diagonal</value> </data>
+  <data name='PatternSpottedTransform' xml:space='preserve'> <value>Manchado</value> </data>
+  <!--Separator 2-->
+  <data name='ResetRadian' xml:space='preserve'> <value>Redefine o ângulo de rotação</value> </data>
+  <data name='ResetScale' xml:space='preserve'> <value>Redefinir o zoom</value> </data>
+  <data name='InkErase' xml:space='preserve'> <value>borracha</value> </data>
+  <data name='InkGeneral' xml:space='preserve'> <value>rotina</value> </data>
+  <data name='InkTip' xml:space='preserve'> <value>Forma da ponta da caneta</value> </data>
+  <data name='InkLine' xml:space='preserve'> <value>linha reta</value> </data>
+  <data name='InkBlur' xml:space='preserve'> <value>obscuro</value> </data>
+  <data name='InkMosaic' xml:space='preserve'> <value>mosaico</value> </data>
+  <data name='InkLiquefy' xml:space='preserve'> <value>liquefazer</value> </data>
+  <data name='HarmonyComplementary' xml:space='preserve'> <value>Complementação</value> </data>
+  <data name='HarmonySplitComplementary' xml:space='preserve'> <value>Divisão de cores complementar</value> </data>
+  <data name='HarmonyAnalogous' xml:space='preserve'> <value>aproximado</value> </data>
+  <data name='HarmonyTriadic' xml:space='preserve'> <value>trissecção</value> </data>
+  <data name='HarmonyTetradic' xml:space='preserve'> <value>retângulo</value> </data>
+  <data name='CompositeAdd' xml:space='preserve'> <value>aumento</value> </data>
+  <data name='CompositeSubtract' xml:space='preserve'> <value>subtrair</value> </data>
+  <data name='CombineNew' xml:space='preserve'> <value>Novo</value> </data>
+  <data name='CombineUnion' xml:space='preserve'> <value>União</value> </data>
+  <data name='CombineExclude' xml:space='preserve'> <value>Excluir</value> </data>
+  <data name='CombineIntersect' xml:space='preserve'> <value>Cruzar-se</value> </data>
+  <data name='ArrowNone' xml:space='preserve'> <value>Nenhum</value> </data>
+  <data name='ArrowArrow' xml:space='preserve'> <value>Seta</value> </data>
+  <data name='GridGrid' xml:space='preserve'> <value>Grade</value> </data>
+  <data name='GridColumn' xml:space='preserve'> <value>Coluna</value> </data>
+  <data name='GridRow' xml:space='preserve'> <value>Remar</value> </data>
+  <data name='SymmetryX' xml:space='preserve'> <value>Simetria do eixo X</value> </data>
+  <data name='SymmetryY' xml:space='preserve'> <value>Simetria do eixo Y</value> </data>
+  <data name='SymmetryRadial' xml:space='preserve'> <value>Simetria de origem</value> </data>
+  <data name='MirrorRadial' xml:space='preserve'> <value>Simetria radial</value> </data>
+  <!--Separator 3-->
+  <data name='Blends_None' xml:space='preserve'> <value>Normal</value> </data>
+  <data name='Blends_Multiply' xml:space='preserve'> <value>Multiplicar</value> </data>
+  <data name='Blends_Screen' xml:space='preserve'> <value>Tela</value> </data>
+  <data name='Blends_Darken' xml:space='preserve'> <value>Escurecer</value> </data>
+  <data name='Blends_Lighten' xml:space='preserve'> <value>Aliviar</value> </data>
+  <data name='Blends_Dissolve' xml:space='preserve'> <value>Dissolver</value> </data>
+  <data name='Blends_ColorBurn' xml:space='preserve'> <value>Queimadura de cor</value> </data>
+  <data name='Blends_LinearBurn' xml:space='preserve'> <value>Queima linear</value> </data>
+  <data name='Blends_DarkerColor' xml:space='preserve'> <value>Cor mais escura</value> </data>
+  <data name='Blends_LighterColor' xml:space='preserve'> <value>Cor mais clara</value> </data>
+  <data name='Blends_ColorDodge' xml:space='preserve'> <value>Dodge Cor</value> </data>
+  <data name='Blends_LinearDodge' xml:space='preserve'> <value>Linear Dodge</value> </data>
+  <data name='Blends_Overlay' xml:space='preserve'> <value>Recobrir</value> </data>
+  <data name='Blends_SoftLight' xml:space='preserve'> <value>Luz suave</value> </data>
+  <data name='Blends_HardLight' xml:space='preserve'> <value>Luz dura</value> </data>
+  <data name='Blends_VividLight' xml:space='preserve'> <value>Luz Vívida</value> </data>
+  <data name='Blends_LinearLight' xml:space='preserve'> <value>Luz Linear</value> </data>
+  <data name='Blends_PinLight' xml:space='preserve'> <value>Luz de pinos</value> </data>
+  <data name='Blends_HardMix' xml:space='preserve'> <value>Mistura Dura</value> </data>
+  <data name='Blends_Difference' xml:space='preserve'> <value>Diferença</value> </data>
+  <data name='Blends_Exclusion' xml:space='preserve'> <value>Exclusão</value> </data>
+  <data name='Blends_Hue' xml:space='preserve'> <value>Matiz</value> </data>
+  <data name='Blends_Saturation' xml:space='preserve'> <value>Saturação</value> </data>
+  <data name='Blends_Color' xml:space='preserve'> <value>Cor</value> </data>
+  <data name='Blends_Luminosity' xml:space='preserve'> <value>Luminosidade</value> </data>
+  <data name='Blends_Subtract' xml:space='preserve'> <value>Subtrair</value> </data>
+  <data name='Blends_Division' xml:space='preserve'> <value>Divisão</value> </data>
+  <!--Separator 4-->
+  <data name='Layer_Bitmap' xml:space='preserve'> <value>Camada de bitmap</value> </data>
+  <data name='Layer_Image' xml:space='preserve'> <value>Camada de imagem</value> </data>
+  <data name='Layer_Text' xml:space='preserve'> <value>Camada de texto</value> </data>
+  <data name='Layer_Group' xml:space='preserve'> <value>Camada de grupo</value> </data>
+  <data name='Layer_Curve' xml:space='preserve'> <value>Camada de curva</value> </data>
+  <data name='Layer_Fill' xml:space='preserve'> <value>Camada de preenchimento</value> </data>
+  <!--Separator 5-->
+  <data name='Brush_Erase' xml:space='preserve'> <value>borracha</value> </data>
+  <data name='Brush_Paint' xml:space='preserve'> <value>pintura</value> </data>
+  <data name='Brush_Fx' xml:space='preserve'> <value>efeito especial</value> </data>
+  <data name='Brush_Others' xml:space='preserve'> <value>outro</value> </data>
+  <!--Separator 6-->
+  <data name='Hardness_None' xml:space='preserve'> <value>Nenhum</value> </data>
+  <data name='Hardness_Cosine' xml:space='preserve'> <value>Co-seno</value> </data>
+  <data name='Hardness_Quadratic' xml:space='preserve'> <value>Quadrático</value> </data>
+  <data name='Hardness_Cube' xml:space='preserve'> <value>Cubo</value> </data>
+  <data name='Hardness_Quartic' xml:space='preserve'> <value>Quartic</value> </data>
+  <!--Separator 7-->
+  <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>Vizinho mais próximo</value> </data>
+  <data name='Interpolation_Linear' xml:space='preserve'> <value>Linear</value> </data>
+  <data name='Interpolation_Cubic' xml:space='preserve'> <value>Cúbico</value> </data>
+  <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>Multi Amostra Linear</value> </data>
+  <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>Anisotrópico</value> </data>
+  <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>Cúbico de alta qualidade</value> </data>
+  <!--Separator 8-->
+  <data name='Tip_NoLayer' xml:space='preserve'> <value>Sem camada</value> </data>
+  <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>Não camada de bitmap</value> </data>
+  <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>Não camada de curva</value> </data>
+  <data name='Tip_NoPixel' xml:space='preserve'> <value>Sem pixel</value> </data>
+  <data name='Tip_NoPixelForMarquee' xml:space='preserve'> <value>Sem pixel</value> </data>
+  <data name='Tip_NoPixelForBitmapLayer' xml:space='preserve'> <value>Sem pixel</value> </data>
+  <data name='Tip_NoPaintTool' xml:space='preserve'> <value>Ferramenta Pincel</value> </data>
+  <data name='Tip_Spread' xml:space='preserve'> <value>Espalhar</value> </data>
+  <data name='Tip_Zoom' xml:space='preserve'> <value>Zoom</value> </data>
+  <data name='Tip_Undo' xml:space='preserve'> <value>Desfazer</value> </data>
+  <data name='Tip_Redo' xml:space='preserve'> <value>Refazer</value> </data>
+  <data name='Tip_Saving' xml:space='preserve'> <value>Preservação...</value> </data>
+  <data name='Tip_SaveSuccess' xml:space='preserve'> <value>Salvo com êxito</value> </data>
+  <data name='Tip_SaveFailed' xml:space='preserve'> <value>Falha ao salvar</value> </data>
+  <data name='Tip_NoFile' xml:space='preserve'> <value>Arquivo não encontrado</value> </data>
+  <data name='Tip_NoFolder' xml:space='preserve'> <value>Pasta não encontrada</value> </data>
+  <data name='Tip_NoSupport' xml:space='preserve'> <value>Não há suporte para tipos de arquivo</value> </data>
+  <data name='Tip_NoCompatible' xml:space='preserve'> <value>Não compatível</value> </data>
+  <!--Separator 9-->
+  <data name='SubTip_NoLayer' xml:space='preserve'> <value>Criar uma nova camada?</value> </data>
+  <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>Só pode operar na camada de bitmap</value> </data>
+  <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>Só pode operar na Camada de Curva</value> </data>
+  <data name='SubTip_NoPixel' xml:space='preserve'> <value>O pixel atual é transparente</value> </data>
+  <data name='SubTip_NoPixelForMarquee' xml:space='preserve'> <value>A Letreiro é Transparente</value> </data>
+  <data name='SubTip_NoPixelForBitmapLayer' xml:space='preserve'> <value>A camada de bitmap atual é transparente</value> </data>
+  <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>As predefinições de pincel só podem ser usadas com a Ferramenta de pintura</value> </data>
+  <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Tentar novamente?</value> </data>
+  <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Não é compatível com recursos de GPU.</value> </data>
+  <!--Separator 10-->
+  <data name='Layer_Property' xml:space='preserve'> <value>atributo</value> </data>
+  <data name='Layer_Property_Opacity' xml:space='preserve'> <value>Opacidade</value> </data>
+  <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>Modo de mesclagem</value> </data>
+  <data name='Layer_Property_TagType' xml:space='preserve'> <value>Tipo de tag</value> </data>
+  <data name='Paint_Scratchpad' xml:space='preserve'> <value>Memorando</value> </data>
+  <data name='Paint_Property' xml:space='preserve'> <value>atributo</value> </data>
+  <data name='Paint_Property_Size' xml:space='preserve'> <value>Tamanho</value> </data>
+  <data name='Paint_Property_Opacity' xml:space='preserve'> <value>Opacidade</value> </data>
+  <data name='Paint_Property_Spacing' xml:space='preserve'> <value>Espaçamento</value> </data>
+  <data name='Paint_Property_Flow' xml:space='preserve'> <value>Fluir</value> </data>
+  <data name='Paint_Property_MinSize' xml:space='preserve'> <value>Tamanho mínimo</value> </data>
+  <data name='Paint_Property_MinFlow' xml:space='preserve'> <value>Fluxo Mínimo</value> </data>
+  <data name='Paint_Property_Tip' xml:space='preserve'> <value>Forma da ponta</value> </data>
+  <data name='Paint_Property_Hardness' xml:space='preserve'> <value>Dureza</value> </data>
+  <data name='Paint_Texture' xml:space='preserve'> <value>textura</value> </data>
+  <data name='Paint_Texture_Shape' xml:space='preserve'> <value>Forma</value> </data>
+  <data name='Paint_Texture_Rotate' xml:space='preserve'> <value>Girar para traçar</value> </data>
+  <data name='Paint_Texture_Grain' xml:space='preserve'> <value>Grão</value> </data>
+  <data name='Paint_Texture_Scale' xml:space='preserve'> <value>zoom</value> </data>
+  <data name='Paint_Texture_Import' xml:space='preserve'> <value>Importação...</value> </data>
+  <data name='Paint_Texture_Recolor' xml:space='preserve'> <value>Recolorir</value> </data>
+  <data name='Paint_Texture_Remove' xml:space='preserve'> <value>Retirar</value> </data>
+  <data name='Paint_Texture_BlendMode' xml:space='preserve'> <value>Modo de mesclagem</value> </data>
+  <data name='Paint_Mix' xml:space='preserve'> <value>Misturar cores</value> </data>
+  <data name='Paint_Mix_Mix' xml:space='preserve'> <value>Misturar</value> </data>
+  <data name='Paint_Mix_Wet' xml:space='preserve'> <value>Molhado</value> </data>
+  <data name='Paint_Mix_Persistence' xml:space='preserve'> <value>Persistência</value> </data>
+  <data name='Effect_Apply' xml:space='preserve'> <value>Aplicar novamente</value> </data>
+  <data name='Color_Straw' xml:space='preserve'> <value>Palha</value> </data>
+  <data name='Color_Wheel' xml:space='preserve'> <value>Roda de Cores</value> </data>
+  <data name='Color_Box' xml:space='preserve'> <value>Caixa de cores</value> </data>
+  <data name='Color_Palette' xml:space='preserve'> <value>Paleta</value> </data>
+  <data name='Color_Parameter' xml:space='preserve'> <value>Parâmetro</value> </data>
+  <data name='Color_Alpha' xml:space='preserve'> <value>Alfa</value> </data>
+  <data name='Color_Red' xml:space='preserve'> <value>vermelho</value> </data>
+  <data name='Color_Green' xml:space='preserve'> <value>Verde</value> </data>
+  <data name='Color_Blue' xml:space='preserve'> <value>Azul</value> </data>
+  <data name='Color_Hue' xml:space='preserve'> <value>Matiz</value> </data>
+  <data name='Color_Saturation' xml:space='preserve'> <value>Saturação</value> </data>
+  <data name='Color_Value' xml:space='preserve'> <value>valor</value> </data>
+  <data name='Color_Hex' xml:space='preserve'> <value>Enfeitiçar</value> </data>
+  <!--Separator 11-->
+  <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
+  <data name='Export_Object' xml:space='preserve'> <value>Objeto exportado</value> </data>
+  <data name='Export_Object_Image' xml:space='preserve'> <value>Imagem</value> </data>
+  <data name='Export_Object_Layers' xml:space='preserve'> <value>Todas as camadas</value> </data>
+  <data name='Export_Object_Layer' xml:space='preserve'> <value>Camada atual</value> </data>
+  <data name='Extend_Indicator' xml:space='preserve'> <value>Âncora para Canvas</value> </data>
+  <data name='Stretch_Interpolation' xml:space='preserve'> <value>Interpolação</value> </data>
+  <data name='Texture' xml:space='preserve'> <value>textura</value> </data>
+  <!--Separator 12-->
+  <data name='NewProject' xml:space='preserve'> <value>Criar um novo projeto</value> </data>
+  <data name='NewImage' xml:space='preserve'> <value>Criar a partir de imagens</value> </data>
+  <data name='NewFolder' xml:space='preserve'> <value>Nova pasta</value> </data>
+  <data name='DupliateProject' xml:space='preserve'> <value>Projeto(s) dupliate</value> </data>
+  <data name='DupliateProject_Subtitle' xml:space='preserve'> <value>Selecione o(s) projeto(s) que você deseja duplicar.</value> </data>
+  <data name='DeleteProject' xml:space='preserve'> <value>Excluir projeto(s)</value> </data>
+  <data name='DeleteProject_Subtitle' xml:space='preserve'> <value>Selecione o(s) projeto(s) que você deseja excluir.</value> </data>
+  <data name='SelectProject' xml:space='preserve'> <value>Selecionar projeto(s)</value> </data>
+  <data name='SelectProject_Subtitle' xml:space='preserve'> <value>Selecione o(s) projeto(s) que você deseja mover.</value> </data>
+  <data name='MoveProject' xml:space='preserve'> <value>Mover projeto(s)</value> </data>
+  <data name='MoveProject_Subtitle' xml:space='preserve'> <value>Mova o(s) projeto(s) para esta pasta.</value> </data>
+  <data name='RenameProject' xml:space='preserve'> <value>Renomear</value> </data>
+  <!--Separator 13-->
+  <data name='Main_Documentation' xml:space='preserve'> <value>Abrir a página da web do documento</value> </data>
+  <data name='Main_Setting' xml:space='preserve'> <value>Abra a página de configurações</value> </data>
+  <data name='Main_Home' xml:space='preserve'> <value>página inicial</value> </data>
+  <data name='Main_Back' xml:space='preserve'> <value>retornar</value> </data>
+  <data name='Main_Type' xml:space='preserve'> <value>Tipo</value> </data>
+  <data name='Main_Date' xml:space='preserve'> <value>Data de Criação</value> </data>
+  <data name='Main_Name' xml:space='preserve'> <value>Nome</value> </data>
+  <data name='Theme' xml:space='preserve'> <value>Tema</value> </data>
+  <data name='Theme_Light' xml:space='preserve'> <value>Claro</value> </data>
+  <data name='Theme_Dark' xml:space='preserve'> <value>Escuro</value> </data>
+  <data name='Theme_UseSystem' xml:space='preserve'> <value>Sistema de uso</value> </data>
+  <data name='Language' xml:space='preserve'> <value>Língua</value> </data>
+  <data name='Language_Tip' xml:space='preserve'> <value>Reinicie o aplicativo para ver as alterações.</value> </data>
+  <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Usar configuração do sistema</value> </data>
+  <data name='LocalFolder' xml:space='preserve'> <value>Pasta lo cal</value> </data>
+  <data name='LocalFolder_Open' xml:space='preserve'> <value>Abrir</value> </data>
+  <!--Separator 14-->
+  <data name='CropCanvas_Radians' xml:space='preserve'> <value>Radianos</value> </data>
+  <data name='Transform_Snap' xml:space='preserve'> <value>adsorção</value> </data>
+  <data name='Transform_Ratio' xml:space='preserve'> <value>Proporção igual</value> </data>
+  <data name='Transform_Center' xml:space='preserve'> <value>Centro</value> </data>
+  <data name='Transform_X' xml:space='preserve'> <value>X</value> </data>
+  <data name='Transform_Y' xml:space='preserve'> <value>Y</value> </data>
+  <data name='Transform_W' xml:space='preserve'> <value>Largura</value> </data>
+  <data name='Transform_H' xml:space='preserve'> <value>Altura</value> </data>
+  <data name='DisplacementLiquefaction_Tool' xml:space='preserve'> <value>Ferramenta</value> </data>
+  <data name='DisplacementLiquefaction_Push' xml:space='preserve'> <value>Empurrar</value> </data>
+  <data name='DisplacementLiquefaction_Pinch' xml:space='preserve'> <value>Beliscar</value> </data>
+  <data name='DisplacementLiquefaction_Expand' xml:space='preserve'> <value>Expandir</value> </data>
+  <data name='DisplacementLiquefaction_TwirlLeft' xml:space='preserve'> <value>Girar à esquerda</value> </data>
+  <data name='DisplacementLiquefaction_TwirlRight' xml:space='preserve'> <value>Girar à direita</value> </data>
+  <data name='DisplacementLiquefaction_Reset' xml:space='preserve'> <value>Repor</value> </data>
+  <data name='DisplacementLiquefaction_Size' xml:space='preserve'> <value>Tamanho</value> </data>
+  <data name='DisplacementLiquefaction_Pressure' xml:space='preserve'> <value>Pressão</value> </data>
+  <data name='GradientMapping_DropRemove' xml:space='preserve'> <value>Soltar para remover</value> </data>
+  <data name='RippleEffect_Frequency' xml:space='preserve'> <value>Frequência</value> </data>
+  <data name='RippleEffect_Phase' xml:space='preserve'> <value>Fase</value> </data>
+  <data name='RippleEffect_Amplitude' xml:space='preserve'> <value>Amplitude</value> </data>
+  <data name='Threshold_Reverse' xml:space='preserve'> <value>Inverter</value> </data>
+  <data name='HSB_Hue' xml:space='preserve'> <value>Matiz</value> </data>
+  <data name='HSB_Saturation' xml:space='preserve'> <value>Saturação</value> </data>
+  <data name='HSB_Brightness' xml:space='preserve'> <value>Brilho</value> </data>
+  <data name='HueRotation_Angle' xml:space='preserve'> <value>Ângulo</value> </data>
+  <data name='Temperature_Tint' xml:space='preserve'> <value>Tonalidade</value> </data>
+  <data name='HighlightsAndShadows_Shadows' xml:space='preserve'> <value>Sombras</value> </data>
+  <data name='HighlightsAndShadows_Highlights' xml:space='preserve'> <value>Destaques</value> </data>
+  <data name='HighlightsAndShadows_Clarity' xml:space='preserve'> <value>Clareza</value> </data>
+  <data name='HighlightsAndShadows_Blur' xml:space='preserve'> <value>Borrão</value> </data>
+  <data name='GammaTransfer_ChannelSelect' xml:space='preserve'> <value>Seleção de canal</value> </data>
+  <data name='GammaTransfer_Alpha' xml:space='preserve'> <value>Alfa</value> </data>
+  <data name='GammaTransfer_Red' xml:space='preserve'> <value>Vermelho</value> </data>
+  <data name='GammaTransfer_Green' xml:space='preserve'> <value>Verde</value> </data>
+  <data name='GammaTransfer_Blue' xml:space='preserve'> <value>Azul</value> </data>
+  <data name='GammaTransfer_Amplitude' xml:space='preserve'> <value>Amplitude</value> </data>
+  <data name='GammaTransfer_Exponent' xml:space='preserve'> <value>Expoente</value> </data>
+  <data name='GammaTransfer_Offset' xml:space='preserve'> <value>Offset</value> </data>
+  <data name='Vignette_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='GaussianBlur_BlurAmount' xml:space='preserve'> <value>Quantidade de desfoque</value> </data>
+  <data name='DirectionalBlur_BlurAmount' xml:space='preserve'> <value>Quantidade de desfoque</value> </data>
+  <data name='DirectionalBlur_Angle' xml:space='preserve'> <value>Ângulo</value> </data>
+  <data name='Sharpen_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='Shadow_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='Shadow_Opacity' xml:space='preserve'> <value>Opacidade</value> </data>
+  <data name='Shadow_X' xml:space='preserve'> <value>X</value> </data>
+  <data name='Shadow_Y' xml:space='preserve'> <value>Y</value> </data>
+  <data name='EdgeDetection_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='EdgeDetection_BlurAmount' xml:space='preserve'> <value>Quantidade de desfoque</value> </data>
+  <data name='EdgeDetection_OverlayEdges' xml:space='preserve'> <value>Bordas de sobreposição</value> </data>
+  <data name='Morphology_Size' xml:space='preserve'> <value>Tamanho</value> </data>
+  <data name='Emboss_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='Emboss_Angle' xml:space='preserve'> <value>Ângulo</value> </data>
+  <data name='Straighten_Angle' xml:space='preserve'> <value>Ângulo</value> </data>
+  <data name='Posterize_Count' xml:space='preserve'> <value>ordens de magnitude</value> </data>
+  <data name='LuminanceToAlpha_Background' xml:space='preserve'> <value>Fundo</value> </data>
+  <data name='LuminanceToAlpha_Normal' xml:space='preserve'> <value>Normal</value> </data>
+  <data name='LuminanceToAlpha_WhitePaper' xml:space='preserve'> <value>Branco</value> </data>
+  <data name='LuminanceToAlpha_BlackPaper' xml:space='preserve'> <value>Papel preto</value> </data>
+  <data name='ChromaKey_Tolerance' xml:space='preserve'> <value>Tolerância</value> </data>
+  <data name='ChromaKey_Invert' xml:space='preserve'> <value>reversão</value> </data>
+  <data name='ChromaKey_Feather' xml:space='preserve'> <value>Pena</value> </data>
+  <data name='Border_EdgeBehaviorX' xml:space='preserve'> <value>Comportamento da borda do eixo X</value> </data>
+  <data name='Border_EdgeBehaviorY' xml:space='preserve'> <value>Comportamento da borda do eixo Y</value> </data>
+  <data name='Border_Clamp' xml:space='preserve'> <value>embrulhar</value> </data>
+  <data name='Border_Wrap' xml:space='preserve'> <value>Quebra de linha</value> </data>
+  <data name='Border_Mirror' xml:space='preserve'> <value>imagem espelhada</value> </data>
+  <data name='Colouring_Angle' xml:space='preserve'> <value>Ângulo</value> </data>
+  <data name='Lighting_Distance' xml:space='preserve'> <value>Distância</value> </data>
+  <data name='Lighting_Angle' xml:space='preserve'> <value>Ângulo</value> </data>
+  <data name='Lighting_Ambient' xml:space='preserve'> <value>Ambiente</value> </data>
+  <data name='Fog_ScaleFactor' xml:space='preserve'> <value>Razão de escala</value> </data>
+  <data name='Fog_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='Glass_ScaleFactor' xml:space='preserve'> <value>Razão de escala</value> </data>
+  <data name='Glass_Amount' xml:space='preserve'> <value>Quantidade</value> </data>
+  <data name='SelectionFlood_Tolerance' xml:space='preserve'> <value>Tolerância</value> </data>
+  <data name='SelectionFlood_Contiguous' xml:space='preserve'> <value>Enrolada</value> </data>
+  <data name='SelectionFlood_Feather' xml:space='preserve'> <value>Pena</value> </data>
+  <data name='SelectionBrush_Size' xml:space='preserve'> <value>Tamanho</value> </data>
+  <data name='Paint_Size' xml:space='preserve'> <value>Tamanho</value> </data>
+  <data name='Paint_Opacity' xml:space='preserve'> <value>Opacidade</value> </data>
+  <data name='PaintBrushMulti_Sectors' xml:space='preserve'> <value>setor </value> </data>
+  <data name='View_Radian' xml:space='preserve'> <value>Radianos</value> </data>
+  <data name='View_Scale' xml:space='preserve'> <value>zoom</value> </data>
+  <data name='Straw_Object' xml:space='preserve'> <value>Objeto</value> </data>
+  <data name='Straw_Layers' xml:space='preserve'> <value>Todas as camadas</value> </data>
+  <data name='Straw_Layer' xml:space='preserve'> <value>Camada atual</value> </data>
+  <data name='Brush_GradientType' xml:space='preserve'> <value>Tipo de gradiente</value> </data>
+  <data name='Brush_Linear' xml:space='preserve'> <value>Linear</value> </data>
+  <data name='Brush_Radial' xml:space='preserve'> <value>Radial</value> </data>
+  <data name='Brush_Elliptical' xml:space='preserve'> <value>Elíptico</value> </data>
+  <data name='Brush_Opaque' xml:space='preserve'> <value>Opaco</value> </data>
+  <data name='Brush_Reverse' xml:space='preserve'> <value>Inverter</value> </data>
+  <data name='Transparency_TransparencyType' xml:space='preserve'> <value>Tipo de transparência</value> </data>
+  <data name='Transparency_Reverse' xml:space='preserve'> <value>Inverter</value> </data>
+  <data name='Pen_SegmentType' xml:space='preserve'> <value>Tipo de segmento</value> </data>
+  <data name='Pen_Curve' xml:space='preserve'> <value>Curva</value> </data>
+  <data name='Pen_Line' xml:space='preserve'> <value>Linha</value> </data>
+  <data name='Pen_Close' xml:space='preserve'> <value>Fechar</value> </data>
+  <data name='GeometryRoundRect_Corner' xml:space='preserve'> <value>Canto</value> </data>
+  <data name='GeometryTriangle_CenterPoint' xml:space='preserve'> <value>Ponto Central</value> </data>
+  <data name='GeometryDiamond_MidPoint' xml:space='preserve'> <value>Ponto Médio</value> </data>
+  <data name='GeometryPentagon_Points' xml:space='preserve'> <value>Pontos</value> </data>
+  <data name='GeometryStar_Points' xml:space='preserve'> <value>Pontos</value> </data>
+  <data name='GeometryStar_InnerRadius' xml:space='preserve'> <value>Raio interno</value> </data>
+  <data name='GeometryDonut_HoleRadius' xml:space='preserve'> <value>Raio do furo</value> </data>
+  <data name='GeometryCog_Count' xml:space='preserve'> <value>Contar</value> </data>
+  <data name='GeometryCog_InnerRadius' xml:space='preserve'> <value>Raio interno</value> </data>
+  <data name='GeometryCog_Tooth' xml:space='preserve'> <value>Dente</value> </data>
+  <data name='GeometryCog_Notch' xml:space='preserve'> <value>Entalhe</value> </data>
+  <data name='GeometryPie_SweepAngle' xml:space='preserve'> <value>Ângulo de varredura</value> </data>
+  <data name='GeometryCookie_InnerRadius' xml:space='preserve'> <value>Raio interno</value> </data>
+  <data name='GeometryCookie_SweepAngle' xml:space='preserve'> <value>Ângulo de varredura</value> </data>
+  <data name='GeometryArrow_Width' xml:space='preserve'> <value>Largura</value> </data>
+  <data name='GeometryHeart_Spread' xml:space='preserve'> <value>Espalhar</value> </data>
+  <data name='PatternGrid_StrokeWidth' xml:space='preserve'> <value>Largura do traçado</value> </data>
+  <data name='PatternGrid_ColumnSpan' xml:space='preserve'> <value>Extensão da coluna</value> </data>
+  <data name='PatternGrid_RowSpan' xml:space='preserve'> <value>Extensão da linha</value> </data>
+  <data name='PatternDiagonal_Frequency' xml:space='preserve'> <value>Frequência</value> </data>
+  <data name='PatternDiagonal_Phase' xml:space='preserve'> <value>Fase</value> </data>
+  <data name='PatternDiagonal_Amplitude' xml:space='preserve'> <value>Amplitude</value> </data>
+  <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Raio</value> </data>
+  <data name='PatternSpotted_Span' xml:space='preserve'> <value>Palmo</value> </data>
+  <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Desvanecer</value> </data>
+ </root>

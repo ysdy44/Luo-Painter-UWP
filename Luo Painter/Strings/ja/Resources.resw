@@ -1,0 +1,589 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <xsd:schema id='root' xmlns='' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:msdata='urn:schemas-microsoft-com:xml-msdata'>
+    <xsd:import namespace='http://www.w3.org/XML/1998/namespace' />
+    <xsd:element name='root' msdata:IsDataSet='true'>
+      <xsd:complexType>
+        <xsd:choice maxOccurs='unbounded'>
+          <xsd:element name='metadata'>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name='value' type='xsd:string' minOccurs='0' />
+              </xsd:sequence>
+              <xsd:attribute name='name' use='required' type='xsd:string' />
+              <xsd:attribute name='type' type='xsd:string' />
+              <xsd:attribute name='mimetype' type='xsd:string' />
+              <xsd:attribute ref='xml:space' />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name='assembly'>
+            <xsd:complexType>
+              <xsd:attribute name='alias' type='xsd:string' />
+              <xsd:attribute name='name' type='xsd:string' />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name='data'>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name='value' type='xsd:string' minOccurs='0' msdata:Ordinal='1' />
+                <xsd:element name='comment' type='xsd:string' minOccurs='0' msdata:Ordinal='2' />
+              </xsd:sequence>
+              <xsd:attribute name='name' type='xsd:string' use='required' msdata:Ordinal='1' />
+              <xsd:attribute name='type' type='xsd:string' msdata:Ordinal='3' />
+              <xsd:attribute name='mimetype' type='xsd:string' msdata:Ordinal='4' />
+              <xsd:attribute ref='xml:space' />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name='resheader'>
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name='value' type='xsd:string' minOccurs='0' msdata:Ordinal='1' />
+              </xsd:sequence>
+              <xsd:attribute name='name' type='xsd:string' use='required' />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name='resmimetype'>
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name='version'>
+    <value>2.0</value>
+  </resheader>
+  <resheader name='reader'>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name='writer'>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!--Separator 0-->
+  <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.0.0</value> </data>
+  <data name='InputText' xml:space='preserve'> <value>テキストを入力してください</value> </data>
+  <data name='Untitled' xml:space='preserve'> <value>無題</value> </data>
+  <data name='UntitledFolder' xml:space='preserve'> <value>新しいフォルダ</value> </data>
+  <data name='GithubLink' xml:space='preserve'> <value>https://github.com/ysdy44/Luo-Painter-UWP</value> </data>
+  <data name='FeedbackLink' xml:space='preserve'> <value>ysdy44@outlook.com</value> </data>
+  <data name='Github' xml:space='preserve'> <value>Github</value> </data>
+  <data name='Feedback' xml:space='preserve'> <value>フィードバック</value> </data>
+  <data name='Apply' xml:space='preserve'> <value>申し込む</value> </data>
+  <data name='Back' xml:space='preserve'> <value>バック</value> </data>
+  <data name='OK' xml:space='preserve'> <value>OK</value> </data>
+  <data name='Cancel' xml:space='preserve'> <value>キャンセル</value> </data>
+  <data name='X' xml:space='preserve'> <value>X</value> </data>
+  <data name='Y' xml:space='preserve'> <value>Y</value> </data>
+  <data name='Width' xml:space='preserve'> <value>幅</value> </data>
+  <data name='Height' xml:space='preserve'> <value>高さ</value> </data>
+  <!--Separator 1-->
+  <data name='Home' xml:space='preserve'> <value>ホーム</value> </data>
+  <data name='Close' xml:space='preserve'> <value>閉じる</value> </data>
+  <data name='Save' xml:space='preserve'> <value>保存</value> </data>
+  <data name='Export' xml:space='preserve'> <value>エクスポート</value> </data>
+  <data name='Undo' xml:space='preserve'> <value>元に戻す</value> </data>
+  <data name='Redo' xml:space='preserve'> <value>やり直し</value> </data>
+  <data name='FullScreen' xml:space='preserve'> <value>やり直し</value> </data>
+  <data name='UnFullScreen' xml:space='preserve'> <value>フルスクリーンを終了</value> </data>
+  <data name='JPEG' xml:space='preserve'> <value>JPEG</value> </data>
+  <data name='PNG' xml:space='preserve'> <value>PNG</value> </data>
+  <data name='BMP' xml:space='preserve'> <value>BMP</value> </data>
+  <data name='GIF' xml:space='preserve'> <value>GIF</value> </data>
+  <data name='TIFF' xml:space='preserve'> <value>TIFF</value> </data>
+  <data name='Cut' xml:space='preserve'> <value>切り取り</value> </data>
+  <data name='Copy' xml:space='preserve'> <value>コピー</value> </data>
+  <data name='Paste' xml:space='preserve'> <value>貼り付け</value> </data>
+  <data name='Clear' xml:space='preserve'> <value>クリア</value> </data>
+  <data name='DockLeft' xml:space='preserve'> <value>左側をドッキング</value> </data>
+  <data name='DockRight' xml:space='preserve'> <value>右側をドッキングします</value> </data>
+  <data name='FileMenu' xml:space='preserve'> <value>ファイル</value> </data>
+  <data name='ExportMenu' xml:space='preserve'> <value>書き出す</value> </data>
+  <data name='HistogramMenu' xml:space='preserve'> <value>ヒストグラム</value> </data>
+  <data name='ColorMenu' xml:space='preserve'> <value>色</value> </data>
+  <data name='ColorHarmonyMenu' xml:space='preserve'> <value>調和</value> </data>
+  <data name='EditMenu' xml:space='preserve'> <value>編集</value> </data>
+  <data name='AdjustmentMenu' xml:space='preserve'> <value>調整する</value> </data>
+  <data name='OtherMenu' xml:space='preserve'> <value>他</value> </data>
+  <data name='PaintMenu' xml:space='preserve'> <value>絵画</value> </data>
+  <data name='BrushMenu' xml:space='preserve'> <value>みがきます</value> </data>
+  <data name='SizeMenu' xml:space='preserve'> <value>大きさ</value> </data>
+  <data name='EffectMenu' xml:space='preserve'> <value>特殊効果</value> </data>
+  <data name='HistoryMenu' xml:space='preserve'> <value>歴史</value> </data>
+  <data name='ToolMenu' xml:space='preserve'> <value>ツール</value> </data>
+  <data name='LayerMenu' xml:space='preserve'> <value>レイヤー</value> </data>
+  <data name='LayerNewMenu' xml:space='preserve'> <value>新着</value> </data>
+  <data name='LayerPropertyMenu' xml:space='preserve'> <value>属性</value> </data>
+  <data name='LayerRenameMenu' xml:space='preserve'> <value>名前を変更する</value> </data>
+  <data name='CropCanvas' xml:space='preserve'> <value>キャンバスの切り抜き</value> </data>
+  <data name='ResizeCanvas' xml:space='preserve'> <value>キャンバスのサイズ変更</value> </data>
+  <data name='RotateCanvas' xml:space='preserve'> <value>キャンバスの回転</value> </data>
+  <data name='Stretch' xml:space='preserve'> <value>伸ばす</value> </data>
+  <data name='Extend' xml:space='preserve'> <value>延長</value> </data>
+  <data name='Offset' xml:space='preserve'> <value>オフセット</value> </data>
+  <data name='FlipHorizontal' xml:space='preserve'> <value>水平反転</value> </data>
+  <data name='FlipVertical' xml:space='preserve'> <value>垂直反転</value> </data>
+  <data name='LeftTurn' xml:space='preserve'> <value>左折</value> </data>
+  <data name='RightTurn' xml:space='preserve'> <value>右折</value> </data>
+  <data name='OverTurn' xml:space='preserve'> <value>ターンオーバー</value> </data>
+  <data name='AddLayer' xml:space='preserve'> <value>レイヤーの追加</value> </data>
+  <data name='AddBitmapLayer' xml:space='preserve'> <value>ビットマップレイヤーの追加</value> </data>
+  <data name='AddImageLayer' xml:space='preserve'> <value>画像レイヤーの追加</value> </data>
+  <data name='AddCurveLayer' xml:space='preserve'> <value>カーブレイヤーの追加</value> </data>
+  <data name='AddFillLayer' xml:space='preserve'> <value>塗りつぶしレイヤーの追加</value> </data>
+  <data name='CutLayer' xml:space='preserve'> <value>カット層</value> </data>
+  <data name='CopyLayer' xml:space='preserve'> <value>レイヤーのコピー</value> </data>
+  <data name='PasteLayer' xml:space='preserve'> <value>レイヤーの貼り付け</value> </data>
+  <data name='Remove' xml:space='preserve'> <value>削除</value> </data>
+  <data name='Duplicate' xml:space='preserve'> <value>デュプリケート</value> </data>
+  <data name='Extract' xml:space='preserve'> <value>抜く</value> </data>
+  <data name='Merge' xml:space='preserve'> <value>マージ</value> </data>
+  <data name='Flatten' xml:space='preserve'> <value>フラット化</value> </data>
+  <data name='Group' xml:space='preserve'> <value>グループ</value> </data>
+  <data name='Ungroup' xml:space='preserve'> <value>グループを解除</value> </data>
+  <data name='Release' xml:space='preserve'> <value>リリース</value> </data>
+  <data name='Union' xml:space='preserve'> <value>和集合</value> </data>
+  <data name='Exclude' xml:space='preserve'> <value>除外</value> </data>
+  <data name='Xor' xml:space='preserve'> <value>クソル</value> </data>
+  <data name='Intersect' xml:space='preserve'> <value>交わる</value> </data>
+  <data name='ExpandStroke' xml:space='preserve'> <value>ストロークを拡大</value> </data>
+  <data name='MirrorHorizontally' xml:space='preserve'> <value>水平ミラー</value> </data>
+  <data name='MirrorVertically' xml:space='preserve'> <value>ミラー垂直</value> </data>
+  <data name='RotateLeft' xml:space='preserve'> <value>左に回転</value> </data>
+  <data name='RotateRight' xml:space='preserve'> <value>右に回転</value> </data>
+  <data name='BackOne' xml:space='preserve'> <value>バックワン</value> </data>
+  <data name='ForwardOne' xml:space='preserve'> <value>フォワードワン</value> </data>
+  <data name='MoveBack' xml:space='preserve'> <value>繰り下がる</value> </data>
+  <data name='MoveFront' xml:space='preserve'> <value>前面に移動</value> </data>
+  <data name='AlignLeft' xml:space='preserve'> <value>左揃え</value> </data>
+  <data name='AlignCenter' xml:space='preserve'> <value>中央揃え</value> </data>
+  <data name='AlignRight' xml:space='preserve'> <value>右揃え</value> </data>
+  <data name='SpaceHorizontally' xml:space='preserve'> <value>水平方向のスペース</value> </data>
+  <data name='AlignTop' xml:space='preserve'> <value>上揃え</value> </data>
+  <data name='AlignMiddle' xml:space='preserve'> <value>中央揃え</value> </data>
+  <data name='AlignBottom' xml:space='preserve'> <value>下揃え</value> </data>
+  <data name='SpaceVertically' xml:space='preserve'> <value>垂直方向のスペース</value> </data>
+  <data name='All' xml:space='preserve'> <value>すべて選択</value> </data>
+  <data name='Deselect' xml:space='preserve'> <value>オフ</value> </data>
+  <data name='MarqueeInvert' xml:space='preserve'> <value>反転</value> </data>
+  <data name='Pixel' xml:space='preserve'> <value>ピクセル</value> </data>
+  <data name='Feather' xml:space='preserve'> <value>羽</value> </data>
+  <data name='MarqueeTransform' xml:space='preserve'> <value>変形する</value> </data>
+  <data name='Grow' xml:space='preserve'> <value>育つ</value> </data>
+  <data name='Shrink' xml:space='preserve'> <value>縮む</value> </data>
+  <data name='Move' xml:space='preserve'> <value>移動</value> </data>
+  <data name='Transform' xml:space='preserve'> <value>変形</value> </data>
+  <data name='FreeTransform' xml:space='preserve'> <value>自由変形</value> </data>
+  <data name='DisplacementLiquefaction' xml:space='preserve'> <value>変位液化</value> </data>
+  <data name='GradientMapping' xml:space='preserve'> <value>グラデーションマッピング</value> </data>
+  <data name='RippleEffect' xml:space='preserve'> <value>波及効果</value> </data>
+  <data name='Threshold' xml:space='preserve'> <value>しきい値</value> </data>
+  <data name='HSB' xml:space='preserve'> <value>色相、彩度、明るさ</value> </data>
+  <data name='Gray' xml:space='preserve'> <value>グレースケール</value> </data>
+  <data name='Invert' xml:space='preserve'> <value>反転</value> </data>
+  <data name='Exposure' xml:space='preserve'> <value>接触</value> </data>
+  <data name='Brightness' xml:space='preserve'> <value>明るさ</value> </data>
+  <data name='Saturation' xml:space='preserve'> <value>飽和</value> </data>
+  <data name='HueRotation' xml:space='preserve'> <value>色相回転</value> </data>
+  <data name='Contrast' xml:space='preserve'> <value>対照</value> </data>
+  <data name='Temperature' xml:space='preserve'> <value>温度</value> </data>
+  <data name='HighlightsAndShadows' xml:space='preserve'> <value>ハイライトとシャドウ</value> </data>
+  <data name='GammaTransfer' xml:space='preserve'> <value>ガンマ線転送</value> </data>
+  <data name='Vignette' xml:space='preserve'> <value>ビネット</value> </data>
+  <data name='ColorMatrix' xml:space='preserve'> <value>カラーマトリックス</value> </data>
+  <data name='ColorMatch' xml:space='preserve'> <value>カラーマッチング</value> </data>
+  <data name='GaussianBlur' xml:space='preserve'> <value>ガウスぼかし</value> </data>
+  <data name='DirectionalBlur' xml:space='preserve'> <value>指向性ぼかし</value> </data>
+  <data name='Sharpen' xml:space='preserve'> <value>研ぐ</value> </data>
+  <data name='Shadow' xml:space='preserve'> <value>影</value> </data>
+  <data name='EdgeDetection' xml:space='preserve'> <value>エッジ検出</value> </data>
+  <data name='Morphology' xml:space='preserve'> <value>形態学</value> </data>
+  <data name='Emboss' xml:space='preserve'> <value>彫り上げる</value> </data>
+  <data name='Straighten' xml:space='preserve'> <value>矯める</value> </data>
+  <data name='Sepia' xml:space='preserve'> <value>セピア</value> </data>
+  <data name='Posterize' xml:space='preserve'> <value>ポスタリゼーション</value> </data>
+  <data name='LuminanceToAlpha' xml:space='preserve'> <value>アルファへの輝度</value> </data>
+  <data name='ChromaKey' xml:space='preserve'> <value>クロマキー</value> </data>
+  <data name='Border' xml:space='preserve'> <value>境</value> </data>
+  <data name='Colouring' xml:space='preserve'> <value>彩り</value> </data>
+  <data name='Tint' xml:space='preserve'> <value>染める</value> </data>
+  <data name='DiscreteTransfer' xml:space='preserve'> <value>離散転送</value> </data>
+  <data name='Lighting' xml:space='preserve'> <value>照明</value> </data>
+  <data name='Fog' xml:space='preserve'> <value>霧</value> </data>
+  <data name='Glass' xml:space='preserve'> <value>グラス</value> </data>
+  <data name='PinchPunch' xml:space='preserve'> <value>ピンチパンチ</value> </data>
+  <data name='MarqueeRectangular' xml:space='preserve'> <value>直角の</value> </data>
+  <data name='MarqueeElliptical' xml:space='preserve'> <value>楕円</value> </data>
+  <data name='MarqueePolygon' xml:space='preserve'> <value>多角形</value> </data>
+  <data name='MarqueeFreeHand' xml:space='preserve'> <value>フリーハンド</value> </data>
+  <data name='SelectionFlood' xml:space='preserve'> <value>洪水</value> </data>
+  <data name='SelectionBrush' xml:space='preserve'> <value>選択ブラシ</value> </data>
+  <data name='PaintBrush' xml:space='preserve'> <value>ペイントブラシ</value> </data>
+  <data name='PaintLine' xml:space='preserve'> <value>線</value> </data>
+  <data name='PaintBrushForce' xml:space='preserve'> <value>フォースブラシ</value> </data>
+  <data name='PaintBrushMulti' xml:space='preserve'> <value>マルチブラシ</value> </data>
+  <data name='Cursor' xml:space='preserve'> <value>カーソル</value> </data>
+  <data name='View' xml:space='preserve'> <value>眺める</value> </data>
+  <data name='Straw' xml:space='preserve'> <value>藁</value> </data>
+  <data name='Fill' xml:space='preserve'> <value>塗りつぶし</value> </data>
+  <data name='Brush' xml:space='preserve'> <value>ブラシ</value> </data>
+  <data name='Transparency' xml:space='preserve'> <value>透明性</value> </data>
+  <data name='Image' xml:space='preserve'> <value>画像</value> </data>
+  <data name='Crop' xml:space='preserve'> <value>実り</value> </data>
+  <data name='Node' xml:space='preserve'> <value>ノード</value> </data>
+  <data name='Pen' xml:space='preserve'> <value>ペン</value> </data>
+  <data name='TextArtistic' xml:space='preserve'> <value>芸術的なテキスト</value> </data>
+  <data name='TextFrame' xml:space='preserve'> <value>フレームテキスト</value> </data>
+  <data name='GeometryRectangle' xml:space='preserve'> <value>長方形</value> </data>
+  <data name='GeometryEllipse' xml:space='preserve'> <value>楕円</value> </data>
+  <data name='GeometryRoundRect' xml:space='preserve'> <value>角丸長方形</value> </data>
+  <data name='GeometryTriangle' xml:space='preserve'> <value>三角形</value> </data>
+  <data name='GeometryDiamond' xml:space='preserve'> <value>ダイヤモンド</value> </data>
+  <data name='GeometryPentagon' xml:space='preserve'> <value>五角形</value> </data>
+  <data name='GeometryStar' xml:space='preserve'> <value>星</value> </data>
+  <data name='GeometryCog' xml:space='preserve'> <value>歯車</value> </data>
+  <data name='GeometryDonut' xml:space='preserve'> <value>ドーナツ</value> </data>
+  <data name='GeometryPie' xml:space='preserve'> <value>パイ</value> </data>
+  <data name='GeometryCookie' xml:space='preserve'> <value>クッキー</value> </data>
+  <data name='GeometryArrow' xml:space='preserve'> <value>矢</value> </data>
+  <data name='GeometryCapsule' xml:space='preserve'> <value>カプセル</value> </data>
+  <data name='GeometryHeart' xml:space='preserve'> <value>心</value> </data>
+  <data name='PatternGrid' xml:space='preserve'> <value>グリッド</value> </data>
+  <data name='PatternDiagonal' xml:space='preserve'> <value>対角</value> </data>
+  <data name='PatternSpotted' xml:space='preserve'> <value>発見</value> </data>
+  <data name='GeometryRectangleTransform' xml:space='preserve'> <value>長方形</value> </data>
+  <data name='GeometryEllipseTransform' xml:space='preserve'> <value>楕円</value> </data>
+  <data name='GeometryRoundRectTransform' xml:space='preserve'> <value>角丸長方形</value> </data>
+  <data name='GeometryTriangleTransform' xml:space='preserve'> <value>三角形</value> </data>
+  <data name='GeometryDiamondTransform' xml:space='preserve'> <value>ダイヤモンド</value> </data>
+  <data name='GeometryPentagonTransform' xml:space='preserve'> <value>五角形</value> </data>
+  <data name='GeometryStarTransform' xml:space='preserve'> <value>星</value> </data>
+  <data name='GeometryCogTransform' xml:space='preserve'> <value>歯車</value> </data>
+  <data name='GeometryDonutTransform' xml:space='preserve'> <value>ドーナツ</value> </data>
+  <data name='GeometryPieTransform' xml:space='preserve'> <value>パイ</value> </data>
+  <data name='GeometryCookieTransform' xml:space='preserve'> <value>クッキー</value> </data>
+  <data name='GeometryArrowTransform' xml:space='preserve'> <value>矢</value> </data>
+  <data name='GeometryCapsuleTransform' xml:space='preserve'> <value>カプセル</value> </data>
+  <data name='GeometryHeartTransform' xml:space='preserve'> <value>心</value> </data>
+  <data name='PatternGridTransform' xml:space='preserve'> <value>グリッド</value> </data>
+  <data name='PatternDiagonalTransform' xml:space='preserve'> <value>対角</value> </data>
+  <data name='PatternSpottedTransform' xml:space='preserve'> <value>発見</value> </data>
+  <!--Separator 2-->
+  <data name='ResetRadian' xml:space='preserve'> <value>回転角度をリセットします</value> </data>
+  <data name='ResetScale' xml:space='preserve'> <value>ズームをリセットする</value> </data>
+  <data name='InkErase' xml:space='preserve'> <value>消しゴム</value> </data>
+  <data name='InkGeneral' xml:space='preserve'> <value>ルーチン</value> </data>
+  <data name='InkTip' xml:space='preserve'> <value>ペン先の形状</value> </data>
+  <data name='InkLine' xml:space='preserve'> <value>直線</value> </data>
+  <data name='InkBlur' xml:space='preserve'> <value>不明瞭</value> </data>
+  <data name='InkMosaic' xml:space='preserve'> <value>モザイク</value> </data>
+  <data name='InkLiquefy' xml:space='preserve'> <value>液化</value> </data>
+  <data name='HarmonyComplementary' xml:space='preserve'> <value>補完</value> </data>
+  <data name='HarmonySplitComplementary' xml:space='preserve'> <value>補色分割</value> </data>
+  <data name='HarmonyAnalogous' xml:space='preserve'> <value>アバウト</value> </data>
+  <data name='HarmonyTriadic' xml:space='preserve'> <value>三等分する</value> </data>
+  <data name='HarmonyTetradic' xml:space='preserve'> <value>長方形</value> </data>
+  <data name='CompositeAdd' xml:space='preserve'> <value>増える</value> </data>
+  <data name='CompositeSubtract' xml:space='preserve'> <value>引く</value> </data>
+  <data name='CombineNew' xml:space='preserve'> <value>新着</value> </data>
+  <data name='CombineUnion' xml:space='preserve'> <value>和集合</value> </data>
+  <data name='CombineExclude' xml:space='preserve'> <value>除外</value> </data>
+  <data name='CombineIntersect' xml:space='preserve'> <value>交わる</value> </data>
+  <data name='ArrowNone' xml:space='preserve'> <value>なし</value> </data>
+  <data name='ArrowArrow' xml:space='preserve'> <value>矢印</value> </data>
+  <data name='GridGrid' xml:space='preserve'> <value>グリッド</value> </data>
+  <data name='GridColumn' xml:space='preserve'> <value>コラム</value> </data>
+  <data name='GridRow' xml:space='preserve'> <value>漕ぐ</value> </data>
+  <data name='SymmetryX' xml:space='preserve'> <value>X 軸対称</value> </data>
+  <data name='SymmetryY' xml:space='preserve'> <value>Y 軸対称</value> </data>
+  <data name='SymmetryRadial' xml:space='preserve'> <value>起源の対称性</value> </data>
+  <data name='MirrorRadial' xml:space='preserve'> <value>放射状対称性</value> </data>
+  <!--Separator 3-->
+  <data name='Blends_None' xml:space='preserve'> <value>通常</value> </data>
+  <data name='Blends_Multiply' xml:space='preserve'> <value>乗算</value> </data>
+  <data name='Blends_Screen' xml:space='preserve'> <value>スクリーン</value> </data>
+  <data name='Blends_Darken' xml:space='preserve'> <value>比較(暗)</value> </data>
+  <data name='Blends_Lighten' xml:space='preserve'> <value>比較(明)</value> </data>
+  <data name='Blends_Dissolve' xml:space='preserve'> <value>ディザ合成</value> </data>
+  <data name='Blends_ColorBurn' xml:space='preserve'> <value>焼き込みカラー</value> </data>
+  <data name='Blends_LinearBurn' xml:space='preserve'> <value>焼き込み</value> </data>
+  <data name='Blends_DarkerColor' xml:space='preserve'> <value>カラー比較</value> </data>
+  <data name='Blends_LighterColor' xml:space='preserve'> <value>カラー比較</value> </data>
+  <data name='Blends_ColorDodge' xml:space='preserve'> <value>覆い焼きカラー</value> </data>
+  <data name='Blends_LinearDodge' xml:space='preserve'> <value>覆い焼き(リニア) - 加算</value> </data>
+  <data name='Blends_Overlay' xml:space='preserve'> <value>オーバーレイ</value> </data>
+  <data name='Blends_SoftLight' xml:space='preserve'> <value>ソフトライト</value> </data>
+  <data name='Blends_HardLight' xml:space='preserve'> <value>ハードライト</value> </data>
+  <data name='Blends_VividLight' xml:space='preserve'> <value>ビビッドライト</value> </data>
+  <data name='Blends_LinearLight' xml:space='preserve'> <value>リニアライト</value> </data>
+  <data name='Blends_PinLight' xml:space='preserve'> <value>ピンライト</value> </data>
+  <data name='Blends_HardMix' xml:space='preserve'> <value>ハードミックス</value> </data>
+  <data name='Blends_Difference' xml:space='preserve'> <value>差の絶対値</value> </data>
+  <data name='Blends_Exclusion' xml:space='preserve'> <value>除外</value> </data>
+  <data name='Blends_Hue' xml:space='preserve'> <value>色相</value> </data>
+  <data name='Blends_Saturation' xml:space='preserve'> <value>飽和</value> </data>
+  <data name='Blends_Color' xml:space='preserve'> <value>色</value> </data>
+  <data name='Blends_Luminosity' xml:space='preserve'> <value>輝度</value> </data>
+  <data name='Blends_Subtract' xml:space='preserve'> <value>減算</value> </data>
+  <data name='Blends_Division' xml:space='preserve'> <value>除算</value> </data>
+  <!--Separator 4-->
+  <data name='Layer_Bitmap' xml:space='preserve'> <value>ビットマップレイヤー</value> </data>
+  <data name='Layer_Image' xml:space='preserve'> <value>画像レイヤー</value> </data>
+  <data name='Layer_Text' xml:space='preserve'> <value>テキストレイヤー</value> </data>
+  <data name='Layer_Group' xml:space='preserve'> <value>グループ レイヤー</value> </data>
+  <data name='Layer_Curve' xml:space='preserve'> <value>カーブレイヤー</value> </data>
+  <data name='Layer_Fill' xml:space='preserve'> <value>塗りつぶしレイヤー</value> </data>
+  <!--Separator 5-->
+  <data name='Brush_Erase' xml:space='preserve'> <value>消しゴム</value> </data>
+  <data name='Brush_Paint' xml:space='preserve'> <value>絵画</value> </data>
+  <data name='Brush_Fx' xml:space='preserve'> <value>特殊効果</value> </data>
+  <data name='Brush_Others' xml:space='preserve'> <value>他</value> </data>
+  <!--Separator 6-->
+  <data name='Hardness_None' xml:space='preserve'> <value>なし</value> </data>
+  <data name='Hardness_Cosine' xml:space='preserve'> <value>余弦</value> </data>
+  <data name='Hardness_Quadratic' xml:space='preserve'> <value>二次</value> </data>
+  <data name='Hardness_Cube' xml:space='preserve'> <value>三乗</value> </data>
+  <data name='Hardness_Quartic' xml:space='preserve'> <value>クォーティック</value> </data>
+  <!--Separator 7-->
+  <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>最近傍</value> </data>
+  <data name='Interpolation_Linear' xml:space='preserve'> <value>リニア</value> </data>
+  <data name='Interpolation_Cubic' xml:space='preserve'> <value>キュービック</value> </data>
+  <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>マルチサンプルリニア</value> </data>
+  <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>異 方 性</value> </data>
+  <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>高品質キュービック</value> </data>
+  <!--Separator 8-->
+  <data name='Tip_NoLayer' xml:space='preserve'> <value>レイヤーなし</value> </data>
+  <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>ビットマップレイヤーではない</value> </data>
+  <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>カーブレイヤーではない</value> </data>
+  <data name='Tip_NoPixel' xml:space='preserve'> <value>ピクセルなし</value> </data>
+  <data name='Tip_NoPixelForMarquee' xml:space='preserve'> <value>ピクセルなし</value> </data>
+  <data name='Tip_NoPixelForBitmapLayer' xml:space='preserve'> <value>ピクセルなし</value> </data>
+  <data name='Tip_NoPaintTool' xml:space='preserve'> <value>ブラシツール</value> </data>
+  <data name='Tip_Spread' xml:space='preserve'> <value>まん延</value> </data>
+  <data name='Tip_Zoom' xml:space='preserve'> <value>ズーム</value> </data>
+  <data name='Tip_Undo' xml:space='preserve'> <value>元に戻す</value> </data>
+  <data name='Tip_Redo' xml:space='preserve'> <value>やり直し</value> </data>
+  <data name='Tip_Saving' xml:space='preserve'> <value>保存。。。</value> </data>
+  <data name='Tip_SaveSuccess' xml:space='preserve'> <value>正常に保存されました</value> </data>
+  <data name='Tip_SaveFailed' xml:space='preserve'> <value>保存に失敗しました</value> </data>
+  <data name='Tip_NoFile' xml:space='preserve'> <value>ファイルが見つかりません</value> </data>
+  <data name='Tip_NoFolder' xml:space='preserve'> <value>フォルダが見つかりません</value> </data>
+  <data name='Tip_NoSupport' xml:space='preserve'> <value>ファイルの種類はサポートされていません</value> </data>
+  <data name='Tip_NoCompatible' xml:space='preserve'> <value>互換性がありません</value> </data>
+  <!--Separator 9-->
+  <data name='SubTip_NoLayer' xml:space='preserve'> <value>新しいレイヤーを作成しますか?</value> </data>
+  <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>ビットマップレイヤーでのみ動作できます</value> </data>
+  <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>カーブレイヤーでのみ操作できます</value> </data>
+  <data name='SubTip_NoPixel' xml:space='preserve'> <value>現在のピクセルは透明です</value> </data>
+  <data name='SubTip_NoPixelForMarquee' xml:space='preserve'> <value>マーキーは透明です</value> </data>
+  <data name='SubTip_NoPixelForBitmapLayer' xml:space='preserve'> <value>現在のビットマップレイヤーは透明です</value> </data>
+  <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>ブラシプリセットはペイントツールでのみ使用できます</value> </data>
+  <data name='SubTip_SaveFailed' xml:space='preserve'> <value>もう一度やり直してください。</value> </data>
+  <data name='SubTip_NoCompatible' xml:space='preserve'> <value>GPU 機能とは互換性がありません。</value> </data>
+  <!--Separator 10-->
+  <data name='Layer_Property' xml:space='preserve'> <value>属性</value> </data>
+  <data name='Layer_Property_Opacity' xml:space='preserve'> <value>不透明</value> </data>
+  <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>ブレンドモード</value> </data>
+  <data name='Layer_Property_TagType' xml:space='preserve'> <value>タグの種類</value> </data>
+  <data name='Paint_Scratchpad' xml:space='preserve'> <value>メモ</value> </data>
+  <data name='Paint_Property' xml:space='preserve'> <value>属性</value> </data>
+  <data name='Paint_Property_Size' xml:space='preserve'> <value>大きさ</value> </data>
+  <data name='Paint_Property_Opacity' xml:space='preserve'> <value>不透明</value> </data>
+  <data name='Paint_Property_Spacing' xml:space='preserve'> <value>スペーシング</value> </data>
+  <data name='Paint_Property_Flow' xml:space='preserve'> <value>流れる</value> </data>
+  <data name='Paint_Property_MinSize' xml:space='preserve'> <value>最小サイズ</value> </data>
+  <data name='Paint_Property_MinFlow' xml:space='preserve'> <value>最小流量</value> </data>
+  <data name='Paint_Property_Tip' xml:space='preserve'> <value>先端形状</value> </data>
+  <data name='Paint_Property_Hardness' xml:space='preserve'> <value>硬度</value> </data>
+  <data name='Paint_Texture' xml:space='preserve'> <value>テクスチャー</value> </data>
+  <data name='Paint_Texture_Shape' xml:space='preserve'> <value>形</value> </data>
+  <data name='Paint_Texture_Rotate' xml:space='preserve'> <value>回転してストローク</value> </data>
+  <data name='Paint_Texture_Grain' xml:space='preserve'> <value>穀物</value> </data>
+  <data name='Paint_Texture_Scale' xml:space='preserve'> <value>ズーム</value> </data>
+  <data name='Paint_Texture_Import' xml:space='preserve'> <value>輸入。。。</value> </data>
+  <data name='Paint_Texture_Recolor' xml:space='preserve'> <value>色の変更</value> </data>
+  <data name='Paint_Texture_Remove' xml:space='preserve'> <value>取り去る</value> </data>
+  <data name='Paint_Texture_BlendMode' xml:space='preserve'> <value>ブレンドモード</value> </data>
+  <data name='Paint_Mix' xml:space='preserve'> <value>ミックスカラー</value> </data>
+  <data name='Paint_Mix_Mix' xml:space='preserve'> <value>混ぜる</value> </data>
+  <data name='Paint_Mix_Wet' xml:space='preserve'> <value>濡れた</value> </data>
+  <data name='Paint_Mix_Persistence' xml:space='preserve'> <value>固執</value> </data>
+  <data name='Effect_Apply' xml:space='preserve'> <value>再申請</value> </data>
+  <data name='Color_Straw' xml:space='preserve'> <value>藁</value> </data>
+  <data name='Color_Wheel' xml:space='preserve'> <value>カラーホイール</value> </data>
+  <data name='Color_Box' xml:space='preserve'> <value>カラーボックス</value> </data>
+  <data name='Color_Palette' xml:space='preserve'> <value>パレット</value> </data>
+  <data name='Color_Parameter' xml:space='preserve'> <value>パラメーター</value> </data>
+  <data name='Color_Alpha' xml:space='preserve'> <value>アルファ</value> </data>
+  <data name='Color_Red' xml:space='preserve'> <value>赤</value> </data>
+  <data name='Color_Green' xml:space='preserve'> <value>緑</value> </data>
+  <data name='Color_Blue' xml:space='preserve'> <value>青い</value> </data>
+  <data name='Color_Hue' xml:space='preserve'> <value>色相</value> </data>
+  <data name='Color_Saturation' xml:space='preserve'> <value>飽和</value> </data>
+  <data name='Color_Value' xml:space='preserve'> <value>価値</value> </data>
+  <data name='Color_Hex' xml:space='preserve'> <value>16 進</value> </data>
+  <!--Separator 11-->
+  <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
+  <data name='Export_Object' xml:space='preserve'> <value>エクスポートされたオブジェクト</value> </data>
+  <data name='Export_Object_Image' xml:space='preserve'> <value>画像</value> </data>
+  <data name='Export_Object_Layers' xml:space='preserve'> <value>すべてのレイヤー</value> </data>
+  <data name='Export_Object_Layer' xml:space='preserve'> <value>現在のレイヤー</value> </data>
+  <data name='Extend_Indicator' xml:space='preserve'> <value>キャンバスにアンカー</value> </data>
+  <data name='Stretch_Interpolation' xml:space='preserve'> <value>補間</value> </data>
+  <data name='Texture' xml:space='preserve'> <value>テクスチャー</value> </data>
+  <!--Separator 12-->
+  <data name='NewProject' xml:space='preserve'> <value>新しいプロジェクトを作成する</value> </data>
+  <data name='NewImage' xml:space='preserve'> <value>画像から作成</value> </data>
+  <data name='NewFolder' xml:space='preserve'> <value>新しいフォルダ</value> </data>
+  <data name='DupliateProject' xml:space='preserve'> <value>重複プロジェクト</value> </data>
+  <data name='DupliateProject_Subtitle' xml:space='preserve'> <value>複製するプロジェクトを選択します。</value> </data>
+  <data name='DeleteProject' xml:space='preserve'> <value>プロジェクトの削除</value> </data>
+  <data name='DeleteProject_Subtitle' xml:space='preserve'> <value>削除するプロジェクトを選択します。</value> </data>
+  <data name='SelectProject' xml:space='preserve'> <value>プロジェクトの選択</value> </data>
+  <data name='SelectProject_Subtitle' xml:space='preserve'> <value>移動するプロジェクトを選択します。</value> </data>
+  <data name='MoveProject' xml:space='preserve'> <value>プロジェクトの移動</value> </data>
+  <data name='MoveProject_Subtitle' xml:space='preserve'> <value>プロジェクトをこのフォルダに移動します。</value> </data>
+  <data name='RenameProject' xml:space='preserve'> <value>名前を変更する</value> </data>
+  <!--Separator 13-->
+  <data name='Main_Documentation' xml:space='preserve'> <value>ドキュメントのWebページを開く</value> </data>
+  <data name='Main_Setting' xml:space='preserve'> <value>設定ページを開く</value> </data>
+  <data name='Main_Home' xml:space='preserve'> <value>ホームページ</value> </data>
+  <data name='Main_Back' xml:space='preserve'> <value>帰る</value> </data>
+  <data name='Main_Type' xml:space='preserve'> <value>種類</value> </data>
+  <data name='Main_Date' xml:space='preserve'> <value>作成日</value> </data>
+  <data name='Main_Name' xml:space='preserve'> <value>名前</value> </data>
+  <data name='Theme' xml:space='preserve'> <value>テーマ</value> </data>
+  <data name='Theme_Light' xml:space='preserve'> <value>光</value> </data>
+  <data name='Theme_Dark' xml:space='preserve'> <value>闇</value> </data>
+  <data name='Theme_UseSystem' xml:space='preserve'> <value>システムを使用する</value> </data>
+  <data name='Language' xml:space='preserve'> <value>言語</value> </data>
+  <data name='Language_Tip' xml:space='preserve'> <value>アプリを再起動して変更内容を表示します。</value> </data>
+  <data name='Language_UseSystemSetting' xml:space='preserve'> <value>システム設定を使用する</value> </data>
+  <data name='LocalFolder' xml:space='preserve'> <value>ローカルフォルダ</value> </data>
+  <data name='LocalFolder_Open' xml:space='preserve'> <value>開いた</value> </data>
+  <!--Separator 14-->
+  <data name='CropCanvas_Radians' xml:space='preserve'> <value>ラジアン</value> </data>
+  <data name='Transform_Snap' xml:space='preserve'> <value>吸着</value> </data>
+  <data name='Transform_Ratio' xml:space='preserve'> <value>等しい比率</value> </data>
+  <data name='Transform_Center' xml:space='preserve'> <value>センター</value> </data>
+  <data name='Transform_X' xml:space='preserve'> <value>X</value> </data>
+  <data name='Transform_Y' xml:space='preserve'> <value>Y</value> </data>
+  <data name='Transform_W' xml:space='preserve'> <value>幅</value> </data>
+  <data name='Transform_H' xml:space='preserve'> <value>高さ</value> </data>
+  <data name='DisplacementLiquefaction_Tool' xml:space='preserve'> <value>道具</value> </data>
+  <data name='DisplacementLiquefaction_Push' xml:space='preserve'> <value>押す</value> </data>
+  <data name='DisplacementLiquefaction_Pinch' xml:space='preserve'> <value>抓る</value> </data>
+  <data name='DisplacementLiquefaction_Expand' xml:space='preserve'> <value>膨らむ</value> </data>
+  <data name='DisplacementLiquefaction_TwirlLeft' xml:space='preserve'> <value>左回転</value> </data>
+  <data name='DisplacementLiquefaction_TwirlRight' xml:space='preserve'> <value>右に回転</value> </data>
+  <data name='DisplacementLiquefaction_Reset' xml:space='preserve'> <value>リセット</value> </data>
+  <data name='DisplacementLiquefaction_Size' xml:space='preserve'> <value>大きさ</value> </data>
+  <data name='DisplacementLiquefaction_Pressure' xml:space='preserve'> <value>圧力</value> </data>
+  <data name='GradientMapping_DropRemove' xml:space='preserve'> <value>ドロップして削除</value> </data>
+  <data name='RippleEffect_Frequency' xml:space='preserve'> <value>周波数</value> </data>
+  <data name='RippleEffect_Phase' xml:space='preserve'> <value>位相</value> </data>
+  <data name='RippleEffect_Amplitude' xml:space='preserve'> <value>振幅</value> </data>
+  <data name='Threshold_Reverse' xml:space='preserve'> <value>逆</value> </data>
+  <data name='HSB_Hue' xml:space='preserve'> <value>色相</value> </data>
+  <data name='HSB_Saturation' xml:space='preserve'> <value>飽和</value> </data>
+  <data name='HSB_Brightness' xml:space='preserve'> <value>明るさ</value> </data>
+  <data name='HueRotation_Angle' xml:space='preserve'> <value>角</value> </data>
+  <data name='Temperature_Tint' xml:space='preserve'> <value>染める</value> </data>
+  <data name='HighlightsAndShadows_Shadows' xml:space='preserve'> <value>影</value> </data>
+  <data name='HighlightsAndShadows_Highlights' xml:space='preserve'> <value>ハイライト</value> </data>
+  <data name='HighlightsAndShadows_Clarity' xml:space='preserve'> <value>明快</value> </data>
+  <data name='HighlightsAndShadows_Blur' xml:space='preserve'> <value>滲む</value> </data>
+  <data name='GammaTransfer_ChannelSelect' xml:space='preserve'> <value>チャンネル選択</value> </data>
+  <data name='GammaTransfer_Alpha' xml:space='preserve'> <value>アルファ</value> </data>
+  <data name='GammaTransfer_Red' xml:space='preserve'> <value>赤い</value> </data>
+  <data name='GammaTransfer_Green' xml:space='preserve'> <value>緑</value> </data>
+  <data name='GammaTransfer_Blue' xml:space='preserve'> <value>青い</value> </data>
+  <data name='GammaTransfer_Amplitude' xml:space='preserve'> <value>振幅</value> </data>
+  <data name='GammaTransfer_Exponent' xml:space='preserve'> <value>指数</value> </data>
+  <data name='GammaTransfer_Offset' xml:space='preserve'> <value>相殺</value> </data>
+  <data name='Vignette_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='GaussianBlur_BlurAmount' xml:space='preserve'> <value>ぼかし量</value> </data>
+  <data name='DirectionalBlur_BlurAmount' xml:space='preserve'> <value>ぼかし量</value> </data>
+  <data name='DirectionalBlur_Angle' xml:space='preserve'> <value>角</value> </data>
+  <data name='Sharpen_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='Shadow_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='Shadow_Opacity' xml:space='preserve'> <value>不透明</value> </data>
+  <data name='Shadow_X' xml:space='preserve'> <value>X</value> </data>
+  <data name='Shadow_Y' xml:space='preserve'> <value>Y</value> </data>
+  <data name='EdgeDetection_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='EdgeDetection_BlurAmount' xml:space='preserve'> <value>ぼかし量</value> </data>
+  <data name='EdgeDetection_OverlayEdges' xml:space='preserve'> <value>オーバーレイエッジ</value> </data>
+  <data name='Morphology_Size' xml:space='preserve'> <value>大きさ</value> </data>
+  <data name='Emboss_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='Emboss_Angle' xml:space='preserve'> <value>角</value> </data>
+  <data name='Straighten_Angle' xml:space='preserve'> <value>角</value> </data>
+  <data name='Posterize_Count' xml:space='preserve'> <value>桁違い</value> </data>
+  <data name='LuminanceToAlpha_Background' xml:space='preserve'> <value>バックグラウンド</value> </data>
+  <data name='LuminanceToAlpha_Normal' xml:space='preserve'> <value>通常</value> </data>
+  <data name='LuminanceToAlpha_WhitePaper' xml:space='preserve'> <value>白い</value> </data>
+  <data name='LuminanceToAlpha_BlackPaper' xml:space='preserve'> <value>黒い紙</value> </data>
+  <data name='ChromaKey_Tolerance' xml:space='preserve'> <value>寛容</value> </data>
+  <data name='ChromaKey_Invert' xml:space='preserve'> <value>ロールバック</value> </data>
+  <data name='ChromaKey_Feather' xml:space='preserve'> <value>羽</value> </data>
+  <data name='Border_EdgeBehaviorX' xml:space='preserve'> <value>X 軸エッジの挙動</value> </data>
+  <data name='Border_EdgeBehaviorY' xml:space='preserve'> <value>Y 軸エッジの動作</value> </data>
+  <data name='Border_Clamp' xml:space='preserve'> <value>包む</value> </data>
+  <data name='Border_Wrap' xml:space='preserve'> <value>改行</value> </data>
+  <data name='Border_Mirror' xml:space='preserve'> <value>鏡像</value> </data>
+  <data name='Colouring_Angle' xml:space='preserve'> <value>角</value> </data>
+  <data name='Lighting_Distance' xml:space='preserve'> <value>距離</value> </data>
+  <data name='Lighting_Angle' xml:space='preserve'> <value>角</value> </data>
+  <data name='Lighting_Ambient' xml:space='preserve'> <value>アンビエント</value> </data>
+  <data name='Fog_ScaleFactor' xml:space='preserve'> <value>スケール比</value> </data>
+  <data name='Fog_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='Glass_ScaleFactor' xml:space='preserve'> <value>スケール比</value> </data>
+  <data name='Glass_Amount' xml:space='preserve'> <value>量</value> </data>
+  <data name='SelectionFlood_Tolerance' xml:space='preserve'> <value>寛容</value> </data>
+  <data name='SelectionFlood_Contiguous' xml:space='preserve'> <value>踡</value> </data>
+  <data name='SelectionFlood_Feather' xml:space='preserve'> <value>羽</value> </data>
+  <data name='SelectionBrush_Size' xml:space='preserve'> <value>大きさ</value> </data>
+  <data name='Paint_Size' xml:space='preserve'> <value>大きさ</value> </data>
+  <data name='Paint_Opacity' xml:space='preserve'> <value>不透明</value> </data>
+  <data name='PaintBrushMulti_Sectors' xml:space='preserve'> <value>セクター </value> </data>
+  <data name='View_Radian' xml:space='preserve'> <value>ラジアン</value> </data>
+  <data name='View_Scale' xml:space='preserve'> <value>ズーム</value> </data>
+  <data name='Straw_Object' xml:space='preserve'> <value>オブジェクト</value> </data>
+  <data name='Straw_Layers' xml:space='preserve'> <value>すべてのレイヤー</value> </data>
+  <data name='Straw_Layer' xml:space='preserve'> <value>現在のレイヤー</value> </data>
+  <data name='Brush_GradientType' xml:space='preserve'> <value>グラデーションタイプ</value> </data>
+  <data name='Brush_Linear' xml:space='preserve'> <value>リニア</value> </data>
+  <data name='Brush_Radial' xml:space='preserve'> <value>ラジアル</value> </data>
+  <data name='Brush_Elliptical' xml:space='preserve'> <value>楕円</value> </data>
+  <data name='Brush_Opaque' xml:space='preserve'> <value>オペーク</value> </data>
+  <data name='Brush_Reverse' xml:space='preserve'> <value>逆</value> </data>
+  <data name='Transparency_TransparencyType' xml:space='preserve'> <value>透明タイプ</value> </data>
+  <data name='Transparency_Reverse' xml:space='preserve'> <value>逆</value> </data>
+  <data name='Pen_SegmentType' xml:space='preserve'> <value>セグメントタイプ</value> </data>
+  <data name='Pen_Curve' xml:space='preserve'> <value>曲線</value> </data>
+  <data name='Pen_Line' xml:space='preserve'> <value>線</value> </data>
+  <data name='Pen_Close' xml:space='preserve'> <value>閉める</value> </data>
+  <data name='GeometryRoundRect_Corner' xml:space='preserve'> <value>隅</value> </data>
+  <data name='GeometryTriangle_CenterPoint' xml:space='preserve'> <value>中心点</value> </data>
+  <data name='GeometryDiamond_MidPoint' xml:space='preserve'> <value>中間点</value> </data>
+  <data name='GeometryPentagon_Points' xml:space='preserve'> <value>ポイント</value> </data>
+  <data name='GeometryStar_Points' xml:space='preserve'> <value>ポイント</value> </data>
+  <data name='GeometryStar_InnerRadius' xml:space='preserve'> <value>内側の半径</value> </data>
+  <data name='GeometryDonut_HoleRadius' xml:space='preserve'> <value>穴の半径</value> </data>
+  <data name='GeometryCog_Count' xml:space='preserve'> <value>数える</value> </data>
+  <data name='GeometryCog_InnerRadius' xml:space='preserve'> <value>内側の半径</value> </data>
+  <data name='GeometryCog_Tooth' xml:space='preserve'> <value>歯</value> </data>
+  <data name='GeometryCog_Notch' xml:space='preserve'> <value>ノッチ</value> </data>
+  <data name='GeometryPie_SweepAngle' xml:space='preserve'> <value>掃引角度</value> </data>
+  <data name='GeometryCookie_InnerRadius' xml:space='preserve'> <value>内側の半径</value> </data>
+  <data name='GeometryCookie_SweepAngle' xml:space='preserve'> <value>掃引角度</value> </data>
+  <data name='GeometryArrow_Width' xml:space='preserve'> <value>幅</value> </data>
+  <data name='GeometryHeart_Spread' xml:space='preserve'> <value>まん延</value> </data>
+  <data name='PatternGrid_StrokeWidth' xml:space='preserve'> <value>ストローク幅</value> </data>
+  <data name='PatternGrid_ColumnSpan' xml:space='preserve'> <value>列スパン</value> </data>
+  <data name='PatternGrid_RowSpan' xml:space='preserve'> <value>行スパン</value> </data>
+  <data name='PatternDiagonal_Frequency' xml:space='preserve'> <value>周波数</value> </data>
+  <data name='PatternDiagonal_Phase' xml:space='preserve'> <value>位相</value> </data>
+  <data name='PatternDiagonal_Amplitude' xml:space='preserve'> <value>振幅</value> </data>
+  <data name='PatternSpotted_Radius' xml:space='preserve'> <value>半径</value> </data>
+  <data name='PatternSpotted_Span' xml:space='preserve'> <value>全長</value> </data>
+  <data name='PatternSpotted_Fade' xml:space='preserve'> <value>剥げる</value> </data>
+ </root>
