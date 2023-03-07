@@ -102,6 +102,7 @@
   <data name='ColorMenu' xml:space='preserve'> <value>颜色</value> </data>
   <data name='ColorHarmonyMenu' xml:space='preserve'> <value>调和</value> </data>
   <data name='EditMenu' xml:space='preserve'> <value>编辑</value> </data>
+  <data name='AdjustmentMenu' xml:space='preserve'> <value>调整</value> </data>
   <data name='OtherMenu' xml:space='preserve'> <value>其他</value> </data>
   <data name='PaintMenu' xml:space='preserve'> <value>绘画</value> </data>
   <data name='BrushMenu' xml:space='preserve'> <value>笔刷</value> </data>
