@@ -1,19 +1,11 @@
 ﻿using Luo_Painter.Models;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Windows.UI;
 
 namespace Luo_Painter.Layers
 {
-    public partial class LayerNodes : List<ILayer>, ILayerRender
+    public partial class LayerNodes
     {
 
         public IEnumerable<XElement> Save() =>

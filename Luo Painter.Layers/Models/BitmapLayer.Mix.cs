@@ -5,14 +5,18 @@ using Windows.UI;
 namespace Luo_Painter.Layers.Models
 {
     public sealed partial class BitmapLayer
-    {
-        public Vector4 MixHdr { get; private set; } = Vector4.Zero;
-        public Vector4 PersistenceHdr { get; private set; } = Vector4.Zero;
+    {    
+        // Mix WetHdr and StartingWetHdr
+        Vector4 MixHdr;
 
-        Vector4 MixWetHdr;
-        Vector4 StartingMixWetHdr;
+        // Starting ColorHdr
+        Vector4 PersistenceHdr;
 
-        Vector2 StartingMixPoint;
+        // Delta ColorHdr
+        Vector4 WetHdr;
+        Vector4 StartingWetHdr;
+
+        Vector2 StartingWetPoint;
 
         public Vector4 GetMix(Vector4 colorHdr, float mix)
         {
@@ -30,13 +34,13 @@ namespace Luo_Painter.Layers.Models
 
         public void ConstructMix(Vector2 point)
         {
-            this.MixWetHdr =
-            this.StartingMixWetHdr =
+            this.WetHdr =
+            this.StartingWetHdr =
             this.MixHdr =
             this.PersistenceHdr =
             new Vector4(1, 1, 1, 0);
 
-            this.StartingMixPoint = point;
+            this.StartingWetPoint = point;
 
             int x = (int)point.X;
             int y = (int)point.Y;
@@ -49,8 +53,8 @@ namespace Luo_Painter.Layers.Models
             Color color = this.OriginRenderTarget.GetPixelColors(x, y, 1, 1).Single();
             if (color == Colors.Transparent) return;
 
-            this.MixWetHdr =
-            this.StartingMixWetHdr =
+            this.WetHdr =
+            this.StartingWetHdr =
             this.MixHdr =
             this.PersistenceHdr =
             new Vector4(color.R, color.G, color.B, color.A) / 255f;
@@ -58,22 +62,22 @@ namespace Luo_Painter.Layers.Models
 
         public void Mix(Vector2 point, float size, float wet)
         {
-            float distance = Vector2.Distance(this.StartingMixPoint, point); // Point
+            float distance = Vector2.Distance(this.StartingWetPoint, point); // Point
             float length = size * wet; // Size
 
             if (distance < length)
             {
                 // 1. Lerp
-                this.MixHdr = Vector4.Lerp(this.StartingMixWetHdr, this.MixWetHdr, distance / length);
+                this.MixHdr = Vector4.Lerp(this.StartingWetHdr, this.WetHdr, distance / length);
                 return;
             }
 
             // 2. Update
-            this.MixHdr = this.MixWetHdr;
-            this.StartingMixWetHdr = this.MixWetHdr;
-            this.MixWetHdr.W = 0;
+            this.MixHdr = this.WetHdr;
+            this.StartingWetHdr = this.WetHdr;
+            this.WetHdr.W = 0;
 
-            this.StartingMixPoint = point;
+            this.StartingWetPoint = point;
 
             int x = (int)point.X;
             int y = (int)point.Y;
@@ -87,7 +91,7 @@ namespace Luo_Painter.Layers.Models
             if (color == Colors.Transparent) return;
 
             // 3. Recolor
-            this.MixWetHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
+            this.WetHdr = new Vector4(color.R, color.G, color.B, color.A) / 255f;
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Luo_Painter.Layers.Models
 
                 float sizePressed = this.GetPressed(minSize, sizePressure, segment.StartingPressure) * segment.Size;
 
-                ds.DrawLine(segment.StartingPosition, segment.Position, color, sizePressed + sizePressed, BitmapLayer.CanvasStrokeStyle);
+                ds.DrawLine(segment.StartingPosition, segment.Position, color, sizePressed, BitmapLayer.CanvasStrokeStyle);
             }
         }
 

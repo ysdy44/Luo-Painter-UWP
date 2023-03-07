@@ -1,22 +1,17 @@
 ﻿using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
-using System;
-using System.Numerics;
-using Windows.UI;
-using Windows.Foundation;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Microsoft.Graphics.Canvas.Effects;
-using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Numerics;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
+using Windows.Foundation;
 using Windows.Storage.Streams;
+using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
     public sealed partial class BitmapLayer : LayerBase, ILayer
     {
         public LayerType Type => LayerType.Bitmap;
-
-
         public ICanvasImage this[BitmapType type]
         {
             get

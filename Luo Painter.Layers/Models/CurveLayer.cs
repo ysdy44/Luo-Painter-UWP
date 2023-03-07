@@ -1,6 +1,8 @@
-﻿using Luo_Painter.Blends;
+﻿using FanKit.Transformers;
+using Luo_Painter.Blends;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -89,8 +91,8 @@ namespace Luo_Painter.Layers.Models
             if (px < 0) return false;
             if (py < 0) return false;
 
-            if (px >= this.Width) return false;
-            if (py >= this.Height) return false;
+            if (px >= base.Width) return false;
+            if (py >= base.Height) return false;
 
             return true;
 
@@ -101,23 +103,23 @@ namespace Luo_Painter.Layers.Models
         }
 
 
-        protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height), this.Width, this.Height);
+        protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Width, base.Height), base.Width, base.Height);
 
-        protected override ILayer OffsetSelf(ICanvasResourceCreator resourceCreator, Vector2 offset) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height, offset), this.Width, this.Height);
+        protected override ILayer OffsetSelf(ICanvasResourceCreator resourceCreator, Vector2 offset) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Width, base.Height, offset), base.Width, base.Height);
 
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height), width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Vector2 offset) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height, offset), width, height);
         protected override ILayer CropSelf(ICanvasResourceCreator resourceCreator, int width, int height, Matrix3x2 matrix, CanvasImageInterpolation interpolation) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height, matrix), width, height);
 
-        protected override ILayer SkretchSelf(ICanvasResourceCreator resourceCreator, int width, int height, CanvasImageInterpolation interpolation) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height, Matrix3x2.CreateScale(width / (float)this.Width, height / (float)this.Height)), width, height);
+        protected override ILayer SkretchSelf(ICanvasResourceCreator resourceCreator, int width, int height, CanvasImageInterpolation interpolation) => new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, width, height, Matrix3x2.CreateScale(width / (float)base.Width, height / (float)base.Height)), width, height);
         protected override ILayer FlipSelf(ICanvasResourceCreator resourceCreator, BitmapFlip flip)
         {
             switch (flip)
             {
                 case BitmapFlip.Horizontal:
-                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, 1, this.Center)), this.Width, this.Height);
+                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Width, base.Height, Matrix3x2.CreateScale(-1, 1, this.Center)), base.Width, base.Height);
                 case BitmapFlip.Vertical:
-                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(1, -1, this.Center)), this.Width, this.Height);
+                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Width, base.Height, Matrix3x2.CreateScale(1, -1, this.Center)), base.Width, base.Height);
                 default:
                     return this.CloneSelf(resourceCreator);
             }
@@ -127,11 +129,11 @@ namespace Luo_Painter.Layers.Models
             switch (rotation)
             {
                 case BitmapRotation.Clockwise90Degrees: // RightTurn
-                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Height, this.Width, Matrix3x2.CreateRotation(FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(this.Height, 0)), this.Width, this.Height);
+                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Height, base.Width, Matrix3x2.CreateRotation(FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(base.Height, 0)), base.Width, base.Height);
                 case BitmapRotation.Clockwise180Degrees: // OverTurn
-                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Width, this.Height, Matrix3x2.CreateScale(-1, -1, this.Center)), this.Width, this.Height);
+                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Width, base.Height, Matrix3x2.CreateScale(-1, -1, this.Center)), base.Width, base.Height);
                 case BitmapRotation.Clockwise270Degrees: // LeftTurn
-                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, this.Height, this.Width, Matrix3x2.CreateRotation(-FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(0, this.Width)), this.Width, this.Height);
+                    return new CurveLayer(resourceCreator, from a in this.Anchorss select a.Clone(resourceCreator, base.Height, base.Width, Matrix3x2.CreateRotation(-FanKit.Math.PiOver2) * Matrix3x2.CreateTranslation(0, base.Width)), base.Width, base.Height);
                 default:
                     return this.CloneSelf(resourceCreator);
             }

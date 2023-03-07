@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class CurveLayer : LayerBase, ILayer
+    public sealed partial class CurveLayer
     {
 
         public IList<AnchorCollection> Anchorss;
