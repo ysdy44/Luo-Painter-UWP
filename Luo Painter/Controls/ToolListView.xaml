@@ -42,23 +42,23 @@
                         <options:OptionType>PaintBrushMulti</options:OptionType>
                     </luo_painter:OptionGrouping>
                     <luo_painter:OptionGrouping Key="Vector">
-                        <options:OptionType>Cursor</options:OptionType>
+                        <!--<options:OptionType>Cursor</options:OptionType>-->
                         <options:OptionType>View</options:OptionType>
                         <options:OptionType>Straw</options:OptionType>
                         <options:OptionType>Fill</options:OptionType>
                         <options:OptionType>Brush</options:OptionType>
                         <options:OptionType>Transparency</options:OptionType>
-                        <options:OptionType>Image</options:OptionType>
-                        <options:OptionType>Crop</options:OptionType>
+                        <!--<options:OptionType>Image</options:OptionType>-->
+                        <!--<options:OptionType>Crop</options:OptionType>-->
                     </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Text">
-                        <options:OptionType>TextArtistic</options:OptionType>
-                        <options:OptionType>TextFrame</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Curve">
-                        <options:OptionType>Pen</options:OptionType>
-                        <options:OptionType>Node</options:OptionType>
-                    </luo_painter:OptionGrouping>
+                    <!--<luo_painter:OptionGrouping Key="Text">-->
+                        <!--<options:OptionType>TextArtistic</options:OptionType>-->
+                        <!--<options:OptionType>TextFrame</options:OptionType>-->
+                    <!--</luo_painter:OptionGrouping>-->
+                    <!--<luo_painter:OptionGrouping Key="Curve">-->
+                        <!--<options:OptionType>Pen</options:OptionType>-->
+                        <!--<options:OptionType>Node</options:OptionType>-->
+                    <!--</luo_painter:OptionGrouping>-->
                     <luo_painter:OptionGrouping Key="Geometry">
                         <!--Geometry0-->
                         <options:OptionType>GeometryRectangle</options:OptionType>

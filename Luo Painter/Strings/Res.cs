@@ -60,6 +60,10 @@ namespace Luo_Painter
         public static OptionType GetOT(TextBlock dp) => default;
         public static void SetOT(TextBlock dp, OptionType value) => dp.Text = App.Resource.GetString(value.ToString());
 
+        // OptionContent
+        public static OptionType GetOC(ContentControl dp) => dp.Content is OptionType value ? value : default;
+        public static void SetOC(ContentControl dp, OptionType value) => dp.Content = App.Resource.GetString(value.ToString());
+
         // OptionAccessKey
         public static OptionType GetOAK(MenuFlyoutSeparator dp) => default;
         public static void SetOAK(MenuFlyoutSeparator dp, OptionType value) => dp.AccessKey = App.Resource.GetString(value.ToString());

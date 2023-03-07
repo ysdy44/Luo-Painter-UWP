@@ -84,7 +84,7 @@
 
                     </TransitionCollection>
                 </ItemsControl.ItemContainerTransitions>
-                
+
                 <ListViewBase.Header>
                     <Border Height="50" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}">
                         <TextBlock
@@ -102,18 +102,18 @@
                         </TextBlock>
                     </Border>
                 </ListViewBase.Header>
-                
+
                 <ListViewBase.Footer>
                     <Button x:Name="ApplyButton" Margin="4,6" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
                             luo_painter:Res.UC="Effect_Apply"/>
                 </ListViewBase.Footer>
-                
-                <ListViewItem x:Name="AdjustmentItem">Adjustment</ListViewItem>
-                <ListViewItem x:Name="Adjustment2Item">Adjustment2</ListViewItem>
-                <ListViewItem x:Name="Effect1Item">Effect1</ListViewItem>
-                <ListViewItem x:Name="Effect2Item">Effect2</ListViewItem>
-                <ListViewItem x:Name="Effect3Item">Effect3</ListViewItem>
-                
+
+                <ListViewItem x:Name="AdjustmentItem" luo_painter:Res.OC="AdjustmentMenu"/>
+                <ListViewItem x:Name="Adjustment2Item" luo_painter:Res.OC="AdjustmentMenu"/>
+                <ListViewItem x:Name="Effect1Item" luo_painter:Res.OC="EffectMenu"/>
+                <ListViewItem x:Name="Effect2Item" luo_painter:Res.OC="EffectMenu"/>
+                <ListViewItem x:Name="Effect3Item" luo_painter:Res.OC="EffectMenu"/>
+
             </ListView>
         </SplitView.Pane>
         <ListView 

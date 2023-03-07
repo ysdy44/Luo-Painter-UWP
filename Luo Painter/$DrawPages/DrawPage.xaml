@@ -279,8 +279,8 @@
                                             <KeyboardAccelerator Key="Insert"/>
                                         </UIElement.KeyboardAccelerators>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem local:Cmd.MFIWI="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
-                                    <MenuFlyoutItem local:Cmd.MFIWI="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
+                                    <!--<MenuFlyoutItem local:Cmd.MFIWI="AddImageLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>-->
+                                    <!--<MenuFlyoutItem local:Cmd.MFIWI="AddCurveLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>-->
                                     <MenuFlyoutItem local:Cmd.MFIWI="AddFillLayer" Command="{x:Bind Command}" Style="{StaticResource AppMenuFlyoutItemWithIconStyle}"/>
                                 </MenuFlyout>
                             </SplitButton.Flyout>
@@ -405,7 +405,7 @@
                                             <ColumnDefinition Width="1*" />
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="TransformSnapButton" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="TransformSnapButton" IsEnabled="False" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                             <StackPanel Spacing="12" Orientation="Horizontal">
                                                 <FontIcon Glyph="&#xE2AC;" FontFamily="Segoe MDL2 Assets"/>
                                                 <TextBlock VerticalAlignment="Center"
