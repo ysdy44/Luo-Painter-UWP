@@ -167,11 +167,12 @@
     <Compile Include="%24DrawPages\DrawPage.Export.cs" />
     <Compile Include="%24DrawPages\DrawPage.History.cs" />
     <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
-    <Compile Include="%24DrawPages\DrawPage.Ink.Paint.cs" />
+    <Compile Include="%24DrawPages\DrawPage.InkType.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
     <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tasks.cs" />
+    <Compile Include="%24DrawPages\DrawPage.xaml.AppBar.cs" />
     <Compile Include="%24DrawPages\DrawPage.xaml.cs">
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
@@ -371,8 +372,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="%24DrawPages\DrawPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="%24MainPages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
