@@ -6,12 +6,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
-    xmlns:brushes="using:Luo_Painter.Brushes"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
-    xmlns:effects="using:Microsoft.Graphics.Canvas.Effects"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     >
 
@@ -147,7 +145,7 @@
                 <Button x:Name="ScratchpadButton" Padding="12,2" Margin="12,10" Height="32" CornerRadius="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
                     <StackPanel Spacing="8" Orientation="Horizontal">
                         <FontIcon Glyph="&#xE932;" FontFamily="Segoe MDL2 Assets"/>
-                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Scratchpad"/>
+                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Scratchpad}"/>
                     </StackPanel>
                 </Button>
             </Grid>
@@ -188,36 +186,36 @@
                                     TextWrapping="Wrap" 
                                     VerticalAlignment="Center" 
                                     OpticalMarginAlignment="TrimSideBearings"
-                                    luo_painter:Res.OT="PaintMenu"
+                                    Text="{strings:Option Type=PaintMenu}"
                                     />
                             </Border>
                         </ListViewBase.Header>
 
                         <ListViewBase.Footer>
                             <ComboBox x:Name="TypeComboBox" SelectedIndex="2" Margin="4,6">
-                                <ComboBoxItem luo_painter:Res.EE="InkErase"/>
-                                <ComboBoxItem FontWeight="Bold" luo_painter:Res.EE="InkGeneral"/>
-                                <ComboBoxItem luo_painter:Res.EE="InkTip"/>
-                                <ComboBoxItem luo_painter:Res.EE="InkLine"/>
-                                <ComboBoxItem luo_painter:Res.EE="InkBlur"/>
-                                <ComboBoxItem luo_painter:Res.EE="InkMosaic"/>
-                                <ComboBoxItem luo_painter:Res.EE="InkLiquefy"/>
+                                <ComboBoxItem Content="{strings:ElementItem Type=InkErase}"/>
+                                <ComboBoxItem FontWeight="Bold" Content="{strings:ElementItem Type=InkGeneral}"/>
+                                <ComboBoxItem Content="{strings:ElementItem Type=InkTip}"/>
+                                <ComboBoxItem Content="{strings:ElementItem Type=InkLine}"/>
+                                <ComboBoxItem Content="{strings:ElementItem Type=InkBlur}"/>
+                                <ComboBoxItem Content="{strings:ElementItem Type=InkMosaic}"/>
+                                <ComboBoxItem Content="{strings:ElementItem Type=InkLiquefy}"/>
                             </ComboBox>
                         </ListViewBase.Footer>
 
                         <ListViewItem
                             x:Name="PropertyItem" 
-                            luo_painter:Res.UC="Paint_Property"
+                            Content="{strings:UI Type=Paint_Property}"
                             />
                         <ListViewItem
                             x:Name="TextureItem" 
                             Visibility="{x:Bind TextureVisibilityConverter(Type), Mode=OneWay}" 
-                            luo_painter:Res.UC="Paint_Texture"
+                            Content="{strings:UI Type=Paint_Texture}"
                             />
                         <ListViewItem
                             x:Name="MixItem"
                             Visibility="{x:Bind MixVisibilityConverter(Type), Mode=OneWay}" 
-                            luo_painter:Res.UC="Paint_Mix"
+                            Content="{strings:UI Type=Paint_Mix}"
                             />
 
                     </ListView>
@@ -229,7 +227,7 @@
 
                             <!--Property-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                       luo_painter:Res.UT="Paint_Property"/>
+                                       Text="{strings:UI Type=Paint_Property}"/>
 
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}">
                                 <StackPanel Margin="2">
@@ -240,7 +238,7 @@
                                         Decrease="True"
                                         TickFrequency="100" 
                                         TickPlacement="Outside" 
-                                        luo_painter:Res.UH="Paint_Property_Size"
+                                        Header="{strings:UI Type=Paint_Property_Size}"
                                         />
 
                                     <!--Opacity-->
@@ -252,7 +250,7 @@
                                         Unit="%"
                                         TickFrequency="25" 
                                         TickPlacement="Outside"
-                                        luo_painter:Res.UH="Paint_Property_Opacity"
+                                        Header="{strings:UI Type=Paint_Property_Opacity}"
                                         />
 
                                     <!--Spacing-->
@@ -264,7 +262,7 @@
                                         TickPlacement="Outside" 
                                         Foreground="{ThemeResource AppForeground}" 
                                         Visibility="{x:Bind SpacingVisibilityConverter(Type), Mode=OneWay}" 
-                                        luo_painter:Res.UH="Paint_Property_Spacing"
+                                        Header="{strings:UI Type=Paint_Property_Spacing}"
                                         />
 
                                     <!--Flow-->
@@ -276,7 +274,7 @@
                                         TickPlacement="Outside" 
                                         Foreground="{ThemeResource AppForeground}" 
                                         Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}" 
-                                        luo_painter:Res.UH="Paint_Property_Flow"
+                                        Header="{strings:UI Type=Paint_Property_Flow}"
                                         />
 
                                 </StackPanel>
@@ -297,7 +295,7 @@
                                             TickFrequency="25" 
                                             TickPlacement="Outside" 
                                             Foreground="{ThemeResource AppForeground}" 
-                                            luo_painter:Res.UH="Paint_Property_MinSize"
+                                            Header="{strings:UI Type=Paint_Property_MinSize}"
                                             />
                                         <hsvColorPickers:NumberSlider
                                             x:Name="MinFlowSlider" 
@@ -307,7 +305,7 @@
                                             TickPlacement="Outside" 
                                             Foreground="{ThemeResource AppForeground}" 
                                             Visibility="{x:Bind FlowVisibilityConverter(Type), Mode=OneWay}"
-                                            luo_painter:Res.UH="Paint_Property_MinFlow"
+                                            Header="{strings:UI Type=Paint_Property_MinFlow}"
                                             />
                                     </StackPanel>
                                 </Border>
@@ -334,7 +332,7 @@
                             <!--Tip-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                                        Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}"
-                                       luo_painter:Res.UT="Paint_Property_Tip"/>
+                                       Text="{strings:UI Type=Paint_Property_Tip}"/>
 
                             <Grid Height="136" ColumnSpacing="8"
                                   Visibility="{x:Bind TipVisibilityConverter(Type), Mode=OneWay}">
@@ -371,7 +369,7 @@
                             <!--Hardness-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                                        Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}"
-                                       luo_painter:Res.UT="Paint_Property_Hardness"/>
+                                       Text="{strings:UI Type=Paint_Property_Hardness}"/>
 
                             <Grid ColumnSpacing="8" Visibility="{x:Bind HardnessVisibilityConverter(Type), Mode=OneWay}">
                                 <Grid.ColumnDefinitions>
@@ -393,19 +391,19 @@
                                         <UIElement.RenderTransform>
                                             <ScaleTransform ScaleX="3" ScaleY="3"/>
                                         </UIElement.RenderTransform>
-                                        <ContentControl luo_painter:Res.EI="HardnessNone" Visibility="Visible"/>
-                                        <ContentControl luo_painter:Res.EI="HardnessCosine" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:Res.EI="HardnessQuadratic" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:Res.EI="HardnessCube" Visibility="Collapsed"/>
-                                        <ContentControl luo_painter:Res.EI="HardnessQuartic" Visibility="Collapsed"/>
+                                        <ContentControl Content="{strings:ElementIcon Type=HardnessNone}" Visibility="Visible"/>
+                                        <ContentControl Content="{strings:ElementIcon Type=HardnessCosine}" Visibility="Collapsed"/>
+                                        <ContentControl Content="{strings:ElementIcon Type=HardnessQuadratic}" Visibility="Collapsed"/>
+                                        <ContentControl Content="{strings:ElementIcon Type=HardnessCube}" Visibility="Collapsed"/>
+                                        <ContentControl Content="{strings:ElementIcon Type=HardnessQuartic}" Visibility="Collapsed"/>
                                     </elements:IndexGrid>
                                 </Border>
                                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
-                                    <luo_painter:HardnessIcon Type="None"/>
-                                    <luo_painter:HardnessIcon Type="Cosine"/>
-                                    <luo_painter:HardnessIcon Type="Quadratic"/>
-                                    <luo_painter:HardnessIcon Type="Cube"/>
-                                    <luo_painter:HardnessIcon Type="Quartic"/>
+                                    <ListViewItem Content="{strings:Element Type=HardnessNone}"/>
+                                    <ListViewItem Content="{strings:Element Type=HardnessCosine}"/>
+                                    <ListViewItem Content="{strings:Element Type=HardnessQuadratic}"/>
+                                    <ListViewItem Content="{strings:Element Type=HardnessCube}"/>
+                                    <ListViewItem Content="{strings:Element Type=HardnessQuartic}"/>
                                 </ListView>
                             </Grid>
 
@@ -418,7 +416,7 @@
                             <!--Shape-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                                        Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}"
-                                       luo_painter:Res.UT="Paint_Texture_Shape"/>
+                                       Text="{strings:UI Type=Paint_Texture_Shape}"/>
 
                             <Grid ColumnSpacing="8" RowSpacing="4" Margin="0,0,0,4"
                                   Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
@@ -439,19 +437,19 @@
                                 <Button x:Name="ImportShapeButton" IsEnabled="False" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                     <StackPanel Spacing="8" Orientation="Horizontal">
                                         <SymbolIcon Symbol="OpenFile"/>
-                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Import"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Texture_Import}"/>
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="TextureShapeButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                     <StackPanel Spacing="8" Orientation="Horizontal">
                                         <SymbolIcon Symbol="Pictures"/>
-                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Texture}"/>
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="RemoveShapeButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                     <StackPanel Spacing="8" Orientation="Horizontal">
                                         <SymbolIcon Symbol="Delete"/>
-                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Remove"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Texture_Remove}"/>
                                     </StackPanel>
                                 </Button>
                             </Grid>
@@ -464,7 +462,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                               luo_painter:Res.UT="Paint_Texture_Recolor"/>
+                                               Text="{strings:UI Type=Paint_Texture_Recolor}"/>
                                     <ToggleSwitch x:Name="RecolorShapeButton" Grid.Column="1" Margin="4,2"/>
                                 </Grid>
                             </Border>
@@ -477,7 +475,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                               luo_painter:Res.UT="Paint_Texture_Rotate"/>
+                                               Text="{strings:UI Type=Paint_Texture_Rotate}"/>
                                     <ToggleSwitch x:Name="RotateButton" Grid.Column="1" Margin="4,2"/>
                                 </Grid>
                             </Border>
@@ -485,7 +483,7 @@
                             <!--Grain-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
                                        Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}"
-                                       luo_painter:Res.UT="Paint_Texture_Grain"/>
+                                       Text="{strings:UI Type=Paint_Texture_Grain}"/>
 
                             <Grid ColumnSpacing="8" RowSpacing="4" Margin="0,0,0,4" 
                                   Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
@@ -506,19 +504,19 @@
                                 <Button x:Name="ImportGrainButton" IsEnabled="False" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                     <StackPanel Spacing="8" Orientation="Horizontal">
                                         <SymbolIcon Symbol="OpenFile"/>
-                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Import"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Texture_Import}"/>
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="TextureGrainButton" Grid.Column="1" Grid.Row="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                     <StackPanel Spacing="8" Orientation="Horizontal">
                                         <SymbolIcon Symbol="Pictures"/>
-                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Texture}"/>
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="RemoveGrainButton" Grid.Column="1" Grid.Row="2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch">
                                     <StackPanel Spacing="8" Orientation="Horizontal">
                                         <SymbolIcon Symbol="Delete"/>
-                                        <TextBlock VerticalAlignment="Center" luo_painter:Res.UT="Paint_Texture_Remove"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{strings:UI Type=Paint_Texture_Remove}"/>
                                     </StackPanel>
                                 </Button>
                             </Grid>
@@ -531,7 +529,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Margin="10,4" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                               luo_painter:Res.UT="Paint_Texture_Recolor"/>
+                                               Text="{strings:UI Type=Paint_Texture_Recolor}"/>
                                     <ToggleSwitch x:Name="RecolorGrainButton" Grid.Column="1" Margin="4,2"/>
                                 </Grid>
                             </Border>
@@ -539,31 +537,31 @@
                             <Border CornerRadius="8" Margin="0,4,0,4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
                                     Visibility="{x:Bind GrainVisibilityConverter(Type), Mode=OneWay}">
                                 <hsvColorPickers:NumberSlider x:Name="GrainScaleSlider" Decrease="True" Unit="%" TickFrequency="100" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                              luo_painter:Res.UH="Paint_Texture_Scale"/>
+                                                              Header="{strings:UI Type=Paint_Texture_Scale}"/>
                             </Border>
 
                             <!--BlendMode-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                                        Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}" 
-                                       luo_painter:Res.UT="Paint_Texture_BlendMode"/>
+                                       Text="{strings:UI Type=Paint_Texture_BlendMode}"/>
 
 
                             <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
                                       Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
                                 <!--None-->
-                                <luo_painter:BlendItem Type="-1"/>
+                                <ListViewItem Content="{strings:BlendItem Type=-1}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Darken-->
-                                <luo_painter:BlendItem Type="Darken"/>
-                                <luo_painter:BlendItem Type="Multiply"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Darken}"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Multiply}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Lighten-->
-                                <luo_painter:BlendItem Type="Lighten"/>
-                                <luo_painter:BlendItem Type="Screen"/>
-                                <luo_painter:BlendItem Type="LinearDodge"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Lighten}"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Screen}"/>
+                                <ListViewItem Content="{strings:BlendItem Type=LinearDodge}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Contrast-->
-                                <luo_painter:BlendItem Type="Overlay"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Overlay}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                                 <!--Difference-->
-                                <luo_painter:BlendItem Type="Difference"/>
-                                <luo_painter:BlendItem Type="Subtract"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Difference}"/>
+                                <ListViewItem Content="{strings:BlendItem Type=Subtract}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
                             </ListView>
 
                         </StackPanel>
@@ -574,7 +572,7 @@
 
                             <!--MixColor-->
                             <TextBlock Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                       luo_painter:Res.UT="Paint_Mix"/>
+                                       Text="{strings:UI Type=Paint_Mix}"/>
 
                             <Grid Height="90" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                 <Grid.ColumnDefinitions>
@@ -622,13 +620,13 @@
                                 <StackPanel Margin="2">
 
                                     <hsvColorPickers:NumberSlider x:Name="MixSlider" Decrease="True" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                                  luo_painter:Res.UH="Paint_Mix_Mix"/>
+                                                                  Header="{strings:UI Type=Paint_Mix_Mix}"/>
 
                                     <hsvColorPickers:NumberSlider x:Name="WetSlider" Decrease="True" TickFrequency="2" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                                  luo_painter:Res.UH="Paint_Mix_Wet"/>
+                                                                  Header="{strings:UI Type=Paint_Mix_Wet}"/>
 
                                     <hsvColorPickers:NumberSlider x:Name="PersistenceSlider" Decrease="True" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                                  luo_painter:Res.UH="Paint_Mix_Persistence"/>
+                                                                  Header="{strings:UI Type=Paint_Mix_Persistence}"/>
 
                                 </StackPanel>
                             </Border>
