@@ -289,8 +289,22 @@
                             <SplitButton.Flyout>
                                 <MenuFlyout Placement="TopEdgeAlignedRight">
                                     <!--New-->
-                                    <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                             AccessKey="{strings:Option Type=LayerNewMenu}"/>
+                                    <MenuFlyoutSeparator Margin="16,6,16,12">
+                                        <Control.Template>
+                                            <ControlTemplate TargetType="MenuFlyoutSeparator">
+                                                <TextBlock                                    
+                                                    IsTextSelectionEnabled="True"                                   
+                                                    FontWeight="Medium" 
+                                                    TextTrimming="CharacterEllipsis" 
+                                                    FontSize="20" 
+                                                    TextWrapping="Wrap"
+                                                    VerticalAlignment="Center"
+                                                    OpticalMarginAlignment="TrimSideBearings"
+                                                    Text="{strings:Option Type=LayerNewMenu}"                                   
+                                                    />
+                                            </ControlTemplate>
+                                        </Control.Template>
+                                    </MenuFlyoutSeparator>
                                     <controls:OptionItem Type="AddBitmapLayer" Command="{x:Bind Command}">
                                         <UIElement.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Insert"/>
@@ -1671,8 +1685,22 @@
                         </ToolTipService.ToolTip>
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                             AccessKey="{strings:Option Type=FileMenu}"/>
+                                <MenuFlyoutSeparator Margin="16,6,16,12">
+                                    <Control.Template>
+                                        <ControlTemplate TargetType="MenuFlyoutSeparator">
+                                            <TextBlock                                    
+                                                IsTextSelectionEnabled="True"                                   
+                                                FontWeight="Medium" 
+                                                TextTrimming="CharacterEllipsis" 
+                                                FontSize="20" 
+                                                TextWrapping="Wrap"
+                                                VerticalAlignment="Center"
+                                                OpticalMarginAlignment="TrimSideBearings"
+                                                Text="{strings:Option Type=FileMenu}"                                   
+                                                />
+                                        </ControlTemplate>
+                                    </Control.Template>
+                                </MenuFlyoutSeparator>
                                 <MenuFlyoutItem Text="{strings:Option Type=Home}" CommandParameter="{strings:OptionType Type=Home}" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="Home"/>
@@ -1793,8 +1821,22 @@
                         <Button.Flyout>
                             <MenuFlyout x:Name="EditMenuFlyout" Placement="Bottom">
                                 <!--Edit-->
-                                <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                             AccessKey="{strings:Option Type=EditMenu}"/>
+                                <MenuFlyoutSeparator Margin="16,6,16,12">
+                                    <Control.Template>
+                                        <ControlTemplate TargetType="MenuFlyoutSeparator">
+                                            <TextBlock                                    
+                                                IsTextSelectionEnabled="True"                                   
+                                                FontWeight="Medium" 
+                                                TextTrimming="CharacterEllipsis" 
+                                                FontSize="20" 
+                                                TextWrapping="Wrap"
+                                                VerticalAlignment="Center"
+                                                OpticalMarginAlignment="TrimSideBearings"
+                                                Text="{strings:Option Type=EditMenu}"                                   
+                                                />
+                                        </ControlTemplate>
+                                    </Control.Template>
+                                </MenuFlyoutSeparator>
                                 <controls:OptionItem Type="Cut" Command="{x:Bind Command}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="X"/>
@@ -1866,8 +1908,22 @@
                         <Button.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <!--Others-->
-                                <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                             AccessKey="{strings:Option Type=OtherMenu}"/>
+                                <MenuFlyoutSeparator Margin="16,6,16,12">
+                                    <Control.Template>
+                                        <ControlTemplate TargetType="MenuFlyoutSeparator">
+                                            <TextBlock                                    
+                                                IsTextSelectionEnabled="True"                                   
+                                                FontWeight="Medium" 
+                                                TextTrimming="CharacterEllipsis" 
+                                                FontSize="20" 
+                                                TextWrapping="Wrap"
+                                                VerticalAlignment="Center"
+                                                OpticalMarginAlignment="TrimSideBearings"
+                                                Text="{strings:Option Type=OtherMenu}"                                   
+                                                />
+                                        </ControlTemplate>
+                                    </Control.Template>
+                                </MenuFlyoutSeparator>
                                 <controls:OptionItem Type="Move" Command="{x:Bind Command}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="M"/>

@@ -260,8 +260,22 @@
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
                     <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
-                        <MenuFlyoutSeparator Style="{StaticResource AppHeaderMenuFlyoutSeparator}"
-                                             AccessKey="{strings:Option Type=LayerMenu}"/>
+                        <MenuFlyoutSeparator Margin="16,6,16,12">
+                            <Control.Template>
+                                <ControlTemplate TargetType="MenuFlyoutSeparator">
+                                    <TextBlock                                    
+                                        IsTextSelectionEnabled="True"                                   
+                                        FontWeight="Medium" 
+                                        TextTrimming="CharacterEllipsis" 
+                                        FontSize="20" 
+                                        TextWrapping="Wrap"
+                                        VerticalAlignment="Center"
+                                        OpticalMarginAlignment="TrimSideBearings"
+                                        Text="{strings:Option Type=LayerMenu}"                                   
+                                        />
+                                </ControlTemplate>
+                            </Control.Template>
+                        </MenuFlyoutSeparator>
 
                         <!--TagType-->
                         <blends:TagTypeSegmented x:Name="TagTypeSegmented" Width="286" Height="40">
