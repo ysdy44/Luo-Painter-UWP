@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:options="using:Luo_Painter.Options"
     xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
@@ -25,24 +26,24 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <luo_painter:OptionGroupingList x:Name="Collection">
-                    <luo_painter:OptionGrouping Key="Marquee">
+                <local:OptionGroupingList x:Name="Collection">
+                    <local:OptionGrouping Key="Marquee">
                         <options:OptionType>MarqueeRectangular</options:OptionType>
                         <options:OptionType>MarqueeElliptical</options:OptionType>
                         <options:OptionType>MarqueePolygon</options:OptionType>
                         <options:OptionType>MarqueeFreeHand</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Selection">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Selection">
                         <options:OptionType>SelectionFlood</options:OptionType>
                         <options:OptionType>SelectionBrush</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Paint">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Paint">
                         <options:OptionType>PaintBrush</options:OptionType>
                         <options:OptionType>PaintLine</options:OptionType>
                         <options:OptionType>PaintBrushForce</options:OptionType>
                         <options:OptionType>PaintBrushMulti</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Vector">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Vector">
                         <!--<options:OptionType>Cursor</options:OptionType>-->
                         <options:OptionType>View</options:OptionType>
                         <options:OptionType>Straw</options:OptionType>
@@ -51,16 +52,16 @@
                         <options:OptionType>Transparency</options:OptionType>
                         <!--<options:OptionType>Image</options:OptionType>-->
                         <!--<options:OptionType>Crop</options:OptionType>-->
-                    </luo_painter:OptionGrouping>
-                    <!--<luo_painter:OptionGrouping Key="Text">-->
-                        <!--<options:OptionType>TextArtistic</options:OptionType>-->
-                        <!--<options:OptionType>TextFrame</options:OptionType>-->
-                    <!--</luo_painter:OptionGrouping>-->
-                    <!--<luo_painter:OptionGrouping Key="Curve">-->
-                        <!--<options:OptionType>Pen</options:OptionType>-->
-                        <!--<options:OptionType>Node</options:OptionType>-->
-                    <!--</luo_painter:OptionGrouping>-->
-                    <luo_painter:OptionGrouping Key="Geometry">
+                    </local:OptionGrouping>
+                    <!--<local:OptionGrouping Key="Text">-->
+                    <!--<options:OptionType>TextArtistic</options:OptionType>-->
+                    <!--<options:OptionType>TextFrame</options:OptionType>-->
+                    <!--</local:OptionGrouping>-->
+                    <!--<local:OptionGrouping Key="Curve">-->
+                    <!--<options:OptionType>Pen</options:OptionType>-->
+                    <!--<options:OptionType>Node</options:OptionType>-->
+                    <!--</local:OptionGrouping>-->
+                    <local:OptionGrouping Key="Geometry">
                         <!--Geometry0-->
                         <options:OptionType>GeometryRectangle</options:OptionType>
                         <options:OptionType>GeometryEllipse</options:OptionType>
@@ -80,13 +81,13 @@
                         <options:OptionType>GeometryArrow</options:OptionType>
                         <options:OptionType>GeometryCapsule</options:OptionType>
                         <options:OptionType>GeometryHeart</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Pattern">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Pattern">
                         <options:OptionType>PatternGrid</options:OptionType>
                         <options:OptionType>PatternDiagonal</options:OptionType>
                         <options:OptionType>PatternSpotted</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                </luo_painter:OptionGroupingList>
+                    </local:OptionGrouping>
+                </local:OptionGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -133,10 +134,10 @@
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="options:OptionType">
-            <luo_painter:OptionIcon Type="{x:Bind}"/>
+            <local:OptionIcon Type="{x:Bind}"/>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
-    
+
     <ItemsControl.GroupStyle>
         <GroupStyle HidesIfEmpty="True">
             <GroupStyle.HeaderContainerStyle>

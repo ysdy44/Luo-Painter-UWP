@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:options="using:Luo_Painter.Options"
     xmlns:strings="using:Luo_Painter.Strings"
@@ -16,8 +15,8 @@
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
                 <!--Collection-->
-                <luo_painter:OptionGroupingList x:Name="Collection">
-                    <luo_painter:OptionGrouping Key="Adjustment">
+                <local:OptionGroupingList x:Name="Collection">
+                    <local:OptionGrouping Key="Adjustment">
                         <options:OptionType>Gray</options:OptionType>
                         <options:OptionType>Invert</options:OptionType>
                         <options:OptionType>Exposure</options:OptionType>
@@ -27,14 +26,14 @@
                         <options:OptionType>Contrast</options:OptionType>
                         <options:OptionType>Temperature</options:OptionType>
                         <options:OptionType>HighlightsAndShadows</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Adjustment2">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Adjustment2">
                         <options:OptionType>GammaTransfer</options:OptionType>
                         <options:OptionType>Vignette</options:OptionType>
                         <options:OptionType>ColorMatrix</options:OptionType>
                         <options:OptionType>ColorMatch</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Effect1">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Effect1">
                         <options:OptionType>GaussianBlur</options:OptionType>
                         <options:OptionType>DirectionalBlur</options:OptionType>
                         <options:OptionType>Sharpen</options:OptionType>
@@ -43,8 +42,8 @@
                         <options:OptionType>Morphology</options:OptionType>
                         <options:OptionType>Emboss</options:OptionType>
                         <options:OptionType>Straighten</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Effect2">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Effect2">
                         <options:OptionType>Sepia</options:OptionType>
                         <options:OptionType>Posterize</options:OptionType>
                         <options:OptionType>LuminanceToAlpha</options:OptionType>
@@ -53,14 +52,14 @@
                         <options:OptionType>Colouring</options:OptionType>
                         <options:OptionType>Tint</options:OptionType>
                         <options:OptionType>DiscreteTransfer</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                    <luo_painter:OptionGrouping Key="Effect3">
+                    </local:OptionGrouping>
+                    <local:OptionGrouping Key="Effect3">
                         <options:OptionType>Lighting</options:OptionType>
                         <options:OptionType>Fog</options:OptionType>
                         <options:OptionType>Glass</options:OptionType>
                         <options:OptionType>PinchPunch</options:OptionType>
-                    </luo_painter:OptionGrouping>
-                </luo_painter:OptionGroupingList>
+                    </local:OptionGrouping>
+                </local:OptionGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
