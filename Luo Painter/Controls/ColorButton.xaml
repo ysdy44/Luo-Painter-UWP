@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignWidth="50" 
     d:DesignHeight="50"
@@ -16,8 +16,11 @@
     Height="50" 
     Foreground="{ThemeResource AppForeground}" 
     Style="{StaticResource TextBlockButtonStyle}" 
-    luo_painter:Res.OTT="ColorMenu"
     >
+
+    <ToolTipService.ToolTip>
+        <ToolTip Content="{strings:Option Type=ColorMenu}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+    </ToolTipService.ToolTip>
 
     <UIElement.ManipulationMode>
         TranslateX, TranslateY
@@ -51,11 +54,13 @@
                         TextWrapping="Wrap" 
                         VerticalAlignment="Center" 
                         OpticalMarginAlignment="TrimSideBearings"
-                        luo_painter:Res.OT="ColorMenu"
+                        Text="{strings:Option Type=ColorMenu}"
                         />
                     <Button Grid.Column="1" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                            Command="{x:Bind OpenCommand}"
-                            luo_painter:Res.UTT="Color_Straw">
+                            Command="{x:Bind OpenCommand}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{strings:UI Type=Color_Straw}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                        </ToolTipService.ToolTip>
                         <UIElement.ManipulationMode>
                             TranslateX, TranslateY
                         </UIElement.ManipulationMode>
@@ -75,16 +80,28 @@
 
                 <!--Type-->
                 <ListBox x:Name="ComboBox" SelectedIndex="0" Visibility="Visible">
-                    <ListBoxItem luo_painter:Res.UTT="Color_Wheel">
+                    <ListBoxItem>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{strings:UI Type=Color_Wheel}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                        </ToolTipService.ToolTip>
                         <FontIcon Glyph="&#xF157;" FontFamily="Segoe MDL2 Assets"/>
                     </ListBoxItem>
-                    <ListBoxItem luo_painter:Res.UTT="Color_Box">
+                    <ListBoxItem>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{strings:UI Type=Color_Box}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                        </ToolTipService.ToolTip>
                         <FontIcon Glyph="&#xF158;" FontFamily="Segoe MDL2 Assets"/>
                     </ListBoxItem>
-                    <ListBoxItem luo_painter:Res.UTT="Color_Palette">
+                    <ListBoxItem>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{strings:UI Type=Color_Palette}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                        </ToolTipService.ToolTip>
                         <FontIcon Glyph="&#xF0B9;" FontFamily="Segoe MDL2 Assets"/>
                     </ListBoxItem>
-                    <ListBoxItem luo_painter:Res.UTT="Color_Parameter">
+                    <ListBoxItem>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{strings:UI Type=Color_Parameter}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                        </ToolTipService.ToolTip>
                         <FontIcon Glyph="&#xE9E9;" FontFamily="Segoe MDL2 Assets"/>
                     </ListBoxItem>
                 </ListBox>
@@ -210,7 +227,7 @@
                                             TextWrapping="Wrap" 
                                             VerticalAlignment="Center" 
                                             OpticalMarginAlignment="TrimSideBearings"
-                                            luo_painter:Res.OT="ColorHarmonyMenu"
+                                            Text="{strings:Option Type=ColorHarmonyMenu}"
                                             />
 
                                         <ListView
@@ -219,11 +236,11 @@
                                             IsItemClickEnabled="True" 
                                             Style="{StaticResource AppListViewStyle}"
                                             >
-                                            <ListViewItem luo_painter:Res.EE="HarmonyComplementary"/>
-                                            <ListViewItem luo_painter:Res.EE="HarmonySplitComplementary"/>
-                                            <ListViewItem luo_painter:Res.EE="HarmonyAnalogous"/>
-                                            <ListViewItem luo_painter:Res.EE="HarmonyTriadic"/>
-                                            <ListViewItem luo_painter:Res.EE="HarmonyTetradic"/>
+                                            <ListViewItem Content="{strings:ElementItem Type=HarmonyComplementary}"/>
+                                            <ListViewItem Content="{strings:ElementItem Type=HarmonySplitComplementary}"/>
+                                            <ListViewItem Content="{strings:ElementItem Type=HarmonyAnalogous}"/>
+                                            <ListViewItem Content="{strings:ElementItem Type=HarmonyTriadic}"/>
+                                            <ListViewItem Content="{strings:ElementItem Type=HarmonyTetradic}"/>
                                         </ListView>
 
                                     </StackPanel>
@@ -241,7 +258,7 @@
                                 <ColumnDefinition Width="140"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="HexTextBlock" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                                       luo_painter:Res.UT="Color_Hex"/>
+                                       Text="{strings:UI Type=Color_Hex}"/>
                             <TextBlock Margin="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18" Foreground="{ThemeResource AppForeground}">
                                 #
                             </TextBlock>
