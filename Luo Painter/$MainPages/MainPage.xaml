@@ -8,6 +8,7 @@
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:models="using:Luo_Painter.Models.Projects"
+    xmlns:strings="using:Luo_Painter.Strings"
     NavigationCacheMode="Required"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -16,7 +17,7 @@
     <FrameworkElement.Resources>
         <!--Flyout-->
         <MenuFlyout x:Name="FileMenuFlyout">
-            <MenuFlyoutItem x:Name="RenameItem" CommandParameter="{x:Null}" Text="{x:Bind RenameProject}">
+            <MenuFlyoutItem x:Name="RenameItem" CommandParameter="{x:Null}" Text="{strings:UI Type=RenameProject}">
                 <MenuFlyoutItem.Command>
                     <local:ProjectCommand x:Name="RenameCommand"/>
                 </MenuFlyoutItem.Command>
@@ -25,37 +26,37 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Name="DupliateItem" Text="{x:Bind DupliateProject}">
+            <MenuFlyoutItem x:Name="DupliateItem" Text="{strings:UI Type=DupliateProject}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="DeleteItem" Text="{x:Bind DeleteProject}">
+            <MenuFlyoutItem x:Name="DeleteItem" Text="{strings:UI Type=DeleteProject}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Delete" Foreground="Red"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Name="MoveItem" Text="{x:Bind MoveProject}">
+            <MenuFlyoutItem x:Name="MoveItem" Text="{strings:UI Type=MoveProject}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="MoveToFolder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Name="LocalItem" Text="{x:Bind LocalFolder}">
+            <MenuFlyoutItem x:Name="LocalItem" Text="{strings:UI Type=LocalFolder}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
         </MenuFlyout>
         <MenuFlyout x:Name="FolderMenuFlyout">
-            <MenuFlyoutItem x:Name="DeleteItem2" Text="{x:Bind DeleteProject}">
+            <MenuFlyoutItem x:Name="DeleteItem2" Text="{strings:UI Type=DeleteProject}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Delete" Foreground="Red"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Name="LocalItem2" Text="{x:Bind LocalFolder}">
+            <MenuFlyoutItem x:Name="LocalItem2" Text="{strings:UI Type=LocalFolder}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Folder" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
                 </MenuFlyoutItem.Icon>
@@ -138,9 +139,9 @@
                     SelectedIndex="0"
                     Style="{StaticResource AppSegmentListBoxStyle}"
                     >
-                    <ListBoxItem local:Res.UC="Main_Type"/>
-                    <ListBoxItem local:Res.UC="Main_Date"/>
-                    <ListBoxItem local:Res.UC="Main_Name"/>
+                    <ListBoxItem Content="{strings:UI Type=Main_Type}"/>
+                    <ListBoxItem Content="{strings:UI Type=Main_Date}"/>
+                    <ListBoxItem Content="{strings:UI Type=Main_Name}"/>
                 </ListBox>
             </ListViewBase.Header>
 
@@ -335,25 +336,43 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
 
-            <ListViewItem local:Res.UTT="NewProject">
+            <ListViewItem>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=NewProject}" Placement="Left" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Add"/>
             </ListViewItem>
-            <ListViewItem local:Res.UTT="NewImage">
+            <ListViewItem>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=NewImage}" Placement="Left" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Pictures"/>
             </ListViewItem>
-            <ListViewItem local:Res.UTT="NewFolder">
+            <ListViewItem>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=NewFolder}" Placement="Left" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="NewFolder"/>
             </ListViewItem>
 
             <ListViewItem IsEnabled="False" MinWidth="32" MinHeight="1" Width="32" Height="1" Margin="2" Padding="0" Background="{ThemeResource AppForeground}" Style="{x:Null}"/>
 
-            <ListViewItem local:Res.UTT="DupliateProject">
+            <ListViewItem>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=DupliateProject}" Placement="Left" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Copy"/>
             </ListViewItem>
-            <ListViewItem local:Res.UTT="DeleteProject">
+            <ListViewItem>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=DeleteProject}" Placement="Left" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Delete"/>
             </ListViewItem>
-            <ListViewItem local:Res.UTT="MoveProject">
+            <ListViewItem>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=MoveProject}" Placement="Left" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="MoveToFolder"/>
             </ListViewItem>
 
@@ -373,7 +392,7 @@
                 Grid.Column="1" 
                 HorizontalAlignment="Center" 
                 Style="{StaticResource SubheaderTextBlockStyle}"
-                local:Res.UT="Name"
+                Text="{strings:UI Type=Name}"
                 >
                 <!--Transitions-->
                 <UIElement.Transitions>
@@ -385,8 +404,10 @@
             </TextBlock>
 
             <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}"
-                    local:Res.UTT="Main_Documentation" >
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=Main_Documentation}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
@@ -396,8 +417,10 @@
             </Button>
 
             <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}" 
-                    local:Res.UTT="Main_Setting">
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=Main_Setting}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
                 <!--Transitions-->
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
@@ -468,7 +491,7 @@
 
             <ListViewBase.Header>
                 <Button x:Name="HomeButton" Padding="8,0" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Foreground="{ThemeResource AppForeground}" 
-                        local:Res.UC="Main_Home">
+                        Content="{strings:UI Type=Main_Home}" >
                     <ContentControl.ContentTransitions>
                         <TransitionCollection>
                         </TransitionCollection>
@@ -478,7 +501,7 @@
 
             <ListViewBase.Footer>
                 <Button x:Name="BackButton" Padding="8,0" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Foreground="{ThemeResource AppForeground}" 
-                        local:Res.UC="Main_Back">
+                        Content="{strings:UI Type=Main_Back}" >
                     <ContentControl.ContentTransitions>
                         <TransitionCollection>
                         </TransitionCollection>
@@ -496,7 +519,10 @@
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
-            local:Res.UK="DupliateProject"
+            Title="{strings:UI Type=DupliateProject}"
+            Subtitle="{strings:UI Type=DupliateProject_Subtitle}"
+            PrimaryButtonText="{strings:UI Type=OK}"
+            SecondaryButtonText="{strings:UI Type=Cancel}"
             />
         <elements:Docker 
             x:Name="DeleteDocker" 
@@ -504,7 +530,10 @@
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
-            local:Res.UK="DeleteProject"
+            Title="{strings:UI Type=DeleteProject}"
+            Subtitle="{strings:UI Type=DeleteProject_Subtitle}"
+            PrimaryButtonText="{strings:UI Type=OK}"
+            SecondaryButtonText="{strings:UI Type=Cancel}"
             />
         <elements:Docker 
             x:Name="SelectDocker" 
@@ -512,14 +541,20 @@
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
-            local:Res.UK="SelectProject"
+            Title="{strings:UI Type=SelectProject}"
+            Subtitle="{strings:UI Type=SelectProject_Subtitle}"
+            PrimaryButtonText="{strings:UI Type=OK}"
+            SecondaryButtonText="{strings:UI Type=Cancel}"
             />
         <elements:Docker 
             x:Name="MoveDocker" 
             BorderBrush="{ThemeResource AppStroke}"
             Background="{ThemeResource AppAcrylicOverlayBrush}" 
             Foreground="{ThemeResource AppForeground}"
-            local:Res.UK="MoveProject"
+            Title="{strings:UI Type=MoveProject}"
+            Subtitle="{strings:UI Type=MoveProject_Subtitle}"
+            PrimaryButtonText="{strings:UI Type=OK}"
+            SecondaryButtonText="{strings:UI Type=Cancel}"
             />
 
 
@@ -527,7 +562,9 @@
         <ContentDialog
             x:Name="RenameDialog"
             Style="{StaticResource AppContentDialogStyle}"
-            local:Res.UD="RenameProject"
+            Title="{strings:UI Type=RenameProject}"
+            PrimaryButtonText="{strings:UI Type=OK}"
+            SecondaryButtonText="{strings:UI Type=Cancel}"
             >
             <TextBox x:Name="RenameTextBox" >
                 <TextBox.Header>
@@ -547,7 +584,9 @@
         <ContentDialog 
             x:Name="AddDialog" 
             Style="{StaticResource AppContentDialogStyle}"
-            local:Res.UD="NewProject"
+            Title="{strings:UI Type=NewProject}"
+            PrimaryButtonText="{strings:UI Type=OK}"
+            SecondaryButtonText="{strings:UI Type=Cancel}"
             >
             <controls:SizePicker x:Name="SizePicker" Margin="0,8,0,18"/>
         </ContentDialog>
