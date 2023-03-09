@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
+    xmlns:local="using:Luo_Painter.Controls"
     xmlns:options="using:Luo_Painter.Options"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     >
 
@@ -96,7 +98,7 @@
                             TextWrapping="Wrap" 
                             VerticalAlignment="Center" 
                             OpticalMarginAlignment="TrimSideBearings"
-                            luo_painter:Res.OT="EffectMenu"
+                            Text="{strings:Option Type=EffectMenu}"
                             >
                             <!--Effects-->
                         </TextBlock>
@@ -105,14 +107,14 @@
 
                 <ListViewBase.Footer>
                     <Button x:Name="ApplyButton" Margin="4,6" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
-                            luo_painter:Res.UC="Effect_Apply"/>
+                            Content="{strings:UI Type=Effect_Apply}"/>
                 </ListViewBase.Footer>
 
-                <ListViewItem x:Name="AdjustmentItem" luo_painter:Res.OC="AdjustmentMenu"/>
-                <ListViewItem x:Name="Adjustment2Item" luo_painter:Res.OC="AdjustmentMenu"/>
-                <ListViewItem x:Name="Effect1Item" luo_painter:Res.OC="EffectMenu"/>
-                <ListViewItem x:Name="Effect2Item" luo_painter:Res.OC="EffectMenu"/>
-                <ListViewItem x:Name="Effect3Item" luo_painter:Res.OC="EffectMenu"/>
+                <ListViewItem x:Name="AdjustmentItem" Content="{strings:Option Type=AdjustmentMenu}"/>
+                <ListViewItem x:Name="Adjustment2Item" Content="{strings:Option Type=AdjustmentMenu}"/>
+                <ListViewItem x:Name="Effect1Item" Content="{strings:Option Type=EffectMenu}"/>
+                <ListViewItem x:Name="Effect2Item" Content="{strings:Option Type=EffectMenu}"/>
+                <ListViewItem x:Name="Effect3Item" Content="{strings:Option Type=EffectMenu}"/>
 
             </ListView>
         </SplitView.Pane>
@@ -164,25 +166,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="options:OptionType">
-                    <luo_painter:OptionThumbnail Type="{x:Bind}" >
-                        <ContentControl.Template>
-                            <ControlTemplate TargetType="ContentControl">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="92"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Border Width="118" Height="76" CornerRadius="4" Margin="10,8" BorderThickness="2" BorderBrush="Black" Background="{TemplateBinding Background}"/>
-                                    <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </ContentControl.Template>
-                        <ContentControl.ContentTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <TextBlock Text="{x:Bind}" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </DataTemplate>
-                        </ContentControl.ContentTemplate>
-                    </luo_painter:OptionThumbnail>
+                    <local:OptionThumbnail Type="{x:Bind}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 

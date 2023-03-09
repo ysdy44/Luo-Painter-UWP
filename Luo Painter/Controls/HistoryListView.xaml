@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:historys="using:Luo_Painter.Models"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignWidth="400"
     d:DesignHeight="400"
@@ -65,7 +66,7 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center"
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:Res.OT="HistoryMenu"
+                Text="{strings:Option Type=HistoryMenu}"
                 />
         </Border>
     </ListViewBase.Header>

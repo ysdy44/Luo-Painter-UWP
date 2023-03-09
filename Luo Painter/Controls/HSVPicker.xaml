@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
+    xmlns:strings="using:Luo_Painter.Strings"
     d:DesignWidth="400"
     d:DesignHeight="400"
     mc:Ignorable="d"
@@ -20,7 +20,7 @@
             TickFrequency="60" 
             TickPlacement="Outside" 
             Foreground="{ThemeResource AppForeground}"
-            luo_painter:Res.UH="Color_Hue" 
+            Header="{strings:UI Type=Color_Hue}"
             >
             <Control.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -42,7 +42,7 @@
             TickFrequency="25" 
             TickPlacement="Outside"
             Foreground="{ThemeResource AppForeground}"
-            luo_painter:Res.UH="Color_Saturation" 
+            Header="{strings:UI Type=Color_Saturation}" 
             >
             <Control.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -59,7 +59,7 @@
             TickFrequency="25" 
             TickPlacement="Outside" 
             Foreground="{ThemeResource AppForeground}"
-            luo_painter:Res.UH="Color_Value"
+            Header="{strings:UI Type=Color_Value}"
             >
             <Control.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">

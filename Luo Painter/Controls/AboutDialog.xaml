@@ -4,12 +4,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
+    xmlns:strings="using:Luo_Painter.Strings"
     d:DesignHeight="400"
     d:DesignWidth="400"
     mc:Ignorable="d"
     Style="{StaticResource AppContentDialogStyle}"
-    PrimaryButtonText="{x:Bind Back}"
+    PrimaryButtonText="{strings:UI Type=Back}"
     >
 
     <StackPanel>
@@ -25,16 +25,16 @@
         </Border>
 
         <Border Padding="12,0" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource AppRoundedBorderStyle}">
-            <TextBlock luo_painter:Res.UT="Version"/>
+            <TextBlock Text="{strings:UI Type=Version}"/>
         </Border>
 
         <ContentControl Height="12"/>
-        <TextBlock HorizontalAlignment="Center" luo_painter:Res.UT="Github"/>
-        <HyperlinkButton HorizontalAlignment="Center" luo_painter:Res.UC="GithubLink" NavigateUri="{x:Bind GithubLink}"/>
+        <TextBlock HorizontalAlignment="Center" Text="{strings:UI Type=Github}"/>
+        <HyperlinkButton HorizontalAlignment="Center" Content="{strings:UI Type=GithubLink}" NavigateUri="{x:Bind GithubLink}"/>
 
         <ContentControl Height="12"/>
-        <TextBlock HorizontalAlignment="Center" luo_painter:Res.UT="Feedback"/>
-        <HyperlinkButton HorizontalAlignment="Center" luo_painter:Res.UC="FeedbackLink" NavigateUri="{x:Bind FeedbackLink}"/>
+        <TextBlock HorizontalAlignment="Center" Text="{strings:UI Type=Feedback}"/>
+        <HyperlinkButton HorizontalAlignment="Center" Content="{strings:UI Type=FeedbackLink}" NavigateUri="{x:Bind FeedbackLink}"/>
 
     </StackPanel>
 </ContentDialog>

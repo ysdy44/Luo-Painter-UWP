@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="100"
@@ -32,9 +32,9 @@
         <TextBox x:Name="HeightTextBox" Grid.Column="1" Grid.Row="2" />
 
         <TextBlock Margin="22,0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}"           
-                   luo_painter:Res.UT="Width"/>
+                   Text="{strings:UI Type=Width}"/>
         <TextBlock Grid.Row="2" Margin="22,0" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}"           
-                   luo_painter:Res.UT="Height"/>
+                   Text="{strings:UI Type=Height}"/>
 
     </Grid>
 </UserControl>

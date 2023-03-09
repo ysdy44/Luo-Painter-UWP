@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:options="using:Luo_Painter.Options"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignWidth="400" 
     d:DesignHeight="400"
@@ -135,7 +136,7 @@
             <luo_painter:OptionIcon Type="{x:Bind}"/>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
-
+    
     <ItemsControl.GroupStyle>
         <GroupStyle HidesIfEmpty="True">
             <GroupStyle.HeaderContainerStyle>
@@ -168,7 +169,7 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:Res.OT="ToolMenu"
+                Text="{strings:Option Type=ToolMenu}"
                 />
         </Border>
     </ListViewBase.Header>

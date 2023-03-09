@@ -17,7 +17,7 @@
     Foreground="{ThemeResource AppForeground}" 
     Style="{StaticResource TextBlockButtonStyle}" 
     >
-
+    
     <ToolTipService.ToolTip>
         <ToolTip Content="{strings:Option Type=ColorMenu}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
     </ToolTipService.ToolTip>

@@ -4,12 +4,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
-    luo_painter:Res.UD="Offset"
+    Title="{strings:UI Type=Offset}"
+    PrimaryButtonText="{strings:UI Type=OK}"
+    SecondaryButtonText="{strings:UI Type=Cancel}"
     >
 
     <controls:OffsetPicker x:Name="OffsetPicker" Margin="0,8,0,18"/>

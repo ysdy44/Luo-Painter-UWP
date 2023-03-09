@@ -7,6 +7,7 @@
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignWidth="400"   
     d:DesignHeight="400"
@@ -157,7 +158,7 @@
                 TextWrapping="Wrap" 
                 VerticalAlignment="Center" 
                 OpticalMarginAlignment="TrimSideBearings"
-                luo_painter:Res.OT="BrushMenu"
+                Text="{strings:Option Type=BrushMenu}"
                 />
         </Border>
     </ListViewBase.Header>

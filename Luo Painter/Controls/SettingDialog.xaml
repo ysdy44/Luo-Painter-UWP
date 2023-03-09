@@ -4,13 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
+    xmlns:strings="using:Luo_Painter.Strings"
     xmlns:globalization="using:System.Globalization"
     d:DesignHeight="400"
     d:DesignWidth="400"
     mc:Ignorable="d" 
     Style="{StaticResource AppContentDialogStyle}"
-    PrimaryButtonText="{x:Bind Back}"
+    PrimaryButtonText="{strings:UI Type=Back}"
     >
 
     <FrameworkElement.Resources>
@@ -34,29 +34,29 @@
 
         <!--Theme-->
         <TextBlock x:Name="TB0" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                   luo_painter:Res.UT="Theme"/>
+                   Text="{strings:UI Type=Theme}"/>
         <ComboBox x:Name="ThemeComboBox">
             <StackPanel Spacing="10" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE706;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                <TextBlock x:Name="TB1" luo_painter:Res.UT="Theme_Light"/> 
+                <TextBlock x:Name="TB1" Text="{strings:UI Type=Theme_Light}"/> 
             </StackPanel>
             <StackPanel Spacing="10" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE708;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                <TextBlock x:Name="TB2" luo_painter:Res.UT="Theme_Dark"/>
+                <TextBlock x:Name="TB2" Text="{strings:UI Type=Theme_Dark}"/>
             </StackPanel>
             <StackPanel Spacing="10" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE7E8;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                <TextBlock x:Name="TB3" luo_painter:Res.UT="Theme_UseSystem"/>
+                <TextBlock x:Name="TB3" Text="{strings:UI Type=Theme_UseSystem}"/>
             </StackPanel>
         </ComboBox>
 
         <!--Language-->
         <TextBlock x:Name="TB4" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                   luo_painter:Res.UT="Language"/>
+                   Text="{strings:UI Type=Language}"/>
         <ComboBox x:Name="LanguageComboBox">
             <StackPanel Spacing="10" Orientation="Horizontal">
                 <SymbolIcon Symbol="Globe"/>
-                <TextBlock x:Name="TB6" luo_painter:Res.UT="Language_UseSystemSetting"/>
+                <TextBlock x:Name="TB6" Text="{strings:UI Type=Language_UseSystemSetting}"/>
             </StackPanel>
             <ComboBoxItem Content="{x:Bind CultureInfoConverter(1)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
             <ComboBoxItem Content="{x:Bind CultureInfoConverter(2)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
@@ -73,16 +73,16 @@
         </ComboBox>
 
         <HyperlinkButton x:Name="LanguageTipButton">
-            <TextBlock x:Name="TB5" luo_painter:Res.UT="Language_Tip"/>
+            <TextBlock x:Name="TB5" Text="{strings:UI Type=Language_Tip}"/>
         </HyperlinkButton>
 
         <!--LocalFolder-->
         <TextBlock x:Name="TB7" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
-                   luo_painter:Res.UT="LocalFolder"/>
+                   Text="{strings:UI Type=LocalFolder}"/>
         <Button x:Name="LocalFolderButton" Padding="12,2" Margin="0,6" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
             <StackPanel Spacing="8" Orientation="Horizontal">
                 <SymbolIcon Symbol="NewWindow"/>
-                <TextBlock x:Name="TB8" VerticalAlignment="Center" luo_painter:Res.UT="LocalFolder_Open"/>
+                <TextBlock x:Name="TB8" VerticalAlignment="Center" Text="{strings:UI Type=LocalFolder_Open}"/>
             </StackPanel>
         </Button>
         
