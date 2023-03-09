@@ -401,23 +401,11 @@
                                     </elements:IndexGrid>
                                 </Border>
                                 <ListView x:Name="HardnessListView" Grid.Column="1" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}">
-
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="brushes:BrushEdgeHardness">
-                                            <luo_painter:HardnessIcon Type="{x:Bind}"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-
-                                    <ItemsControl.ItemsSource>
-                                        <luo_painter:HardnessList x:Name="HardnessCollection">
-                                            <brushes:BrushEdgeHardness>None</brushes:BrushEdgeHardness>
-                                            <brushes:BrushEdgeHardness>Cosine</brushes:BrushEdgeHardness>
-                                            <brushes:BrushEdgeHardness>Quadratic</brushes:BrushEdgeHardness>
-                                            <brushes:BrushEdgeHardness>Cube</brushes:BrushEdgeHardness>
-                                            <brushes:BrushEdgeHardness>Quartic</brushes:BrushEdgeHardness>
-                                        </luo_painter:HardnessList>
-                                    </ItemsControl.ItemsSource>
-
+                                    <luo_painter:HardnessIcon Type="None"/>
+                                    <luo_painter:HardnessIcon Type="Cosine"/>
+                                    <luo_painter:HardnessIcon Type="Quadratic"/>
+                                    <luo_painter:HardnessIcon Type="Cube"/>
+                                    <luo_painter:HardnessIcon Type="Quartic"/>
                                 </ListView>
                             </Grid>
 
@@ -562,32 +550,20 @@
 
                             <ListView x:Name="BlendModeListView" IsItemClickEnabled="True" Style="{StaticResource AppListViewStyle}"
                                       Visibility="{x:Bind BlendModeVisibilityConverter(Type), Mode=OneWay}">
-
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="effects:BlendEffectMode">
-                                        <luo_painter:BlendItem Type="{x:Bind}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-
-                                <ItemsControl.ItemsSource>
-                                    <luo_painter:BlendList x:Name="BlendCollection">
-                                        <!--None-->
-                                        <effects:BlendEffectMode>-1</effects:BlendEffectMode>
-                                        <!--Darken-->
-                                        <effects:BlendEffectMode>Darken</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Multiply</effects:BlendEffectMode>
-                                        <!--Lighten-->
-                                        <effects:BlendEffectMode>Lighten</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Screen</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>LinearDodge</effects:BlendEffectMode>
-                                        <!--Contrast-->
-                                        <effects:BlendEffectMode>Overlay</effects:BlendEffectMode>
-                                        <!--Difference-->
-                                        <effects:BlendEffectMode>Difference</effects:BlendEffectMode>
-                                        <effects:BlendEffectMode>Subtract</effects:BlendEffectMode>
-                                    </luo_painter:BlendList>
-                                </ItemsControl.ItemsSource>
-
+                                <!--None-->
+                                <luo_painter:BlendItem Type="-1"/>
+                                <!--Darken-->
+                                <luo_painter:BlendItem Type="Darken"/>
+                                <luo_painter:BlendItem Type="Multiply"/>
+                                <!--Lighten-->
+                                <luo_painter:BlendItem Type="Lighten"/>
+                                <luo_painter:BlendItem Type="Screen"/>
+                                <luo_painter:BlendItem Type="LinearDodge"/>
+                                <!--Contrast-->
+                                <luo_painter:BlendItem Type="Overlay"/>
+                                <!--Difference-->
+                                <luo_painter:BlendItem Type="Difference"/>
+                                <luo_painter:BlendItem Type="Subtract"/>
                             </ListView>
 
                         </StackPanel>

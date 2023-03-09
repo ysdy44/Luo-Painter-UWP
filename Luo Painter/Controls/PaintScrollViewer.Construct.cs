@@ -1,9 +1,37 @@
-﻿using Luo_Painter.Brushes;
+﻿using Luo_Painter.Blends;
+using Luo_Painter.Brushes;
+using Microsoft.Graphics.Canvas.Effects;
 
 namespace Luo_Painter.Controls
 {
     public sealed partial class PaintScrollViewer
     {
+
+        readonly BrushEdgeHardness[] Hardnesss = new BrushEdgeHardness[]
+        {
+            BrushEdgeHardness.None,
+            BrushEdgeHardness.Cosine,
+            BrushEdgeHardness.Quadratic,
+            BrushEdgeHardness.Cube,
+            BrushEdgeHardness.Quartic,
+        };
+        readonly BlendEffectMode[] BlendModes = new BlendEffectMode[]
+        {
+            // None
+            BlendExtensions.None,
+            // Darken 
+            BlendEffectMode.Darken,
+            BlendEffectMode.Multiply,
+            // Lighten 
+            BlendEffectMode.Lighten,
+            BlendEffectMode.Screen,
+            BlendEffectMode.LinearDodge,
+            // Contrast 
+            BlendEffectMode.Overlay,
+            // Difference 
+            BlendEffectMode.Difference,
+            BlendEffectMode.Subtract,
+        };
 
         public void ConstructInkSliderValue(InkPresenter presenter)
         {
@@ -92,7 +120,14 @@ namespace Luo_Painter.Controls
                         break;
                 }
 
-                this.HardnessListView.SelectedIndex = this.HardnessCollection.IndexOf(presenter.Hardness);
+                for (int i = 0; i < this.Hardnesss.Length; i++)
+                {
+                    if (this.Hardnesss[i] == presenter.Hardness)
+                    {
+                        this.HardnessListView.SelectedIndex = i;
+                        break;
+                    }
+                }
 
 
                 // Texture
@@ -103,7 +138,14 @@ namespace Luo_Painter.Controls
                 this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
                 this.RecolorGrainButton.IsOn = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
 
-                this.BlendModeListView.SelectedIndex = this.BlendCollection.IndexOf(presenter.BlendMode);
+                for (int i = 0; i < this.BlendModes.Length; i++)
+                {
+                    if (this.BlendModes[i] == presenter.BlendMode)
+                    {
+                        this.BlendModeListView.SelectedIndex = i;
+                        break;
+                    }
+                }
 
 
                 // Texture
