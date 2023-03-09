@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="Luo_Painter.Controls.OptionThumbnail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="400"
+    d:DesignHeight="400"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="92"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Width="118" Height="76" CornerRadius="4" Margin="10,8" BorderThickness="2" BorderBrush="Black">
+            <Border.Background>
+                <ImageBrush>
+                    <ImageBrush.ImageSource>
+                        <BitmapImage x:Name="BitmapImage">
+                            <!--UriSource-->
+                        </BitmapImage>
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Border.Background>
+        </Border>
+        <TextBlock x:Name="TextBlock" Grid.Row="1" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--Text-->
+        </TextBlock>
+    </Grid>
+</UserControl>

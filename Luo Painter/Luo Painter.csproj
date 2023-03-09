@@ -249,6 +249,9 @@
     <Compile Include="Controls\OptionItem.xaml.cs">
       <DependentUpon>OptionItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OptionThumbnail.xaml.cs">
+      <DependentUpon>OptionThumbnail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PaintScrollViewer.Construct.cs" />
     <Compile Include="Controls\PaintScrollViewer.Mix.cs" />
     <Compile Include="Controls\PaintScrollViewer.Picker.cs" />
@@ -455,6 +458,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\OptionItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OptionThumbnail.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
