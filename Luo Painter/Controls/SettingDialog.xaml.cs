@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using System;
 using System.Globalization;
 using Windows.Globalization;
@@ -11,12 +12,9 @@ namespace Luo_Painter.Controls
     public sealed partial class SettingDialog : ContentDialog
     {
 
-        //@String
-        private string Back => App.Resource.GetString(UIType.Back.ToString());
-
         //@Converter
         private CultureInfo CultureInfoConverter(int value) => new CultureInfo(this.Lang[value]);
-        readonly Lang Lang = new Lang();
+        readonly Languages Lang = new Languages();
 
         private ElementTheme Theme
         {
@@ -112,17 +110,17 @@ namespace Luo_Painter.Controls
                 int index = this.LanguageComboBox.SelectedIndex;
                 this.PrimaryLanguageOverride = this.Lang[index];
 
-                Res.SetUT(this.TB0, UIType.Theme);
-                Res.SetUT(this.TB1, UIType.Theme_Light);
-                Res.SetUT(this.TB2, UIType.Theme_Dark);
-                Res.SetUT(this.TB3, UIType.Theme_UseSystem);
+                this.TB0.Text = App.Resource.GetString(UIType.Theme.ToString());
+                this.TB1.Text = App.Resource.GetString(UIType.Theme_Light.ToString());
+                this.TB2.Text = App.Resource.GetString(UIType.Theme_Dark.ToString());
+                this.TB3.Text = App.Resource.GetString(UIType.Theme_UseSystem.ToString());
 
-                Res.SetUT(this.TB4, UIType.Language);
-                Res.SetUT(this.TB5, UIType.Language_Tip);
-                Res.SetUT(this.TB6, UIType.Language_UseSystemSetting);
+                this.TB4.Text = App.Resource.GetString(UIType.Language.ToString());
+                this.TB5.Text = App.Resource.GetString(UIType.Language_Tip.ToString());
+                this.TB6.Text = App.Resource.GetString(UIType.Language_UseSystemSetting.ToString());
 
-                Res.SetUT(this.TB7, UIType.LocalFolder);
-                Res.SetUT(this.TB8, UIType.LocalFolder_Open);
+                this.TB7.Text = App.Resource.GetString(UIType.LocalFolder.ToString());
+                this.TB8.Text = App.Resource.GetString(UIType.LocalFolder_Open.ToString());
             };
             this.LanguageTipButton.Click += async (s, e) => await Windows.ApplicationModel.Core.CoreApplication.RequestRestartAsync(string.Empty);
             this.LocalFolderButton.Click += async (s, e) => await Windows.System.Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);

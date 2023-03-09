@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Luo_Painter
+namespace Luo_Painter.Strings
 {
-    public sealed class Lang : IEnumerable<string>
+    public sealed class Languages : IEnumerable<string>
     {
         public int Count => 13;
 
