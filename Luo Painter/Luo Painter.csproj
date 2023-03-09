@@ -300,11 +300,8 @@
     <Compile Include="FileUtils\FileUtil.Clipboard.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strings\Cmd.cs" />
     <Compile Include="Strings\Extension.cs" />
-    <Compile Include="Strings\Ico.cs" />
-    <Compile Include="Strings\Lang.cs" />
-    <Compile Include="Strings\Res.cs" />
+    <Compile Include="Strings\Languages.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
