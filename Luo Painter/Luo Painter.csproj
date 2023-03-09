@@ -246,6 +246,9 @@
     <Compile Include="Controls\OffsetPicker.xaml.cs">
       <DependentUpon>OffsetPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OptionIcon.xaml.cs">
+      <DependentUpon>OptionIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OptionItem.xaml.cs">
       <DependentUpon>OptionItem.xaml</DependentUpon>
     </Compile>
@@ -455,6 +458,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\OffsetPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OptionIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
