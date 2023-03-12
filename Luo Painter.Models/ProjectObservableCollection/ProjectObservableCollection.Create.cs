@@ -7,7 +7,7 @@ namespace Luo_Painter.Models
 {
     public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
     {
-        
+
         public async Task<StorageFolder> Create(string path, string displayName)
         {
             if (path is null)
