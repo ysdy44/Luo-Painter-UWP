@@ -76,7 +76,7 @@ namespace Luo_Painter
         //@Task
         readonly object Locker = new object();
         //@ Paint
-        readonly PaintTaskCollection Tasks = new PaintTaskCollection();
+        readonly TaskCollection Tasks = new TaskCollection();
 
         //@Task
         readonly object InkLocker = new object();

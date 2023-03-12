@@ -17,11 +17,11 @@ namespace Luo_Painter
     {
         private void TasksStop()
         {
-            this.Tasks.State = PaintTaskState.Painted;
+            this.Tasks.State = TaskState.Painted;
         }
         private async void TasksStart()
         {
-            this.Tasks.State = PaintTaskState.Painting;
+            this.Tasks.State = TaskState.Painting;
             await Task.Run(this.TasksAction);
         }
 
@@ -31,17 +31,17 @@ namespace Luo_Painter
             {
                 switch (this.Tasks.GetBehavior())
                 {
-                    case PaintTaskBehavior.WaitingWork:
+                    case TaskBehavior.WaitingWork:
                         continue;
-                    case PaintTaskBehavior.Working:
-                    case PaintTaskBehavior.WorkingBeforeDead:
+                    case TaskBehavior.Working:
+                    case TaskBehavior.WorkingBeforeDead:
                         StrokeSegment segment = this.Tasks[0];
                         this.Tasks.RemoveAt(0);
                         this.PaintDelta(segment);
                         break;
                     default:
                         //@Paint
-                        this.Tasks.State = PaintTaskState.Finished;
+                        this.Tasks.State = TaskState.Finished;
                         this.Tasks.Clear();
                         this.PaintCompleted();
                         return;

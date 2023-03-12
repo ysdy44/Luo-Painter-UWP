@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class PaintTaskCollection
+    public sealed partial class TaskCollection
     {
 
         //@Const
         const float Gm1 = 100.0f;
-        const float ttm = PaintTaskCollection.dt * PaintTaskCollection.dt;
+        const float ttm = TaskCollection.dt * TaskCollection.dt;
         const float dt = 0.001666f;
 
         // Force
@@ -37,25 +35,25 @@ namespace Luo_Painter.Models
             Interval = 20
         };
 
-        public PaintTaskCollection()
+        public TaskCollection()
         {
             this.Timer.Elapsed += (s, e) =>
             {
                 float durationTime = 20 / this.Speed;
                 int times = 0;
 
-                for (this.Acceleration += durationTime; this.Acceleration >= PaintTaskCollection.dt; this.Acceleration -= PaintTaskCollection.dt, times++)
+                for (this.Acceleration += durationTime; this.Acceleration >= TaskCollection.dt; this.Acceleration -= TaskCollection.dt, times++)
                 {
                     Vector2 vector = this.Position - this.PositionStabilizer;
                     float length = vector.Length();
                     if (length < 2) return;
 
-                    float f = PaintTaskCollection.Gm1 * this.Mass / 10;
+                    float f = TaskCollection.Gm1 * this.Mass / 10;
                     Vector2 fd = f * vector / length;
 
-                    this.Velocity += fd * PaintTaskCollection.ttm;
-                    this.Velocity *= 1 - PaintTaskCollection.dt / length * 100;
-                    this.PositionStabilizer += this.Velocity * PaintTaskCollection.dt * 1;
+                    this.Velocity += fd * TaskCollection.ttm;
+                    this.Velocity *= 1 - TaskCollection.dt / length * 100;
+                    this.PositionStabilizer += this.Velocity * TaskCollection.dt * 1;
 
                     StrokeSegment segment = new StrokeSegment(this.StartingPositionStabilizer, this.PositionStabilizer, this.StartingPressureStabilizer, this.Pressure, this.Size, this.Spacing);
                     if (segment.InRadius) continue;

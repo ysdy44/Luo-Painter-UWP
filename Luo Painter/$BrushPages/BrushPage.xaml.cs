@@ -26,7 +26,7 @@ namespace Luo_Painter
         //@Task
         readonly object Locker = new object();
         //@ Paint
-        readonly PaintTaskCollection Tasks = new PaintTaskCollection();
+        readonly TaskCollection Tasks = new TaskCollection();
 
         Vector2 StartingPosition;
         Vector2 Position;

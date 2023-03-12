@@ -25,7 +25,7 @@ namespace Luo_Painter.TestApp
             EndCap = CanvasCapStyle.Round,
         };
 
-        private readonly PaintTaskCollection Tasks = new PaintTaskCollection();
+        private readonly TaskCollection Tasks = new TaskCollection();
 
         CanvasRenderTarget RenderTarget;
         Transformer Border;
@@ -114,7 +114,7 @@ namespace Luo_Painter.TestApp
 
                 //@Paint
                 this.Tasks.StartForce(this.StartingPosition, this.StartingPressure, 12, 0.25f);
-                this.Tasks.State = PaintTaskState.Painting;
+                this.Tasks.State = TaskState.Painting;
                 await Task.Run(this.TasksAction);
 
                 this.CanvasControl.Invalidate(); // Invalidate
@@ -134,7 +134,7 @@ namespace Luo_Painter.TestApp
 
                 //@Paint
                 this.Tasks.StopForce();
-                this.Tasks.State = PaintTaskState.Painted;
+                this.Tasks.State = TaskState.Painted;
 
                 this.CanvasControl.Invalidate(); // Invalidate
             };
@@ -194,16 +194,16 @@ namespace Luo_Painter.TestApp
             {
                 switch (this.Tasks.GetBehavior())
                 {
-                    case PaintTaskBehavior.WaitingWork:
+                    case TaskBehavior.WaitingWork:
                         continue;
-                    case PaintTaskBehavior.Working:
-                    case PaintTaskBehavior.WorkingBeforeDead:
+                    case TaskBehavior.Working:
+                    case TaskBehavior.WorkingBeforeDead:
                         StrokeSegment segment = this.Tasks[0];
                         this.Tasks.Remove(segment);
                         this.TasksElapsed(segment);
                         break;
-                    case PaintTaskBehavior.Dead:
-                        this.Tasks.State = PaintTaskState.Finished;
+                    case TaskBehavior.Dead:
+                        this.Tasks.State = TaskState.Finished;
                         this.Tasks.Clear();
                         this.TasksFinished();
                         return;

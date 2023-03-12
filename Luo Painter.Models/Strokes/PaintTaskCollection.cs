@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Luo_Painter.Models
 {
-    public enum PaintTaskState : byte
+    public enum TaskState : byte
     {
         Finished,
 
@@ -11,7 +11,7 @@ namespace Luo_Painter.Models
         Painted,
     }
 
-    public enum PaintTaskBehavior : byte
+    public enum TaskBehavior : byte
     {
         Dead,
 
@@ -20,29 +20,29 @@ namespace Luo_Painter.Models
         WorkingBeforeDead,
     }
 
-    public sealed partial class PaintTaskCollection : List<StrokeSegment>, IDisposable
+    public sealed partial class TaskCollection : List<StrokeSegment>, IDisposable
     {
-        public PaintTaskState State { get; set; } = PaintTaskState.Finished;
-        public PaintTaskBehavior GetBehavior()
+        public TaskState State { get; set; } = TaskState.Finished;
+        public TaskBehavior GetBehavior()
         {
             if (base.Count is 0)
             {
                 switch (this.State)
                 {
-                    case PaintTaskState.Painting:
-                        return PaintTaskBehavior.WaitingWork;
+                    case TaskState.Painting:
+                        return TaskBehavior.WaitingWork;
                     default:
-                        return PaintTaskBehavior.Dead;
+                        return TaskBehavior.Dead;
                 }
             }
             else
             {
                 switch (this.State)
                 {
-                    case PaintTaskState.Painting:
-                        return PaintTaskBehavior.Working;
+                    case TaskState.Painting:
+                        return TaskBehavior.Working;
                     default:
-                        return PaintTaskBehavior.WorkingBeforeDead;
+                        return TaskBehavior.WorkingBeforeDead;
                 }
             }
         }
