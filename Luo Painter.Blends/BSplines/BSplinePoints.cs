@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public sealed class BSplinePoints : List<Vector2>
     {

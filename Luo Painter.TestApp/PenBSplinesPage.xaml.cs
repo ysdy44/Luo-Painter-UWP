@@ -1,4 +1,4 @@
-﻿using Luo_Painter.Blends;
+﻿using Luo_Painter.Layers;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Numerics;
@@ -30,7 +30,7 @@ namespace Luo_Painter.TestApp
             this.ConstructPenBSplines();
             this.ConstructCanvas();
             this.ConstructOperator();
-
+        
             this.BSplines.Arrange();
             this.ListView.ItemsSource = this.BSplines;
         }

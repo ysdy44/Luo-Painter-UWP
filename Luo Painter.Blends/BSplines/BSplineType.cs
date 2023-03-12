@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Blends
+﻿namespace Luo_Painter.Layers
 {
     internal enum BSplineType : byte
     {

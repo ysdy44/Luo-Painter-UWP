@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public sealed class BSpline : List<BSplinePoints>
     {
