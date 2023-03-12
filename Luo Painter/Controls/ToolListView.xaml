@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
-    xmlns:options="using:Luo_Painter.Options"
+    xmlns:models="using:Luo_Painter.Models"
     xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignWidth="400" 
@@ -28,64 +28,64 @@
             <CollectionViewSource.Source>
                 <local:OptionGroupingList x:Name="Collection">
                     <local:OptionGrouping Key="Marquee">
-                        <options:OptionType>MarqueeRectangular</options:OptionType>
-                        <options:OptionType>MarqueeElliptical</options:OptionType>
-                        <options:OptionType>MarqueePolygon</options:OptionType>
-                        <options:OptionType>MarqueeFreeHand</options:OptionType>
+                        <models:OptionType>MarqueeRectangular</models:OptionType>
+                        <models:OptionType>MarqueeElliptical</models:OptionType>
+                        <models:OptionType>MarqueePolygon</models:OptionType>
+                        <models:OptionType>MarqueeFreeHand</models:OptionType>
                     </local:OptionGrouping>
                     <local:OptionGrouping Key="Selection">
-                        <options:OptionType>SelectionFlood</options:OptionType>
-                        <options:OptionType>SelectionBrush</options:OptionType>
+                        <models:OptionType>SelectionFlood</models:OptionType>
+                        <models:OptionType>SelectionBrush</models:OptionType>
                     </local:OptionGrouping>
                     <local:OptionGrouping Key="Paint">
-                        <options:OptionType>PaintBrush</options:OptionType>
-                        <options:OptionType>PaintLine</options:OptionType>
-                        <options:OptionType>PaintBrushForce</options:OptionType>
-                        <options:OptionType>PaintBrushMulti</options:OptionType>
+                        <models:OptionType>PaintBrush</models:OptionType>
+                        <models:OptionType>PaintLine</models:OptionType>
+                        <models:OptionType>PaintBrushForce</models:OptionType>
+                        <models:OptionType>PaintBrushMulti</models:OptionType>
                     </local:OptionGrouping>
                     <local:OptionGrouping Key="Vector">
-                        <!--<options:OptionType>Cursor</options:OptionType>-->
-                        <options:OptionType>View</options:OptionType>
-                        <options:OptionType>Straw</options:OptionType>
-                        <options:OptionType>Fill</options:OptionType>
-                        <options:OptionType>Brush</options:OptionType>
-                        <options:OptionType>Transparency</options:OptionType>
-                        <!--<options:OptionType>Image</options:OptionType>-->
-                        <!--<options:OptionType>Crop</options:OptionType>-->
+                        <!--<models:OptionType>Cursor</models:OptionType>-->
+                        <models:OptionType>View</models:OptionType>
+                        <models:OptionType>Straw</models:OptionType>
+                        <models:OptionType>Fill</models:OptionType>
+                        <models:OptionType>Brush</models:OptionType>
+                        <models:OptionType>Transparency</models:OptionType>
+                        <!--<models:OptionType>Image</models:OptionType>-->
+                        <!--<models:OptionType>Crop</models:OptionType>-->
                     </local:OptionGrouping>
                     <!--<local:OptionGrouping Key="Text">-->
-                    <!--<options:OptionType>TextArtistic</options:OptionType>-->
-                    <!--<options:OptionType>TextFrame</options:OptionType>-->
+                    <!--<models:OptionType>TextArtistic</models:OptionType>-->
+                    <!--<models:OptionType>TextFrame</models:OptionType>-->
                     <!--</local:OptionGrouping>-->
                     <!--<local:OptionGrouping Key="Curve">-->
-                    <!--<options:OptionType>Pen</options:OptionType>-->
-                    <!--<options:OptionType>Node</options:OptionType>-->
+                    <!--<models:OptionType>Pen</models:OptionType>-->
+                    <!--<models:OptionType>Node</models:OptionType>-->
                     <!--</local:OptionGrouping>-->
                     <local:OptionGrouping Key="Geometry">
                         <!--Geometry0-->
-                        <options:OptionType>GeometryRectangle</options:OptionType>
-                        <options:OptionType>GeometryEllipse</options:OptionType>
+                        <models:OptionType>GeometryRectangle</models:OptionType>
+                        <models:OptionType>GeometryEllipse</models:OptionType>
                         <!--Geometry1-->
-                        <options:OptionType>GeometryRoundRect</options:OptionType>
-                        <options:OptionType>GeometryTriangle</options:OptionType>
-                        <options:OptionType>GeometryDiamond</options:OptionType>
+                        <models:OptionType>GeometryRoundRect</models:OptionType>
+                        <models:OptionType>GeometryTriangle</models:OptionType>
+                        <models:OptionType>GeometryDiamond</models:OptionType>
                         <!--Geometry2-->
-                        <options:OptionType>GeometryPentagon</options:OptionType>
-                        <options:OptionType>GeometryStar</options:OptionType>
-                        <options:OptionType>GeometryCog</options:OptionType>
+                        <models:OptionType>GeometryPentagon</models:OptionType>
+                        <models:OptionType>GeometryStar</models:OptionType>
+                        <models:OptionType>GeometryCog</models:OptionType>
                         <!--Geometry3-->
-                        <options:OptionType>GeometryDonut</options:OptionType>
-                        <options:OptionType>GeometryPie</options:OptionType>
-                        <options:OptionType>GeometryCookie</options:OptionType>
+                        <models:OptionType>GeometryDonut</models:OptionType>
+                        <models:OptionType>GeometryPie</models:OptionType>
+                        <models:OptionType>GeometryCookie</models:OptionType>
                         <!--Geometry4-->
-                        <options:OptionType>GeometryArrow</options:OptionType>
-                        <options:OptionType>GeometryCapsule</options:OptionType>
-                        <options:OptionType>GeometryHeart</options:OptionType>
+                        <models:OptionType>GeometryArrow</models:OptionType>
+                        <models:OptionType>GeometryCapsule</models:OptionType>
+                        <models:OptionType>GeometryHeart</models:OptionType>
                     </local:OptionGrouping>
                     <local:OptionGrouping Key="Pattern">
-                        <options:OptionType>PatternGrid</options:OptionType>
-                        <options:OptionType>PatternDiagonal</options:OptionType>
-                        <options:OptionType>PatternSpotted</options:OptionType>
+                        <models:OptionType>PatternGrid</models:OptionType>
+                        <models:OptionType>PatternDiagonal</models:OptionType>
+                        <models:OptionType>PatternSpotted</models:OptionType>
                     </local:OptionGrouping>
                 </local:OptionGroupingList>
             </CollectionViewSource.Source>
@@ -133,7 +133,7 @@
     </ItemsControl.ItemContainerStyle>
 
     <ItemsControl.ItemTemplate>
-        <DataTemplate x:DataType="options:OptionType">
+        <DataTemplate x:DataType="models:OptionType">
             <local:OptionIcon Type="{x:Bind}"/>
         </DataTemplate>
     </ItemsControl.ItemTemplate>

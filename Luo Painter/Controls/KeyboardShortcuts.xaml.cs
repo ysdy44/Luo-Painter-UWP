@@ -2,7 +2,7 @@
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Luo_Painter.Options;
+using Luo_Painter.Models;
 
 namespace Luo_Painter.Controls
 {

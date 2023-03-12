@@ -3,7 +3,7 @@ using Luo_Painter.Brushes;
 using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
-using Luo_Painter.Options;
+using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;

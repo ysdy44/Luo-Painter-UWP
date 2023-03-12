@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Luo_Painter.Options
+namespace Luo_Painter.Models
 {
     /// <summary>
     /// None: <para/>

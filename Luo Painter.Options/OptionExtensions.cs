@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Options
+namespace Luo_Painter.Models
 {
     public static class OptionExtensions
     {

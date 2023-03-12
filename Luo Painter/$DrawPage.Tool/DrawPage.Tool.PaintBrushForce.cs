@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
-using Luo_Painter.Options;
 using System;
 using Windows.Foundation;
 using Windows.UI.Core;

@@ -4,7 +4,6 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
-using Luo_Painter.Options;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;

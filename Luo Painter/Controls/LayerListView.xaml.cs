@@ -2,7 +2,6 @@
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
-using Luo_Painter.Options;
 using System;
 using System.Linq;
 using System.Windows.Input;

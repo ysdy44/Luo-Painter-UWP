@@ -1,6 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.HSVColorPickers;
-using Luo_Painter.Options;
+using Luo_Painter.Models;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;

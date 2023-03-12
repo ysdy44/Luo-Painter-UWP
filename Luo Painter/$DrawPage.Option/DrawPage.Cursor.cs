@@ -1,6 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
-using Luo_Painter.Options;
+using Luo_Painter.Models;
 using System.Numerics;
 using Windows.UI.Core;
 using Windows.UI.Xaml;

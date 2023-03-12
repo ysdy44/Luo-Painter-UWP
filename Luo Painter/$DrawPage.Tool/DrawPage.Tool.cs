@@ -1,6 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Layers;
-using Luo_Painter.Options;
+using Luo_Painter.Models;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter

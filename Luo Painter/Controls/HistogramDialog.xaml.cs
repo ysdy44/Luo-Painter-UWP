@@ -1,5 +1,4 @@
 ﻿using Luo_Painter.Models;
-using Luo_Painter.Options;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;

@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Models;
-using Luo_Painter.Options;
 using System;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
