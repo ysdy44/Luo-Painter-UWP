@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.HSVColorPickers
 {
     public static partial class Matrix5x4Extension
     {

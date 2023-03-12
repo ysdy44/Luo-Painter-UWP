@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.HSVColorPickers
 {
     /// <summary>
     /// Provides extended methods for <see cref="Matrix5x4"/> to build <see cref="ColorMatrixEffect"/>.
