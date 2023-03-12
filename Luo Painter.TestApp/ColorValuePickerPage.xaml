@@ -13,12 +13,6 @@
 
         <StackPanel Spacing="8" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Border Background="{ThemeResource CommandBarBackground}">
-                <hsvColorPickers:RGBPicker x:Name="RGBPicker"/>
-            </Border>
-            <Border Background="{ThemeResource CommandBarBackground}">
-                <hsvColorPickers:HSVPicker x:Name="HSVPicker"/>
-            </Border>
-            <Border Background="{ThemeResource CommandBarBackground}">
                 <hsvColorPickers:NumberSlider x:Name="AlphaSlider" Maximum="255" TickFrequency="127" TickPlacement="Outside" Foreground="{x:Bind Foreground, Mode=OneWay}">
                     <Control.Background>
                         <ImageBrush ImageSource="{x:Bind AlphaImageSource.ImageSource}"/>
