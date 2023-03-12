@@ -1,5 +1,4 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Blends;
 using Microsoft.Graphics.Canvas;
 using System.Collections.Generic;
 using System.Linq;

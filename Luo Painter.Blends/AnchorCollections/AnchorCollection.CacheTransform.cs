@@ -1,7 +1,7 @@
 ﻿using FanKit.Transformers;
 using System.Numerics;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public sealed partial class AnchorCollection
     {

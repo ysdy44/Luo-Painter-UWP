@@ -1,5 +1,5 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Blends;
+using Luo_Painter.Layers;
 using Luo_Painter.Elements;
 using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas;

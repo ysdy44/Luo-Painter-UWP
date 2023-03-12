@@ -1,6 +1,4 @@
-﻿using FanKit.Transformers;
-using Luo_Painter.Blends;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;

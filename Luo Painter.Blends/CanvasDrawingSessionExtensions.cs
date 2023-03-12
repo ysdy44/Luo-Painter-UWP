@@ -4,7 +4,7 @@ using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public static class CanvasDrawingSessionExtensions
     {

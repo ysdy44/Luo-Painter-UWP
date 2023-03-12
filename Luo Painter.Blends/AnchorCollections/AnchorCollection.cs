@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Xml.Linq;
 using Windows.UI;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public sealed partial class AnchorCollection : List<Anchor>, ICacheTransform, IDisposable
     {

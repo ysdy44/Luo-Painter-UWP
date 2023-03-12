@@ -4,7 +4,7 @@ using Microsoft.Graphics.Canvas.Geometry;
 using System;
 using System.Numerics;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public sealed partial class Anchor
     {

@@ -1,6 +1,6 @@
 ﻿using FanKit.Transformers;
-using Luo_Painter.Blends;
 using Luo_Painter.Elements;
+using Luo_Painter.Layers;
 using Luo_Painter.Options;
 using System.Numerics;
 
@@ -15,8 +15,8 @@ namespace Luo_Painter
         {
             this.RadianClearButton.Click += (s, e) => this.RadianStoryboard.Begin(); // Storyboard
 
-            this.RadianRemoveButton.Click += (s, e) => this.RadianSlider.Value --;
-            this.RadianAddButton.Click += (s, e) => this.RadianSlider.Value ++;
+            this.RadianRemoveButton.Click += (s, e) => this.RadianSlider.Value--;
+            this.RadianAddButton.Click += (s, e) => this.RadianSlider.Value++;
 
             this.RadianSlider.ValueChanged += (s, e) =>
             {
