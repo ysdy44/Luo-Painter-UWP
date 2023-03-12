@@ -153,6 +153,9 @@
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\SwitchGroupPresenter.cs" />
     <Compile Include="Controls\SwitchPresenter.cs" />
+    <Compile Include="Controls\TagTypeSegmented.xaml.cs">
+      <DependentUpon>TagTypeSegmented.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ThumbSlider.cs" />
     <Compile Include="Extensions\ApplicationTitleBarExtension.cs" />
     <Compile Include="Extensions\ContentDialogExtensions.cs" />
@@ -228,6 +231,10 @@
     <Page Include="Controls\IndicatorPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TagTypeSegmented.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\PipsPivot.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -162,6 +162,7 @@
     <Compile Include="Models\ImageLayer.cs" />
     <Compile Include="PixelBounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Layers.rd.xml" />
   </ItemGroup>
   <ItemGroup>

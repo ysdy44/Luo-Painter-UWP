@@ -3,11 +3,11 @@
 
 
     <ResourceDictionary.MergedDictionaries>
-        <!--Expanders-->
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Containers/Docker.xaml" />
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Containers/Expander.xaml" />
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Containers/Sheet.xaml" />
         <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Containers/Spliter.xaml" />
+        <ResourceDictionary Source="ms-appx:///Luo Painter.Elements/Controls/TagTypeSegmented.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 
