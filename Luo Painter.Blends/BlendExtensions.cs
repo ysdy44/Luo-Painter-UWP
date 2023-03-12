@@ -4,7 +4,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Layers
 {
     public static class BlendExtensions
     {

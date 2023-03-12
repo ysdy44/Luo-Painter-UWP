@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Blends;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI.Xaml;
 
