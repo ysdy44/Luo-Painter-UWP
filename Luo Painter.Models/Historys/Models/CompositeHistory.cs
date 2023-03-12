@@ -5,8 +5,8 @@
         public HistoryMode Mode => HistoryMode.Composite;
         public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;
 
-        public readonly IHistory[] Histories;
-        public CompositeHistory(IHistory[] histories)
+        public IHistory[] Histories { get; }
+        public CompositeHistory(params IHistory[] histories)
         {
             this.Histories = histories;
         }

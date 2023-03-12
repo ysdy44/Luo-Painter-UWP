@@ -3,23 +3,17 @@
     public class PropertyHistory : IHistory
     {
         public HistoryMode Mode => HistoryMode.Property;
-        public HistoryPropertyMode PropertyMode => this.type;
+        public HistoryPropertyMode PropertyMode { get; }
 
-        public string Id => this.id;
-        public object UndoParameter => this.undoParameter;
-        public object RedoParameter => this.redoParameter;
-
-        readonly HistoryPropertyMode type;
-        readonly string id;
-        readonly object undoParameter;
-        readonly object redoParameter;
-
-        public PropertyHistory(HistoryPropertyMode type, string id, object undoParameter, object redoParameter)
+        public string Id { get; }
+        public object UndoParameter { get; }
+        public object RedoParameter { get; }
+        public PropertyHistory(HistoryPropertyMode propertyMode, string id, object undoParameter, object redoParameter)
         {
-            this.type = type;
-            this.id = id;
-            this.undoParameter = undoParameter;
-            this.redoParameter = redoParameter;
+            this.PropertyMode = propertyMode;
+            this.Id = id;
+            this.UndoParameter = undoParameter;
+            this.RedoParameter = redoParameter;
         }
 
         public void Dispose()
