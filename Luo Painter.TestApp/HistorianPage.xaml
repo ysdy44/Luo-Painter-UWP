@@ -50,7 +50,10 @@
                         
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="historys:IHistory">
-                                <TextBlock Text="{x:Bind Type, Mode=OneWay}" />
+                                <TextBlock>
+                                    <Run Text="{x:Bind Mode}"/>
+                                    <Run Text="{x:Bind PropertyMode}"/>
+                                </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         
