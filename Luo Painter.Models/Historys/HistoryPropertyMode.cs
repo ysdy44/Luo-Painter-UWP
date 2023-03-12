@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Models.Historys;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Windows.Storage.Streams;
 
 namespace Luo_Painter.Models

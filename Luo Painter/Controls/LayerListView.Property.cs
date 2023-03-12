@@ -1,7 +1,6 @@
 ﻿using Luo_Painter.Blends;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
-using Luo_Painter.Models.Historys;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Collections.Generic;
 using System.Linq;

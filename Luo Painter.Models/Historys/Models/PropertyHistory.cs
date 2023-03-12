@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter.Models.Historys
+﻿namespace Luo_Painter.Models
 {
     public class PropertyHistory : IHistory
     {

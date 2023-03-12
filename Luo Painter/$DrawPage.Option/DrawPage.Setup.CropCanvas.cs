@@ -2,7 +2,6 @@
 using Luo_Painter.Blends;
 using Luo_Painter.Elements;
 using Luo_Painter.Models;
-using Luo_Painter.Models.Historys;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Linq;

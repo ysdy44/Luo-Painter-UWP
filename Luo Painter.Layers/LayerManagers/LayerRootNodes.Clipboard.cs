@@ -1,5 +1,4 @@
 ﻿using Luo_Painter.Models;
-using Luo_Painter.Models.Historys;
 using Microsoft.Graphics.Canvas;
 using System.Collections.Generic;
 
