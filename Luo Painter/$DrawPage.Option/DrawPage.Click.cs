@@ -600,11 +600,10 @@ namespace Luo_Painter
                                     this.CreateMarqueeResources(w, h);
                                 }
                                 // History
-                                int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                {
+                                int removes = this.History.Push(new CompositeHistory(
                                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
                                     new SetupHistory(width, height, w, h)
-                                }));
+                                ));
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -646,11 +645,10 @@ namespace Luo_Painter
 
                                 Vector2 offset = vect2 - vect;
                                 // History
-                                int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                {
+                                int removes = this.History.Push(new CompositeHistory(
                                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
                                     new SetupHistory(width, height, w, h)
-                                }));
+                                ));
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -729,11 +727,10 @@ namespace Luo_Painter
                         }
                         else
                         {
-                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                            {
+                            int removes = this.History.Push(new CompositeHistory(
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()),
                                 new SetupHistory(width, height, height, width)
-                            }));
+                            ));
                         }
                     }
 
@@ -763,11 +760,10 @@ namespace Luo_Painter
                         }
                         else
                         {
-                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                            {
+                            int removes = this.History.Push(new CompositeHistory(
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()),
                                 new SetupHistory(width, height, height, width)
-                            }));
+                            ));
                         }
                     }
 
@@ -1007,11 +1003,10 @@ namespace Luo_Painter
                                         {
                                             // History
                                             bitmapLayer.Merge(neighbor);
-                                            int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                            {
+                                            int removes = this.History.Push(new CompositeHistory(
                                                 bitmapLayer.GetBitmapResetHistory(),
                                                 this.LayerManager.Remove(this, neighbor, false)
-                                            }));
+                                            ));
                                             bitmapLayer.Flush();
                                             bitmapLayer.RenderThumbnail();
 

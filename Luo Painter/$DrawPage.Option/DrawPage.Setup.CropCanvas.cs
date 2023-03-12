@@ -130,11 +130,10 @@ namespace Luo_Painter
                 this.CreateMarqueeResources(w, h);
 
                 /// History
-                int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                {
-                        this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
-                        new SetupHistory(width, height,w, h)
-                }));
+                int removes = this.History.Push(new CompositeHistory(
+                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
+                    new SetupHistory(width, height, w, h)
+                ));
             }
             else
             {
@@ -149,11 +148,10 @@ namespace Luo_Painter
                 }
 
                 /// History
-                int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                {
-                        this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
-                        new SetupHistory(width, height, w, h)
-                }));
+                int removes = this.History.Push(new CompositeHistory(
+                    this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
+                    new SetupHistory(width, height, w, h)
+                ));
 
                 this.Transformer.Radian = 0f;
                 this.Transformer.ReloadMatrix();

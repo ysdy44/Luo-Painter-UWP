@@ -309,11 +309,10 @@ namespace Luo_Painter.TestApp
                                 {
                                     /// History
                                     bitmapLayer.Merge(neighbor);
-                                    int removes = this.History.Push(new CompositeHistory(new IHistory[]
-                                    {
+                                    int removes = this.History.Push(new CompositeHistory(
                                         bitmapLayer.GetBitmapResetHistory(),
                                         this.LayerManager.Remove(this, neighbor, false)
-                                    }));
+                                    ));
                                     bitmapLayer.Flush();
                                     bitmapLayer.RenderThumbnail();
 
