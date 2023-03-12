@@ -3,17 +3,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Luo_Painter.Blends"
+    xmlns:local="using:Luo_Painter.Elements"
     mc:Ignorable="d"
     >
 
-    
+
     <Style TargetType="local:TagTypeSegmented" >
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TagTypeSegmented">
                     <StackPanel 
-                         Orientation="Horizontal"
+                        x:Name="StackPanel"
+                        Orientation="Horizontal"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -70,18 +71,18 @@
                                 </Setter>
                             </Style>
                         </FrameworkElement.Resources>
-                        <Button x:Name="None" Background="{ThemeResource RadioButtonBackgroundThemeBrush}"/>
-                        <Button x:Name="Red" Background="LightCoral"/>
-                        <Button x:Name="Orange" Background="Orange"/>
-                        <Button x:Name="Yellow" Background="Yellow"/>
-                        <Button x:Name="Green" Background="YellowGreen"/>
-                        <Button x:Name="Blue" Background="SkyBlue"/>
-                        <Button x:Name="Purple" Background="Plum"/>
+                        <Button TabIndex="0" Background="{ThemeResource RadioButtonBackgroundThemeBrush}"/>
+                        <Button TabIndex="1" Background="LightCoral"/>
+                        <Button TabIndex="2" Background="Orange"/>
+                        <Button TabIndex="3" Background="Yellow"/>
+                        <Button TabIndex="4" Background="YellowGreen"/>
+                        <Button TabIndex="5" Background="SkyBlue"/>
+                        <Button TabIndex="6" Background="Plum"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    
+
 </ResourceDictionary>

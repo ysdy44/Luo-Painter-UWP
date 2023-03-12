@@ -6,8 +6,8 @@
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
-    xmlns:blends="using:Luo_Painter.Blends"
     xmlns:local="using:Luo_Painter.Controls"
+    xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:layers="using:Luo_Painter.Layers"
     xmlns:strings="using:Luo_Painter.Strings"
@@ -278,11 +278,11 @@
                         </MenuFlyoutSeparator>
 
                         <!--TagType-->
-                        <blends:TagTypeSegmented x:Name="TagTypeSegmented" Width="286" Height="40">
+                        <elements:TagTypeSegmented x:Name="TagTypeSegmented" Width="286" Height="40">
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{strings:UI Type=Layer_Property_TagType}" Style="{StaticResource AppToolTipStyle}"/>
                             </ToolTipService.ToolTip>
-                        </blends:TagTypeSegmented>
+                        </elements:TagTypeSegmented>
 
                         <local:OptionItem x:Name="CutLayerItem" Type="CutLayer" Command="{x:Bind Command}"/>
                         <local:OptionItem x:Name="CopyLayerItem" Type="CopyLayer" Command="{x:Bind Command}"/>

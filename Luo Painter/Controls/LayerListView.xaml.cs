@@ -92,22 +92,16 @@ namespace Luo_Painter.Controls
                 this.UngroupItem.GoToState(isEnabled);
                 this.ReleaseItem.GoToState(isEnabled);
 
+                TagType type = isEnabled && base.SelectedItem is ILayer layer ? layer.TagType : TagType.None;
+                this.TagTypeSegmented.Type = (int)type;
                 this.TagTypeSegmented.IsEnabled = isEnabled;
-
-                if (isEnabled && base.SelectedItem is ILayer layer)
-                {
-                    this.TagTypeSegmented.Type = layer.TagType;
-                }
-                else
-                {
-                    this.TagTypeSegmented.Type = TagType.None;
-                }
             };
             this.TagTypeSegmented.TypeChanged += (s, e) =>
             {
+                TagType type = (TagType)e;
                 foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
                 {
-                    item.TagType = e;
+                    item.TagType = type;
                 }
             };
         }

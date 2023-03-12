@@ -3,34 +3,35 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter.Blends
+namespace Luo_Painter.Elements
 {
     /// <summary>
-    /// Segmented of <see cref="TagType"/>
+    /// Segmented of Tag Type
     /// </summary>
     public sealed class TagTypeSegmented : MenuFlyoutSeparator
     {
 
         //@Delegate
-        public event EventHandler<TagType> TypeChanged;
+        public event EventHandler<int> TypeChanged;
 
+        StackPanel StackPanel;
         readonly Button[] Controls = new Button[7];
-        int Index;
 
         /// <summary> Gets or sets the tag type. </summary>
-        public TagType Type
+        public int Type
         {
-            get => (TagType)this.Index;
+            get => this.type;
             set
             {
-                this.Index = (int)value;
+                this.type = value;
                 foreach (Button item in this.Controls)
                 {
                     if (item is null) continue;
-                    item.IsEnabled = item.TabIndex != this.Index;
+                    item.IsEnabled = item.TabIndex != this.type;
                 }
             }
         }
+        private int type;
 
         //@Construct
         /// <summary>
@@ -57,24 +58,25 @@ namespace Luo_Painter.Blends
         {
             base.OnApplyTemplate();
 
-            foreach (TagType item in System.Enum.GetValues(typeof(TagType)))
+            if (this.StackPanel is null is false)
             {
-                int i = (int)item;
-
-                if (this.Controls[i] != null)
+                foreach (Button item in this.StackPanel.Children)
                 {
-                    this.Controls[i].TabIndex = 0;
-                    this.Controls[i].Click -= this.Click;
-                    this.Controls[i].Width = double.NaN;
-                    this.Controls[i].IsEnabled = true;
+                    if (item == null) continue;
+                    item.Click -= this.Click;
+                    item.Width = double.NaN;
+                    item.IsEnabled = true;
                 }
-                this.Controls[i] = base.GetTemplateChild(item.ToString()) as Button;
-                if (this.Controls[i] != null)
+            }
+            this.StackPanel = base.GetTemplateChild(nameof(StackPanel)) as StackPanel;
+            if (this.StackPanel is null is false)
+            {
+                foreach (Button item in this.StackPanel.Children)
                 {
-                    this.Controls[i].TabIndex = i;
-                    this.Controls[i].Click += this.Click;
-                    this.Controls[i].Width = base.Width / 7;
-                    this.Controls[i].IsEnabled = this.Index != i;
+                    if (item == null) continue;
+                    item.Click += this.Click;
+                    item.Width = base.Width / 7;
+                    item.IsEnabled = this.type != item.TabIndex;
                 }
             }
         }
@@ -83,7 +85,7 @@ namespace Luo_Painter.Blends
         {
             if (sender is Button item)
             {
-                this.Type = (TagType)item.TabIndex;
+                this.Type = item.TabIndex;
                 this.TypeChanged?.Invoke(this, this.Type); // Delegate
             }
         }
