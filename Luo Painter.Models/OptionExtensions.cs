@@ -39,8 +39,8 @@ namespace Luo_Painter.Models
         public static OptionType ToPatternTransform(this OptionType type) => type.IsPattern() ? (type | OptionType.WithTransform | OptionType.HasPreview) : type;
 
         //@Resource
-        public static string GetThumbnail(this OptionType type) => type.ExistThumbnail() ? $"ms-appx:///Luo Painter.Options/Thumbnails/{type}.jpg" : throw new NullReferenceException($"The {type} no Tumbnail.");
-        public static string GetResource(this OptionType type) => type.ExistIcon() ? $"ms-appx:///Luo Painter.Options/Icons/{type}Icon.xaml" : throw new NullReferenceException($"The {type} no Icon.");
+        public static string GetThumbnail(this OptionType type) => type.ExistThumbnail() ? $"ms-appx:///Luo Painter.Models/Thumbnails/{type}.jpg" : throw new NullReferenceException($"The {type} no Tumbnail.");
+        public static string GetResource(this OptionType type) => type.ExistIcon() ? $"ms-appx:///Luo Painter.Models/Icons/{type}Icon.xaml" : throw new NullReferenceException($"The {type} no Icon.");
         public static ControlTemplate GetTemplate(this OptionType type, ResourceDictionary resource) => resource[$"{type}Icon"] as ControlTemplate;
 
     }
