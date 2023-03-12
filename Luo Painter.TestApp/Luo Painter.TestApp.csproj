@@ -125,6 +125,9 @@
     <Compile Include="ArithmeticCompositeEffectPage.xaml.cs">
       <DependentUpon>ArithmeticCompositeEffectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BatteryPage.xaml.cs">
+      <DependentUpon>BatteryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BitmapPixelBrushPage.xaml.cs">
       <DependentUpon>BitmapPixelBrushPage.xaml</DependentUpon>
     </Compile>
@@ -367,6 +370,10 @@
     <Page Include="ArithmeticCompositeEffectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BatteryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="BitmapPixelBrushPage.xaml">
       <Generator>MSBuild:Compile</Generator>
