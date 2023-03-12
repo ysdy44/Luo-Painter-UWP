@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
 
-namespace Luo_Painter.Models.Projects
+namespace Luo_Painter.Models
 {
     public sealed class ProjectFolder : ProjectBase
     {

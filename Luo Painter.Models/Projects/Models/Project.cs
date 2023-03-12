@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Media;
 
-namespace Luo_Painter.Models.Projects
+namespace Luo_Painter.Models
 {
     public sealed partial class Project : ProjectBase
     {

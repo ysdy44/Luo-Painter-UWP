@@ -7,7 +7,7 @@
     xmlns:local="using:Luo_Painter"
     xmlns:controls="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
-    xmlns:models="using:Luo_Painter.Models.Projects"
+    xmlns:models="using:Luo_Painter.Models"
     xmlns:strings="using:Luo_Painter.Strings"
     NavigationCacheMode="Required"
     mc:Ignorable="d"

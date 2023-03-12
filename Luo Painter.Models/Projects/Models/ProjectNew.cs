@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Luo_Painter.Models.Projects
+namespace Luo_Painter.Models
 {
     public sealed class ProjectNew : ProjectBase
     {
