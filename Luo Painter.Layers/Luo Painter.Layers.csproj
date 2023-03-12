@@ -120,7 +120,20 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnchorCollection\AnchorCollection.CacheTransform.cs" />
+    <Compile Include="AnchorCollection\AnchorCollection.cs" />
+    <Compile Include="AnchorCollection\AnchorCollection.Export.cs" />
+    <Compile Include="AnchorCollection\AnchorCollection.Segment.cs" />
+    <Compile Include="Anchors\Anchor.Builder.cs" />
+    <Compile Include="Anchors\Anchor.cs" />
+    <Compile Include="Anchors\Anchor.Segment.cs" />
     <Compile Include="BitmapType.cs" />
+    <Compile Include="BlendExtensions.cs" />
+    <Compile Include="BSplines\BSpline.cs" />
+    <Compile Include="BSplines\BSplineParameter.cs" />
+    <Compile Include="BSplines\BSplinePoints.cs" />
+    <Compile Include="BSplines\BSplineType.cs" />
+    <Compile Include="CanvasDrawingSessionExtensions.cs" />
     <Compile Include="ILayer.cs" />
     <Compile Include="ILayer.Drag.cs" />
     <Compile Include="ILayer.Render.cs" />
@@ -162,6 +175,7 @@
     <Compile Include="Models\ImageLayer.cs" />
     <Compile Include="PixelBounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceImage.cs" />
     <Compile Include="TagType.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Layers.rd.xml" />
   </ItemGroup>

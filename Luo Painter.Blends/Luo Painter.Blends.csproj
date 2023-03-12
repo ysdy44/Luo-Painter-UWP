@@ -120,23 +120,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnchorCollections\AnchorCollection.CacheTransform.cs" />
-    <Compile Include="AnchorCollections\AnchorCollection.cs" />
-    <Compile Include="AnchorCollections\AnchorCollection.Export.cs" />
-    <Compile Include="AnchorCollections\AnchorCollection.Segment.cs" />
-    <Compile Include="Anchors\Anchor.Builder.cs" />
-    <Compile Include="Anchors\Anchor.cs" />
-    <Compile Include="Anchors\Anchor.Segment.cs" />
-    <Compile Include="BlendExtensions.cs" />
-    <Compile Include="BSplines\BSpline.cs" />
-    <Compile Include="BSplines\BSplineParameter.cs" />
-    <Compile Include="BSplines\BSplinePoints.cs" />
-    <Compile Include="BSplines\BSplineType.cs" />
-    <Compile Include="CanvasDrawingSessionExtensions.cs" />
-    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.cs" />
-    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.Fx.cs" />
-    <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.HSB.cs" />
-    <Compile Include="ReferenceImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.Blends.rd.xml" />
   </ItemGroup>
