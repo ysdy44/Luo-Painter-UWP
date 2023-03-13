@@ -32,55 +32,6 @@
         </Button>
     </FrameworkElement.Tag>
 
-    <FrameworkElement.Resources>
-        <!--Flyout-->
-        <Flyout x:Name="RenameFlyout" Placement="Bottom" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
-            <Grid RowSpacing="2" Padding="6,4" Width="318" Height="151">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBox x:Name="RenameTextBox" Grid.Row="1"
-                         PlaceholderText="{x:Bind InputText}"/>
-
-                <StackPanel Grid.Row="2" Margin="0,4" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="OKButton" Canvas.Left="62" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="Enter"/>
-                        </UIElement.KeyboardAccelerators>
-                        <FontIcon Glyph="&#xEC61;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
-                    </Button>
-                    <Button x:Name="CancelButton" Canvas.Left="152" Canvas.Top="224" Width="86" Height="52" CornerRadius="4" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                        <UIElement.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="Escape"/>
-                        </UIElement.KeyboardAccelerators>
-                        <FontIcon Glyph="&#xEB90;" FontSize="20" FontWeight="Bold" FontFamily="Segoe MDL2 Assets"/>
-                    </Button>
-                </StackPanel>
-
-                <TextBlock
-                    Margin="10,4,10,10" 
-                    IsTextSelectionEnabled="True"
-                    FontWeight="Medium" 
-                    TextTrimming="CharacterEllipsis" 
-                    FontSize="20" 
-                    TextWrapping="Wrap" 
-                    VerticalAlignment="Center" 
-                    OpticalMarginAlignment="TrimSideBearings"
-                    Text="{strings:Option Type=LayerRenameMenu}"
-                    >      
-                    <UIElement.KeyboardAccelerators>
-                        <KeyboardAccelerator x:Name="KeyboardAccelerator" Modifiers="None" Key="F2"/>
-                    </UIElement.KeyboardAccelerators>
-                    <!--Rename-->
-                </TextBlock>
-
-            </Grid>
-        </Flyout>
-    </FrameworkElement.Resources>
-
     <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
             <ItemsStackPanel VerticalAlignment="Top"/>
@@ -158,6 +109,9 @@
                 OpticalMarginAlignment="TrimSideBearings"
                 Text="{strings:Option Type=LayerMenu}"
                 >
+                <UIElement.KeyboardAccelerators>
+                    <KeyboardAccelerator x:Name="KeyboardAccelerator" Modifiers="None" Key="F2"/>
+                </UIElement.KeyboardAccelerators>
                 <!--Layers-->
             </TextBlock>
 

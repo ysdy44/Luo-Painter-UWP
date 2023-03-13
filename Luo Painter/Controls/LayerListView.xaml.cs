@@ -2,10 +2,13 @@
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
@@ -25,18 +28,66 @@ namespace Luo_Painter.Controls
 
         //@Content
         public bool PasteLayerIsEnabled { get; set; }
-        public bool IsOpen => this.RenameFlyout.IsOpen;
+        public bool IsOpen => this.RenamePopup.IsOpen;
         public ImageSource Source { get; set; }
+
+        readonly Popup RenamePopup = new Popup();
+        readonly TextBox RenameTextBox = new TextBox();
+        
+        bool IsPropertyEnabled;
+
+        int OpacityCount = 0;
+        int BlendModeCount = 0;
 
         public INumberBase OpacityNumber => this.OpacitySlider;
         public double OpacitySliderValue { set => this.OpacitySlider.Value = value; }
 
-        private string InputText => App.Resource.GetString(UIType.InputText.ToString());
+        //string NameValue => this.NameTextBox.Text;
+        float OpacityValue => (float)(this.OpacitySlider.Value / 100);
+        BlendEffectMode BlendModeValue => this.BlendModes[this.BlendModeComboBox.SelectedIndex];
+
+        readonly BlendEffectMode[] BlendModes = new BlendEffectMode[]
+        {
+            BlendExtensions.None,
+            BlendEffectMode.Dissolve,
+            // Darken
+            BlendEffectMode.Darken,
+            BlendEffectMode.Multiply,
+            BlendEffectMode.ColorBurn,
+            BlendEffectMode.LinearBurn,
+            BlendEffectMode.DarkerColor,
+            // Lighten
+            BlendEffectMode.Lighten,
+            BlendEffectMode.Screen,
+            BlendEffectMode.ColorDodge,
+            BlendEffectMode.LinearDodge,
+            BlendEffectMode.LighterColor,
+            // Contrast
+            BlendEffectMode.Overlay,
+            BlendEffectMode.SoftLight,
+            BlendEffectMode.HardLight,
+            BlendEffectMode.VividLight,
+            BlendEffectMode.LinearLight,
+            BlendEffectMode.PinLight,
+            BlendEffectMode.HardMix,
+            // Difference
+            BlendEffectMode.Difference,
+            BlendEffectMode.Exclusion,
+            BlendEffectMode.Subtract,
+            BlendEffectMode.Division,
+            // Color
+            BlendEffectMode.Hue,
+            BlendEffectMode.Saturation,
+            BlendEffectMode.Color,
+            BlendEffectMode.Luminosity,
+         };
 
         //@Construct
         public LayerListView()
         {
             this.InitializeComponent();
+            this.RenamePopup.Child = this.RenameTextBox;
+
             this.ConstructPropertys();
             this.ConstructProperty();
 
@@ -54,22 +105,6 @@ namespace Luo_Painter.Controls
                         else if (base.SelectedItems.All(c => c != item))
                             base.SelectedItem = item;
                         this.MenuFlyout.ShowAt(this, e.GetPosition(this));
-                    }
-                }
-            };
-            base.DoubleTapped += async (s, e) =>
-            {
-                await System.Threading.Tasks.Task.Delay(100);
-
-                if (e.OriginalSource is FrameworkElement element)
-                {
-                    if (element.DataContext is ILayer item)
-                    {
-                        if (base.SelectedItem is null)
-                            base.SelectedItem = item;
-                        else if (base.SelectedItems.All(c => c != item))
-                            base.SelectedItem = item;
-                        this.RenameFlyout.ShowAt(element);
                     }
                 }
             };

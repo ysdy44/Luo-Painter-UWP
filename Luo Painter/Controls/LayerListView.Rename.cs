@@ -1,48 +1,77 @@
 ﻿using Luo_Painter.Layers;
+using System.Linq;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Xaml;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class LayerListView : XamlListView
+    public sealed partial class LayerListView
     {
 
         private void ConstructRenames()
         {
-            this.RenameFlyout.Closed += (s, e) =>
+            base.DoubleTapped += async (s, e) =>
             {
-            };
+                await System.Threading.Tasks.Task.Delay(100);
 
-            this.RenameFlyout.Opened += (s, e) =>
+                if (e.OriginalSource is FrameworkElement element)
+                {
+                    if (element.DataContext is ILayer item)
+                    {
+                        if (base.SelectedItem is null)
+                            base.SelectedItem = item;
+                        else if (base.SelectedItems.All(c => c != item))
+                            base.SelectedItem = item;
+
+                        double padding = (element.ActualHeight - 22) / 2;
+                        this.RenameTextBox.Padding = new Thickness(4, padding, 4, padding);
+                        this.RenameTextBox.Width = element.ActualWidth - 8;
+                        this.RenameTextBox.Height = element.ActualHeight;
+
+                        Point transform = element.TransformToVisual(Window.Current.Content).TransformPoint(default);
+                        this.RenamePopup.HorizontalOffset = transform.X;
+                        this.RenamePopup.VerticalOffset = transform.Y;
+                        this.RenamePopup.IsOpen = true;
+
+                        this.RenameTextBox.Text = item.Name ?? string.Empty;
+                        this.RenameTextBox.SelectAll();
+                        this.RenameTextBox.Focus(FocusState.Keyboard);
+                    }
+                }
+            };
+            this.KeyboardAccelerator.Invoked += (s, e) =>
             {
                 if (base.SelectedItem is ILayer layer)
                 {
-                    this.OKButton.IsEnabled = true;
-                    this.CancelButton.IsEnabled = true;
+                    if (base.ContainerFromItem(layer) is FrameworkElement element)
+                    {
+                        double padding = (element.ActualHeight - 22) / 2;
+                        this.RenameTextBox.Padding = new Thickness(4, padding, 4, padding);
+                        this.RenameTextBox.Width = element.ActualWidth - 8;
+                        this.RenameTextBox.Height = element.ActualHeight;
 
-                    this.RenameTextBox.IsEnabled = true;
-                    this.RenameTextBox.Text = layer.Name ?? string.Empty;
+                        Point transform = element.TransformToVisual(Window.Current.Content).TransformPoint(default);
+                        this.RenamePopup.HorizontalOffset = transform.X + 4;
+                        this.RenamePopup.VerticalOffset = transform.Y;
+                        this.RenamePopup.IsOpen = true;
 
-                    this.RenameTextBox.SelectAll();
-                }
-                else
-                {
-                    this.OKButton.IsEnabled = false;
-                    this.CancelButton.IsEnabled = false;
-
-                    this.RenameTextBox.IsEnabled = false;
-                    this.RenameTextBox.Text = string.Empty;
+                        this.RenameTextBox.Text = layer.Name ?? string.Empty;
+                        this.RenameTextBox.SelectAll();
+                        this.RenameTextBox.Focus(FocusState.Keyboard);
+                    }
                 }
             };
         }
 
         private void ConstructRename()
         {
-            this.KeyboardAccelerator.Invoked += (s, e) =>
+            this.RenameTextBox.LostFocus += (s, e) =>
             {
+                this.RenamePopup.IsOpen = false;
                 if (base.SelectedItem is ILayer layer)
                 {
-                    this.RenameFlyout.ShowAt(this.TitleTextBlock);
+                    layer.Name = this.RenameTextBox.Text;
                 }
             };
 
@@ -51,31 +80,18 @@ namespace Luo_Painter.Controls
                 switch (e.Key)
                 {
                     case VirtualKey.Enter:
+                        this.RenamePopup.IsOpen = false;
                         if (base.SelectedItem is ILayer layer)
                         {
                             layer.Name = this.RenameTextBox.Text;
                         }
-                        this.RenameFlyout.Hide();
                         break;
                     case VirtualKey.Execute:
-                        this.RenameFlyout.Hide();
+                        this.RenamePopup.IsOpen = false;
                         break;
                     default:
                         break;
                 }
-            };
-
-            this.OKButton.Click += (s, e) =>
-            {
-                if (base.SelectedItem is ILayer layer)
-                {
-                    layer.Name = this.RenameTextBox.Text;
-                }
-                this.RenameFlyout.Hide();
-            };
-            this.CancelButton.Click += (s, e) =>
-            {
-                this.RenameFlyout.Hide();
             };
         }
 

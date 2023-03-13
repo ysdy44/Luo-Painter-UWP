@@ -6,53 +6,8 @@ using System.Linq;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class LayerListView : XamlListView
+    public sealed partial class LayerListView
     {
-
-        //string NameValue => this.NameTextBox.Text;
-        float OpacityValue => (float)(this.OpacitySlider.Value / 100);
-        BlendEffectMode BlendModeValue => this.BlendModes[this.BlendModeComboBox.SelectedIndex];
-
-        bool IsPropertyEnabled;
-
-        int OpacityCount = 0;
-        int BlendModeCount = 0;
-
-        readonly BlendEffectMode[] BlendModes = new BlendEffectMode[]
-        {
-            BlendExtensions.None,
-            BlendEffectMode.Dissolve,
-            // Darken
-            BlendEffectMode.Darken,
-            BlendEffectMode.Multiply,
-            BlendEffectMode.ColorBurn,
-            BlendEffectMode.LinearBurn,
-            BlendEffectMode.DarkerColor,
-            // Lighten
-            BlendEffectMode.Lighten,
-            BlendEffectMode.Screen,
-            BlendEffectMode.ColorDodge,
-            BlendEffectMode.LinearDodge,
-            BlendEffectMode.LighterColor,
-            // Contrast
-            BlendEffectMode.Overlay,
-            BlendEffectMode.SoftLight,
-            BlendEffectMode.HardLight,
-            BlendEffectMode.VividLight,
-            BlendEffectMode.LinearLight,
-            BlendEffectMode.PinLight,
-            BlendEffectMode.HardMix,
-            // Difference
-            BlendEffectMode.Difference,
-            BlendEffectMode.Exclusion,
-            BlendEffectMode.Subtract,
-            BlendEffectMode.Division,
-            // Color
-            BlendEffectMode.Hue,
-            BlendEffectMode.Saturation,
-            BlendEffectMode.Color,
-            BlendEffectMode.Luminosity,
-         };
 
         private void ConstructPropertys()
         {
