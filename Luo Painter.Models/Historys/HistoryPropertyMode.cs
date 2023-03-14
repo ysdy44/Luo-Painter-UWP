@@ -11,8 +11,6 @@ namespace Luo_Painter.Models
         /// <summary> Normal </summary>
         None,
 
-        /// <summary> <see cref="string"/> </summary>
-        Name,
         /// <summary> <see cref="double"/> </summary>
         Opacity,
         /// <summary> <see cref="Microsoft.Graphics.Canvas.Effects.BlendEffectMode"/> </summary>

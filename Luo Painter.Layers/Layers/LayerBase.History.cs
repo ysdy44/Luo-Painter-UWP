@@ -11,13 +11,6 @@ namespace Luo_Painter.Layers
         {
             switch (type)
             {
-                case HistoryPropertyMode.Name:
-                    if (parameter is string name)
-                    {
-                        this.Name = name;
-                        return true;
-                    }
-                    else return false;
                 case HistoryPropertyMode.Opacity:
                     if (parameter is float opacity)
                     {
