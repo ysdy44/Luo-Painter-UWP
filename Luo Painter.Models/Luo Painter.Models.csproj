@@ -126,7 +126,7 @@
     <Compile Include="FileImageSource.cs" />
     <Compile Include="Historys\HistoryMode.cs" />
     <Compile Include="Historys\HistoryPropertyMode.cs" />
-    <Compile Include="Historys\HistoryType.cs" />
+    <Compile Include="Historys\HistoryTitle.cs" />
     <Compile Include="Historys\IHistory.cs" />
     <Compile Include="Historys\Layerage.cs" />
     <Compile Include="History\ArrangeHistory.cs" />
