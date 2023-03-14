@@ -264,16 +264,17 @@
                 <SplitView.Pane>
                     <Grid BorderThickness="1,0,0,0" BorderBrush="{ThemeResource AppStroke}">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <controls:LayerListView 
                             x:Name="LayerListView"
-                            Command="{x:Bind Command}" 
+                            Grid.Row="1" 
                             ItemsSource="{x:Bind ObservableCollection}"
                             />
                         <SplitButton
-                            Grid.Row="1" 
+                            Grid.Row="2" 
                             Margin="7,0" 
                             Height="40" 
                             CornerRadius="4" 
@@ -317,6 +318,210 @@
                             </SplitButton.Flyout>
                             <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
                         </SplitButton>
+                        <Grid Height="50" Padding="0,0,4,0" ColumnSpacing="4" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Margin="16,0,0,0"
+                                IsTextSelectionEnabled="True"
+                                FontWeight="Medium" 
+                                TextTrimming="CharacterEllipsis" 
+                                FontSize="20" 
+                                TextWrapping="Wrap" 
+                                VerticalAlignment="Center" 
+                                OpticalMarginAlignment="TrimSideBearings"
+                                Text="{strings:Option Type=LayerMenu}"
+                                >
+                                <!--Layers-->
+                            </TextBlock>
+
+                            <Button Grid.Column="1" Width="70" Height="40" CornerRadius="4" BorderThickness="1">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{strings:Option Type=LayerPropertyMenu}" Style="{StaticResource AppToolTipStyle}"/>
+                                </ToolTipService.ToolTip>
+                                <UIElement.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="F3"/>
+                                </UIElement.KeyboardAccelerators>
+                                <Button.Flyout>
+                                    <Flyout x:Name="Flyout" Placement="RightEdgeAlignedTop" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
+                                        <StackPanel Spacing="2" Padding="6,4" Width="318">
+
+                                            <TextBlock                    
+                                                Margin="10,4,10,10" 
+                                                IsTextSelectionEnabled="True"
+                                                FontWeight="Medium" 
+                                                TextTrimming="CharacterEllipsis" 
+                                                FontSize="20" 
+                                                TextWrapping="Wrap" 
+                                                VerticalAlignment="Center" 
+                                                OpticalMarginAlignment="TrimSideBearings"
+                                                Text="{strings:Option Type=LayerPropertyMenu}"
+                                                >                                
+                                                <!--Properties-->
+                                            </TextBlock>
+
+                                            <!--Opacity-->
+                                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
+                                                <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Margin="0,5" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
+                                                          Header="{strings:UI Type=Layer_Property_Opacity}"/>
+                                            </Border>
+
+                                            <!--BlendMode-->
+                                            <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
+                                                       Text="{strings:UI Type=Layer_Property_BlendMode}"/>
+                                            <ComboBox x:Name="BlendModeComboBox" >
+
+                                                <ItemsControl.ItemContainerStyle>
+                                                    <Style TargetType="ComboBoxItem">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                                    </Style>
+                                                </ItemsControl.ItemContainerStyle>
+
+                                                <!--None-->
+                                                <ComboBoxItem Content="{strings:BlendItem Type=-1}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Dissolve}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                                <!--Darken-->
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Darken}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Multiply}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=ColorBurn}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=LinearBurn}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=DarkerColor}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                                <!--Lighten-->
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Lighten}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Screen}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=ColorDodge}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=LinearDodge}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=LighterColor}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                                <!--Contrast-->
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Overlay}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=SoftLight}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=HardLight}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=VividLight}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=LinearLight}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=PinLight}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=HardMix}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                                <!--Difference-->
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Difference}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Exclusion}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Subtract}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Division}" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}"/>
+                                                <!--Color-->
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Hue}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Saturation}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Color}"/>
+                                                <ComboBoxItem Content="{strings:BlendItem Type=Luminosity}"/>
+
+                                            </ComboBox>
+
+                                            <Button x:Name="RemoveButton" Width="70" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                                                    CommandParameter="{strings:OptionType Type=Remove}" Command="{x:Bind Command}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{strings:Option Type=Remove}" Style="{StaticResource AppToolTipStyle}"/>
+                                                </ToolTipService.ToolTip>
+                                                <SymbolIcon Symbol="Delete"/>
+                                            </Button>
+
+                                        </StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                                <FontIcon Glyph="&#xE81E;" FontFamily="Segoe MDL2 Assets"/>
+                            </Button>
+
+                            <Button Grid.Column="2" Width="44" Height="40" CornerRadius="4" BorderThickness="1">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{strings:Option Type=LayerMenu}" Style="{StaticResource AppToolTipStyle}"/>
+                                </ToolTipService.ToolTip>
+                                <Button.Flyout>
+                                    <MenuFlyout x:Name="MenuFlyout" Placement="BottomEdgeAlignedLeft">
+                                        <MenuFlyoutSeparator Margin="16,6,16,12">
+                                            <Control.Template>
+                                                <ControlTemplate TargetType="MenuFlyoutSeparator">
+                                                    <TextBlock                                    
+                                                        IsTextSelectionEnabled="True"                                   
+                                                        FontWeight="Medium" 
+                                                        TextTrimming="CharacterEllipsis" 
+                                                        FontSize="20" 
+                                                        TextWrapping="Wrap"
+                                                        VerticalAlignment="Center"
+                                                        OpticalMarginAlignment="TrimSideBearings"
+                                                        Text="{strings:Option Type=LayerMenu}"                                   
+                                                        />
+                                                </ControlTemplate>
+                                            </Control.Template>
+                                        </MenuFlyoutSeparator>
+
+                                        <!--TagType-->
+                                        <elements:TagTypeSegmented x:Name="TagTypeSegmented" Width="286" Height="40">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{strings:UI Type=Layer_Property_TagType}" Style="{StaticResource AppToolTipStyle}"/>
+                                            </ToolTipService.ToolTip>
+                                        </elements:TagTypeSegmented>
+
+                                        <controls:OptionItem x:Name="CutLayerItem" Type="CutLayer" Command="{x:Bind Command}"/>
+                                        <controls:OptionItem x:Name="CopyLayerItem" Type="CopyLayer" Command="{x:Bind Command}"/>
+                                        <controls:OptionItem x:Name="PasteLayerItem" Type="PasteLayer" Command="{x:Bind Command}"/>
+                                        <controls:OptionItem x:Name="RemoveItem" Type="Remove" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Key="Delete"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <MenuFlyoutSeparator/>
+                                        <controls:OptionItem x:Name="DuplicateItem" Type="Duplicate" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="D"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <controls:OptionItem x:Name="ExtractItem" Type="Extract" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <controls:OptionItem x:Name="MergeItem" Type="Merge" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="M"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <controls:OptionItem x:Name="FlattenItem" Type="Flatten" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="F"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <!--Group-->
+                                        <MenuFlyoutSeparator/>
+                                        <controls:OptionItem x:Name="GroupItem" Type="Group" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="G"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <controls:OptionItem x:Name="UngroupItem" Type="Ungroup" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="U"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <controls:OptionItem x:Name="ReleaseItem" Type="Release" Command="{x:Bind Command}">
+                                            <UIElement.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control" Key="R"/>
+                                            </UIElement.KeyboardAccelerators>
+                                        </controls:OptionItem>
+                                        <!--
+                                        <local:OptionItem Type="ExpandStroke" Command="{x:Bind Command}"/>
+                                        <MenuFlyoutSeparator/>
+                                        <local:OptionItem Type="Union" Command="{x:Bind Command}"/>
+                                        <local:OptionItem Type="Exclude" Command="{x:Bind Command}"/>
+                                        <local:OptionItem Type="Xor" Command="{x:Bind Command}"/>
+                                        <local:OptionItem Type="Intersect" Command="{x:Bind Command}"/>
+                                        -->
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                                <SymbolIcon Symbol="More"/>
+                            </Button>
+
+                        </Grid>
                     </Grid>
                 </SplitView.Pane>
                 <Grid x:Name="ContentGrid">

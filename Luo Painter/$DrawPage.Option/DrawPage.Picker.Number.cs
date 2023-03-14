@@ -36,11 +36,11 @@ namespace Luo_Painter
 
         public void ConstructNumberPicker()
         {
-            this.LayerListView.OpacitySliderClick += (s, e) =>
+            this.OpacitySlider.Click += (s, e) =>
             {
                 this.NumberPickerMode = NumberPickerMode.LayerOpacity;
-                this.NumberFlyout.ShowAt(this.LayerListView.OpacityNumber.PlacementTarget);
-                this.NumberPicker.Construct(this.LayerListView.OpacityNumber);
+                this.NumberFlyout.ShowAt(this.OpacitySlider.PlacementTarget);
+                this.NumberPicker.Construct(this.OpacitySlider);
             };
 
             this.RadianSlider.Click += (s, e) => this.NumberShowAt(this.RadianSlider, NumberPickerMode.ViewRadian);
@@ -57,7 +57,7 @@ namespace Luo_Painter
                 switch (mode)
                 {
                     case NumberPickerMode.LayerOpacity:
-                        this.LayerListView.OpacitySliderValue = e;
+                        this.OpacitySlider.Value = e;
                         break;
 
                     case NumberPickerMode.ViewRadian:

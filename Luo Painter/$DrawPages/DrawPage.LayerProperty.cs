@@ -4,9 +4,9 @@ using Microsoft.Graphics.Canvas.Effects;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class LayerListView
+    public sealed partial class DrawPage
     {
 
         bool IsPropertyEnabled;
@@ -59,17 +59,19 @@ namespace Luo_Painter.Controls
                     case 0:
                         break;
                     case 1:
-                        if (base.SelectedItem is ILayer layer)
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
-                            float redo = this.OpacityValue;
+                            float redo = (float)this.OpacitySlider.Value;
 
                             // History
-                            this.History(this, new PropertyHistory(HistoryPropertyMode.Opacity, layer.Id, layer.StartingOpacity, redo));
+                            int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.Opacity, layer.Id, layer.StartingOpacity, redo));
                         }
                         break;
                     default:
-                        // History
-                        this.History(this, new CompositeHistory(this.GetOpacityHistory().ToArray()));
+                        {
+                            // History
+                            int removes = this.History.Push(new CompositeHistory(this.GetOpacityHistory().ToArray()));
+                        }
                         break;
                 }
 
@@ -78,17 +80,19 @@ namespace Luo_Painter.Controls
                     case 0:
                         break;
                     case 1:
-                        if (base.SelectedItem is ILayer layer)
+                        if (this.LayerSelectedItem is ILayer layer)
                         {
-                            BlendEffectMode? redo = this.BlendModeValue;
+                            BlendEffectMode redo = this.BlendModes[this.BlendModeComboBox.SelectedIndex];
 
                             // History
-                            this.History(this, new PropertyHistory(HistoryPropertyMode.BlendMode, layer.Id, layer.StartingBlendMode, redo));
+                            int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.BlendMode, layer.Id, layer.StartingBlendMode, redo));
                         }
                         break;
                     default:
-                        // History
-                        this.History(this, new CompositeHistory(this.GetBlendModeHistory().ToArray()));
+                        {
+                            // History
+                            int removes = this.History.Push(new CompositeHistory(this.GetBlendModeHistory().ToArray()));
+                        }
                         break;
                 }
             };
@@ -96,7 +100,7 @@ namespace Luo_Painter.Controls
             this.Flyout.Opened += (s, e) =>
             {
                 this.IsPropertyEnabled = false;
-                if (base.SelectedItem is ILayer layer)
+                if (this.LayerSelectedItem is ILayer layer)
                 {
                     this.RemoveButton.IsEnabled = true;
                     this.OpacitySlider.IsEnabled = true;
@@ -137,7 +141,7 @@ namespace Luo_Painter.Controls
 
                 if (this.OpacityCount is 0)
                 {
-                    foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+                    foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
                         this.OpacityCount++;
                         item.CacheOpacity();
@@ -146,23 +150,23 @@ namespace Luo_Painter.Controls
                 }
                 else
                 {
-                    foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+                    foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
                         item.Opacity = redo;
                     }
                 }
 
-                this.Invalidate(s, e); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
             this.BlendModeComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.IsPropertyEnabled is false) return;
 
-                BlendEffectMode redo = this.BlendModeValue;
+                BlendEffectMode redo = this.BlendModes[this.BlendModeComboBox.SelectedIndex];
 
                 if (this.BlendModeCount is 0)
                 {
-                    foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+                    foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
                         this.BlendModeCount++;
                         item.CacheBlendMode();
@@ -171,21 +175,21 @@ namespace Luo_Painter.Controls
                 }
                 else
                 {
-                    foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+                    foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                     {
                         item.BlendMode = redo;
                     }
                 }
 
-                this.Invalidate(s, e); // Invalidate
+                this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
         }
 
         private IEnumerable<IHistory> GetOpacityHistory()
         {
-            float redo = this.OpacityValue;
+            float redo = (float)this.OpacitySlider.Value;
 
-            foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+            foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
             {
                 if (item.StartingOpacity == redo) continue;
 
@@ -194,9 +198,9 @@ namespace Luo_Painter.Controls
         }
         private IEnumerable<IHistory> GetBlendModeHistory()
         {
-            BlendEffectMode? redo = this.BlendModeValue;
+            BlendEffectMode redo = this.BlendModes[this.BlendModeComboBox.SelectedIndex];
 
-            foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+            foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
             {
                 if (item.StartingBlendMode == redo) continue;
 

@@ -20,7 +20,8 @@ namespace Luo_Painter
         int BrushPageId;
 
         bool PasteIsEnabled;
-
+        bool PasteLayerIsEnabled;
+        
         private void ConstructDraw()
         {
             float dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
@@ -80,7 +81,7 @@ namespace Luo_Painter
         }
         public void RaiseLayerCanExecuteChanged()
         {
-            this.LayerListView.PasteLayerIsEnabled = this.ClipboardLayers.Count is 0 is false;
+            this.PasteLayerIsEnabled = this.ClipboardLayers.Count is 0 is false;
         }
 
 

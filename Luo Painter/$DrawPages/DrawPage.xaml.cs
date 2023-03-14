@@ -174,6 +174,12 @@ namespace Luo_Painter
             this.ConstructLayers();
             this.ConstructLayer();
 
+            this.ConstructMenus();
+            this.ConstructMenu();
+
+            this.ConstructPropertys();
+            this.ConstructProperty();
+
             this.ConstructColorPicker();
             this.ConstructNumberPicker();
 

@@ -1,29 +1,25 @@
 ﻿using Luo_Painter.Layers;
 using Luo_Painter.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter
 {
-    public sealed partial class LayerListView
+    public sealed partial class DrawPage
     {
 
         private void ConstructMenus()
         {
-            base.RightTapped += (s, e) =>
+            this.LayerListView.RightTapped += (s, e) =>
             {
                 if (e.OriginalSource is FrameworkElement element)
                 {
                     if (element.DataContext is ILayer item)
                     {
-                        if (base.SelectedItem is null)
-                            base.SelectedItem = item;
-                        else if (base.SelectedItems.All(c => c != item))
-                            base.SelectedItem = item;
+                        if (this.LayerSelectedItem is null)
+                            this.LayerSelectedItem = item;
+                        else if (this.LayerSelectedItems.All(c => c != item))
+                            this.LayerSelectedItem = item;
                         this.MenuFlyout.ShowAt(this, e.GetPosition(this));
                     }
                 }
@@ -34,7 +30,7 @@ namespace Luo_Painter.Controls
         {
             this.MenuFlyout.Opened += (s, e) =>
             {
-                bool isEnabled = base.SelectedItem is null is false;
+                bool isEnabled = this.LayerSelectedItem is null is false;
 
                 this.CutLayerItem.GoToState(isEnabled);
                 this.CopyLayerItem.GoToState(isEnabled);
@@ -48,14 +44,14 @@ namespace Luo_Painter.Controls
                 this.UngroupItem.GoToState(isEnabled);
                 this.ReleaseItem.GoToState(isEnabled);
 
-                TagType type = isEnabled && base.SelectedItem is ILayer layer ? layer.TagType : TagType.None;
+                TagType type = isEnabled && this.LayerSelectedItem is ILayer layer ? layer.TagType : TagType.None;
                 this.TagTypeSegmented.Type = (int)type;
                 this.TagTypeSegmented.IsEnabled = isEnabled;
             };
             this.TagTypeSegmented.TypeChanged += (s, e) =>
             {
                 TagType type = (TagType)e;
-                foreach (ILayer item in base.SelectedItems.Cast<ILayer>())
+                foreach (ILayer item in this.LayerSelectedItems.Cast<ILayer>())
                 {
                     item.TagType = type;
                 }
