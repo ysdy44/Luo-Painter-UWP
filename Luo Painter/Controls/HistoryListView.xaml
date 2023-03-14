@@ -5,12 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:luo_painter="using:Luo_Painter"
-    xmlns:historys="using:Luo_Painter.Models"
     xmlns:strings="using:Luo_Painter.Strings"
     mc:Ignorable="d"
     d:DesignWidth="400"
     d:DesignHeight="400"
-    IsItemClickEnabled="True"
+    SelectionMode="None"
+    IsItemClickEnabled="False"
     Padding="1,0"   
     BorderThickness="1"
     BorderBrush="{ThemeResource AppStroke}"
@@ -31,29 +31,6 @@
 
         </TransitionCollection>
     </ItemsControl.ItemContainerTransitions>
-
-    <ItemsControl.ItemTemplate>
-        <DataTemplate x:DataType="historys:IHistory">
-            <SwipeControl>
-                <SwipeControl.RightItems>
-                    <SwipeItems Mode="Execute">
-                        <SwipeItem>
-                            <SwipeItem.IconSource>
-                                <SymbolIconSource Symbol="Undo"/>
-                            </SwipeItem.IconSource>
-                            <SwipeItem.Text>
-                                Undo
-                            </SwipeItem.Text>
-                        </SwipeItem>
-                    </SwipeItems>
-                </SwipeControl.RightItems>
-                <TextBlock VerticalAlignment="Center">
-                    <Run Text="{x:Bind Mode}"/>
-                    <Run Text="{x:Bind PropertyMode}"/>
-                </TextBlock>
-            </SwipeControl>
-        </DataTemplate>
-    </ItemsControl.ItemTemplate>
 
     <ListViewBase.Header>
         <Border Height="32" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
