@@ -1,60 +1,19 @@
-﻿using Luo_Painter.Elements;
-using Luo_Painter.HSVColorPickers;
-using Luo_Painter.Layers;
+﻿using Luo_Painter.Layers;
 using Luo_Painter.Models;
-using Microsoft.Graphics.Canvas.Effects;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
-    internal class LayerCommand : RelayCommand<ILayer> { }
-
-    public sealed partial class LayerListView : XamlListView
+    public sealed partial class LayerListView
     {
-        //@Delegate
-        public event EventHandler<ILayer> VisualClick { remove => this.VisualCommand.Click -= value; add => this.VisualCommand.Click += value; }
-        public event EventHandler<IHistory> History;
-        public event EventHandler<object> Invalidate;
-        public event RoutedEventHandler OpacitySliderClick { remove => this.OpacitySlider.Click -= value; add => this.OpacitySlider.Click += value; }
 
-        //@Command
-        public ICommand Command { get; set; }
-
-        //@Content
-        public bool PasteLayerIsEnabled { get; set; }
-        public bool IsOpen => this.RenamePopup.IsOpen;
-        public ImageSource Source { get; set; }
-
-        readonly Popup RenamePopup = new Popup();
-        readonly TextBox RenameTextBox = new TextBox();
-        
-
-        public INumberBase OpacityNumber => this.OpacitySlider;
-        public double OpacitySliderValue { set => this.OpacitySlider.Value = value; }
-
-        //string NameValue => this.NameTextBox.Text;
-        float OpacityValue => (float)(this.OpacitySlider.Value / 100);
-        BlendEffectMode BlendModeValue => this.BlendModes[this.BlendModeComboBox.SelectedIndex];
-
-
-        //@Construct
-        public LayerListView()
+        private void ConstructMenus()
         {
-            this.InitializeComponent();
-            this.RenamePopup.Child = this.RenameTextBox;
-
-            this.ConstructPropertys();
-            this.ConstructProperty();
-
-            this.ConstructRenames();
-            this.ConstructRename();
-
             base.RightTapped += (s, e) =>
             {
                 if (e.OriginalSource is FrameworkElement element)
@@ -69,7 +28,10 @@ namespace Luo_Painter.Controls
                     }
                 }
             };
+        }
 
+        private void ConstructMenu()
+        {
             this.MenuFlyout.Opened += (s, e) =>
             {
                 bool isEnabled = base.SelectedItem is null is false;

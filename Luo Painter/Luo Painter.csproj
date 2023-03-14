@@ -169,6 +169,8 @@
     <Compile Include="%24DrawPages\DrawPage.Ink.cs" />
     <Compile Include="%24DrawPages\DrawPage.InkType.cs" />
     <Compile Include="%24DrawPages\DrawPage.Layer.cs" />
+    <Compile Include="%24DrawPages\DrawPage.LayerMenu.cs" />
+    <Compile Include="%24DrawPages\DrawPage.LayerProperty.cs" />
     <Compile Include="%24DrawPages\DrawPage.Operator.cs" />
     <Compile Include="%24DrawPages\DrawPage.Paint.cs" />
     <Compile Include="%24DrawPages\DrawPage.Tasks.cs" />
@@ -229,7 +231,6 @@
     <Compile Include="Controls\KeyboardShortcuts.xaml.cs">
       <DependentUpon>KeyboardShortcuts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LayerListView.Property.cs" />
     <Compile Include="Controls\LayerListView.Rename.cs" />
     <Compile Include="Controls\LayerListView.xaml.cs">
       <DependentUpon>LayerListView.xaml</DependentUpon>
