@@ -34,6 +34,7 @@ namespace Luo_Painter
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move:
                         /// History
                         IHistory history = this.LayerManager.DragItemsCompleted(this, e.Items);
+                        history.Title = App.Resource.GetString(UIType.Layer_Move.ToString());
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -63,6 +64,7 @@ namespace Luo_Painter
 
                     // History
                     IHistory history = new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo);
+                    history.Title = App.Resource.GetString(UIType.Layer_Visibility.ToString());
                     int removes = this.History.Push(history);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -76,6 +78,7 @@ namespace Luo_Painter
 
                     // History
                     IHistory history = new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo);
+                    history.Title = App.Resource.GetString(UIType.Layer_Visibility.ToString());
                     int removes = this.History.Push(history);
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -92,6 +95,7 @@ namespace Luo_Painter
                         {
                             // History
                             IHistory history = his.Single();
+                            history.Title = App.Resource.GetString(UIType.Layer_Visibility.ToString());
                             int removes = this.History.Push(history);
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -102,6 +106,7 @@ namespace Luo_Painter
                         {
                             // History
                             IHistory history = new CompositeHistory(his.ToArray());
+                            history.Title = App.Resource.GetString(UIType.Layer_Visibility.ToString());
                             int removes = this.History.Push(history);
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate

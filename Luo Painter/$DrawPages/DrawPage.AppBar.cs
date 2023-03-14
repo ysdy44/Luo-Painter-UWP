@@ -152,6 +152,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = bitmapLayer.GetBitmapHistory();
+                        history.Title = App.Resource.GetString(type.ToString());
                         int removes = this.History.Push(history);
 
                         bitmapLayer.Flush();
@@ -164,6 +165,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = bitmapLayer.GetBitmapResetHistory();
+                        history.Title = App.Resource.GetString(type.ToString());
                         int removes = this.History.Push(history);
 
                         bitmapLayer.Flush();
@@ -212,6 +214,7 @@ namespace Luo_Painter
 
                 // History
                 IHistory history = bitmapLayer.GetBitmapHistory();
+                history.Title = App.Resource.GetString(type.ToString());
                 int removes = this.History.Push(history);
 
                 bitmapLayer.Flush();
@@ -229,6 +232,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = bitmapLayer.GetBitmapResetHistory();
+                            history.Title = App.Resource.GetString(type.ToString());
                             int removes = this.History.Push(history);
 
                             bitmapLayer.Flush();
@@ -256,6 +260,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = bitmapLayer.GetBitmapHistory();
+                            history.Title = App.Resource.GetString(type.ToString());
                             int removes = this.History.Push(history);
 
                             bitmapLayer.Flush();

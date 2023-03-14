@@ -55,6 +55,7 @@ namespace Luo_Painter
 
             // History
             IHistory history = this.Marquee.GetBitmapResetHistory();
+            history.Title = App.Resource.GetString(this.OptionType.ToString());
             int removes = this.History.Push(history);
 
             this.Marquee.Flush();

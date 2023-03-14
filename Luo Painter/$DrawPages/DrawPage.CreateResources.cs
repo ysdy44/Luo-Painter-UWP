@@ -211,6 +211,7 @@ namespace Luo_Painter
             // History
             Layerage[] redo = this.Nodes.Convert();
             IHistory history = new ArrangeHistory(undo, redo);
+            history.Title = App.Resource.GetString(OptionType.AddImageLayer.ToString());
             int removes = this.History.Push(history);
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
