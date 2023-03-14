@@ -281,37 +281,49 @@ namespace Luo_Painter
                 case SelectionType.None:
                     break;
                 case SelectionType.All:
-                    this.BitmapLayer.Fill(brush, BitmapType.Source);
-                    // History
-                    int removes1 = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
+                    {
+                        this.BitmapLayer.Fill(brush, BitmapType.Source);
+
+                        // History
+                        IHistory history = this.BitmapLayer.GetBitmapResetHistory();
+                        int removes = this.History.Push(history);
+                    }
                     break;
                 case SelectionType.PixelBounds:
-                    CanvasCommandList commandList1 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList1.CreateDrawingSession())
                     {
-                        ds.FillRectangle(this.BrushBounds, brush);
+                        CanvasCommandList commandList1 = new CanvasCommandList(this.CanvasDevice);
+                        using (CanvasDrawingSession ds = commandList1.CreateDrawingSession())
+                        {
+                            ds.FillRectangle(this.BrushBounds, brush);
+                        }
+                        this.BitmapLayer.Draw(new AlphaMaskEffect
+                        {
+                            AlphaMask = this.BitmapLayer[BitmapType.Origin],
+                            Source = commandList1
+                        }, BitmapType.Source);
+
+                        // History
+                        IHistory history = this.BitmapLayer.GetBitmapHistory();
+                        int removes = this.History.Push(history);
                     }
-                    this.BitmapLayer.Draw(new AlphaMaskEffect
-                    {
-                        AlphaMask = this.BitmapLayer[BitmapType.Origin],
-                        Source = commandList1
-                    }, BitmapType.Source);
-                    // History
-                    int removes2 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                     break;
                 case SelectionType.MarqueePixelBounds:
-                    CanvasCommandList commandList2 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
                     {
-                        ds.FillRectangle(this.BrushBounds, brush);
+                        CanvasCommandList commandList2 = new CanvasCommandList(this.CanvasDevice);
+                        using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
+                        {
+                            ds.FillRectangle(this.BrushBounds, brush);
+                        }
+                        this.BitmapLayer.Draw(new AlphaMaskEffect
+                        {
+                            AlphaMask = this.Marquee[BitmapType.Source],
+                            Source = commandList2
+                        }, BitmapType.Source);
+
+                        // History
+                        IHistory history = this.BitmapLayer.GetBitmapHistory();
+                        int removes = this.History.Push(history);
                     }
-                    this.BitmapLayer.Draw(new AlphaMaskEffect
-                    {
-                        AlphaMask = this.Marquee[BitmapType.Source],
-                        Source = commandList2
-                    }, BitmapType.Source);
-                    // History
-                    int removes3 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                     break;
                 default:
                     break;
@@ -325,37 +337,49 @@ namespace Luo_Painter
                 case SelectionType.None:
                     break;
                 case SelectionType.All:
-                    this.BitmapLayer.Fill(color, BitmapType.Source);
-                    // History
-                    int removes1 = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
+                    {
+                        this.BitmapLayer.Fill(color, BitmapType.Source);
+
+                        // History
+                        IHistory history = this.BitmapLayer.GetBitmapResetHistory();
+                        int removes = this.History.Push(history);
+                    }
                     break;
                 case SelectionType.PixelBounds:
-                    CanvasCommandList commandList1 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList1.CreateDrawingSession())
                     {
-                        ds.FillRectangle(this.BrushBounds, color);
+                        CanvasCommandList commandList1 = new CanvasCommandList(this.CanvasDevice);
+                        using (CanvasDrawingSession ds = commandList1.CreateDrawingSession())
+                        {
+                            ds.FillRectangle(this.BrushBounds, color);
+                        }
+                        this.BitmapLayer.Draw(new AlphaMaskEffect
+                        {
+                            AlphaMask = this.BitmapLayer[BitmapType.Origin],
+                            Source = commandList1
+                        }, BitmapType.Source);
+
+                        // History
+                        IHistory history = this.BitmapLayer.GetBitmapHistory();
+                        int removes = this.History.Push(history);
                     }
-                    this.BitmapLayer.Draw(new AlphaMaskEffect
-                    {
-                        AlphaMask = this.BitmapLayer[BitmapType.Origin],
-                        Source = commandList1
-                    }, BitmapType.Source);
-                    // History
-                    int removes2 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                     break;
                 case SelectionType.MarqueePixelBounds:
-                    CanvasCommandList commandList2 = new CanvasCommandList(this.CanvasDevice);
-                    using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
                     {
-                        ds.FillRectangle(this.BrushBounds, color);
+                        CanvasCommandList commandList2 = new CanvasCommandList(this.CanvasDevice);
+                        using (CanvasDrawingSession ds = commandList2.CreateDrawingSession())
+                        {
+                            ds.FillRectangle(this.BrushBounds, color);
+                        }
+                        this.BitmapLayer.Draw(new AlphaMaskEffect
+                        {
+                            AlphaMask = this.Marquee[BitmapType.Source],
+                            Source = commandList2
+                        }, BitmapType.Source);
+
+                        // History
+                        IHistory history = this.BitmapLayer.GetBitmapHistory();
+                        int removes = this.History.Push(history);
                     }
-                    this.BitmapLayer.Draw(new AlphaMaskEffect
-                    {
-                        AlphaMask = this.Marquee[BitmapType.Source],
-                        Source = commandList2
-                    }, BitmapType.Source);
-                    // History
-                    int removes3 = this.History.Push(this.BitmapLayer.GetBitmapHistory());
                     break;
                 default:
                     break;

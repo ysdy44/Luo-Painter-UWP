@@ -70,7 +70,9 @@ namespace Luo_Painter
             this.BitmapLayer.Hit(this.CreateTransform.Transformer);
 
             // History
-            int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+            IHistory history = this.BitmapLayer.GetBitmapHistory();
+            int removes = this.History.Push(history);
+
             this.BitmapLayer.Flush();
             this.BitmapLayer.RenderThumbnail();
 

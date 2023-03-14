@@ -230,7 +230,8 @@ namespace Luo_Painter
                         }
 
                         // History
-                        int removes = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
+                        IHistory history = this.BitmapLayer.GetBitmapResetHistory();
+                        int removes = this.History.Push(history);
                     }
                     break;
                 case SelectionType.PixelBounds:
@@ -249,7 +250,8 @@ namespace Luo_Painter
                         }
 
                         // History
-                        int removes = this.History.Push(this.BitmapLayer.GetBitmapResetHistory());
+                        IHistory history = this.BitmapLayer.GetBitmapResetHistory();
+                        int removes = this.History.Push(history);
                     }
                     break;
                 case SelectionType.MarqueePixelBounds:
@@ -269,7 +271,8 @@ namespace Luo_Painter
                         }
 
                         // History
-                        int removes = this.History.Push(this.BitmapLayer.GetBitmapHistory());
+                        IHistory history = this.BitmapLayer.GetBitmapHistory();
+                        int removes = this.History.Push(history);
                     }
                     break;
                 default:

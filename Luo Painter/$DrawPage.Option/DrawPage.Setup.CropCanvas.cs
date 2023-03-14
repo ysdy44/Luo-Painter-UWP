@@ -128,11 +128,12 @@ namespace Luo_Painter
                 this.CreateResources(w, h);
                 this.CreateMarqueeResources(w, h);
 
-                /// History
-                int removes = this.History.Push(new CompositeHistory(
+                // History
+                IHistory history = new CompositeHistory(
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
                     new SetupHistory(width, height, w, h)
-                ));
+                    );
+                int removes = this.History.Push(history);
             }
             else
             {
@@ -146,11 +147,12 @@ namespace Luo_Painter
                     this.CreateMarqueeResources(w, h);
                 }
 
-                /// History
-                int removes = this.History.Push(new CompositeHistory(
+                // History
+                IHistory history = new CompositeHistory(
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
                     new SetupHistory(width, height, w, h)
-                ));
+                    );
+                int removes = this.History.Push(history);
 
                 this.Transformer.Radian = 0f;
                 this.Transformer.ReloadMatrix();

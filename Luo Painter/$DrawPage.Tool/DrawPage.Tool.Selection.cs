@@ -55,7 +55,9 @@ namespace Luo_Painter
         private void SelectionBrush_Complete()
         {
             // History
-            int removes = this.History.Push(this.Marquee.GetBitmapHistory());
+            IHistory history = this.Marquee.GetBitmapHistory();
+            int removes = this.History.Push(history);
+
             this.Marquee.Flush();
             this.Marquee.RenderThumbnail();
             this.CanvasControl.Invalidate(); // Invalidate
@@ -99,7 +101,8 @@ namespace Luo_Painter
                     return true;
                 default:
                     // History
-                    int removes = this.History.Push(this.Marquee.New(bitmapLayer, interpolationColors, BitmapType.Temp));
+                    IHistory history = this.Marquee.New(bitmapLayer, interpolationColors, BitmapType.Temp);
+                    int removes = this.History.Push(history);
 
                     this.Marquee.Flush();
                     this.Marquee.RenderThumbnail();

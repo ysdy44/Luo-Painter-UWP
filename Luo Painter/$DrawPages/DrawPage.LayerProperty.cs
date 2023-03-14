@@ -64,13 +64,15 @@ namespace Luo_Painter
                             float redo = (float)this.OpacitySlider.Value;
 
                             // History
-                            int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.Opacity, layer.Id, layer.StartingOpacity, redo));
+                            IHistory history = new PropertyHistory(HistoryPropertyMode.Opacity, layer.Id, layer.StartingOpacity, redo);
+                            int removes = this.History.Push(history);
                         }
                         break;
                     default:
                         {
                             // History
-                            int removes = this.History.Push(new CompositeHistory(this.GetOpacityHistory().ToArray()));
+                            IHistory history = new CompositeHistory(this.GetOpacityHistory().ToArray());
+                            int removes = this.History.Push(history);
                         }
                         break;
                 }
@@ -85,13 +87,15 @@ namespace Luo_Painter
                             BlendEffectMode redo = this.BlendModes[this.BlendModeComboBox.SelectedIndex];
 
                             // History
-                            int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.BlendMode, layer.Id, layer.StartingBlendMode, redo));
+                            IHistory history = new PropertyHistory(HistoryPropertyMode.BlendMode, layer.Id, layer.StartingBlendMode, redo);
+                            int removes = this.History.Push(history);
                         }
                         break;
                     default:
                         {
                             // History
-                            int removes = this.History.Push(new CompositeHistory(this.GetBlendModeHistory().ToArray()));
+                            IHistory history = new CompositeHistory(this.GetBlendModeHistory().ToArray());
+                            int removes = this.History.Push(history);
                         }
                         break;
                 }

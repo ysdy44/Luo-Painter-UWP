@@ -107,7 +107,9 @@ namespace Luo_Painter
             await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 // History
-                int removes = this.History.Push(bitmapLayer.GetBitmapHistory());
+                IHistory history = bitmapLayer.GetBitmapHistory();
+                int removes = this.History.Push(history);
+
                 bitmapLayer.Flush();
                 bitmapLayer.RenderThumbnail();
 

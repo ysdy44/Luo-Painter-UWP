@@ -54,7 +54,9 @@ namespace Luo_Painter
             }
 
             // History
-            int removes = this.History.Push(this.Marquee.GetBitmapResetHistory());
+            IHistory history = this.Marquee.GetBitmapResetHistory();
+            int removes = this.History.Push(history);
+
             this.Marquee.Flush();
             this.Marquee.RenderThumbnail();
 

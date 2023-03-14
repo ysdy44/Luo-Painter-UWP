@@ -232,15 +232,6 @@ namespace Luo_Painter
 
             this.PaintScrollViewer.ScratchpadClick += (s, e) => this.TryShowBrushPage();
 
-            this.LayerListView.Invalidate += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.LayerListView.History += (s, e) =>
-            {
-                // History
-                int removes = this.History.Push(e);
-                this.CanvasVirtualControl.Invalidate(); // Invalidate
-                this.RaiseHistoryCanExecuteChanged();
-            };
-
             this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;
             this.SplitLeftButton.PointerEntered += (s, e) =>
             {

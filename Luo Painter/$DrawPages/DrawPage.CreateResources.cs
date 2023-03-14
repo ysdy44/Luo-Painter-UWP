@@ -210,7 +210,8 @@ namespace Luo_Painter
 
             // History
             Layerage[] redo = this.Nodes.Convert();
-            int removes = this.History.Push(new ArrangeHistory(undo, redo));
+            IHistory history = new ArrangeHistory(undo, redo);
+            int removes = this.History.Push(history);
 
             this.CanvasVirtualControl.Invalidate(); // Invalidate
 

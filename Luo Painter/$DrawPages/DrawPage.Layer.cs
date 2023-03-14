@@ -33,7 +33,8 @@ namespace Luo_Painter
                         break;
                     case Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move:
                         /// History
-                        int removes = this.History.Push(this.LayerManager.DragItemsCompleted(this, e.Items));
+                        IHistory history = this.LayerManager.DragItemsCompleted(this, e.Items);
+                        int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -61,7 +62,9 @@ namespace Luo_Painter
                     layer.Visibility = redo;
 
                     // History
-                    int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo));
+                    IHistory history = new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo);
+                    int removes = this.History.Push(history);
+
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.RaiseHistoryCanExecuteChanged();
                     return;
@@ -72,7 +75,9 @@ namespace Luo_Painter
                     layer.Visibility = redo;
 
                     // History
-                    int removes = this.History.Push(new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo));
+                    IHistory history = new PropertyHistory(HistoryPropertyMode.Visibility, layer.Id, undo, redo);
+                    int removes = this.History.Push(history);
+
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.RaiseHistoryCanExecuteChanged();
                     return;
@@ -84,16 +89,24 @@ namespace Luo_Painter
                     case 0:
                         break;
                     case 1:
-                        // History
-                        int removes1 = this.History.Push(his.Single());
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-                        this.RaiseHistoryCanExecuteChanged();
+                        {
+                            // History
+                            IHistory history = his.Single();
+                            int removes = this.History.Push(history);
+
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.RaiseHistoryCanExecuteChanged();
+                        }
                         break;
                     default:
-                        // History
-                        int removes2 = this.History.Push(new CompositeHistory(his.ToArray()));
-                        this.CanvasVirtualControl.Invalidate(); // Invalidate
-                        this.RaiseHistoryCanExecuteChanged();
+                        {
+                            // History
+                            IHistory history = new CompositeHistory(his.ToArray());
+                            int removes = this.History.Push(history);
+
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.RaiseHistoryCanExecuteChanged();
+                        }
                         break;
                 }
             };

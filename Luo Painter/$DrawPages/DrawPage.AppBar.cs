@@ -123,7 +123,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
-        private void Primary(BitmapLayer bitmapLayer, ICanvasImage source)
+        private void Primary(OptionType type, BitmapLayer bitmapLayer, ICanvasImage source)
         {
             Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
@@ -132,31 +132,43 @@ namespace Luo_Painter
             switch (mode)
             {
                 case PixelBoundsMode.None:
-                    bitmapLayer.Hit(InterpolationColors);
-
-                    switch (this.SelectionType)
                     {
-                        case SelectionType.MarqueePixelBounds:
-                            bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
-                            {
-                                Source1 = this.Marquee[BitmapType.Source],
-                                Source2 = bitmapLayer[BitmapType.Origin],
-                                Source3 = source
-                            });
-                            break;
-                        default:
-                            bitmapLayer.DrawCopy(source);
-                            break;
+                        bitmapLayer.Hit(InterpolationColors);
+
+                        switch (this.SelectionType)
+                        {
+                            case SelectionType.MarqueePixelBounds:
+                                bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                                {
+                                    Source1 = this.Marquee[BitmapType.Source],
+                                    Source2 = bitmapLayer[BitmapType.Origin],
+                                    Source3 = source
+                                });
+                                break;
+                            default:
+                                bitmapLayer.DrawCopy(source);
+                                break;
+                        }
+
+                        // History
+                        IHistory history = bitmapLayer.GetBitmapHistory();
+                        int removes = this.History.Push(history);
+
+                        bitmapLayer.Flush();
+                        bitmapLayer.RenderThumbnail();
                     }
-                    int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
                     break;
                 default:
-                    bitmapLayer.DrawCopy(source);
-                    int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
-                    bitmapLayer.Flush();
-                    bitmapLayer.RenderThumbnail();
+                    {
+                        bitmapLayer.DrawCopy(source);
+
+                        // History
+                        IHistory history = bitmapLayer.GetBitmapResetHistory();
+                        int removes = this.History.Push(history);
+
+                        bitmapLayer.Flush();
+                        bitmapLayer.RenderThumbnail();
+                    }
                     break;
             }
 
@@ -199,7 +211,9 @@ namespace Luo_Painter
                 }));
 
                 // History
-                int removes = this.History.Push(bitmapLayer.GetBitmapHistory());
+                IHistory history = bitmapLayer.GetBitmapHistory();
+                int removes = this.History.Push(history);
+
                 bitmapLayer.Flush();
                 bitmapLayer.RenderThumbnail();
             }
@@ -210,31 +224,43 @@ namespace Luo_Painter
                 {
                     case PixelBoundsMode.Solid:
                     case PixelBoundsMode.Transarent:
-                        bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
-                        int removes2 = this.History.Push(bitmapLayer.GetBitmapResetHistory());
-                        bitmapLayer.Flush();
-                        bitmapLayer.RenderThumbnail();
+                        {
+                            bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
+
+                            // History
+                            IHistory history = bitmapLayer.GetBitmapResetHistory();
+                            int removes = this.History.Push(history);
+
+                            bitmapLayer.Flush();
+                            bitmapLayer.RenderThumbnail();
+                        }
                         break;
                     case PixelBoundsMode.None:
-                        bitmapLayer.Hit(InterpolationColors);
-
-                        switch (this.SelectionType)
                         {
-                            case SelectionType.MarqueePixelBounds:
-                                bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
-                                {
-                                    Source1 = this.Marquee[BitmapType.Source],
-                                    Source2 = bitmapLayer[BitmapType.Origin],
-                                    Source3 = this.GetPreview(type, bitmapLayer[BitmapType.Origin])
-                                });
-                                break;
-                            default:
-                                bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
-                                break;
+                            bitmapLayer.Hit(InterpolationColors);
+
+                            switch (this.SelectionType)
+                            {
+                                case SelectionType.MarqueePixelBounds:
+                                    bitmapLayer.DrawCopy(new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                                    {
+                                        Source1 = this.Marquee[BitmapType.Source],
+                                        Source2 = bitmapLayer[BitmapType.Origin],
+                                        Source3 = this.GetPreview(type, bitmapLayer[BitmapType.Origin])
+                                    });
+                                    break;
+                                default:
+                                    bitmapLayer.DrawCopy(this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
+                                    break;
+                            }
+
+                            // History
+                            IHistory history = bitmapLayer.GetBitmapHistory();
+                            int removes = this.History.Push(history);
+
+                            bitmapLayer.Flush();
+                            bitmapLayer.RenderThumbnail();
                         }
-                        int removes3 = this.History.Push(bitmapLayer.GetBitmapHistory());
-                        bitmapLayer.Flush();
-                        bitmapLayer.RenderThumbnail();
                         break;
                 }
             }

@@ -364,21 +364,29 @@ namespace Luo_Painter
                             switch (mode)
                             {
                                 case PixelBoundsMode.None:
-                                    this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
+                                    {
+                                        this.Clipboard.DrawCopy(bitmapLayer.GetMask(this.Marquee));
 
-                                    // History
-                                    int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
-                                    bitmapLayer.Flush();
-                                    bitmapLayer.RenderThumbnail();
+                                        // History
+                                        IHistory history = bitmapLayer.Clear(this.Marquee, interpolationColors);
+                                        int removes = this.History.Push(history);
+
+                                        bitmapLayer.Flush();
+                                        bitmapLayer.RenderThumbnail();
+                                    }
                                     break;
                                 default:
-                                    this.Clipboard.CopyPixels(bitmapLayer);
+                                    {
+                                        this.Clipboard.CopyPixels(bitmapLayer);
 
-                                    // History
-                                    int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
-                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
-                                    bitmapLayer.ClearThumbnail(Colors.Transparent);
+                                        // History
+                                        IHistory history = bitmapLayer.GetBitmapClearHistory(Colors.Transparent);
+                                        int removes = this.History.Push(history);
+
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
+                                        bitmapLayer.ClearThumbnail(Colors.Transparent);
+                                    }
                                     break;
                             }
 
@@ -425,7 +433,8 @@ namespace Luo_Painter
                         BitmapLayer add = new BitmapLayer(this.CanvasDevice, this.Clipboard[BitmapType.Source], this.Transformer.Width, this.Transformer.Height);
 
                         // History
-                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+                        IHistory history = this.LayerManager.Add(this, add);
+                        int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -443,17 +452,25 @@ namespace Luo_Painter
                             switch (mode)
                             {
                                 case PixelBoundsMode.None:
-                                    // History
-                                    int removes = this.History.Push(bitmapLayer.Clear(this.Marquee, interpolationColors));
-                                    bitmapLayer.Flush();
-                                    bitmapLayer.RenderThumbnail();
+                                    {
+                                        // History
+                                        IHistory history = bitmapLayer.Clear(this.Marquee, interpolationColors);
+                                        int removes = this.History.Push(history);
+
+                                        bitmapLayer.Flush();
+                                        bitmapLayer.RenderThumbnail();
+                                    }
                                     break;
                                 default:
-                                    // History
-                                    int removes2 = this.History.Push(bitmapLayer.GetBitmapClearHistory(Colors.Transparent));
-                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
-                                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
-                                    bitmapLayer.ClearThumbnail(Colors.Transparent);
+                                    {
+                                        // History
+                                        IHistory history = bitmapLayer.GetBitmapClearHistory(Colors.Transparent);
+                                        int removes = this.History.Push(history);
+
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
+                                        bitmapLayer.Clear(Colors.Transparent, BitmapType.Source);
+                                        bitmapLayer.ClearThumbnail(Colors.Transparent);
+                                    }
                                     break;
                             }
 
@@ -596,11 +613,13 @@ namespace Luo_Painter
                                     this.CreateResources(w, h);
                                     this.CreateMarqueeResources(w, h);
                                 }
+
                                 // History
-                                int removes = this.History.Push(new CompositeHistory(
+                                IHistory history = new CompositeHistory(
                                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
                                     new SetupHistory(width, height, w, h)
-                                ));
+                                );
+                                int removes = this.History.Push(history);
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -641,11 +660,13 @@ namespace Luo_Painter
                                 Vector2 vect2 = this.Transformer.GetIndicatorVector(indicator);
 
                                 Vector2 offset = vect2 - vect;
+
                                 // History
-                                int removes = this.History.Push(new CompositeHistory(
+                                IHistory history = new CompositeHistory(
                                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
                                     new SetupHistory(width, height, w, h)
-                                ));
+                                );
+                                int removes = this.History.Push(history);
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -669,7 +690,8 @@ namespace Luo_Painter
                                 if (offset == Vector2.Zero) break;
 
                                 // History
-                                int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Offset(this.CanvasDevice, offset)).ToArray()));
+                                IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Offset(this.CanvasDevice, offset)).ToArray());
+                                int removes = this.History.Push(history);
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -682,24 +704,26 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.FlipHorizontal:
-                    // History
                     {
-                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray()));
+                        // History
+                        IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray());
+                        int removes = this.History.Push(history);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.FlipVertical:
-                    // History
                     {
-                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray()));
+                        // History
+                        IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray());
+                        int removes = this.History.Push(history);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
                     break;
 
                 case OptionType.LeftTurn:
@@ -720,14 +744,16 @@ namespace Luo_Painter
                         // History
                         if (width == height)
                         {
-                            int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()));
+                            IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray());
+                            int removes = this.History.Push(history);
                         }
                         else
                         {
-                            int removes = this.History.Push(new CompositeHistory(
+                            IHistory history = new CompositeHistory(
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()),
                                 new SetupHistory(width, height, height, width)
-                            ));
+                            );
+                            int removes = this.History.Push(history);
                         }
                     }
 
@@ -753,14 +779,16 @@ namespace Luo_Painter
                         // History
                         if (width == height)
                         {
-                            int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()));
+                            IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray());
+                            int removes = this.History.Push(history);
                         }
                         else
                         {
-                            int removes = this.History.Push(new CompositeHistory(
+                            IHistory history = new CompositeHistory(
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()),
                                 new SetupHistory(width, height, height, width)
-                            ));
+                            );
+                            int removes = this.History.Push(history);
                         }
                     }
 
@@ -769,14 +797,15 @@ namespace Luo_Painter
                     this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.OverTurn:
-                    // History
                     {
-                        int removes = this.History.Push(this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray()));
+                        // History
+                        IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray());
+                        int removes = this.History.Push(history);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
                     break;
 
                 #endregion
@@ -796,12 +825,13 @@ namespace Luo_Painter
                         ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
                         // History
-                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+                        IHistory history = this.LayerManager.Add(this, add);
+                        int removes = this.History.Push(history);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.AddImageLayer:
                     this.AddAsync(await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop));
@@ -811,24 +841,26 @@ namespace Luo_Painter
                         ILayer add = new CurveLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
                         // History
-                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+                        IHistory history = this.LayerManager.Add(this, add);
+                        int removes = this.History.Push(history);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
                     break;
                 case OptionType.AddFillLayer:
                     {
                         ILayer add = new FillLayer(this.CanvasDevice, this.Color, this.Transformer.Width, this.Transformer.Height);
 
                         // History
-                        int removes = this.History.Push(this.LayerManager.Add(this, add));
+                        IHistory history = this.LayerManager.Add(this, add);
+                        int removes = this.History.Push(history);
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
                     break;
 
                 // Clipboard
@@ -843,7 +875,8 @@ namespace Luo_Painter
                                 if (this.LayerSelectedItem is ILayer layer)
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Cut(this, layer));
+                                    IHistory history = this.LayerManager.Cut(this, layer);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -854,7 +887,8 @@ namespace Luo_Painter
                             default:
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Cut(this, items));
+                                    IHistory history = this.LayerManager.Cut(this, items);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -896,7 +930,8 @@ namespace Luo_Painter
                                 if (LayerDictionary.Instance.ContainsKey(id))
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id));
+                                    IHistory history = this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -906,7 +941,8 @@ namespace Luo_Painter
                             default:
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ClipboardLayers));
+                                    IHistory history = this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ClipboardLayers);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -929,7 +965,8 @@ namespace Luo_Painter
                                 if (this.LayerSelectedItem is ILayer layer)
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Remove(this, layer, true));
+                                    IHistory history = this.LayerManager.Remove(this, layer, true);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -939,7 +976,8 @@ namespace Luo_Painter
                             default:
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Remove(this, items));
+                                    IHistory history = this.LayerManager.Remove(this, items);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -979,7 +1017,8 @@ namespace Luo_Painter
                             }
 
                             // History
-                            int removes = this.History.Push(this.LayerManager.Add(this, add));
+                            IHistory history = this.LayerManager.Add(this, add);
+                            int removes = this.History.Push(history);
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -1000,10 +1039,12 @@ namespace Luo_Painter
                                         {
                                             // History
                                             bitmapLayer.Merge(neighbor);
-                                            int removes = this.History.Push(new CompositeHistory(
+                                            IHistory history = new CompositeHistory(
                                                 bitmapLayer.GetBitmapResetHistory(),
                                                 this.LayerManager.Remove(this, neighbor, false)
-                                            ));
+                                            );
+                                            int removes = this.History.Push(history);
+
                                             bitmapLayer.Flush();
                                             bitmapLayer.RenderThumbnail();
 
@@ -1030,7 +1071,8 @@ namespace Luo_Painter
                             ILayer add = new BitmapLayer(this.CanvasDevice, image, this.Transformer.Width, this.Transformer.Height);
 
                             // History
-                            int removes = this.History.Push(this.LayerManager.Clear(this, add));
+                            IHistory history = this.LayerManager.Clear(this, add);
+                            int removes = this.History.Push(history);
                         }
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1053,7 +1095,8 @@ namespace Luo_Painter
                                     ILayer add = new GroupLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Group(this, add, layer));
+                                    IHistory history = this.LayerManager.Group(this, add, layer);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -1065,7 +1108,8 @@ namespace Luo_Painter
                                     ILayer add = new GroupLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
 
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Group(this, add, items));
+                                    IHistory history = this.LayerManager.Group(this, add, items);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -1082,7 +1126,8 @@ namespace Luo_Painter
                             if (layer.Children.Count is 0) break;
 
                             // History
-                            int removes = this.History.Push(this.LayerManager.Ungroup(this, layer));
+                            IHistory history = this.LayerManager.Ungroup(this, layer);
+                            int removes = this.History.Push(history);
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -1115,7 +1160,8 @@ namespace Luo_Painter
                             default:
                                 {
                                     // History
-                                    int removes = this.History.Push(this.LayerManager.Release(this, items));
+                                    IHistory history = this.LayerManager.Release(this, items);
+                                    int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
@@ -1144,43 +1190,51 @@ namespace Luo_Painter
 
                 // Selecting
                 case OptionType.All:
-                    // History
                     {
-                        int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue));
-                    }
-                    this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
-                    this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
-                    this.Marquee.ClearThumbnail(Colors.DodgerBlue);
+                        // History
+                        IHistory history = this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue);
+                        int removes = this.History.Push(history);
 
-                    this.RaiseHistoryCanExecuteChanged();
+                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
+                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
+                        this.Marquee.ClearThumbnail(Colors.DodgerBlue);
+
+                        this.RaiseHistoryCanExecuteChanged();
+                    }
                     break;
                 case OptionType.Deselect:
-                    // History
                     {
-                        int removes = this.History.Push(this.Marquee.GetBitmapClearHistory(Colors.Transparent));
-                    }
-                    this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
-                    this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
-                    this.Marquee.ClearThumbnail(Colors.Transparent);
+                        // History
+                        IHistory history = this.Marquee.GetBitmapClearHistory(Colors.Transparent);
+                        int removes = this.History.Push(history);
 
-                    this.RaiseHistoryCanExecuteChanged();
+                        this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
+                        this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
+                        this.Marquee.ClearThumbnail(Colors.Transparent);
+
+                        this.RaiseHistoryCanExecuteChanged();
+                    }
                     break;
                 case OptionType.MarqueeInvert:
-                    // History
                     {
-                        int removes = this.History.Push(this.Marquee.Invert(Colors.DodgerBlue));
-                    }
-                    this.Marquee.Flush();
-                    this.Marquee.RenderThumbnail();
+                        // History
+                        IHistory history = this.Marquee.Invert(Colors.DodgerBlue);
+                        int removes = this.History.Push(history);
 
-                    this.RaiseHistoryCanExecuteChanged();
+                        this.Marquee.Flush();
+                        this.Marquee.RenderThumbnail();
+
+                        this.RaiseHistoryCanExecuteChanged();
+                    }
                     break;
                 case OptionType.Pixel:
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
                             // History
-                            int removes = this.History.Push(this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue));
+                            IHistory history = this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue);
+                            int removes = this.History.Push(history);
+
                             this.Marquee.Flush();
                             this.Marquee.RenderThumbnail();
 
@@ -1525,7 +1579,7 @@ namespace Luo_Painter
                                     break;
                                 }
 
-                                this.Primary(bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
+                                this.Primary(type, bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                                 break;
                             }
                             else this.Tip(TipType.NotBitmapLayer);
