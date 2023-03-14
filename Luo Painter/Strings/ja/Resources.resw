@@ -293,6 +293,11 @@
   <data name='GridGrid' xml:space='preserve'> <value>グリッド</value> </data>
   <data name='GridColumn' xml:space='preserve'> <value>コラム</value> </data>
   <data name='GridRow' xml:space='preserve'> <value>漕ぐ</value> </data>
+  <data name='HardnessNone' xml:space='preserve'> <value>なし</value> </data>
+  <data name='HardnessCosine' xml:space='preserve'> <value>余弦</value> </data>
+  <data name='HardnessQuadratic' xml:space='preserve'> <value>二次</value> </data>
+  <data name='HardnessCube' xml:space='preserve'> <value>三乗</value> </data>
+  <data name='HardnessQuartic' xml:space='preserve'> <value>クォーティック</value> </data>
   <data name='SymmetryX' xml:space='preserve'> <value>X 軸対称</value> </data>
   <data name='SymmetryY' xml:space='preserve'> <value>Y 軸対称</value> </data>
   <data name='SymmetryRadial' xml:space='preserve'> <value>起源の対称性</value> </data>
@@ -338,19 +343,13 @@
   <data name='Brush_Fx' xml:space='preserve'> <value>特殊効果</value> </data>
   <data name='Brush_Others' xml:space='preserve'> <value>他</value> </data>
   <!--Separator 6-->
-  <data name='Hardness_None' xml:space='preserve'> <value>なし</value> </data>
-  <data name='Hardness_Cosine' xml:space='preserve'> <value>余弦</value> </data>
-  <data name='Hardness_Quadratic' xml:space='preserve'> <value>二次</value> </data>
-  <data name='Hardness_Cube' xml:space='preserve'> <value>三乗</value> </data>
-  <data name='Hardness_Quartic' xml:space='preserve'> <value>クォーティック</value> </data>
-  <!--Separator 7-->
   <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>最近傍</value> </data>
   <data name='Interpolation_Linear' xml:space='preserve'> <value>リニア</value> </data>
   <data name='Interpolation_Cubic' xml:space='preserve'> <value>キュービック</value> </data>
   <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>マルチサンプルリニア</value> </data>
   <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>異 方 性</value> </data>
   <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>高品質キュービック</value> </data>
-  <!--Separator 8-->
+  <!--Separator 7-->
   <data name='Tip_NoLayer' xml:space='preserve'> <value>レイヤーなし</value> </data>
   <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>ビットマップレイヤーではない</value> </data>
   <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>カーブレイヤーではない</value> </data>
@@ -369,7 +368,7 @@
   <data name='Tip_NoFolder' xml:space='preserve'> <value>フォルダが見つかりません</value> </data>
   <data name='Tip_NoSupport' xml:space='preserve'> <value>ファイルの種類はサポートされていません</value> </data>
   <data name='Tip_NoCompatible' xml:space='preserve'> <value>互換性がありません</value> </data>
-  <!--Separator 9-->
+  <!--Separator 8-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>新しいレイヤーを作成しますか?</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>ビットマップレイヤーでのみ動作できます</value> </data>
   <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>カーブレイヤーでのみ操作できます</value> </data>
@@ -379,11 +378,13 @@
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>ブラシプリセットはペイントツールでのみ使用できます</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>もう一度やり直してください。</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>GPU 機能とは互換性がありません。</value> </data>
-  <!--Separator 10-->
+  <!--Separator 9-->
   <data name='Layer_Property' xml:space='preserve'> <value>属性</value> </data>
-  <data name='Layer_Property_Opacity' xml:space='preserve'> <value>不透明</value> </data>
-  <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>ブレンドモード</value> </data>
-  <data name='Layer_Property_TagType' xml:space='preserve'> <value>タグの種類</value> </data>
+  <data name='Layer_Opacity' xml:space='preserve'> <value>不透明</value> </data>
+  <data name='Layer_BlendMode' xml:space='preserve'> <value>ブレンドモード</value> </data>
+  <data name='Layer_TagType' xml:space='preserve'> <value>タグの種類</value> </data>
+  <data name='Layer_Visibility' xml:space='preserve'> <value>可視性</value> </data>
+  <data name='Layer_Move' xml:space='preserve'> <value>移動</value> </data>
   <data name='Paint_Scratchpad' xml:space='preserve'> <value>メモ</value> </data>
   <data name='Paint_Property' xml:space='preserve'> <value>属性</value> </data>
   <data name='Paint_Property_Size' xml:space='preserve'> <value>大きさ</value> </data>
@@ -421,7 +422,7 @@
   <data name='Color_Saturation' xml:space='preserve'> <value>飽和</value> </data>
   <data name='Color_Value' xml:space='preserve'> <value>価値</value> </data>
   <data name='Color_Hex' xml:space='preserve'> <value>16 進</value> </data>
-  <!--Separator 11-->
+  <!--Separator 10-->
   <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
   <data name='Export_Object' xml:space='preserve'> <value>エクスポートされたオブジェクト</value> </data>
   <data name='Export_Object_Image' xml:space='preserve'> <value>画像</value> </data>
@@ -430,7 +431,7 @@
   <data name='Extend_Indicator' xml:space='preserve'> <value>キャンバスにアンカー</value> </data>
   <data name='Stretch_Interpolation' xml:space='preserve'> <value>補間</value> </data>
   <data name='Texture' xml:space='preserve'> <value>テクスチャー</value> </data>
-  <!--Separator 12-->
+  <!--Separator 11-->
   <data name='NewProject' xml:space='preserve'> <value>新しいプロジェクトを作成する</value> </data>
   <data name='NewImage' xml:space='preserve'> <value>画像から作成</value> </data>
   <data name='NewFolder' xml:space='preserve'> <value>新しいフォルダ</value> </data>
@@ -443,7 +444,7 @@
   <data name='MoveProject' xml:space='preserve'> <value>プロジェクトの移動</value> </data>
   <data name='MoveProject_Subtitle' xml:space='preserve'> <value>プロジェクトをこのフォルダに移動します。</value> </data>
   <data name='RenameProject' xml:space='preserve'> <value>名前を変更する</value> </data>
-  <!--Separator 13-->
+  <!--Separator 12-->
   <data name='Main_Documentation' xml:space='preserve'> <value>ドキュメントのWebページを開く</value> </data>
   <data name='Main_Setting' xml:space='preserve'> <value>設定ページを開く</value> </data>
   <data name='Main_Home' xml:space='preserve'> <value>ホームページ</value> </data>
@@ -460,7 +461,7 @@
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>システム設定を使用する</value> </data>
   <data name='LocalFolder' xml:space='preserve'> <value>ローカルフォルダ</value> </data>
   <data name='LocalFolder_Open' xml:space='preserve'> <value>開いた</value> </data>
-  <!--Separator 14-->
+  <!--Separator 13-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>ラジアン</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>吸着</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>等しい比率</value> </data>

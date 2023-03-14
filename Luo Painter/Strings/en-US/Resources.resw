@@ -293,6 +293,11 @@
   <data name='GridGrid' xml:space='preserve'> <value>Grid</value> </data>
   <data name='GridColumn' xml:space='preserve'> <value>Column</value> </data>
   <data name='GridRow' xml:space='preserve'> <value>Row</value> </data>
+  <data name='HardnessNone' xml:space='preserve'> <value>None</value> </data>
+  <data name='HardnessCosine' xml:space='preserve'> <value>Cosine</value> </data>
+  <data name='HardnessQuadratic' xml:space='preserve'> <value>Quadratic</value> </data>
+  <data name='HardnessCube' xml:space='preserve'> <value>Cube</value> </data>
+  <data name='HardnessQuartic' xml:space='preserve'> <value>Quartic</value> </data>
   <data name='SymmetryX' xml:space='preserve'> <value>X-axis symmetry</value> </data>
   <data name='SymmetryY' xml:space='preserve'> <value>Y-axis symmetry</value> </data>
   <data name='SymmetryRadial' xml:space='preserve'> <value>Symmetry of origin</value> </data>
@@ -338,19 +343,13 @@
   <data name='Brush_Fx' xml:space='preserve'> <value>Fx</value> </data>
   <data name='Brush_Others' xml:space='preserve'> <value>Other</value> </data>
   <!--Separator 6-->
-  <data name='Hardness_None' xml:space='preserve'> <value>None</value> </data>
-  <data name='Hardness_Cosine' xml:space='preserve'> <value>Cosine</value> </data>
-  <data name='Hardness_Quadratic' xml:space='preserve'> <value>Quadratic</value> </data>
-  <data name='Hardness_Cube' xml:space='preserve'> <value>Cube</value> </data>
-  <data name='Hardness_Quartic' xml:space='preserve'> <value>Quartic</value> </data>
-  <!--Separator 7-->
   <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>Nearest Neighbor</value> </data>
   <data name='Interpolation_Linear' xml:space='preserve'> <value>Linear</value> </data>
   <data name='Interpolation_Cubic' xml:space='preserve'> <value>Cubic</value> </data>
   <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>Multi Sample Linear</value> </data>
   <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>Anisotropic</value> </data>
   <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>High Quality Cubic</value> </data>
-  <!--Separator 8-->
+  <!--Separator 7-->
   <data name='Tip_NoLayer' xml:space='preserve'> <value>No Layer</value> </data>
   <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>Not Bitmap Layer</value> </data>
   <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>Not Curve Layer</value> </data>
@@ -369,7 +368,7 @@
   <data name='Tip_NoFolder' xml:space='preserve'> <value>Folder not found</value> </data>
   <data name='Tip_NoSupport' xml:space='preserve'> <value>The file type is not supported.</value> </data>
   <data name='Tip_NoCompatible' xml:space='preserve'> <value>Not compatible</value> </data>
-  <!--Separator 9-->
+  <!--Separator 8-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>Create a new Layer?</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>Can only operate on Bitmap Layer</value> </data>
   <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>Can only operate on Curve Layer</value> </data>
@@ -379,11 +378,13 @@
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>Brush Presets can only be used with the Paint Tool</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Try again?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Not compatible with the GPU capabilities.</value> </data>
-  <!--Separator 10-->
+  <!--Separator 9-->
   <data name='Layer_Property' xml:space='preserve'> <value>Property</value> </data>
-  <data name='Layer_Property_Opacity' xml:space='preserve'> <value>Opacity</value> </data>
-  <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>Blend Mode</value> </data>
-  <data name='Layer_Property_TagType' xml:space='preserve'> <value>Tag Type</value> </data>
+  <data name='Layer_Opacity' xml:space='preserve'> <value>Opacity</value> </data>
+  <data name='Layer_BlendMode' xml:space='preserve'> <value>Blend Mode</value> </data>
+  <data name='Layer_TagType' xml:space='preserve'> <value>Tag Type</value> </data>
+  <data name='Layer_Visibility' xml:space='preserve'> <value>Visibility</value> </data>
+  <data name='Layer_Move' xml:space='preserve'> <value>Move</value> </data>
   <data name='Paint_Scratchpad' xml:space='preserve'> <value>Scratchpad</value> </data>
   <data name='Paint_Property' xml:space='preserve'> <value>Property</value> </data>
   <data name='Paint_Property_Size' xml:space='preserve'> <value>Size</value> </data>
@@ -421,7 +422,7 @@
   <data name='Color_Saturation' xml:space='preserve'> <value>Saturation</value> </data>
   <data name='Color_Value' xml:space='preserve'> <value>Value</value> </data>
   <data name='Color_Hex' xml:space='preserve'> <value>Hex</value> </data>
-  <!--Separator 11-->
+  <!--Separator 10-->
   <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
   <data name='Export_Object' xml:space='preserve'> <value>Exported Object</value> </data>
   <data name='Export_Object_Image' xml:space='preserve'> <value>Image</value> </data>
@@ -430,7 +431,7 @@
   <data name='Extend_Indicator' xml:space='preserve'> <value>Anchor to Canvas</value> </data>
   <data name='Stretch_Interpolation' xml:space='preserve'> <value>Interpolation</value> </data>
   <data name='Texture' xml:space='preserve'> <value>Texture</value> </data>
-  <!--Separator 12-->
+  <!--Separator 11-->
   <data name='NewProject' xml:space='preserve'> <value>Create a new Project</value> </data>
   <data name='NewImage' xml:space='preserve'> <value>Create From Images</value> </data>
   <data name='NewFolder' xml:space='preserve'> <value>New a new Folder</value> </data>
@@ -443,7 +444,7 @@
   <data name='MoveProject' xml:space='preserve'> <value>Move project(s)</value> </data>
   <data name='MoveProject_Subtitle' xml:space='preserve'> <value>Move the project(s) to this Folder.</value> </data>
   <data name='RenameProject' xml:space='preserve'> <value>Rename</value> </data>
-  <!--Separator 13-->
+  <!--Separator 12-->
   <data name='Main_Documentation' xml:space='preserve'> <value>Open document webpage</value> </data>
   <data name='Main_Setting' xml:space='preserve'> <value>Open the settings page</value> </data>
   <data name='Main_Home' xml:space='preserve'> <value>Go Home</value> </data>
@@ -460,7 +461,7 @@
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Use system setting</value> </data>
   <data name='LocalFolder' xml:space='preserve'> <value>Local folder</value> </data>
   <data name='LocalFolder_Open' xml:space='preserve'> <value>Open</value> </data>
-  <!--Separator 14-->
+  <!--Separator 13-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>Radians</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>Snap</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>Ratio</value> </data>

@@ -6,7 +6,7 @@ namespace Luo_Painter.Strings
     public sealed class Languages : IEnumerable<string>
     {
         public int Count => 13;
-
+        
         public int this[string value]
         {
             get

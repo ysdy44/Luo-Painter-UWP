@@ -1,4 +1,6 @@
 ﻿using Luo_Painter.Layers;
+using Luo_Painter.Elements;
+using Luo_Painter.Models;
 using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -17,21 +19,18 @@ namespace Luo_Painter.Strings
         protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
     }
 
-
     [MarkupExtensionReturnType(ReturnType = typeof(string))]
     public class OptionExtension : MarkupExtension
     {
         public OptionType Type { get; set; }
         protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
     }
-
     [MarkupExtensionReturnType(ReturnType = typeof(OptionType))]
     public class OptionTypeExtension : MarkupExtension
     {
         public OptionType Type { get; set; }
         protected override object ProvideValue() => this.Type;
     }
-
     [MarkupExtensionReturnType(ReturnType = typeof(ContentControl))]
     public class OptionIconExtension : MarkupExtension
     {
@@ -47,7 +46,6 @@ namespace Luo_Painter.Strings
             return icon;
         }
     }
-
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
     public class OptionItemExtension : MarkupExtension
     {
@@ -79,14 +77,12 @@ namespace Luo_Painter.Strings
         }
     }
 
-
     [MarkupExtensionReturnType(ReturnType = typeof(string))]
     public class ElementExtension : MarkupExtension
     {
         public ElementType Type { get; set; }
         protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
     }
-
     [MarkupExtensionReturnType(ReturnType = typeof(ContentControl))]
     public class ElementIconExtension : MarkupExtension
     {
@@ -102,7 +98,6 @@ namespace Luo_Painter.Strings
             return icon;
         }
     }
-
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
     public class ElementItemExtension : MarkupExtension
     {
@@ -134,7 +129,6 @@ namespace Luo_Painter.Strings
         }
     }
 
-
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
     public class BlendItemExtension : MarkupExtension
     {
@@ -164,7 +158,6 @@ namespace Luo_Painter.Strings
             };
         }
     }
-
 
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
     public class InterpolationItemExtension : MarkupExtension

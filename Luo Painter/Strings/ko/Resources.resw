@@ -293,6 +293,11 @@
   <data name='GridGrid' xml:space='preserve'> <value>그리드</value> </data>
   <data name='GridColumn' xml:space='preserve'> <value>열</value> </data>
   <data name='GridRow' xml:space='preserve'> <value>행</value> </data>
+  <data name='HardnessNone' xml:space='preserve'> <value>없음</value> </data>
+  <data name='HardnessCosine' xml:space='preserve'> <value>코사인</value> </data>
+  <data name='HardnessQuadratic' xml:space='preserve'> <value>정방형</value> </data>
+  <data name='HardnessCube' xml:space='preserve'> <value>입방체</value> </data>
+  <data name='HardnessQuartic' xml:space='preserve'> <value>쿼틱</value> </data>
   <data name='SymmetryX' xml:space='preserve'> <value>X축 대칭</value> </data>
   <data name='SymmetryY' xml:space='preserve'> <value>Y축 대칭</value> </data>
   <data name='SymmetryRadial' xml:space='preserve'> <value>원산지 대칭</value> </data>
@@ -338,19 +343,13 @@
   <data name='Brush_Fx' xml:space='preserve'> <value>특수 효과</value> </data>
   <data name='Brush_Others' xml:space='preserve'> <value>다른</value> </data>
   <!--Separator 6-->
-  <data name='Hardness_None' xml:space='preserve'> <value>없음</value> </data>
-  <data name='Hardness_Cosine' xml:space='preserve'> <value>코사인</value> </data>
-  <data name='Hardness_Quadratic' xml:space='preserve'> <value>정방형</value> </data>
-  <data name='Hardness_Cube' xml:space='preserve'> <value>입방체</value> </data>
-  <data name='Hardness_Quartic' xml:space='preserve'> <value>쿼틱</value> </data>
-  <!--Separator 7-->
   <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>가장 가까운 이웃</value> </data>
   <data name='Interpolation_Linear' xml:space='preserve'> <value>선형</value> </data>
   <data name='Interpolation_Cubic' xml:space='preserve'> <value>입방</value> </data>
   <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>다중 샘플 선형</value> </data>
   <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>이방성</value> </data>
   <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>고품질 큐빅</value> </data>
-  <!--Separator 8-->
+  <!--Separator 7-->
   <data name='Tip_NoLayer' xml:space='preserve'> <value>레이어 없음</value> </data>
   <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>비트맵 레이어 아님</value> </data>
   <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>곡선 레이어 아님</value> </data>
@@ -369,7 +368,7 @@
   <data name='Tip_NoFolder' xml:space='preserve'> <value>폴더를 찾을 수 없음</value> </data>
   <data name='Tip_NoSupport' xml:space='preserve'> <value>파일 형식은 지원되지 않습니다.</value> </data>
   <data name='Tip_NoCompatible' xml:space='preserve'> <value>호환되지 않음</value> </data>
-  <!--Separator 9-->
+  <!--Separator 8-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>새 레이어를 만드시겠습니까?</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>비트맵 레이어에서만 작동할 수 있습니다.</value> </data>
   <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>곡선 레이어에서만 작동 가능</value> </data>
@@ -379,11 +378,13 @@
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>브러시 사전 설정은 페인트 도구에서만 사용할 수 있습니다.</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>다시 한 번 시도해 보세요?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>GPU 기능과 호환되지 않습니다.</value> </data>
-  <!--Separator 10-->
+  <!--Separator 9-->
   <data name='Layer_Property' xml:space='preserve'> <value>속성</value> </data>
-  <data name='Layer_Property_Opacity' xml:space='preserve'> <value>불투명도</value> </data>
-  <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>블렌드 모드</value> </data>
-  <data name='Layer_Property_TagType' xml:space='preserve'> <value>태그 유형</value> </data>
+  <data name='Layer_Opacity' xml:space='preserve'> <value>불투명도</value> </data>
+  <data name='Layer_BlendMode' xml:space='preserve'> <value>블렌드 모드</value> </data>
+  <data name='Layer_TagType' xml:space='preserve'> <value>태그 유형</value> </data>
+  <data name='Layer_Visibility' xml:space='preserve'> <value>시계</value> </data>
+  <data name='Layer_Move' xml:space='preserve'> <value>이동</value> </data>
   <data name='Paint_Scratchpad' xml:space='preserve'> <value>메모</value> </data>
   <data name='Paint_Property' xml:space='preserve'> <value>속성</value> </data>
   <data name='Paint_Property_Size' xml:space='preserve'> <value>크기</value> </data>
@@ -421,7 +422,7 @@
   <data name='Color_Saturation' xml:space='preserve'> <value>포화</value> </data>
   <data name='Color_Value' xml:space='preserve'> <value>값</value> </data>
   <data name='Color_Hex' xml:space='preserve'> <value>16 진수</value> </data>
-  <!--Separator 11-->
+  <!--Separator 10-->
   <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
   <data name='Export_Object' xml:space='preserve'> <value>내보낸 개체</value> </data>
   <data name='Export_Object_Image' xml:space='preserve'> <value>이미지</value> </data>
@@ -430,7 +431,7 @@
   <data name='Extend_Indicator' xml:space='preserve'> <value>캔버스에 앵커</value> </data>
   <data name='Stretch_Interpolation' xml:space='preserve'> <value>보간법</value> </data>
   <data name='Texture' xml:space='preserve'> <value>텍스처</value> </data>
-  <!--Separator 12-->
+  <!--Separator 11-->
   <data name='NewProject' xml:space='preserve'> <value>새 프로젝트 만들기</value> </data>
   <data name='NewImage' xml:space='preserve'> <value>이미지에서 만들기</value> </data>
   <data name='NewFolder' xml:space='preserve'> <value>새 폴더 새로 만들기</value> </data>
@@ -443,7 +444,7 @@
   <data name='MoveProject' xml:space='preserve'> <value>프로젝트 이동</value> </data>
   <data name='MoveProject_Subtitle' xml:space='preserve'> <value>프로젝트를 이 폴더로 이동합니다.</value> </data>
   <data name='RenameProject' xml:space='preserve'> <value>이름 바꾸기</value> </data>
-  <!--Separator 13-->
+  <!--Separator 12-->
   <data name='Main_Documentation' xml:space='preserve'> <value>문서 웹 페이지 열기</value> </data>
   <data name='Main_Setting' xml:space='preserve'> <value>설정 페이지 열기</value> </data>
   <data name='Main_Home' xml:space='preserve'> <value>홈페이지</value> </data>
@@ -460,7 +461,7 @@
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>시스템 설정 사용</value> </data>
   <data name='LocalFolder' xml:space='preserve'> <value>로컬 폴더</value> </data>
   <data name='LocalFolder_Open' xml:space='preserve'> <value>열다</value> </data>
-  <!--Separator 14-->
+  <!--Separator 13-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>라디안</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>흡착</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>동일한 비율</value> </data>

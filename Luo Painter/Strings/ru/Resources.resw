@@ -293,6 +293,11 @@
   <data name='GridGrid' xml:space='preserve'> <value>Сетка</value> </data>
   <data name='GridColumn' xml:space='preserve'> <value>Столбец</value> </data>
   <data name='GridRow' xml:space='preserve'> <value>Ряд</value> </data>
+  <data name='HardnessNone' xml:space='preserve'> <value>Никто</value> </data>
+  <data name='HardnessCosine' xml:space='preserve'> <value>Косинус</value> </data>
+  <data name='HardnessQuadratic' xml:space='preserve'> <value>Квадратный</value> </data>
+  <data name='HardnessCube' xml:space='preserve'> <value>Куб</value> </data>
+  <data name='HardnessQuartic' xml:space='preserve'> <value>Квартик</value> </data>
   <data name='SymmetryX' xml:space='preserve'> <value>Симметрия по оси X</value> </data>
   <data name='SymmetryY' xml:space='preserve'> <value>Симметрия по оси Y</value> </data>
   <data name='SymmetryRadial' xml:space='preserve'> <value>Симметрия происхождения</value> </data>
@@ -338,19 +343,13 @@
   <data name='Brush_Fx' xml:space='preserve'> <value>специальный эффект</value> </data>
   <data name='Brush_Others' xml:space='preserve'> <value>Другое__________</value> </data>
   <!--Separator 6-->
-  <data name='Hardness_None' xml:space='preserve'> <value>Никто</value> </data>
-  <data name='Hardness_Cosine' xml:space='preserve'> <value>Косинус</value> </data>
-  <data name='Hardness_Quadratic' xml:space='preserve'> <value>Квадратный</value> </data>
-  <data name='Hardness_Cube' xml:space='preserve'> <value>Куб</value> </data>
-  <data name='Hardness_Quartic' xml:space='preserve'> <value>Квартик</value> </data>
-  <!--Separator 7-->
   <data name='Interpolation_NearestNeighbor' xml:space='preserve'> <value>Ближайший сосед</value> </data>
   <data name='Interpolation_Linear' xml:space='preserve'> <value>Линейный</value> </data>
   <data name='Interpolation_Cubic' xml:space='preserve'> <value>Кубический</value> </data>
   <data name='Interpolation_MultiSampleLinear' xml:space='preserve'> <value>Многопрофильная линейная</value> </data>
   <data name='Interpolation_Anisotropic' xml:space='preserve'> <value>Анизотропный</value> </data>
   <data name='Interpolation_HighQualityCubic' xml:space='preserve'> <value>Высококачественный кубический</value> </data>
-  <!--Separator 8-->
+  <!--Separator 7-->
   <data name='Tip_NoLayer' xml:space='preserve'> <value>Без слоя</value> </data>
   <data name='Tip_NotBitmapLayer' xml:space='preserve'> <value>Не растровый слой</value> </data>
   <data name='Tip_NotCurveLayer' xml:space='preserve'> <value>Не кривой слой</value> </data>
@@ -369,7 +368,7 @@
   <data name='Tip_NoFolder' xml:space='preserve'> <value>Папка не найдена</value> </data>
   <data name='Tip_NoSupport' xml:space='preserve'> <value>Типы файлов не поддерживаются</value> </data>
   <data name='Tip_NoCompatible' xml:space='preserve'> <value>Несовместимо</value> </data>
-  <!--Separator 9-->
+  <!--Separator 8-->
   <data name='SubTip_NoLayer' xml:space='preserve'> <value>Создать новый слой?</value> </data>
   <data name='SubTip_NotBitmapLayer' xml:space='preserve'> <value>Может работать только с растровым слоем</value> </data>
   <data name='SubTip_NotCurveLayer' xml:space='preserve'> <value>Может работать только с кривым слоем</value> </data>
@@ -379,11 +378,13 @@
   <data name='SubTip_NoPaintTool' xml:space='preserve'> <value>Стили кисти можно использовать только с инструментом «Рисование»</value> </data>
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Повторить?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Не совместим с функциями графического процессора.</value> </data>
-  <!--Separator 10-->
+  <!--Separator 9-->
   <data name='Layer_Property' xml:space='preserve'> <value>атрибут</value> </data>
-  <data name='Layer_Property_Opacity' xml:space='preserve'> <value>Непрозрачность</value> </data>
-  <data name='Layer_Property_BlendMode' xml:space='preserve'> <value>Режим наложения</value> </data>
-  <data name='Layer_Property_TagType' xml:space='preserve'> <value>Тип тега</value> </data>
+  <data name='Layer_Opacity' xml:space='preserve'> <value>Непрозрачность</value> </data>
+  <data name='Layer_BlendMode' xml:space='preserve'> <value>Режим наложения</value> </data>
+  <data name='Layer_TagType' xml:space='preserve'> <value>Тип тега</value> </data>
+  <data name='Layer_Visibility' xml:space='preserve'> <value>Видимость</value> </data>
+  <data name='Layer_Move' xml:space='preserve'> <value>Переместить</value> </data>
   <data name='Paint_Scratchpad' xml:space='preserve'> <value>записка</value> </data>
   <data name='Paint_Property' xml:space='preserve'> <value>атрибут</value> </data>
   <data name='Paint_Property_Size' xml:space='preserve'> <value>Размер</value> </data>
@@ -421,7 +422,7 @@
   <data name='Color_Saturation' xml:space='preserve'> <value>Насыщенность</value> </data>
   <data name='Color_Value' xml:space='preserve'> <value>ценность</value> </data>
   <data name='Color_Hex' xml:space='preserve'> <value>Зачаровывать</value> </data>
-  <!--Separator 11-->
+  <!--Separator 10-->
   <data name='Export_DPI' xml:space='preserve'> <value>DPI</value> </data>
   <data name='Export_Object' xml:space='preserve'> <value>Экспортированный объект</value> </data>
   <data name='Export_Object_Image' xml:space='preserve'> <value>Образ</value> </data>
@@ -430,7 +431,7 @@
   <data name='Extend_Indicator' xml:space='preserve'> <value>Привязка к холсту</value> </data>
   <data name='Stretch_Interpolation' xml:space='preserve'> <value>Интерполяция</value> </data>
   <data name='Texture' xml:space='preserve'> <value>текстура</value> </data>
-  <!--Separator 12-->
+  <!--Separator 11-->
   <data name='NewProject' xml:space='preserve'> <value>Создание нового проекта</value> </data>
   <data name='NewImage' xml:space='preserve'> <value>Создание из изображений</value> </data>
   <data name='NewFolder' xml:space='preserve'> <value>Создание новой папки</value> </data>
@@ -443,7 +444,7 @@
   <data name='MoveProject' xml:space='preserve'> <value>Перемещение проекта(ов)</value> </data>
   <data name='MoveProject_Subtitle' xml:space='preserve'> <value>Переместите проекты в эту папку.</value> </data>
   <data name='RenameProject' xml:space='preserve'> <value>Переименовать</value> </data>
-  <!--Separator 13-->
+  <!--Separator 12-->
   <data name='Main_Documentation' xml:space='preserve'> <value>Открыть веб-страницу документа</value> </data>
   <data name='Main_Setting' xml:space='preserve'> <value>Откройте страницу настроек</value> </data>
   <data name='Main_Home' xml:space='preserve'> <value>домашняя страница</value> </data>
@@ -460,7 +461,7 @@
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Использовать системные настройки</value> </data>
   <data name='LocalFolder' xml:space='preserve'> <value>Локальная папка</value> </data>
   <data name='LocalFolder_Open' xml:space='preserve'> <value>Открыть</value> </data>
-  <!--Separator 14-->
+  <!--Separator 13-->
   <data name='CropCanvas_Radians' xml:space='preserve'> <value>Радианах</value> </data>
   <data name='Transform_Snap' xml:space='preserve'> <value>адсорбция</value> </data>
   <data name='Transform_Ratio' xml:space='preserve'> <value>Равное соотношение</value> </data>
