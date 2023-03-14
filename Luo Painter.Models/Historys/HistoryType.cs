@@ -1,16 +1,8 @@
 ﻿namespace Luo_Painter.Models
 {
-    public enum HistoryType
+    public class HistoryTitle
     {
-        None,
-
-        Name,
-        Opacity,
-        BlendMode,
-        Visibility,
-
-        Bitmap,
-        BitmapClear,
-        BitmapReset,
+        public string Title { get; set; }
+        public override string ToString() => this.Title;
     }
 }

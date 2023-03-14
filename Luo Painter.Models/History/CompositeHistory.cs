@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public class CompositeHistory : IHistory
+    public class CompositeHistory : HistoryTitle, IHistory
     {
         public HistoryMode Mode => HistoryMode.Composite;
         public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;

@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public class PropertyHistory : IHistory
+    public class PropertyHistory : HistoryTitle, IHistory
     {
         public HistoryMode Mode => HistoryMode.Property;
         public HistoryPropertyMode PropertyMode { get; }

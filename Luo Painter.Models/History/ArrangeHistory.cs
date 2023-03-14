@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public class ArrangeHistory : IHistory
+    public class ArrangeHistory : HistoryTitle, IHistory
     {
         public HistoryMode Mode => HistoryMode.Arrange;
         public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;
