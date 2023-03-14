@@ -367,12 +367,12 @@
                                             <!--Opacity-->
                                             <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}" >
                                                 <hsvColorPickers:NumberSlider x:Name="OpacitySlider" Margin="0,5" Unit="%" TickFrequency="25" TickPlacement="Outside" Foreground="{ThemeResource AppForeground}"
-                                                          Header="{strings:UI Type=Layer_Property_Opacity}"/>
+                                                          Header="{strings:UI Type=Layer_Opacity}"/>
                                             </Border>
 
                                             <!--BlendMode-->
                                             <TextBlock x:Name="BlendModeTextBlock" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}" 
-                                                       Text="{strings:UI Type=Layer_Property_BlendMode}"/>
+                                                       Text="{strings:UI Type=Layer_BlendMode}"/>
                                             <ComboBox x:Name="BlendModeComboBox" >
 
                                                 <ItemsControl.ItemContainerStyle>
@@ -458,7 +458,7 @@
                                         <!--TagType-->
                                         <elements:TagTypeSegmented x:Name="TagTypeSegmented" Width="286" Height="40">
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{strings:UI Type=Layer_Property_TagType}" Style="{StaticResource AppToolTipStyle}"/>
+                                                <ToolTip Content="{strings:UI Type=Layer_TagType}" Style="{StaticResource AppToolTipStyle}"/>
                                             </ToolTipService.ToolTip>
                                         </elements:TagTypeSegmented>
 

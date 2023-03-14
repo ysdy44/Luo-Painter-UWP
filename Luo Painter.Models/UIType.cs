@@ -30,9 +30,11 @@
 
         // Layer
         Layer_Property,
-        Layer_Property_Opacity,
-        Layer_Property_BlendMode,
-        Layer_Property_TagType,
+        Layer_Opacity,
+        Layer_BlendMode,
+        Layer_TagType,
+        Layer_Visibility,
+        Layer_Move,
 
         // Paint
         Paint_Scratchpad,
