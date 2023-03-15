@@ -286,6 +286,8 @@
     <Content Include="Tiles\2023031501.jpg" />
     <Content Include="Tiles\2023031502.jpg" />
     <Content Include="Tiles\2023031503.jpg" />
+    <Content Include="Tiles\2023031504.jpg" />
+    <Content Include="Tiles\2023031505.jpg" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

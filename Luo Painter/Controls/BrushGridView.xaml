@@ -43,12 +43,18 @@
                         <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012006"/>
                     </local:InkGrouping>
                     <local:InkGrouping Key="Others">
-                        <local:PaintBrush Type="General" Size2="75" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" Shape="FX00" Tile2="2023030601"/>
-                        <local:PaintBrush Type="General" Size2="100" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Flash02" Tile2="2023030603"/>
-                        <local:PaintBrush Type="General" Size2="50" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Splodge03" Rotate="True" Tile2="2023030602"/>
+                        <local:PaintBrush Type="General" Size2="125" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" Shape="FX00" Tile2="2023030601"/>
+                        <local:PaintBrush Type="General" Size2="200" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Flash02" Tile2="2023030603"/>
                     </local:InkGrouping>
                     <local:InkGrouping Key="Others">
-                        <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="0.33" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge02" Rotate="True" Tile2="2023031501"/>
+                        <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1.25" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Splodge03" Rotate="True" Tile2="2023030602"/>
+                        <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1.25" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Splodge04" Rotate="True" Tile2="2023031504"/>
+                    </local:InkGrouping>
+                    <local:InkGrouping Key="Others">
+                        <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge07" Rotate="True" Tile2="2023031505"/>
+                        <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge02" Rotate="True" Tile2="2023031501"/>
+                    </local:InkGrouping>
+                    <local:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch04" Rotate="True" Tile2="2023031502"/>
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch00" Rotate="True" Tile2="2023031503"/>
                     </local:InkGrouping>
