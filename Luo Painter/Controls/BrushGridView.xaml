@@ -53,6 +53,8 @@
                     <local:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge07" Rotate="True" Tile2="2023031505"/>
                         <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge02" Rotate="True" Tile2="2023031501"/>
+                        <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch03" Rotate="True" Tile2="2023031605"/>
+                        <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch05" Rotate="True" Tile2="2023031604"/>
                     </local:InkGrouping>
                     <local:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch04" Rotate="True" Tile2="2023031502"/>

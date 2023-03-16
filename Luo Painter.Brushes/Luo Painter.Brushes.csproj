@@ -280,6 +280,7 @@
     <Content Include="Tiles\2023012200.jpg" />
     <Content Include="Tiles\2023012201.jpg" />
     <Content Include="Tiles\2023012501.jpg" />
+    <Content Include="Tiles\2023012601.jpg" />
     <Content Include="Tiles\2023030601.jpg" />
     <Content Include="Tiles\2023030602.jpg" />
     <Content Include="Tiles\2023030603.jpg" />
@@ -291,6 +292,8 @@
     <Content Include="Tiles\2023031601.jpg" />
     <Content Include="Tiles\2023031602.jpg" />
     <Content Include="Tiles\2023031603.jpg" />
+    <Content Include="Tiles\2023031604.jpg" />
+    <Content Include="Tiles\2023031605.jpg" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
