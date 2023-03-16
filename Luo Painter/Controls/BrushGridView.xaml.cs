@@ -34,6 +34,8 @@ namespace Luo_Painter.Controls
 
         public double MinSize2 { get => base.MinSize; set => base.MinSize = (float)value; }
         public double MinFlow2 { get => base.MinFlow; set => base.MinFlow = (float)value; }
+
+        public double GrainScale2 { get => base.GrainScale; set => base.GrainScale = (float)value; }
     }
     internal sealed class PaintBrush : BrushBase
     {

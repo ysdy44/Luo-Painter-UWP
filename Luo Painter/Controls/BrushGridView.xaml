@@ -58,6 +58,11 @@
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch04" Rotate="True" Tile2="2023031502"/>
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch00" Rotate="True" Tile2="2023031503"/>
                     </local:InkGrouping>
+                    <local:InkGrouping Key="Others">
+                        <local:PaintBrush Type="General" Size2="180" Opacity2="0.89" Spacing2="0.33" Flow2="1" Hardness="Cosine" Grain="Splodge06" GrainScale2="0.5" Tile2="2023031601"/>
+                        <local:PaintBrush Type="General" Size2="272.25" Opacity2="0.56" Spacing2="0.4" Flow2="1" Hardness="Cosine" Grain="Splodge08" GrainScale2="0.25" Tile2="2023031602"/>
+                        <local:PaintBrush Type="General" Size2="160" Opacity2="0.84" Spacing2="0.45" Flow2="1" Hardness="Cosine" Grain="Splodge09" GrainScale2="0.5" Tile2="2023031603"/>
+                    </local:InkGrouping>
                     <local:InkGrouping Key="Flash">
                         <local:RetouchBrush Type="General" Size2="300" Opacity2="0.9" Spacing2="0.8" Flow2="1" Hardness="Quartic" Path="Flash00" Shape="Flash00" />
                         <local:RetouchBrush Type="General" Size2="500" Opacity2="0.85" Spacing2="0.55" Flow2="1" Hardness="None" Path="Flash01" Shape="Flash01" />
