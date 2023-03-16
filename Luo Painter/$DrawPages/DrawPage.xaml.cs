@@ -286,20 +286,20 @@ namespace Luo_Painter
                 }
             };
 
-            // Drag and Drop 
-            base.AllowDrop = true;
-            base.Drop += async (s, e) =>
-            {
-                if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
+            // Drag and Drop
+            //base.AllowDrop = true;
+            //base.Drop += async (s, e) =>
+            //{
+            //    if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
 
-                this.AddAsync(from file in await e.DataView.GetStorageItemsAsync() where file is IStorageFile select file as IStorageFile);
-            };
-            base.DragOver += (s, e) =>
-            {
-                e.AcceptedOperation = DataPackageOperation.Copy;
-                //e.DragUIOverride.Caption = 
-                e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
-            };
+            //    this.AddAsync(from file in await e.DataView.GetStorageItemsAsync() where file is IStorageFile select file as IStorageFile);
+            //};
+            //base.DragOver += (s, e) =>
+            //{
+            //    e.AcceptedOperation = DataPackageOperation.Copy;
+            //    //e.DragUIOverride.Caption = 
+            //    e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
+            //};
         }
 
         //@BackRequested
