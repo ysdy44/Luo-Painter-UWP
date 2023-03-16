@@ -23,13 +23,14 @@ namespace Luo_Painter.Brushes
         UISpacing = 64,
         UIFlow = 128,
 
-        UIHardness = 2048,
-        UITip = 256,
-        UIShape = 4096,
-        UIGrain = 8192,
+        UIHardness = 256,
+        UITip = 512,
+        UIShape = 1024,
 
-        UIBlendMode = 512,
-        UIMix = 1024,
+        UIBlendMode = 2048,
+        UIGrain = 4096,
+
+        UIMix = 8192,
 
 
         General = 16384 | UIOpacity | UISpacing | UIFlow | UIHardness | UIShape | UIGrain | UIBlendMode | UIMix,
