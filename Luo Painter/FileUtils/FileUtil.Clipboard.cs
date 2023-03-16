@@ -12,6 +12,7 @@ namespace Luo_Painter
     {
         /// <summary>
         /// This is the maximum Bitmap render size for Win2D
+        /// <see cref="CanvasDevice.MaximumBitmapSizeInPixels"/>
         /// </summary>
         public const int MaxImageSize = 16384;
 

@@ -115,16 +115,6 @@ namespace Luo_Painter.Layers.Models
 
             return this.GetBitmapHistory();
         }
-        public IHistory Add(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
-        {
-            using (CanvasDrawingSession ds = this.CreateDrawingSession())
-            {
-                ds.DrawImage(marquee[type]);
-            }
-            this.Hit(interpolationColors);
-
-            return this.GetBitmapHistory();
-        }
         public IHistory Clear(BitmapLayer marquee, Color[] interpolationColors, BitmapType type = BitmapType.Source)
         {
             PixelBounds bounds = marquee.CreateInterpolationBounds(interpolationColors);
