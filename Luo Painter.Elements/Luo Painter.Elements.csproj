@@ -160,7 +160,7 @@
     <Compile Include="Extensions\ApplicationTitleBarExtension.cs" />
     <Compile Include="Extensions\ContentDialogExtensions.cs" />
     <Compile Include="Extensions\CoreCursorDictionary.cs" />
-    <Compile Include="Extensions\CoreCursorExtension.cs" />
+    <Compile Include="Extensions\CoreCursorExtensions.cs" />
     <Compile Include="Extensions\DPIExtensions.cs" />
     <Compile Include="Extensions\FrameworkElementExtensions.cs" />
     <Compile Include="Extensions\TextRangeExtensions.cs" />

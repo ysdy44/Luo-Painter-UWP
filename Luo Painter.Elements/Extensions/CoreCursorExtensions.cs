@@ -10,7 +10,7 @@ namespace Luo_Painter.Elements
     /// Provides constant and static member 
     /// for <see cref="Window.Current.CoreWindow.PointerCursor"/>.
     /// </summary>
-    public static class CoreCursorExtension
+    public static class CoreCursorExtensions
     {
 
         public static CoreCursorType ToCursorType(this Vector2 vector, int offset = 0)
