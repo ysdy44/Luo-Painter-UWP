@@ -65,37 +65,6 @@
                         <local:PaintBrush Type="General" Size2="272.25" Opacity2="0.56" Spacing2="0.4" Flow2="1" Hardness="Cosine" Grain="Splodge08" GrainScale2="0.25" Tile2="2023031602"/>
                         <local:PaintBrush Type="General" Size2="160" Opacity2="0.84" Spacing2="0.45" Flow2="1" Hardness="Cosine" Grain="Splodge09" GrainScale2="0.5" Tile2="2023031603"/>
                     </local:InkGrouping>
-                    <local:InkGrouping Key="Flash">
-                        <local:RetouchBrush Type="General" Size2="300" Opacity2="0.9" Spacing2="0.8" Flow2="1" Hardness="Quartic" Path="Flash00" Shape="Flash00" />
-                        <local:RetouchBrush Type="General" Size2="500" Opacity2="0.85" Spacing2="0.55" Flow2="1" Hardness="None" Path="Flash01" Shape="Flash01" />
-                        <local:RetouchBrush Type="General" Size2="428.49" Opacity2="0.66" Spacing2="0.6" Flow2="1" Hardness="Cosine" Path="Flash02" Shape="Flash02" />
-                        <local:RetouchBrush Type="General" Size2="306.25" Opacity2="0.73" Spacing2="0.8" Flow2="1" Hardness="Quartic" Path="Flash03" Shape="Flash03" />
-                        <local:RetouchBrush Type="General" Size2="1024" Opacity2="0.9" Spacing2="0.3" Flow2="1" Hardness="None" Path="Flash04" Shape="Flash04" />
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Splodge">
-                        <local:RetouchBrush Type="General" Size2="120" Opacity2="0.7" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Splodge00" Shape="Splodge00" />
-                        <local:RetouchBrush Type="General" Size2="158.76" Opacity2="1" Spacing2="0.22" Flow2="1" Hardness="Cosine" Path="Splodge01" Shape="Splodge01" />
-                        <local:RetouchBrush Type="General" Size2="150" Opacity2="1" Spacing2="0.33" Flow2="1" Hardness="None" Path="Splodge02" Shape="Splodge02" />
-                        <local:RetouchBrush Type="General" Size2="136.89" Opacity2="0.89" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Splodge03" Shape="Splodge03" />
-                        <local:RetouchBrush Type="General" Size2="86.49" Opacity2="0.69" Spacing2="0.3" Flow2="1" Hardness="Cosine" Path="Splodge04" Shape="Splodge04" />
-                        <local:RetouchBrush Type="General" Size2="108.16" Opacity2="0.79" Spacing2="0.4" Flow2="1" Hardness="Cosine" Path="Splodge05" Shape="Splodge05" />
-                        <local:RetouchBrush Type="General" Size2="180" Opacity2="0.89" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Splodge06" Shape="Splodge06" />
-                        <local:RetouchBrush Type="General" Size2="249.64" Opacity2="1" Spacing2="0.66" Flow2="1" Hardness="None" Path="Splodge07" Shape="Splodge07" />
-                        <local:RetouchBrush Type="General" Size2="272.25" Opacity2="0.56" Spacing2="0.4" Flow2="1" Hardness="Cosine" Path="Splodge08" Shape="Splodge08" />
-                        <local:RetouchBrush Type="General" Size2="160" Opacity2="0.84" Spacing2="0.45" Flow2="1" Hardness="Cosine" Path="Splodge09" Shape="Splodge09" />
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Scratch">
-                        <local:RetouchBrush Type="General" Size2="222" Opacity2="0.49" Spacing2="0.45" Flow2="1" Hardness="Quartic" Path="Scratch00" Shape="Scratch00" />
-                        <local:RetouchBrush Type="General" Size2="233" Opacity2="1" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Scratch01" Shape="Scratch01" />
-                        <local:RetouchBrush Type="General" Size2="158.76" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="None" Path="Scratch02" Shape="Scratch02" />
-                        <local:RetouchBrush Type="General" Size2="132.25" Opacity2="0.21" Spacing2="0.22" Flow2="1" Hardness="Cosine" Path="Scratch03" Shape="Scratch03" />
-                        <local:RetouchBrush Type="General" Size2="193.21" Opacity2="0.21" Spacing2="0.22" Flow2="1" Hardness="Cosine" Path="Scratch04" Shape="Scratch04" />
-                        <local:RetouchBrush Type="General" Size2="225" Opacity2="0.8" Spacing2="0.45" Flow2="1" Hardness="Quartic" Path="Scratch05" Shape="Scratch05" />
-                        <local:RetouchBrush Type="General" Size2="112.36" Opacity2="0.8" Spacing2="0.66" Flow2="1" Hardness="Cosine" Path="Scratch06" Shape="Scratch06" />
-                        <local:RetouchBrush Type="General" Size2="102" Opacity2="1" Spacing2="0.66" Flow2="1" Hardness="Cube" Path="Scratch07" Shape="Scratch07" />
-                        <local:RetouchBrush Type="General" Size2="121" Opacity2="0.58" Spacing2="0.8" Flow2="1" Hardness="Cosine" Path="Scratch08" Shape="Scratch08" />
-                        <local:RetouchBrush Type="General" Size2="166.41" Opacity2="0.41" Spacing2="0.33" Flow2="1" Hardness="Cosine" Path="Scratch09" Shape="Scratch09" />
-                    </local:InkGrouping>
                 </local:InkGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
@@ -117,20 +86,14 @@
         </TransitionCollection>
     </ItemsControl.ItemContainerTransitions>
 
-    <ItemsControl.ItemTemplateSelector>
-        <local:InkTemplateSelector>
-            <local:InkTemplateSelector.PaintTemplate>
-                <DataTemplate x:DataType="local:PaintBrush">
-                    <elements:SelectedImagePresenter Source="{x:Bind ImageSource}"/>
-                </DataTemplate>
-            </local:InkTemplateSelector.PaintTemplate>
-            <local:InkTemplateSelector.RetouchTemplate>
-                <DataTemplate x:DataType="local:RetouchBrush">
-                    <elements:SelectedImagesPresenter Source1="{x:Bind BrushSource}" Source2="{x:Bind Brush}"/>
-                </DataTemplate>
-            </local:InkTemplateSelector.RetouchTemplate>
-        </local:InkTemplateSelector>
-    </ItemsControl.ItemTemplateSelector>
+    <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="local:PaintBrush">
+            <Grid>
+                <Image Source="{x:Bind ImageSource}"/>
+                <elements:SelectedLightDismissPresenter/>
+            </Grid>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
 
     <ItemsControl.GroupStyle>
         <GroupStyle HidesIfEmpty="True">

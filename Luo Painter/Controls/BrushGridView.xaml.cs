@@ -1,8 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
@@ -42,30 +40,6 @@ namespace Luo_Painter.Controls
         public uint Tile { get; set; }
         public string ImageSource => this.Tile == default ? BrushExtensions.DeaultTile : this.Tile.GetTile();
         public int Tile2 { get => (int)this.Tile; set => this.Tile = (uint)value; }
-    }
-    internal sealed class RetouchBrush : BrushBase
-    {
-        public string Path { get; set; }
-        public string Brush => this.Path.GetBrush();
-        public string BrushSource => this.Path.GetBrushSource();
-    }
-
-    internal class InkTemplateSelector : DataTemplateSelector
-    {
-        public DataTemplate PaintTemplate { get; set; }
-        public DataTemplate RetouchTemplate { get; set; }
-        protected override DataTemplate SelectTemplateCore(object item)
-        {
-            if (item is PaintBrush)
-            {
-                return this.PaintTemplate;
-            }
-            else if (item is RetouchBrush)
-            {
-                return this.RetouchTemplate;
-            }
-            else return null;
-        }
     }
 
     public sealed partial class BrushGridView : XamlGridView
