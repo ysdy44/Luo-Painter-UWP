@@ -1841,17 +1841,7 @@
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{strings:Option Type=DockLeft}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
                 </ToolTipService.ToolTip>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <SymbolIcon Margin="4,0" Symbol="DockLeft"/>
-                    <FontIcon Glyph="&#xE26C;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
-                        <UIElement.RenderTransformOrigin>
-                            0.5, 0.5
-                        </UIElement.RenderTransformOrigin>
-                        <UIElement.RenderTransform>
-                            <RotateTransform Angle="{x:Bind DockLeftConverter(SplitLeftView.IsPaneOpen), Mode=OneWay}"/>
-                        </UIElement.RenderTransform>
-                    </FontIcon>
-                </StackPanel>
+                <SymbolIcon Margin="4,0" Symbol="DockLeft"/>
             </Button>
 
             <Button x:Name="DockRightButton" Width="90" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
@@ -1860,17 +1850,7 @@
                 <ToolTipService.ToolTip>
                     <ToolTip Content="{strings:Option Type=DockRight}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
                 </ToolTipService.ToolTip>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE26B;" FontSize="8" FontWeight="Bold" FontFamily="Segoe MDL2 Assets">
-                        <UIElement.RenderTransformOrigin>
-                            0.5, 0.5
-                        </UIElement.RenderTransformOrigin>
-                        <UIElement.RenderTransform>
-                            <RotateTransform Angle="{x:Bind DockRightConverter(SplitRightView.IsPaneOpen), Mode=OneWay}"/>
-                        </UIElement.RenderTransform>
-                    </FontIcon>
-                    <SymbolIcon Margin="4,0" Symbol="DockRight"/>
-                </StackPanel>
+                <SymbolIcon Margin="4,0" Symbol="DockRight"/>
             </Button>
 
             <Grid x:Name="HeadGrid" CornerRadius="6" Height="50" MaxWidth="1120" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackground}" >

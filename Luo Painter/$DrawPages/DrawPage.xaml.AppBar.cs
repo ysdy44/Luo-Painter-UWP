@@ -72,9 +72,6 @@ namespace Luo_Painter
         private double OpacityConverter(double value) => value / 100;
         private string OpacityToStringConverter(double value) => $"{(int)value} %";
 
-        public double DockLeftConverter(bool value) => value ? -90 : 0;
-        public double DockRightConverter(bool value) => value ? 90 : 0;
-
         private Visibility SymmetryIndexToVisibilityConverter(int value)
         {
             switch (value)
