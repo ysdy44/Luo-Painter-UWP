@@ -6,7 +6,6 @@ namespace Luo_Painter.Controls
     public sealed partial class AboutDialog : ContentDialog
     {
         //@String
-        private string Back => App.Resource.GetString(UIType.Back.ToString());
         private string GithubLink => App.Resource.GetString(UIType.GithubLink.ToString());
         private string FeedbackLink => $"mailto:{App.Resource.GetString(UIType.FeedbackLink.ToString())}";
 
