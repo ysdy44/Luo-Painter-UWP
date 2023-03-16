@@ -120,6 +120,7 @@
         <!--Body-->
         <elements:AnimationListView
             x:Name="ListView"
+            Margin="0,24,0,0"
             IsItemClickEnabled="True"
             SelectionMode="{x:Bind BooleanToSelectionModeConverter(ListView.IsItemClickEnabled), Mode=OneWay}"
             ReorderMode="{x:Bind BooleanToReorderModeConverter(ListView.IsItemClickEnabled), Mode=OneWay}"
@@ -379,64 +380,11 @@
         </ListView>
 
 
-        <!--Head-->
-        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock 
-                x:Name="TitleTextBlock"
-                Grid.Column="1" 
-                HorizontalAlignment="Center" 
-                Style="{StaticResource SubheaderTextBlockStyle}"
-                Text="{strings:UI Type=Name}"
-                >
-                <!--Transitions-->
-                <UIElement.Transitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
-                    </TransitionCollection>               
-                </UIElement.Transitions>
-                <!--Luo Painter-->
-            </TextBlock>
-
-            <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{strings:UI Type=Main_Documentation}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
-                </ToolTipService.ToolTip>
-                <!--Transitions-->
-                <ContentControl.ContentTransitions>
-                    <TransitionCollection>
-                    </TransitionCollection>
-                </ContentControl.ContentTransitions>
-                <SymbolIcon Symbol="Important"/>
-            </Button>
-
-            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
-                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="{strings:UI Type=Main_Setting}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
-                </ToolTipService.ToolTip>
-                <!--Transitions-->
-                <ContentControl.ContentTransitions>
-                    <TransitionCollection>
-                    </TransitionCollection>
-                </ContentControl.ContentTransitions>
-                <SymbolIcon Symbol="Setting"/>
-            </Button>
-
-        </Grid>
-
-
         <!--Breadcrumb-->
         <ListView
             x:Name="PathListView"    
             Grid.Column="1"
-            Margin="0,50,0,0"
+            Margin="0,49,0,0"
             Padding="12,0"
             Height="24"
             VerticalAlignment="Top"
@@ -510,6 +458,59 @@
             </ListViewBase.Footer>
 
         </ListView>
+
+
+        <!--Head-->
+        <Grid Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundMediumLight}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                x:Name="TitleTextBlock"
+                Grid.Column="1" 
+                HorizontalAlignment="Center" 
+                Style="{StaticResource SubheaderTextBlockStyle}"
+                Text="{strings:UI Type=Name}"
+                >
+                <!--Transitions-->
+                <UIElement.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
+                    </TransitionCollection>               
+                </UIElement.Transitions>
+                <!--Luo Painter-->
+            </TextBlock>
+
+            <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=Main_Documentation}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
+                <!--Transitions-->
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <SymbolIcon Symbol="Important"/>
+            </Button>
+
+            <Button x:Name="SettingButton" Grid.Column="2" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                    IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{strings:UI Type=Main_Setting}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
+                </ToolTipService.ToolTip>
+                <!--Transitions-->
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+                <SymbolIcon Symbol="Setting"/>
+            </Button>
+
+        </Grid>
 
 
         <!--Docker-->

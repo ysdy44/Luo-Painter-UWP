@@ -39,12 +39,6 @@ namespace Luo_Painter
     public sealed partial class MainPage : Page
     {
         //@Strings
-        private string RenameProject => App.Resource.GetString(UIType.RenameProject.ToString());
-        private string DupliateProject => App.Resource.GetString(UIType.DupliateProject.ToString());
-        private string DeleteProject => App.Resource.GetString(UIType.DeleteProject.ToString());
-        private string MoveProject => App.Resource.GetString(UIType.MoveProject.ToString());
-        private string LocalFolder => App.Resource.GetString(UIType.LocalFolder.ToString());
-
         private string Untitled => App.Resource.GetString(UIType.Untitled.ToString());
         private string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
 
