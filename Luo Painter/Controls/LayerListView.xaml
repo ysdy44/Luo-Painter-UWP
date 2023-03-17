@@ -18,10 +18,6 @@
     ReorderMode="Enabled" 
     ScrollViewer.VerticalScrollBarVisibility="Hidden"
     >
-    
-    <UIElement.KeyboardAccelerators>
-        <KeyboardAccelerator x:Name="KeyboardAccelerator" Modifiers="None" Key="F2"/>
-    </UIElement.KeyboardAccelerators>
 
     <FrameworkElement.Tag>
         <Button x:Name="VisualButton" CommandParameter="{x:Null}">
