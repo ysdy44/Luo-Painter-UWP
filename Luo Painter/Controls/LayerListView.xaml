@@ -37,7 +37,6 @@
     <ItemsControl.ItemContainerStyle>
         <Style TargetType="ListViewItem">
             <Setter Property="MinWidth" Value="70"/>
-            <Setter Property="Height" Value="55"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0"/>

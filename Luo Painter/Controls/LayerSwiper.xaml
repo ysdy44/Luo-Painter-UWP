@@ -120,11 +120,11 @@
             </Button>
         </StackPanel>
 
+        <SymbolIcon x:Name="SymbolIcon" Symbol="Folder" Visibility="Collapsed"/>
         <Border 
             x:Name="ChildBorder"
+            Visibility="Collapsed"
             CornerRadius="2"
-            MinWidth="32"
-            MinHeight="32"
             IsHitTestVisible="False" 
             BorderThickness="1"
             BorderBrush="Black" 
