@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="96b962b6-d67f-4601-a356-f31fd307374b"
-    Publisher="CN=apple"
+    Name="43956ysdy44.LuoPainter"
+    Publisher="CN=9DF2B1A6-C2CE-481C-9997-A3B93DA91100"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="96b962b6-d67f-4601-a356-f31fd307374b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="cc09f942-c05a-4ff5-9e2b-ce4866c63aa5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Luo Painter</DisplayName>
-    <PublisherDisplayName>apple</PublisherDisplayName>
+    <PublisherDisplayName>淹死的鱼ysdy44</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
