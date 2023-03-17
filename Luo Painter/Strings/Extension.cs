@@ -170,7 +170,7 @@ namespace Luo_Painter.Strings
                 {
                     new TextBlock
                     {
-                        Text = App.Resource.GetString($"Interpolations_{this.Type}"),
+                        Text = App.Resource.GetString($"Interpolation_{this.Type}"),
                         VerticalAlignment = VerticalAlignment.Center,
                         TextTrimming = TextTrimming.CharacterEllipsis,
                     },
