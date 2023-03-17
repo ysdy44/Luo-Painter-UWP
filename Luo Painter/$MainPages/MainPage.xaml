@@ -114,7 +114,7 @@
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
 
 
-        <elements:AlignmentGridWithLines x:Name="AlignmentGrid" IsHitTestVisible="False" Background="{ThemeResource AppBackgroundDark}"/>
+        <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" Background="{ThemeResource AppBackgroundDark}"/>
 
 
         <!--Body-->
