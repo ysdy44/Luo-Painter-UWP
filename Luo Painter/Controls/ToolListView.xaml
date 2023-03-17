@@ -84,7 +84,7 @@
                     </local:OptionGrouping>
                     <local:OptionGrouping Key="Pattern">
                         <models:OptionType>PatternGrid</models:OptionType>
-                        <models:OptionType>PatternDiagonal</models:OptionType>
+                        <!--<models:OptionType>PatternDiagonal</models:OptionType>-->
                         <models:OptionType>PatternSpotted</models:OptionType>
                     </local:OptionGrouping>
                 </local:OptionGroupingList>

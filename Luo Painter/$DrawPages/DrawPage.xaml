@@ -1502,14 +1502,14 @@
                                                                       Header="{strings:UI Type=View_Scale}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="{x:Bind DevicePhoneToOrientationVerticalConverter(Device), Mode=OneWay}" >
-                                        <Grid ColumnSpacing="2" Padding="8,0" Height="60" 
+                                        <Grid Padding="8,0" Height="60" 
                                               Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <RepeatButton x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="RadianRemoveButton" Padding="4,2" CornerRadius="4,0,0,4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh">
                                                     <UIElement.RenderTransformOrigin>
                                                         0.5, 0.5
@@ -1519,33 +1519,33 @@
                                                     </UIElement.RenderTransform>
                                                 </SymbolIcon>
                                             </RepeatButton>
-                                            <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                                            <Button x:Name="RadianClearButton" Grid.Column="1" CornerRadius="0" Height="40" BorderThickness="1" HorizontalAlignment="Stretch"
                                                     Content="{strings:ElementIcon Type=ResetRadian}">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip Content="{strings:Element Type=ResetRadian}" Placement="Top" Style="{StaticResource AppToolTipStyle}"/>
                                                 </ToolTipService.ToolTip>
                                             </Button>
-                                            <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="RadianAddButton" Grid.Column="2" Padding="4,2" CornerRadius="0,4,4,0" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Refresh"/>
                                             </RepeatButton>
                                         </Grid>
-                                        <Grid ColumnSpacing="2" Padding="8,0" Height="60" 
+                                        <Grid Padding="8,0" Height="60" 
                                               Width="{x:Bind ReverseDevicePhoneToWidth260Converter(Device), Mode=OneWay}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <RepeatButton x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="ScaleRemoveButton" Padding="4,2" CornerRadius="4,0,0,4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Remove"/>
                                             </RepeatButton>
-                                            <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                                            <Button x:Name="ScaleClearButton" Grid.Column="1" CornerRadius="0" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" 
                                                     Content="{strings:ElementIcon Type=ResetScale}">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip Content="{strings:Element Type=ResetScale}" Placement="Top" Style="{StaticResource AppToolTipStyle}"/>
                                                 </ToolTipService.ToolTip>
                                             </Button>
-                                            <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="4" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
+                                            <RepeatButton x:Name="ScaleAddButton" Grid.Column="2" Padding="4,2" CornerRadius="0,4,4,0" Height="40" BorderThickness="1" HorizontalAlignment="Stretch" >
                                                 <SymbolIcon Symbol="Add"/>
                                             </RepeatButton>
                                         </Grid>
@@ -2121,7 +2121,9 @@
                                 </controls:OptionItem>
                                 <controls:OptionItem Type="FreeTransform" Command="{x:Bind Command}"/>
                                 <MenuFlyoutSeparator/>
+                                <!--
                                 <controls:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
+                                -->
                                 <controls:OptionItem Type="GradientMapping" Command="{x:Bind Command}"/>
                                 <controls:OptionItem Type="RippleEffect" Command="{x:Bind Command}"/>
                                 <controls:OptionItem Type="Threshold" Command="{x:Bind Command}"/>
