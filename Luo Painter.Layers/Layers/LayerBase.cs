@@ -36,9 +36,23 @@ namespace Luo_Painter.Layers
                 this.Load(element);
             }
 
-
-            this.ThumbnailWriteableBitmap = new WriteableBitmap(50, 50);
-            this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, 50, 50, 96);
+            if (width == height)
+            {
+                this.ThumbnailWriteableBitmap = new WriteableBitmap(50, 50);
+                this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, 50, 50, 96);
+            }
+            else if (width > height)
+            {
+                int h = (int)(50d * height / width);
+                this.ThumbnailWriteableBitmap = new WriteableBitmap(50, h);
+                this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, 50, h, 96);
+            }
+            else if (width < height)
+            {
+                int w = (int)(50d * width / height);
+                this.ThumbnailWriteableBitmap = new WriteableBitmap(w, 50);
+                this.ThumbnailRenderTarget = new CanvasRenderTarget(resourceCreator, w, 50, 96);
+            }
 
             int wh = System.Math.Max(width, height);
             if (wh <= 50) this.ThumbnailType = ThumbnailType.Origin;
