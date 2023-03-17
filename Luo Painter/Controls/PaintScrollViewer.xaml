@@ -455,7 +455,7 @@
                             </Grid>
 
                             <Border Height="40" Margin="0,2" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource SystemAltLowColor}" 
-                                    Visibility="{x:Bind ShapeVisibilityConverter(Type), Mode=OneWay}">
+                                    Visibility="Collapsed">
                                 <Grid ColumnSpacing="4">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="136"/>
