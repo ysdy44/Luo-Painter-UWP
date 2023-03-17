@@ -110,6 +110,7 @@ namespace Luo_Painter
                 this.IsPropertyEnabled = false;
                 if (this.LayerSelectedItem is ILayer layer)
                 {
+                    this.RenameButton.IsEnabled = true;
                     this.RemoveButton.IsEnabled = true;
                     this.OpacitySlider.IsEnabled = true;
                     this.OpacitySlider.Value = layer.Opacity * 100;
@@ -126,6 +127,7 @@ namespace Luo_Painter
                 }
                 else
                 {
+                    this.RenameButton.IsEnabled = false;
                     this.RemoveButton.IsEnabled = false;
                     this.OpacitySlider.Value = 100;
                     this.OpacitySlider.IsEnabled = false;

@@ -564,8 +564,10 @@ namespace Luo_Painter
                 //    break;
                 //case OptionType.LayerPropertyMenu:
                 //    break;
-                //case OptionType.LayerRenameMenu:
-                //    break;
+                case OptionType.LayerRenameMenu:
+                    if (this.SplitLeftView.IsPaneOpen)
+                        this.LayerListView.Rename();
+                    break;
 
                 #endregion
 

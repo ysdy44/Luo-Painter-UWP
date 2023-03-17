@@ -418,13 +418,25 @@
 
                                             </ComboBox>
 
-                                            <Button x:Name="RemoveButton" Width="70" Height="50" HorizontalAlignment="Right" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="RenameButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
+                                                        CommandParameter="{strings:OptionType Type=LayerRenameMenu}" Command="{x:Bind Command}">
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip Content="{strings:Option Type=LayerRenameMenu}" Style="{StaticResource AppToolTipStyle}"/>
+                                                    </ToolTipService.ToolTip>
+                                                    <UIElement.KeyboardAccelerators>
+                                                        <KeyboardAccelerator Modifiers="None" Key="F2"/>
+                                                    </UIElement.KeyboardAccelerators>
+                                                    <SymbolIcon Symbol="Rename"/>
+                                                </Button>
+                                                <Button x:Name="RemoveButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
                                                     CommandParameter="{strings:OptionType Type=Remove}" Command="{x:Bind Command}">
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip Content="{strings:Option Type=Remove}" Style="{StaticResource AppToolTipStyle}"/>
-                                                </ToolTipService.ToolTip>
-                                                <SymbolIcon Symbol="Delete"/>
-                                            </Button>
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip Content="{strings:Option Type=Remove}" Style="{StaticResource AppToolTipStyle}"/>
+                                                    </ToolTipService.ToolTip>
+                                                    <SymbolIcon Symbol="Delete"/>
+                                                </Button>
+                                            </StackPanel>
 
                                         </StackPanel>
                                     </Flyout>
