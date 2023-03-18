@@ -377,6 +377,8 @@
     <Content Include="Icons\LoadFaill.jpg" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
+    <None Include="README-EN.md" />
+    <None Include="README-ZH.md" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
