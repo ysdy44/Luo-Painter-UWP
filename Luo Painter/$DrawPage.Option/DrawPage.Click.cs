@@ -60,12 +60,9 @@ namespace Luo_Painter
                 case OptionType.WithTransform: break;
 
                 // Root
-                case OptionType.File: break;
-                case OptionType.Edit: break;
-                case OptionType.Menu: break;
-                case OptionType.Setup: break;
+                case OptionType.App: break;
+                case OptionType.Option: break;
                 case OptionType.Layer: break;
-                case OptionType.Select: break;
                 case OptionType.Effect: break;
                 case OptionType.Tool: break;
 
@@ -1219,10 +1216,10 @@ namespace Luo_Painter
                 #region Select
 
                 // Category
-                case OptionType.Selecting: break;
+                case OptionType.Select: break;
                 case OptionType.Marquees: break;
 
-                // Selecting
+                // Select
                 case OptionType.All:
                     {
                         // History

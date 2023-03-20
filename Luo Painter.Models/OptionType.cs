@@ -36,10 +36,8 @@ namespace Luo_Painter.Models
 
         // Root
         App = 1 << 24,
-        Edit = 2 << 24,
-        Setup = 8 << 24,
-        Layer = 16 << 24,
-        Select = 32 << 24,
+        Option = 2 << 24,
+        Layer = 16 << 24, 
         Effect = 64 << 24,
         Tool = (uint)128 << 24,
 
@@ -104,12 +102,16 @@ namespace Luo_Painter.Models
 
         #endregion
 
-        #region Setup
-
+        #region Option
+   
         // Category
-        CropCanvas = Setup | 1 << 16 | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        ResizeCanvas = Setup | 2 << 16 | ExistIcon | IsItemClickEnabled,
-        RotateCanvas = Setup | 3 << 16 | ExistIcon | IsItemClickEnabled,
+        Edit = Option | 1 << 16,
+        Select = Option | 2 << 16,
+        Marquees = Option | 4 << 16,
+
+        CropCanvas = Option | 8 << 16 | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        ResizeCanvas = Option | 16 << 16 | ExistIcon | IsItemClickEnabled,
+        RotateCanvas = Option | 32 << 16 | ExistIcon | IsItemClickEnabled,
 
         // Edit
         Cut = Edit | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -117,6 +119,18 @@ namespace Luo_Painter.Models
         Paste = Edit | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         Clear = Edit | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Select
+        All = Select | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Deselect = Select | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        MarqueeInvert = Select | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Pixel = Select | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        // Marquees
+        Feather = Marquees | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        MarqueeTransform = Marquees | 2 << 8 | WithState | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
+        Grow = Marquees | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
+        Shrink = Marquees | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
         // Resize
         Stretch = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
@@ -203,26 +217,6 @@ namespace Luo_Painter.Models
         AlignMiddle = Align | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         AlignBottom = Align | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         SpaceVertically = Align | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-
-        #endregion
-
-        #region Select
-
-        // Category
-        Selecting = Select | 1 << 16,
-        Marquees = Select | 2 << 16,
-
-        // Selecting
-        All = Selecting | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Deselect = Selecting | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        MarqueeInvert = Selecting | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Pixel = Selecting | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-
-        // Marquees
-        Feather = Marquees | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        MarqueeTransform = Marquees | 2 << 8 | WithState | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
-        Grow = Marquees | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
-        Shrink = Marquees | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
