@@ -66,8 +66,15 @@ namespace Luo_Painter
                 case OptionType.Effect: break;
                 case OptionType.Tool: break;
 
-                #region File
+                #region App
 
+                // Category
+                case OptionType.File: break;
+                case OptionType.Layout: break;
+                case OptionType.Format: break;
+                case OptionType.Menu: break;
+
+                // File
                 case OptionType.Home:
                 case OptionType.Close:
                     if (this.IsFullScreen)
@@ -309,6 +316,7 @@ namespace Luo_Painter
                     this.Tip(TipType.Redo, $"{this.History.Index} / {this.History.Count}");
                     break;
 
+                // Layout
                 case OptionType.FullScreen:
                     if (this.IsFullScreen)
                     {
@@ -326,6 +334,14 @@ namespace Luo_Painter
                     this.IsFullScreen = false;
                     break;
 
+                case OptionType.DockLeft:
+                    this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
+                    break;
+                case OptionType.DockRight:
+                    this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
+                    break;
+
+                // Format
                 case OptionType.JPEG:
                     this.ExportDialog.FileFormat = CanvasBitmapFileFormat.Jpeg;
                     this.Click(OptionType.ExportMenu);
@@ -347,10 +363,97 @@ namespace Luo_Painter
                     this.Click(OptionType.ExportMenu);
                     break;
 
+                // Menu
+                case OptionType.FileMenu: break;
+                case OptionType.ExportMenu:
+                    if (ContentDialogExtensions.CanShow)
+                    {
+                        ContentDialogResult result = await this.ExportDialog.ShowInstance();
+
+                        switch (result)
+                        {
+                            case ContentDialogResult.Primary:
+                                switch (this.ExportDialog.Mode)
+                                {
+                                    case ExportMode.None:
+                                        this.Click(OptionType.Export);
+                                        break;
+                                    case ExportMode.All:
+                                        this.Click(OptionType.ExportAll);
+                                        break;
+                                    case ExportMode.Current:
+                                        this.Click(OptionType.ExportCurrent);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case OptionType.HistogramMenu:
+                    if (CanvasImage.IsHistogramSupported(this.CanvasDevice) is false)
+                    {
+                        await new MessageDialog
+                        (
+                            App.Resource.GetString($"SubTip_{TipType.NoCompatible}"),
+                            App.Resource.GetString($"Tip_{TipType.NoCompatible}")
+                        ).ShowAsync();
+                        break;
+                    }
+
+                    this.Histogram();
+                    this.HistogramCanvasControl.Invalidate();
+                    await this.HistogramDialog.ShowInstance();
+                    break;
+
+                case OptionType.PaintMenu:
+                    this.PaintScrollViewer.Toggle();
+                    break;
+                case OptionType.BrushMenu: break;
+                case OptionType.SizeMenu: break;
+                case OptionType.EffectMenu: break;
+                case OptionType.HistoryMenu: break;
+
+                case OptionType.ToolMenu: break;
+                case OptionType.LayerMenu: break;
+
+                case OptionType.LayerPropertyMenu: break;
+                case OptionType.LayerRenameMenu:
+                    if (this.SplitLeftView.IsPaneOpen)
+                        this.LayerListView.Rename();
+                    break;
+
                 #endregion
 
-                #region Edit
+                #region Option
 
+                // Category
+                case OptionType.Edit: break;
+                case OptionType.Select: break;
+                case OptionType.Marquees: break;
+
+                case OptionType.CropCanvas:
+                    {
+                        int width = this.Transformer.Width;
+                        int height = this.Transformer.Height;
+
+                        this.SetCropCanvas(width, height);
+                    }
+
+                    this.BitmapLayer = null;
+                    this.OptionType = OptionType.CropCanvas;
+                    this.ConstructAppBar(OptionType.CropCanvas);
+
+                    this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                    this.CanvasControl.Invalidate(); // Invalidate
+                    break;
+                case OptionType.ResizeCanvas: break;
+                case OptionType.RotateCanvas: break;
+
+                // Edit
                 case OptionType.Cut: // Copy + Clear
                     {
                         if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
@@ -483,115 +586,152 @@ namespace Luo_Painter
                     }
                     break;
 
-                #endregion
-
-                #region Menu
-
-                case OptionType.DockLeft:
-                    this.SplitLeftView.IsPaneOpen = !this.SplitLeftView.IsPaneOpen;
-                    break;
-                case OptionType.DockRight:
-                    this.SplitRightView.IsPaneOpen = !this.SplitRightView.IsPaneOpen;
-                    break;
-
-                //case OptionType.FileMenu:
-                //    break;
-                case OptionType.ExportMenu:
-                    if (ContentDialogExtensions.CanShow)
+                // Select
+                case OptionType.All:
                     {
-                        ContentDialogResult result = await this.ExportDialog.ShowInstance();
+                        // History
+                        IHistory history = this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue);
+                        history.Title = App.Resource.GetString(type.ToString());
+                        int removes = this.History.Push(history);
 
-                        switch (result)
+                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
+                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
+                        this.Marquee.ClearThumbnail(Colors.DodgerBlue);
+
+                        this.RaiseHistoryCanExecuteChanged();
+                    }
+                    break;
+                case OptionType.Deselect:
+                    {
+                        // History
+                        IHistory history = this.Marquee.GetBitmapClearHistory(Colors.Transparent);
+                        history.Title = App.Resource.GetString(type.ToString());
+                        int removes = this.History.Push(history);
+
+                        this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
+                        this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
+                        this.Marquee.ClearThumbnail(Colors.Transparent);
+
+                        this.RaiseHistoryCanExecuteChanged();
+                    }
+                    break;
+                case OptionType.MarqueeInvert:
+                    {
+                        // History
+                        IHistory history = this.Marquee.Invert(Colors.DodgerBlue);
+                        history.Title = App.Resource.GetString(type.ToString());
+                        int removes = this.History.Push(history);
+
+                        this.Marquee.Flush();
+                        this.Marquee.RenderThumbnail();
+
+                        this.RaiseHistoryCanExecuteChanged();
+                    }
+                    break;
+                case OptionType.Pixel:
+                    {
+                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
                         {
-                            case ContentDialogResult.Primary:
-                                switch (this.ExportDialog.Mode)
-                                {
-                                    case ExportMode.None:
-                                        this.Click(OptionType.Export);
-                                        break;
-                                    case ExportMode.All:
-                                        this.Click(OptionType.ExportAll);
-                                        break;
-                                    case ExportMode.Current:
-                                        this.Click(OptionType.ExportCurrent);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            default:
-                                break;
+                            // History
+                            IHistory history = this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue);
+                            history.Title = App.Resource.GetString(type.ToString());
+                            int removes = this.History.Push(history);
+
+                            this.Marquee.Flush();
+                            this.Marquee.RenderThumbnail();
+
+                            this.RaiseHistoryCanExecuteChanged();
                         }
                     }
                     break;
-                case OptionType.HistogramMenu:
-                    if (CanvasImage.IsHistogramSupported(this.CanvasDevice) is false)
+
+                // Marquees
+                case OptionType.Feather:
                     {
-                        await new MessageDialog
-                        (
-                            App.Resource.GetString($"SubTip_{TipType.NoCompatible}"),
-                            App.Resource.GetString($"Tip_{TipType.NoCompatible}")
-                        ).ShowAsync();
-                        break;
+                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+                        if (mode is PixelBoundsMode.Transarent)
+                        {
+                            this.Tip(TipType.NoPixelForMarquee);
+                            break;
+                        }
+
+                        this.OptionType = OptionType.Feather;
+                        this.ConstructAppBar(OptionType.Feather);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
                     }
-
-                    this.Histogram();
-                    this.HistogramCanvasControl.Invalidate();
-                    await this.HistogramDialog.ShowInstance();
                     break;
-
-                case OptionType.PaintMenu:
-                    this.PaintScrollViewer.Toggle();
-                    break;
-                //case OptionType.BrushMenu:
-                //    break;
-                //case OptionType.SizeMenu:
-                //    break;
-                //case OptionType.EffectMenu:
-                //    break;
-                //case OptionType.HistoryMenu:
-                //    break;
-
-                //case OptionType.ToolMenu:
-                //    break;
-                //case OptionType.LayerMenu:
-                //    break;
-
-                //case OptionType.LayerNew:
-                //    break;
-                //case OptionType.LayerPropertyMenu:
-                //    break;
-                case OptionType.LayerRenameMenu:
-                    if (this.SplitLeftView.IsPaneOpen)
-                        this.LayerListView.Rename();
-                    break;
-
-                #endregion
-
-                #region Setup
-
-                case OptionType.CropCanvas:
+                case OptionType.MarqueeTransform:
                     {
-                        int width = this.Transformer.Width;
-                        int height = this.Transformer.Height;
+                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
-                        this.SetCropCanvas(width, height);
+                        if (mode is PixelBoundsMode.Transarent)
+                        {
+                            this.Tip(TipType.NoPixelForMarquee);
+                            break;
+                        }
+
+                        switch (mode)
+                        {
+                            case PixelBoundsMode.None:
+                                PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(interpolationColors);
+                                PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, interpolationColors);
+                                this.ResetTransform(bounds);
+                                break;
+                            default:
+                                this.ResetTransform(this.Marquee.Bounds);
+                                break;
+                        }
+
+                        this.OptionType = OptionType.MarqueeTransform;
+                        this.ConstructAppBar(OptionType.MarqueeTransform);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
                     }
+                    break;
+                case OptionType.Grow:
+                    {
+                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
 
-                    this.BitmapLayer = null;
-                    this.OptionType = OptionType.CropCanvas;
-                    this.ConstructAppBar(OptionType.CropCanvas);
+                        if (mode is PixelBoundsMode.Transarent)
+                        {
+                            this.Tip(TipType.NoPixelForMarquee);
+                            break;
+                        }
 
-                    this.CanvasAnimatedControl.Invalidate(true); // Invalidate
-                    this.CanvasControl.Invalidate(); // Invalidate
+                        this.OptionType = OptionType.Grow;
+                        this.ConstructAppBar(OptionType.Grow);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
+                    }
+                    break;
+                case OptionType.Shrink:
+                    {
+                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
+
+                        if (mode is PixelBoundsMode.Transarent)
+                        {
+                            this.Tip(TipType.NoPixelForMarquee);
+                            break;
+                        }
+
+                        this.OptionType = OptionType.Shrink;
+                        this.ConstructAppBar(OptionType.Shrink);
+
+                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                        this.CanvasControl.Invalidate(); // Invalidate
+                    }
                     break;
 
-                //case OptionType.ResizeCanvas:
-                //    break;
-
-                //case OptionType.RotateCanvas:
-                //    break;
-
+                // ResizeCanvas
                 case OptionType.Stretch:
                     if (ContentDialogExtensions.CanShow)
                     {
@@ -710,6 +850,7 @@ namespace Luo_Painter
                     }
                     break;
 
+                // RotateCanvas
                 case OptionType.FlipHorizontal:
                     {
                         // History
@@ -833,7 +974,7 @@ namespace Luo_Painter
                 case OptionType.Grouping: break;
                 case OptionType.Combine: break;
 
-                // Add
+                // New
                 case OptionType.AddBitmapLayer:
                     {
                         ILayer add = new BitmapLayer(this.CanvasDevice, this.Transformer.Width, this.Transformer.Height);
@@ -1210,159 +1351,6 @@ namespace Luo_Painter
                 case OptionType.Intersect: break;
 
                 case OptionType.ExpandStroke: break;
-
-                #endregion
-
-                #region Select
-
-                // Category
-                case OptionType.Select: break;
-                case OptionType.Marquees: break;
-
-                // Select
-                case OptionType.All:
-                    {
-                        // History
-                        IHistory history = this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue);
-                        history.Title = App.Resource.GetString(type.ToString());
-                        int removes = this.History.Push(history);
-
-                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
-                        this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Source);
-                        this.Marquee.ClearThumbnail(Colors.DodgerBlue);
-
-                        this.RaiseHistoryCanExecuteChanged();
-                    }
-                    break;
-                case OptionType.Deselect:
-                    {
-                        // History
-                        IHistory history = this.Marquee.GetBitmapClearHistory(Colors.Transparent);
-                        history.Title = App.Resource.GetString(type.ToString());
-                        int removes = this.History.Push(history);
-
-                        this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
-                        this.Marquee.Clear(Colors.Transparent, BitmapType.Source);
-                        this.Marquee.ClearThumbnail(Colors.Transparent);
-
-                        this.RaiseHistoryCanExecuteChanged();
-                    }
-                    break;
-                case OptionType.MarqueeInvert:
-                    {
-                        // History
-                        IHistory history = this.Marquee.Invert(Colors.DodgerBlue);
-                        history.Title = App.Resource.GetString(type.ToString());
-                        int removes = this.History.Push(history);
-
-                        this.Marquee.Flush();
-                        this.Marquee.RenderThumbnail();
-
-                        this.RaiseHistoryCanExecuteChanged();
-                    }
-                    break;
-                case OptionType.Pixel:
-                    {
-                        if (this.LayerSelectedItem is BitmapLayer bitmapLayer)
-                        {
-                            // History
-                            IHistory history = this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue);
-                            history.Title = App.Resource.GetString(type.ToString());
-                            int removes = this.History.Push(history);
-
-                            this.Marquee.Flush();
-                            this.Marquee.RenderThumbnail();
-
-                            this.RaiseHistoryCanExecuteChanged();
-                        }
-                    }
-                    break;
-
-                // Marquees
-                case OptionType.Feather:
-                    {
-                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                        if (mode is PixelBoundsMode.Transarent)
-                        {
-                            this.Tip(TipType.NoPixelForMarquee);
-                            break;
-                        }
-
-                        this.OptionType = OptionType.Feather;
-                        this.ConstructAppBar(OptionType.Feather);
-
-                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
-                    break;
-                case OptionType.MarqueeTransform:
-                    {
-                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                        if (mode is PixelBoundsMode.Transarent)
-                        {
-                            this.Tip(TipType.NoPixelForMarquee);
-                            break;
-                        }
-
-                        switch (mode)
-                        {
-                            case PixelBoundsMode.None:
-                                PixelBounds interpolationBounds = this.Marquee.CreateInterpolationBounds(interpolationColors);
-                                PixelBounds bounds = this.Marquee.CreatePixelBounds(interpolationBounds, interpolationColors);
-                                this.ResetTransform(bounds);
-                                break;
-                            default:
-                                this.ResetTransform(this.Marquee.Bounds);
-                                break;
-                        }
-
-                        this.OptionType = OptionType.MarqueeTransform;
-                        this.ConstructAppBar(OptionType.MarqueeTransform);
-
-                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
-                    break;
-                case OptionType.Grow:
-                    {
-                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                        if (mode is PixelBoundsMode.Transarent)
-                        {
-                            this.Tip(TipType.NoPixelForMarquee);
-                            break;
-                        }
-
-                        this.OptionType = OptionType.Grow;
-                        this.ConstructAppBar(OptionType.Grow);
-
-                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
-                    break;
-                case OptionType.Shrink:
-                    {
-                        Color[] interpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(interpolationColors);
-
-                        if (mode is PixelBoundsMode.Transarent)
-                        {
-                            this.Tip(TipType.NoPixelForMarquee);
-                            break;
-                        }
-
-                        this.OptionType = OptionType.Shrink;
-                        this.ConstructAppBar(OptionType.Shrink);
-
-                        this.CanvasAnimatedControl.Invalidate(true); // Invalidate
-                        this.CanvasControl.Invalidate(); // Invalidate
-                    }
-                    break;
 
                 #endregion
 
