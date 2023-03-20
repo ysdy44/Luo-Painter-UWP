@@ -35,17 +35,23 @@ namespace Luo_Painter.Models
         WithTransform = 128,
 
         // Root
-        File = 1 << 24,
+        App = 1 << 24,
         Edit = 2 << 24,
-        Menu = 4 << 24,
         Setup = 8 << 24,
         Layer = 16 << 24,
         Select = 32 << 24,
         Effect = 64 << 24,
         Tool = (uint)128 << 24,
 
-        #region File
+        #region App
 
+        // Category
+        File = App | 1 << 16,
+        Layout = App | 2 << 16,
+        Format = App | 4 << 16,
+        Menu = App | 8 << 16,
+
+        // File
         Home = File | 1 << 8 | IsItemClickEnabled,
         Close = File | 2 << 8 | IsItemClickEnabled,
         Save = File | 3 << 8 | IsItemClickEnabled,
@@ -57,32 +63,21 @@ namespace Luo_Painter.Models
         Undo = File | 9 << 8 | IsItemClickEnabled,
         Redo = File | 10 << 8 | IsItemClickEnabled,
 
-        FullScreen = File | 11 << 8 | IsItemClickEnabled,
-        UnFullScreen = File | 12 << 8 | IsItemClickEnabled,
+        // Layout
+        FullScreen = Layout | 1 << 8 | IsItemClickEnabled,
+        UnFullScreen = Layout | 2 << 8 | IsItemClickEnabled,
 
-        JPEG = File | 13 << 8 | ExistIcon | IsItemClickEnabled,
-        PNG = File | 14 << 8 | ExistIcon | IsItemClickEnabled,
-        BMP = File | 15 << 8 | ExistIcon | IsItemClickEnabled,
-        GIF = File | 16 << 8 | ExistIcon | IsItemClickEnabled,
-        TIFF = File | 17 << 8 | ExistIcon | IsItemClickEnabled,
+        DockLeft = Layout | 3 << 8 | IsItemClickEnabled,
+        DockRight = Layout | 4 << 8 | IsItemClickEnabled,
 
-        #endregion
+        // Format
+        JPEG = Format | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        PNG = Format | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        BMP = Format | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        GIF = Format | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        TIFF = Format | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
-        #region Edit
-
-        Cut = Edit | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Copy = Edit | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Paste = Edit | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-
-        Clear = Edit | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-
-        #endregion
-
-        #region Menu
-
-        DockLeft = Menu | 1 << 8 | HasMenu | IsItemClickEnabled,
-        DockRight = Menu | 2 << 8 | HasMenu | IsItemClickEnabled,
-
+        // Menu
         FileMenu = Menu | 3 << 8 | HasMenu | IsItemClickEnabled,
         ExportMenu = Menu | 4 << 8 | HasMenu | IsItemClickEnabled,
         HistogramMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
@@ -115,6 +110,13 @@ namespace Luo_Painter.Models
         CropCanvas = Setup | 1 << 16 | 1 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
         ResizeCanvas = Setup | 2 << 16 | ExistIcon | IsItemClickEnabled,
         RotateCanvas = Setup | 3 << 16 | ExistIcon | IsItemClickEnabled,
+
+        // Edit
+        Cut = Edit | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Copy = Edit | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Paste = Edit | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+
+        Clear = Edit | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         // Resize
         Stretch = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
