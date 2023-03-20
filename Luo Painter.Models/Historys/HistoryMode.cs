@@ -3,7 +3,7 @@
     /// <summary>
     /// Mode of History
     /// </summary>
-    public enum HistoryMode : byte
+    public enum HistoryMode
     {
         /// <summary>
         /// Normal

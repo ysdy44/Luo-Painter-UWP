@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Models
 {
-    public enum SymmetryMode : byte
+    public enum SymmetryMode
     {
         /// <summary> Nornal. </summary>
         None = 0,
@@ -21,7 +21,7 @@ namespace Luo_Painter.Models
         MirrorRadial
     }
 
-    public enum SymmetryType : byte
+    public enum SymmetryType
     {
         None = 0,
 

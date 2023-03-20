@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public enum TaskBehavior : byte
+    public enum TaskBehavior
     {
         Dead,
 

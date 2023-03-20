@@ -4,7 +4,7 @@ using Windows.Storage.Streams;
 
 namespace Luo_Painter.Models
 {
-    public enum ProjectParameterType : byte
+    public enum ProjectParameterType
     {
         None,
 

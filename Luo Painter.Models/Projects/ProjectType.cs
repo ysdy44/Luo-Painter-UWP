@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public enum ProjectType : int
+    public enum ProjectType
     {
         New = 1,
         Project = 2,

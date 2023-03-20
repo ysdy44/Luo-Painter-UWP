@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public enum ActionType : int
+    public enum ActionType
     {
         /// <summary> Open Project </summary>
         OpenProject,

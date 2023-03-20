@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public enum TaskState : byte
+    public enum TaskState
     {
         Finished,
 

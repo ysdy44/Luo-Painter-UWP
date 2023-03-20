@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Models
 {
-    public enum UIType : int
+    public enum UIType
     {
         Name,
 
