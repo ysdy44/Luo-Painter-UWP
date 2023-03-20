@@ -10,7 +10,7 @@ using Windows.UI;
 namespace Luo_Painter.Layers
 {
     [Flags]
-    public enum RegionType : uint
+    public enum RegionType
     {
         None = 0, // 0000
         XRemainder = 1, // 0001

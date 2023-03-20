@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Layers
 {
-    internal enum BSplineType : byte
+    internal enum BSplineType
     {
         None,
         BeginFigure,
