@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Shaders
 {
-    public enum DisplacementLiquefactionMode : int
+    public enum DisplacementLiquefactionMode
     {
         Reset = 0,
 
