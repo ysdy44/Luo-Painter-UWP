@@ -29,7 +29,7 @@ namespace Luo_Painter
       }) { }
     }
 
-    internal enum SourcePageType : byte
+    internal enum SourcePageType
     {
         Invalid,
 

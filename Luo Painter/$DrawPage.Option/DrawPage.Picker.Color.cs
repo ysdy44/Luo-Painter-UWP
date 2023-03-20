@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter
 {
-    internal enum ColorPickerMode : int
+    internal enum ColorPickerMode
     {
         None = 0,
 

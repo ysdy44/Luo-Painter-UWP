@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter
 {
-    internal enum NumberPickerMode : int
+    internal enum NumberPickerMode
     {
         None = 0,
 

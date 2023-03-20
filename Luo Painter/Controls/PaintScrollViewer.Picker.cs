@@ -2,7 +2,7 @@
 
 namespace Luo_Painter.Controls
 {
-    internal enum PaintNumberPickerMode : byte
+    internal enum PaintNumberPickerMode
     {
         None,
 
