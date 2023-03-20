@@ -7,7 +7,7 @@ namespace Luo_Painter.Models
     /// 0b_00000000_00000000_00000000_00000000 <para/>
     /// 
     /// Root: <para/>
-    /// 0b_11111111_00000000_00000000_00000000 <para/>
+    /// 0b_00011111_00000000_00000000_00000000 <para/>
     /// 
     /// Category: <para/>
     /// 0b_00000000_11111111_00000000_00000000 <para/>
@@ -19,7 +19,7 @@ namespace Luo_Painter.Models
     /// 0b_00000000_00000000_00000000_11111111 <para/>
     /// </summary>
     [Flags]
-    public enum OptionType : uint
+    public enum OptionType
     {
         // None
         None = 0,
@@ -37,9 +37,9 @@ namespace Luo_Painter.Models
         // Root
         App = 1 << 24,
         Option = 2 << 24,
-        Layer = 16 << 24, 
-        Effect = 64 << 24,
-        Tool = (uint)128 << 24,
+        Layer = 4 << 24,
+        Effect = 8 << 24,
+        Tool = 16 << 24,
 
         #region App
 
@@ -54,12 +54,12 @@ namespace Luo_Painter.Models
         Close = File | 2 << 8 | IsItemClickEnabled,
         Save = File | 3 << 8 | IsItemClickEnabled,
 
-        Export = File | 5 << 8 | IsItemClickEnabled,
-        ExportAll = File | 6 << 8 | IsItemClickEnabled,
-        ExportCurrent = File | 7 << 8 | IsItemClickEnabled,
+        Export = File | 4 << 8 | IsItemClickEnabled,
+        ExportAll = File | 5 << 8 | IsItemClickEnabled,
+        ExportCurrent = File | 6 << 8 | IsItemClickEnabled,
 
-        Undo = File | 9 << 8 | IsItemClickEnabled,
-        Redo = File | 10 << 8 | IsItemClickEnabled,
+        Undo = File | 7 << 8 | IsItemClickEnabled,
+        Redo = File | 8 << 8 | IsItemClickEnabled,
 
         // Layout
         FullScreen = Layout | 1 << 8 | IsItemClickEnabled,
@@ -76,34 +76,34 @@ namespace Luo_Painter.Models
         TIFF = Format | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Menu
-        FileMenu = Menu | 3 << 8 | HasMenu | IsItemClickEnabled,
-        ExportMenu = Menu | 4 << 8 | HasMenu | IsItemClickEnabled,
-        HistogramMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
+        FileMenu = Menu | 1 << 8 | HasMenu | IsItemClickEnabled,
+        ExportMenu = Menu | 2 << 8 | HasMenu | IsItemClickEnabled,
+        HistogramMenu = Menu | 3 << 8 | HasMenu | IsItemClickEnabled,
 
-        ColorMenu = Menu | 6 << 8 | HasMenu | IsItemClickEnabled,
-        ColorHarmonyMenu = Menu | 7 << 8 | HasMenu | IsItemClickEnabled,
+        ColorMenu = Menu | 4 << 8 | HasMenu | IsItemClickEnabled,
+        ColorHarmonyMenu = Menu | 5 << 8 | HasMenu | IsItemClickEnabled,
 
-        EditMenu = Menu | 8 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        AdjustmentMenu = Menu | 9 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        OtherMenu = Menu | 10 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        EditMenu = Menu | 6 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        AdjustmentMenu = Menu | 7 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        OtherMenu = Menu | 8 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        PaintMenu = Menu | 11 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        BrushMenu = Menu | 12 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        SizeMenu = Menu | 13 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        EffectMenu = Menu | 14 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        HistoryMenu = Menu | 15 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        PaintMenu = Menu | 9 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        BrushMenu = Menu | 10 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        SizeMenu = Menu | 11 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        EffectMenu = Menu | 12 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        HistoryMenu = Menu | 13 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        ToolMenu = Menu | 16 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
-        LayerMenu = Menu | 17 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        ToolMenu = Menu | 14 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
+        LayerMenu = Menu | 15 << 8 | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        LayerNewMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
-        LayerPropertyMenu = Menu | 19 << 8 | HasMenu | IsItemClickEnabled,
-        LayerRenameMenu = Menu | 20 << 8 | HasMenu | IsItemClickEnabled,
+        LayerNewMenu = Menu | 16 << 8 | HasMenu | IsItemClickEnabled,
+        LayerPropertyMenu = Menu | 17 << 8 | HasMenu | IsItemClickEnabled,
+        LayerRenameMenu = Menu | 18 << 8 | HasMenu | IsItemClickEnabled,
 
         #endregion
 
         #region Option
-   
+
         // Category
         Edit = Option | 1 << 16,
         Select = Option | 2 << 16,
@@ -132,12 +132,12 @@ namespace Luo_Painter.Models
         Grow = Marquees | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
         Shrink = Marquees | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        // Resize
+        // ResizeCanvas
         Stretch = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
         Extend = ResizeCanvas | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
         Offset = ResizeCanvas | 4 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
 
-        // Rotate
+        // RotateCanvas
         FlipHorizontal = RotateCanvas | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         FlipVertical = RotateCanvas | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
