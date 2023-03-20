@@ -10,7 +10,7 @@ namespace Luo_Painter.Elements
     /// <summary>
     /// State of <see cref="Expander"/> 
     /// </summary>
-    public enum ExpanderState : byte
+    public enum ExpanderState
     {
         Collapsed,
         Flyout,
@@ -20,7 +20,7 @@ namespace Luo_Painter.Elements
     /// <summary>
     /// Mode of <see cref="Expander"/>'s placement target
     /// </summary>
-    public enum ExpanderPlacementMode : byte
+    public enum ExpanderPlacementMode
     {
         Center,
         Left,

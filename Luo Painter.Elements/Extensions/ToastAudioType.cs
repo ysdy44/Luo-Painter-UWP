@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Elements
 {
-    public enum ToastAudioType : int
+    public enum ToastAudioType
     {
         Default,
 
