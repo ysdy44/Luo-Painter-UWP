@@ -1,9 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\apple\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\apple\\.nuget\\packages",
-      "C:\\Users\\apple\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-    ]
-  }
-}
