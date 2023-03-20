@@ -3,7 +3,7 @@
 namespace Luo_Painter.Brushes
 {
     [Flags]
-    public enum InkType : uint
+    public enum InkType
     {
         None = 0,
 

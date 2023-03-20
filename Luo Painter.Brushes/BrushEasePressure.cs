@@ -3,7 +3,7 @@
     /// <summary>
     /// Pressure of the brush easing.
     /// </summary>
-    public enum BrushEasePressure : int
+    public enum BrushEasePressure
     {
         /// <summary> f (x) = 1 </summary>
         None = 0,

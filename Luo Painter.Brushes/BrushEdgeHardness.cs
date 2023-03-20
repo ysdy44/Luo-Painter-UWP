@@ -3,7 +3,7 @@
     /// <summary>
     /// Hardness of the brush edge.
     /// </summary>
-    public enum BrushEdgeHardness : int
+    public enum BrushEdgeHardness
     {
         /// <summary> f (x) = 1 </summary>
         None = 0,
