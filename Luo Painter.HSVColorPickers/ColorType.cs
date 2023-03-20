@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.HSVColorPickers
 {
-    public enum ColorType : byte
+    public enum ColorType
     {
         None = 0,
         Wheel = 4,

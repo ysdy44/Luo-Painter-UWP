@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.HSVColorPickers
 {
-    public enum HarmonyMode : byte
+    public enum HarmonyMode
     {
         None,
 
