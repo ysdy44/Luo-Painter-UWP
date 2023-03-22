@@ -306,14 +306,14 @@
                                             </ControlTemplate>
                                         </Control.Template>
                                     </MenuFlyoutSeparator>
-                                    <controls:OptionItem Type="AddBitmapLayer" Command="{x:Bind Command}">
+                                    <MenuFlyoutItem Text="{strings:Option Type=AddBitmapLayer}" Tag="{strings:OptionIcon Type=AddBitmapLayer}" CommandParameter="{strings:OptionType Type=AddBitmapLayer}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                         <UIElement.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Insert"/>
                                         </UIElement.KeyboardAccelerators>
-                                    </controls:OptionItem>
-                                    <!--<controls:OptionItem Type="AddImageLayer" Command="{x:Bind Command}"/>-->
-                                    <!--<controls:OptionItem Type="AddCurveLayer" Command="{x:Bind Command}"/>-->
-                                    <controls:OptionItem Type="AddFillLayer" Command="{x:Bind Command}"/>
+                                    </MenuFlyoutItem>
+                                    <!--<MenuFlyoutItem Type="AddImageLayer" Command="{x:Bind Command}"/>-->
+                                    <!--<MenuFlyoutItem Type="AddCurveLayer" Command="{x:Bind Command}"/>-->
+                                    <MenuFlyoutItem Text="{strings:Option Type=AddFillLayer}" Tag="{strings:OptionIcon Type=AddFillLayer}" CommandParameter="{strings:OptionType Type=AddFillLayer}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                             <SymbolIcon Margin="10,0,0,0" Symbol="Add"/>
@@ -474,52 +474,52 @@
                                             </ToolTipService.ToolTip>
                                         </elements:TagTypeSegmented>
 
-                                        <controls:OptionItem x:Name="CutLayerItem" Type="CutLayer" Command="{x:Bind Command}"/>
-                                        <controls:OptionItem x:Name="CopyLayerItem" Type="CopyLayer" Command="{x:Bind Command}"/>
-                                        <controls:OptionItem x:Name="PasteLayerItem" Type="PasteLayer" Command="{x:Bind Command}"/>
-                                        <controls:OptionItem x:Name="RemoveItem" Type="Remove" Command="{x:Bind Command}">
+                                        <MenuFlyoutItem x:Name="CutLayerItem" Text="{strings:Option Type=CutLayer}" Tag="{strings:OptionIcon Type=CutLayer}" CommandParameter="{strings:OptionType Type=CutLayer}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                        <MenuFlyoutItem x:Name="CopyLayerItem" Text="{strings:Option Type=CopyLayer}" Tag="{strings:OptionIcon Type=CopyLayer}" CommandParameter="{strings:OptionType Type=CopyLayer}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                        <MenuFlyoutItem x:Name="PasteLayerItem" Text="{strings:Option Type=PasteLayer}" Tag="{strings:OptionIcon Type=PasteLayer}" CommandParameter="{strings:OptionType Type=PasteLayer}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                        <MenuFlyoutItem x:Name="RemoveItem" Text="{strings:Option Type=Remove}" Tag="{strings:OptionIcon Type=Remove}" CommandParameter="{strings:OptionType Type=Remove}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Key="Delete"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
+                                        </MenuFlyoutItem>
                                         <MenuFlyoutSeparator/>
-                                        <controls:OptionItem x:Name="DuplicateItem" Type="Duplicate" Command="{x:Bind Command}">
+                                        <MenuFlyoutItem x:Name="DuplicateItem" Text="{strings:Option Type=Duplicate}" Tag="{strings:OptionIcon Type=Duplicate}" CommandParameter="{strings:OptionType Type=Duplicate}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="D"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
-                                        <controls:OptionItem x:Name="ExtractItem" Type="Extract" Command="{x:Bind Command}">
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem x:Name="ExtractItem" Text="{strings:Option Type=Extract}" Tag="{strings:OptionIcon Type=Extract}" CommandParameter="{strings:OptionType Type=Extract}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="E"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
-                                        <controls:OptionItem x:Name="MergeItem" Type="Merge" Command="{x:Bind Command}">
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem x:Name="MergeItem" Text="{strings:Option Type=Merge}" Tag="{strings:OptionIcon Type=Merge}" CommandParameter="{strings:OptionType Type=Merge}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="M"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
-                                        <controls:OptionItem x:Name="FlattenItem" Type="Flatten" Command="{x:Bind Command}">
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem x:Name="FlattenItem" Text="{strings:Option Type=Flatten}" Tag="{strings:OptionIcon Type=Flatten}" CommandParameter="{strings:OptionType Type=Flatten}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="F"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
+                                        </MenuFlyoutItem>
                                         <!--Group-->
                                         <MenuFlyoutSeparator/>
-                                        <controls:OptionItem x:Name="GroupItem" Type="Group" Command="{x:Bind Command}">
+                                        <MenuFlyoutItem x:Name="GroupItem" Text="{strings:Option Type=Group}" Tag="{strings:OptionIcon Type=Group}" CommandParameter="{strings:OptionType Type=Group}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="G"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
-                                        <controls:OptionItem x:Name="UngroupItem" Type="Ungroup" Command="{x:Bind Command}">
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem x:Name="UngroupItem" Text="{strings:Option Type=Ungroup}" Tag="{strings:OptionIcon Type=Ungroup}" CommandParameter="{strings:OptionType Type=Ungroup}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="U"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
-                                        <controls:OptionItem x:Name="ReleaseItem" Type="Release" Command="{x:Bind Command}">
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem x:Name="ReleaseItem" Text="{strings:Option Type=Release}" Tag="{strings:OptionIcon Type=Release}" CommandParameter="{strings:OptionType Type=Release}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                             <UIElement.KeyboardAccelerators>
                                                 <KeyboardAccelerator Modifiers="Control" Key="R"/>
                                             </UIElement.KeyboardAccelerators>
-                                        </controls:OptionItem>
+                                        </MenuFlyoutItem>
                                         <!--
                                         <local:OptionItem Type="ExpandStroke" Command="{x:Bind Command}"/>
                                         <MenuFlyoutSeparator/>
@@ -1915,11 +1915,11 @@
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="NewWindow"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <controls:OptionItem Type="JPEG" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="PNG" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="BMP" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="GIF" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="TIFF" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=JPEG}" Tag="{strings:OptionIcon Type=JPEG}" CommandParameter="{strings:OptionType Type=JPEG}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=PNG}" Tag="{strings:OptionIcon Type=PNG}" CommandParameter="{strings:OptionType Type=PNG}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=BMP}" Tag="{strings:OptionIcon Type=BMP}" CommandParameter="{strings:OptionType Type=BMP}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=GIF}" Tag="{strings:OptionIcon Type=GIF}" CommandParameter="{strings:OptionType Type=GIF}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=TIFF}" Tag="{strings:OptionIcon Type=TIFF}" CommandParameter="{strings:OptionType Type=TIFF}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutItem Text="{strings:Option Type=HistogramMenu}" CommandParameter="{strings:OptionType Type=HistogramMenu}" Command="{x:Bind Command}">
                                     <MenuFlyoutItem.Icon>
@@ -1936,20 +1936,20 @@
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="StopSlideShow"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <controls:OptionItem Type="Stretch" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="Extend" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="Offset" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=Stretch}" Tag="{strings:OptionIcon Type=Stretch}" CommandParameter="{strings:OptionType Type=Stretch}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=Extend}" Tag="{strings:OptionIcon Type=Extend}" CommandParameter="{strings:OptionType Type=Extend}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=Offset}" Tag="{strings:OptionIcon Type=Offset}" CommandParameter="{strings:OptionType Type=Offset}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSubItem Text="{strings:Option Type=RotateCanvas}">
                                     <MenuFlyoutSubItem.Icon>
                                         <SymbolIcon Symbol="Orientation"/>
                                     </MenuFlyoutSubItem.Icon>
-                                    <controls:OptionItem Type="FlipHorizontal" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="FlipVertical" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=FlipHorizontal}" Tag="{strings:OptionIcon Type=FlipHorizontal}" CommandParameter="{strings:OptionType Type=FlipHorizontal}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=FlipVertical}" Tag="{strings:OptionIcon Type=FlipVertical}" CommandParameter="{strings:OptionType Type=FlipVertical}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                     <MenuFlyoutSeparator/>
-                                    <controls:OptionItem Type="LeftTurn" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="RightTurn" Command="{x:Bind Command}"/>
-                                    <controls:OptionItem Type="OverTurn" Command="{x:Bind Command}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=LeftTurn}" Tag="{strings:OptionIcon Type=LeftTurn}" CommandParameter="{strings:OptionType Type=LeftTurn}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=RightTurn}" Tag="{strings:OptionIcon Type=RightTurn}" CommandParameter="{strings:OptionType Type=RightTurn}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                    <MenuFlyoutItem Text="{strings:Option Type=OverTurn}" Tag="{strings:OptionIcon Type=OverTurn}" CommandParameter="{strings:OptionType Type=OverTurn}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem Text="{strings:Option Type=Close}" CommandParameter="{strings:OptionType Type=Close}" Command="{x:Bind Command}">
@@ -2040,53 +2040,53 @@
                                         </ControlTemplate>
                                     </Control.Template>
                                 </MenuFlyoutSeparator>
-                                <controls:OptionItem Type="Cut" Command="{x:Bind Command}">
+                                <MenuFlyoutItem Text="{strings:Option Type=Cut}" Tag="{strings:OptionIcon Type=Cut}" CommandParameter="{strings:OptionType Type=Cut}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="X"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem Type="Copy" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{strings:Option Type=Copy}" Tag="{strings:OptionIcon Type=Copy}" CommandParameter="{strings:OptionType Type=Copy}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="C"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem x:Name="PasteItem" Type="Paste" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="PasteItem" Text="{strings:Option Type=Paste}" Tag="{strings:OptionIcon Type=Paste}" CommandParameter="{strings:OptionType Type=Paste}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="V"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem x:Name="ClearItem" Type="Clear" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="ClearItem" Text="{strings:Option Type=Clear}" Tag="{strings:OptionIcon Type=Clear}" CommandParameter="{strings:OptionType Type=Clear}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Key="Back"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
+                                </MenuFlyoutItem>
                                 <!--Select-->
                                 <MenuFlyoutSeparator/>
-                                <controls:OptionItem Type="All" Command="{x:Bind Command}">
+                                <MenuFlyoutItem Text="{strings:Option Type=All}" Tag="{strings:OptionIcon Type=All}" CommandParameter="{strings:OptionType Type=All}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="A"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem Type="Deselect" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{strings:Option Type=Deselect}" Tag="{strings:OptionIcon Type=Deselect}" CommandParameter="{strings:OptionType Type=Deselect}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="D"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem Type="MarqueeInvert" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{strings:Option Type=MarqueeInvert}" Tag="{strings:OptionIcon Type=MarqueeInvert}" CommandParameter="{strings:OptionType Type=MarqueeInvert}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="I"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem Type="Pixel" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{strings:Option Type=Pixel}" Tag="{strings:OptionIcon Type=Pixel}" CommandParameter="{strings:OptionType Type=Pixel}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="P"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
+                                </MenuFlyoutItem>
                                 <MenuFlyoutSeparator/>
-                                <controls:OptionItem Type="Feather" Command="{x:Bind Command}"/>
-                                <controls:OptionItem Type="MarqueeTransform" Command="{x:Bind Command}"/>
-                                <controls:OptionItem Type="Grow" Command="{x:Bind Command}"/>
-                                <controls:OptionItem Type="Shrink" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=Feather}" Tag="{strings:OptionIcon Type=Feather}" CommandParameter="{strings:OptionType Type=Feather}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=MarqueeTransform}" Tag="{strings:OptionIcon Type=MarqueeTransform}" CommandParameter="{strings:OptionType Type=MarqueeTransform}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=Grow}" Tag="{strings:OptionIcon Type=Grow}" CommandParameter="{strings:OptionType Type=Grow}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=Shrink}" Tag="{strings:OptionIcon Type=Shrink}" CommandParameter="{strings:OptionType Type=Shrink}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <!--EditMenu-->
@@ -2127,26 +2127,26 @@
                                         </ControlTemplate>
                                     </Control.Template>
                                 </MenuFlyoutSeparator>
-                                <controls:OptionItem Type="Move" Command="{x:Bind Command}">
+                                <MenuFlyoutItem Text="{strings:Option Type=Move}" Tag="{strings:OptionIcon Type=Move}" CommandParameter="{strings:OptionType Type=Move}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="M"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem Type="Transform" Command="{x:Bind Command}">
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{strings:Option Type=Transform}" Tag="{strings:OptionIcon Type=Transform}" CommandParameter="{strings:OptionType Type=Transform}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}">
                                     <UIElement.KeyboardAccelerators>
                                         <KeyboardAccelerator Modifiers="Control" Key="T"/>
                                     </UIElement.KeyboardAccelerators>
-                                </controls:OptionItem>
-                                <controls:OptionItem Type="FreeTransform" Command="{x:Bind Command}"/>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{strings:Option Type=FreeTransform}" Tag="{strings:OptionIcon Type=FreeTransform}" CommandParameter="{strings:OptionType Type=FreeTransform}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 <MenuFlyoutSeparator/>
                                 <!--
-                                <controls:OptionItem Type="DisplacementLiquefaction" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=DisplacementLiquefaction}" Tag="{strings:OptionIcon Type=DisplacementLiquefaction}" CommandParameter="{strings:OptionType Type=DisplacementLiquefaction}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 -->
-                                <controls:OptionItem Type="GradientMapping" Command="{x:Bind Command}"/>
-                                <controls:OptionItem Type="RippleEffect" Command="{x:Bind Command}"/>
-                                <controls:OptionItem Type="Threshold" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=GradientMapping}" Tag="{strings:OptionIcon Type=GradientMapping}" CommandParameter="{strings:OptionType Type=GradientMapping}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=RippleEffect}" Tag="{strings:OptionIcon Type=RippleEffect}" CommandParameter="{strings:OptionType Type=RippleEffect}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=Threshold}" Tag="{strings:OptionIcon Type=Threshold}" CommandParameter="{strings:OptionType Type=Threshold}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                 <MenuFlyoutSeparator/>
-                                <controls:OptionItem Type="HSB" Command="{x:Bind Command}"/>
+                                <MenuFlyoutItem Text="{strings:Option Type=HSB}" Tag="{strings:OptionIcon Type=HSB}" CommandParameter="{strings:OptionType Type=HSB}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                             </MenuFlyout>
                         </Button.Flyout>
                         <!--OtherMenu-->
