@@ -5,7 +5,7 @@ using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Numerics;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
@@ -15,6 +15,8 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
+        int Timeout;
+
         private void TasksStop()
         {
             this.Tasks.State = TaskState.Painted;
@@ -32,14 +34,32 @@ namespace Luo_Painter
                 switch (this.Tasks.GetBehavior())
                 {
                     case TaskBehavior.WaitingWork:
-                        continue;
+
+                        //@Debug
+                        // Task waiting freezes the UI thread,
+                        // So the Task sleeps for 10 milliseconds.
+                        Thread.Sleep(10);
+
+                        this.Timeout++;
+                        if (this.Timeout < 512) continue;
+                        this.Timeout = 0;
+
+                        //@Paint
+                        this.Tasks.State = TaskState.Finished;
+                        this.Tasks.Clear();
+                        this.PaintCompleted();
+                        return;
                     case TaskBehavior.Working:
                     case TaskBehavior.WorkingBeforeDead:
+                        this.Timeout = 0;
+
                         StrokeSegment segment = this.Tasks[0];
                         this.Tasks.RemoveAt(0);
                         this.PaintDelta(segment);
                         break;
                     default:
+                        this.Timeout = 0;
+
                         //@Paint
                         this.Tasks.State = TaskState.Finished;
                         this.Tasks.Clear();
