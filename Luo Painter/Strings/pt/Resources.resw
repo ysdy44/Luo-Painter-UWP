@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.0.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.0.2</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Introduza o texto</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Sem título</value> </data>
   <data name='UntitledFolder' xml:space='preserve'> <value>Nova pasta</value> </data>
@@ -85,17 +85,13 @@
   <data name='Redo' xml:space='preserve'> <value>Refazer</value> </data>
   <data name='FullScreen' xml:space='preserve'> <value>Refazer</value> </data>
   <data name='UnFullScreen' xml:space='preserve'> <value>Sair da tela cheia</value> </data>
+  <data name='DockLeft' xml:space='preserve'> <value>Encaixe à esquerda</value> </data>
+  <data name='DockRight' xml:space='preserve'> <value>Encaixe o lado direito</value> </data>
   <data name='JPEG' xml:space='preserve'> <value>JPEG</value> </data>
   <data name='PNG' xml:space='preserve'> <value>PNG</value> </data>
   <data name='BMP' xml:space='preserve'> <value>BMP</value> </data>
   <data name='GIF' xml:space='preserve'> <value>GIF</value> </data>
   <data name='TIFF' xml:space='preserve'> <value>TIFF</value> </data>
-  <data name='Cut' xml:space='preserve'> <value>Cortar</value> </data>
-  <data name='Copy' xml:space='preserve'> <value>Copiar</value> </data>
-  <data name='Paste' xml:space='preserve'> <value>Colar</value> </data>
-  <data name='Clear' xml:space='preserve'> <value>Limpar</value> </data>
-  <data name='DockLeft' xml:space='preserve'> <value>Encaixe à esquerda</value> </data>
-  <data name='DockRight' xml:space='preserve'> <value>Encaixe o lado direito</value> </data>
   <data name='FileMenu' xml:space='preserve'> <value>Arquivo</value> </data>
   <data name='ExportMenu' xml:space='preserve'> <value>Exportar</value> </data>
   <data name='HistogramMenu' xml:space='preserve'> <value>histograma</value> </data>
@@ -117,6 +113,18 @@
   <data name='CropCanvas' xml:space='preserve'> <value>Recortar lona</value> </data>
   <data name='ResizeCanvas' xml:space='preserve'> <value>Redimensionar tela</value> </data>
   <data name='RotateCanvas' xml:space='preserve'> <value>Girar tela</value> </data>
+  <data name='Cut' xml:space='preserve'> <value>Cortar</value> </data>
+  <data name='Copy' xml:space='preserve'> <value>Copiar</value> </data>
+  <data name='Paste' xml:space='preserve'> <value>Colar</value> </data>
+  <data name='Clear' xml:space='preserve'> <value>Limpar</value> </data>
+  <data name='All' xml:space='preserve'> <value>Selecionar tudo</value> </data>
+  <data name='Deselect' xml:space='preserve'> <value>Desmarque</value> </data>
+  <data name='MarqueeInvert' xml:space='preserve'> <value>Inverter</value> </data>
+  <data name='Pixel' xml:space='preserve'> <value>Pixel</value> </data>
+  <data name='Feather' xml:space='preserve'> <value>Pena</value> </data>
+  <data name='MarqueeTransform' xml:space='preserve'> <value>Transformar</value> </data>
+  <data name='Grow' xml:space='preserve'> <value>Crescer</value> </data>
+  <data name='Shrink' xml:space='preserve'> <value>Encolher</value> </data>
   <data name='Stretch' xml:space='preserve'> <value>Esticar</value> </data>
   <data name='Extend' xml:space='preserve'> <value>Estender</value> </data>
   <data name='Offset' xml:space='preserve'> <value>Offset</value> </data>
@@ -162,14 +170,6 @@
   <data name='AlignMiddle' xml:space='preserve'> <value>Alinhar o meio</value> </data>
   <data name='AlignBottom' xml:space='preserve'> <value>Alinhar parte inferior</value> </data>
   <data name='SpaceVertically' xml:space='preserve'> <value>Espaço verticalmente</value> </data>
-  <data name='All' xml:space='preserve'> <value>Selecionar tudo</value> </data>
-  <data name='Deselect' xml:space='preserve'> <value>Desmarque</value> </data>
-  <data name='MarqueeInvert' xml:space='preserve'> <value>Inverter</value> </data>
-  <data name='Pixel' xml:space='preserve'> <value>Pixel</value> </data>
-  <data name='Feather' xml:space='preserve'> <value>Pena</value> </data>
-  <data name='MarqueeTransform' xml:space='preserve'> <value>Transformar</value> </data>
-  <data name='Grow' xml:space='preserve'> <value>Crescer</value> </data>
-  <data name='Shrink' xml:space='preserve'> <value>Encolher</value> </data>
   <data name='Move' xml:space='preserve'> <value>Mover</value> </data>
   <data name='Transform' xml:space='preserve'> <value>Transformar</value> </data>
   <data name='FreeTransform' xml:space='preserve'> <value>Transformação livre</value> </data>

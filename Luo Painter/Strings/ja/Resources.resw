@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.0.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.0.2</value> </data>
   <data name='InputText' xml:space='preserve'> <value>テキストを入力してください</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>無題</value> </data>
   <data name='UntitledFolder' xml:space='preserve'> <value>新しいフォルダ</value> </data>
@@ -85,17 +85,13 @@
   <data name='Redo' xml:space='preserve'> <value>やり直し</value> </data>
   <data name='FullScreen' xml:space='preserve'> <value>やり直し</value> </data>
   <data name='UnFullScreen' xml:space='preserve'> <value>フルスクリーンを終了</value> </data>
+  <data name='DockLeft' xml:space='preserve'> <value>左側をドッキング</value> </data>
+  <data name='DockRight' xml:space='preserve'> <value>右側をドッキングします</value> </data>
   <data name='JPEG' xml:space='preserve'> <value>JPEG</value> </data>
   <data name='PNG' xml:space='preserve'> <value>PNG</value> </data>
   <data name='BMP' xml:space='preserve'> <value>BMP</value> </data>
   <data name='GIF' xml:space='preserve'> <value>GIF</value> </data>
   <data name='TIFF' xml:space='preserve'> <value>TIFF</value> </data>
-  <data name='Cut' xml:space='preserve'> <value>切り取り</value> </data>
-  <data name='Copy' xml:space='preserve'> <value>コピー</value> </data>
-  <data name='Paste' xml:space='preserve'> <value>貼り付け</value> </data>
-  <data name='Clear' xml:space='preserve'> <value>クリア</value> </data>
-  <data name='DockLeft' xml:space='preserve'> <value>左側をドッキング</value> </data>
-  <data name='DockRight' xml:space='preserve'> <value>右側をドッキングします</value> </data>
   <data name='FileMenu' xml:space='preserve'> <value>ファイル</value> </data>
   <data name='ExportMenu' xml:space='preserve'> <value>書き出す</value> </data>
   <data name='HistogramMenu' xml:space='preserve'> <value>ヒストグラム</value> </data>
@@ -117,6 +113,18 @@
   <data name='CropCanvas' xml:space='preserve'> <value>キャンバスの切り抜き</value> </data>
   <data name='ResizeCanvas' xml:space='preserve'> <value>キャンバスのサイズ変更</value> </data>
   <data name='RotateCanvas' xml:space='preserve'> <value>キャンバスの回転</value> </data>
+  <data name='Cut' xml:space='preserve'> <value>切り取り</value> </data>
+  <data name='Copy' xml:space='preserve'> <value>コピー</value> </data>
+  <data name='Paste' xml:space='preserve'> <value>貼り付け</value> </data>
+  <data name='Clear' xml:space='preserve'> <value>クリア</value> </data>
+  <data name='All' xml:space='preserve'> <value>すべて選択</value> </data>
+  <data name='Deselect' xml:space='preserve'> <value>オフ</value> </data>
+  <data name='MarqueeInvert' xml:space='preserve'> <value>反転</value> </data>
+  <data name='Pixel' xml:space='preserve'> <value>ピクセル</value> </data>
+  <data name='Feather' xml:space='preserve'> <value>羽</value> </data>
+  <data name='MarqueeTransform' xml:space='preserve'> <value>変形する</value> </data>
+  <data name='Grow' xml:space='preserve'> <value>育つ</value> </data>
+  <data name='Shrink' xml:space='preserve'> <value>縮む</value> </data>
   <data name='Stretch' xml:space='preserve'> <value>伸ばす</value> </data>
   <data name='Extend' xml:space='preserve'> <value>延長</value> </data>
   <data name='Offset' xml:space='preserve'> <value>オフセット</value> </data>
@@ -162,14 +170,6 @@
   <data name='AlignMiddle' xml:space='preserve'> <value>中央揃え</value> </data>
   <data name='AlignBottom' xml:space='preserve'> <value>下揃え</value> </data>
   <data name='SpaceVertically' xml:space='preserve'> <value>垂直方向のスペース</value> </data>
-  <data name='All' xml:space='preserve'> <value>すべて選択</value> </data>
-  <data name='Deselect' xml:space='preserve'> <value>オフ</value> </data>
-  <data name='MarqueeInvert' xml:space='preserve'> <value>反転</value> </data>
-  <data name='Pixel' xml:space='preserve'> <value>ピクセル</value> </data>
-  <data name='Feather' xml:space='preserve'> <value>羽</value> </data>
-  <data name='MarqueeTransform' xml:space='preserve'> <value>変形する</value> </data>
-  <data name='Grow' xml:space='preserve'> <value>育つ</value> </data>
-  <data name='Shrink' xml:space='preserve'> <value>縮む</value> </data>
   <data name='Move' xml:space='preserve'> <value>移動</value> </data>
   <data name='Transform' xml:space='preserve'> <value>変形</value> </data>
   <data name='FreeTransform' xml:space='preserve'> <value>自由変形</value> </data>
