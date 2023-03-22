@@ -1967,6 +1967,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{strings:Option Type=FullScreen}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
                         </ToolTipService.ToolTip>
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                        </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="FullScreen" />
                     </Button>
                     <Button x:Name="UnFullScreenButton" Visibility="Collapsed" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
@@ -1975,6 +1978,9 @@
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{strings:Option Type=UnFullScreen}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
                         </ToolTipService.ToolTip>
+                        <UIElement.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="None" Key="Escape"/>
+                        </UIElement.KeyboardAccelerators>
                         <SymbolIcon Symbol="BackToWindow" />
                     </Button>
                 </StackPanel>

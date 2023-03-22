@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:transformers="using:FanKit.Transformers"
     xmlns:elements="using:Luo_Painter.Elements"
+    xmlns:strings="using:Luo_Painter.Strings"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     NavigationCacheMode="Required"
     mc:Ignorable="d"
@@ -38,28 +39,24 @@
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
 
             <Button x:Name="ImageButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
-                <Button.KeyboardAccelerators>
+                <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Key="M"/>
                     <KeyboardAccelerator Key="I"/>
-                </Button.KeyboardAccelerators>
+                </UIElement.KeyboardAccelerators>
                 <StackPanel Spacing="8" Orientation="Horizontal">
                     <SymbolIcon Symbol="Pictures"/>
-                    <TextBlock x:Name="ImageTextBlock" VerticalAlignment="Center">
-                        Image
-                    </TextBlock>
+                    <TextBlock VerticalAlignment="Center" Text="{strings:Option Type=Image}"/>
                 </StackPanel>
             </Button>
 
             <Button x:Name="ClearButton" Padding="12,2" Margin="12,4" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppBorderBrush}" Background="{ThemeResource AppBackgroundLight}">
-                <Button.KeyboardAccelerators>
+                <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Back"/>
                     <KeyboardAccelerator Key="Delete"/>
-                </Button.KeyboardAccelerators>
+                </UIElement.KeyboardAccelerators>
                 <StackPanel Spacing="8" Orientation="Horizontal">
                     <SymbolIcon Symbol="Delete"/>
-                    <TextBlock x:Name="ClearTextBlock" VerticalAlignment="Center">
-                        Clear
-                    </TextBlock>
+                    <TextBlock VerticalAlignment="Center" Text="{strings:Option Type=Clear}"/>
                 </StackPanel>
             </Button>
 
