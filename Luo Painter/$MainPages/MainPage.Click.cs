@@ -58,6 +58,10 @@ namespace Luo_Painter
                 case ActionType.NewProject:
                     if (ContentDialogExtensions.CanShow)
                     {
+                        var screen = FileUtil.GetCurrentViewBounds();
+                        this.SizePicker.ResezingWidth(System.Math.Clamp(screen.Width, 16, 8192));
+                        this.SizePicker.ResezingHeight(System.Math.Clamp(screen.Height, 16, 8192));
+
                         ContentDialogResult result = await this.AddDialog.ShowInstance();
 
                         switch (result)

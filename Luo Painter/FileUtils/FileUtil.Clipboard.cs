@@ -2,9 +2,12 @@
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
+using Windows.UI.ViewManagement;
 
 namespace Luo_Painter
 {
@@ -15,6 +18,24 @@ namespace Luo_Painter
         /// <see cref="CanvasDevice.MaximumBitmapSizeInPixels"/>
         /// </summary>
         public const int MaxImageSize = 16384;
+
+        public static Size GetCurrentViewBounds()
+        {
+            try
+            {
+                ApplicationView applicationView = ApplicationView.GetForCurrentView();
+                Rect bounds = applicationView.VisibleBounds;
+
+                DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
+                double scale = displayInformation.RawPixelsPerViewPixel;
+
+                return new Size(bounds.Width * scale, bounds.Height * scale);
+            }
+            catch (Exception)
+            {
+                return Size.Empty;
+            }
+        }
 
         public static async Task<RandomAccessStreamReference> ToStream(this CanvasBitmap bitmap)
         {
