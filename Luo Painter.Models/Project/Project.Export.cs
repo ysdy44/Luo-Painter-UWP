@@ -16,10 +16,13 @@ namespace Luo_Painter.Models
     public sealed partial class Project
     {
 
-        public async Task<ProjectParameter> SaveAsync(System.Drawing.Size size)
+        public async Task<ProjectParameter> SaveAsync(StorageFolder item, System.Drawing.Size size)
         {
+            //@Debug
+            // The blank project cannot be opened if it crashes.
+
             // Save Project.xml
-            using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Project.xml"))
+            using (IRandomAccessStream stream = await item.OpenAsync("Project.xml"))
             {
                 new XDocument(new XElement("Root",
                     new XElement("Width", size.Width),
@@ -151,6 +154,23 @@ namespace Luo_Painter.Models
             if (hasProject is false) return null;
             if (width < 16) return null;
             if (height < 16) return null;
+
+            //@Debug
+            // The blank project cannot be opened if it crashes.
+            if (docLayers is null)
+            {
+                return new ProjectParameter
+                {
+                    Type = ProjectParameterType.NewProject,
+
+                    Path = this.Path,
+                    Name = this.Name,
+                    DisplayName = this.DisplayName,
+
+                    Width = width,
+                    Height = height,
+                };
+            }
 
             // 3. Load Bitmaps.xml 
             IDictionary<string, IBuffer> bitmaps = null;

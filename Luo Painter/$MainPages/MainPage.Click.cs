@@ -67,7 +67,7 @@ namespace Luo_Painter
 
                                 StorageFolder item = await this.ObservableCollection.Create(this.Paths.GetPath(), this.Untitled);
                                 Project project = new Project(item);
-                                ProjectParameter parameter = await project.SaveAsync(size);
+                                ProjectParameter parameter = await project.SaveAsync(item, size);
 
                                 this.ObservableCollection.Insert(project);
                                 base.Frame.Navigate(typeof(DrawPage), parameter);
