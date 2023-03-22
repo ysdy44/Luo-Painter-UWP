@@ -108,20 +108,23 @@ namespace Luo_Painter
         private async void PaintCompleted()
         {
             BitmapLayer bitmapLayer = this.BitmapLayer;
+            this.BitmapLayer = null;
 
-            //@Task
-            lock (this.Locker)
+            if (bitmapLayer is null is false)
             {
-                if (this.InkType is InkType.Liquefy is false)
+                //@Task
+                lock (this.Locker)
                 {
-                    using (CanvasDrawingSession ds = this.BitmapLayer.CreateDrawingSession())
+                    if (this.InkType is InkType.Liquefy is false)
                     {
-                        ds.Clear(Colors.Transparent);
-                        this.InkPresenter.Preview(ds, this.InkType, this.BitmapLayer[BitmapType.Origin], this.BitmapLayer[BitmapType.Temp]);
+                        using (CanvasDrawingSession ds = bitmapLayer.CreateDrawingSession())
+                        {
+                            ds.Clear(Colors.Transparent);
+                            this.InkPresenter.Preview(ds, this.InkType, bitmapLayer[BitmapType.Origin], bitmapLayer[BitmapType.Temp]);
+                        }
                     }
+                    bitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
                 }
-                this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
-                this.BitmapLayer = null;
             }
 
             await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
