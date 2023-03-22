@@ -167,21 +167,21 @@ namespace Luo_Painter
         {
             switch (item.Type)
             {
-                case ProjectParameterType.None:
+                case ProjectParameterType.NewProject:
                     BitmapLayer bitmapLayer1 = new BitmapLayer(this.CanvasDevice, item.Width, item.Height);
                     this.Nodes.Add(bitmapLayer1);
                     this.ObservableCollection.Add(bitmapLayer1);
 
                     this.LayerSelectedIndex = 0;
                     break;
-                case ProjectParameterType.Image:
+                case ProjectParameterType.NewImage:
                     BitmapLayer bitmapLayer2 = new BitmapLayer(this.CanvasDevice, item.Bitmap, item.Width, item.Height);
                     this.Nodes.Add(bitmapLayer2);
                     this.ObservableCollection.Add(bitmapLayer2);
 
                     this.LayerSelectedIndex = 0;
                     break;
-                case ProjectParameterType.File:
+                case ProjectParameterType.OpenProject:
                     if (string.IsNullOrEmpty(item.DocProject)) break;
 
                     // 1. Load Photos.xml

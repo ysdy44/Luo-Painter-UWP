@@ -29,7 +29,7 @@ namespace Luo_Painter.Models
 
             return new ProjectParameter
             {
-                Type = ProjectParameterType.None,
+                Type = ProjectParameterType.NewProject,
 
                 Path = this.Path,
                 Name = this.Name,
@@ -82,7 +82,7 @@ namespace Luo_Painter.Models
 
             return new ProjectParameter
             {
-                Type = ProjectParameterType.Image,
+                Type = ProjectParameterType.NewImage,
 
                 Path = this.Path,
                 Name = this.Name,
@@ -222,7 +222,7 @@ namespace Luo_Painter.Models
 
             return new ProjectParameter
             {
-                Type = ProjectParameterType.File,
+                Type = ProjectParameterType.OpenProject,
 
                 Path = this.Path,
                 Name = this.Name,

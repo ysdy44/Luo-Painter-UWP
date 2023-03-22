@@ -6,12 +6,12 @@ namespace Luo_Painter.Models
 {
     public enum ProjectParameterType
     {
-        None,
+        NewProject,
 
         /// <summary>
         /// <see cref="ProjectParameter.Bitmap"/>
         /// </summary>
-        Image,
+        NewImage,
 
         /// <summary>
         /// <see cref="ProjectParameter.DocProject"/>
@@ -19,7 +19,7 @@ namespace Luo_Painter.Models
         /// <see cref="ProjectParameter.Bitmaps"/>
         /// <see cref="ProjectParameter.Photos"/>
         /// </summary>
-        File
+        OpenProject
     }
 
     public class ProjectParameter
