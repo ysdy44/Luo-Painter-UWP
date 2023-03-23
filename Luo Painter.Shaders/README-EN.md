@@ -1,6 +1,6 @@
 ﻿## Pixel Shader 
 
-This Shaders folder contains custom pixel shaders for use by PixelShaderEffect.
+This folder contains some custom pixel shaders for use by PixelShaderEffect.
 
 
 <br/>
@@ -15,6 +15,20 @@ This Shaders folder contains custom pixel shaders for use by PixelShaderEffect.
 |Compile command|CompileShaders.cmd|
 |Shader source code|*.hlsl File|
 |Binaries|*.bin File|
+
+
+<br/>
+
+## 引用
+
+无
+
+
+<br/>
+
+## Nuget 引用
+
+无
 
 
 <br/>
@@ -34,7 +48,7 @@ using Windows.Storage.Streams;
 public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource source, float parameter1)
 {
     // TODO: Please replace "MyHLSL.bin" with the File Name.
-    Uri uri = new Uri("ms-appx:///Shaders/MyHLSL.bin");
+    Uri uri = new Uri("ms-appx:///Luo Painter.Shaders/MyHLSL.bin");
 
     // Read all bytes.
     StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
@@ -68,6 +82,6 @@ public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource sour
 > 
 > (This will recompile *.hlsl files, generating the *.bin output binaries)
 >
-> 4. In the Solution View, Put the *.bin File into the "Shader" Folder;
+> 4. In the Solution View, Put the *.bin File into this Folder;
 >
 > 5. In the Properties View, Set the "Build Action" of the *.bin File to "Content".

@@ -1,6 +1,6 @@
 ## 像素着色器 
 
-此 Shaders 文件夹包含供 PixelShaderEffect 使用的自定义像素着色器。
+此文件夹包含一些供 PixelShaderEffect 使用的自定义像素着色器
 
 
 <br/>
@@ -15,6 +15,20 @@
 |编译命令|CompileShaders.cmd|
 |着色器源代码|*.hlsl 文件|
 |二进制文件|*.bin 文件|
+
+
+<br/>
+
+## 引用
+
+无
+
+
+<br/>
+
+## Nuget 引用
+
+无
 
 
 <br/>
@@ -34,7 +48,7 @@ using Windows.Storage.Streams;
 public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource source, float parameter1)
 {
     // TODO: 请把 "MyHLSL.bin" 替换为文件名。
-    Uri uri = new Uri("ms-appx:///Shaders/MyHLSL.bin");
+    Uri uri = new Uri("ms-appx:///Luo Painter.Shaders/MyHLSL.bin");
 
     // 读取所有字节。
     StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
@@ -68,6 +82,6 @@ public static async Task<PixelShaderEffect> CreaAsync(IGraphicsEffectSource sour
 > 
 > （这将重新编译 *.hlsl 文件，生成 *.bin 输出二进制文件）
 >
-> 4. 在解决方案视图中，将 *.bin 文件放入 "Shader" 文件夹；
+> 4. 在解决方案视图中，将 *.bin 文件放入此文件夹；
 >
 > 5. 在属性视图中，将 *.bin 文件的 ”生成操作“ 设置为 “内容”。
