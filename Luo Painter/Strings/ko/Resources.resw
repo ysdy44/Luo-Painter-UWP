@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.0.2</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.0.3</value> </data>
   <data name='InputText' xml:space='preserve'> <value>텍스트를 입력하십시오</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>제목 없음</value> </data>
   <data name='UntitledFolder' xml:space='preserve'> <value>새 폴더</value> </data>
