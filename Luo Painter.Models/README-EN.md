@@ -1,10 +1,8 @@
 ﻿## Class library that contains models
  
 This is a class library, and this folder contains some of the basis model types
-
-This Icons folder contains some icon resource files
-
-This Thumbnails folder contains some thumbnail image files
+- This Icons folder contains some icon resource files
+- This Thumbnails folder contains some thumbnail image files
 
 
 <br/>

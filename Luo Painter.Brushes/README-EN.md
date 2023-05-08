@@ -1,10 +1,8 @@
 ﻿## Class library that contains brushes
  
 This is a brush class library, and this folder contains some brush types, texture image files, tile image files
-
-This Textures folder contains some texture image files
-
-This tiles folder contains some tile image files
+- This Textures folder contains some texture image files
+- This tiles folder contains some tile image files
 
 
 <br/>

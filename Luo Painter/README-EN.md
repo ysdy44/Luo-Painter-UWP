@@ -1,12 +1,9 @@
 ﻿## Entrance
  
 This is an application that is the entry point to Luo Painter, please run it to see the main features of Luo Painter
-
-This $MainPages folder contains the first page
-
-This $DrawPages folder contains the second page
-
-This Controls folder contains controls such as dialog, list views, buttons, canvases
+- This $MainPages folder contains the first page
+- This $DrawPages folder contains the second page
+- This Controls folder contains controls such as dialog, list views, buttons, canvases
 
 
 <br/>
