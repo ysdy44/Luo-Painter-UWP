@@ -19,6 +19,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luo Painter.Shaders", "Luo 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luo Painter.TestApp", "Luo Painter.TestApp\Luo Painter.TestApp.csproj", "{37E8EB39-17F0-4A86-982F-B90997756BB5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{C8BA717A-B58C-488E-A55B-7E5B0FEDDCDE}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README-EN.md = README-EN.md
+		README-ZH.md = README-ZH.md
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
