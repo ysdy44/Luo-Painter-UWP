@@ -27,6 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{C8BA717A-B
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScreenShot", "ScreenShot", "{D830109E-A160-45E3-8EA0-468EC3FAF263}"
+	ProjectSection(SolutionItems) = preProject
+		ScreenShot\logo.png = ScreenShot\logo.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -224,6 +229,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D830109E-A160-45E3-8EA0-468EC3FAF263} = {C8BA717A-B58C-488E-A55B-7E5B0FEDDCDE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFDB3A7B-DAF7-4743-BC8E-B7D05DF3DE3B}
