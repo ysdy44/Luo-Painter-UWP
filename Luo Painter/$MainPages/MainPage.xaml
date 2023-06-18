@@ -14,6 +14,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    <!--Extension-->
+    <FrameworkElement.Tag>
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
+    </FrameworkElement.Tag>
+
     <FrameworkElement.Resources>
         <!--Flyout-->
         <MenuFlyout x:Name="FileMenuFlyout">
@@ -66,7 +71,6 @@
 
     <Grid>
 
-
         <!--VisualState-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -109,13 +113,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-
-        <!--Extension-->
-        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
-
-
         <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" Background="{ThemeResource AppBackgroundDark}"/>
-
 
         <!--Body-->
         <elements:AnimationListView

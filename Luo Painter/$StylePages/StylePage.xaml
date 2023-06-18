@@ -10,15 +10,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    <!--Extension-->
+    <FrameworkElement.Tag>
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
+    </FrameworkElement.Tag>
+
     <Grid>
 
-
-        <!--Extension-->
-        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorMediumDark}" AccentTitleBarColor="{ThemeResource SystemAccentColor}"/>
-
-
         <elements:AlignmentGridWithSpot x:Name="AlignmentGrid" IsHitTestVisible="False" Background="{ThemeResource AppBackgroundMediumLight}"/>
-
 
         <!--Body-->
         <ScrollViewer>

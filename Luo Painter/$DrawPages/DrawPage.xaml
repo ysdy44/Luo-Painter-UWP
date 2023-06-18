@@ -17,6 +17,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
 
+    <!--Extension-->
+    <FrameworkElement.Tag>
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorDark}" AccentTitleBarColor="{ThemeResource AppBackgroundColorDark}"/>
+    </FrameworkElement.Tag>
 
     <FrameworkElement.Resources>
         <!--Transformer-->
@@ -45,7 +49,6 @@
             <hsvColorPickers:NumberPicker x:Name="NumberPicker" />
         </Flyout>
     </FrameworkElement.Resources>
-
 
     <Grid Background="{ThemeResource AppBackgroundDark}">
 
@@ -199,11 +202,6 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-
-        <!--Extension-->
-        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorDark}" AccentTitleBarColor="{ThemeResource AppBackgroundColorDark}"/>
-
 
         <!--Body-->
         <SplitView 

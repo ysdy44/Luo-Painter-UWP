@@ -12,17 +12,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
-
+    
+    <!--Extension-->
+    <FrameworkElement.Tag>
+        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorDark}" AccentTitleBarColor="{ThemeResource AppBackgroundColorDark}"/>
+    </FrameworkElement.Tag>
+    
     <FrameworkElement.Resources>
         <!--Transformer-->
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
     </FrameworkElement.Resources>
 
-
     <Grid>
-
-        <!--Extension-->
-        <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="{ThemeResource AppBackgroundColorDark}" AccentTitleBarColor="{ThemeResource AppBackgroundColorDark}"/>
 
         <!--Canvas-->
         <Canvas x:Name="Canvas" FlowDirection="LeftToRight" Background="{ThemeResource AppBackgroundDark}" >
