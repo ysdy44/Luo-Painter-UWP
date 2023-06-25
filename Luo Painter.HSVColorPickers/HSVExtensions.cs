@@ -23,11 +23,7 @@ namespace Luo_Painter.HSVColorPickers
         /// <returns> Hex. </returns>
         public static string ToHex(this Color color)
         {
-            string r = color.R.ToString("x2");
-            string g = color.G.ToString("x2");
-            string b = color.B.ToString("x2");
-
-            return $"{r}{g}{b}".ToUpper();
+            return $"{color.R:x2}{color.G:x2}{color.B:x2}".ToUpper();
         }
         /// <summary>
         /// Hex to Color.
@@ -36,26 +32,44 @@ namespace Luo_Painter.HSVColorPickers
         /// <returns> Color. </returns>
         public static Color? ToColor(string hex)
         {
-            if (string.IsNullOrEmpty(hex)) return null;
-
-            int length = hex.Length;
-            if (length < 6) return null;
-            else if (length > 6) hex = hex.Substring(length - 6, 6);
-
-            int hexNumber;
-            try
+            switch (hex.Length)
             {
-                hexNumber = int.Parse(hex, NumberStyles.HexNumber);
+                case 0:
+                    return null;
+                case 1:
+                    if (int.TryParse(hex, NumberStyles.HexNumber, null, out int rgb1))
+                    {
+                        byte rgb = (byte)(rgb1 * 0x11); // Hex: 16 + 1 = 17
+                        return Color.FromArgb(255, rgb, rgb, rgb);
+                    }
+                    return null;
+                case 2:
+                    if (byte.TryParse(hex, NumberStyles.HexNumber, null, out byte rgb2))
+                    {
+                        return Color.FromArgb(255, rgb2, rgb2, rgb2);
+                    }
+                    return null;
+                case 3:
+                    if (byte.TryParse($"{hex[0]}", NumberStyles.HexNumber, null, out byte r3) &&
+                    byte.TryParse($"{hex[1]}", NumberStyles.HexNumber, null, out byte g3) &&
+                    byte.TryParse($"{hex[2]}", NumberStyles.HexNumber, null, out byte b3))
+                    {
+                        return Color.FromArgb(255, r3, g3, b3);
+                    }
+                    return null;
+                case 4:
+                    return null;
+                case 5:
+                    return null;
+                default:
+                    if (byte.TryParse($"{hex[0]}{hex[1]}", NumberStyles.HexNumber, null, out byte r) &&
+                    byte.TryParse($"{hex[2]}{hex[3]}", NumberStyles.HexNumber, null, out byte g) &&
+                    byte.TryParse($"{hex[4]}{hex[5]}", NumberStyles.HexNumber, null, out byte b))
+                    {
+                        return Color.FromArgb(255, r, g, b);
+                    }
+                    return null;
             }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            int r = (hexNumber >> 16) & 255;
-            int g = (hexNumber >> 8) & 255;
-            int b = (hexNumber >> 0) & 255;
-            return Color.FromArgb(255, (byte)r, (byte)g, (byte)b);
         }
 
         /// <summary>
