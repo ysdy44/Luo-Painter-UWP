@@ -376,6 +376,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Icons\LoadFaill.jpg" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Icons\Logo.png" />
     <Content Include="Properties\Default.rd.xml" />
     <None Include="README-EN.md" />
     <None Include="README-ZH.md" />
