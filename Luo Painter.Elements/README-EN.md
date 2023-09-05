@@ -8,7 +8,7 @@ This is a library of control classes, and this folder contains some of the basis
 ## Function description
 
 |Key|Value|
-|:-|:-|
+|---|---|
 |System requirements| Windows 10 1803 or upper|
 |Development tool|Visual Studio 2022|
 |Programing language|C#|

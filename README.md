@@ -16,7 +16,7 @@ Painting Tool. You can give it a try if you need to paint something.
 ## Development environment
 
 |Key|Value|
-|:-|:-|
+|---|---|
 |System requirements| Windows 10 1803 or upper|
 |Development tool|Visual Studio 2022|
 |Graphics library|Win2D|

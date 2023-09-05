@@ -19,7 +19,7 @@ Luo Painter is a free and open source painting tool that only supports the Windo
 ## Development environment
 
 |Key|Value|
-|:-|:-|
+|---|---|
 |System requirements| Windows 10 1803 or upper|
 |Development tool|Visual Studio 2022|
 |Graphics library|Win2D|

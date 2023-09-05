@@ -8,7 +8,7 @@ This is a class library, and this folder contains some layer types
 ## Function description
 
 |Key|Value|
-|:-|:-|
+|---|---|
 |System requirements| Windows 10 1803 or upper|
 |Development tool|Visual Studio 2022|
 |Programing language|C#|
@@ -19,7 +19,7 @@ This is a class library, and this folder contains some layer types
 ## Reference
 
 |Value|
-|:-|
+|---|
 |Luo Painter.Models|
 
 
@@ -28,7 +28,7 @@ This is a class library, and this folder contains some layer types
 ## Nuget Reference
 
 |Value|
-|:-|
+|---|
 |FanKit.Transformers|
 
 

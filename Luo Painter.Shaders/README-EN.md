@@ -8,7 +8,7 @@ This folder contains some custom pixel shaders for use by PixelShaderEffect.
 ## Development environment
 
 |Key|Value|
-|:-|:-|
+|---|---|
 |Development tool|Visual Studio 2017|
 |Programing language|HLSL|
 |Compile tool|Developer Command Prompt|

@@ -8,7 +8,7 @@
 ## 开发环境
 
 |Key|Value|
-|:-|:-|
+|---|---|
 |系统要求| Windows 10 1803 或更高|
 |开发工具|Visual Studio 2022|
 |编程语言|C#|
@@ -19,7 +19,7 @@
 ## 引用
 
 |Value|
-|:-|
+|---|
 |Luo Painter.Models|
 
 
@@ -28,7 +28,7 @@
 ## Nuget 引用
 
 |Value|
-|:-|
+|---|
 |FanKit.Transformers|
 
 
