@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Strings;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,7 @@ namespace Luo_Painter.Controls
     internal class InkGrouping : List<InkAttributes>, IList<InkAttributes>, IGrouping<InkGroupingType, InkAttributes>
     {
         public InkGroupingType Key { set; get; }
-        public string KeyString => App.Resource.GetString($"Brush_{(this.Key.HasFlag(InkGroupingType.Others) ? InkGroupingType.Others : this.Key)}");
+        public string KeyString => this.Key.GetString();
     }
 
     internal class BrushBase : InkAttributes
