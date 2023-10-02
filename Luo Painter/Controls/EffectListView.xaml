@@ -7,6 +7,7 @@
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:models="using:Luo_Painter.Models"
     xmlns:strings="using:Luo_Painter.Strings"
+    xmlns:ui="using:Luo_Painter.UI"
     mc:Ignorable="d"
     >
 
@@ -15,8 +16,8 @@
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
                 <!--Collection-->
-                <local:OptionGroupingList x:Name="Collection">
-                    <local:OptionGrouping Key="Adjustment">
+                <ui:OptionGroupingList x:Name="Collection">
+                    <ui:OptionGrouping Key="Adjustment">
                         <models:OptionType>Gray</models:OptionType>
                         <models:OptionType>Invert</models:OptionType>
                         <models:OptionType>Exposure</models:OptionType>
@@ -26,14 +27,14 @@
                         <models:OptionType>Contrast</models:OptionType>
                         <models:OptionType>Temperature</models:OptionType>
                         <models:OptionType>HighlightsAndShadows</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Adjustment2">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Adjustment2">
                         <models:OptionType>GammaTransfer</models:OptionType>
                         <models:OptionType>Vignette</models:OptionType>
                         <models:OptionType>ColorMatrix</models:OptionType>
                         <models:OptionType>ColorMatch</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Effect1">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Effect1">
                         <models:OptionType>GaussianBlur</models:OptionType>
                         <models:OptionType>DirectionalBlur</models:OptionType>
                         <models:OptionType>Sharpen</models:OptionType>
@@ -42,8 +43,8 @@
                         <models:OptionType>Morphology</models:OptionType>
                         <models:OptionType>Emboss</models:OptionType>
                         <models:OptionType>Straighten</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Effect2">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Effect2">
                         <models:OptionType>Sepia</models:OptionType>
                         <models:OptionType>Posterize</models:OptionType>
                         <models:OptionType>LuminanceToAlpha</models:OptionType>
@@ -52,14 +53,14 @@
                         <models:OptionType>Colouring</models:OptionType>
                         <models:OptionType>Tint</models:OptionType>
                         <models:OptionType>DiscreteTransfer</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Effect3">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Effect3">
                         <models:OptionType>Lighting</models:OptionType>
                         <models:OptionType>Fog</models:OptionType>
                         <models:OptionType>Glass</models:OptionType>
                         <models:OptionType>PinchPunch</models:OptionType>
-                    </local:OptionGrouping>
-                </local:OptionGroupingList>
+                    </ui:OptionGrouping>
+                </ui:OptionGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -165,7 +166,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:OptionType">
-                    <local:OptionThumbnail Type="{x:Bind}"/>
+                    <ui:OptionThumbnail Type="{x:Bind}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 

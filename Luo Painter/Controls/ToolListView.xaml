@@ -26,24 +26,24 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <local:OptionGroupingList x:Name="Collection">
-                    <local:OptionGrouping Key="Marquee">
+                <ui:OptionGroupingList x:Name="Collection">
+                    <ui:OptionGrouping Key="Marquee">
                         <models:OptionType>MarqueeRectangular</models:OptionType>
                         <models:OptionType>MarqueeElliptical</models:OptionType>
                         <models:OptionType>MarqueePolygon</models:OptionType>
                         <models:OptionType>MarqueeFreeHand</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Selection">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Selection">
                         <models:OptionType>SelectionFlood</models:OptionType>
                         <models:OptionType>SelectionBrush</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Paint">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Paint">
                         <models:OptionType>PaintBrush</models:OptionType>
                         <models:OptionType>PaintLine</models:OptionType>
                         <models:OptionType>PaintBrushForce</models:OptionType>
                         <models:OptionType>PaintBrushMulti</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Vector">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Vector">
                         <!--<models:OptionType>Cursor</models:OptionType>-->
                         <models:OptionType>View</models:OptionType>
                         <models:OptionType>Straw</models:OptionType>
@@ -52,7 +52,7 @@
                         <models:OptionType>Transparency</models:OptionType>
                         <!--<models:OptionType>Image</models:OptionType>-->
                         <!--<models:OptionType>Crop</models:OptionType>-->
-                    </local:OptionGrouping>
+                    </ui:OptionGrouping>
                     <!--<local:OptionGrouping Key="Text">-->
                     <!--<models:OptionType>TextArtistic</models:OptionType>-->
                     <!--<models:OptionType>TextFrame</models:OptionType>-->
@@ -61,7 +61,7 @@
                     <!--<models:OptionType>Pen</models:OptionType>-->
                     <!--<models:OptionType>Node</models:OptionType>-->
                     <!--</local:OptionGrouping>-->
-                    <local:OptionGrouping Key="Geometry">
+                    <ui:OptionGrouping Key="Geometry">
                         <!--Geometry0-->
                         <models:OptionType>GeometryRectangle</models:OptionType>
                         <models:OptionType>GeometryEllipse</models:OptionType>
@@ -81,13 +81,13 @@
                         <models:OptionType>GeometryArrow</models:OptionType>
                         <models:OptionType>GeometryCapsule</models:OptionType>
                         <models:OptionType>GeometryHeart</models:OptionType>
-                    </local:OptionGrouping>
-                    <local:OptionGrouping Key="Pattern">
+                    </ui:OptionGrouping>
+                    <ui:OptionGrouping Key="Pattern">
                         <models:OptionType>PatternGrid</models:OptionType>
                         <!--<models:OptionType>PatternDiagonal</models:OptionType>-->
                         <models:OptionType>PatternSpotted</models:OptionType>
-                    </local:OptionGrouping>
-                </local:OptionGroupingList>
+                    </ui:OptionGrouping>
+                </ui:OptionGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -134,7 +134,7 @@
 
     <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="models:OptionType">
-            <local:OptionIcon Type="{x:Bind}"/>
+            <ui:OptionIcon Type="{x:Bind}"/>
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 

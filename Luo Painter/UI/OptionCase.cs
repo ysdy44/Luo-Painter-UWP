@@ -3,7 +3,7 @@ using Luo_Painter.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     [ContentProperty(Name = nameof(Content))]
     internal class OptionCase : DependencyObject, ICase<OptionType>
