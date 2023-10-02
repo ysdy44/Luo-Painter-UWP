@@ -91,9 +91,9 @@ namespace Luo_Painter
         readonly Symmetryer Symmetryer = new Symmetryer();
 
 
-        Transform Transform;
-        Transform CreateTransform;
-        FreeTransform FreeTransform;
+        TransformMatrix Transform;
+        TransformBase CreateTransform;
+        TransformZDistance FreeTransform;
 
         TransformBase CropTransform;
         Vector2 StartingPositionWithoutRadian;

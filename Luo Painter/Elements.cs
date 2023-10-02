@@ -57,7 +57,7 @@ namespace Luo_Painter
         public Transformer StartingTransformer;
         public Transformer Transformer;
     }
-    internal struct Transform
+    internal struct TransformMatrix
     {
         public bool IsMove;
         public TransformerMode Mode;
@@ -68,7 +68,7 @@ namespace Luo_Painter
         public Transformer StartingTransformer;
         public Transformer Transformer;
     }
-    internal struct FreeTransform
+    internal struct TransformZDistance
     {
         public Vector2 Distance;
         public TransformerMode Mode;
