@@ -1,5 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using System.Collections.Generic;
+﻿using Luo_Painter.UI;
 using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls

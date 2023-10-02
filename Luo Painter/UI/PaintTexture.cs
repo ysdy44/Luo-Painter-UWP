@@ -1,6 +1,6 @@
 ﻿using Luo_Painter.Brushes;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.UI
 {
     public sealed class PaintTexture
     {

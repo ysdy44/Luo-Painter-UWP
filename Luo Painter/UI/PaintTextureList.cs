@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.UI
 {
     public sealed class PaintTextureList : List<PaintTexture>
     {

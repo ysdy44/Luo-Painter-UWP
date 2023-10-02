@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:strings="using:Luo_Painter.Strings"
+    xmlns:ui="using:Luo_Painter.UI"
     mc:Ignorable="d"
     FullSizeDesired="False" 
     Style="{StaticResource AppContentDialogStyle}"
@@ -34,7 +35,7 @@
         </ItemsControl.ItemContainerStyle>
 
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="local:PaintTexture">
+            <DataTemplate x:DataType="ui:PaintTexture">
                 <Image Source="{x:Bind Texture}">
                     <ToolTipService.ToolTip>
                         <ToolTip>
@@ -51,39 +52,39 @@
 
         <ItemsControl.ItemsSource>
             <!--Collection-->
-            <local:PaintTextureList x:Name="Collection">
-                <local:PaintTexture Width="1300" Height="1300" Path="Scratch00" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch01" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch02" />
-                <local:PaintTexture Width="1200" Height="1200" Path="Scratch03" />
-                <local:PaintTexture Width="1300" Height="1300" Path="Scratch04" />
+            <ui:PaintTextureList x:Name="Collection">
+                <ui:PaintTexture Width="1300" Height="1300" Path="Scratch00" />
+                <ui:PaintTexture Width="1400" Height="1400" Path="Scratch01" />
+                <ui:PaintTexture Width="1400" Height="1400" Path="Scratch02" />
+                <ui:PaintTexture Width="1200" Height="1200" Path="Scratch03" />
+                <ui:PaintTexture Width="1300" Height="1300" Path="Scratch04" />
 
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch05" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Scratch06" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Scratch07" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Scratch08" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Scratch09" />
+                <ui:PaintTexture Width="1400" Height="1400" Path="Scratch05" />
+                <ui:PaintTexture Width="1400" Height="1400" Path="Scratch06" />
+                <ui:PaintTexture Width="1600" Height="1600" Path="Scratch07" />
+                <ui:PaintTexture Width="1600" Height="1600" Path="Scratch08" />
+                <ui:PaintTexture Width="1600" Height="1600" Path="Scratch09" />
 
-                <local:PaintTexture Width="512" Height="512" Path="Splodge00" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge01" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge02" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge03" />
-                <local:PaintTexture Width="512" Height="512" Path="Splodge04" />
+                <ui:PaintTexture Width="512" Height="512" Path="Splodge00" />
+                <ui:PaintTexture Width="512" Height="512" Path="Splodge01" />
+                <ui:PaintTexture Width="512" Height="512" Path="Splodge02" />
+                <ui:PaintTexture Width="512" Height="512" Path="Splodge03" />
+                <ui:PaintTexture Width="512" Height="512" Path="Splodge04" />
 
-                <local:PaintTexture Width="600" Height="600" Path="Splodge05" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Splodge06" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Splodge07" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Splodge08" />
-                <local:PaintTexture Width="1024" Height="1024" Path="Splodge09" />
+                <ui:PaintTexture Width="600" Height="600" Path="Splodge05" />
+                <ui:PaintTexture Width="1400" Height="1400" Path="Splodge06" />
+                <ui:PaintTexture Width="1600" Height="1600" Path="Splodge07" />
+                <ui:PaintTexture Width="1600" Height="1600" Path="Splodge08" />
+                <ui:PaintTexture Width="1024" Height="1024" Path="Splodge09" />
 
-                <local:PaintTexture Width="400" Height="400" Path="Flash00" />
-                <local:PaintTexture Width="1400" Height="1400" Path="Flash01" />
-                <local:PaintTexture Width="1100" Height="1100" Path="Flash02" />
-                <local:PaintTexture Width="1600" Height="1600" Path="Flash03" />
-                <local:PaintTexture Width="900" Height="900" Path="Flash04" />
+                <ui:PaintTexture Width="400" Height="400" Path="Flash00" />
+                <ui:PaintTexture Width="1400" Height="1400" Path="Flash01" />
+                <ui:PaintTexture Width="1100" Height="1100" Path="Flash02" />
+                <ui:PaintTexture Width="1600" Height="1600" Path="Flash03" />
+                <ui:PaintTexture Width="900" Height="900" Path="Flash04" />
 
-                <local:PaintTexture Width="758" Height="758" Path="FX00" />
-            </local:PaintTextureList>
+                <ui:PaintTexture Width="758" Height="758" Path="FX00" />
+            </ui:PaintTextureList>
         </ItemsControl.ItemsSource>
 
     </GridView>
