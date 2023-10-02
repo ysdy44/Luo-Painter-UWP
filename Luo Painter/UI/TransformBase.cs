@@ -1,8 +1,8 @@
 ﻿using FanKit.Transformers;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
-    internal struct TransformBase
+    public struct TransformBase
     {
         public bool IsMove;
         public TransformerMode Mode;

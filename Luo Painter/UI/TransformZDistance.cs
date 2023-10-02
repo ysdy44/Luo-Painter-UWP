@@ -1,9 +1,9 @@
 ﻿using FanKit.Transformers;
 using System.Numerics;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
-    internal struct TransformZDistance
+    public struct TransformZDistance
     {
         public Vector2 Distance;
         public TransformerMode Mode;

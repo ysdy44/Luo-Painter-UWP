@@ -1,9 +1,9 @@
 ﻿using FanKit.Transformers;
 using System.Numerics;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
-    internal struct TransformMatrix
+    public struct TransformMatrix
     {
         public bool IsMove;
         public TransformerMode Mode;
