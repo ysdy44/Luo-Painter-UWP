@@ -9,6 +9,7 @@
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:models="using:Luo_Painter.Models"
     xmlns:strings="using:Luo_Painter.Strings"
+    xmlns:ui="using:Luo_Painter.UI"
     NavigationCacheMode="Required"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -25,7 +26,7 @@
         <MenuFlyout x:Name="FileMenuFlyout">
             <MenuFlyoutItem x:Name="RenameItem" CommandParameter="{x:Null}" Text="{strings:UI Type=RenameProject}">
                 <MenuFlyoutItem.Command>
-                    <local:ProjectCommand x:Name="RenameCommand"/>
+                    <ui:ProjectCommand x:Name="RenameCommand"/>
                 </MenuFlyoutItem.Command>
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Rename" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
@@ -172,9 +173,9 @@
             </ItemsControl.ItemContainerStyle>
 
             <ItemsControl.ItemTemplateSelector>
-                <local:ProjectDataTemplateSelector>
+                <ui:ProjectDataTemplateSelector>
 
-                    <local:ProjectDataTemplateSelector.None>
+                    <ui:ProjectDataTemplateSelector.None>
                         <DataTemplate x:DataType="models:ProjectNew">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
@@ -199,9 +200,9 @@
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>
-                    </local:ProjectDataTemplateSelector.None>
+                    </ui:ProjectDataTemplateSelector.None>
 
-                    <local:ProjectDataTemplateSelector.File>
+                    <ui:ProjectDataTemplateSelector.File>
                         <DataTemplate x:DataType="models:Project">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
@@ -230,9 +231,9 @@
                                 <TextBlock Grid.Row="2" FontSize="10" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" Text="{x:Bind DateCreated,Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
-                    </local:ProjectDataTemplateSelector.File>
+                    </ui:ProjectDataTemplateSelector.File>
 
-                    <local:ProjectDataTemplateSelector.Folder>
+                    <ui:ProjectDataTemplateSelector.Folder>
                         <DataTemplate x:DataType="models:ProjectFolder">
                             <Grid RowSpacing="2">
                                 <Grid.RowDefinitions>
@@ -293,9 +294,9 @@
                                 <TextBlock Grid.Row="2" FontSize="10" HorizontalAlignment="Center" Foreground="{ThemeResource AppForeground}" Text="{x:Bind DateCreated,Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
-                    </local:ProjectDataTemplateSelector.Folder>
+                    </ui:ProjectDataTemplateSelector.Folder>
 
-                </local:ProjectDataTemplateSelector>
+                </ui:ProjectDataTemplateSelector>
             </ItemsControl.ItemTemplateSelector>
 
         </elements:AnimationListView>

@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     public class ProjectDataTemplateSelector : DataTemplateSelector
     {
