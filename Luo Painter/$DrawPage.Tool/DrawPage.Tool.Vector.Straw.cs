@@ -51,13 +51,13 @@ namespace Luo_Painter
                 default:
                     if (this.LayerSelectedItem is null)
                     {
-                        this.Tip(TipType.NoLayer);
+                        this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                         break;
                     }
 
                     if (this.LayerSelectedItem is BitmapLayer bitmapLayer is false)
                     {
-                        this.Tip(TipType.NotBitmapLayer);
+                        this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         break;
                     }
 

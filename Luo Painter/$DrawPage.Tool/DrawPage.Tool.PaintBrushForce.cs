@@ -19,14 +19,14 @@ namespace Luo_Painter
 
             if (this.LayerSelectedItem is null)
             {
-                this.Tip(TipType.NoLayer);
+                this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                 return;
             }
 
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip(TipType.NotBitmapLayer);
+                this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                 return;
             }
 

@@ -75,7 +75,7 @@ namespace Luo_Painter
             }
             else
             {
-                this.Tip(TipType.NoLayer);
+                this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
             }
         }
 
@@ -85,7 +85,7 @@ namespace Luo_Painter
 
             if (result is false)
             {
-                this.Tip(TipType.NoPixel);
+                this.ToastTip.Tip(TipType.NoPixel.GetString(), TipType.NoPixel.GetString(true));
                 return false;
             }
 
@@ -96,7 +96,7 @@ namespace Luo_Painter
             switch (mode)
             {
                 case PixelBoundsMode.Transarent:
-                    this.Tip(TipType.NoPixelForMarquee);
+                    this.ToastTip.Tip(TipType.NoPixelForMarquee.GetString(), TipType.NoPixelForMarquee.GetString(true));
                     return false;
                 case PixelBoundsMode.Solid:
                     this.Click(OptionType.All);

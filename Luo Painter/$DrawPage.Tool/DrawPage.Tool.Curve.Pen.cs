@@ -16,7 +16,7 @@ namespace Luo_Painter
             {
                 if (this.LayerSelectedItem is null)
                 {
-                    this.Tip(TipType.NoLayer);
+                    this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     return;
                 }
 
@@ -36,7 +36,7 @@ namespace Luo_Painter
                 }
                 else
                 {
-                    this.Tip(TipType.NotCurveLayer);
+                    this.ToastTip.Tip(TipType.NotCurveLayer.GetString(), TipType.NotCurveLayer.GetString(true));
                 }
             };
         }
@@ -45,14 +45,14 @@ namespace Luo_Painter
         {
             if (this.LayerSelectedItem is null)
             {
-                this.Tip(TipType.NoLayer);
+                this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                 return;
             }
 
             this.CurveLayer = this.LayerSelectedItem as CurveLayer;
             if (this.CurveLayer is null)
             {
-                this.Tip(TipType.NotCurveLayer);
+                this.ToastTip.Tip(TipType.NotCurveLayer.GetString(), TipType.NotCurveLayer.GetString(true));
                 return;
             }
 

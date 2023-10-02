@@ -285,7 +285,7 @@ namespace Luo_Painter
                     this.ConstructBrush(brush);
 
                     if (this.OptionType.IsPaint()) return;
-                    this.Tip(TipType.NoPaintTool);
+                    this.ToastTip.Tip(TipType.NoPaintTool.GetString(), TipType.NoPaintTool.GetString(true));
 
                     this.ToolListView.SelectedType = OptionType.PaintBrush;
                     this.Click(OptionType.PaintBrush);

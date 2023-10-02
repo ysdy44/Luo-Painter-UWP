@@ -87,7 +87,7 @@ namespace Luo_Painter
             {
                 this.Rippler.Spread = Vector2.Distance(this.RipplerCenter, this.RipplerPoint) / 512 / 1.41421356f;
 
-                this.Tip(TipType.Spread, $"{this.Rippler.Spread * 100:0.00}%");
+                this.ToastTip.Tip(TipType.Spread.GetString(), $"{this.Rippler.Spread * 100:0.00}%");
             }
             else
             {

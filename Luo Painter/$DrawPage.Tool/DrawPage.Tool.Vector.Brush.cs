@@ -47,7 +47,7 @@ namespace Luo_Painter
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip(TipType.NoLayer);
+                this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace Luo_Painter
             switch (this.SelectionType)
             {
                 case SelectionType.None:
-                    this.Tip(TipType.NoPixelForBitmapLayer);
+                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                     return;
                 case SelectionType.All:
                     break;
@@ -222,7 +222,7 @@ namespace Luo_Painter
             this.BitmapLayer = this.LayerSelectedItem as BitmapLayer;
             if (this.BitmapLayer is null)
             {
-                this.Tip(TipType.NoLayer);
+                this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                 return;
             }
 
@@ -230,7 +230,7 @@ namespace Luo_Painter
             switch (this.SelectionType)
             {
                 case SelectionType.None:
-                    this.Tip(TipType.NoPixelForBitmapLayer);
+                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                     return;
                 case SelectionType.All:
                     break;

@@ -120,13 +120,13 @@ namespace Luo_Painter
                     {
                         if (this.Nodes.Count() is 0)
                         {
-                            this.Tip(TipType.NoLayer);
+                            this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                             break;
                         }
 
                         StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                         if (file is null) break;
-                        this.Tip(TipType.Saving, this.ApplicationView.Title);
+                        this.ToastTip.Tip(TipType.Saving.GetString(), this.ApplicationView.Title);
 
                         float dpi = this.ExportDialog.DPI;
                         Rect rect = new Rect
@@ -161,27 +161,27 @@ namespace Luo_Painter
 
                         if (result is false)
                         {
-                            this.Tip(TipType.SaveFailed);
+                            this.ToastTip.Tip(TipType.SaveFailed.GetString(), TipType.SaveFailed.GetString(true));
                             break;
                         }
 
                         if (result)
                             ToastExtensions.Show(file);
                         else
-                            this.Tip(TipType.SaveFailed);
+                            this.ToastTip.Tip(TipType.SaveFailed.GetString(), TipType.SaveFailed.GetString(true));
                     }
                     break;
                 case OptionType.ExportAll:
                     {
                         if (this.Nodes.Count() is 0)
                         {
-                            this.Tip(TipType.NoLayer);
+                            this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                             break;
                         }
 
                         IStorageFolder folder = await FileUtil.PickSingleFolderAsync(PickerLocationId.Desktop);
                         if (folder is null) break;
-                        this.Tip(TipType.Saving, this.ApplicationView.Title);
+                        this.ToastTip.Tip(TipType.Saving.GetString(), this.ApplicationView.Title);
 
                         float dpi = this.ExportDialog.DPI;
                         Rect rect = new Rect
@@ -226,11 +226,11 @@ namespace Luo_Painter
 
                                 if (result)
                                 {
-                                    this.Tip(TipType.SaveSuccess, this.ApplicationView.Title);
+                                    this.ToastTip.Tip(TipType.SaveSuccess.GetString(), this.ApplicationView.Title);
                                     options.ItemsToSelect.Add(file);
                                 }
                                 else
-                                    this.Tip(TipType.SaveFailed);
+                                    this.ToastTip.Tip(TipType.SaveFailed.GetString(), TipType.SaveFailed.GetString(true));
                             }
                         }
 
@@ -246,7 +246,7 @@ namespace Luo_Painter
                         {
                             StorageFile file = await FileUtil.PickSingleFileAsync(PickerLocationId.Desktop, this.ExportDialog.FileChoices, this.ApplicationView.Title);
                             if (file is null) break;
-                            this.Tip(TipType.Saving, this.ApplicationView.Title);
+                            this.ToastTip.Tip(TipType.Saving.GetString(), this.ApplicationView.Title);
 
                             float dpi = this.ExportDialog.DPI;
                             Rect rect = new Rect
@@ -282,9 +282,10 @@ namespace Luo_Painter
                             if (result)
                                 ToastExtensions.Show(file);
                             else
-                                this.Tip(TipType.SaveFailed);
+                                this.ToastTip.Tip(TipType.SaveFailed.GetString(), TipType.SaveFailed.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else
+                            this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
 
@@ -300,7 +301,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                     this.RaiseHistoryCanExecuteChanged();
-                    this.Tip(TipType.Undo, $"{this.History.Index} / {this.History.Count}");
+                    this.ToastTip.Tip(TipType.Undo.GetString(), $"{this.History.Index} / {this.History.Count}");
                     break;
                 case OptionType.Redo:
                     if (this.History.CanRedo is false) break;
@@ -314,7 +315,7 @@ namespace Luo_Painter
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
 
                     this.RaiseHistoryCanExecuteChanged();
-                    this.Tip(TipType.Redo, $"{this.History.Index} / {this.History.Count}");
+                    this.ToastTip.Tip(TipType.Redo.GetString(), $"{this.History.Index} / {this.History.Count}");
                     break;
 
                 // Layout
@@ -496,7 +497,7 @@ namespace Luo_Painter
                             this.RaiseHistoryCanExecuteChanged();
                             this.RaiseEditCanExecuteChanged();
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 case OptionType.Copy:
@@ -527,7 +528,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip(TipType.NoPixelForBitmapLayer);
+                            this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                             break;
                         }
 
@@ -652,7 +653,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip(TipType.NoPixelForMarquee);
+                            this.ToastTip.Tip(TipType.NoPixelForMarquee.GetString(), TipType.NoPixelForMarquee.GetString(true));
                             break;
                         }
 
@@ -670,7 +671,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip(TipType.NoPixelForMarquee);
+                            this.ToastTip.Tip(TipType.NoPixelForMarquee.GetString(), TipType.NoPixelForMarquee.GetString(true));
                             break;
                         }
 
@@ -700,7 +701,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip(TipType.NoPixelForMarquee);
+                            this.ToastTip.Tip(TipType.NoPixelForMarquee.GetString(), TipType.NoPixelForMarquee.GetString(true));
                             break;
                         }
 
@@ -718,7 +719,7 @@ namespace Luo_Painter
 
                         if (mode is PixelBoundsMode.Transarent)
                         {
-                            this.Tip(TipType.NoPixelForMarquee);
+                            this.ToastTip.Tip(TipType.NoPixelForMarquee.GetString(), TipType.NoPixelForMarquee.GetString(true));
                             break;
                         }
 
@@ -1164,7 +1165,7 @@ namespace Luo_Painter
 
                             if (mode is PixelBoundsMode.Transarent)
                             {
-                                this.Tip(TipType.NoPixelForBitmapLayer);
+                                this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                 break;
                             }
 
@@ -1218,13 +1219,13 @@ namespace Luo_Painter
                                     }
                                     break;
                                 default:
-                                    this.Tip(TipType.NotBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                                     break;
                             }
                         }
                         else
                         {
-                            this.Tip(TipType.NoLayer);
+                            this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                         }
                     }
                     break;
@@ -1382,9 +1383,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 case OptionType.Transform:
@@ -1396,7 +1397,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1432,9 +1433,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 case OptionType.FreeTransform:
@@ -1446,7 +1447,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1482,9 +1483,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
 
@@ -1497,7 +1498,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1514,9 +1515,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 case OptionType.GradientMapping:
@@ -1528,7 +1529,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1545,9 +1546,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 case OptionType.RippleEffect:
@@ -1559,7 +1560,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1576,9 +1577,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 //case OptionType.Threshold: break;
@@ -1597,16 +1598,16 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
                                 this.Primary(type, bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
 
@@ -1629,9 +1630,9 @@ namespace Luo_Painter
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 this.CanvasControl.Invalidate(); // Invalidate
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
                 case OptionType.Lighting:
@@ -1643,7 +1644,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1660,9 +1661,9 @@ namespace Luo_Painter
                                 this.CanvasControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
 
@@ -1714,7 +1715,7 @@ namespace Luo_Painter
                                 SelectionType state = bitmapLayer.GetSelection(this.Marquee, out Color[] InterpolationColors, out PixelBoundsMode mode);
                                 if (state is SelectionType.None)
                                 {
-                                    this.Tip(TipType.NoPixelForBitmapLayer);
+                                    this.ToastTip.Tip(TipType.NoPixelForBitmapLayer.GetString(), TipType.NoPixelForBitmapLayer.GetString(true));
                                     break;
                                 }
 
@@ -1727,9 +1728,9 @@ namespace Luo_Painter
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
                                 break;
                             }
-                            else this.Tip(TipType.NotBitmapLayer);
+                            else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));
                         }
-                        else this.Tip(TipType.NoLayer);
+                        else this.ToastTip.Tip(TipType.NoLayer.GetString(), TipType.NoLayer.GetString(true));
                     }
                     break;
 
