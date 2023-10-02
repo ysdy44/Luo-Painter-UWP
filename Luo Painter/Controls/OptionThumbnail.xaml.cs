@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,7 +39,7 @@ namespace Luo_Painter.Controls
         {
             if (value.ExistThumbnail())
             {
-                this.TextBlock.Text = App.Resource.GetString(value.ToString());
+                this.TextBlock.Text = value.GetString();
                 this.BitmapImage.UriSource = new Uri(value.GetThumbnail());
             }
         }

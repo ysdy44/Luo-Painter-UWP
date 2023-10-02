@@ -134,7 +134,7 @@ namespace Luo_Painter
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
                     new SetupHistory(width, height, w, h)
                     );
-                history.Title = App.Resource.GetString(this.OptionType.ToString());
+                history.Title = this.OptionType.GetString();
                 int removes = this.History.Push(history);
             }
             else
@@ -154,7 +154,7 @@ namespace Luo_Painter
                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, matrix, CanvasImageInterpolation.NearestNeighbor)).ToArray()),
                     new SetupHistory(width, height, w, h)
                     );
-                history.Title = App.Resource.GetString(this.OptionType.ToString());
+                history.Title = this.OptionType.GetString();
                 int removes = this.History.Push(history);
 
                 this.Transformer.Radian = 0f;

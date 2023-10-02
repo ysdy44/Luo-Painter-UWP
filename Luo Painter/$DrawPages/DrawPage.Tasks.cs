@@ -132,7 +132,7 @@ namespace Luo_Painter
             {
                 // History
                 IHistory history = bitmapLayer.GetBitmapHistory();
-                history.Title = App.Resource.GetString(this.OptionType.ToString());
+                history.Title = this.OptionType.GetString();
                 int removes = this.History.Push(history);
 
                 bitmapLayer.Flush();

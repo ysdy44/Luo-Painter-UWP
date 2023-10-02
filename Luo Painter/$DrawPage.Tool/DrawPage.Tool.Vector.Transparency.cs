@@ -232,7 +232,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.BitmapLayer.GetBitmapResetHistory();
-                        history.Title = App.Resource.GetString(this.OptionType.ToString());
+                        history.Title = this.OptionType.GetString();
                         int removes = this.History.Push(history);
                     }
                     break;
@@ -253,7 +253,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.BitmapLayer.GetBitmapResetHistory();
-                        history.Title = App.Resource.GetString(this.OptionType.ToString());
+                        history.Title = this.OptionType.GetString();
                         int removes = this.History.Push(history);
                     }
                     break;
@@ -275,7 +275,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.BitmapLayer.GetBitmapHistory();
-                        history.Title = App.Resource.GetString(this.OptionType.ToString());
+                        history.Title = this.OptionType.GetString();
                         int removes = this.History.Push(history);
                     }
                     break;

@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,7 +39,7 @@ namespace Luo_Painter.Controls
         {
             if (value.IsItemClickEnabled())
             {
-                base.Text = App.Resource.GetString(value.ToString());
+                base.Text = value.GetString();
                 base.CommandParameter = value;
             }
 

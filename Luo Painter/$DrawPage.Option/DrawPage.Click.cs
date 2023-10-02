@@ -465,7 +465,7 @@ namespace Luo_Painter
 
                                         // History
                                         IHistory history = bitmapLayer.Clear(this.Marquee, interpolationColors);
-                                        history.Title = App.Resource.GetString(type.ToString());
+                                        history.Title = type.GetString();
                                         int removes = this.History.Push(history);
 
                                         bitmapLayer.Flush();
@@ -478,7 +478,7 @@ namespace Luo_Painter
 
                                         // History
                                         IHistory history = bitmapLayer.GetBitmapClearHistory(Colors.Transparent);
-                                        history.Title = App.Resource.GetString(type.ToString());
+                                        history.Title = type.GetString();
                                         int removes = this.History.Push(history);
 
                                         bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
@@ -532,7 +532,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.LayerManager.Add(this, add);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -554,7 +554,7 @@ namespace Luo_Painter
                                     {
                                         // History
                                         IHistory history = bitmapLayer.Clear(this.Marquee, interpolationColors);
-                                        history.Title = App.Resource.GetString(type.ToString());
+                                        history.Title = type.GetString();
                                         int removes = this.History.Push(history);
 
                                         bitmapLayer.Flush();
@@ -565,7 +565,7 @@ namespace Luo_Painter
                                     {
                                         // History
                                         IHistory history = bitmapLayer.GetBitmapClearHistory(Colors.Transparent);
-                                        history.Title = App.Resource.GetString(type.ToString());
+                                        history.Title = type.GetString();
                                         int removes = this.History.Push(history);
 
                                         bitmapLayer.Clear(Colors.Transparent, BitmapType.Origin);
@@ -587,7 +587,7 @@ namespace Luo_Painter
                     {
                         // History
                         IHistory history = this.Marquee.GetBitmapClearHistory(Colors.DodgerBlue);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.Marquee.Clear(Colors.DodgerBlue, BitmapType.Origin);
@@ -601,7 +601,7 @@ namespace Luo_Painter
                     {
                         // History
                         IHistory history = this.Marquee.GetBitmapClearHistory(Colors.Transparent);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.Marquee.Clear(Colors.Transparent, BitmapType.Origin);
@@ -615,7 +615,7 @@ namespace Luo_Painter
                     {
                         // History
                         IHistory history = this.Marquee.Invert(Colors.DodgerBlue);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.Marquee.Flush();
@@ -630,7 +630,7 @@ namespace Luo_Painter
                         {
                             // History
                             IHistory history = this.Marquee.Pixel(bitmapLayer, Colors.DodgerBlue);
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
 
                             this.Marquee.Flush();
@@ -759,7 +759,7 @@ namespace Luo_Painter
                                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Skretch(this.CanvasDevice, w, h, interpolation)).ToArray()),
                                     new SetupHistory(width, height, w, h)
                                 );
-                                history.Title = App.Resource.GetString(type.ToString());
+                                history.Title = type.GetString();
                                 int removes = this.History.Push(history);
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -807,7 +807,7 @@ namespace Luo_Painter
                                     this.LayerManager.Setup(this, this.Nodes.Select(c => c.Crop(this.CanvasDevice, w, h, offset)).ToArray()),
                                     new SetupHistory(width, height, w, h)
                                 );
-                                history.Title = App.Resource.GetString(type.ToString());
+                                history.Title = type.GetString();
                                 int removes = this.History.Push(history);
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -833,7 +833,7 @@ namespace Luo_Painter
 
                                 // History
                                 IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Offset(this.CanvasDevice, offset)).ToArray());
-                                history.Title = App.Resource.GetString(type.ToString());
+                                history.Title = type.GetString();
                                 int removes = this.History.Push(history);
 
                                 this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -851,7 +851,7 @@ namespace Luo_Painter
                     {
                         // History
                         IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Horizontal)).ToArray());
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -863,7 +863,7 @@ namespace Luo_Painter
                     {
                         // History
                         IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Flip(this.CanvasDevice, BitmapFlip.Vertical)).ToArray());
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -891,7 +891,7 @@ namespace Luo_Painter
                         if (width == height)
                         {
                             IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray());
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
                         }
                         else
@@ -900,7 +900,7 @@ namespace Luo_Painter
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise270Degrees)).ToArray()),
                                 new SetupHistory(width, height, height, width)
                             );
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
                         }
                     }
@@ -928,7 +928,7 @@ namespace Luo_Painter
                         if (width == height)
                         {
                             IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray());
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
                         }
                         else
@@ -937,7 +937,7 @@ namespace Luo_Painter
                                 this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise90Degrees)).ToArray()),
                                 new SetupHistory(width, height, height, width)
                             );
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
                         }
                     }
@@ -950,7 +950,7 @@ namespace Luo_Painter
                     {
                         // History
                         IHistory history = this.LayerManager.Setup(this, this.Nodes.Select(c => c.Rotation(this.CanvasDevice, BitmapRotation.Clockwise180Degrees)).ToArray());
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -977,7 +977,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.LayerManager.Add(this, add);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -994,7 +994,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.LayerManager.Add(this, add);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1008,7 +1008,7 @@ namespace Luo_Painter
 
                         // History
                         IHistory history = this.LayerManager.Add(this, add);
-                        history.Title = App.Resource.GetString(type.ToString());
+                        history.Title = type.GetString();
                         int removes = this.History.Push(history);
 
                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1030,7 +1030,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Cut(this, layer);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1043,7 +1043,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Cut(this, items);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1087,7 +1087,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, id);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1099,7 +1099,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Paste(this, this.CanvasDevice, this.Transformer.Width, this.Transformer.Height, this.ClipboardLayers);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1124,7 +1124,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Remove(this, layer, true);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1136,7 +1136,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Remove(this, items);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1178,7 +1178,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = this.LayerManager.Add(this, add);
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1204,7 +1204,7 @@ namespace Luo_Painter
                                                 bitmapLayer.GetBitmapResetHistory(),
                                                 this.LayerManager.Remove(this, neighbor, false)
                                             );
-                                            history.Title = App.Resource.GetString(type.ToString());
+                                            history.Title = type.GetString();
                                             int removes = this.History.Push(history);
 
                                             bitmapLayer.Flush();
@@ -1234,7 +1234,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = this.LayerManager.Clear(this, add);
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
                         }
 
@@ -1259,7 +1259,7 @@ namespace Luo_Painter
 
                                     // History
                                     IHistory history = this.LayerManager.Group(this, add, layer);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1273,7 +1273,7 @@ namespace Luo_Painter
 
                                     // History
                                     IHistory history = this.LayerManager.Group(this, add, items);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1292,7 +1292,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = this.LayerManager.Ungroup(this, layer);
-                            history.Title = App.Resource.GetString(type.ToString());
+                            history.Title = type.GetString();
                             int removes = this.History.Push(history);
 
                             this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1315,7 +1315,7 @@ namespace Luo_Painter
                                     if (this.LayerManager.Release(this, layer) is IHistory history)
                                     {
                                         // History
-                                        history.Title = App.Resource.GetString(type.ToString());
+                                        history.Title = type.GetString();
                                         int removes = this.History.Push(history);
 
                                         this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -1328,7 +1328,7 @@ namespace Luo_Painter
                                 {
                                     // History
                                     IHistory history = this.LayerManager.Release(this, items);
-                                    history.Title = App.Resource.GetString(type.ToString());
+                                    history.Title = type.GetString();
                                     int removes = this.History.Push(history);
 
                                     this.CanvasVirtualControl.Invalidate(); // Invalidate

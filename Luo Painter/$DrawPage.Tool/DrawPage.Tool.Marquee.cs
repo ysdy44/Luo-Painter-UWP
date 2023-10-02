@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using Microsoft.Graphics.Canvas;
 using Windows.Foundation;
 
@@ -55,7 +56,7 @@ namespace Luo_Painter
 
             // History
             IHistory history = this.Marquee.GetBitmapResetHistory();
-            history.Title = App.Resource.GetString(this.OptionType.ToString());
+            history.Title = this.OptionType.GetString();
             int removes = this.History.Push(history);
 
             this.Marquee.Flush();
