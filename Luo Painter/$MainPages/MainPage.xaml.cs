@@ -14,29 +14,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    internal class ProjectCommand : RelayCommand<ProjectBase> { }
-
-    internal class ProjectDataTemplateSelector : DataTemplateSelector
-    {
-        public DataTemplate None { get; set; }
-        public DataTemplate File { get; set; }
-        public DataTemplate Folder { get; set; }
-        protected override DataTemplate SelectTemplateCore(object item)
-        {
-            if (item is ProjectBase item2)
-            {
-                switch (item2.Type)
-                {
-                    case ProjectType.New: return this.None;
-                    case ProjectType.Project: return this.File;
-                    case ProjectType.Folder: return this.Folder;
-                    default: return null;
-                }
-            }
-            else return null;
-        }
-    }
-
     public sealed partial class MainPage : Page
     {
         //@Strings

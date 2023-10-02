@@ -7,8 +7,6 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Controls
 {
-    internal class LayerCommand : RelayCommand<ILayer> { }
-
     public sealed partial class LayerListView : XamlListView
     {
         //@Delegate

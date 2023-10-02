@@ -6,9 +6,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    internal sealed class OptionGroupingList : GroupingList<OptionGrouping, OptionType, OptionType> { }
-    internal class OptionGrouping : Grouping<OptionType, OptionType> { }
-
     public sealed partial class OptionIcon : ContentControl
     {
 

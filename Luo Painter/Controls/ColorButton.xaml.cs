@@ -9,15 +9,6 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Controls
 {
-    [Flags]
-    public enum ColorChangedMode
-    {
-        WithPrimaryBrush = 1,
-        WithSecondaryBrush = 2,
-        WithColor = 4,
-        All = WithPrimaryBrush | WithSecondaryBrush | WithColor
-    }
-
     public sealed partial class ColorButton : EyedropperButton, IColorHdrBase, IColorBase
     {
         //@Converter

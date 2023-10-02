@@ -2,21 +2,6 @@
 
 namespace Luo_Painter.Controls
 {
-    internal enum ColorNumberPickerMode
-    {
-        None,
-
-        Red,
-        Green,
-        Blue,
-
-        Hue,
-        Saturation,
-        Value,
-
-        Hex,
-    }
-
     public sealed partial class ColorButton
     {
 

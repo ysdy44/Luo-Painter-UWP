@@ -254,15 +254,6 @@
     <Compile Include="Controls\OffsetPicker.xaml.cs">
       <DependentUpon>OffsetPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\OptionIcon.xaml.cs">
-      <DependentUpon>OptionIcon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OptionItem.xaml.cs">
-      <DependentUpon>OptionItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OptionThumbnail.xaml.cs">
-      <DependentUpon>OptionThumbnail.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\PaintScrollViewer.Construct.cs" />
     <Compile Include="Controls\PaintScrollViewer.Mix.cs" />
     <Compile Include="Controls\PaintScrollViewer.Picker.cs" />
@@ -304,7 +295,6 @@
     <Compile Include="Controls\ToolListView.xaml.cs">
       <DependentUpon>ToolListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Elements.cs" />
     <Compile Include="FileUtils\FileUtil.Clipboard.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -314,6 +304,51 @@
     <Compile Include="Strings\OptionExtension.cs" />
     <Compile Include="Strings\StringExtensions.cs" />
     <Compile Include="Strings\UIExtension.cs" />
+    <Compile Include="UI\ApplicationBrushesExtension.cs" />
+    <Compile Include="UI\ColorChangedMode.cs" />
+    <Compile Include="UI\ColorNumberPickerMode.cs" />
+    <Compile Include="UI\ColorPickerMode.cs" />
+    <Compile Include="UI\ContextAppBarDevice.cs" />
+    <Compile Include="UI\EdgeDetectionModeButton.cs" />
+    <Compile Include="UI\ExportMode.cs" />
+    <Compile Include="UI\InkGrouping.cs" />
+    <Compile Include="UI\InkGroupingList.cs" />
+    <Compile Include="UI\InkGroupingType.cs" />
+    <Compile Include="UI\KeyboardShortcut.cs" />
+    <Compile Include="UI\LayerCommand.cs" />
+    <Compile Include="UI\MorphologyNumberSlider.cs" />
+    <Compile Include="UI\NumberPickerMode.cs" />
+    <Compile Include="UI\OptionCase.cs" />
+    <Compile Include="UI\OptionGrouping.cs" />
+    <Compile Include="UI\OptionGroupingList.cs" />
+    <Compile Include="UI\OptionIcon.xaml.cs">
+      <DependentUpon>OptionIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OptionItem.xaml.cs">
+      <DependentUpon>OptionItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OptionSwitchPresenter.cs" />
+    <Compile Include="UI\OptionThumbnail.xaml.cs">
+      <DependentUpon>OptionThumbnail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PaintBrush.cs" />
+    <Compile Include="UI\PaintSize.cs" />
+    <Compile Include="UI\PaintTexture.cs" />
+    <Compile Include="UI\PaintTextureList.cs" />
+    <Compile Include="UI\PressureItem.cs" />
+    <Compile Include="UI\PressureItemList.cs" />
+    <Compile Include="UI\PressurePoints.cs" />
+    <Compile Include="UI\ProjectCommand.cs" />
+    <Compile Include="UI\ProjectDataTemplateSelector.cs" />
+    <Compile Include="UI\SimulateType.cs" />
+    <Compile Include="UI\SourceDrawToStyleAttribute.cs" />
+    <Compile Include="UI\SourceMainToDrawAttribute.cs" />
+    <Compile Include="UI\SourcePageType.cs" />
+    <Compile Include="UI\TransformBase.cs" />
+    <Compile Include="UI\TransformMatrix.cs" />
+    <Compile Include="UI\TransformZDistance.cs" />
+    <Compile Include="UI\XamlGridView.cs" />
+    <Compile Include="UI\XamlListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -474,18 +509,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\OptionIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\OptionItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\OptionThumbnail.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\PaintScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -555,6 +578,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Transition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\OptionIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\OptionItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\OptionThumbnail.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

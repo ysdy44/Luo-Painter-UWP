@@ -5,13 +5,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
-    public enum ExportMode
-    {
-        None,
-        All,
-        Current,
-    }
-
     public sealed partial class ExportDialog : ContentDialog
     {
 
