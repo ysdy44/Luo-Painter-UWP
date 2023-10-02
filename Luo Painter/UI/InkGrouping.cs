@@ -3,7 +3,7 @@ using Luo_Painter.Strings;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.UI
 {
     public class InkGrouping : List<InkAttributes>, IList<InkAttributes>, IGrouping<InkGroupingType, InkAttributes>
     {

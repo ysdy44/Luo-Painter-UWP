@@ -1,15 +1,10 @@
 ﻿using Luo_Painter.Controls;
-using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.Linq;
 using Windows.UI.Popups;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
 
 namespace Luo_Painter.Strings
 {

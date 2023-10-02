@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.UI
 {
     [Flags]
     public enum InkGroupingType

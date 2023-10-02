@@ -8,6 +8,7 @@
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:strings="using:Luo_Painter.Strings"
+    xmlns:ui="using:Luo_Painter.UI"
     mc:Ignorable="d"
     d:DesignWidth="400"   
     d:DesignHeight="400"
@@ -25,47 +26,47 @@
         <!--CollectionViewSource-->
         <CollectionViewSource x:Name="CollectionViewSource" IsSourceGrouped="True">
             <CollectionViewSource.Source>
-                <local:InkGroupingList x:Name="Collection">
-                    <local:InkGrouping Key="Erase">
+                <ui:InkGroupingList x:Name="Collection">
+                    <ui:InkGrouping Key="Erase">
                         <local:PaintBrush Type="Erase" Size2="22" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011900"/>
                         <local:PaintBrush Type="Erase" Size2="32" Opacity2="0.5" Spacing2="0.25" Flow2="1" Hardness="Cosine" Tile2="2023012200"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Paint">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Paint">
                         <local:PaintBrush Type="Tip" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" SizePressure="Quadratic" MinSize2="0.25" Tile2="2023011802"/>
                         <local:PaintBrush Type="General" Size2="12" Opacity2="1" Spacing2="0.25" Flow2="1" Hardness="Quadratic" SizePressure="Quadratic" Tile2="2023011901"/>
                         <local:PaintBrush Type="General" Size2="360" Opacity2="1" Spacing2="0.15" Flow2="0.25" Hardness="Cosine" Tile2="2023012201"/>
                         <local:PaintBrush Type="General" Size2="5" Opacity2="1" Spacing2="0.75" Flow2="1" Hardness="Quadratic" SizePressure="QuadraticFlipReverse" Tile2="2023012501"/>
                         <local:PaintBrush Type="Line" Size2="3" Opacity2="1" Spacing2="0.25" Flow2="1" Tile2="2023011803"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Fx">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Fx">
                         <local:PaintBrush Type="Blur" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" Hardness="Cosine" SizePressure="Quadratic" Tile2="2023012104"/>
                         <local:PaintBrush Type="Mosaic" Size2="64" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012105"/>
                         <local:PaintBrush Type="Liquefy" Size2="32" Opacity2="1" Spacing2="0.5" Flow2="1" SizePressure="Quadratic" Tile2="2023012006"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Others">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="125" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" Shape="FX00" Tile2="2023030601"/>
                         <local:PaintBrush Type="General" Size2="200" Opacity2="1" Spacing2="2" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Flash02" Tile2="2023030603"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Others">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1.25" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Splodge03" Rotate="True" Tile2="2023030602"/>
                         <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1.25" Flow2="0.5" MinSize2="0.5" SizePressure="Symmetry" FlowPressure="Linear" Shape="Splodge04" Rotate="True" Tile2="2023031504"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Others">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge07" Rotate="True" Tile2="2023031505"/>
                         <local:PaintBrush Type="General" Size2="150" Opacity2="1" Spacing2="1" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Shape="Splodge02" Rotate="True" Tile2="2023031501"/>
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch03" Rotate="True" Tile2="2023031605"/>
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch05" Rotate="True" Tile2="2023031604"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Others">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch04" Rotate="True" Tile2="2023031502"/>
                         <local:PaintBrush Type="General" Size2="250" Opacity2="0.5" Spacing2="0.75" Flow2="1" MinSize2="0.5" SizePressure="Symmetry" Hardness="Cosine" Shape="Scratch00" Rotate="True" Tile2="2023031503"/>
-                    </local:InkGrouping>
-                    <local:InkGrouping Key="Others">
+                    </ui:InkGrouping>
+                    <ui:InkGrouping Key="Others">
                         <local:PaintBrush Type="General" Size2="180" Opacity2="0.89" Spacing2="0.33" Flow2="1" Hardness="Cosine" Grain="Splodge06" GrainScale2="0.5" Tile2="2023031601"/>
                         <local:PaintBrush Type="General" Size2="272.25" Opacity2="0.56" Spacing2="0.4" Flow2="1" Hardness="Cosine" Grain="Splodge08" GrainScale2="0.25" Tile2="2023031602"/>
                         <local:PaintBrush Type="General" Size2="160" Opacity2="0.84" Spacing2="0.45" Flow2="1" Hardness="Cosine" Grain="Splodge09" GrainScale2="0.5" Tile2="2023031603"/>
-                    </local:InkGrouping>
-                </local:InkGroupingList>
+                    </ui:InkGrouping>
+                </ui:InkGroupingList>
             </CollectionViewSource.Source>
         </CollectionViewSource>
     </FrameworkElement.Resources>
@@ -115,7 +116,7 @@
                 </Style>
             </GroupStyle.HeaderContainerStyle>
             <GroupStyle.HeaderTemplate>
-                <DataTemplate x:DataType="local:InkGrouping">
+                <DataTemplate x:DataType="ui:InkGrouping">
                     <TextBlock
                         Text="{x:Bind KeyString}" 
                         Foreground="{ThemeResource AppForeground}"
