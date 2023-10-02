@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Navigation;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     internal sealed class SourceDrawToStyleAttribute : Attribute
     {

@@ -1,29 +1,26 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Controls;
 using Luo_Painter.Elements;
-using Luo_Painter.Models;
-using Luo_Painter.Strings;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
+using Luo_Painter.Models;
+using Luo_Painter.Strings;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Display;
-using Windows.Storage;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Popups;
 
 namespace Luo_Painter
 {
@@ -67,7 +64,6 @@ namespace Luo_Painter
         BitmapLayer Displacement { get; set; }
         CurveLayer CurveLayer { get; set; }
 
-        bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
 

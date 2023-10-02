@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Luo_Painter.UI;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
