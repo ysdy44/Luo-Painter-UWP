@@ -22,7 +22,7 @@
     <FrameworkElement.Tag>
         <Button x:Name="VisualButton" CommandParameter="{x:Null}">
             <ButtonBase.Command>
-                <local:LayerCommand x:Name="VisualCommand"/>
+                <ui:LayerCommand x:Name="VisualCommand"/>
             </ButtonBase.Command>
             <SymbolIcon Symbol="View"/>
         </Button>
