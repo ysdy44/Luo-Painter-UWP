@@ -22,6 +22,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Popups;
 
 namespace Luo_Painter
 {
@@ -219,6 +220,14 @@ namespace Luo_Painter
             this.ConstructTransform();
             this.ConstructFreeTransform();
 
+            this.CanvasDevice.DeviceLost += async (s, e) =>
+            {
+                await new MessageDialog
+                (
+                    "GPU device is lost, save the project and restart the application.",
+                    "GPU device is lost"
+                ).ShowAsync();
+            };
 
             this.ContentGrid.SizeChanged += (s, e) =>
             {
@@ -289,7 +298,7 @@ namespace Luo_Painter
                 }
             };
 
-            // Drag and Drop
+            // Drag and Drop 
             //base.AllowDrop = true;
             //base.Drop += async (s, e) =>
             //{
