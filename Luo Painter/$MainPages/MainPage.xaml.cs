@@ -41,6 +41,7 @@ namespace Luo_Painter
         //@Strings
         private string Untitled => App.Resource.GetString(UIType.Untitled.ToString());
         private string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
+        FlowDirection Direction => CultureInfoCollection.FlowDirection;
 
         //@Converter
         private ListViewSelectionMode BooleanToSelectionModeConverter(bool value) => value ? ListViewSelectionMode.None : ListViewSelectionMode.Multiple;

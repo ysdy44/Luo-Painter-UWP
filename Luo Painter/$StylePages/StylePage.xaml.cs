@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Elements;
 using Windows.Foundation;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -8,6 +9,9 @@ namespace Luo_Painter
 {
     public sealed partial class StylePage : Page
     {
+        //@String
+        FlowDirection Direction => CultureInfoCollection.FlowDirection;
+
         public bool Disabler
         {
             get => App.SourcePageType != SourcePageType.StylePage;

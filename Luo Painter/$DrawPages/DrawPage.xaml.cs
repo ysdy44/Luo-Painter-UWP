@@ -28,6 +28,9 @@ namespace Luo_Painter
     public sealed partial class DrawPage : Page, ILayerManager, IInkParameter, IInkSlider, ICommand
     {
 
+        //@String
+        FlowDirection Direction => CultureInfoCollection.FlowDirection;
+
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
@@ -62,6 +65,7 @@ namespace Luo_Painter
         BitmapLayer Displacement { get; set; }
         CurveLayer CurveLayer { get; set; }
 
+        bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
 

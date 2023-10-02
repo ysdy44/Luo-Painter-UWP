@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.Brushes;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
@@ -18,6 +19,8 @@ namespace Luo_Painter
 {
     public sealed partial class BrushPage : Page, IInkParameter
     {
+        //@String
+        FlowDirection Direction => CultureInfoCollection.FlowDirection;
 
         public CanvasDevice CanvasDevice => this.InkParameter.CanvasDevice;
 
