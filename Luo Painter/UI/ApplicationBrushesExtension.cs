@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml.Media;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     internal class ApplicationBrushesExtension : List<SolidColorBrush>
     {

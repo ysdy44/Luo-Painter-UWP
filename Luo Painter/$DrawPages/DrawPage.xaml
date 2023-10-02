@@ -11,6 +11,7 @@
     xmlns:elements="using:Luo_Painter.Elements"
     xmlns:hsvColorPickers="using:Luo_Painter.HSVColorPickers"
     xmlns:strings="using:Luo_Painter.Strings"
+    xmlns:ui="using:Luo_Painter.UI"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     NavigationCacheMode="Required"
     mc:Ignorable="d" 
@@ -28,7 +29,7 @@
         <transformers:CanvasOperator x:Name="Operator" DestinationControl="{x:Bind CanvasControl}"/>
         <transformers:CanvasTransformer x:Name="Transformer" />
         <!--Extension-->
-        <local:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
+        <ui:ApplicationBrushesExtension x:Name="ApplicationBrushes"/>
         <!--Storyboard-->
         <!--Radian-->
         <Storyboard x:Name="RadianStoryboard">
