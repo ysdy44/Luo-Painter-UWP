@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
+    xmlns:ui="using:Luo_Painter.UI"
     mc:Ignorable="d"
     d:DesignWidth="400"
     d:DesignHeight="400"          
@@ -52,7 +53,7 @@
     </ItemsControl.ItemContainerStyle>
 
     <ItemsControl.ItemTemplate>
-        <DataTemplate x:DataType="local:KeyboardShortcut">
+        <DataTemplate x:DataType="ui:KeyboardShortcut">
             <Grid Padding="60,2">
                 <TextBlock Text="{x:Bind CommandParameter}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{ThemeResource AppForeground}" >
                     <!--CommandParameter-->
@@ -64,41 +65,41 @@
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 
-    <local:KeyboardShortcut Modifiers="Control" Key="S" CommandParameter="Save" />
-    <local:KeyboardShortcut Modifiers="Control" Key="Z" CommandParameter="Undo" />
-    <local:KeyboardShortcut Modifiers="Control" Key="Y" CommandParameter="Redo" />
-    <local:KeyboardShortcut Modifiers="None" Key="Escape" CommandParameter="FullScreen" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="S" CommandParameter="Save" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="Z" CommandParameter="Undo" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="Y" CommandParameter="Redo" />
+    <ui:KeyboardShortcut Modifiers="None" Key="Escape" CommandParameter="FullScreen" />
 
 
-    <local:KeyboardShortcut Modifiers="None" Key="F2" CommandParameter="LayerRenameMenu" />
-    <local:KeyboardShortcut Modifiers="None" Key="F3" CommandParameter="LayerPropertyMenu" />
-    <local:KeyboardShortcut Modifiers="None" Key="F5" CommandParameter="PaintMenu" />
-    <local:KeyboardShortcut Modifiers="None" Key="F6" CommandParameter="BrushMenu" />
+    <ui:KeyboardShortcut Modifiers="None" Key="F2" CommandParameter="LayerRenameMenu" />
+    <ui:KeyboardShortcut Modifiers="None" Key="F3" CommandParameter="LayerPropertyMenu" />
+    <ui:KeyboardShortcut Modifiers="None" Key="F5" CommandParameter="PaintMenu" />
+    <ui:KeyboardShortcut Modifiers="None" Key="F6" CommandParameter="BrushMenu" />
 
 
-    <local:KeyboardShortcut Key="Delete" CommandParameter="Remove" />
-    <local:KeyboardShortcut Key="Insert" CommandParameter="AddBitmapLayer" />
+    <ui:KeyboardShortcut Key="Delete" CommandParameter="Remove" />
+    <ui:KeyboardShortcut Key="Insert" CommandParameter="AddBitmapLayer" />
 
-    <local:KeyboardShortcut Modifiers="Control" Key="X" CommandParameter="Cut" />
-    <local:KeyboardShortcut Modifiers="Control" Key="J" CommandParameter="Duplicate" />
-    <local:KeyboardShortcut Modifiers="Control" Key="C" CommandParameter="Copy" />
-    <local:KeyboardShortcut Modifiers="Control" Key="V" CommandParameter="Paste" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="X" CommandParameter="Cut" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="J" CommandParameter="Duplicate" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="C" CommandParameter="Copy" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="V" CommandParameter="Paste" />
 
-    <local:KeyboardShortcut Key="Back" CommandParameter="Clear" />
+    <ui:KeyboardShortcut Key="Back" CommandParameter="Clear" />
 
-    <local:KeyboardShortcut Modifiers="Control" Key="E" CommandParameter="Extract" />
-    <local:KeyboardShortcut Modifiers="Control" Key="M" CommandParameter="Merge" />
-    <local:KeyboardShortcut Modifiers="Control" Key="F" CommandParameter="Flatten" />
-
-
-    <local:KeyboardShortcut Modifiers="Control" Key="A" CommandParameter="All" />
-    <local:KeyboardShortcut Modifiers="Control" Key="D" CommandParameter="Deselect" />
-    <local:KeyboardShortcut Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" />
-    <local:KeyboardShortcut Modifiers="Control" Key="P" CommandParameter="Pixel" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="E" CommandParameter="Extract" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="M" CommandParameter="Merge" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="F" CommandParameter="Flatten" />
 
 
-    <local:KeyboardShortcut Modifiers="Control" Key="G" CommandParameter="Group" />
-    <local:KeyboardShortcut Modifiers="Control" Key="U" CommandParameter="Ungroup" />
-    <local:KeyboardShortcut Modifiers="Control" Key="R" CommandParameter="Release" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="A" CommandParameter="All" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="D" CommandParameter="Deselect" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="I" CommandParameter="MarqueeInvert" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="P" CommandParameter="Pixel" />
+
+
+    <ui:KeyboardShortcut Modifiers="Control" Key="G" CommandParameter="Group" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="U" CommandParameter="Ungroup" />
+    <ui:KeyboardShortcut Modifiers="Control" Key="R" CommandParameter="Release" />
 
 </ItemsControl>
