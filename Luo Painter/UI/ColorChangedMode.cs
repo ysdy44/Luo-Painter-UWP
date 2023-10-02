@@ -3,7 +3,7 @@ using Luo_Painter.Models;
 using System;
 using System.Linq.Expressions;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.UI
 {
     [Flags]
     public enum ColorChangedMode

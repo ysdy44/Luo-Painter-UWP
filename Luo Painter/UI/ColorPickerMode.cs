@@ -1,4 +1,4 @@
-﻿namespace Luo_Painter
+﻿namespace Luo_Painter.UI
 {
     public enum ColorPickerMode
     {
