@@ -1,4 +1,6 @@
-﻿namespace Luo_Painter
+﻿using Luo_Painter.UI;
+
+namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {

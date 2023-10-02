@@ -1,4 +1,5 @@
 ﻿using Luo_Painter.HSVColorPickers;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas.Effects;
 
 namespace Luo_Painter

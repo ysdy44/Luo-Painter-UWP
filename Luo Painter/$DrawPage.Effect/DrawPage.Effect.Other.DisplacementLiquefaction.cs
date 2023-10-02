@@ -2,6 +2,7 @@
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
 using Luo_Painter.Shaders;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.Foundation;
 
