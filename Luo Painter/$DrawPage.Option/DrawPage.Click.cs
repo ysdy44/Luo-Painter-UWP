@@ -396,11 +396,7 @@ namespace Luo_Painter
                 case OptionType.HistogramMenu:
                     if (CanvasImage.IsHistogramSupported(this.CanvasDevice) is false)
                     {
-                        await new MessageDialog
-                        (
-                            App.Resource.GetString($"SubTip_{TipType.NoCompatible}"),
-                            App.Resource.GetString($"Tip_{TipType.NoCompatible}")
-                        ).ShowAsync();
+                        await TipType.NoCompatible.ToDialog().ShowAsync();
                         break;
                     }
 

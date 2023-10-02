@@ -145,7 +145,7 @@ namespace Luo_Painter
                         CanvasBitmap bitmap = await this.CreateBitmap(item);
                         if (bitmap is null)
                         {
-                            await new MessageDialog(item.Path, App.Resource.GetString($"Tip_{TipType.NoSupport}")).ShowAsync();
+                            await TipType.NoSupport.ToDialog(item.Path).ShowAsync();
                             continue;
                         }
 
@@ -168,7 +168,7 @@ namespace Luo_Painter
                         CanvasBitmap bitmap = await this.CreateBitmap(item);
                         if (bitmap is null)
                         {
-                            await new MessageDialog(item.Path, App.Resource.GetString($"Tip_{TipType.NoSupport}")).ShowAsync();
+                            await TipType.NoSupport.ToDialog(item.Path).ShowAsync();
                             continue;
                         }
 
@@ -192,7 +192,7 @@ namespace Luo_Painter
                     CanvasBitmap bitmap = await this.CreateBitmap(item);
                     if (bitmap is null)
                     {
-                        await new MessageDialog(item.Path, App.Resource.GetString($"Tip_{TipType.NoSupport}")).ShowAsync();
+                        await TipType.NoSupport.ToDialog(item.Path).ShowAsync();
                         continue;
                     }
 

@@ -82,7 +82,7 @@ namespace Luo_Painter
 
             if (folder is null)
             {
-                await new MessageDialog(path, App.Resource.GetString($"Tip_{TipType.NoFolder}")).ShowAsync();
+                await TipType.NoFolder.ToDialog(path).ShowAsync();
                 return;
             }
 

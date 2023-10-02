@@ -35,7 +35,7 @@ namespace Luo_Painter
                             ProjectParameter parameter = await project.LoadAsync();
                             if (parameter is null)
                             {
-                                await new MessageDialog(project.Path, App.Resource.GetString($"Tip_{TipType.NoFile}")).ShowAsync();
+                                await TipType.NoFile.ToDialog(project.Path).ShowAsync();
                                 break;
                             }
 

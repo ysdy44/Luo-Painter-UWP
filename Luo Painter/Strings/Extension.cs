@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Linq;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -66,6 +67,24 @@ namespace Luo_Painter.Strings
             {
                 return App.Resource.GetString($"Tip_{type}");
             }
+        }
+
+
+        public static MessageDialog ToDialog(this TipType type)
+        {
+            return new MessageDialog
+            (
+                App.Resource.GetString($"SubTip_{type}"),
+                App.Resource.GetString($"Tip_{type}")
+            );
+        }
+        public static MessageDialog ToDialog(this TipType type, string subtip)
+        {
+            return new MessageDialog
+            (
+                subtip,
+                App.Resource.GetString($"Tip_{type}")
+            );
         }
     }
 

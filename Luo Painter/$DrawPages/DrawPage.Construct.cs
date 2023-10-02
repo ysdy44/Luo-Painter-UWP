@@ -84,24 +84,5 @@ namespace Luo_Painter
         {
             this.PasteLayerIsEnabled = this.ClipboardLayers.Count is 0 is false;
         }
-
-
-        public void Tip(TipType type)
-        {
-            this.ToastTip.Tip
-            (
-                App.Resource.GetString($"Tip_{type}"),
-                App.Resource.GetString($"SubTip_{type}")
-            );
-        }
-        public void Tip(TipType type, string subtitle)
-        {
-            this.ToastTip.Tip
-            (
-                App.Resource.GetString($"Tip_{type}"),
-                subtitle
-            );
-        }
-
     }
 }
