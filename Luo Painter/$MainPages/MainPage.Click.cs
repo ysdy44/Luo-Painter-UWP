@@ -20,7 +20,7 @@ namespace Luo_Painter
     public sealed partial class MainPage : Page
     {
 
-        [MainPageToDrawPage(NavigationMode.Forward)]
+        [SourceMainToDraw(NavigationMode.Forward)]
         private async void Click(ActionType action, object obj = null)
         {
             if (this.Disabler) return;

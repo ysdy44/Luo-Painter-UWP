@@ -7,16 +7,16 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Luo_Painter
 {
-    internal sealed class MainPageToDrawPageAttribute : Attribute
+    internal sealed class SourceMainToDrawAttribute : Attribute
     {
         readonly NavigationMode NavigationMode;
-        public MainPageToDrawPageAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
+        public SourceMainToDrawAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
         public override string ToString() => $"{typeof(MainPage)} to {typeof(DrawPage)}, Parameter is {typeof(ProjectParameter)}, NavigationMode is {this.NavigationMode}";
     }
-    internal sealed class DrawPageToStylePageAttribute : Attribute
+    internal sealed class SourceDrawToStyleAttribute : Attribute
     {
         readonly NavigationMode NavigationMode;
-        public DrawPageToStylePageAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
+        public SourceDrawToStyleAttribute(NavigationMode navigationMode) => this.NavigationMode = navigationMode;
         public override string ToString() => $"{typeof(DrawPage)} to {typeof(StylePage)}, NavigationMode is {this.NavigationMode}";
     }
 
