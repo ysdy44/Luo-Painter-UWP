@@ -74,5 +74,4 @@ namespace Luo_Painter.Elements
             }
         }
     }
-
 }

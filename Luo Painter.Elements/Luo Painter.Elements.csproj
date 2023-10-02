@@ -157,6 +157,7 @@
       <DependentUpon>TagTypeSegmented.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ThumbSlider.cs" />
+    <Compile Include="CultureInfoCollection.cs" />
     <Compile Include="Extensions\ApplicationTitleBarExtension.cs" />
     <Compile Include="Extensions\ContentDialogExtensions.cs" />
     <Compile Include="Extensions\CoreCursorDictionary.cs" />
