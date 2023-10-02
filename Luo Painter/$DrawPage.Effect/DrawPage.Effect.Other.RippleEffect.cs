@@ -2,6 +2,7 @@
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
 using Luo_Painter.Shaders;
+using Luo_Painter.Strings;
 using Microsoft.Graphics.Canvas;
 using System.Numerics;
 

@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;

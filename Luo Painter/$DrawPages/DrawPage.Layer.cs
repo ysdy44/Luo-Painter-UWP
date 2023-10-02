@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Layers;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;

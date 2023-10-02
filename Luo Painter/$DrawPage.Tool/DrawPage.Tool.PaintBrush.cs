@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 
 namespace Luo_Painter
 {

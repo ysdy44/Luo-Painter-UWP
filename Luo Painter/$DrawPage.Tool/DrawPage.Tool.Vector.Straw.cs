@@ -2,6 +2,7 @@
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using Windows.UI;
 
 namespace Luo_Painter
