@@ -10,7 +10,7 @@ namespace Luo_Painter.Strings
     public sealed class ElementExtension : MarkupExtension
     {
         public ElementType Type { get; set; }
-        protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
+        protected override object ProvideValue() => this.Type.GetString();
     }
 
     [MarkupExtensionReturnType(ReturnType = typeof(ContentControl))]
@@ -50,7 +50,7 @@ namespace Luo_Painter.Strings
                 {
                     new TextBlock
                     {
-                        Text = App.Resource.GetString(this.Type.ToString()),
+                        Text =this.Type.GetString(),
                         VerticalAlignment = VerticalAlignment.Center,
                         TextTrimming = TextTrimming.CharacterEllipsis,
                     },

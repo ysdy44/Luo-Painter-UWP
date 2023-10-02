@@ -19,7 +19,7 @@ namespace Luo_Painter.Strings
                 {
                     new TextBlock
                     {
-                        Text = App.Resource.GetString($"Interpolation_{this.Type}"),
+                        Text =this.Type.GetString(),
                         VerticalAlignment = VerticalAlignment.Center,
                         TextTrimming = TextTrimming.CharacterEllipsis,
                     },

@@ -18,7 +18,7 @@ namespace Luo_Painter.Strings
                 {
                     new TextBlock
                     {
-                        Text = App.Resource.GetString($"Blends_{this.Type.GetTitle()}"),
+                        Text = this.Type.GetString(),
                         VerticalAlignment = VerticalAlignment.Center,
                         TextTrimming = TextTrimming.CharacterEllipsis,
                     },
