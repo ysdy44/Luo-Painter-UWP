@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:Luo_Painter.Controls"
+    xmlns:ui="using:Luo_Painter.UI"
     mc:Ignorable="d"
     Margin="6,12,6,4" 
     Width="240"
@@ -12,8 +13,8 @@
 
     <FrameworkElement.Resources>
         <!--Collection-->
-        <local:PressureItemList x:Name="Collection">
-            <local:PressureItem
+        <ui:PressureItemList x:Name="Collection">
+            <ui:PressureItem
                 Pressure="None"
                 Index="0"
                 Title=""
@@ -22,7 +23,7 @@
                 Line75="0"
                 Points ="0,240 0,0 240,0 240,240"
                 />
-            <local:PressureItem
+            <ui:PressureItem
                 Pressure="Linear"
                 Index="1"
                 Title="f(x) = x"
@@ -31,7 +32,7 @@
                 Line75="60"
                 Points ="0,240 240,0 240,240"
                 />
-            <local:PressureItem
+            <ui:PressureItem
                 Pressure="Quadratic"
                 Index="2"
                 Title="f(x) = x²"
@@ -40,7 +41,7 @@
                 Line75="105"
                 Points ="0,240 0,240 15,239.0625 30,236.25 45,231.5625 60,225 75,216.5625 90,206.25 105,194.0625 120,180 135,164.0625 150,146.25 165,126.5625 180,105 195,81.5625 210,56.25 225,29.0625 240,0 240,240"
                 />
-            <local:PressureItem
+            <ui:PressureItem
                 Pressure="QuadraticFlipReverse"
                 Index="3"
                 Title="f(x) = 1 - (1 - x)²"
@@ -49,7 +50,7 @@
                 Line75="15"
                 Points ="0,240 0,240 15,210.9375 30,183.75 45,158.4375 60,135 75,113.4375 90,93.75 105,75.9375 120,60 135,45.9375 150,33.75 165,23.4375 180,15 195,8.4375 210,3.75 225,0.9375 240,0 240,240"
                 />
-            <local:PressureItem
+            <ui:PressureItem
                 Pressure="Symmetry"
                 Index="4"
                 Title="f(x) = (2x)² / 2"
@@ -58,7 +59,7 @@
                 Line75="30"
                 Points ="0,240 0,240 15,238.125 30,232.5 45,223.125 60,210 75,193.125 90,172.5 105,148.125 120,120 135,91.875 150,67.5 165,46.875 180,30 195,16.875 210,7.5 225,1.875 240,0 240,240"
                 />
-        </local:PressureItemList>
+        </ui:PressureItemList>
     </FrameworkElement.Resources>
 
     <StackPanel Spacing="4">

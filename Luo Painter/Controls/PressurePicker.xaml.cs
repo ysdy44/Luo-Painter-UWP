@@ -1,6 +1,5 @@
 ﻿using Luo_Painter.Brushes;
-using System.Collections.Generic;
-using Windows.Foundation;
+using Luo_Painter.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 

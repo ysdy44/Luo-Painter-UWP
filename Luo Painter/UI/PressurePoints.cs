@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI.Xaml.Media;
 
-namespace Luo_Painter.Controls
+namespace Luo_Painter.UI
 {
     public sealed class PressurePoints : Dictionary<BrushEasePressure, PointCollection>
     {
