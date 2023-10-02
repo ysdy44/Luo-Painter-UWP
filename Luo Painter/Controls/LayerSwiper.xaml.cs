@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Layers;
+using Luo_Painter.Strings;
 using Microsoft.Graphics.Canvas.Effects;
 using System.Windows.Input;
 using Windows.UI;
@@ -22,7 +23,7 @@ namespace Luo_Painter.Controls
         {
             set
             {
-                this.Run2.Text = App.Resource.GetString($"Layer_{value}");
+                this.Run2.Text = value.GetString();
 
                 switch (value)
                 {
