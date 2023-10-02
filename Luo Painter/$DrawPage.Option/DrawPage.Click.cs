@@ -77,7 +77,7 @@ namespace Luo_Painter
                 // File
                 case OptionType.Home:
                 case OptionType.Close:
-                    if (this.IsFullScreen)
+                    if (this.ApplicationView.IsFullScreenMode)
                     {
                         this.Click(OptionType.UnFullScreen);
                         break;
@@ -318,7 +318,7 @@ namespace Luo_Painter
 
                 // Layout
                 case OptionType.FullScreen:
-                    if (this.IsFullScreen)
+                    if (this.ApplicationView.IsFullScreenMode)
                     {
                         this.Click(OptionType.UnFullScreen);
                         break;
@@ -326,12 +326,10 @@ namespace Luo_Painter
 
                     VisualStateManager.GoToState(this, nameof(FullScreen), false);
                     this.ApplicationView.TryEnterFullScreenMode();
-                    this.IsFullScreen = true;
                     break;
                 case OptionType.UnFullScreen:
                     VisualStateManager.GoToState(this, nameof(UnFullScreen), false);
                     this.ApplicationView.ExitFullScreenMode();
-                    this.IsFullScreen = false;
                     break;
 
                 case OptionType.DockLeft:

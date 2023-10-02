@@ -62,7 +62,6 @@ namespace Luo_Painter
         BitmapLayer Displacement { get; set; }
         CurveLayer CurveLayer { get; set; }
 
-        bool IsFullScreen { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
         OptionType OptionType { get; set; } = OptionType.PaintBrush;
 
