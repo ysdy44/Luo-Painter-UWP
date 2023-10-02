@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Elements;
+﻿using Luo_Painter.Controls;
+using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Models;
 using Microsoft.Graphics.Canvas;
@@ -11,27 +12,84 @@ using Windows.UI.Xaml.Markup;
 
 namespace Luo_Painter.Strings
 {
+    public static class StringExtensions
+    {
+        // 0
+        public static string GetString(this OptionType type)
+        {
+            return App.Resource.GetString(type.ToString());
+        }
+        public static string GetString(this ElementType type)
+        {
+            return App.Resource.GetString(type.ToString());
+        }
+        public static string GetString(this UIType type)
+        {
+            return App.Resource.GetString(type.ToString());
+        }
+
+        // 1
+        public static string GetString(this BlendEffectMode type)
+        {
+            return App.Resource.GetString($"Blends_{type.GetTitle()}");
+        }
+        public static string GetString(this LayerType type)
+        {
+            return App.Resource.GetString($"Layer_{type}");
+        }
+
+        // 2
+        public static string GetString(this InkGroupingType type)
+        {
+            if (type.HasFlag(InkGroupingType.Others))
+            {
+                return App.Resource.GetString($"Brush_{InkGroupingType.Others}");
+            }
+            else
+            {
+                return App.Resource.GetString($"Brush_{type}");
+            }
+        }
+
+        // 3
+        public static string GetString(this CanvasImageInterpolation type)
+        {
+            return App.Resource.GetString($"Interpolation_{type}");
+        }
+        public static string GetString(this TipType type, bool isSub = false)
+        {
+            if (isSub)
+            {
+                return App.Resource.GetString($"SubTip_{type}");
+            }
+            else
+            {
+                return App.Resource.GetString($"Tip_{type}");
+            }
+        }
+    }
+
     [MarkupExtensionReturnType(ReturnType = typeof(string))]
-    public class UIExtension : MarkupExtension
+    public sealed class UIExtension : MarkupExtension
     {
         public UIType Type { get; set; }
         protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
     }
 
     [MarkupExtensionReturnType(ReturnType = typeof(string))]
-    public class OptionExtension : MarkupExtension
+    public sealed class OptionExtension : MarkupExtension
     {
         public OptionType Type { get; set; }
         protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
     }
     [MarkupExtensionReturnType(ReturnType = typeof(OptionType))]
-    public class OptionTypeExtension : MarkupExtension
+    public sealed class OptionTypeExtension : MarkupExtension
     {
         public OptionType Type { get; set; }
         protected override object ProvideValue() => this.Type;
     }
     [MarkupExtensionReturnType(ReturnType = typeof(ContentControl))]
-    public class OptionIconExtension : MarkupExtension
+    public sealed class OptionIconExtension : MarkupExtension
     {
         public OptionType Type { get; set; }
         protected override object ProvideValue()
@@ -46,7 +104,7 @@ namespace Luo_Painter.Strings
         }
     }
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
-    public class OptionItemExtension : MarkupExtension
+    public sealed class OptionItemExtension : MarkupExtension
     {
         public OptionType Type { get; set; }
         protected override object ProvideValue()
@@ -77,13 +135,13 @@ namespace Luo_Painter.Strings
     }
 
     [MarkupExtensionReturnType(ReturnType = typeof(string))]
-    public class ElementExtension : MarkupExtension
+    public sealed class ElementExtension : MarkupExtension
     {
         public ElementType Type { get; set; }
         protected override object ProvideValue() => App.Resource.GetString(this.Type.ToString());
     }
     [MarkupExtensionReturnType(ReturnType = typeof(ContentControl))]
-    public class ElementIconExtension : MarkupExtension
+    public sealed class ElementIconExtension : MarkupExtension
     {
         public ElementType Type { get; set; }
         protected override object ProvideValue()
@@ -98,7 +156,7 @@ namespace Luo_Painter.Strings
         }
     }
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
-    public class ElementItemExtension : MarkupExtension
+    public sealed class ElementItemExtension : MarkupExtension
     {
         public ElementType Type { get; set; }
         protected override object ProvideValue()
@@ -129,7 +187,7 @@ namespace Luo_Painter.Strings
     }
 
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
-    public class BlendItemExtension : MarkupExtension
+    public sealed class BlendItemExtension : MarkupExtension
     {
         public BlendEffectMode Type { get; set; }
         protected override object ProvideValue()
@@ -159,7 +217,7 @@ namespace Luo_Painter.Strings
     }
 
     [MarkupExtensionReturnType(ReturnType = typeof(Grid))]
-    public class InterpolationItemExtension : MarkupExtension
+    public sealed class InterpolationItemExtension : MarkupExtension
     {
         public CanvasImageInterpolation Type { get; set; }
         protected override object ProvideValue()

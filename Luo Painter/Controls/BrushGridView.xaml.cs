@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Luo_Painter.Controls
 {
-    internal enum InkGroupingType
+    public enum InkGroupingType
     {
         Erase = 8,
         Paint = 16,
