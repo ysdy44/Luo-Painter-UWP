@@ -66,7 +66,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = new PropertyHistory(HistoryPropertyMode.Opacity, layer.Id, layer.StartingOpacity, redo);
-                            history.Title = App.Resource.GetString(UIType.Layer_Opacity.ToString());
+                            history.Title = UIType.Layer_Opacity.GetString();
                             int removes = this.History.Push(history);
                         }
                         break;
@@ -74,7 +74,7 @@ namespace Luo_Painter
                         {
                             // History
                             IHistory history = new CompositeHistory(this.GetOpacityHistory().ToArray());
-                            history.Title = App.Resource.GetString(UIType.Layer_Opacity.ToString());
+                            history.Title = UIType.Layer_Opacity.GetString();
                             int removes = this.History.Push(history);
                         }
                         break;
@@ -91,7 +91,7 @@ namespace Luo_Painter
 
                             // History
                             IHistory history = new PropertyHistory(HistoryPropertyMode.BlendMode, layer.Id, layer.StartingBlendMode, redo);
-                            history.Title = App.Resource.GetString(UIType.Layer_BlendMode.ToString());
+                            history.Title = UIType.Layer_BlendMode.GetString();
                             int removes = this.History.Push(history);
                         }
                         break;
@@ -99,7 +99,7 @@ namespace Luo_Painter
                         {
                             // History
                             IHistory history = new CompositeHistory(this.GetBlendModeHistory().ToArray());
-                            history.Title = App.Resource.GetString(UIType.Layer_BlendMode.ToString());
+                            history.Title = UIType.Layer_BlendMode.GetString();
                             int removes = this.History.Push(history);
                         }
                         break;

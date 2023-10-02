@@ -40,8 +40,8 @@ namespace Luo_Painter
     public sealed partial class MainPage : Page
     {
         //@Strings
-        private string Untitled => App.Resource.GetString(UIType.Untitled.ToString());
-        private string New => App.Resource.GetString(UIType.UntitledFolder.ToString());
+        private string Untitled => UIType.Untitled.GetString();
+        private string New => UIType.UntitledFolder.GetString();
         FlowDirection Direction => CultureInfoCollection.FlowDirection;
 
         //@Converter

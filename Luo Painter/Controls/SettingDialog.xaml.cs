@@ -1,5 +1,6 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -52,17 +53,17 @@ namespace Luo_Painter.Controls
                 else
                     CultureInfoCollection.SetLanguageEmpty();
 
-                this.TB0.Text = App.Resource.GetString(UIType.Theme.ToString());
-                this.TB1.Text = App.Resource.GetString(UIType.Theme_Light.ToString());
-                this.TB2.Text = App.Resource.GetString(UIType.Theme_Dark.ToString());
-                this.TB3.Text = App.Resource.GetString(UIType.Theme_UseSystem.ToString());
+                this.TB0.Text = UIType.Theme.GetString();
+                this.TB1.Text = UIType.Theme_Light.GetString();
+                this.TB2.Text = UIType.Theme_Dark.GetString();
+                this.TB3.Text = UIType.Theme_UseSystem.GetString();
 
-                this.TB4.Text = App.Resource.GetString(UIType.Language.ToString());
-                this.TB5.Text = App.Resource.GetString(UIType.Language_Tip.ToString());
-                base.PrimaryButtonText = App.Resource.GetString(UIType.Back.ToString());
+                this.TB4.Text = UIType.Language.GetString();
+                this.TB5.Text = UIType.Language_Tip.GetString();
+                base.PrimaryButtonText = UIType.Back.GetString();
 
-                this.TB7.Text = App.Resource.GetString(UIType.LocalFolder.ToString());
-                this.TB8.Text = App.Resource.GetString(UIType.LocalFolder_Open.ToString());
+                this.TB7.Text = UIType.LocalFolder.GetString();
+                this.TB8.Text = UIType.LocalFolder_Open.GetString();
             };
             this.LanguageTipButton.Click += async (s, e) => await Windows.ApplicationModel.Core.CoreApplication.RequestRestartAsync(string.Empty);
             this.LocalFolderButton.Click += async (s, e) => await Windows.System.Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
