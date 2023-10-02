@@ -12,33 +12,12 @@ namespace Luo_Painter.Controls
     public sealed partial class SettingDialog : ContentDialog
     {
 
+        // Setting
+        readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+
         //@Converter
         private CultureInfo CultureInfoConverter(int value) => new CultureInfo(this.Lang[value]);
         readonly Languages Lang = new Languages();
-
-        private ElementTheme Theme
-        {
-            get
-            {
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Theme"))
-                {
-                    if (ApplicationData.Current.LocalSettings.Values["Theme"] is int item)
-                    {
-                        return (ElementTheme)item;
-                    }
-                }
-                return base.RequestedTheme;
-            }
-            set
-            {
-                ApplicationData.Current.LocalSettings.Values["Theme"] = (int)value;
-                if (Window.Current.Content is FrameworkElement frameworkElement)
-                {
-                    if (frameworkElement.RequestedTheme == value) return;
-                    frameworkElement.RequestedTheme = value;
-                }
-            }
-        }
 
         private string PrimaryLanguageOverride
         {
@@ -89,7 +68,7 @@ namespace Luo_Painter.Controls
 
             string lang = this.PrimaryLanguageOverride;
             this.LanguageComboBox.SelectedIndex = this.Lang[lang];
-            switch (this.Theme)
+            switch (this.GetTheme())
             {
                 case ElementTheme.Light: this.ThemeComboBox.SelectedIndex = 0; break;
                 case ElementTheme.Dark: this.ThemeComboBox.SelectedIndex = 1; break;
@@ -100,11 +79,12 @@ namespace Luo_Painter.Controls
             {
                 switch (this.ThemeComboBox.SelectedIndex)
                 {
-                    case 0: this.Theme = ElementTheme.Light; break;
-                    case 1: this.Theme = ElementTheme.Dark; break;
-                    default: this.Theme = ElementTheme.Default; break;
+                    case 0: this.SetTheme(ElementTheme.Light); break;
+                    case 1: this.SetTheme(ElementTheme.Dark); break;
+                    default: this.SetTheme(ElementTheme.Default); break;
                 }
             };
+
             this.LanguageComboBox.SelectionChanged += (s, e) =>
             {
                 int index = this.LanguageComboBox.SelectedIndex;
@@ -124,6 +104,27 @@ namespace Luo_Painter.Controls
             };
             this.LanguageTipButton.Click += async (s, e) => await Windows.ApplicationModel.Core.CoreApplication.RequestRestartAsync(string.Empty);
             this.LocalFolderButton.Click += async (s, e) => await Windows.System.Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
+        }
+
+        public void SetTheme(ElementTheme value)
+        {
+            this.LocalSettings.Values["Theme"] = (int)value;
+            if (Window.Current.Content is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.RequestedTheme == value) return;
+                frameworkElement.RequestedTheme = value;
+            }
+        }
+        public ElementTheme GetTheme()
+        {
+            if (this.LocalSettings.Values.ContainsKey("Theme"))
+            {
+                if (this.LocalSettings.Values["Theme"] is int item)
+                {
+                    return (ElementTheme)item;
+                }
+            }
+            return ElementTheme.Dark;
         }
     }
 }
